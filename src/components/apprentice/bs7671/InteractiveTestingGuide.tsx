@@ -1,22 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import {
-  ArrowLeft,
-  ArrowRight,
-  CheckCircle,
-  AlertTriangle,
-  Lightbulb,
-  Wrench,
-  BookOpen,
-  Clock,
-  Shield,
-  ChevronDown,
-  HardHat,
-  Flame,
-  SearchX,
-} from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle, ChevronDown } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { BS7671Test } from '@/data/bs7671-testing/allBS7671Tests';
 import type { useBS7671Progress } from './hooks/useBS7671Progress';
@@ -42,10 +26,12 @@ const InteractiveTestingGuide = ({
   const completedCount = progress.getCompletedStepCount(guide.id);
   const progressPercent = (completedCount / guide.steps.length) * 100;
 
-  // Save last viewed step on navigation
+  // Save last viewed step on navigation. `progress` is a fresh object every
+  // render — depend on the stable callback only to avoid an infinite loop.
+  const setLastStepViewed = progress.setLastStepViewed;
   useEffect(() => {
-    progress.setLastStepViewed(guide.id, currentStep);
-  }, [currentStep, guide.id, progress]);
+    setLastStepViewed(guide.id, currentStep);
+  }, [currentStep, guide.id, setLastStepViewed]);
 
   // Close troubleshooting when changing steps
   useEffect(() => {
@@ -89,375 +75,297 @@ const InteractiveTestingGuide = ({
     onComplete();
   };
 
-  const getDifficultyConfig = (difficulty: string) => {
-    switch (difficulty) {
-      case 'Beginner':
-        return {
-          bg: 'bg-green-500/10',
-          text: 'text-green-400',
-          border: 'border-green-500/30',
-        };
-      case 'Intermediate':
-        return {
-          bg: 'bg-elec-yellow/10',
-          text: 'text-elec-yellow',
-          border: 'border-elec-yellow/30',
-        };
-      case 'Advanced':
-        return {
-          bg: 'bg-red-500/10',
-          text: 'text-red-400',
-          border: 'border-red-500/30',
-        };
-      default:
-        return {
-          bg: 'bg-blue-500/10',
-          text: 'text-blue-400',
-          border: 'border-blue-500/30',
-        };
-    }
-  };
-
   const currentStepData = guide.steps[currentStep];
   const isLastStep = currentStep === guide.steps.length - 1;
-  const difficultyConfig = getDifficultyConfig(guide.difficulty);
+
+  const Section = ({
+    eyebrow,
+    children,
+  }: {
+    eyebrow: string;
+    children: React.ReactNode;
+  }) => (
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        {eyebrow}
+      </span>
+      <div className="text-[14px] text-white/85 leading-relaxed">{children}</div>
+    </div>
+  );
 
   return (
     <div className="space-y-6 animate-fade-in text-left">
       {/* Header */}
-      <Card className="bg-gradient-to-br from-white/5 to-elec-card border-cyan-500/20 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-        <CardHeader className="relative">
-          <div className="flex flex-col gap-3">
-            <Button
-              variant="ghost"
-              onClick={onBack}
-              className="text-cyan-400 hover:bg-cyan-500/10 border border-cyan-500/30 h-11 touch-manipulation self-start"
-            >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Tests
-            </Button>
-            <div className="flex flex-wrap items-center gap-2">
-              <Badge
-                className={`${difficultyConfig.bg} ${difficultyConfig.text} border ${difficultyConfig.border}`}
+      <div className="space-y-4">
+        <Button
+          variant="ghost"
+          onClick={onBack}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back to tests
+        </Button>
+
+        <div className="space-y-2">
+          <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span>{guide.difficulty}</span>
+            <span className="text-white/25">·</span>
+            <span>{guide.duration}</span>
+            <span className="text-white/25">·</span>
+            <span className="font-mono normal-case tracking-normal">{guide.regulationClause}</span>
+          </div>
+          <h2 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
+            {guide.title}
+          </h2>
+          <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">{guide.description}</p>
+        </div>
+      </div>
+
+      {/* Progress strip */}
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
+        <div className="flex items-baseline justify-between">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Progress
+          </span>
+          <span className="text-[12px] text-white/85 font-mono">
+            {completedCount}/{guide.steps.length} · {Math.round(progressPercent)}%
+          </span>
+        </div>
+        <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-elec-yellow transition-all duration-500"
+            style={{ width: `${progressPercent}%` }}
+          />
+        </div>
+
+        <div ref={stepperRef} className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+          {guide.steps.map((step, index) => {
+            const isActive = index === currentStep;
+            const isCompleted = progress.isStepComplete(guide.id, index);
+
+            const pillClasses = isActive
+              ? 'bg-elec-yellow text-black font-semibold border-elec-yellow'
+              : isCompleted
+                ? 'bg-white/[0.04] text-white border-white/10'
+                : 'bg-transparent text-white/55 border-white/10';
+
+            return (
+              <button
+                key={step.id}
+                data-active={isActive}
+                onClick={() => setCurrentStep(index)}
+                className={`flex-shrink-0 h-9 min-w-[36px] px-2.5 rounded-lg border flex items-center justify-center gap-1.5 text-[12px] transition-all touch-manipulation ${pillClasses}`}
               >
-                {guide.difficulty}
-              </Badge>
-              <Badge className="bg-blue-500/10 text-blue-400 border border-blue-500/30">
-                <Clock className="h-3 w-3 mr-1" />
-                {guide.duration}
-              </Badge>
-            </div>
-          </div>
-          <div className="mt-4 space-y-2">
-            <CardTitle className="text-white text-xl flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-gradient-to-br from-cyan-500/20 to-cyan-500/5 border border-cyan-500/30">
-                <BookOpen className="h-5 w-5 text-cyan-400" />
-              </div>
-              {guide.title}
-            </CardTitle>
-            <p className="text-white">{guide.description}</p>
-            <span className="text-sm text-cyan-400 font-mono">{guide.regulationClause}</span>
-          </div>
-        </CardHeader>
-        <CardContent className="relative space-y-4">
-          <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-left">
-            <div className="text-sm mb-1">
-              <span className="text-white">Progress — </span>
-              <span className="text-cyan-400 font-medium">
-                {completedCount} of {guide.steps.length} steps
-              </span>
-            </div>
-            <div className="h-3 bg-white/10 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-500 ease-out rounded-full"
-                style={{ width: `${progressPercent}%` }}
-              />
-            </div>
-            <div className="text-sm mt-2">
-              <span className="text-white">
-                Step {currentStep + 1} of {guide.steps.length}
-              </span>
-              <span className="text-green-400 font-medium ml-2">
-                ({Math.round(progressPercent)}%)
-              </span>
-            </div>
-          </div>
-
-          {/* Step Stepper Pills */}
-          <div ref={stepperRef} className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
-            {guide.steps.map((step, index) => {
-              const isActive = index === currentStep;
-              const isCompleted = progress.isStepComplete(guide.id, index);
-
-              let pillClasses = '';
-              if (isActive) {
-                pillClasses = 'bg-elec-yellow text-black font-bold border-elec-yellow';
-              } else if (isCompleted) {
-                pillClasses = 'bg-green-500/20 text-green-400 border-green-500/30';
-              } else {
-                pillClasses = 'bg-white/10 text-white border-white/10';
-              }
-
-              return (
-                <button
-                  key={step.id}
-                  data-active={isActive}
-                  onClick={() => setCurrentStep(index)}
-                  className={`flex-shrink-0 h-11 min-w-[44px] px-3 rounded-xl border flex items-center justify-center gap-1.5 text-sm transition-all touch-manipulation ${pillClasses}`}
-                >
-                  {isCompleted && !isActive ? (
-                    <CheckCircle className="h-4 w-4" />
-                  ) : (
-                    <span>{index + 1}</span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </CardContent>
-      </Card>
+                {isCompleted && !isActive ? (
+                  <CheckCircle className="h-3.5 w-3.5" />
+                ) : (
+                  <span>{index + 1}</span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
       {/* Current Step */}
-      <Card className="bg-gradient-to-br from-white/5 to-elec-card border-elec-yellow/20 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-        <CardHeader className="relative">
-          <div className="flex items-center justify-between gap-4">
-            <CardTitle className="text-white flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-elec-yellow to-elec-yellow/80 text-black flex items-center justify-center text-lg font-bold">
-                {currentStep + 1}
-              </div>
+      <div className="space-y-4">
+        <div className="flex items-baseline justify-between gap-4">
+          <div className="space-y-1">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Step {currentStep + 1} of {guide.steps.length}
+            </span>
+            <h3 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
               {currentStepData.title}
-            </CardTitle>
-            {isStepCompleted && (
-              <div className="p-2 rounded-lg bg-green-500/20">
-                <CheckCircle className="h-5 w-5 text-green-400" />
-              </div>
-            )}
+            </h3>
           </div>
-        </CardHeader>
-        <CardContent className="space-y-4 relative">
-          {/* Why This Matters — Apprentice Tip */}
-          {currentStepData.apprenticeTip && (
-            <div className="p-4 rounded-xl bg-cyan-500/10 border-l-4 border-cyan-500">
-              <h4 className="font-medium text-cyan-400 mb-2 flex items-center gap-2 text-sm">
-                <HardHat className="h-4 w-4" />
-                Why This Matters
-              </h4>
-              <p className="text-white">{currentStepData.apprenticeTip}</p>
-            </div>
+          {isStepCompleted && (
+            <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0" />
           )}
+        </div>
 
-          {/* Step Instruction */}
-          <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
-            <h4 className="font-medium text-blue-400 mb-2 flex items-center gap-2 text-sm">
-              <BookOpen className="h-4 w-4" />
-              Instructions
-            </h4>
-            <p className="text-white">{currentStepData.instruction}</p>
-            {currentStepData.regulationReference && (
-              <div className="mt-3 text-xs text-blue-400 font-mono px-2 py-1 rounded bg-blue-500/10 inline-block">
-                Reference: {currentStepData.regulationReference}
-              </div>
-            )}
+        {currentStepData.apprenticeTip && (
+          <Section eyebrow="Why this matters">{currentStepData.apprenticeTip}</Section>
+        )}
+
+        <Section eyebrow="Instructions">
+          <p>{currentStepData.instruction}</p>
+          {currentStepData.regulationReference && (
+            <p className="mt-2 text-[11px] text-white/55 font-mono">
+              Ref: {currentStepData.regulationReference}
+            </p>
+          )}
+        </Section>
+
+        <Section eyebrow="Expected result">{currentStepData.expectedResult}</Section>
+
+        {currentStepData.realWorldExample && (
+          <Section eyebrow="On site">{currentStepData.realWorldExample}</Section>
+        )}
+
+        {currentStepData.safetyWarning && (
+          <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+              Safety warning
+            </span>
+            <p className="text-[14px] text-white/85 leading-relaxed">
+              {currentStepData.safetyWarning}
+            </p>
           </div>
+        )}
 
-          {/* Expected Result */}
-          <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/20">
-            <h4 className="font-medium text-green-400 mb-2 flex items-center gap-2 text-sm">
-              <CheckCircle className="h-4 w-4" />
-              Expected Result
-            </h4>
-            <p className="text-white">{currentStepData.expectedResult}</p>
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Equipment
+          </span>
+          <div className="flex flex-wrap gap-1.5">
+            {currentStepData.equipment.map((item, index) => (
+              <span
+                key={index}
+                className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+              >
+                {item}
+              </span>
+            ))}
           </div>
+        </div>
 
-          {/* On Site — Real World Example */}
-          {currentStepData.realWorldExample && (
-            <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
-              <h4 className="font-medium text-amber-400 mb-2 flex items-center gap-2 text-sm">
-                <Flame className="h-4 w-4" />
-                On Site
-              </h4>
-              <p className="text-white">{currentStepData.realWorldExample}</p>
-            </div>
-          )}
-
-          {/* Safety Warning */}
-          {currentStepData.safetyWarning && (
-            <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20">
-              <h4 className="font-medium text-red-400 mb-2 flex items-center gap-2 text-sm">
-                <Shield className="h-4 w-4" />
-                Safety Warning
-              </h4>
-              <p className="text-white">{currentStepData.safetyWarning}</p>
-            </div>
-          )}
-
-          {/* Equipment Required */}
-          <div className="p-4 rounded-xl bg-purple-500/10 border border-purple-500/20">
-            <h4 className="font-medium text-purple-400 mb-3 flex items-center gap-2 text-sm">
-              <Wrench className="h-4 w-4" />
-              Equipment Required
-            </h4>
-            <div className="flex flex-wrap gap-2">
-              {currentStepData.equipment.map((item, index) => (
-                <Badge
+        {currentStepData.tips && currentStepData.tips.length > 0 && (
+          <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+              Pro tips
+            </span>
+            <ul className="space-y-1.5">
+              {currentStepData.tips.map((tip, index) => (
+                <li
                   key={index}
-                  className="bg-purple-500/10 text-purple-300 border border-purple-500/30"
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
                 >
-                  {item}
-                </Badge>
-              ))}
-            </div>
-          </div>
-
-          {/* Tips */}
-          {currentStepData.tips && currentStepData.tips.length > 0 && (
-            <div className="p-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-              <h4 className="font-medium text-elec-yellow mb-3 flex items-center gap-2 text-sm">
-                <Lightbulb className="h-4 w-4" />
-                Pro Tips
-              </h4>
-              <ul className="space-y-2">
-                {currentStepData.tips.map((tip, index) => (
-                  <li key={index} className="text-sm text-white flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-1.5 flex-shrink-0" />
-                    {tip}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Troubleshooting — Collapsible */}
-          {currentStepData.troubleshooting && currentStepData.troubleshooting.length > 0 && (
-            <Collapsible open={troubleshootingOpen} onOpenChange={setTroubleshootingOpen}>
-              <CollapsibleTrigger asChild>
-                <button className="w-full p-4 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-between text-left touch-manipulation h-auto min-h-[44px]">
-                  <div className="flex items-center gap-2 text-sm font-medium text-red-400">
-                    <SearchX className="h-4 w-4" />
-                    Troubleshooting
-                  </div>
-                  <ChevronDown
-                    className={`h-4 w-4 text-red-400 transition-transform duration-200 ${
-                      troubleshootingOpen ? 'rotate-180' : ''
-                    }`}
-                  />
-                </button>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <div className="mt-2 p-4 rounded-xl bg-red-500/10 border border-red-500/20">
-                  <ul className="space-y-3">
-                    {currentStepData.troubleshooting.map((item, index) => (
-                      <li key={index} className="text-sm text-white flex items-start gap-2">
-                        <span className="w-1.5 h-1.5 bg-red-400 rounded-full mt-1.5 flex-shrink-0" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
-          )}
-
-          {/* Navigation */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-4 border-t border-white/10">
-            <Button
-              variant="outline"
-              onClick={handlePrevious}
-              disabled={currentStep === 0}
-              className="h-11 border-white/20 text-white hover:bg-white/10 disabled:opacity-50 touch-manipulation"
-            >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Previous
-            </Button>
-
-            <div className="flex flex-col sm:flex-row gap-2">
-              {!isStepCompleted && (
-                <Button
-                  onClick={handleStepComplete}
-                  className="h-11 bg-green-600 hover:bg-green-500 text-white touch-manipulation active:scale-95 transition-all"
-                >
-                  <CheckCircle className="h-4 w-4 mr-2" />
-                  Mark Complete
-                </Button>
-              )}
-
-              {isLastStep ? (
-                <Button
-                  onClick={handleComplete}
-                  disabled={!isStepCompleted}
-                  className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-95 transition-all disabled:opacity-50"
-                >
-                  Complete Test
-                  <CheckCircle className="h-4 w-4 ml-2" />
-                </Button>
-              ) : (
-                <Button
-                  onClick={handleNext}
-                  className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-95 transition-all"
-                >
-                  Next Step
-                  <ArrowRight className="h-4 w-4 ml-2" />
-                </Button>
-              )}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Test Overview */}
-      <Card className="bg-gradient-to-br from-white/5 to-elec-card border-white/10 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-        <CardHeader className="relative">
-          <CardTitle className="text-white flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30">
-              <BookOpen className="h-5 w-5 text-blue-400" />
-            </div>
-            Test Overview
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4 relative">
-          <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
-            <h4 className="font-medium text-blue-400 mb-2 text-sm">Purpose</h4>
-            <p className="text-sm text-white">{guide.purpose}</p>
-          </div>
-
-          {guide.testLimits.length > 0 && (
-            <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/20">
-              <h4 className="font-medium text-green-400 mb-3 text-sm">Test Limits</h4>
-              <div className="space-y-2">
-                {guide.testLimits.map((limit, index) => (
-                  <div
-                    key={index}
-                    className="text-sm text-white p-2 rounded-lg bg-white/10 text-left"
-                  >
-                    <span>{limit.parameter}: </span>
-                    <span className="font-mono text-green-300">
-                      {limit.limit} {limit.unit}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <div className="p-4 rounded-xl bg-orange-500/10 border border-orange-500/20">
-            <h4 className="font-medium text-orange-400 mb-3 text-sm flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4" />
-              Common Issues
-            </h4>
-            <ul className="space-y-2">
-              {guide.commonIssues.map((issue, index) => (
-                <li key={index} className="text-sm text-white flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-1.5 flex-shrink-0" />
-                  {issue}
+                  <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                  <span>{tip}</span>
                 </li>
               ))}
             </ul>
           </div>
-        </CardContent>
-      </Card>
+        )}
+
+        {currentStepData.troubleshooting && currentStepData.troubleshooting.length > 0 && (
+          <Collapsible open={troubleshootingOpen} onOpenChange={setTroubleshootingOpen}>
+            <CollapsibleTrigger asChild>
+              <button className="w-full rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 flex items-center justify-between text-left touch-manipulation h-auto min-h-[44px]">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Troubleshooting
+                </span>
+                <ChevronDown
+                  className={`h-4 w-4 text-white/55 transition-transform duration-200 ${
+                    troubleshootingOpen ? 'rotate-180' : ''
+                  }`}
+                />
+              </button>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <div className="mt-2 rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5">
+                <ul className="space-y-2">
+                  {currentStepData.troubleshooting.map((item, index) => (
+                    <li
+                      key={index}
+                      className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+        )}
+
+        {/* Navigation */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+          <Button
+            variant="outline"
+            onClick={handlePrevious}
+            disabled={currentStep === 0}
+            className="h-11 border-white/15 text-white hover:bg-white/[0.05] disabled:opacity-40 touch-manipulation"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Previous
+          </Button>
+
+          <div className="flex flex-col sm:flex-row gap-2 sm:ml-auto">
+            {!isStepCompleted && (
+              <Button
+                variant="outline"
+                onClick={handleStepComplete}
+                className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+              >
+                <CheckCircle className="h-4 w-4 mr-2" />
+                Mark complete
+              </Button>
+            )}
+
+            {isLastStep ? (
+              <Button
+                onClick={handleComplete}
+                disabled={!isStepCompleted}
+                className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-40"
+              >
+                Complete test
+                <CheckCircle className="h-4 w-4 ml-2" />
+              </Button>
+            ) : (
+              <Button
+                onClick={handleNext}
+                className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98]"
+              >
+                Next step
+                <ArrowRight className="h-4 w-4 ml-2" />
+              </Button>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Test Overview */}
+      <div className="space-y-4 pt-4 border-t border-white/[0.06]">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Test overview
+        </span>
+
+        <Section eyebrow="Purpose">{guide.purpose}</Section>
+
+        {guide.testLimits.length > 0 && (
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Test limits
+            </span>
+            <div className="space-y-1">
+              {guide.testLimits.map((limit, index) => (
+                <div
+                  key={index}
+                  className="flex items-baseline justify-between text-[13px] text-white/85"
+                >
+                  <span>{limit.parameter}</span>
+                  <span className="font-mono text-white">
+                    {limit.limit} {limit.unit}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <Section eyebrow="Common issues">
+          <ul className="space-y-1.5">
+            {guide.commonIssues.map((issue, index) => (
+              <li key={index} className="flex items-start gap-2">
+                <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                <span>{issue}</span>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      </div>
     </div>
   );
 };

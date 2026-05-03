@@ -464,17 +464,18 @@ export default function Sub2() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 643.1 (test sequence — paraphrased)"
-            clause="The tests of Regulation 643.2 to 643.10 shall be carried out in the sequence shown, where relevant. Each test shall be carried out before circuits are energised, except for those which by their nature must be carried out on the energised installation. Where a test fails, the fault shall be remedied and the previous test sequence repeated as necessary before progressing."
+            source="BS 7671:2018+A4:2026 — Regulation 643.1 (Sequence of tests) and Regulation 643.7.2 (closing paragraph — repeat tests after fault rectification)"
+            clause={`Regulation 643.1: The tests of Regulations 643.2 to 643.6, where relevant, shall be carried out in that order before the installation is energised. Regulation 643.7 onwards covers tests that by their nature require the supply to be connected (Ze, PFC, Zs, RCD operation, AFDD confirmation, functional). Per Regulation 643.7.2 (closing paragraph): if any test indicates a failure to comply, that test and any preceding test, the results of which may have been influenced by the fault indicated, shall be repeated after the fault has been rectified.`}
             meaning={
               <>
-                The sequence is mandated, not advisory. Each test depends on the previous one
-                passing. If a fault is found mid-sequence, remedy it AND restart from the relevant
-                point — you cannot just patch the fault and continue. This protects against tests
-                being invalidated by changes made part-way through verification.
+                The sequence is mandated, not advisory. Dead tests (643.2 to 643.6) run in order
+                before energisation; live tests (643.7 onwards) follow once safe. If a fault is
+                found mid-sequence, remedy it AND repeat that test plus any earlier tests it could
+                have influenced — you cannot just patch the fault and continue. This protects
+                against tests being invalidated by changes made part-way through verification.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Part 6, Chapter 64, Regulation 643.1 — paraphrased."
+            cite="Source: BS 7671:2018+A4:2026 Part 6, Chapter 64, Regulations 643.1 and 643.7.2."
           />
 
           <InlineCheck

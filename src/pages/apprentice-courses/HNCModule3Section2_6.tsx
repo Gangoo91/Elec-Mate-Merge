@@ -264,9 +264,9 @@ const HNCModule3Section2_6 = () => {
 
           <TLDR
             points={[
-              'You can compute the resonant frequency f\u2080 = 1 / (2\u03c0\u221a(LC)) of any RLC network and explain why X_L = X_C at that point.',
+              'You can compute the resonant frequency f₀ = 1 / (2π√(LC)) of any RLC network and explain why X_L = X_C at that point.',
               'You can describe series resonance (Z minimum, current peak) and parallel resonance (Z maximum, current minimum) and apply each in tuned filters.',
-              'You can quantify the quality factor Q = \u03c9\u2080L / R = 1 / (\u03c9\u2080CR) and use it to predict bandwidth and the sharpness of the response.',
+              'You can quantify the quality factor Q = ω₀L / R = 1 / (ω₀CR) and use it to predict bandwidth and the sharpness of the response.',
               'You can spot the risk of unintentional resonance between an under-detuned PFC capacitor bank and the supply transformer reactance, especially in the presence of 5th and 7th harmonics from VFDs.',
               'You can use resonance principles when specifying detuning reactors (BS EN 61921) and harmonic filters on a building services switchboard.',
             ]}
@@ -279,7 +279,7 @@ const HNCModule3Section2_6 = () => {
               <>
                 IEEE 519 is the international reference for harmonic limits at the point of
                 common coupling. The capacitor-resonance clause is exactly why building
-                services PFC banks are detuned \u2014 a plain capacitor on a system with
+                services PFC banks are detuned — a plain capacitor on a system with
                 meaningful harmonic content can resonate with the supply impedance, push
                 THD beyond 5 % and cook the capacitors.
               </>
@@ -787,7 +787,7 @@ const HNCModule3Section2_6 = () => {
             situation={
               <>
                 A workshop with eight 22 kW VFD-driven extract fans has a 200 kVAr plain
-                capacitor bank that has failed twice in 18 months \u2014 swollen cans, blown
+                capacitor bank that has failed twice in 18 months — swollen cans, blown
                 in-line fuses, evidence of sustained over-current on the bank ammeter. The
                 supply impedance and the bank capacitance happen to resonate near the 5th
                 harmonic (250 Hz) of the 50 Hz supply.
@@ -795,11 +795,11 @@ const HNCModule3Section2_6 = () => {
             }
             whatToDo={
               <>
-                Compute the system resonant frequency: f\u2080 = 1 / (2\u03c0\u221a(L_supply
-                \u00d7 C_bank)). If f\u2080 sits at or near 250 Hz (5th) or 350 Hz (7th), the
+                Compute the system resonant frequency: f₀ = 1 / (2π√(L_supply
+                × C_bank)). If f₀ sits at or near 250 Hz (5th) or 350 Hz (7th), the
                 supply impedance and the bank are forming a parallel resonant circuit that
                 amplifies the harmonic current pulled from the VFDs into the capacitors.
-                Replace the bank with a detuned bank to BS EN 61921 \u2014 typically 7 %
+                Replace the bank with a detuned bank to BS EN 61921 — typically 7 %
                 series reactor (tunes around 134 Hz, well below 250 Hz) so the bank looks
                 inductive at the harmonic frequencies and presents low impedance only at the
                 fundamental 50 Hz. Re-measure THD and capacitor current after commissioning;
@@ -809,7 +809,7 @@ const HNCModule3Section2_6 = () => {
             whyItMatters={
               <>
                 Unintentional resonance is the classic mistake when adding bulk PFC to a
-                modern non-linear load. Knowing the resonance theory (X_L = X_C at f\u2080)
+                modern non-linear load. Knowing the resonance theory (X_L = X_C at f₀)
                 turns a mysterious recurring fault into an obvious design defect with a
                 standard fix.
               </>
@@ -824,13 +824,13 @@ const HNCModule3Section2_6 = () => {
 
           <KeyTakeaways
             points={[
-              'Resonance occurs when X_L = X_C \u2014 reactive components cancel and impedance is determined by R alone.',
-              'Resonant frequency: f\u2080 = 1 / (2\u03c0\u221a(LC)). Above f\u2080 the circuit is inductive; below f\u2080 it is capacitive.',
-              'Series resonance: Z minimum, current maximum, voltage across L and C can far exceed source voltage \u2014 used in series tuned filters.',
-              'Parallel resonance: Z maximum, current minimum, circulating current between L and C can far exceed line current \u2014 the mechanism behind unintentional PFC resonance.',
-              'Quality factor Q = X_L / R = X_C / R \u2014 high Q means narrow bandwidth and sharp resonance; low Q means broad response.',
-              'Bandwidth BW = f\u2080 / Q \u2014 the frequency span between the two \u22123 dB points.',
-              'The classic building services hazard: plain PFC bank + supply impedance + 5th-harmonic VFD current = unintentional parallel resonance \u2192 capacitor failure.',
+              'Resonance occurs when X_L = X_C — reactive components cancel and impedance is determined by R alone.',
+              'Resonant frequency: f₀ = 1 / (2π√(LC)). Above f₀ the circuit is inductive; below f₀ it is capacitive.',
+              'Series resonance: Z minimum, current maximum, voltage across L and C can far exceed source voltage — used in series tuned filters.',
+              'Parallel resonance: Z maximum, current minimum, circulating current between L and C can far exceed line current — the mechanism behind unintentional PFC resonance.',
+              'Quality factor Q = X_L / R = X_C / R — high Q means narrow bandwidth and sharp resonance; low Q means broad response.',
+              'Bandwidth BW = f₀ / Q — the frequency span between the two −3 dB points.',
+              'The classic building services hazard: plain PFC bank + supply impedance + 5th-harmonic VFD current = unintentional parallel resonance → capacitor failure.',
               'Mitigation: detuning reactors per BS EN 61921 push the resonant frequency below the harmonic spectrum, protecting the bank and limiting THD to the IEEE 519 5 % target.',
             ]}
           />

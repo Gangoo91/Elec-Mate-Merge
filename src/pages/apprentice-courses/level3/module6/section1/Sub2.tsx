@@ -366,7 +366,7 @@ export default function Sub2() {
                 Reg 312.1 is the explicit hook for single-phase or three-phase and L-N or L-L-L-N or L-L. The choice cascades into device selection (single pole MCB versus three-pole MCCB), cable arrangement, isolation requirements, and how Zs is calculated. On many commercial projects the design starts with a single-phase service and grows to three-phase as the load assessment grows; Reg 312 is the regulatory anchor for that escalation. Reg 312.1.1 covers AC arrangements (figures for single-phase 2/3-wire, two-phase 3-wire, three-phase 3/4-wire) and Reg 312.1.2 covers DC arrangements.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 312.1 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 312.1."
           />
 
           <InlineCheck
@@ -409,7 +409,7 @@ export default function Sub2() {
                 Reg 132.2(c)(i)–(v) is the modern home for the supply characteristics record. The Ze figure, prospective fault current and earthing arrangement cap every protective device decision; the maximum allowable current set by the DNO caps every load assessment; the inherent protective measures and any distributor-specific requirements feed device selection and installation method. The figures must come from the DNO in writing — verbal numbers are not auditable, and getting them wrong invalidates the whole design.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 132.2(c)(i)–(v), (d) and (e) — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 132.2(c)(i)–(v), (d) and (e)."
           />
 
           <InlineCheck

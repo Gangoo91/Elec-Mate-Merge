@@ -1,5 +1,13 @@
 import { useState, useMemo, useCallback } from 'react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  PageFrame,
+  PageHero,
+  itemVariants,
+} from '@/components/college/primitives';
 import {
   BookOpen,
   Brain,
@@ -73,6 +81,7 @@ const CATEGORIES = [
 ] as const;
 
 const OnJobFlashcards = () => {
+  const navigate = useNavigate();
   const { profile } = useAuth();
 
   // Auto-default level tab from profile
@@ -278,18 +287,29 @@ const OnJobFlashcards = () => {
 
   return (
     <PullToRefresh onRefresh={handleRefresh} isRefreshing={isRefreshing}>
-      <div className="max-w-4xl mx-auto px-4 pb-20 space-y-5 animate-fade-in">
+      <PageFrame className="px-4 sm:px-6 lg:px-8">
         {/* Achievement unlock toast */}
         <AchievementUnlockToast achievements={recentlyUnlocked} />
 
-        {/* Header */}
-        <div className="flex items-center justify-between pt-4">
-          <SmartBackButton />
-          <div className="flex items-center gap-2">
-            <Lightbulb className="h-5 w-5 text-elec-yellow" />
-            <h1 className="text-lg font-bold text-white">Flashcards & Microlearning</h1>
-          </div>
-        </div>
+        <motion.div variants={itemVariants}>
+          <Button
+            variant="ghost"
+            onClick={() => navigate('/apprentice/on-job-tools')}
+            className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+          >
+            <ArrowLeft className="mr-2 h-5 w-5" />
+            Back
+          </Button>
+        </motion.div>
+
+        <motion.div variants={itemVariants}>
+          <PageHero
+            eyebrow="Apprentice · Microlearning"
+            title="Flashcards"
+            description="Quick recall for cable colours, BS 7671 regs, EICR codes, safe isolation, fault finding — the kind of facts you need on your tongue, not in a book."
+            tone="yellow"
+          />
+        </motion.div>
 
         {/* First-time welcome banner */}
         {streak.totalSessions === 0 && masteredCards === 0 && (
@@ -413,7 +433,7 @@ const OnJobFlashcards = () => {
           }}
           onSelectMode={handleSelectMode}
         />
-      </div>
+      </PageFrame>
     </PullToRefresh>
   );
 };

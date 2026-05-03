@@ -237,9 +237,9 @@ const HNCModule3Section1_3 = () => {
 
           <TLDR
             points={[
-              'You can recognise a series circuit (one path, one current) and apply R_T = R\u2081 + R\u2082 + R\u2083 \u2014 the model used every time cable resistance adds in series with the load.',
-              'You can use the voltage-divider rule V\u2099 = V_T \u00d7 (R\u2099 / R_T) for sensor circuits, control wiring and signal-conditioning networks.',
-              'You can sum series voltage sources \u2014 the basis of every battery pack in emergency lighting, fire-alarm and BMS standby systems.',
+              'You can recognise a series circuit (one path, one current) and apply R_T = R₁ + R₂ + R₃ — the model used every time cable resistance adds in series with the load.',
+              'You can use the voltage-divider rule Vₙ = V_T × (Rₙ / R_T) for sensor circuits, control wiring and signal-conditioning networks.',
+              'You can sum series voltage sources — the basis of every battery pack in emergency lighting, fire-alarm and BMS standby systems.',
               'You can spot the single-point-of-failure character of series circuits and design around it where reliability matters.',
               'You can use series analysis to estimate the voltage actually delivered to a load once cable losses are included.',
             ]}
@@ -250,8 +250,8 @@ const HNCModule3Section1_3 = () => {
             clause="Self-contained and central-battery emergency luminaires shall maintain rated luminous output for the declared duration (typically 1 h or 3 h) at the end of life of the battery, with the supply voltage at the lower limit of the declared range."
             meaning={
               <>
-                Series cell stacks in NiCd or LiFePO\u2084 emergency luminaire packs are sized
-                so that the end-of-life cell voltage \u00d7 number of cells still drives the
+                Series cell stacks in NiCd or LiFePO₄ emergency luminaire packs are sized
+                so that the end-of-life cell voltage × number of cells still drives the
                 LED string at rated lumen output. Series circuit analysis is the design
                 arithmetic that proves the duration claim.
               </>
@@ -586,7 +586,7 @@ const HNCModule3Section1_3 = () => {
               <>
                 You are specifying a self-contained 3 h maintained emergency luminaire for a
                 hotel escape route. The LED engine needs 24 V DC at 0.4 A under emergency
-                operation. You are using LiFePO\u2084 cells (3.2 V nominal, 2.8 V end-of-life)
+                operation. You are using LiFePO₄ cells (3.2 V nominal, 2.8 V end-of-life)
                 in series.
               </>
             }
@@ -596,15 +596,15 @@ const HNCModule3Section1_3 = () => {
                 spec when the battery is at the bottom of its discharge curve: ceiling(24 V /
                 2.8 V) = 9 cells in series (giving 25.2 V end-of-life, 28.8 V nominal). Then
                 size the series current-limiting resistor (or constant-current driver) to drop
-                the surplus voltage to the LED engine\u2019s forward voltage at 0.4 A. Finally,
-                pick a cell capacity (Ah) of at least I_load \u00d7 duration \u00d7 derating
-                factor \u2014 typically 0.4 A \u00d7 3 h \u00d7 1.25 \u2248 1.5 Ah minimum.
+                the surplus voltage to the LED engine’s forward voltage at 0.4 A. Finally,
+                pick a cell capacity (Ah) of at least I_load × duration × derating
+                factor — typically 0.4 A × 3 h × 1.25 ≈ 1.5 Ah minimum.
               </>
             }
             whyItMatters={
               <>
                 The whole BS 5266-1 duration claim rests on series-circuit arithmetic. Get the
-                cell count wrong and the lamp dims out before the 3 h is up \u2014 a
+                cell count wrong and the lamp dims out before the 3 h is up — a
                 certifiable non-compliance and a life-safety failure on the day it is needed.
               </>
             }
@@ -618,13 +618,13 @@ const HNCModule3Section1_3 = () => {
 
           <KeyTakeaways
             points={[
-              'Series circuits have a single current path \u2014 the same current flows through every component (I_T = I\u2081 = I\u2082 = I\u2083).',
-              'Total resistance is the sum of individual resistances: R_T = R\u2081 + R\u2082 + R\u2083 + ... \u2014 always greater than the largest single R.',
-              'Voltages add: V_T = V\u2081 + V\u2082 + V\u2083 \u2014 useful for both sources (battery cells in series) and resistive drops.',
-              'Voltage-divider rule: V\u2099 = V_T \u00d7 (R\u2099 / R_T) \u2014 the larger R drops the larger voltage.',
-              'Cable resistance always sits in series with the load \u2014 this is why voltage drop matters and why long cable runs need bigger conductors.',
+              'Series circuits have a single current path — the same current flows through every component (I_T = I₁ = I₂ = I₃).',
+              'Total resistance is the sum of individual resistances: R_T = R₁ + R₂ + R₃ + ... — always greater than the largest single R.',
+              'Voltages add: V_T = V₁ + V₂ + V₃ — useful for both sources (battery cells in series) and resistive drops.',
+              'Voltage-divider rule: Vₙ = V_T × (Rₙ / R_T) — the larger R drops the larger voltage.',
+              'Cable resistance always sits in series with the load — this is why voltage drop matters and why long cable runs need bigger conductors.',
               'Series circuits are single-point-of-failure by design: one open-circuit and the whole chain dies. Use parallel where redundancy matters.',
-              'Series battery cells multiply voltage but not capacity (Ah) \u2014 the underpinning model for every emergency-lighting pack and BMS UPS string.',
+              'Series battery cells multiply voltage but not capacity (Ah) — the underpinning model for every emergency-lighting pack and BMS UPS string.',
               'Series voltage division is the working model for sensor pull-up networks, control-circuit dividers and signal-conditioning interfaces.',
             ]}
           />

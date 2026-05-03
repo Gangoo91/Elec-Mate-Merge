@@ -293,18 +293,18 @@ export default function Sub3() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 643.x (verification of three-phase systems)"
+            source="BS 7671:2018+A4:2026 — Regulation 643.7.1 (Verification of automatic disconnection of supply)"
             clause={
               <>
-                "On three-phase circuits, the prospective fault current at the origin and at the relevant points of the installation shall be determined; the protective device shall have a breaking capacity not less than the prospective fault current at the point at which it is installed (Regulation 434.5.1)."
+                "The effectiveness of the measures for fault protection by automatic disconnection of supply shall be verified: (a) for TN systems by measurement of the earth fault loop impedance, and verification of the characteristics and/or the effectiveness of the associated protective device (visual inspection in the case of overcurrent protective devices and testing in the case of RCDs); (b) for TT systems by measurement of the resistance of the earth electrode for exposed-conductive-parts of the installation, and verification of the characteristics and/or the effectiveness of the associated protective device."
               </>
             }
             meaning={
               <>
-                Three-phase prospective fault current (Ipf) is typically much higher than single-phase &mdash; 6&ndash;25 kA at the cut-out is normal for small-commercial. The protective device's breaking capacity must be at least equal to the Ipf at its location. Standard 6 kA MCBs may NOT be suitable on the supply side of a small-commercial installation; 10 kA or higher devices (Hager NDN, Schneider C60H, ABB S203M) are normal. The L3 apprentice's verification work measures Ipf at the cut-out and at downstream sub-boards and confirms each device's rating is adequate.
+                On three-phase work the L3 verification still hangs off Reg 643.7.1 &mdash; measure earth fault loop impedance, verify the protective device, confirm disconnect time. Three-phase prospective fault current (Ipf) is typically much higher than single-phase &mdash; 6&ndash;25 kA at the cut-out is normal for small-commercial &mdash; so the protective device&apos;s breaking capacity must be at least equal to the Ipf at its location (Reg 434.5.1). Standard 6 kA MCBs may NOT be suitable on the supply side of a small-commercial installation; 10 kA or higher devices (Hager NDN, Schneider C60H, ABB S203M) are normal. The L3 apprentice&apos;s verification work measures Ipf at the cut-out and at downstream sub-boards and confirms each device&apos;s rating is adequate.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026, Regulation 434.5.1 + Section 643 — IET Wiring Regulations 18th Edition Amendment 4."
+            cite="Source: BS 7671:2018+A4:2026 Part 6, Chapter 64, Regulation 643.7.1."
           />
 
           <InlineCheck
@@ -359,18 +359,18 @@ export default function Sub3() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 712.537.2.2.5"
+            source="BS 7671:2018+A4:2026 — Section 712 (Solar photovoltaic power supply systems) — DC-side isolation provisions, including residual-energisation warning on combiner boxes / DC isolators"
             clause={
               <>
-                "Means shall be provided to allow the PV inverter to be isolated from the DC side. The means of isolation shall be arranged to operate on all live conductors of the DC system."
+                Section 712 sets the requirements for the DC side of solar PV installations, including isolation, identification and the requirement that DC-side equipment (combiner boxes, inverter DC isolators) carry a permanent warning that PV arrays and battery storage can continue to feed live parts after local isolation. Routine maintenance must assume DC-side parts are energised even if the AC supply or inverter is off.
               </>
             }
             meaning={
               <>
-                BS 7671 712 (A4:2026) requires a dedicated DC isolator on every PV installation, located so the inverter can be safely worked on without exposure to the DC supply. The isolator must be DC-rated (BS EN 60947-3 DC-PV1 or DC-PV2) &mdash; standard AC isolators will not safely break DC current. The L3 apprentice's first move on any PV fault is to identify the DC isolator and operate it before any work near the inverter or DC cabling.
+                BS 7671 Section 712 (A4:2026) sets the DC-side requirements for PV installations. A dedicated DC isolator is needed so the inverter can be safely worked on without exposure to the DC supply; the isolator must be DC-rated (BS EN 60947-3 DC-PV1 or DC-PV2) because standard AC isolators will not safely break DC current. The L3 apprentice&apos;s first move on any PV fault is to identify the DC isolator and operate it before any work near the inverter or DC cabling, and to treat DC-side parts as energised even after local isolation where battery storage or array feed-back is possible.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026, Regulation 712.537.2.2.5 — IET Wiring Regulations 18th Edition Amendment 4."
+            cite="Source: BS 7671:2018+A4:2026 Part 7, Section 712 (Solar PV) — DC-side provisions."
           />
 
           <InlineCheck
@@ -538,7 +538,7 @@ export default function Sub3() {
                 Specialised systems (EV, PV, battery, heat-pump) sit downstream of the same TN earthing arrangement. Their fault behaviour depends on the upstream PEN being intact &mdash; a compromised PEN turns an EV chassis or a PV frame into a hazard for anyone touching it from true earth. That&apos;s why supply-side reading at the cut-out comes before any specialised-system fault work.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Reg 411.4.1, verbatim."
+            cite="Source: BS 7671:2018+A4:2026 — Reg 411.4.1."
           />
 
           <SectionRule />

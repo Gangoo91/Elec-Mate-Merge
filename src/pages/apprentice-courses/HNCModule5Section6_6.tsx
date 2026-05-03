@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 5 · Section 6 · Subsection 6 — Practical Completion
+ * HNC Electrical Engineering for Building Services (Project Management — Pearson U4004 + BSE PM context)
+ *   Achieving Practical Completion — the contractual gateway that triggers DLP, half retention release, end of LADs and start of the operational phase.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Practical Completion - HNC Module 5 Section 6.6';
@@ -225,863 +242,557 @@ const faqs = [
 ];
 
 const HNCModule5Section6_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section6')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module5-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 5.6.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Practical Completion
-          </h1>
-          <p className="text-white">
-            Completion requirements, defects liability period, sectional completion and handover
-            procedures
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 5 · Section 6 · Subsection 6"
+            title="Practical Completion"
+            description="Completion requirements, defects liability period, sectional completion and handover procedures."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Practical completion:</strong> Works substantially complete and fit for use
-              </li>
-              <li className="pl-1">
-                <strong>Defects liability:</strong> Typically 12 months for building services
-              </li>
-              <li className="pl-1">
-                <strong>Key trigger:</strong> Releases 50% retention, starts DLP
-              </li>
-              <li className="pl-1">
-                <strong>Documentation:</strong> O&M manuals, as-builts, test certificates
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Commissioning:</strong> Must be complete before handover
-              </li>
-              <li className="pl-1">
-                <strong>Seasonal testing:</strong> May extend into DLP
-              </li>
-              <li className="pl-1">
-                <strong>Training:</strong> Staff must be trained on systems
-              </li>
-              <li className="pl-1">
-                <strong>Warranties:</strong> Start from practical completion
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              "Practical Completion (PC) = the works are sufficiently complete that the client can take possession and use the building, with only minor defects to rectify.",
+              "PC triggers: DLP starts, half retention released, LADs end, insurance transfers, occupancy can begin.",
+              "Sectional completion: phased PC where parts of the building hand over at different times — each section follows full PC procedure.",
+              "PC certificate issued by contract administrator (JCT) or stated in NEC by Project Manager — formal contractual milestone.",
+              "Common PC pitfall: \"PC with snags\" — most contracts allow only minor outstanding items; substantial defects defer PC.",
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="JCT Standard Building Contract 2024 — Clause 2.30 (Practical Completion)"
+            clause="When in the opinion of the Architect/Contract Administrator practical completion of the Works or a Section is achieved and, where applicable, the Contractor has complied sufficiently with clause 2.40 (information for the health and safety file) and clause 3.18.4 (as-built drawings), the Architect/Contract Administrator shall forthwith issue a certificate to that effect, and practical completion of the Works or Section shall be deemed to have taken place on the date stated in that certificate."
+            meaning={
+              <>
+                JCT 2.30 makes PC a function of the CA's opinion AND compliance with information delivery (H&S file content, as-built drawings). Many contractors fail to deliver these in time, so even if the works are physically complete, the certificate is delayed. Treat the H&S file and as-builts as PC deliverables, not post-PC tidy-up.
+              </>
+            }
+            cite="Source: JCT Standard Building Contract 2024 (refer to JCT published text for verbatim clauses)."
+          />
+
+
+          <LearningOutcomes
+            outcomes={[
               'Define practical completion and its contractual significance',
               'Understand defects liability period obligations',
               'Distinguish between sectional completion and partial possession',
               'Apply pre-completion inspection procedures',
               'Identify handover documentation requirements',
               'Manage the making good of defects process',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Practical Completion Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Practical Completion Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical Completion Fundamentals">
             <p>
               Practical completion is a pivotal milestone in construction contracts, marking when
               the works are substantially complete and the building is fit for occupation or use.
               For building services contractors, this moment triggers significant contractual and
               commercial consequences.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Key characteristics of practical completion:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Substantial completion:</strong> Works complete except minor defects
-                </li>
-                <li className="pl-1">
-                  <strong>Fit for purpose:</strong> Building can be safely occupied and used
-                </li>
-                <li className="pl-1">
-                  <strong>Not perfection:</strong> Minor snagging items do not prevent certification
-                </li>
-                <li className="pl-1">
-                  <strong>Contractually defined:</strong> Certificate issued by contract
-                  administrator
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Contractual Effects of Practical Completion
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Effect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Consequence</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Building Services Impact
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Possession transfers</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Client takes control of building
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Access for defects only</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Half retention released</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Typically 50% of retention fund
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Improves cash flow</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DLP commences</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Defects liability period starts
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        12-month defects obligation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LADs cease</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Liquidated damages no longer apply
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Financial risk reduces</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Insurance responsibility</td>
-                      <td className="border border-white/10 px-3 py-2">Client insures the works</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Contractor liability changes
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Key characteristics of practical completion:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Substantial completion:</strong> Works complete except minor defects
+              </li>
+              <li>
+                <strong>Fit for purpose:</strong> Building can be safely occupied and used
+              </li>
+              <li>
+                <strong>Not perfection:</strong> Minor snagging items do not prevent certification
+              </li>
+              <li>
+                <strong>Contractually defined:</strong> Certificate issued by contract administrator
+              </li>
+            </ul>
+            <p>
+              <strong>Contractual effects of practical completion:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Possession transfers:</strong> Client takes control of building — Access for
+                defects only
+              </li>
+              <li>
+                <strong>Half retention released:</strong> Typically 50% of retention fund — Improves
+                cash flow
+              </li>
+              <li>
+                <strong>DLP commences:</strong> Defects liability period starts — 12-month defects
+                obligation
+              </li>
+              <li>
+                <strong>LADs cease:</strong> Liquidated damages no longer apply — Financial risk
+                reduces
+              </li>
+              <li>
+                <strong>Insurance responsibility:</strong> Client insures the works — Contractor
+                liability changes
+              </li>
+            </ul>
+            <p>
               <strong>Key principle:</strong> Practical completion is a matter of fact, not opinion.
               The contract administrator must certify when works objectively meet the criteria, not
               when it is convenient.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Pre-Completion Inspections */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Pre-Completion Inspections and Snagging
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Pre-Completion Inspections and Snagging">
             <p>
               Before practical completion can be certified, systematic inspections identify any
               outstanding defects or incomplete works. For building services, these inspections
               cover installation quality, commissioning status, and documentation completeness.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Contractor Self-Inspection
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Internal quality check before handover</li>
-                  <li className="pl-1">Verify all systems commissioned</li>
-                  <li className="pl-1">Confirm documentation complete</li>
-                  <li className="pl-1">Rectify defects before formal inspection</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Formal Pre-Completion Inspection
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Contract administrator leads walkthrough</li>
-                  <li className="pl-1">Client representative attends</li>
-                  <li className="pl-1">Building services engineer inspects systems</li>
-                  <li className="pl-1">Snagging list produced</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Inspection Checklist
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Inspection Items
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Documentation Required
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Electrical</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Distribution boards, accessories, containment
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        EIC, test results, as-builts
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">HVAC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Plant operation, controls, air balancing
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Commissioning certs, BMS log
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fire alarm</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Detection coverage, sounders, cause and effect
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        BS 5839 certificate, zone plan
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Emergency lighting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Luminaire positions, duration test
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        BS 5266 certificate, test log
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Data/comms</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Outlet installation, patch panels
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Test results, schedule</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
-              <p className="text-sm font-medium text-amber-400 mb-2">
-                Snagging vs Prevention of Practical Completion
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Snagging items:</strong> Minor defects that do not prevent occupation -
-                  can be listed for rectification
-                </li>
-                <li className="pl-1">
-                  <strong>Preventing items:</strong> Significant defects affecting safety,
-                  compliance, or usability - must be completed first
-                </li>
-                <li className="pl-1">
-                  <strong>Example:</strong> Missing socket outlet cover = snagging; non-functional
-                  fire alarm = preventing
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Contractor self-inspection:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Internal quality check before handover</li>
+              <li>Verify all systems commissioned</li>
+              <li>Confirm documentation complete</li>
+              <li>Rectify defects before formal inspection</li>
+            </ul>
+            <p>
+              <strong>Formal pre-completion inspection:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Contract administrator leads walkthrough</li>
+              <li>Client representative attends</li>
+              <li>Building services engineer inspects systems</li>
+              <li>Snagging list produced</li>
+            </ul>
+            <p>
+              <strong>Building services inspection checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Electrical:</strong> Distribution boards, accessories, containment — EIC,
+                test results, as-builts
+              </li>
+              <li>
+                <strong>HVAC:</strong> Plant operation, controls, air balancing — Commissioning
+                certs, BMS log
+              </li>
+              <li>
+                <strong>Fire alarm:</strong> Detection coverage, sounders, cause and effect — BS
+                5839 certificate, zone plan
+              </li>
+              <li>
+                <strong>Emergency lighting:</strong> Luminaire positions, duration test — BS 5266
+                certificate, test log
+              </li>
+              <li>
+                <strong>Data/comms:</strong> Outlet installation, patch panels — Test results,
+                schedule
+              </li>
+            </ul>
+            <p>
+              <strong>Snagging vs prevention of practical completion:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Snagging items:</strong> Minor defects that do not prevent occupation - can
+                be listed for rectification
+              </li>
+              <li>
+                <strong>Preventing items:</strong> Significant defects affecting safety, compliance,
+                or usability - must be completed first
+              </li>
+              <li>
+                <strong>Example:</strong> Missing socket outlet cover = snagging; non-functional
+                fire alarm = preventing
+              </li>
+            </ul>
+            <p>
               <strong>Best practice:</strong> Conduct internal snagging 2-3 weeks before target
               completion to allow time for rectification before formal inspection.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 3: Sectional and Partial Completion */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Sectional Completion and Partial Possession
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Sectional Completion and Partial Possession">
             <p>
               Large building projects are often completed in phases, allowing clients to occupy and
               use parts of the building before overall completion. Understanding the distinction
               between sectional completion and partial possession is essential for managing
               contractual obligations.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Sectional Completion vs Partial Possession
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Sectional Completion
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Partial Possession
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Planning</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Defined in contract from start
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Arises during construction
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Completion dates</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Each section has defined date
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">No pre-defined dates</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LADs</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Apply to each section separately
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Reduced proportionally</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DLP</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Starts for each section separately
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Proportionate period for possessed part
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Consent</td>
-                      <td className="border border-white/10 px-3 py-2">Part of contract</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Requires contractor consent
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Building Services Considerations for Phased Handover
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>System isolation:</strong> Sections must be independently operable -
-                  separate distribution boards, controls
-                </li>
-                <li className="pl-1">
-                  <strong>Commissioning:</strong> Each section requires full commissioning before
-                  handover
-                </li>
-                <li className="pl-1">
-                  <strong>Fire systems:</strong> Fire alarm zones may need temporary modifications
-                  for phased occupation
-                </li>
-                <li className="pl-1">
-                  <strong>Shared plant:</strong> Central plant serving multiple sections creates
-                  interface complexity
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Example: Hospital Wing Sectional Completion
-              </p>
-              <div className="p-3 rounded bg-white/5">
-                <p className="text-sm text-white mb-2">A new hospital building with three wings:</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>
-                    <strong>Section 1 (Outpatients):</strong> Completion 1st March - Must have
-                    independent power, lighting, fire alarm, HVAC
-                  </li>
-                  <li>
-                    <strong>Section 2 (Diagnostics):</strong> Completion 1st June - Medical gas,
-                    specialist ventilation, UPS systems
-                  </li>
-                  <li>
-                    <strong>Section 3 (Wards):</strong> Completion 1st September - Nurse call,
-                    bed-head services, final plantroom handover
-                  </li>
-                </ul>
-                <p className="text-sm text-elec-yellow/70 mt-2">
-                  Each section has its own 12-month DLP running from its completion date.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Sectional completion vs partial possession:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Planning — Sectional:</strong> Defined in contract from start. Partial:
+                Arises during construction
+              </li>
+              <li>
+                <strong>Completion dates — Sectional:</strong> Each section has defined date.
+                Partial: No pre-defined dates
+              </li>
+              <li>
+                <strong>LADs — Sectional:</strong> Apply to each section separately. Partial:
+                Reduced proportionally
+              </li>
+              <li>
+                <strong>DLP — Sectional:</strong> Starts for each section separately. Partial:
+                Proportionate period for possessed part
+              </li>
+              <li>
+                <strong>Consent — Sectional:</strong> Part of contract. Partial: Requires
+                contractor consent
+              </li>
+            </ul>
+            <p>
+              <strong>Building services considerations for phased handover:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>System isolation:</strong> Sections must be independently operable -
+                separate distribution boards, controls
+              </li>
+              <li>
+                <strong>Commissioning:</strong> Each section requires full commissioning before
+                handover
+              </li>
+              <li>
+                <strong>Fire systems:</strong> Fire alarm zones may need temporary modifications for
+                phased occupation
+              </li>
+              <li>
+                <strong>Shared plant:</strong> Central plant serving multiple sections creates
+                interface complexity
+              </li>
+            </ul>
+            <p>
+              <strong>Example — hospital wing sectional completion. A new hospital building with
+              three wings:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Section 1 (Outpatients):</strong> Completion 1st March - Must have
+                independent power, lighting, fire alarm, HVAC
+              </li>
+              <li>
+                <strong>Section 2 (Diagnostics):</strong> Completion 1st June - Medical gas,
+                specialist ventilation, UPS systems
+              </li>
+              <li>
+                <strong>Section 3 (Wards):</strong> Completion 1st September - Nurse call, bed-head
+                services, final plantroom handover
+              </li>
+              <li>Each section has its own 12-month DLP running from its completion date.</li>
+            </ul>
+            <p>
               <strong>Planning tip:</strong> Sectional completion requires careful coordination of
               building services - ensure contract documents clearly define what systems and
               documentation are required for each section.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 4: Defects Liability Period */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Defects Liability Period and Making Good
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Defects Liability Period and Making Good">
             <p>
               The defects liability period (DLP), also called the rectification period, runs from
               practical completion and provides the client with protection against defects in
               materials or workmanship. For building services, this period is critical for
               identifying operational defects that only become apparent during normal use.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Defects Liability Period Overview
-              </p>
-              <div className="grid sm:grid-cols-3 gap-4">
-                <div className="p-4 rounded-lg bg-white/5">
-                  <p className="text-sm font-medium text-white mb-2">Typical Duration</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>
-                      Building services: <strong>12 months</strong>
-                    </li>
-                    <li>General building: 12 months</li>
-                    <li>Infrastructure: Up to 24 months</li>
-                    <li>Some specialist: 6 months</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded-lg bg-white/5">
-                  <p className="text-sm font-medium text-white mb-2">Contractor Obligations</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Make good notified defects</li>
-                    <li>At own cost</li>
-                    <li>Within reasonable time</li>
-                    <li>Defects from workmanship/materials</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded-lg bg-white/5">
-                  <p className="text-sm font-medium text-white mb-2">Client Responsibilities</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Routine maintenance</li>
-                    <li>Prompt notification of defects</li>
-                    <li>Allow reasonable access</li>
-                    <li>Not cause damage</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                What Constitutes a Defect?
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-green-400 mb-1">Contractor Liability</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">
-                      Poor workmanship (loose connections, incorrect installation)
-                    </li>
-                    <li className="pl-1">
-                      Defective materials (faulty component, sub-standard cable)
-                    </li>
-                    <li className="pl-1">Non-compliance with specification</li>
-                    <li className="pl-1">Incomplete commissioning</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-red-400 mb-1">Not Contractor Liability</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Normal wear and tear</li>
-                    <li className="pl-1">User damage or misuse</li>
-                    <li className="pl-1">Consumables (lamps, filters, fuses)</li>
-                    <li className="pl-1">Lack of routine maintenance</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services - Common DLP Defects
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Defects
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Root Cause</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Electrical</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Nuisance tripping, loose connections
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Poor terminations, incorrect protection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lighting controls</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sensor failures, incorrect zoning
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Commissioning issues, component quality
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">HVAC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Temperature control problems, noise
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Balancing, control strategy, vibration
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fire alarm</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        False alarms, non-detection
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Detector selection, cause and effect
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BMS</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Control failures, communication errors
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Programming, integration, sensors
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Certificate of Making Good Defects
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Issued by contract administrator at end of DLP</li>
-                <li className="pl-1">Confirms all notified defects have been rectified</li>
-                <li className="pl-1">Triggers release of remaining retention (typically 50%)</li>
-                <li className="pl-1">Does not end liability - Limitation Act still applies</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Typical duration:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Building services: <strong>12 months</strong>
+              </li>
+              <li>General building: 12 months</li>
+              <li>Infrastructure: Up to 24 months</li>
+              <li>Some specialist: 6 months</li>
+            </ul>
+            <p>
+              <strong>Contractor obligations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Make good notified defects</li>
+              <li>At own cost</li>
+              <li>Within reasonable time</li>
+              <li>Defects from workmanship/materials</li>
+            </ul>
+            <p>
+              <strong>Client responsibilities:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Routine maintenance</li>
+              <li>Prompt notification of defects</li>
+              <li>Allow reasonable access</li>
+              <li>Not cause damage</li>
+            </ul>
+            <p>
+              <strong>Contractor liability — what constitutes a defect:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Poor workmanship (loose connections, incorrect installation)</li>
+              <li>Defective materials (faulty component, sub-standard cable)</li>
+              <li>Non-compliance with specification</li>
+              <li>Incomplete commissioning</li>
+            </ul>
+            <p>
+              <strong>Not contractor liability:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Normal wear and tear</li>
+              <li>User damage or misuse</li>
+              <li>Consumables (lamps, filters, fuses)</li>
+              <li>Lack of routine maintenance</li>
+            </ul>
+            <p>
+              <strong>Building services — common DLP defects:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Electrical:</strong> Nuisance tripping, loose connections — Poor
+                terminations, incorrect protection
+              </li>
+              <li>
+                <strong>Lighting controls:</strong> Sensor failures, incorrect zoning —
+                Commissioning issues, component quality
+              </li>
+              <li>
+                <strong>HVAC:</strong> Temperature control problems, noise — Balancing, control
+                strategy, vibration
+              </li>
+              <li>
+                <strong>Fire alarm:</strong> False alarms, non-detection — Detector selection, cause
+                and effect
+              </li>
+              <li>
+                <strong>BMS:</strong> Control failures, communication errors — Programming,
+                integration, sensors
+              </li>
+            </ul>
+            <p>
+              <strong>Certificate of making good defects:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Issued by contract administrator at end of DLP</li>
+              <li>Confirms all notified defects have been rectified</li>
+              <li>Triggers release of remaining retention (typically 50%)</li>
+              <li>Does not end liability - Limitation Act still applies</li>
+            </ul>
+            <p>
               <strong>Commercial tip:</strong> Maintain detailed records of all defect
               notifications, responses, and rectification work. Disputes often arise about whether
               defects were notified within the DLP.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — Practical completion documentation:</strong> Electrical
+              subcontractor preparing for practical completion of a 10,000m² office building.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1. Electrical Installation Certificate (BS 7671)</li>
+              <li>2. Schedule of test results - all circuits</li>
+              <li>3. As-built drawings - distribution, small power, lighting</li>
+              <li>4. O&M manuals - all equipment with data sheets</li>
+              <li>5. Fire alarm BS 5839 certificate and zone plan</li>
+              <li>6. Emergency lighting BS 5266 certificate</li>
+              <li>7. Commissioning certificates - lighting controls, BMS points</li>
+              <li>8. Warranty certificates and spare parts lists</li>
+              <li>All documentation must be compiled and submitted before formal inspection.</li>
+            </ul>
+            <p>
+              <strong>Example 2 — Defects liability calculation:</strong> Building with sectional
+              completion - when does each section's DLP end?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Section A practical completion: 15th January 2024</li>
+              <li>Section B practical completion: 1st April 2024</li>
+              <li>Section C practical completion: 1st July 2024</li>
+              <li>
+                <strong>Section A DLP ends:</strong> 15th January 2025
+              </li>
+              <li>
+                <strong>Section B DLP ends:</strong> 1st April 2025
+              </li>
+              <li>
+                <strong>Section C DLP ends:</strong> 1st July 2025
+              </li>
+              <li>Each section has independent retention release dates.</li>
+            </ul>
+            <p>
+              <strong>Example 3 — Partial possession effect:</strong> Client takes early possession
+              of ground floor (25% of building value) 8 weeks before planned completion.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Contract value: £4,000,000</li>
+              <li>Retention: 3% = £120,000</li>
+              <li>Liquidated damages: £10,000 per week</li>
+              <li>1. Retention released proportionally: 25% × £120,000 = £30,000</li>
+              <li>2. LADs reduced: 25% × £10,000 = £7,500 per week applies to remaining works</li>
+              <li>3. Ground floor DLP starts from possession date</li>
+              <li>4. Insurance responsibility transfers for ground floor</li>
+              <li>Ground floor requires fully commissioned, independent building services.</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Practical Completion Documentation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Electrical subcontractor preparing for practical
-                completion of a 10,000m² office building.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-elec-yellow/80">Documentation checklist:</p>
-                <p className="mt-2">1. Electrical Installation Certificate (BS 7671)</p>
-                <p>2. Schedule of test results - all circuits</p>
-                <p>3. As-built drawings - distribution, small power, lighting</p>
-                <p>4. O&M manuals - all equipment with data sheets</p>
-                <p>5. Fire alarm BS 5839 certificate and zone plan</p>
-                <p>6. Emergency lighting BS 5266 certificate</p>
-                <p>7. Commissioning certificates - lighting controls, BMS points</p>
-                <p>8. Warranty certificates and spare parts lists</p>
-                <p className="mt-2 text-green-400">
-                  All documentation must be compiled and submitted before formal inspection.
-                </p>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Defects Liability Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Building with sectional completion - when does each
-                section's DLP end?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Section A practical completion: 15th January 2024</p>
-                <p>Section B practical completion: 1st April 2024</p>
-                <p>Section C practical completion: 1st July 2024</p>
-                <p className="mt-2">12-month DLP for each section:</p>
-                <p className="mt-1">
-                  <strong>Section A DLP ends:</strong> 15th January 2025
-                </p>
-                <p>
-                  <strong>Section B DLP ends:</strong> 1st April 2025
-                </p>
-                <p>
-                  <strong>Section C DLP ends:</strong> 1st July 2025
-                </p>
-                <p className="mt-2 text-amber-400">
-                  Note: Each section has independent retention release dates.
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Partial Possession Effect
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Client takes early possession of ground floor (25% of
-                building value) 8 weeks before planned completion.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Contract value: £4,000,000</p>
-                <p>Retention: 3% = £120,000</p>
-                <p>Liquidated damages: £10,000 per week</p>
-                <p className="mt-2 text-elec-yellow/80">Effects of partial possession:</p>
-                <p className="mt-1">
-                  1. Retention released proportionally: 25% × £120,000 = £30,000
-                </p>
-                <p>2. LADs reduced: 25% × £10,000 = £7,500 per week applies to remaining works</p>
-                <p>3. Ground floor DLP starts from possession date</p>
-                <p>4. Insurance responsibility transfers for ground floor</p>
-                <p className="mt-2 text-green-400">
-                  Ground floor requires fully commissioned, independent building services.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Pre-completion checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Complete internal snagging 2-3 weeks before target date</li>
+              <li>Compile all documentation in building manual format</li>
+              <li>Verify all systems commissioned with certificates</li>
+              <li>Arrange staff training sessions</li>
+              <li>Prepare health and safety file contribution</li>
+              <li>Confirm all statutory compliance certificates obtained</li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Typical DLP: <strong>12 months</strong> for building services
+              </li>
+              <li>
+                Retention at PC: <strong>50%</strong> released
+              </li>
+              <li>
+                Limitation period: <strong>6 years</strong> (simple contract) /{' '}
+                <strong>12 years</strong> (deed)
+              </li>
+              <li>
+                Certificate issuer: <strong>Contract administrator</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Pre-Completion Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Complete internal snagging 2-3 weeks before target date</li>
-                <li className="pl-1">Compile all documentation in building manual format</li>
-                <li className="pl-1">Verify all systems commissioned with certificates</li>
-                <li className="pl-1">Arrange staff training sessions</li>
-                <li className="pl-1">Prepare health and safety file contribution</li>
-                <li className="pl-1">Confirm all statutory compliance certificates obtained</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Typical DLP: <strong>12 months</strong> for building services
-                </li>
-                <li className="pl-1">
-                  Retention at PC: <strong>50%</strong> released
-                </li>
-                <li className="pl-1">
-                  Limitation period: <strong>6 years</strong> (simple contract) /{' '}
-                  <strong>12 years</strong> (deed)
-                </li>
-                <li className="pl-1">
-                  Certificate issuer: <strong>Contract administrator</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Incomplete documentation</strong> - Delays certification and retention
                   release
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Late snagging</strong> - Insufficient time to rectify before handover
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Poor defects records</strong> - Disputes about liability and timing
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring seasonal commissioning</strong> - Systems fail when conditions
                   change
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Compile all certificates, O&M, as-builts and training records before the formal inspection, snag internally 2-3 weeks early, log every DLP defect with dates, and book seasonal commissioning visits into the DLP calendar."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="PC declined for missing H&S file content"
+            situation={
+              <>
+                The works are physically complete. You request PC. The CA inspects, finds 23 minor snags (acceptable), but declines PC on the basis that the H&S file lacks: as-built electrical drawings, commissioning records for the BMS, manufacturer's O&M for the AHUs, asbestos register update, residual risk register from the design team. PC slips by three weeks while the documentation is gathered. LADs accrue at £15k/week.
+              </>
+            }
+            whatToDo={
+              <>
+                Treat PC as a deliverable with a checklist: physical completion, H&S file content, as-built drawings, commissioning records, training, O&Ms, certificates. Run the checklist 4 weeks before target PC; chase missing items aggressively. Engage the principal designer early on H&S file requirements — they often own deliverables you need to compile. PC is not when the work stops; it is when the deliverables stop.
+              </>
+            }
+            whyItMatters={
+              <>
+                PC is the project's major commercial milestone. Late PC means continuing LADs, delayed retention release, extended preliminaries cost, and a soured client relationship. Disciplined PC preparation — including the documentation as a deliverable — protects the project's margin and reputation.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Practical Completion Requirements</p>
-                <ul className="space-y-0.5">
-                  <li>Works substantially complete</li>
-                  <li>Building fit for occupation/use</li>
-                  <li>All commissioning complete</li>
-                  <li>Documentation provided</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">DLP Obligations</p>
-                <ul className="space-y-0.5">
-                  <li>Make good defects at own cost</li>
-                  <li>Respond within reasonable time</li>
-                  <li>Defects from workmanship/materials</li>
-                  <li>Seasonal commissioning visits</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+                    <KeyTakeaways
+            points={[
+              "PC = works sufficiently complete that client can take possession; minor defects only.",
+              "PC triggers DLP start, half retention release, end of LADs, insurance transfer.",
+              "Sectional completion: phased PC for parts of the building — full procedure for each section.",
+              "PC certificate issued by CA (JCT) or stated by PM (NEC) — formal milestone.",
+              "\"PC with snags\" only for minor items — substantial defects defer PC.",
+              "JCT 2.30 makes PC contingent on H&S file content and as-built delivery.",
+              "Documentation is a PC deliverable — start production at Stage 4, not after PC.",
+              "Pre-PC checklist 4 weeks out; missing items become the critical path to handover.",
+            ]}
+          />
+
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 6
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section6')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Site management and CDM
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module6')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next module <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                HNC Module 6
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

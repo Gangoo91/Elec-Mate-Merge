@@ -1,16 +1,21 @@
-import {
-  ArrowLeft,
-  Flame,
-  CheckCircle,
-  ThermometerSun,
-  Gauge,
-  Shield,
-  AlertTriangle,
-} from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 8 · Section 1 · Subsection 1 — Boiler Systems
+ * HNC Electrical Engineering for Building Services (HVAC Systems)
+ *   Boiler types, ErP efficiency ratings, cascade systems, flue requirements and safety controls for heating installations
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Boiler Systems - HNC Module 8 Section 1.1';
@@ -272,1008 +277,383 @@ const faqs = [
 ];
 
 const HNCModule8Section1_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section1")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module8-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Flame className="h-4 w-4" />
-            <span>Module 8.1.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Boiler Systems
-          </h1>
-          <p className="text-white">
-            Boiler types, ErP efficiency ratings, cascade systems, flue requirements and safety
-            controls for heating installations
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 8 · Section 1 · Subsection 1"
+            title="Boiler Systems"
+            description="Boiler types, ErP efficiency ratings, cascade systems, flue requirements and safety controls for heating installations"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Condensing boilers:</strong> Minimum 92% efficiency (ErP)
-              </li>
-              <li className="pl-1">
-                <strong>Cascade systems:</strong> Multiple boilers with sequencing control
-              </li>
-              <li className="pl-1">
-                <strong>Flue requirements:</strong> Building Regulations Part J compliant
-              </li>
-              <li className="pl-1">
-                <strong>Safety controls:</strong> Flame supervision, overheat protection
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Identify and compare different boiler types and their applications",
+              "Understand ErP efficiency ratings and SEDBUK methodology",
+              "Design and specify cascade boiler systems with sequencing control",
+              "Apply Building Regulations Part J flue requirements correctly",
+              "Specify appropriate safety controls and electrical connections",
+              "Commission boilers in accordance with Gas Safe and manufacturer requirements",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Boiler Types and Classifications">
+            <p>Modern heating systems utilise various boiler types, each suited to specific applications and building requirements. Understanding the characteristics, advantages and limitations of each type is essential for correct specification and installation.</p>
+            <p><strong>Primary Boiler Classifications:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Combination (Combi) boilers:</strong> Provide space heating and instantaneous DHW from a single unit</li>
+              <li><strong>System boilers:</strong> Heat water for an unvented or vented hot water cylinder, with integral pump and expansion vessel</li>
+              <li><strong>Regular (heat-only) boilers:</strong> Require separate pump, expansion vessel and controls, typically with vented cylinders</li>
+              <li><strong>Condensing boilers:</strong> High-efficiency units that recover latent heat from flue gases</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Regulatory Framework</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Building Regs Part J:</strong> Combustion appliances and flues
-              </li>
-              <li className="pl-1">
-                <strong>Building Regs Part L:</strong> Conservation of fuel and power
-              </li>
-              <li className="pl-1">
-                <strong>BS 7671:</strong> Electrical connections and isolation
-              </li>
-              <li className="pl-1">
-                <strong>Gas Safety Regs:</strong> Installation and maintenance
-              </li>
+            <p><strong>Boiler Type Comparison</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Combi:</strong> Instantaneous — Small-medium properties, 1-2 bathrooms — 24-42 kW</li>
+              <li><strong>System:</strong> Stored (cylinder) — Larger properties, multiple bathrooms — 12-35 kW</li>
+              <li><strong>Regular:</strong> Stored (cylinder) — Replacement in existing systems — 12-30 kW</li>
+              <li><strong>Commercial:</strong> Various — Large buildings, cascade systems — 50-150+ kW</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Condensing Boiler Operation</strong></p>
+            <p>Key principles:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Flue gas cooled below dew point (~55°C)</li>
+              <li>• Water vapour condenses releasing latent heat</li>
+              <li>• Requires low return temperature (&lt;55°C)</li>
+              <li>• Secondary heat exchanger for heat recovery</li>
+            </ul>
+            <p>Efficiency factors:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Return water temperature critical</li>
+              <li>• Weather compensation improves operation</li>
+              <li>• Oversized radiators enhance condensing</li>
+              <li>• Underfloor heating ideal for condensing</li>
+            </ul>
+            <p><strong>Building Regulations requirement:</strong> Part L mandates minimum 90% seasonal efficiency (SEDBUK 2009) for new boiler installations, effectively requiring condensing technology in virtually all cases.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Identify and compare different boiler types and their applications',
-              'Understand ErP efficiency ratings and SEDBUK methodology',
-              'Design and specify cascade boiler systems with sequencing control',
-              'Apply Building Regulations Part J flue requirements correctly',
-              'Specify appropriate safety controls and electrical connections',
-              'Commission boilers in accordance with Gas Safe and manufacturer requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Boiler Types and Classifications */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Boiler Types and Classifications
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Efficiency Ratings and ErP Directive">
+            <p>The Energy-related Products (ErP) directive establishes minimum efficiency standards and energy labelling requirements for heating appliances. Understanding these ratings is essential for specifying compliant and efficient heating systems.</p>
+            <p><strong>ErP Energy Labels</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>A+++ to G rating scale</li>
+              <li>Space heating efficiency</li>
+              <li>Water heating efficiency</li>
+              <li>Sound power level (dB)</li>
+              <li>Annual energy consumption</li>
+            </ul>
+            <p><strong>SEDBUK Methodology</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Seasonal efficiency calculation</li>
+              <li>Full and part load testing</li>
+              <li>UK climate conditions</li>
+              <li>Standardised test procedures</li>
+              <li>2009 and 2005 versions</li>
+            </ul>
+            <p><strong>Minimum Standards</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Space heaters: 86% minimum</li>
+              <li>Combi DHW: 82% minimum</li>
+              <li>NOx emissions: &lt;56 mg/kWh</li>
+              <li>Smart controls required</li>
+              <li>Ecodesign compliance</li>
+            </ul>
+            <p><strong>ErP Efficiency Classes - Space Heating</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>A+++:</strong> &gt;150% — Heat pumps (GSHP)</li>
+              <li><strong>A++:</strong> 125-150% — Heat pumps (ASHP)</li>
+              <li><strong>A+:</strong> 98-125% — Condensing + solar thermal</li>
+              <li><strong>A:</strong> 90-98% — Condensing boilers</li>
+              <li><strong>B-D:</strong> 82-90% — Non-condensing (limited use)</li>
+            </ul>
+            <p><strong>Weather Compensation Benefits</strong></p>
+            <p>Weather compensation adjusts boiler flow temperature based on external conditions. In milder weather, lower flow temperatures (&lt;55°C) maximise condensing operation, improving seasonal efficiency by 5-15%. Modern ErP regulations require temperature controls with weather compensation capability as standard.</p>
+            <p><strong>Compliance note:</strong> All boilers sold in the UK must display ErP energy labels. Installers must provide customers with product fiche documentation showing efficiency data and advise on appropriate controls to achieve stated performance.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Cascade Systems and Sequencing Control">
+            <p>Cascade boiler systems utilise multiple boilers operating together to meet varying heat demands efficiently. Sequencing control brings boilers online progressively, maintaining high efficiency across the full load range while providing resilience.</p>
+            <p><strong>Cascade System Advantages:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Improved efficiency:</strong> Boilers operate closer to optimal load point (70-80% capacity)</li>
+              <li><strong>Resilience:</strong> System continues operating if one boiler fails (N+1 redundancy)</li>
+              <li><strong>Flexibility:</strong> Scalable capacity to match building demand profiles</li>
+              <li><strong>Maintenance:</strong> Individual boilers can be serviced without total system shutdown</li>
+              <li><strong>Extended life:</strong> Reduced running hours per unit with lead-lag rotation</li>
+            </ul>
+            <p><strong>Cascade Control Methods</strong></p>
+            <p><strong>Sequencing Control</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Lead boiler fires on initial demand</li>
+              <li>• Lag boilers staged as load increases</li>
+              <li>• Time delay between staging (typically 3-5 mins)</li>
+              <li>• Reverse sequence on falling demand</li>
+              <li>• Hysteresis prevents short cycling</li>
+            </ul>
+            <p><strong>Lead-Lag Rotation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Periodic rotation of lead boiler</li>
+              <li>• Options: time-based, run-hours, demand-based</li>
+              <li>• Typical rotation: daily or weekly</li>
+              <li>• Run-hour equalisation over time</li>
+              <li>• Fault condition triggers auto-rotation</li>
+            </ul>
+            <p><strong>Cascade System Components</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Low-loss header:</strong> Hydraulic separation — Size for total system flow rate, air/dirt separation</li>
+              <li><strong>Cascade controller:</strong> Sequencing logic — BMS integration, weather compensation, optimisation</li>
+              <li><strong>Primary pumps:</strong> Boiler circuit flow — Individual or common, variable speed recommended</li>
+              <li><strong>Non-return valves:</strong> Prevent reverse flow — Spring-loaded type, low resistance design</li>
+              <li><strong>Isolation valves:</strong> Maintenance isolation — Full bore, lockable handles</li>
+              <li><strong>Common flue:</strong> Shared flue system — Fan-assisted, sized for all boilers firing</li>
+            </ul>
+            <p><strong>Worked Example: Cascade Sizing</strong></p>
+            <p><strong>Scenario:</strong> Office building with 200 kW design heat load. Specify cascade system.</p>
+            <p>Design heat load: 200 kW</p>
+            <p>Diversity factor: 0.8 (typical office)</p>
+            <p>Operating load: 200 × 0.8 = 160 kW</p>
+            <p>Option A: 3 × 80 kW boilers (240 kW total)</p>
+            <p>- Normal operation: 2 boilers at 80% = 128 kW</p>
+            <p>- Peak demand: All 3 boilers = 240 kW capacity</p>
+            <p>- N+1 redundancy maintained</p>
+            <p>Option B: 4 × 60 kW boilers (240 kW total)</p>
+            <p>- Better modulation range</p>
+            <p>- Higher capital cost</p>
+            <p>- More maintenance items</p>
+            <p>Recommendation: Option A - balances efficiency, cost and resilience</p>
+            <p><strong>Design principle:</strong> Size cascade systems so that normal operation uses fewer than all boilers, reserving capacity for peak demand and providing redundancy. Typical designs operate at 60-80% of total installed capacity during average conditions.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Flue Requirements and Safety Controls">
+            <p>Correct flue installation is critical for safe boiler operation. Building Regulations Approved Document J specifies requirements for combustion appliances, while Gas Safe regulations mandate specific safety controls and interlocks.</p>
+            <p><strong>Flue Types and Applications</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Room-sealed balanced flue:</strong> Concentric or twin-pipe system drawing air from outside - most common for modern boilers</li>
+              <li><strong>Open flue:</strong> Draws combustion air from the room - requires adequate ventilation</li>
+              <li><strong>Fan-assisted flue:</strong> Uses fan to overcome longer flue runs</li>
+              <li><strong>Vertical balanced flue:</strong> Through-roof installation for internal locations</li>
+            </ul>
+            <p><strong>Building Regulations Part J - Terminal Positions</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Below opening window:</strong> 300mm — 300mm — 300mm</li>
+              <li><strong>Above opening window:</strong> 300mm — 300mm — 300mm</li>
+              <li><strong>Horizontally from opening:</strong> 300mm — 400mm — 600mm</li>
+              <li><strong>Below eaves/gutter:</strong> 200mm — 300mm — 300mm</li>
+              <li><strong>From internal corner:</strong> 300mm — 600mm — 600mm</li>
+              <li><strong>Above ground level:</strong> 300mm — 300mm — 300mm</li>
+            </ul>
+            <p><strong>Safety Controls - Mandatory Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Flame supervision device:</strong> Ionisation probe or thermocouple - shuts off gas if flame fails</li>
+              <li><strong>Overheat thermostat:</strong> High limit stat (typically 95-100°C) - manual reset required</li>
+              <li><strong>Pressure relief valve:</strong> PRV set at 3 bar - discharges to safe location</li>
+              <li><strong>Pressure gauge:</strong> Visual indication of system pressure</li>
+              <li><strong>Automatic air vent:</strong> Releases air from heat exchanger</li>
+              <li><strong>Frost protection:</strong> Prevents freezing damage - integral to most modern boilers</li>
+            </ul>
+            <p><strong>Electrical Connections (BS 7671)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Permanent supply:</strong> FCU, 3A or 5A fuse — Dedicated circuit recommended</li>
+              <li><strong>Isolation:</strong> Accessible double-pole — Within 3m of boiler</li>
+              <li><strong>Room thermostat:</strong> Volt-free contacts — Breaks call for heat</li>
+              <li><strong>Cylinder stat:</strong> Volt-free contacts — System/regular boilers only</li>
+              <li><strong>Programmer:</strong> Mains or low voltage — Time control for CH and DHW</li>
+              <li><strong>External sensor:</strong> Manufacturer specific — Weather compensation</li>
+            </ul>
+            <p><strong>Condensate Drainage Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Minimum 22mm internal diameter pipework</li>
+              <li>PVC or ABS plastic (acid resistant)</li>
+              <li>Fall of 2.5° minimum (45mm per metre)</li>
+              <li>External runs: insulated or traced heating</li>
+              <li>Discharge to internal soil stack preferred</li>
+              <li>External discharge: above gully trap water level</li>
+              <li>Neutralisation kit for sensitive drainage systems</li>
+            </ul>
+            <p><strong>Gas Safe requirement:</strong> All gas boiler installations must be carried out by a Gas Safe registered engineer. The Benchmark commissioning checklist (or manufacturer equivalent) must be completed, and Building Control notified via a Competent Persons Scheme or direct application.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Modern heating systems utilise various boiler types, each suited to specific
-              applications and building requirements. Understanding the characteristics, advantages
-              and limitations of each type is essential for correct specification and installation.
+              <strong>Example 1: Domestic Boiler Selection</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Primary Boiler Classifications:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Combination (Combi) boilers:</strong> Provide space heating and
-                  instantaneous DHW from a single unit
-                </li>
-                <li className="pl-1">
-                  <strong>System boilers:</strong> Heat water for an unvented or vented hot water
-                  cylinder, with integral pump and expansion vessel
-                </li>
-                <li className="pl-1">
-                  <strong>Regular (heat-only) boilers:</strong> Require separate pump, expansion
-                  vessel and controls, typically with vented cylinders
-                </li>
-                <li className="pl-1">
-                  <strong>Condensing boilers:</strong> High-efficiency units that recover latent
-                  heat from flue gases
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Boiler Type Comparison</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">DHW Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Best Application
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Output</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Combi</td>
-                      <td className="border border-white/10 px-3 py-2">Instantaneous</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Small-medium properties, 1-2 bathrooms
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">24-42 kW</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">System</td>
-                      <td className="border border-white/10 px-3 py-2">Stored (cylinder)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Larger properties, multiple bathrooms
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">12-35 kW</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Regular</td>
-                      <td className="border border-white/10 px-3 py-2">Stored (cylinder)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Replacement in existing systems
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">12-30 kW</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Commercial</td>
-                      <td className="border border-white/10 px-3 py-2">Various</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large buildings, cascade systems
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">50-150+ kW</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Condensing Boiler Operation</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-white">Key principles:</p>
-                  <ul className="text-white space-y-1 mt-2">
-                    <li>• Flue gas cooled below dew point (~55°C)</li>
-                    <li>• Water vapour condenses releasing latent heat</li>
-                    <li>• Requires low return temperature (&lt;55°C)</li>
-                    <li>• Secondary heat exchanger for heat recovery</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-white">Efficiency factors:</p>
-                  <ul className="text-white space-y-1 mt-2">
-                    <li>• Return water temperature critical</li>
-                    <li>• Weather compensation improves operation</li>
-                    <li>• Oversized radiators enhance condensing</li>
-                    <li>• Underfloor heating ideal for condensing</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Building Regulations requirement:</strong> Part L mandates minimum 90%
-              seasonal efficiency (SEDBUK 2009) for new boiler installations, effectively requiring
-              condensing technology in virtually all cases.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Efficiency Ratings and ErP Directive */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Efficiency Ratings and ErP Directive
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> 3-bedroom semi-detached house with 2 bathrooms. Select appropriate boiler type and size.</p>
+            <p>Property details:</p>
+            <p>- 3 bedrooms, 2 bathrooms (family bathroom + en-suite)</p>
+            <p>- Heat loss calculation: 12 kW space heating</p>
+            <p>- DHW demand: 2 showers potentially simultaneous</p>
+            <p>Analysis:</p>
+            <p>- Multiple bathrooms = higher DHW demand</p>
+            <p>- Combi may struggle with simultaneous demand</p>
+            <p>- System boiler with unvented cylinder provides better DHW</p>
+            <p>Recommendation:</p>
+            <p>Option 1: 35 kW combi (if DHW priority acceptable)</p>
+            <p>Option 2: 24 kW system boiler + 180L unvented cylinder</p>
+            <p>Selected: System boiler for superior DHW performance</p>
+            <p>ErP Rating: A (space) + A (water)</p>
             <p>
-              The Energy-related Products (ErP) directive establishes minimum efficiency standards
-              and energy labelling requirements for heating appliances. Understanding these ratings
-              is essential for specifying compliant and efficient heating systems.
+              <strong>Example 2: Flue Position Assessment</strong>
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">ErP Energy Labels</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">A+++ to G rating scale</li>
-                  <li className="pl-1">Space heating efficiency</li>
-                  <li className="pl-1">Water heating efficiency</li>
-                  <li className="pl-1">Sound power level (dB)</li>
-                  <li className="pl-1">Annual energy consumption</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">SEDBUK Methodology</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Seasonal efficiency calculation</li>
-                  <li className="pl-1">Full and part load testing</li>
-                  <li className="pl-1">UK climate conditions</li>
-                  <li className="pl-1">Standardised test procedures</li>
-                  <li className="pl-1">2009 and 2005 versions</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Minimum Standards</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Space heaters: 86% minimum</li>
-                  <li className="pl-1">Combi DHW: 82% minimum</li>
-                  <li className="pl-1">NOx emissions: &lt;56 mg/kWh</li>
-                  <li className="pl-1">Smart controls required</li>
-                  <li className="pl-1">Ecodesign compliance</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                ErP Efficiency Classes - Space Heating
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Class</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Seasonal Efficiency
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Technology
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="bg-green-500/10">
-                      <td className="border border-white/10 px-3 py-2 font-bold">A+++</td>
-                      <td className="border border-white/10 px-3 py-2">&gt;150%</td>
-                      <td className="border border-white/10 px-3 py-2">Heat pumps (GSHP)</td>
-                    </tr>
-                    <tr className="bg-green-500/5">
-                      <td className="border border-white/10 px-3 py-2 font-bold">A++</td>
-                      <td className="border border-white/10 px-3 py-2">125-150%</td>
-                      <td className="border border-white/10 px-3 py-2">Heat pumps (ASHP)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-bold">A+</td>
-                      <td className="border border-white/10 px-3 py-2">98-125%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Condensing + solar thermal
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-bold">A</td>
-                      <td className="border border-white/10 px-3 py-2">90-98%</td>
-                      <td className="border border-white/10 px-3 py-2">Condensing boilers</td>
-                    </tr>
-                    <tr className="bg-orange-500/10">
-                      <td className="border border-white/10 px-3 py-2 font-bold">B-D</td>
-                      <td className="border border-white/10 px-3 py-2">82-90%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Non-condensing (limited use)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <div className="flex items-start gap-3">
-                <ThermometerSun className="h-5 w-5 text-orange-400 mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-sm font-medium text-orange-400 mb-1">
-                    Weather Compensation Benefits
-                  </p>
-                  <p className="text-sm text-white">
-                    Weather compensation adjusts boiler flow temperature based on external
-                    conditions. In milder weather, lower flow temperatures (&lt;55°C) maximise
-                    condensing operation, improving seasonal efficiency by 5-15%. Modern ErP
-                    regulations require temperature controls with weather compensation capability as
-                    standard.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Compliance note:</strong> All boilers sold in the UK must display ErP energy
-              labels. Installers must provide customers with product fiche documentation showing
-              efficiency data and advise on appropriate controls to achieve stated performance.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Cascade Systems and Sequencing Control */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Cascade Systems and Sequencing Control
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> 28 kW combi boiler to be installed in kitchen. Assess flue terminal position.</p>
+            <p>Proposed location: External wall below kitchen window</p>
+            <p>Boiler output: 28 kW (14-70 kW category)</p>
+            <p>Distance requirements (Part J):</p>
+            <p>- Below opening window: 300mm min ✓</p>
+            <p>- Horizontally from opening: 600mm min</p>
+            <p>- Above ground level: 300mm min ✓</p>
+            <p>Site measurement:</p>
+            <p>- Window sill height: 900mm</p>
+            <p>- Proposed terminal height: 500mm</p>
+            <p>- Vertical clearance: 400mm (300mm req) ✓</p>
+            <p>- Horizontal from window edge: 450mm</p>
+            <p>Issue: Horizontal clearance 450mm &lt; 600mm required</p>
+            <p>Solution: Reposition boiler to achieve 600mm clearance</p>
+            <p>or use plume management kit</p>
             <p>
-              Cascade boiler systems utilise multiple boilers operating together to meet varying
-              heat demands efficiently. Sequencing control brings boilers online progressively,
-              maintaining high efficiency across the full load range while providing resilience.
+              <strong>Example 3: Cascade Controller Setup</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Cascade System Advantages:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Improved efficiency:</strong> Boilers operate closer to optimal load point
-                  (70-80% capacity)
-                </li>
-                <li className="pl-1">
-                  <strong>Resilience:</strong> System continues operating if one boiler fails (N+1
-                  redundancy)
-                </li>
-                <li className="pl-1">
-                  <strong>Flexibility:</strong> Scalable capacity to match building demand profiles
-                </li>
-                <li className="pl-1">
-                  <strong>Maintenance:</strong> Individual boilers can be serviced without total
-                  system shutdown
-                </li>
-                <li className="pl-1">
-                  <strong>Extended life:</strong> Reduced running hours per unit with lead-lag
-                  rotation
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Cascade Control Methods</p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-white font-medium mb-1">Sequencing Control</p>
-                  <ul className="text-white space-y-1">
-                    <li>• Lead boiler fires on initial demand</li>
-                    <li>• Lag boilers staged as load increases</li>
-                    <li>• Time delay between staging (typically 3-5 mins)</li>
-                    <li>• Reverse sequence on falling demand</li>
-                    <li>• Hysteresis prevents short cycling</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-white font-medium mb-1">Lead-Lag Rotation</p>
-                  <ul className="text-white space-y-1">
-                    <li>• Periodic rotation of lead boiler</li>
-                    <li>• Options: time-based, run-hours, demand-based</li>
-                    <li>• Typical rotation: daily or weekly</li>
-                    <li>• Run-hour equalisation over time</li>
-                    <li>• Fault condition triggers auto-rotation</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cascade System Components
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Component</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Function</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Specification Considerations
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Low-loss header</td>
-                      <td className="border border-white/10 px-3 py-2">Hydraulic separation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Size for total system flow rate, air/dirt separation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cascade controller</td>
-                      <td className="border border-white/10 px-3 py-2">Sequencing logic</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        BMS integration, weather compensation, optimisation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Primary pumps</td>
-                      <td className="border border-white/10 px-3 py-2">Boiler circuit flow</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Individual or common, variable speed recommended
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Non-return valves</td>
-                      <td className="border border-white/10 px-3 py-2">Prevent reverse flow</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Spring-loaded type, low resistance design
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Isolation valves</td>
-                      <td className="border border-white/10 px-3 py-2">Maintenance isolation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full bore, lockable handles
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Common flue</td>
-                      <td className="border border-white/10 px-3 py-2">Shared flue system</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fan-assisted, sized for all boilers firing
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Worked Example: Cascade Sizing
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Office building with 200 kW design heat load. Specify
-                cascade system.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Design heat load: 200 kW</p>
-                <p className="text-white">Diversity factor: 0.8 (typical office)</p>
-                <p className="text-white">Operating load: 200 × 0.8 = 160 kW</p>
-                <p className="mt-2">Option A: 3 × 80 kW boilers (240 kW total)</p>
-                <p> - Normal operation: 2 boilers at 80% = 128 kW</p>
-                <p> - Peak demand: All 3 boilers = 240 kW capacity</p>
-                <p> - N+1 redundancy maintained</p>
-                <p className="mt-2">Option B: 4 × 60 kW boilers (240 kW total)</p>
-                <p> - Better modulation range</p>
-                <p> - Higher capital cost</p>
-                <p> - More maintenance items</p>
-                <p className="mt-2 text-green-400">
-                  Recommendation: Option A - balances efficiency, cost and resilience
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design principle:</strong> Size cascade systems so that normal operation uses
-              fewer than all boilers, reserving capacity for peak demand and providing redundancy.
-              Typical designs operate at 60-80% of total installed capacity during average
-              conditions.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Flue Requirements and Safety Controls */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Flue Requirements and Safety Controls
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Configure cascade controller for 3 × 80 kW boilers serving office building.</p>
+            <p>System: 3 × 80 kW condensing boilers</p>
+            <p>Design flow temp: 70°C, Return: 50°C (ΔT = 20K)</p>
+            <p>Cascade controller parameters:</p>
+            <p>- Staging setpoint: 80% of current capacity</p>
+            <p>- De-staging setpoint: 30% of current capacity</p>
+            <p>- Staging delay: 5 minutes</p>
+            <p>- De-staging delay: 10 minutes</p>
+            <p>- Lead-lag rotation: Weekly (Monday 00:00)</p>
+            <p>Weather compensation:</p>
+            <p>- Outside temp: 0°C → Flow: 70°C</p>
+            <p>- Outside temp: 10°C → Flow: 55°C</p>
+            <p>- Outside temp: 15°C → Flow: 45°C</p>
+            <p>- Heating curve: 1.2</p>
+            <p>Frost protection: Enable below 3°C external</p>
+            <p>Optimum start: Enable (learns building response)</p>
+            <p>BMS integration: Modbus RTU for monitoring</p>
             <p>
-              Correct flue installation is critical for safe boiler operation. Building Regulations
-              Approved Document J specifies requirements for combustion appliances, while Gas Safe
-              regulations mandate specific safety controls and interlocks.
+              <strong>Example 4: Condensate Pipe Sizing</strong>
             </p>
+            <p><strong>Scenario:</strong> Design condensate drainage for external run to drain.</p>
+            <p>Boiler: 30 kW condensing combi</p>
+            <p>Route: 2m internal + 3m external to gully</p>
+            <p>Internal section (2m):</p>
+            <p>- Pipe: 22mm PVC overflow pipe</p>
+            <p>- Fall: 2.5° minimum (45mm per metre)</p>
+            <p>- Total fall: 2 × 45 = 90mm</p>
+            <p>External section (3m):</p>
+            <p>- Pipe: 32mm PVC (increased for external)</p>
+            <p>- Insulation: 19mm wall foam lagging</p>
+            <p>- Trace heating: Self-regulating 10W/m</p>
+            <p>- Fall: 3 × 45 = 135mm</p>
+            <p>Discharge point:</p>
+            <p>- Above gully water level</p>
+            <p>- Air gap to prevent back-siphonage</p>
+            <p>Complies with manufacturer instructions</p>
+            <p>and BS 6798 condensate requirements</p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Flue Types and Applications
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Room-sealed balanced flue:</strong> Concentric or twin-pipe system drawing
-                  air from outside - most common for modern boilers
-                </li>
-                <li className="pl-1">
-                  <strong>Open flue:</strong> Draws combustion air from the room - requires adequate
-                  ventilation
-                </li>
-                <li className="pl-1">
-                  <strong>Fan-assisted flue:</strong> Uses fan to overcome longer flue runs
-                </li>
-                <li className="pl-1">
-                  <strong>Vertical balanced flue:</strong> Through-roof installation for internal
-                  locations
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Regulations Part J - Terminal Positions
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Location</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Room-Sealed (&lt;7 kW)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Room-Sealed (7-14 kW)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Room-Sealed (&gt;14 kW)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Below opening window</td>
-                      <td className="border border-white/10 px-3 py-2">300mm</td>
-                      <td className="border border-white/10 px-3 py-2">300mm</td>
-                      <td className="border border-white/10 px-3 py-2">300mm</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Above opening window</td>
-                      <td className="border border-white/10 px-3 py-2">300mm</td>
-                      <td className="border border-white/10 px-3 py-2">300mm</td>
-                      <td className="border border-white/10 px-3 py-2">300mm</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Horizontally from opening
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">300mm</td>
-                      <td className="border border-white/10 px-3 py-2">400mm</td>
-                      <td className="border border-white/10 px-3 py-2">600mm</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Below eaves/gutter</td>
-                      <td className="border border-white/10 px-3 py-2">200mm</td>
-                      <td className="border border-white/10 px-3 py-2">300mm</td>
-                      <td className="border border-white/10 px-3 py-2">300mm</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">From internal corner</td>
-                      <td className="border border-white/10 px-3 py-2">300mm</td>
-                      <td className="border border-white/10 px-3 py-2">600mm</td>
-                      <td className="border border-white/10 px-3 py-2">600mm</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Above ground level</td>
-                      <td className="border border-white/10 px-3 py-2">300mm</td>
-                      <td className="border border-white/10 px-3 py-2">300mm</td>
-                      <td className="border border-white/10 px-3 py-2">300mm</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <div className="flex items-start gap-3">
-                <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-sm font-medium text-red-400 mb-1">
-                    Safety Controls - Mandatory Requirements
-                  </p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">
-                      <strong>Flame supervision device:</strong> Ionisation probe or thermocouple -
-                      shuts off gas if flame fails
-                    </li>
-                    <li className="pl-1">
-                      <strong>Overheat thermostat:</strong> High limit stat (typically 95-100°C) -
-                      manual reset required
-                    </li>
-                    <li className="pl-1">
-                      <strong>Pressure relief valve:</strong> PRV set at 3 bar - discharges to safe
-                      location
-                    </li>
-                    <li className="pl-1">
-                      <strong>Pressure gauge:</strong> Visual indication of system pressure
-                    </li>
-                    <li className="pl-1">
-                      <strong>Automatic air vent:</strong> Releases air from heat exchanger
-                    </li>
-                    <li className="pl-1">
-                      <strong>Frost protection:</strong> Prevents freezing damage - integral to most
-                      modern boilers
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Electrical Connections (BS 7671)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Connection</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Requirement</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Permanent supply</td>
-                      <td className="border border-white/10 px-3 py-2">FCU, 3A or 5A fuse</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dedicated circuit recommended
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Isolation</td>
-                      <td className="border border-white/10 px-3 py-2">Accessible double-pole</td>
-                      <td className="border border-white/10 px-3 py-2">Within 3m of boiler</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Room thermostat</td>
-                      <td className="border border-white/10 px-3 py-2">Volt-free contacts</td>
-                      <td className="border border-white/10 px-3 py-2">Breaks call for heat</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cylinder stat</td>
-                      <td className="border border-white/10 px-3 py-2">Volt-free contacts</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        System/regular boilers only
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Programmer</td>
-                      <td className="border border-white/10 px-3 py-2">Mains or low voltage</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Time control for CH and DHW
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">External sensor</td>
-                      <td className="border border-white/10 px-3 py-2">Manufacturer specific</td>
-                      <td className="border border-white/10 px-3 py-2">Weather compensation</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <div className="flex items-start gap-3">
-                <Shield className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">
-                    Condensate Drainage Requirements
-                  </p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Minimum 22mm internal diameter pipework</li>
-                    <li className="pl-1">PVC or ABS plastic (acid resistant)</li>
-                    <li className="pl-1">Fall of 2.5° minimum (45mm per metre)</li>
-                    <li className="pl-1">External runs: insulated or traced heating</li>
-                    <li className="pl-1">Discharge to internal soil stack preferred</li>
-                    <li className="pl-1">External discharge: above gully trap water level</li>
-                    <li className="pl-1">Neutralisation kit for sensitive drainage systems</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Gas Safe requirement:</strong> All gas boiler installations must be carried
-              out by a Gas Safe registered engineer. The Benchmark commissioning checklist (or
-              manufacturer equivalent) must be completed, and Building Control notified via a
-              Competent Persons Scheme or direct application.
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Installation Checklist:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Verify gas supply pressure and pipe sizing adequate for boiler input</li>
+              <li>Check flue terminal position against Part J requirements before installation</li>
+              <li>Ensure condensate drain route is viable with adequate fall</li>
+              <li>Confirm electrical supply available with adequate isolation facilities</li>
+              <li>Check system is flushed and treated before commissioning</li>
+              <li>Complete Benchmark checklist and notify Building Control</li>
+            </ul>
+            <p>
+              <strong>Commissioning Requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Gas tightness test on all new pipework</li>
+              <li>Combustion analysis: CO₂, CO, flue temperature</li>
+              <li>Gas rate check against data plate</li>
+              <li>System pressure test and fill</li>
+              <li>Check all safety controls operate correctly</li>
+              <li>Set controls and demonstrate operation to user</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Domestic Boiler Selection
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> 3-bedroom semi-detached house with 2 bathrooms. Select
-                appropriate boiler type and size.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white overflow-x-auto">
-                <p className="text-white">Property details:</p>
-                <p>- 3 bedrooms, 2 bathrooms (family bathroom + en-suite)</p>
-                <p>- Heat loss calculation: 12 kW space heating</p>
-                <p>- DHW demand: 2 showers potentially simultaneous</p>
-                <p className="mt-2 text-white">Analysis:</p>
-                <p>- Multiple bathrooms = higher DHW demand</p>
-                <p>- Combi may struggle with simultaneous demand</p>
-                <p>- System boiler with unvented cylinder provides better DHW</p>
-                <p className="mt-2 text-white">Recommendation:</p>
-                <p>Option 1: 35 kW combi (if DHW priority acceptable)</p>
-                <p>Option 2: 24 kW system boiler + 180L unvented cylinder</p>
-                <p className="mt-2 text-green-400">
-                  Selected: System boiler for superior DHW performance
-                </p>
-                <p className="text-green-400">ErP Rating: A (space) + A (water)</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Flue Position Assessment
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> 28 kW combi boiler to be installed in kitchen. Assess
-                flue terminal position.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">
-                  Proposed location: External wall below kitchen window
-                </p>
-                <p className="text-white">Boiler output: 28 kW (14-70 kW category)</p>
-                <p className="mt-2">Distance requirements (Part J):</p>
-                <p>- Below opening window: 300mm min ✓</p>
-                <p>- Horizontally from opening: 600mm min</p>
-                <p>- Above ground level: 300mm min ✓</p>
-                <p className="mt-2 text-white">Site measurement:</p>
-                <p>- Window sill height: 900mm</p>
-                <p>- Proposed terminal height: 500mm</p>
-                <p>- Vertical clearance: 400mm (300mm req) ✓</p>
-                <p>- Horizontal from window edge: 450mm</p>
-                <p className="mt-2 text-red-400">
-                  Issue: Horizontal clearance 450mm &lt; 600mm required
-                </p>
-                <p className="text-yellow-400">
-                  Solution: Reposition boiler to achieve 600mm clearance
-                </p>
-                <p className="text-yellow-400">or use plume management kit</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Cascade Controller Setup
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Configure cascade controller for 3 × 80 kW boilers
-                serving office building.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">System: 3 × 80 kW condensing boilers</p>
-                <p className="text-white">Design flow temp: 70°C, Return: 50°C (ΔT = 20K)</p>
-                <p className="mt-2">Cascade controller parameters:</p>
-                <p>- Staging setpoint: 80% of current capacity</p>
-                <p>- De-staging setpoint: 30% of current capacity</p>
-                <p>- Staging delay: 5 minutes</p>
-                <p>- De-staging delay: 10 minutes</p>
-                <p>- Lead-lag rotation: Weekly (Monday 00:00)</p>
-                <p className="mt-2">Weather compensation:</p>
-                <p>- Outside temp: 0°C → Flow: 70°C</p>
-                <p>- Outside temp: 10°C → Flow: 55°C</p>
-                <p>- Outside temp: 15°C → Flow: 45°C</p>
-                <p>- Heating curve: 1.2</p>
-                <p className="mt-2">Frost protection: Enable below 3°C external</p>
-                <p>Optimum start: Enable (learns building response)</p>
-                <p className="mt-2 text-green-400">BMS integration: Modbus RTU for monitoring</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 4: Condensate Pipe Sizing
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Design condensate drainage for external run to drain.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Boiler: 30 kW condensing combi</p>
-                <p className="text-white">Route: 2m internal + 3m external to gully</p>
-                <p className="mt-2">Internal section (2m):</p>
-                <p>- Pipe: 22mm PVC overflow pipe</p>
-                <p>- Fall: 2.5° minimum (45mm per metre)</p>
-                <p>- Total fall: 2 × 45 = 90mm</p>
-                <p className="mt-2">External section (3m):</p>
-                <p>- Pipe: 32mm PVC (increased for external)</p>
-                <p>- Insulation: 19mm wall foam lagging</p>
-                <p>- Trace heating: Self-regulating 10W/m</p>
-                <p>- Fall: 3 × 45 = 135mm</p>
-                <p className="mt-2">Discharge point:</p>
-                <p>- Above gully water level</p>
-                <p>- Air gap to prevent back-siphonage</p>
-                <p className="mt-2 text-green-400">Complies with manufacturer instructions</p>
-                <p className="text-green-400">and BS 6798 condensate requirements</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Installation Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Verify gas supply pressure and pipe sizing adequate for boiler input
-                </li>
-                <li className="pl-1">
-                  Check flue terminal position against Part J requirements before installation
-                </li>
-                <li className="pl-1">Ensure condensate drain route is viable with adequate fall</li>
-                <li className="pl-1">
-                  Confirm electrical supply available with adequate isolation facilities
-                </li>
-                <li className="pl-1">Check system is flushed and treated before commissioning</li>
-                <li className="pl-1">Complete Benchmark checklist and notify Building Control</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Incorrect flue position:</strong> Fails to meet Part J clearances - remedy before commissioning</li>
+                <li><strong>Condensate freezing:</strong> External pipe not insulated/traced - causes boiler lockout</li>
+                <li><strong>Poor system cleanliness:</strong> Debris damages heat exchanger - flush and filter</li>
+                <li><strong>Inadequate isolation:</strong> No accessible double-pole switch - BS 7671 non-compliance</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Commissioning Requirements
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Gas tightness test on all new pipework</li>
-                <li className="pl-1">Combustion analysis: CO₂, CO, flue temperature</li>
-                <li className="pl-1">Gas rate check against data plate</li>
-                <li className="pl-1">System pressure test and fill</li>
-                <li className="pl-1">Check all safety controls operate correctly</li>
-                <li className="pl-1">Set controls and demonstrate operation to user</li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">
-                Common Installation Errors
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Incorrect flue position:</strong> Fails to meet Part J clearances - remedy
-                  before commissioning
-                </li>
-                <li className="pl-1">
-                  <strong>Condensate freezing:</strong> External pipe not insulated/traced - causes
-                  boiler lockout
-                </li>
-                <li className="pl-1">
-                  <strong>Poor system cleanliness:</strong> Debris damages heat exchanger - flush
-                  and filter
-                </li>
-                <li className="pl-1">
-                  <strong>Inadequate isolation:</strong> No accessible double-pole switch - BS 7671
-                  non-compliance
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Boiler Types</p>
-                <ul className="space-y-0.5">
-                  <li>Combi - instant DHW, no cylinder</li>
-                  <li>System - stored DHW, integral pump/vessel</li>
-                  <li>Regular - stored DHW, separate components</li>
-                  <li>All new installations: condensing required</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">ErP Ratings</p>
-                <ul className="space-y-0.5">
-                  <li>A+++ - Heat pumps (GSHP)</li>
-                  <li>A++ - Heat pumps (ASHP)</li>
-                  <li>A/A+ - Condensing boilers</li>
-                  <li>Minimum: 90% SEDBUK (Part L)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Flue Clearances (Part J)</p>
-                <ul className="space-y-0.5">
-                  <li>Below opening: 300mm min</li>
-                  <li>Horizontal (&gt;14kW): 600mm min</li>
-                  <li>Above ground: 300mm min</li>
-                  <li>Below eaves: 200-300mm min</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Safety Controls</p>
-                <ul className="space-y-0.5">
-                  <li>Flame supervision device (FSD)</li>
-                  <li>Overheat thermostat (high limit)</li>
-                  <li>Pressure relief valve (3 bar)</li>
-                  <li>Frost protection (integral)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex justify-start pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 1
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section1")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Heating systems
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section1-2")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Heat pump integration
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

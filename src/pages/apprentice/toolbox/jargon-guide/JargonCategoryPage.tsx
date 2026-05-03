@@ -1,12 +1,13 @@
 import { useState, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Search, X } from 'lucide-react';
+import { ArrowLeft, Search, X } from 'lucide-react';
 import { siteJargonTerms, siteJargonCategories } from '@/data/apprentice/siteJargonData';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
 import JargonTermCard from '@/components/apprentice/site-jargon/JargonTermCard';
 
 const categoryMeta: Record<string, { emoji: string; colour: string; border: string; bg: string }> =
@@ -62,6 +63,7 @@ const categoryMeta: Record<string, { emoji: string; colour: string; border: stri
   };
 
 const JargonCategoryPage = () => {
+  const navigate = useNavigate();
   const { categoryId } = useParams<{ categoryId: string }>();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>('all');
@@ -96,32 +98,50 @@ const JargonCategoryPage = () => {
 
   if (!category || !style) {
     return (
-      <div className="max-w-2xl mx-auto space-y-6 animate-fade-in px-4 pb-20">
-        <div className="flex items-center gap-3">
-          <SmartBackButton />
-          <h1 className="text-xl font-bold text-white">Category Not Found</h1>
-        </div>
-        <Card className="border-red-500/20 bg-red-500/5">
-          <CardContent className="p-4 text-center">
-            <p className="text-white">This category does not exist.</p>
-          </CardContent>
-        </Card>
-      </div>
+      <PageFrame className="px-4 sm:px-6 lg:px-8">
+        <motion.div variants={itemVariants}>
+          <Button
+            variant="ghost"
+            onClick={() => navigate('/apprentice/toolbox/site-jargon')}
+            className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+          >
+            <ArrowLeft className="mr-2 h-5 w-5" />
+            Back
+          </Button>
+        </motion.div>
+        <motion.div variants={itemVariants}>
+          <PageHero
+            eyebrow="Apprentice · Jargon"
+            title="Category not found"
+            description="This jargon category does not exist."
+            tone="yellow"
+          />
+        </motion.div>
+      </PageFrame>
     );
   }
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6 animate-fade-in px-4 pb-20">
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <SmartBackButton />
-        <div>
-          <h1 className="text-xl font-bold text-white">
-            {style.emoji} {category.name}
-          </h1>
-          <p className="text-sm text-white">{category.description}</p>
-        </div>
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice/toolbox/site-jargon')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
+
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow={`Apprentice · ${category.name}`}
+          title={category.name}
+          description={category.description}
+          tone="yellow"
+        />
+      </motion.div>
 
       {/* Stats */}
       <Card className={`${style.border} ${style.bg}`}>
@@ -228,7 +248,7 @@ const JargonCategoryPage = () => {
           </CardContent>
         </Card>
       )}
-    </div>
+    </PageFrame>
   );
 };
 

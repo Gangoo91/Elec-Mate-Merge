@@ -357,7 +357,7 @@ export default function Sub3() {
                 certification at the end cannot reference what was designed.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 132.1 framework — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 132.1 framework."
           />
 
           <InlineCheck
@@ -855,7 +855,7 @@ export default function Sub3() {
                 the install matches the design intent.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 132.1 framework — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 132.1 framework."
           />
 
           <RegsCallout
@@ -879,7 +879,7 @@ export default function Sub3() {
                 actually match the kit you fitted.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 133.1.3 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 133.1.3."
           />
 
           <SectionRule />

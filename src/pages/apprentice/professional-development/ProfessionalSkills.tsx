@@ -1,7 +1,14 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
-import { CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowLeft, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  PageFrame,
+  PageHero,
+  itemVariants,
+} from '@/components/college/primitives';
 
 const skillCategories = [
   {
@@ -179,6 +186,7 @@ const recommendedResources = [
 ];
 
 const ProfessionalSkills = () => {
+  const navigate = useNavigate();
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
   const toggleExpanded = (index: number) => {
@@ -186,24 +194,26 @@ const ProfessionalSkills = () => {
   };
 
   return (
-    <div className="animate-fade-in max-w-2xl mx-auto px-4 pb-20 space-y-6 text-left">
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <SmartBackButton />
-        <h1 className="text-2xl font-bold tracking-tight text-white">Professional Skills</h1>
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice/professional-development')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
 
-      {/* Intro */}
-      <Card className="border-green-500/20 bg-white/5">
-        <CardContent className="p-4">
-          <p className="text-white text-sm leading-relaxed">
-            Technical skills get you qualified — professional skills determine how far you go. The
-            best electricians combine strong technical ability with excellent communication, problem
-            solving, and business skills. These are the skills that turn a good electrician into a
-            successful one.
-          </p>
-        </CardContent>
-      </Card>
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Soft skills"
+          title="Professional skills"
+          description="Technical ability gets you qualified — professional skills decide how far you go. Communication, problem solving, customer handling, business sense — the parts the JIB grade can't measure."
+          tone="yellow"
+        />
+      </motion.div>
 
       {/* Skill Categories */}
       <div className="flex items-center gap-2">
@@ -373,7 +383,7 @@ const ProfessionalSkills = () => {
           </p>
         </CardContent>
       </Card>
-    </div>
+    </PageFrame>
   );
 };
 

@@ -1,8 +1,7 @@
 /**
  * Module 5 · Section 4 · Subsection 1 — Quality Management Systems
- * HNC Electrical Engineering for Building Services (Quality Management)
- *   ISO 9001:2015 requirements, PDCA cycle, document control, NCRs and continual
- *   improvement for building services.
+ * HNC Electrical Engineering for Building Services (Project Management — Pearson U4004 + BSE PM context)
+ *   ISO 9001 quality management systems applied to building services — procedures, documentation control, audit and continual improvement.
  */
 
 import { useNavigate } from 'react-router-dom';
@@ -11,11 +10,15 @@ import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
-  ConceptBlock,
   CommonMistake,
-  LearningOutcomes,
+  ConceptBlock,
   FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
   SectionRule,
+  TLDR,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -281,6 +284,28 @@ const HNCModule5Section4_1 = () => {
             description="ISO 9001 requirements, quality procedures, documentation control and continual improvement for building services."
             tone="purple"
           />
+
+          <TLDR
+            points={[
+              "ISO 9001:2015 is the international QMS standard — risk-based thinking, process approach, leadership commitment, continual improvement.",
+              "Seven QMS principles: customer focus, leadership, engagement of people, process approach, improvement, evidence-based decision-making, relationship management.",
+              "Documented information: quality policy, quality manual, procedures, work instructions, records — only what is needed, controlled by version.",
+              "Internal audit programme verifies compliance; management review (annual) closes the improvement loop.",
+              "Certification (UKAS-accredited certification body) is the visible badge but the value is in the operational discipline.",
+            ]}
+          />
+
+          <RegsCallout
+            source="ISO 9001:2015 — Clause 5.1 (Leadership and commitment)"
+            clause="Top management shall demonstrate leadership and commitment with respect to the quality management system by taking accountability for the effectiveness of the quality management system, ensuring that the quality policy and quality objectives are established for the quality management system and are compatible with the context and strategic direction of the organization, ensuring the integration of the quality management system requirements into the organization’s business processes."
+            meaning={
+              <>
+                ISO 9001 is fundamentally a leadership standard, not a paperwork standard. If the project team treats QMS as compliance theatre, audits will find non-conformities and projects will repeat the same mistakes. The PM's daily attention to procedures, NCRs and lessons-learned is what makes QMS deliver value.
+              </>
+            }
+            cite="Source: ISO 9001:2015 (refer to BSI published text for verbatim clauses)."
+          />
+
 
           <LearningOutcomes
             outcomes={[
@@ -842,9 +867,44 @@ const HNCModule5Section4_1 = () => {
 
           <SectionRule />
 
+          <Scenario
+            title="Failed surveillance audit triggers project re-work"
+            situation={
+              <>
+                Your company holds ISO 9001:2015 certification. During a UKAS-accredited surveillance audit at one of your live MEP projects, the auditor finds 14 NCRs: missing site induction records, undated drawings on site, ITP hold-points unsigned, defective equipment installed without challenge, unsigned QA sign-offs at level 3. The certification body issues a major NCR, threatening certification suspension if not closed within 30 days.
+              </>
+            }
+            whatToDo={
+              <>
+                Convene an urgent project quality review. Brief the site team. Implement a controlled-document register on site, with an out-of-date drawing amnesty followed by a controlled re-issue. Re-validate all open ITPs and sign retrospectively where work has been verified. Brief subcontractors on document control discipline. Implement weekly site QA walk-rounds by the PM. Close all NCRs within 30 days with corrective action evidence. Lessons learned across the wider business — every project needs the same baseline.
+              </>
+            }
+            whyItMatters={
+              <>
+                QMS certification is reputational and commercial — many clients require it as PQQ pre-condition. A suspended certification can lock you out of pre-qualified frameworks for years. More importantly, the project quality issues that generate the NCRs are the same ones that generate defects, rework and client claims. QMS discipline is project-margin discipline.
+              </>
+            }
+          />
+
+          <SectionRule />
+
           <FAQ items={faqs} />
 
           <SectionRule />
+
+                    <KeyTakeaways
+            points={[
+              "ISO 9001:2015 is risk-based, process-led, leadership-driven — not paperwork.",
+              "Seven principles: customer focus, leadership, engagement, process, improvement, evidence, relationships.",
+              "Documented info: policy, manual, procedures, instructions, records — only what is needed.",
+              "Internal audit programme verifies compliance; management review closes the loop.",
+              "NCRs investigated for root cause, corrective action implemented and verified.",
+              "Continual improvement (PDCA cycle): plan, do, check, act.",
+              "Certification by UKAS-accredited body is the badge; operational discipline is the value.",
+              "Project-level QMS is the daily reality — PM’s attention makes the difference.",
+            ]}
+          />
+
 
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
 

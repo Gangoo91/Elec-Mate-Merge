@@ -1,7 +1,7 @@
 /**
  * Module 3 · Section 2 · Subsection 7 — AC Applications in Lighting, HVAC and Motors
  * HNC Electrical Engineering for Building Services (Pearson U4019 — Electrical & Electronic Principles)
- *   The full AC theory toolkit applied to the three big load groups in a real building \u2014
+ *   The full AC theory toolkit applied to the three big load groups in a real building —
  *   lighting drivers, HVAC fan / pump motors and the fixed-speed compressors / heaters that sit alongside.
  */
 
@@ -262,7 +262,7 @@ const HNCModule3Section2_7 = () => {
           <TLDR
             points={[
               'You can size cable, MCB and PFC for an LED lighting circuit, distinguishing drivers with active PFC (PF > 0.9, true) from cheaper drivers with passive PF that need bulk correction.',
-              'You can apply AC analysis to single- and three-phase induction motors \u2014 starting current, running impedance, slip, full-load efficiency and PF at part load.',
+              'You can apply AC analysis to single- and three-phase induction motors — starting current, running impedance, slip, full-load efficiency and PF at part load.',
               'You can compare DOL, star-delta, soft-start and VFD starting methods on the basis of inrush current, voltage dip and harmonic content.',
               'You can size a VFD, choose between motor-mounted and panel-mounted PFC, and decide where harmonic mitigation is needed.',
               'You can map AC theory to BMS metering: real, reactive, apparent power and PF on each phase of every distribution board.',
@@ -270,12 +270,12 @@ const HNCModule3Section2_7 = () => {
           />
 
           <RegsCallout
-            source="BS EN 60034-30-1 — Rotating electrical machines: Efficiency classes (IE1\u2013IE4) for AC induction motors"
+            source="BS EN 60034-30-1 — Rotating electrical machines: Efficiency classes (IE1–IE4) for AC induction motors"
             clause="Single-speed three-phase 50 Hz cage induction motors rated 0.12 kW to 1000 kW shall be classified into efficiency classes from IE1 (Standard) through IE2, IE3 (Premium) to IE4 (Super-Premium), with mandated minimum efficiency depending on rated power and pole number."
             meaning={
               <>
                 Building services HVAC motors above 0.75 kW must meet IE3 minimum (or IE2 if
-                fed from a VFD) under the EU MEPS regulation \u2014 still in force in UK
+                fed from a VFD) under the EU MEPS regulation — still in force in UK
                 building services specs. Pick efficiency class against the load profile,
                 because IE3/IE4 motors run cooler, draw less line current, have better PF
                 and recover their cost premium quickly on annual energy bills.
@@ -784,26 +784,26 @@ const HNCModule3Section2_7 = () => {
               <>
                 A 22 kW three-phase chiller compressor needs to start on a 1000 kVA supply
                 serving a small mixed-use building with sensitive IT load. DOL inrush would be
-                roughly 6 \u00d7 FLC \u2248 240 A, dipping the supply voltage by 6\u20137 % \u2014
+                roughly 6 × FLC ≈ 240 A, dipping the supply voltage by 6–7 % —
                 outside the 4 % limit the IT supplier insists on for clean operation.
               </>
             }
             whatToDo={
               <>
                 Compare the three realistic options. (1) Star-delta: cuts starting current to
-                roughly 1/3 (\u224880 A), but needs the motor to be specifically wound for it
+                roughly 1/3 (≈80 A), but needs the motor to be specifically wound for it
                 and gives a torque dip on transition. (2) Soft-starter: smooth thyristor-based
-                ramp, peak typically 3 \u00d7 FLC, no harmonic content during run. (3) VFD:
-                full speed control, peak start typically 1 \u00d7 FLC, also gives part-load
+                ramp, peak typically 3 × FLC, no harmonic content during run. (3) VFD:
+                full speed control, peak start typically 1 × FLC, also gives part-load
                 energy savings on a chiller, but needs harmonic mitigation per IEEE 519. For
-                this compressor and supply, a VFD is the right pick \u2014 it solves both the
+                this compressor and supply, a VFD is the right pick — it solves both the
                 starting dip and the part-load efficiency problem, and the harmonic mitigation
                 is a known cost line.
               </>
             }
             whyItMatters={
               <>
-                Picking the starting method is a direct application of AC theory \u2014
+                Picking the starting method is a direct application of AC theory —
                 starting impedance, voltage drop, harmonic content. The wrong choice causes
                 rolling brownouts on adjacent loads, premature compressor failure, or both.
               </>
@@ -818,14 +818,14 @@ const HNCModule3Section2_7 = () => {
 
           <KeyTakeaways
             points={[
-              'LED lighting drivers with active PFC: true PF \u2265 0.9, low THD, no bulk PFC needed downstream. Cheap drivers (no active PFC) need attention or bulk correction.',
-              'Three-phase induction motors are inductive loads \u2014 PF lags worse at part load (often 0.6 at 25 % load vs 0.85 at full load).',
-              'DOL starting current is typically 5\u20137 \u00d7 FLC \u2014 sized by blocked-rotor impedance, not running impedance.',
-              'Star-delta starting: \u22481/3 of DOL inrush, requires motor designed for it and a transition torque dip.',
-              'Soft-starter (thyristor): smooth ramp, peak \u22483 \u00d7 FLC during start, no permanent control during run \u2014 best for fixed-speed pumps and compressors.',
-              'VFD: full speed control, peak start \u22481 \u00d7 FLC, large part-load energy savings on variable-torque loads (fans, pumps), needs harmonic mitigation per IEEE 519.',
-              'Motor efficiency class to BS EN 60034-30-1 \u2014 IE3 minimum for most building services motors above 0.75 kW. IE4 / IE5 for high-runtime applications.',
-              'BMS metering should report P (kW), Q (kVAr), S (kVA) and PF per phase \u2014 the AC theory in this section is what makes those readings interpretable on the dashboard.',
+              'LED lighting drivers with active PFC: true PF ≥ 0.9, low THD, no bulk PFC needed downstream. Cheap drivers (no active PFC) need attention or bulk correction.',
+              'Three-phase induction motors are inductive loads — PF lags worse at part load (often 0.6 at 25 % load vs 0.85 at full load).',
+              'DOL starting current is typically 5–7 × FLC — sized by blocked-rotor impedance, not running impedance.',
+              'Star-delta starting: ≈1/3 of DOL inrush, requires motor designed for it and a transition torque dip.',
+              'Soft-starter (thyristor): smooth ramp, peak ≈3 × FLC during start, no permanent control during run — best for fixed-speed pumps and compressors.',
+              'VFD: full speed control, peak start ≈1 × FLC, large part-load energy savings on variable-torque loads (fans, pumps), needs harmonic mitigation per IEEE 519.',
+              'Motor efficiency class to BS EN 60034-30-1 — IE3 minimum for most building services motors above 0.75 kW. IE4 / IE5 for high-runtime applications.',
+              'BMS metering should report P (kW), Q (kVAr), S (kVA) and PF per phase — the AC theory in this section is what makes those readings interpretable on the dashboard.',
             ]}
           />
 

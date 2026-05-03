@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 7 · Section 6 · Subsection 6 — Documentation Requirements
+ * HNC Electrical Engineering for Building Services (Power and Lighting Systems)
+ *   Single line diagrams, distribution schedules, test certificates, O&M manuals, and as-built drawings for electrical installations
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Documentation Requirements - HNC Module 7 Section 6.6';
@@ -244,972 +257,363 @@ const faqs = [
 ];
 
 const HNCModule7Section6_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section6")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module7-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.6.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Documentation Requirements
-          </h1>
-          <p className="text-white">
-            Single line diagrams, distribution schedules, test certificates, O&M manuals, and
-            as-built drawings for electrical installations
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 7 · Section 6 · Subsection 6"
+            title="Documentation Requirements"
+            description="Single line diagrams, distribution schedules, test certificates, O&M manuals, and as-built drawings for electrical installations"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Single line diagrams:</strong> Simplified distribution schematics
-              </li>
-              <li className="pl-1">
-                <strong>Test certificates:</strong> EIC for new, EICR for existing
-              </li>
-              <li className="pl-1">
-                <strong>O&M manuals:</strong> Retained for building life
-              </li>
-              <li className="pl-1">
-                <strong>As-built drawings:</strong> Actual installation record
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Interpret and create single line diagrams for electrical distribution systems",
+              "Produce comprehensive distribution schedules with required circuit data",
+              "Understand EIC, EICR, and MEIWC certification requirements",
+              "Compile O&M manuals meeting CDM and client specifications",
+              "Develop as-built drawings accurately recording installed works",
+              "Assemble complete handover documentation packages",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Single Line Diagrams and Distribution Schedules">
+            <p>Single line diagrams and distribution schedules are fundamental documents for understanding and managing electrical installations. They provide essential information for operation, maintenance, fault finding, and future modifications.</p>
+            <p><strong>Single Line Diagram Requirements:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Supply details:</strong> DNO supply characteristics, CT ratios, maximum demand</li>
+              <li><strong>Main switchgear:</strong> Main switch rating, type, fault level rating</li>
+              <li><strong>Distribution hierarchy:</strong> MSB &gt; sub-mains &gt; DBs &gt; final circuits</li>
+              <li><strong>Protective devices:</strong> Type, rating, breaking capacity at each level</li>
+              <li><strong>Cable references:</strong> Size and type of main feeders and sub-mains</li>
+              <li><strong>Metering points:</strong> Location of revenue and sub-meters</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>CDM 2015:</strong> Health and Safety File requirement
-              </li>
-              <li className="pl-1">
-                <strong>BS 7671:</strong> Certificate retention for installation life
-              </li>
-              <li className="pl-1">
-                <strong>Handover:</strong> Complete package for client
-              </li>
-              <li className="pl-1">
-                <strong>BIM:</strong> Digital O&M increasingly required
-              </li>
+            <p><strong>Distribution Schedule Content</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Circuit No.:</strong> Unique circuit reference — 1, 2, 3... or L1, L2, P1...</li>
+              <li><strong>Description:</strong> Circuit use/location — Lighting - Ground Floor East</li>
+              <li><strong>Protective Device:</strong> Type and rating — MCB Type B 16A</li>
+              <li><strong>Cable:</strong> Type and size — 6242Y 1.5mm²</li>
+              <li><strong>Design Current (Ib):</strong> Calculated load current — 8.5A</li>
+              <li><strong>RCD:</strong> RCD protection if applicable — 30mA Type A</li>
+              <li><strong>Points:</strong> Number of outlets — 12 luminaires</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Single Line Diagram Symbols</strong></p>
+            <p>Common symbols include:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Transformer (two circles)</li>
+              <li>• Isolator (gap with contacts)</li>
+              <li>• Circuit breaker (square with X)</li>
+              <li>• Fuse (rectangle)</li>
+            </ul>
+            <p>Must also show:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Earth connections</li>
+              <li>• Neutral arrangements</li>
+              <li>• Generator connections</li>
+              <li>• UPS systems</li>
+            </ul>
+            <p><strong>Best practice:</strong> Single line diagrams should be displayed in main switch rooms. Distribution schedules should be fixed inside each distribution board cover.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Interpret and create single line diagrams for electrical distribution systems',
-              'Produce comprehensive distribution schedules with required circuit data',
-              'Understand EIC, EICR, and MEIWC certification requirements',
-              'Compile O&M manuals meeting CDM and client specifications',
-              'Develop as-built drawings accurately recording installed works',
-              'Assemble complete handover documentation packages',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Single Line Diagrams and Distribution Schedules */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Single Line Diagrams and Distribution Schedules
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Test Certificates (EIC, EICR, MEIWC)">
+            <p>Electrical test certificates provide formal documentation of compliance and condition. BS 7671 requires specific certificates for different types of work, each serving distinct purposes in the certification regime.</p>
+            <p><strong>EIC - Electrical Installation Certificate</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>New installations</li>
+              <li>Additions with new circuits</li>
+              <li>Alterations with new circuits</li>
+              <li>Three declarations required</li>
+              <li>Schedule of test results</li>
+            </ul>
+            <p><strong>EICR - Condition Report</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Periodic inspection</li>
+              <li>Change of occupancy</li>
+              <li>Change of use</li>
+              <li>Classification codes (C1-C3, FI)</li>
+              <li>Recommendations for next inspection</li>
+            </ul>
+            <p><strong>MEIWC - Minor Works</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>No new circuits</li>
+              <li>Additions to existing circuits</li>
+              <li>Like-for-like replacements</li>
+              <li>Single page format</li>
+              <li>Simplified test results</li>
+            </ul>
+            <p><strong>EIC Declaration Sections</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Section 1:</strong> Designer — Design complies with BS 7671</li>
+              <li><strong>Section 2:</strong> Constructor/Installer — Installation constructed to design</li>
+              <li><strong>Section 3:</strong> Inspector/Tester — Inspection and testing completed</li>
+            </ul>
+            <p><strong>EICR Classification Codes</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>C1:</strong> Danger present — Immediate remedial action</li>
+              <li><strong>C2:</strong> Potentially dangerous — Urgent remedial action</li>
+              <li><strong>C3:</strong> Improvement recommended — Action at discretion</li>
+              <li><strong>FI:</strong> Further investigation — Investigation required</li>
+            </ul>
+            <p><strong>Retention requirement:</strong> BS 7671 Regulation 132.13 requires certificates and test results to be retained for the working life of the installation.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Operation and Maintenance Manuals">
+            <p>Operation and Maintenance (O&M) manuals provide comprehensive information for the safe operation, maintenance, and modification of electrical installations throughout their service life. They form a key part of the CDM Health and Safety File.</p>
+            <p><strong>O&M Manual Structure</strong></p>
+            <p><strong>Volume 1 - Operating Information</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• System descriptions and schematics</li>
+              <li>• Operating procedures</li>
+              <li>• Start-up/shutdown sequences</li>
+              <li>• Emergency procedures</li>
+              <li>• Contact details for support</li>
+            </ul>
+            <p><strong>Volume 2 - Maintenance Information</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Maintenance schedules and frequencies</li>
+              <li>• Equipment data sheets</li>
+              <li>• Spare parts lists and suppliers</li>
+              <li>• Test certificates and records</li>
+              <li>• As-built drawings</li>
+            </ul>
+            <p><strong>O&M Manual Contents Checklist</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Introduction:</strong> Project details, installation summary, document register</li>
+              <li><strong>System descriptions:</strong> Written description of each system with operating parameters</li>
+              <li><strong>Schematics:</strong> Single line diagrams, control schematics, wiring diagrams</li>
+              <li><strong>Equipment schedules:</strong> All installed equipment with make, model, ratings</li>
+              <li><strong>Manufacturer literature:</strong> Data sheets, installation instructions, warranty details</li>
+              <li><strong>Maintenance schedules:</strong> PPM requirements with frequencies and procedures</li>
+              <li><strong>Spare parts:</strong> Recommended spares with part numbers and suppliers</li>
+              <li><strong>Test certificates:</strong> EIC, commissioning records, witness test reports</li>
+              <li><strong>As-built drawings:</strong> Final installation drawings including all variations</li>
+              <li><strong>Training records:</strong> Evidence of handover training provided</li>
+            </ul>
+            <p><strong>Maintenance Schedule Example - Distribution Boards</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Visual inspection:</strong> Monthly — Skilled person</li>
+              <li><strong>Thermal imaging survey:</strong> Annually — Competent person</li>
+              <li><strong>Termination tightness check:</strong> Annually — Competent person</li>
+              <li><strong>RCD functional test:</strong> Quarterly — Instructed person</li>
+              <li><strong>Full periodic inspection:</strong> 5 years — Competent person</li>
+            </ul>
+            <p><strong>CDM requirement:</strong> O&M manuals form part of the Health and Safety File and must be retained for the life of the building. They should be updated whenever significant modifications are made.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="As-Built Drawings and Handover Documentation">
+            <p>As-built drawings record the installation exactly as constructed, incorporating all variations from the original design. Combined with other documentation, they form a comprehensive handover package essential for building operation and future works.</p>
+            <p><strong>As-Built Drawing Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Accuracy:</strong> Must reflect actual installed positions, routes, and equipment</li>
+              <li><strong>Variations:</strong> All site instructions, RFIs, and changes incorporated</li>
+              <li><strong>Cable routes:</strong> Actual containment routes with measurements from datums</li>
+              <li><strong>Equipment locations:</strong> Precise positions of all distribution boards, switches, accessories</li>
+              <li><strong>Hidden services:</strong> Accurate recording of concealed cables and equipment</li>
+              <li><strong>Revision status:</strong> Clearly marked as "As-Built" with final revision number</li>
+            </ul>
+            <p><strong>Drawing Types Required</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>General arrangement:</strong> Equipment positions, containment routes — 1:50 or 1:100</li>
+              <li><strong>Single line diagrams:</strong> Distribution schematic — NTS</li>
+              <li><strong>Lighting layouts:</strong> Luminaire positions, switching zones — 1:50 or 1:100</li>
+              <li><strong>Small power layouts:</strong> Socket and FCU positions — 1:50 or 1:100</li>
+              <li><strong>Containment layouts:</strong> Cable tray, trunking, conduit routes — 1:50 or 1:100</li>
+              <li><strong>Wiring diagrams:</strong> Panel internal wiring, control circuits — NTS</li>
+              <li><strong>External works:</strong> Underground routes, depths, marker posts — 1:100 or 1:200</li>
+            </ul>
+            <p><strong>Handover Documentation Package Checklist</strong></p>
+            <p><strong>Certificates and Records</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>☐ Electrical Installation Certificate(s)</li>
+              <li>☐ Schedule of Test Results</li>
+              <li>☐ Commissioning records</li>
+              <li>☐ Witness test records</li>
+              <li>☐ Fire alarm certificate</li>
+              <li>☐ Emergency lighting certificate</li>
+              <li>☐ PAT test records (if applicable)</li>
+            </ul>
+            <p><strong>Documentation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>☐ O&M manuals (operation)</li>
+              <li>☐ O&M manuals (maintenance)</li>
+              <li>☐ As-built drawings (full set)</li>
+              <li>☐ Equipment warranties</li>
+              <li>☐ Spare parts and keys</li>
+              <li>☐ Training sign-off sheets</li>
+              <li>☐ Snagging completion records</li>
+            </ul>
+            <p><strong>Document Retention Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>EIC and test results:</strong> Life of installation — BS 7671 Reg. 132.13</li>
+              <li><strong>Health and Safety File:</strong> Life of building — CDM 2015 Reg. 12</li>
+              <li><strong>O&M manuals:</strong> Life of building — CDM 2015 / Contract</li>
+              <li><strong>As-built drawings:</strong> Life of building — Good practice</li>
+              <li><strong>EICR reports:</strong> Until superseded + archive — BS 7671</li>
+            </ul>
+            <p><strong>BIM requirement:</strong> On larger projects, as-built information is increasingly required as updated BIM models (COBie data) rather than traditional 2D drawings. The model becomes the authoritative record of the installation.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Single line diagrams and distribution schedules are fundamental documents for
-              understanding and managing electrical installations. They provide essential
-              information for operation, maintenance, fault finding, and future modifications.
+              <strong>Example 1: Distribution Schedule Preparation</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Single Line Diagram Requirements:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Supply details:</strong> DNO supply characteristics, CT ratios, maximum
-                  demand
-                </li>
-                <li className="pl-1">
-                  <strong>Main switchgear:</strong> Main switch rating, type, fault level rating
-                </li>
-                <li className="pl-1">
-                  <strong>Distribution hierarchy:</strong> MSB &gt; sub-mains &gt; DBs &gt; final
-                  circuits
-                </li>
-                <li className="pl-1">
-                  <strong>Protective devices:</strong> Type, rating, breaking capacity at each level
-                </li>
-                <li className="pl-1">
-                  <strong>Cable references:</strong> Size and type of main feeders and sub-mains
-                </li>
-                <li className="pl-1">
-                  <strong>Metering points:</strong> Location of revenue and sub-meters
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Distribution Schedule Content
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Column</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Information Required
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Example</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Circuit No.</td>
-                      <td className="border border-white/10 px-3 py-2">Unique circuit reference</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        1, 2, 3... or L1, L2, P1...
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Description</td>
-                      <td className="border border-white/10 px-3 py-2">Circuit use/location</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lighting - Ground Floor East
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Protective Device</td>
-                      <td className="border border-white/10 px-3 py-2">Type and rating</td>
-                      <td className="border border-white/10 px-3 py-2">MCB Type B 16A</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cable</td>
-                      <td className="border border-white/10 px-3 py-2">Type and size</td>
-                      <td className="border border-white/10 px-3 py-2">6242Y 1.5mm²</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Design Current (Ib)</td>
-                      <td className="border border-white/10 px-3 py-2">Calculated load current</td>
-                      <td className="border border-white/10 px-3 py-2">8.5A</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">RCD</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        RCD protection if applicable
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">30mA Type A</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Points</td>
-                      <td className="border border-white/10 px-3 py-2">Number of outlets</td>
-                      <td className="border border-white/10 px-3 py-2">12 luminaires</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Single Line Diagram Symbols</p>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-white">Common symbols include:</p>
-                  <ul className="text-white space-y-1 mt-2">
-                    <li>• Transformer (two circles)</li>
-                    <li>• Isolator (gap with contacts)</li>
-                    <li>• Circuit breaker (square with X)</li>
-                    <li>• Fuse (rectangle)</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-white">Must also show:</p>
-                  <ul className="text-white space-y-1 mt-2">
-                    <li>• Earth connections</li>
-                    <li>• Neutral arrangements</li>
-                    <li>• Generator connections</li>
-                    <li>• UPS systems</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> Single line diagrams should be displayed in main
-              switch rooms. Distribution schedules should be fixed inside each distribution board
-              cover.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Test Certificates */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Test Certificates (EIC, EICR, MEIWC)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Complete a distribution schedule for a 12-way TP+N board serving office lighting and power.</p>
+            <p>Distribution Board: DB-L1-01 | Location: First Floor Riser</p>
+            <p>Supply: 100A TP+N from MSB via 25mm² 4c SWA</p>
+            <p>Circuit Schedule:</p>
+            <p>Cct | Description | Device | Cable | Ib | RCD</p>
+            <p>----|---------------------|-------------|------------|------|--------</p>
+            <p>1 | Lighting Zone A | B10 SP | 1.5mm² 3c | 6.2A | 30mA A</p>
+            <p>2 | Lighting Zone B | B10 SP | 1.5mm² 3c | 5.8A | 30mA A</p>
+            <p>3 | Emergency Lighting | B6 SP | 1.5mm² 3c | 2.1A | 30mA A</p>
+            <p>4 | Small Power Ring 1 | B32 SP | 2.5mm² 3c | 20A | 30mA A</p>
+            <p>5 | Small Power Ring 2 | B32 SP | 2.5mm² 3c | 20A | 30mA A</p>
+            <p>6 | Server Room AC | B20 DP | 4.0mm² 3c | 16A | -</p>
+            <p>Note: All circuits comply with BS 7671 requirements</p>
             <p>
-              Electrical test certificates provide formal documentation of compliance and condition.
-              BS 7671 requires specific certificates for different types of work, each serving
-              distinct purposes in the certification regime.
+              <strong>Example 2: EICR Observation Recording</strong>
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  EIC - Electrical Installation Certificate
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">New installations</li>
-                  <li className="pl-1">Additions with new circuits</li>
-                  <li className="pl-1">Alterations with new circuits</li>
-                  <li className="pl-1">Three declarations required</li>
-                  <li className="pl-1">Schedule of test results</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  EICR - Condition Report
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Periodic inspection</li>
-                  <li className="pl-1">Change of occupancy</li>
-                  <li className="pl-1">Change of use</li>
-                  <li className="pl-1">Classification codes (C1-C3, FI)</li>
-                  <li className="pl-1">Recommendations for next inspection</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">MEIWC - Minor Works</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">No new circuits</li>
-                  <li className="pl-1">Additions to existing circuits</li>
-                  <li className="pl-1">Like-for-like replacements</li>
-                  <li className="pl-1">Single page format</li>
-                  <li className="pl-1">Simplified test results</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                EIC Declaration Sections
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Section</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Declaration By</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Responsibility</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Section 1</td>
-                      <td className="border border-white/10 px-3 py-2">Designer</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Design complies with BS 7671
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Section 2</td>
-                      <td className="border border-white/10 px-3 py-2">Constructor/Installer</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Installation constructed to design
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Section 3</td>
-                      <td className="border border-white/10 px-3 py-2">Inspector/Tester</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Inspection and testing completed
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                EICR Classification Codes
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Code</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Classification</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Action Required
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="bg-red-500/10">
-                      <td className="border border-white/10 px-3 py-2 font-bold">C1</td>
-                      <td className="border border-white/10 px-3 py-2">Danger present</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Immediate remedial action
-                      </td>
-                    </tr>
-                    <tr className="bg-orange-500/10">
-                      <td className="border border-white/10 px-3 py-2 font-bold">C2</td>
-                      <td className="border border-white/10 px-3 py-2">Potentially dangerous</td>
-                      <td className="border border-white/10 px-3 py-2">Urgent remedial action</td>
-                    </tr>
-                    <tr className="bg-yellow-500/10">
-                      <td className="border border-white/10 px-3 py-2 font-bold">C3</td>
-                      <td className="border border-white/10 px-3 py-2">Improvement recommended</td>
-                      <td className="border border-white/10 px-3 py-2">Action at discretion</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-bold">FI</td>
-                      <td className="border border-white/10 px-3 py-2">Further investigation</td>
-                      <td className="border border-white/10 px-3 py-2">Investigation required</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Retention requirement:</strong> BS 7671 Regulation 132.13 requires
-              certificates and test results to be retained for the working life of the installation.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: O&M Manuals */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Operation and Maintenance Manuals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Record observations from a periodic inspection with appropriate classification codes.</p>
+            <p>Schedule of Observations:</p>
+            <p>Obs | Location | Observation | Code</p>
+            <p>----|-----------------|----------------------------------|------</p>
+            <p>1 | DB-G01 | Missing circuit chart | C3</p>
+            <p>2 | Kitchen | Unprotected cable at cooker |  <span>C1</span></p>
+            <p>3 | WC | No supplementary bonding | <span>C2</span></p>
+            <p>4 | External | IP rating inadequate for location|  <span>C2</span></p>
+            <p>5 | Throughout | No RCD protection to socket outlets|  <span>C2</span></p>
+            <p>6 | Intake | Meter tails undersized for load | FI</p>
+            <p>Overall condition: Unsatisfactory</p>
+            <p>C1 requires immediate attention - client notified</p>
             <p>
-              Operation and Maintenance (O&M) manuals provide comprehensive information for the safe
-              operation, maintenance, and modification of electrical installations throughout their
-              service life. They form a key part of the CDM Health and Safety File.
+              <strong>Example 3: O&M Manual Index Structure</strong>
             </p>
+            <p><strong>Scenario:</strong> Develop an index structure for electrical O&M manuals for a commercial building.</p>
+            <p>Volume E - Electrical Installation O&M Manual</p>
+            <p>Section | Content</p>
+            <p>--------|------------------------------------------</p>
+            <p>E.1 | Introduction and System Overview</p>
+            <p>E.2 | Single Line Diagrams</p>
+            <p>E.3 | Distribution Schedules</p>
+            <p>E.4 | LV Switchgear - Operation & Maintenance</p>
+            <p>E.5 | Distribution Boards - Schedules & Data</p>
+            <p>E.6 | Lighting Systems - Control & Operation</p>
+            <p>E.7 | Emergency Lighting - Test Procedures</p>
+            <p>E.8 | Fire Alarm System - Operation & Test</p>
+            <p>E.9 | UPS System - Operation & Maintenance</p>
+            <p>E.10 | Generator - Operation & Maintenance</p>
+            <p>E.11 | Manufacturer Data Sheets</p>
+            <p>E.12 | Spare Parts Lists</p>
+            <p>E.13 | Test Certificates (EIC, Schedules)</p>
+            <p>E.14 | Commissioning Records</p>
+            <p>E.15 | As-Built Drawing Register</p>
+            <p>Format: PDF with searchable index, also BIM COBie data</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">O&M Manual Structure</p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-white font-medium mb-1">Volume 1 - Operating Information</p>
-                  <ul className="text-white space-y-1">
-                    <li>• System descriptions and schematics</li>
-                    <li>• Operating procedures</li>
-                    <li>• Start-up/shutdown sequences</li>
-                    <li>• Emergency procedures</li>
-                    <li>• Contact details for support</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-white font-medium mb-1">Volume 2 - Maintenance Information</p>
-                  <ul className="text-white space-y-1">
-                    <li>• Maintenance schedules and frequencies</li>
-                    <li>• Equipment data sheets</li>
-                    <li>• Spare parts lists and suppliers</li>
-                    <li>• Test certificates and records</li>
-                    <li>• As-built drawings</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                O&M Manual Contents Checklist
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Introduction:</strong> Project details, installation summary, document
-                  register
-                </li>
-                <li className="pl-1">
-                  <strong>System descriptions:</strong> Written description of each system with
-                  operating parameters
-                </li>
-                <li className="pl-1">
-                  <strong>Schematics:</strong> Single line diagrams, control schematics, wiring
-                  diagrams
-                </li>
-                <li className="pl-1">
-                  <strong>Equipment schedules:</strong> All installed equipment with make, model,
-                  ratings
-                </li>
-                <li className="pl-1">
-                  <strong>Manufacturer literature:</strong> Data sheets, installation instructions,
-                  warranty details
-                </li>
-                <li className="pl-1">
-                  <strong>Maintenance schedules:</strong> PPM requirements with frequencies and
-                  procedures
-                </li>
-                <li className="pl-1">
-                  <strong>Spare parts:</strong> Recommended spares with part numbers and suppliers
-                </li>
-                <li className="pl-1">
-                  <strong>Test certificates:</strong> EIC, commissioning records, witness test
-                  reports
-                </li>
-                <li className="pl-1">
-                  <strong>As-built drawings:</strong> Final installation drawings including all
-                  variations
-                </li>
-                <li className="pl-1">
-                  <strong>Training records:</strong> Evidence of handover training provided
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Maintenance Schedule Example - Distribution Boards
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Task</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Frequency</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Competence</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Visual inspection</td>
-                      <td className="border border-white/10 px-3 py-2">Monthly</td>
-                      <td className="border border-white/10 px-3 py-2">Skilled person</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Thermal imaging survey</td>
-                      <td className="border border-white/10 px-3 py-2">Annually</td>
-                      <td className="border border-white/10 px-3 py-2">Competent person</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Termination tightness check
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Annually</td>
-                      <td className="border border-white/10 px-3 py-2">Competent person</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">RCD functional test</td>
-                      <td className="border border-white/10 px-3 py-2">Quarterly</td>
-                      <td className="border border-white/10 px-3 py-2">Instructed person</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Full periodic inspection</td>
-                      <td className="border border-white/10 px-3 py-2">5 years</td>
-                      <td className="border border-white/10 px-3 py-2">Competent person</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>CDM requirement:</strong> O&M manuals form part of the Health and Safety File
-              and must be retained for the life of the building. They should be updated whenever
-              significant modifications are made.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: As-Built Drawings and Handover */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            As-Built Drawings and Handover Documentation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              As-built drawings record the installation exactly as constructed, incorporating all
-              variations from the original design. Combined with other documentation, they form a
-              comprehensive handover package essential for building operation and future works.
+              <strong>Documentation Production Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                As-Built Drawing Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Accuracy:</strong> Must reflect actual installed positions, routes, and
-                  equipment
-                </li>
-                <li className="pl-1">
-                  <strong>Variations:</strong> All site instructions, RFIs, and changes incorporated
-                </li>
-                <li className="pl-1">
-                  <strong>Cable routes:</strong> Actual containment routes with measurements from
-                  datums
-                </li>
-                <li className="pl-1">
-                  <strong>Equipment locations:</strong> Precise positions of all distribution
-                  boards, switches, accessories
-                </li>
-                <li className="pl-1">
-                  <strong>Hidden services:</strong> Accurate recording of concealed cables and
-                  equipment
-                </li>
-                <li className="pl-1">
-                  <strong>Revision status:</strong> Clearly marked as "As-Built" with final revision
-                  number
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Drawing Types Required</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Drawing Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Content</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Scale</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">General arrangement</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Equipment positions, containment routes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">1:50 or 1:100</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Single line diagrams</td>
-                      <td className="border border-white/10 px-3 py-2">Distribution schematic</td>
-                      <td className="border border-white/10 px-3 py-2">NTS</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lighting layouts</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Luminaire positions, switching zones
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">1:50 or 1:100</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Small power layouts</td>
-                      <td className="border border-white/10 px-3 py-2">Socket and FCU positions</td>
-                      <td className="border border-white/10 px-3 py-2">1:50 or 1:100</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Containment layouts</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable tray, trunking, conduit routes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">1:50 or 1:100</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Wiring diagrams</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Panel internal wiring, control circuits
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">NTS</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">External works</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Underground routes, depths, marker posts
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">1:100 or 1:200</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Handover Documentation Package Checklist
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-white font-medium mb-1">Certificates and Records</p>
-                  <ul className="text-white space-y-1">
-                    <li>☐ Electrical Installation Certificate(s)</li>
-                    <li>☐ Schedule of Test Results</li>
-                    <li>☐ Commissioning records</li>
-                    <li>☐ Witness test records</li>
-                    <li>☐ Fire alarm certificate</li>
-                    <li>☐ Emergency lighting certificate</li>
-                    <li>☐ PAT test records (if applicable)</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-white font-medium mb-1">Documentation</p>
-                  <ul className="text-white space-y-1">
-                    <li>☐ O&M manuals (operation)</li>
-                    <li>☐ O&M manuals (maintenance)</li>
-                    <li>☐ As-built drawings (full set)</li>
-                    <li>☐ Equipment warranties</li>
-                    <li>☐ Spare parts and keys</li>
-                    <li>☐ Training sign-off sheets</li>
-                    <li>☐ Snagging completion records</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Document Retention Requirements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Document</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Retention Period
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Regulation/Standard
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">EIC and test results</td>
-                      <td className="border border-white/10 px-3 py-2">Life of installation</td>
-                      <td className="border border-white/10 px-3 py-2">BS 7671 Reg. 132.13</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Health and Safety File</td>
-                      <td className="border border-white/10 px-3 py-2">Life of building</td>
-                      <td className="border border-white/10 px-3 py-2">CDM 2015 Reg. 12</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">O&M manuals</td>
-                      <td className="border border-white/10 px-3 py-2">Life of building</td>
-                      <td className="border border-white/10 px-3 py-2">CDM 2015 / Contract</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">As-built drawings</td>
-                      <td className="border border-white/10 px-3 py-2">Life of building</td>
-                      <td className="border border-white/10 px-3 py-2">Good practice</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">EICR reports</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Until superseded + archive
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">BS 7671</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>BIM requirement:</strong> On larger projects, as-built information is
-              increasingly required as updated BIM models (COBie data) rather than traditional 2D
-              drawings. The model becomes the authoritative record of the installation.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Start documentation early - don't leave until project end</li>
+              <li>Record variations and changes as they occur on site</li>
+              <li>Use standardised templates for consistency</li>
+              <li>Ensure all signatories have appropriate competence</li>
+              <li>Cross-reference between documents (drawings to schedules)</li>
+              <li>Allow time for client review before formal handover</li>
+            </ul>
+            <p>
+              <strong>Key Documentation Standards:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>BS 7671: Certification requirements and test schedules</li>
+              <li>BS 8536: Briefing for design and construction (soft landings)</li>
+              <li>PAS 1192-2: BIM Level 2 requirements</li>
+              <li>BSRIA BG 6: Guide to design information</li>
+              <li>SFG 20: Maintenance specifications</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Distribution Schedule Preparation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Complete a distribution schedule for a 12-way TP+N board
-                serving office lighting and power.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white overflow-x-auto">
-                <p className="text-white">
-                  Distribution Board: DB-L1-01 | Location: First Floor Riser
-                </p>
-                <p className="text-white">Supply: 100A TP+N from MSB via 25mm² 4c SWA</p>
-                <p className="mt-2">Circuit Schedule:</p>
-                <p>Cct | Description | Device | Cable | Ib | RCD</p>
-                <p>----|---------------------|-------------|------------|------|--------</p>
-                <p>1 | Lighting Zone A | B10 SP | 1.5mm² 3c | 6.2A | 30mA A</p>
-                <p>2 | Lighting Zone B | B10 SP | 1.5mm² 3c | 5.8A | 30mA A</p>
-                <p>3 | Emergency Lighting | B6 SP | 1.5mm² 3c | 2.1A | 30mA A</p>
-                <p>4 | Small Power Ring 1 | B32 SP | 2.5mm² 3c | 20A | 30mA A</p>
-                <p>5 | Small Power Ring 2 | B32 SP | 2.5mm² 3c | 20A | 30mA A</p>
-                <p>6 | Server Room AC | B20 DP | 4.0mm² 3c | 16A | -</p>
-                <p className="mt-2 text-green-400">
-                  Note: All circuits comply with BS 7671 requirements
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: EICR Observation Recording
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Record observations from a periodic inspection with
-                appropriate classification codes.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Schedule of Observations:</p>
-                <p className="mt-2">Obs | Location | Observation | Code</p>
-                <p>----|-----------------|----------------------------------|------</p>
-                <p>1 | DB-G01 | Missing circuit chart | C3</p>
-                <p>
-                  2 | Kitchen | Unprotected cable at cooker |{' '}
-                  <span className="text-red-400">C1</span>
-                </p>
-                <p>
-                  3 | WC | No supplementary bonding | <span className="text-orange-400">C2</span>
-                </p>
-                <p>
-                  4 | External | IP rating inadequate for location|{' '}
-                  <span className="text-orange-400">C2</span>
-                </p>
-                <p>
-                  5 | Throughout | No RCD protection to socket outlets|{' '}
-                  <span className="text-orange-400">C2</span>
-                </p>
-                <p>6 | Intake | Meter tails undersized for load | FI</p>
-                <p className="mt-2 text-white">Overall condition: Unsatisfactory</p>
-                <p className="text-white">C1 requires immediate attention - client notified</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: O&M Manual Index Structure
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Develop an index structure for electrical O&M manuals for
-                a commercial building.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Volume E - Electrical Installation O&M Manual</p>
-                <p className="mt-2">Section | Content</p>
-                <p>--------|------------------------------------------</p>
-                <p>E.1 | Introduction and System Overview</p>
-                <p>E.2 | Single Line Diagrams</p>
-                <p>E.3 | Distribution Schedules</p>
-                <p>E.4 | LV Switchgear - Operation & Maintenance</p>
-                <p>E.5 | Distribution Boards - Schedules & Data</p>
-                <p>E.6 | Lighting Systems - Control & Operation</p>
-                <p>E.7 | Emergency Lighting - Test Procedures</p>
-                <p>E.8 | Fire Alarm System - Operation & Test</p>
-                <p>E.9 | UPS System - Operation & Maintenance</p>
-                <p>E.10 | Generator - Operation & Maintenance</p>
-                <p>E.11 | Manufacturer Data Sheets</p>
-                <p>E.12 | Spare Parts Lists</p>
-                <p>E.13 | Test Certificates (EIC, Schedules)</p>
-                <p>E.14 | Commissioning Records</p>
-                <p>E.15 | As-Built Drawing Register</p>
-                <p className="mt-2 text-green-400">
-                  Format: PDF with searchable index, also BIM COBie data
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Documentation Production Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Start documentation early - don't leave until project end</li>
-                <li className="pl-1">Record variations and changes as they occur on site</li>
-                <li className="pl-1">Use standardised templates for consistency</li>
-                <li className="pl-1">Ensure all signatories have appropriate competence</li>
-                <li className="pl-1">Cross-reference between documents (drawings to schedules)</li>
-                <li className="pl-1">Allow time for client review before formal handover</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Missing signatures:</strong> All EIC sections must be signed by appropriate persons</li>
+                <li><strong>Incomplete test results:</strong> Every circuit must have recorded values</li>
+                <li><strong>Outdated drawings:</strong> As-built must include all final variations</li>
+                <li><strong>Generic O&M content:</strong> Must be project-specific, not manufacturer templates</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Documentation Standards
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">BS 7671: Certification requirements and test schedules</li>
-                <li className="pl-1">
-                  BS 8536: Briefing for design and construction (soft landings)
-                </li>
-                <li className="pl-1">PAS 1192-2: BIM Level 2 requirements</li>
-                <li className="pl-1">BSRIA BG 6: Guide to design information</li>
-                <li className="pl-1">SFG 20: Maintenance specifications</li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">
-                Common Documentation Errors
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Missing signatures:</strong> All EIC sections must be signed by
-                  appropriate persons
-                </li>
-                <li className="pl-1">
-                  <strong>Incomplete test results:</strong> Every circuit must have recorded values
-                </li>
-                <li className="pl-1">
-                  <strong>Outdated drawings:</strong> As-built must include all final variations
-                </li>
-                <li className="pl-1">
-                  <strong>Generic O&M content:</strong> Must be project-specific, not manufacturer
-                  templates
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Certificate Types</p>
-                <ul className="space-y-0.5">
-                  <li>EIC - New installations</li>
-                  <li>EICR - Periodic inspection</li>
-                  <li>MEIWC - Minor works (no new circuits)</li>
-                  <li>All retained for installation life</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">EICR Codes</p>
-                <ul className="space-y-0.5">
-                  <li>C1 - Danger present (immediate)</li>
-                  <li>C2 - Potentially dangerous (urgent)</li>
-                  <li>C3 - Improvement recommended</li>
-                  <li>FI - Further investigation required</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Handover Package</p>
-                <ul className="space-y-0.5">
-                  <li>EIC and test results</li>
-                  <li>O&M manuals (operation + maintenance)</li>
-                  <li>As-built drawings (full set)</li>
-                  <li>Commissioning records</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Retention Periods</p>
-                <ul className="space-y-0.5">
-                  <li>Certificates - Life of installation</li>
-                  <li>H&S File - Life of building</li>
-                  <li>O&M manuals - Life of building</li>
-                  <li>As-built drawings - Life of building</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation - Back button only (last subsection) */}
-        <nav className="flex justify-start pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section6-5")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Commissioning procedures
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next module <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Module 8
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

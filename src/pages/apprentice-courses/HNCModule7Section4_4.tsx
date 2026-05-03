@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 7 · Section 4 · Subsection 4 — Scene Setting
+ * HNC Electrical Engineering for Building Services (Power and Lighting Systems)
+ *   Scene controllers, preset configurations, tunable white, colour changing, and circadian lighting for human-centric design
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Scene Setting - HNC Module 7 Section 4.4';
@@ -251,935 +264,341 @@ const faqs = [
 ];
 
 const HNCModule7Section4_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section4")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module7-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.4.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Scene Setting
-          </h1>
-          <p className="text-white">
-            Scene controllers, preset configurations, tunable white, colour changing, and circadian
-            lighting for human-centric design
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 7 · Section 4 · Subsection 4"
+            title="Scene Setting"
+            description="Scene controllers, preset configurations, tunable white, colour changing, and circadian lighting for human-centric design"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Scene controllers:</strong> Store and recall preset lighting configurations
-              </li>
-              <li className="pl-1">
-                <strong>Tunable white:</strong> CCT adjustment from 2700K to 6500K
-              </li>
-              <li className="pl-1">
-                <strong>RGB/RGBW:</strong> Colour changing via additive colour mixing
-              </li>
-              <li className="pl-1">
-                <strong>Circadian:</strong> Light aligned with biological rhythms
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Design and configure scene controllers for various applications",
+              "Specify tunable white systems for CCT adjustment",
+              "Understand RGB and RGBW colour changing principles",
+              "Apply circadian lighting design for human-centric installations",
+              "Meet WELL Building Standard lighting requirements",
+              "Commission and document scene-based lighting systems",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Scene Controllers and Preset Configurations">
+            <p>Scene controllers are the user interface for recalling pre-programmed lighting configurations. Each scene stores multiple parameters—dimming levels, colour temperatures, and colour values—for groups of luminaires, allowing complex lighting changes with a single button press.</p>
+            <p><strong>Key scene controller components:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Scene buttons:</strong> Dedicated buttons for each preset (typically 4-8 scenes per plate)</li>
+              <li><strong>Raise/lower controls:</strong> Manual override for brightness adjustment</li>
+              <li><strong>Scene memory:</strong> Stored values in drivers (DALI) or central controller</li>
+              <li><strong>Fade time settings:</strong> Transition speed from current to recalled state</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>WELL Standard:</strong> 150+ melanopic EDI at eye level
-              </li>
-              <li className="pl-1">
-                <strong>DALI DT8:</strong> Protocol for colour control
-              </li>
-              <li className="pl-1">
-                <strong>DMX512:</strong> Professional colour changing standard
-              </li>
-              <li className="pl-1">
-                <strong>Human-centric:</strong> Supporting occupant wellbeing
-              </li>
+            <p><strong>Typical Scene Configurations by Space Type</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Boardroom:</strong> Meeting (80%) — Presentation (30%) — Video call (60%) — All off</li>
+              <li><strong>Restaurant:</strong> Lunch (70%, 4000K) — Dinner (40%, 2700K) — Cleaning (100%) — Closed (5%)</li>
+              <li><strong>Retail:</strong> Trading (100%) — Evening (80%) — Closed (security) — Restock (100%)</li>
+              <li><strong>Healthcare ward:</strong> Day (5000K) — Evening (3000K) — Night (dim amber) — Examination</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>DALI Scene Commands</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Recall scene 1:</strong> GOTO SCENE 0 (broadcast to group)</li>
+              <li><strong>Store current as scene 2:</strong> STORE DTR AS SCENE 1</li>
+              <li><strong>Scene storage:</strong> 16 scenes per DALI group (0-15)</li>
+              <li><strong>Fade time:</strong> Configurable 0-90 seconds</li>
+            </ul>
+            <p><strong>Design principle:</strong> Scene names should be intuitive for end users—avoid technical labels like "Scene 3" in favour of descriptive names like "Presentation Mode."</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Design and configure scene controllers for various applications',
-              'Specify tunable white systems for CCT adjustment',
-              'Understand RGB and RGBW colour changing principles',
-              'Apply circadian lighting design for human-centric installations',
-              'Meet WELL Building Standard lighting requirements',
-              'Commission and document scene-based lighting systems',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Scene Controllers and Presets */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Scene Controllers and Preset Configurations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Tunable White (CCT Adjustment)">
+            <p>Tunable white luminaires contain LEDs of different colour temperatures—typically warm white and cool white—allowing the correlated colour temperature (CCT) to be adjusted whilst maintaining consistent light output and colour quality.</p>
+            <p><strong>Warm White</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>2700K - 3000K range</li>
+              <li>Relaxing, comfortable ambience</li>
+              <li>Hospitality, residential</li>
+              <li>Evening/wind-down periods</li>
+            </ul>
+            <p><strong>Neutral White</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>4000K typical</li>
+              <li>Balanced, natural appearance</li>
+              <li>Offices, retail, education</li>
+              <li>General working conditions</li>
+            </ul>
+            <p><strong>Cool White</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>5000K - 6500K range</li>
+              <li>Alertness, concentration</li>
+              <li>Healthcare, laboratories</li>
+              <li>Morning/daytime periods</li>
+            </ul>
+            <p><strong>Tunable White Control Methods</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>DALI DT8 (Tc):</strong> Single address, CCT + level commands — Commercial, healthcare installations</li>
+              <li><strong>Dual channel (0-10V):</strong> Separate warm/cool white channels — Retrofit, simple installations</li>
+              <li><strong>DMX:</strong> Multiple channels per luminaire — Entertainment, architectural</li>
+              <li><strong>Wireless (Bluetooth/Zigbee):</strong> App or gateway control — Residential, small commercial</li>
+            </ul>
+            <p><strong>Tunable White Specification Considerations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>CCT range:</strong> Ensure range covers application needs (wider range = more flexibility)</li>
+              <li><strong>Colour consistency:</strong> Specify MacAdam ellipse (3-step or better) across CCT range</li>
+              <li><strong>Dimming performance:</strong> Check minimum dim level maintains CCT accuracy</li>
+              <li><strong>CRI consistency:</strong> Verify CRI &gt;80 (preferably &gt;90) across full CCT range</li>
+              <li><strong>Efficacy variation:</strong> Note that efficacy typically drops at extreme CCT values</li>
+            </ul>
+            <p><strong>Best practice:</strong> When specifying tunable white, ensure the control system supports smooth CCT transitions to avoid visible colour stepping during adjustments.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Colour Changing Systems (RGB/RGBW)">
+            <p>Colour changing systems use multiple LED colours—typically Red, Green, and Blue (RGB)—to create a wide gamut of colours through additive mixing. RGBW systems add a dedicated White channel for improved white light quality and efficiency.</p>
+            <p><strong>Additive Colour Mixing Principles</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Red + Green =</strong> Yellow</li>
+              <li><strong>Red + Blue =</strong> Magenta</li>
+              <li><strong>Green + Blue =</strong> Cyan</li>
+              <li><strong>Red + Green + Blue =</strong> White (approximate)</li>
+            </ul>
+            <p><strong>RGB vs RGBW Comparison</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Control channels:</strong> 3 (R, G, B) — 4 (R, G, B, W)</li>
+              <li><strong>White light quality:</strong> Poor CRI, pinkish tint — Good CRI, clean white</li>
+              <li><strong>Efficiency at white:</strong> Lower (all LEDs running) — Higher (dedicated white LED)</li>
+              <li><strong>Pastel colours:</strong> Limited quality — Better with white mixing</li>
+              <li><strong>Cost:</strong> Lower — Higher</li>
+              <li><strong>Application:</strong> Saturated colour effects — Architectural, hospitality</li>
+            </ul>
+            <p><strong>DMX512 for Colour Changing</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Universe:</strong> 512 channels per DMX universe</li>
+              <li><strong>Addressing:</strong> Each luminaire occupies 3 (RGB) or 4+ (RGBW) consecutive channels</li>
+              <li><strong>Data rate:</strong> Up to 44 refreshes per second</li>
+              <li><strong>Topology:</strong> Daisy-chain with termination resistor at end</li>
+              <li><strong>Cable:</strong> Screened twisted pair, maximum 300m per run</li>
+            </ul>
+            <p><strong>Colour Changing Applications</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>- Facade and architectural lighting</li>
+              <li>- Retail brand colour implementation</li>
+              <li>- Entertainment and event venues</li>
+              <li>- Feature walls and cove lighting</li>
+              <li>- Wayfinding and zoning</li>
+            </ul>
+            <p><strong>Control Options</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>- DMX controllers with show playback</li>
+              <li>- DALI DT8 colour control</li>
+              <li>- Standalone pixel controllers</li>
+              <li>- BMS integration via gateways</li>
+              <li>- Astronomical time clock triggers</li>
+            </ul>
+            <p><strong>Installation note:</strong> RGB/RGBW installations require careful attention to colour consistency between luminaires. Specify binning requirements and consider calibration during commissioning.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Circadian and Human-Centric Lighting">
+            <p>Circadian lighting (also called human-centric lighting or HCL) designs artificial lighting to support the body's natural 24-hour biological rhythm. By varying colour temperature and intensity throughout the day, circadian lighting aims to improve alertness, mood, and sleep quality.</p>
+            <p><strong>Circadian Rhythm and Light</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Morning (6am-9am):</strong> 5000K-6500K (cool) — High — Suppress melatonin, increase alertness</li>
+              <li><strong>Midday (9am-3pm):</strong> 4000K-5000K — Moderate-high — Maintain alertness, support concentration</li>
+              <li><strong>Afternoon (3pm-6pm):</strong> 3500K-4000K — Moderate — Gradual transition, reduce stimulation</li>
+              <li><strong>Evening (6pm onwards):</strong> 2700K-3000K (warm) — Low — Allow melatonin production, prepare for sleep</li>
+            </ul>
+            <p><strong>Melanopic Metrics Explained</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Melanopic lux (EML/EDI):</strong> Measures biological effectiveness of light for circadian regulation</li>
+              <li><strong>ipRGCs:</strong> Intrinsically photosensitive retinal ganglion cells containing melanopsin</li>
+              <li><strong>Peak sensitivity:</strong> ~480nm (blue light wavelengths)</li>
+              <li><strong>Measurement:</strong> Vertical illuminance at eye level, not horizontal task illuminance</li>
+              <li><strong>WELL requirement:</strong> Minimum 150 melanopic EDI for at least 4 hours daily</li>
+            </ul>
+            <p><strong>WELL Building Standard - Lighting Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>L01 Light Exposure:</strong> &gt;150 melanopic EDI at eye — Circadian entrainment</li>
+              <li><strong>L02 Visual Lighting Design:</strong> Appropriate task illuminance — Visual comfort and performance</li>
+              <li><strong>L03 Circadian Lighting Design:</strong> &gt;200 melanopic EDI option — Enhanced circadian support</li>
+              <li><strong>L04 Glare Control:</strong> UGR limits per task — Visual comfort</li>
+              <li><strong>L06 Visual Balance:</strong> Surface luminance ratios — Reduce eye strain</li>
+              <li><strong>L07 Electric Light Quality:</strong> CRI &gt;80, R9 &gt;0 — Colour rendering quality</li>
+            </ul>
+            <p><strong>Healthcare Applications</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>- Patient recovery rooms (sleep support)</li>
+              <li>- Dementia care units (orientation)</li>
+              <li>- Neonatal intensive care</li>
+              <li>- Staff areas (shift worker alertness)</li>
+              <li>- Mental health facilities</li>
+            </ul>
+            <p><strong>Workplace Applications</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>- Deep-plan offices (limited daylight)</li>
+              <li>- Control rooms (24-hour operation)</li>
+              <li>- Schools (student concentration)</li>
+              <li>- Care homes (elderly wellbeing)</li>
+              <li>- Prisons (inmate behaviour)</li>
+            </ul>
+            <p><strong>Implementation tip:</strong> Circadian lighting requires automatic scheduling via BMS or astronomical time clocks. Manual control alone is insufficient as occupants often do not adjust settings appropriately.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Scene controllers are the user interface for recalling pre-programmed lighting
-              configurations. Each scene stores multiple parameters—dimming levels, colour
-              temperatures, and colour values—for groups of luminaires, allowing complex lighting
-              changes with a single button press.
+              <strong>Example 1: Boardroom Scene Schedule</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Key scene controller components:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Scene buttons:</strong> Dedicated buttons for each preset (typically 4-8
-                  scenes per plate)
-                </li>
-                <li className="pl-1">
-                  <strong>Raise/lower controls:</strong> Manual override for brightness adjustment
-                </li>
-                <li className="pl-1">
-                  <strong>Scene memory:</strong> Stored values in drivers (DALI) or central
-                  controller
-                </li>
-                <li className="pl-1">
-                  <strong>Fade time settings:</strong> Transition speed from current to recalled
-                  state
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Scene Configurations by Space Type
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Space</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Scene 1</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Scene 2</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Scene 3</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Scene 4</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Boardroom</td>
-                      <td className="border border-white/10 px-3 py-2">Meeting (80%)</td>
-                      <td className="border border-white/10 px-3 py-2">Presentation (30%)</td>
-                      <td className="border border-white/10 px-3 py-2">Video call (60%)</td>
-                      <td className="border border-white/10 px-3 py-2">All off</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Restaurant</td>
-                      <td className="border border-white/10 px-3 py-2">Lunch (70%, 4000K)</td>
-                      <td className="border border-white/10 px-3 py-2">Dinner (40%, 2700K)</td>
-                      <td className="border border-white/10 px-3 py-2">Cleaning (100%)</td>
-                      <td className="border border-white/10 px-3 py-2">Closed (5%)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Retail</td>
-                      <td className="border border-white/10 px-3 py-2">Trading (100%)</td>
-                      <td className="border border-white/10 px-3 py-2">Evening (80%)</td>
-                      <td className="border border-white/10 px-3 py-2">Closed (security)</td>
-                      <td className="border border-white/10 px-3 py-2">Restock (100%)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Healthcare ward</td>
-                      <td className="border border-white/10 px-3 py-2">Day (5000K)</td>
-                      <td className="border border-white/10 px-3 py-2">Evening (3000K)</td>
-                      <td className="border border-white/10 px-3 py-2">Night (dim amber)</td>
-                      <td className="border border-white/10 px-3 py-2">Examination</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">DALI Scene Commands</p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">Recall scene 1:</span>{' '}
-                  <span className="text-white">GOTO SCENE 0 (broadcast to group)</span>
-                </p>
-                <p>
-                  <span className="text-white">Store current as scene 2:</span>{' '}
-                  <span className="text-white">STORE DTR AS SCENE 1</span>
-                </p>
-                <p>
-                  <span className="text-white">Scene storage:</span>{' '}
-                  <span className="text-white">16 scenes per DALI group (0-15)</span>
-                </p>
-                <p>
-                  <span className="text-white">Fade time:</span>{' '}
-                  <span className="text-white">Configurable 0-90 seconds</span>
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design principle:</strong> Scene names should be intuitive for end users—avoid
-              technical labels like "Scene 3" in favour of descriptive names like "Presentation
-              Mode."
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Tunable White Systems */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Tunable White (CCT Adjustment)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Configure 4 scenes for a 20-person boardroom with tunable white luminaires.</p>
+            <p>Scene configuration:</p>
+            <p>Scene 1 - "Meeting" (default)</p>
+            <p>General: 80%, 4000K | Downlights: 70% | Perimeter: 60%</p>
+            <p>Fade time: 3 seconds</p>
+            <p>Scene 2 - "Presentation"</p>
+            <p>General: 20%, 3500K | Downlights: 30% | Perimeter: 10%</p>
+            <p>AV screen area: OFF | Fade time: 5 seconds</p>
+            <p>Scene 3 - "Video Conference"</p>
+            <p>General: 60%, 4000K | Face lighting: 80% | Background: 50%</p>
+            <p>No direct glare on screens | Fade time: 3 seconds</p>
+            <p>Scene 4 - "All Off"</p>
+            <p>All luminaires: OFF | Fade time: 5 seconds</p>
+            <p>Controller: 4-button plate at each entrance + AV touch panel integration</p>
             <p>
-              Tunable white luminaires contain LEDs of different colour temperatures—typically warm
-              white and cool white—allowing the correlated colour temperature (CCT) to be adjusted
-              whilst maintaining consistent light output and colour quality.
+              <strong>Example 2: Circadian Schedule for Office</strong>
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Warm White</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">2700K - 3000K range</li>
-                  <li className="pl-1">Relaxing, comfortable ambience</li>
-                  <li className="pl-1">Hospitality, residential</li>
-                  <li className="pl-1">Evening/wind-down periods</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Neutral White</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">4000K typical</li>
-                  <li className="pl-1">Balanced, natural appearance</li>
-                  <li className="pl-1">Offices, retail, education</li>
-                  <li className="pl-1">General working conditions</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cool White</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">5000K - 6500K range</li>
-                  <li className="pl-1">Alertness, concentration</li>
-                  <li className="pl-1">Healthcare, laboratories</li>
-                  <li className="pl-1">Morning/daytime periods</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Tunable White Control Methods
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Protocol</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Control Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DALI DT8 (Tc)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Single address, CCT + level commands
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Commercial, healthcare installations
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Dual channel (0-10V)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Separate warm/cool white channels
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Retrofit, simple installations
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DMX</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multiple channels per luminaire
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Entertainment, architectural
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Wireless (Bluetooth/Zigbee)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">App or gateway control</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Residential, small commercial
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Tunable White Specification Considerations
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>CCT range:</strong> Ensure range covers application needs (wider range =
-                  more flexibility)
-                </li>
-                <li className="pl-1">
-                  <strong>Colour consistency:</strong> Specify MacAdam ellipse (3-step or better)
-                  across CCT range
-                </li>
-                <li className="pl-1">
-                  <strong>Dimming performance:</strong> Check minimum dim level maintains CCT
-                  accuracy
-                </li>
-                <li className="pl-1">
-                  <strong>CRI consistency:</strong> Verify CRI &gt;80 (preferably &gt;90) across
-                  full CCT range
-                </li>
-                <li className="pl-1">
-                  <strong>Efficacy variation:</strong> Note that efficacy typically drops at extreme
-                  CCT values
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> When specifying tunable white, ensure the control
-              system supports smooth CCT transitions to avoid visible colour stepping during
-              adjustments.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Colour Changing Systems */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Colour Changing Systems (RGB/RGBW)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Design a circadian lighting schedule for an open-plan office.</p>
+            <p>Automatic time-based schedule (BMS controlled):</p>
+            <p>07:00 - Morning boost</p>
+            <p>CCT: 6000K | Level: 100% | Melanopic EDI: ~180 lux</p>
+            <p>09:00 - Working day</p>
+            <p>CCT: 5000K | Level: 85% | Melanopic EDI: ~160 lux</p>
+            <p>14:00 - Afternoon</p>
+            <p>CCT: 4000K | Level: 80% | Melanopic EDI: ~120 lux</p>
+            <p>17:00 - Late afternoon</p>
+            <p>CCT: 3500K | Level: 70% | Daylight dimming active</p>
+            <p>19:00 - Evening (if occupied)</p>
+            <p>CCT: 2700K | Level: 50% | Melanopic EDI: ~40 lux</p>
+            <p>WELL compliance: Maintains &gt;150 melanopic EDI 07:00-14:00 (7 hours)</p>
             <p>
-              Colour changing systems use multiple LED colours—typically Red, Green, and Blue
-              (RGB)—to create a wide gamut of colours through additive mixing. RGBW systems add a
-              dedicated White channel for improved white light quality and efficiency.
+              <strong>Example 3: RGBW Facade Specification</strong>
             </p>
+            <p><strong>Scenario:</strong> Specify colour changing linear luminaires for building facade.</p>
+            <p>Specification requirements:</p>
+            <p>Luminaire: RGBW linear, IP66 rated</p>
+            <p>Length: 1000mm modules</p>
+            <p>Output: 1500lm/m (white), full colour gamut</p>
+            <p>Colour consistency: 3-step MacAdam</p>
+            <p>Control: DMX512 via weatherproof junction boxes</p>
+            <p>Channels per luminaire: 4 (RGBW)</p>
+            <p>DMX universe: 1 (covers 128 luminaires)</p>
+            <p>Controller: Show playback with astronomical clock</p>
+            <p>Scenes programmed:</p>
+            <p>Corporate blue (brand colour): R0, G100, B180, W50</p>
+            <p>Warm white (evening): R0, G0, B0, W255 @ 2700K</p>
+            <p>Dynamic colour wash: 30-minute cycle</p>
+            <p>Special events: Manual override from reception</p>
+            <p>Cable: Screened Cat5e for DMX, 5-core for RGBW power</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Additive Colour Mixing Principles
-              </p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">Red + Green =</span>{' '}
-                  <span className="text-yellow-400">Yellow</span>
-                </p>
-                <p>
-                  <span className="text-white">Red + Blue =</span>{' '}
-                  <span className="text-purple-400">Magenta</span>
-                </p>
-                <p>
-                  <span className="text-white">Green + Blue =</span>{' '}
-                  <span className="text-cyan-400">Cyan</span>
-                </p>
-                <p>
-                  <span className="text-white">Red + Green + Blue =</span>{' '}
-                  <span className="text-white">White (approximate)</span>
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">RGB vs RGBW Comparison</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">RGB</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">RGBW</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Control channels</td>
-                      <td className="border border-white/10 px-3 py-2">3 (R, G, B)</td>
-                      <td className="border border-white/10 px-3 py-2">4 (R, G, B, W)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">White light quality</td>
-                      <td className="border border-white/10 px-3 py-2">Poor CRI, pinkish tint</td>
-                      <td className="border border-white/10 px-3 py-2">Good CRI, clean white</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Efficiency at white</td>
-                      <td className="border border-white/10 px-3 py-2">Lower (all LEDs running)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher (dedicated white LED)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pastel colours</td>
-                      <td className="border border-white/10 px-3 py-2">Limited quality</td>
-                      <td className="border border-white/10 px-3 py-2">Better with white mixing</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cost</td>
-                      <td className="border border-white/10 px-3 py-2">Lower</td>
-                      <td className="border border-white/10 px-3 py-2">Higher</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Application</td>
-                      <td className="border border-white/10 px-3 py-2">Saturated colour effects</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Architectural, hospitality
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                DMX512 for Colour Changing
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Universe:</strong> 512 channels per DMX universe
-                </li>
-                <li className="pl-1">
-                  <strong>Addressing:</strong> Each luminaire occupies 3 (RGB) or 4+ (RGBW)
-                  consecutive channels
-                </li>
-                <li className="pl-1">
-                  <strong>Data rate:</strong> Up to 44 refreshes per second
-                </li>
-                <li className="pl-1">
-                  <strong>Topology:</strong> Daisy-chain with termination resistor at end
-                </li>
-                <li className="pl-1">
-                  <strong>Cable:</strong> Screened twisted pair, maximum 300m per run
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-3 rounded bg-white/5">
-                <p className="font-medium text-white mb-2">Colour Changing Applications</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>- Facade and architectural lighting</li>
-                  <li>- Retail brand colour implementation</li>
-                  <li>- Entertainment and event venues</li>
-                  <li>- Feature walls and cove lighting</li>
-                  <li>- Wayfinding and zoning</li>
-                </ul>
-              </div>
-              <div className="p-3 rounded bg-white/5">
-                <p className="font-medium text-white mb-2">Control Options</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>- DMX controllers with show playback</li>
-                  <li>- DALI DT8 colour control</li>
-                  <li>- Standalone pixel controllers</li>
-                  <li>- BMS integration via gateways</li>
-                  <li>- Astronomical time clock triggers</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Installation note:</strong> RGB/RGBW installations require careful attention
-              to colour consistency between luminaires. Specify binning requirements and consider
-              calibration during commissioning.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Circadian and Human-Centric Lighting */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Circadian and Human-Centric Lighting
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Circadian lighting (also called human-centric lighting or HCL) designs artificial
-              lighting to support the body's natural 24-hour biological rhythm. By varying colour
-              temperature and intensity throughout the day, circadian lighting aims to improve
-              alertness, mood, and sleep quality.
+              <strong>Scene Setting Commissioning Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Circadian Rhythm and Light
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Time Period</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Recommended CCT
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Intensity</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Biological Effect
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Morning (6am-9am)</td>
-                      <td className="border border-white/10 px-3 py-2">5000K-6500K (cool)</td>
-                      <td className="border border-white/10 px-3 py-2">High</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Suppress melatonin, increase alertness
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Midday (9am-3pm)</td>
-                      <td className="border border-white/10 px-3 py-2">4000K-5000K</td>
-                      <td className="border border-white/10 px-3 py-2">Moderate-high</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Maintain alertness, support concentration
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Afternoon (3pm-6pm)</td>
-                      <td className="border border-white/10 px-3 py-2">3500K-4000K</td>
-                      <td className="border border-white/10 px-3 py-2">Moderate</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Gradual transition, reduce stimulation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Evening (6pm onwards)</td>
-                      <td className="border border-white/10 px-3 py-2">2700K-3000K (warm)</td>
-                      <td className="border border-white/10 px-3 py-2">Low</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Allow melatonin production, prepare for sleep
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Melanopic Metrics Explained
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Melanopic lux (EML/EDI):</strong> Measures biological effectiveness of
-                  light for circadian regulation
-                </li>
-                <li className="pl-1">
-                  <strong>ipRGCs:</strong> Intrinsically photosensitive retinal ganglion cells
-                  containing melanopsin
-                </li>
-                <li className="pl-1">
-                  <strong>Peak sensitivity:</strong> ~480nm (blue light wavelengths)
-                </li>
-                <li className="pl-1">
-                  <strong>Measurement:</strong> Vertical illuminance at eye level, not horizontal
-                  task illuminance
-                </li>
-                <li className="pl-1">
-                  <strong>WELL requirement:</strong> Minimum 150 melanopic EDI for at least 4 hours
-                  daily
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                WELL Building Standard - Lighting Requirements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Requirement</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">L01 Light Exposure</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        &gt;150 melanopic EDI at eye
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Circadian entrainment</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        L02 Visual Lighting Design
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Appropriate task illuminance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Visual comfort and performance
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        L03 Circadian Lighting Design
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        &gt;200 melanopic EDI option
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Enhanced circadian support
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">L04 Glare Control</td>
-                      <td className="border border-white/10 px-3 py-2">UGR limits per task</td>
-                      <td className="border border-white/10 px-3 py-2">Visual comfort</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">L06 Visual Balance</td>
-                      <td className="border border-white/10 px-3 py-2">Surface luminance ratios</td>
-                      <td className="border border-white/10 px-3 py-2">Reduce eye strain</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        L07 Electric Light Quality
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">CRI &gt;80, R9 &gt;0</td>
-                      <td className="border border-white/10 px-3 py-2">Colour rendering quality</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-3 rounded bg-white/5">
-                <p className="font-medium text-white mb-2">Healthcare Applications</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>- Patient recovery rooms (sleep support)</li>
-                  <li>- Dementia care units (orientation)</li>
-                  <li>- Neonatal intensive care</li>
-                  <li>- Staff areas (shift worker alertness)</li>
-                  <li>- Mental health facilities</li>
-                </ul>
-              </div>
-              <div className="p-3 rounded bg-white/5">
-                <p className="font-medium text-white mb-2">Workplace Applications</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>- Deep-plan offices (limited daylight)</li>
-                  <li>- Control rooms (24-hour operation)</li>
-                  <li>- Schools (student concentration)</li>
-                  <li>- Care homes (elderly wellbeing)</li>
-                  <li>- Prisons (inmate behaviour)</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Implementation tip:</strong> Circadian lighting requires automatic scheduling
-              via BMS or astronomical time clocks. Manual control alone is insufficient as occupants
-              often do not adjust settings appropriately.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Verify all luminaires are correctly addressed and grouped</li>
+              <li>Program each scene with client present for approval</li>
+              <li>Set appropriate fade times (typically 2-5 seconds)</li>
+              <li>Test scene recall from all control points</li>
+              <li>Configure scene priorities and override behaviour</li>
+              <li>Document all scene parameters in O&M manual</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Tunable white range: <strong>2700K to 6500K</strong> typical</li>
+              <li>WELL melanopic EDI: <strong>&gt;150 equivalent lux</strong> at eye level</li>
+              <li>DMX universe: <strong>512 channels</strong> maximum</li>
+              <li>DALI scenes: <strong>16 scenes</strong> per group (0-15)</li>
+              <li>Circadian peak alertness CCT: <strong>5000K-6500K</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Boardroom Scene Schedule
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Configure 4 scenes for a 20-person boardroom with tunable
-                white luminaires.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Scene configuration:</p>
-                <p className="mt-2">Scene 1 - "Meeting" (default)</p>
-                <p className="ml-4">General: 80%, 4000K | Downlights: 70% | Perimeter: 60%</p>
-                <p className="ml-4">Fade time: 3 seconds</p>
-                <p className="mt-2">Scene 2 - "Presentation"</p>
-                <p className="ml-4">General: 20%, 3500K | Downlights: 30% | Perimeter: 10%</p>
-                <p className="ml-4">AV screen area: OFF | Fade time: 5 seconds</p>
-                <p className="mt-2">Scene 3 - "Video Conference"</p>
-                <p className="ml-4">General: 60%, 4000K | Face lighting: 80% | Background: 50%</p>
-                <p className="ml-4">No direct glare on screens | Fade time: 3 seconds</p>
-                <p className="mt-2">Scene 4 - "All Off"</p>
-                <p className="ml-4">All luminaires: OFF | Fade time: 5 seconds</p>
-                <p className="mt-2 text-green-400">
-                  Controller: 4-button plate at each entrance + AV touch panel integration
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Circadian Schedule for Office
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Design a circadian lighting schedule for an open-plan
-                office.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Automatic time-based schedule (BMS controlled):</p>
-                <p className="mt-2">07:00 - Morning boost</p>
-                <p className="ml-4">CCT: 6000K | Level: 100% | Melanopic EDI: ~180 lux</p>
-                <p className="mt-2">09:00 - Working day</p>
-                <p className="ml-4">CCT: 5000K | Level: 85% | Melanopic EDI: ~160 lux</p>
-                <p className="mt-2">14:00 - Afternoon</p>
-                <p className="ml-4">CCT: 4000K | Level: 80% | Melanopic EDI: ~120 lux</p>
-                <p className="mt-2">17:00 - Late afternoon</p>
-                <p className="ml-4">CCT: 3500K | Level: 70% | Daylight dimming active</p>
-                <p className="mt-2">19:00 - Evening (if occupied)</p>
-                <p className="ml-4">CCT: 2700K | Level: 50% | Melanopic EDI: ~40 lux</p>
-                <p className="mt-2 text-green-400">
-                  WELL compliance: Maintains &gt;150 melanopic EDI 07:00-14:00 (7 hours)
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: RGBW Facade Specification
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Specify colour changing linear luminaires for building
-                facade.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Specification requirements:</p>
-                <p className="mt-2">Luminaire: RGBW linear, IP66 rated</p>
-                <p className="ml-4">Length: 1000mm modules</p>
-                <p className="ml-4">Output: 1500lm/m (white), full colour gamut</p>
-                <p className="ml-4">Colour consistency: 3-step MacAdam</p>
-                <p className="mt-2">Control: DMX512 via weatherproof junction boxes</p>
-                <p className="ml-4">Channels per luminaire: 4 (RGBW)</p>
-                <p className="ml-4">DMX universe: 1 (covers 128 luminaires)</p>
-                <p className="ml-4">Controller: Show playback with astronomical clock</p>
-                <p className="mt-2">Scenes programmed:</p>
-                <p className="ml-4">Corporate blue (brand colour): R0, G100, B180, W50</p>
-                <p className="ml-4">Warm white (evening): R0, G0, B0, W255 @ 2700K</p>
-                <p className="ml-4">Dynamic colour wash: 30-minute cycle</p>
-                <p className="ml-4">Special events: Manual override from reception</p>
-                <p className="mt-2 text-green-400">
-                  Cable: Screened Cat5e for DMX, 5-core for RGBW power
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Scene Setting Commissioning Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Verify all luminaires are correctly addressed and grouped</li>
-                <li className="pl-1">Program each scene with client present for approval</li>
-                <li className="pl-1">Set appropriate fade times (typically 2-5 seconds)</li>
-                <li className="pl-1">Test scene recall from all control points</li>
-                <li className="pl-1">Configure scene priorities and override behaviour</li>
-                <li className="pl-1">Document all scene parameters in O&M manual</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Insufficient scene variety</strong> - Provide enough presets for all anticipated uses</li>
+                <li><strong>Manual-only circadian control</strong> - Requires automatic scheduling for effectiveness</li>
+                <li><strong>Ignoring colour consistency</strong> - Specify LED binning requirements</li>
+                <li><strong>Poor labelling</strong> - Use descriptive scene names, not technical codes</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Tunable white range: <strong>2700K to 6500K</strong> typical
-                </li>
-                <li className="pl-1">
-                  WELL melanopic EDI: <strong>&gt;150 equivalent lux</strong> at eye level
-                </li>
-                <li className="pl-1">
-                  DMX universe: <strong>512 channels</strong> maximum
-                </li>
-                <li className="pl-1">
-                  DALI scenes: <strong>16 scenes</strong> per group (0-15)
-                </li>
-                <li className="pl-1">
-                  Circadian peak alertness CCT: <strong>5000K-6500K</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Insufficient scene variety</strong> - Provide enough presets for all
-                  anticipated uses
-                </li>
-                <li className="pl-1">
-                  <strong>Manual-only circadian control</strong> - Requires automatic scheduling for
-                  effectiveness
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring colour consistency</strong> - Specify LED binning requirements
-                </li>
-                <li className="pl-1">
-                  <strong>Poor labelling</strong> - Use descriptive scene names, not technical codes
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Scene Control Standards</p>
-                <ul className="space-y-0.5">
-                  <li>DALI-2 DT8 - Colour control protocol</li>
-                  <li>DMX512 - Entertainment/architectural standard</li>
-                  <li>16 scenes per DALI group</li>
-                  <li>512 channels per DMX universe</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">WELL Lighting Requirements</p>
-                <ul className="space-y-0.5">
-                  <li>&gt;150 melanopic EDI at eye level</li>
-                  <li>CRI &gt;80, R9 &gt;0</li>
-                  <li>Glare control (UGR limits)</li>
-                  <li>Circadian lighting design option</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section4-5">
-              Next: Section 4.5
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section4-3")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Daylight harvesting
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section4-5")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Smart lighting
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

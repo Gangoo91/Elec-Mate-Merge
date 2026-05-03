@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 5 · Section 2 · Subsection 2 — JCT Contracts
+ * HNC Electrical Engineering for Building Services (Project Management — Pearson U4004 + BSE PM context)
+ *   The JCT suite — standard, intermediate, design and build, minor works — and the clauses you live with day-to-day on building services projects.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'JCT Contracts - HNC Module 5 Section 2.2';
@@ -250,874 +267,553 @@ const faqs = [
 ];
 
 const HNCModule5Section2_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section2')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module5-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 5.2.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            JCT Contracts
-          </h1>
-          <p className="text-white">
-            Standard building contracts, intermediate forms, amendments, extensions of time and
-            practical completion provisions
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 5 · Section 2 · Subsection 2"
+            title="JCT Contracts"
+            description="Standard building contracts, intermediate forms, amendments, extensions of time and practical completion provisions."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>JCT SBC:</strong> Traditional procurement, employer provides design
-              </li>
-              <li className="pl-1">
-                <strong>JCT DB:</strong> Contractor responsible for design and build
-              </li>
-              <li className="pl-1">
-                <strong>JCT ICD:</strong> Intermediate form for medium-complexity works
-              </li>
-              <li className="pl-1">
-                <strong>Defects period:</strong> Typically 12 months from practical completion
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Design liability:</strong> Varies by contract form
-              </li>
-              <li className="pl-1">
-                <strong>EOT claims:</strong> Written notice required promptly
-              </li>
-              <li className="pl-1">
-                <strong>Retention:</strong> 50% released at practical completion
-              </li>
-              <li className="pl-1">
-                <strong>Variations:</strong> Must be instructed in writing
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              "JCT publishes a suite (SBC, IC, MW, DB, MP, CM, CE) — pick the form to fit project size, complexity and procurement route.",
+              "JCT SBC 2024 is the default for traditional procurement above ~£500k; IC for medium; MW for small; DB for design-build.",
+              "Key JCT clauses for MEP project managers: payment (Section 4), variations (Section 5), extensions of time (Section 2.27–2.32), loss and expense (Section 4.20–4.26), practical completion (2.30).",
+              "JCT distinguishes Relevant Events (entitle EOT) from Relevant Matters (entitle loss and expense) — these are separate tests, run separately.",
+              "Schedule of Amendments is where bespoke risk allocation lives — read it before you bid, never after award.",
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="JCT Standard Building Contract 2024 — Clause 2.27 (Notice of delay)"
+            clause="If and whenever it becomes reasonably apparent that the progress of the Works or any Section is being or is likely to be delayed the Contractor shall forthwith give written notice to the Architect/Contract Administrator of the material circumstances, including the cause or causes of the delay, and identify in the notice any event which in his opinion is a Relevant Event."
+            meaning={
+              <>
+                JCT 2.27 is the Relevant Event notice — the gateway to an Extension of Time. "Forthwith" means immediately on it becoming apparent, not at the end of the period of delay. A late notice does not necessarily defeat the claim, but it weakens it and can lead to forfeiture of loss and expense (where time-bar applies). Embed notice discipline as routine, not as crisis response.
+              </>
+            }
+            cite="Source: JCT Standard Building Contract 2024 (refer to JCT published text for verbatim clauses)."
+          />
+
+
+          <LearningOutcomes
+            outcomes={[
               'Identify appropriate JCT contract forms for different project types',
               'Understand key clauses affecting electrical subcontractors',
               'Apply extension of time procedures correctly',
               'Prepare and substantiate loss and expense claims',
               'Recognise practical completion requirements and implications',
               'Manage obligations during the defects liability period',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: JCT Contract Forms */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            JCT Contract Forms Overview
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="JCT Contract Forms Overview">
             <p>
               The Joint Contracts Tribunal (JCT) produces the most widely used standard form
               building contracts in the UK. Understanding which contract form applies to your
               project is essential for managing risk, understanding your obligations, and protecting
               your commercial position as an electrical contractor or subcontractor.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key JCT Contract Forms:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>JCT SBC (Standard Building Contract):</strong> For large, complex
-                  traditionally procured projects
-                </li>
-                <li className="pl-1">
-                  <strong>JCT DB (Design and Build):</strong> Contractor takes design responsibility
-                  from employer's requirements
-                </li>
-                <li className="pl-1">
-                  <strong>JCT ICD (Intermediate Building Contract):</strong> Medium-complexity
-                  projects, simpler procedures than SBC
-                </li>
-                <li className="pl-1">
-                  <strong>JCT MW (Minor Works):</strong> Small, straightforward projects
-                </li>
-                <li className="pl-1">
-                  <strong>JCT MWD (Minor Works with Design):</strong> Small projects with contractor
-                  design portion
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Contract Selection Guide
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Contract Form</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Project Value
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Design Responsibility
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Complexity</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">JCT SBC</td>
-                      <td className="border border-white/10 px-3 py-2">Over 1 million pounds</td>
-                      <td className="border border-white/10 px-3 py-2">Employer (via architect)</td>
-                      <td className="border border-white/10 px-3 py-2">High complexity</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">JCT DB</td>
-                      <td className="border border-white/10 px-3 py-2">Any value</td>
-                      <td className="border border-white/10 px-3 py-2">Contractor</td>
-                      <td className="border border-white/10 px-3 py-2">Any complexity</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">JCT ICD</td>
-                      <td className="border border-white/10 px-3 py-2">Up to 1 million pounds</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Employer or partial contractor
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Medium complexity</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">JCT MW</td>
-                      <td className="border border-white/10 px-3 py-2">Up to 250,000 pounds</td>
-                      <td className="border border-white/10 px-3 py-2">Employer</td>
-                      <td className="border border-white/10 px-3 py-2">Simple works</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Example: Hospital Extension
-              </p>
-              <p className="text-sm text-white">
-                A 15 million pounds hospital extension uses JCT SBC with quantities. The M&E package
-                (approximately 5 million pounds) is let as a domestic subcontract to an M&E
-                contractor. Electrical design is provided by the employer's consulting engineers
-                (Contractor's Design Portion excluded). The electrical subcontractor works under the
-                main contractor's domestic subcontract, which incorporates JCT SBC terms by
-                reference.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key principle:</strong> Always obtain and read your subcontract terms - they
+            <p>
+              <strong>Key JCT Contract Forms:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>JCT SBC (Standard Building Contract):</strong> For large, complex
+                traditionally procured projects
+              </li>
+              <li>
+                <strong>JCT DB (Design and Build):</strong> Contractor takes design responsibility
+                from employer's requirements
+              </li>
+              <li>
+                <strong>JCT ICD (Intermediate Building Contract):</strong> Medium-complexity
+                projects, simpler procedures than SBC
+              </li>
+              <li>
+                <strong>JCT MW (Minor Works):</strong> Small, straightforward projects
+              </li>
+              <li>
+                <strong>JCT MWD (Minor Works with Design):</strong> Small projects with contractor
+                design portion
+              </li>
+            </ul>
+            <p>
+              <strong>Contract Selection Guide (Form — Typical Value — Design Responsibility — Complexity):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>JCT SBC:</strong> Over 1 million pounds — Employer (via architect) — High
+                complexity
+              </li>
+              <li>
+                <strong>JCT DB:</strong> Any value — Contractor — Any complexity
+              </li>
+              <li>
+                <strong>JCT ICD:</strong> Up to 1 million pounds — Employer or partial contractor —
+                Medium complexity
+              </li>
+              <li>
+                <strong>JCT MW:</strong> Up to 250,000 pounds — Employer — Simple works
+              </li>
+            </ul>
+            <p>
+              <strong>Building Services Example — Hospital Extension:</strong> A 15 million pounds
+              hospital extension uses JCT SBC with quantities. The M&E package (approximately 5
+              million pounds) is let as a domestic subcontract to an M&E contractor. Electrical
+              design is provided by the employer's consulting engineers (Contractor's Design Portion
+              excluded). The electrical subcontractor works under the main contractor's domestic
+              subcontract, which incorporates JCT SBC terms by reference.
+            </p>
+            <p>
+              <strong>Key principle:</strong> Always obtain and read your subcontract terms — they
               may differ significantly from the main contract.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Key Clauses for Subcontractors */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Key Clauses for Electrical Subcontractors
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Key Clauses for Electrical Subcontractors">
             <p>
               Whether working under a JCT subcontract or a bespoke form, certain clauses critically
               affect your commercial position. Understanding these provisions helps protect against
               common pitfalls in building services contracts.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Payment Provisions</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Payment notice requirements</li>
-                  <li className="pl-1">Pay less notice deadlines</li>
-                  <li className="pl-1">Final date for payment</li>
-                  <li className="pl-1">Retention percentage and release dates</li>
-                  <li className="pl-1">Valuation rules for variations</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Programme and Time</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Commencement and completion dates</li>
-                  <li className="pl-1">Sectional completion provisions</li>
-                  <li className="pl-1">Extension of time procedures</li>
-                  <li className="pl-1">Liquidated damages exposure</li>
-                  <li className="pl-1">Acceleration requirements</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Critical Subcontract Clauses
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Clause Area</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Risk to Subcontractor
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">What to Check</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Design liability</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High - fitness for purpose vs reasonable skill
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Standard of care, PI insurance limits
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Set-off rights</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Medium - cash flow impact
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Conditions for withholding, notice periods
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Indemnities</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High - unlimited liability
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Scope, caps, insurance coverage
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Termination</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High - payment for work done
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Grounds, notice, consequences
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Retention</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Medium - cash flow and insolvency risk
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Percentage, trust account, release dates
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Warning: Pay-When-Paid Clauses
-              </p>
-              <p className="text-sm text-white">
-                Pay-when-paid clauses are largely prohibited under the Construction Act 1996 (except
-                in insolvency). If your subcontract contains such a clause, it may be unenforceable.
-                However, pay-when-certified clauses linking your payment to main contract
-                certification may still be valid. Always seek legal advice on unusual payment terms.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Payment Provisions:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Payment notice requirements</li>
+              <li>Pay less notice deadlines</li>
+              <li>Final date for payment</li>
+              <li>Retention percentage and release dates</li>
+              <li>Valuation rules for variations</li>
+            </ul>
+            <p>
+              <strong>Programme and Time:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Commencement and completion dates</li>
+              <li>Sectional completion provisions</li>
+              <li>Extension of time procedures</li>
+              <li>Liquidated damages exposure</li>
+              <li>Acceleration requirements</li>
+            </ul>
+            <p>
+              <strong>Critical Subcontract Clauses (Clause Area — Risk — What to Check):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Design liability:</strong> High - fitness for purpose vs reasonable skill —
+                Standard of care, PI insurance limits
+              </li>
+              <li>
+                <strong>Set-off rights:</strong> Medium - cash flow impact — Conditions for
+                withholding, notice periods
+              </li>
+              <li>
+                <strong>Indemnities:</strong> High - unlimited liability — Scope, caps, insurance
+                coverage
+              </li>
+              <li>
+                <strong>Termination:</strong> High - payment for work done — Grounds, notice,
+                consequences
+              </li>
+              <li>
+                <strong>Retention:</strong> Medium - cash flow and insolvency risk — Percentage,
+                trust account, release dates
+              </li>
+            </ul>
+            <p>
+              <strong>Warning — Pay-When-Paid Clauses:</strong> Pay-when-paid clauses are largely
+              prohibited under the Construction Act 1996 (except in insolvency). If your subcontract
+              contains such a clause, it may be unenforceable. However, pay-when-certified clauses
+              linking your payment to main contract certification may still be valid. Always seek
+              legal advice on unusual payment terms.
+            </p>
+            <p>
               <strong>Best practice:</strong> Review subcontract terms before tender, price risk
               items, and negotiate unfair clauses before signing.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 3: Extensions of Time and Loss & Expense */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Extensions of Time and Loss and Expense
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Extensions of Time and Loss and Expense">
             <p>
               Managing time and cost claims is critical for project success. JCT contracts provide
               structured mechanisms for claiming extensions of time (EOT) and compensation for loss
               and expense caused by matters beyond the contractor's control.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Relevant Events (Grounds for EOT)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Variations:</strong> Changes to scope instructed by contract administrator
-                </li>
-                <li className="pl-1">
-                  <strong>Late information:</strong> Drawings, details, or instructions not provided
-                  on time
-                </li>
-                <li className="pl-1">
-                  <strong>Employer's other contractors:</strong> Delays caused by direct contractors
-                  or statutory undertakers
-                </li>
-                <li className="pl-1">
-                  <strong>Exceptionally adverse weather:</strong> Must be genuinely exceptional, not
-                  merely bad weather
-                </li>
-                <li className="pl-1">
-                  <strong>Civil commotion or terrorism:</strong> Events beyond reasonable contractor
-                  control
-                </li>
-                <li className="pl-1">
-                  <strong>Force majeure:</strong> Unforeseeable events making performance impossible
-                </li>
-                <li className="pl-1">
-                  <strong>Statutory changes:</strong> New legislation affecting the works
-                </li>
-                <li className="pl-1">
-                  <strong>Employer default:</strong> Failure to give access, impediment, or
-                  prevention
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                EOT Procedure Under JCT SBC
-              </p>
-              <ol className="text-sm text-white space-y-1.5 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  Contractor gives written notice as soon as delay becomes apparent
-                </li>
-                <li className="pl-1">
-                  Notice identifies the relevant event and expected effect on completion
-                </li>
-                <li className="pl-1">
-                  Contractor provides particulars and estimate of delay when reasonably possible
-                </li>
-                <li className="pl-1">
-                  Contract administrator assesses and grants fair and reasonable extension
-                </li>
-                <li className="pl-1">
-                  If refused or inadequate, contractor may refer to adjudication
-                </li>
-              </ol>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Loss and Expense - Relevant Matters
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Relevant Matter
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Loss Items
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Late information</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Standing time, programme revision costs, acceleration
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Variations and disruption
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Additional supervision, extended preliminaries, loss of productivity
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Employer's failure to give access
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Plant standing, labour redeployment, site welfare costs
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Suspension by contractor</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Demobilisation and remobilisation costs
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Approximate quantities adjustment
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rate adjustment, extended duration costs
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Building Services Example: Distribution Board Delay
-              </p>
-              <p className="text-sm text-white">
-                An electrical subcontractor is delayed 4 weeks because the consulting engineer
-                issues revised distribution board schedules late. The subcontractor must: (1) notify
-                the main contractor in writing immediately, (2) provide programme impact analysis,
-                (3) record all affected resources and costs, (4) claim both EOT and loss and
-                expense. Recoverable costs may include electrician standing time, extended site
-                welfare, delayed material deliveries, and reprogramming specialist commissioning
-                engineers.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Relevant Events (Grounds for EOT):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Variations:</strong> Changes to scope instructed by contract administrator
+              </li>
+              <li>
+                <strong>Late information:</strong> Drawings, details, or instructions not provided
+                on time
+              </li>
+              <li>
+                <strong>Employer's other contractors:</strong> Delays caused by direct contractors
+                or statutory undertakers
+              </li>
+              <li>
+                <strong>Exceptionally adverse weather:</strong> Must be genuinely exceptional, not
+                merely bad weather
+              </li>
+              <li>
+                <strong>Civil commotion or terrorism:</strong> Events beyond reasonable contractor
+                control
+              </li>
+              <li>
+                <strong>Force majeure:</strong> Unforeseeable events making performance impossible
+              </li>
+              <li>
+                <strong>Statutory changes:</strong> New legislation affecting the works
+              </li>
+              <li>
+                <strong>Employer default:</strong> Failure to give access, impediment, or prevention
+              </li>
+            </ul>
+            <p>
+              <strong>EOT Procedure Under JCT SBC:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Contractor gives written notice as soon as delay becomes apparent</li>
+              <li>Notice identifies the relevant event and expected effect on completion</li>
+              <li>Contractor provides particulars and estimate of delay when reasonably possible</li>
+              <li>Contract administrator assesses and grants fair and reasonable extension</li>
+              <li>If refused or inadequate, contractor may refer to adjudication</li>
+            </ul>
+            <p>
+              <strong>Loss and Expense — Relevant Matters (Matter — Typical Loss Items):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Late information:</strong> Standing time, programme revision costs,
+                acceleration
+              </li>
+              <li>
+                <strong>Variations and disruption:</strong> Additional supervision, extended
+                preliminaries, loss of productivity
+              </li>
+              <li>
+                <strong>Employer's failure to give access:</strong> Plant standing, labour
+                redeployment, site welfare costs
+              </li>
+              <li>
+                <strong>Suspension by contractor:</strong> Demobilisation and remobilisation costs
+              </li>
+              <li>
+                <strong>Approximate quantities adjustment:</strong> Rate adjustment, extended
+                duration costs
+              </li>
+            </ul>
+            <p>
+              <strong>Building Services Example — Distribution Board Delay:</strong> An electrical
+              subcontractor is delayed 4 weeks because the consulting engineer issues revised
+              distribution board schedules late. The subcontractor must: (1) notify the main
+              contractor in writing immediately, (2) provide programme impact analysis, (3) record
+              all affected resources and costs, (4) claim both EOT and loss and expense. Recoverable
+              costs may include electrician standing time, extended site welfare, delayed material
+              deliveries, and reprogramming specialist commissioning engineers.
+            </p>
+            <p>
               <strong>Documentation is key:</strong> Keep contemporaneous records of delays, cause
               and effect, resources affected, and costs incurred.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 4: Practical Completion and Defects Liability */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Practical Completion and Defects Liability
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Practical Completion and Defects Liability">
             <p>
               Practical completion is a pivotal contractual milestone that triggers several
               important consequences. Understanding what it means and managing the defects liability
               period effectively is essential for completing projects successfully.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Practical Completion Criteria
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Works substantially complete and fit for occupation/use</li>
-                <li className="pl-1">All testing and commissioning satisfactorily completed</li>
-                <li className="pl-1">O&M manuals and as-built drawings provided</li>
-                <li className="pl-1">Training delivered to client's staff where required</li>
-                <li className="pl-1">
-                  Minor outstanding items (snagging) acceptable to contract administrator
-                </li>
-                <li className="pl-1">All statutory approvals and certificates obtained</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Consequences of Practical Completion
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">For the Contractor</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>50% retention released</li>
-                    <li>Liquidated damages liability ends</li>
-                    <li>Insurance responsibilities may transfer</li>
-                    <li>Defects liability period begins</li>
-                    <li>Right to final account preparation</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">For the Employer</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Takes possession of the works</li>
-                    <li>Assumes responsibility for security</li>
-                    <li>Insurance responsibility may transfer</li>
-                    <li>Can occupy and use the building</li>
-                    <li>Final account process commences</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Defects Liability Period (Rectification Period)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Standard Provision
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Subcontractor Implication
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Duration</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        12 months from practical completion
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Must maintain resources to respond
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Notification</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Employer/CA notifies of defects
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Main contractor passes down to trades
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Rectification</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Contractor rectifies at own cost
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Subcontractor liable for own defects
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Exclusions</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fair wear and tear, third-party damage
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Document handover condition
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Certificate</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Making good certificate issued at end
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Triggers remaining retention release
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-2">
-                Building Services Example: Electrical Defects
-              </p>
-              <p className="text-sm text-white">
-                Six months after practical completion, the building manager reports emergency
-                lighting failures. The electrical subcontractor must: (1) attend site promptly to
-                diagnose, (2) determine if the failure is a genuine defect (faulty component, poor
-                workmanship) or misuse/external cause, (3) rectify defects at their own cost, (4)
-                document the repair and root cause. If the failure was due to the client
-                disconnecting the lighting circuit for their own alterations, this is not a defect
-                for the subcontractor to remedy free of charge.
-              </p>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Practical Completion Criteria:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Works substantially complete and fit for occupation/use</li>
+              <li>All testing and commissioning satisfactorily completed</li>
+              <li>O&M manuals and as-built drawings provided</li>
+              <li>Training delivered to client's staff where required</li>
+              <li>
+                Minor outstanding items (snagging) acceptable to contract administrator
+              </li>
+              <li>All statutory approvals and certificates obtained</li>
+            </ul>
+            <p>
+              <strong>Consequences of Practical Completion — For the Contractor:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>50% retention released</li>
+              <li>Liquidated damages liability ends</li>
+              <li>Insurance responsibilities may transfer</li>
+              <li>Defects liability period begins</li>
+              <li>Right to final account preparation</li>
+            </ul>
+            <p>
+              <strong>For the Employer:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Takes possession of the works</li>
+              <li>Assumes responsibility for security</li>
+              <li>Insurance responsibility may transfer</li>
+              <li>Can occupy and use the building</li>
+              <li>Final account process commences</li>
+            </ul>
+            <p>
+              <strong>Defects Liability Period (Rectification Period) — (Aspect — Standard — Subcontractor Implication):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Duration:</strong> 12 months from practical completion — Must maintain
+                resources to respond
+              </li>
+              <li>
+                <strong>Notification:</strong> Employer/CA notifies of defects — Main contractor
+                passes down to trades
+              </li>
+              <li>
+                <strong>Rectification:</strong> Contractor rectifies at own cost — Subcontractor
+                liable for own defects
+              </li>
+              <li>
+                <strong>Exclusions:</strong> Fair wear and tear, third-party damage — Document
+                handover condition
+              </li>
+              <li>
+                <strong>Certificate:</strong> Making good certificate issued at end — Triggers
+                remaining retention release
+              </li>
+            </ul>
+            <p>
+              <strong>Building Services Example — Electrical Defects:</strong> Six months after
+              practical completion, the building manager reports emergency lighting failures. The
+              electrical subcontractor must: (1) attend site promptly to diagnose, (2) determine if
+              the failure is a genuine defect (faulty component, poor workmanship) or
+              misuse/external cause, (3) rectify defects at their own cost, (4) document the repair
+              and root cause. If the failure was due to the client disconnecting the lighting
+              circuit for their own alterations, this is not a defect for the subcontractor to
+              remedy free of charge.
+            </p>
+            <p>
               <strong>Practical tip:</strong> Maintain good relationships with building managers
               during the defects period. Prompt response to genuine issues builds reputation and
               often leads to future work.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — Extension of Time Claim:</strong> Revised containment drawings
+              issued 3 weeks late. Electrical first fix delayed.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Original programme: First fix weeks 10-16</li>
+              <li>Information due: Week 8</li>
+              <li>Information received: Week 11 (3 weeks late)</li>
+              <li>First fix start delayed to week 14</li>
+              <li>Critical path delay: 3 weeks minimum</li>
+              <li>Second fix pushed back accordingly</li>
+              <li>
+                <strong>EOT entitlement:</strong> 3 weeks (minimum)
+              </li>
+              <li>
+                <strong>Loss and expense:</strong> Extended preliminaries, possible acceleration
+                costs
+              </li>
+            </ul>
+            <p>
+              <strong>Example 2 — Loss and Expense Calculation:</strong> Calculate loss and expense
+              for 3-week delay caused by late information.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Site supervision: 3 weeks x 1,200 pounds = 3,600 pounds</li>
+              <li>Welfare facilities: 3 weeks x 400 pounds = 1,200 pounds</li>
+              <li>Small plant and tools: 3 weeks x 300 pounds = 900 pounds</li>
+              <li>Standing time: 2 electricians x 3 days waiting = 6 days x 280 pounds = 1,680 pounds</li>
+              <li>Programme revision: contracts manager time 4 hours x 65 pounds = 260 pounds</li>
+              <li>
+                <strong>Total claim:</strong> 7,640 pounds
+              </li>
+            </ul>
+            <p>
+              <strong>Example 3 — Retention Release Timeline:</strong> Subcontract value 500,000
+              pounds, retention 3%, defects period 12 months.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Total retention held: 500,000 x 3% = <strong>15,000 pounds</strong>
+              </li>
+              <li>Practical completion (1st March 2024): first moiety released 7,500 pounds</li>
+              <li>End of defects period (1st March 2025): making good certificate issued</li>
+              <li>Second moiety released: 7,500 pounds</li>
+              <li>Final release subject to final account agreement</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Extension of Time Claim
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Revised containment drawings issued 3 weeks late.
-                Electrical first fix delayed.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Original programme: First fix weeks 10-16</p>
-                <p>Information due: Week 8</p>
-                <p>Information received: Week 11 (3 weeks late)</p>
-                <p className="mt-2">Impact assessment:</p>
-                <p>- First fix start delayed to week 14</p>
-                <p>- Critical path delay: 3 weeks minimum</p>
-                <p>- Second fix pushed back accordingly</p>
-                <p className="mt-2 text-green-400">EOT entitlement: 3 weeks (minimum)</p>
-                <p className="text-amber-400">
-                  Loss and expense: Extended preliminaries, possible acceleration costs
-                </p>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Loss and Expense Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate loss and expense for 3-week delay caused by
-                late information.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Extended preliminaries:</strong>
-                </p>
-                <p>Site supervision: 3 weeks x 1,200 pounds = 3,600 pounds</p>
-                <p>Welfare facilities: 3 weeks x 400 pounds = 1,200 pounds</p>
-                <p>Small plant and tools: 3 weeks x 300 pounds = 900 pounds</p>
-                <p className="mt-2">
-                  <strong>Standing time:</strong>
-                </p>
-                <p>2 electricians x 3 days waiting = 6 days x 280 pounds = 1,680 pounds</p>
-                <p className="mt-2">
-                  <strong>Programme revision:</strong>
-                </p>
-                <p>Contracts manager time: 4 hours x 65 pounds = 260 pounds</p>
-                <p className="mt-2 border-t border-white/20 pt-2">
-                  Total claim: <strong>7,640 pounds</strong>
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Retention Release Timeline
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Subcontract value 500,000 pounds, retention 3%, defects
-                period 12 months.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  Total retention held: 500,000 x 3% = <strong>15,000 pounds</strong>
-                </p>
-                <p className="mt-2">Practical completion (1st March 2024):</p>
-                <p>- First moiety released: 7,500 pounds</p>
-                <p className="mt-2">End of defects period (1st March 2025):</p>
-                <p>- Making good certificate issued</p>
-                <p>- Second moiety released: 7,500 pounds</p>
-                <p className="mt-2 text-amber-400">
-                  Note: Final release subject to final account agreement
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>EOT claim checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Identify the relevant event from the contract list</li>
+              <li>Give written notice immediately delay becomes apparent</li>
+              <li>State the cause, expected duration, and effect on completion</li>
+              <li>Provide programme showing critical path impact</li>
+              <li>Submit particulars and supporting documentation</li>
+              <li>Follow up and respond to queries promptly</li>
+            </ul>
+            <p>
+              <strong>Key dates and periods to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Retention moieties: <strong>50%</strong> at PC, <strong>50%</strong> at final
+                certificate
+              </li>
+              <li>
+                Defects liability period: <strong>12 months</strong> standard
+              </li>
+              <li>
+                Final certificate: <strong>2 months</strong> after end of defects period (JCT SBC)
+              </li>
+              <li>
+                Adjudication: <strong>28 days</strong> from referral to decision
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">EOT Claim Checklist</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Identify the relevant event from the contract list</li>
-                <li className="pl-1">Give written notice immediately delay becomes apparent</li>
-                <li className="pl-1">
-                  State the cause, expected duration, and effect on completion
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Late notification</strong> — Always notify delays immediately in writing
                 </li>
-                <li className="pl-1">Provide programme showing critical path impact</li>
-                <li className="pl-1">Submit particulars and supporting documentation</li>
-                <li className="pl-1">Follow up and respond to queries promptly</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Dates and Periods to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Retention moieties: <strong>50%</strong> at PC, <strong>50%</strong> at final
-                  certificate
+                <li>
+                  <strong>Poor records</strong> — Keep daily diaries, photos, and correspondence
                 </li>
-                <li className="pl-1">
-                  Defects liability period: <strong>12 months</strong> standard
-                </li>
-                <li className="pl-1">
-                  Final certificate: <strong>2 months</strong> after end of defects period (JCT SBC)
-                </li>
-                <li className="pl-1">
-                  Adjudication: <strong>28 days</strong> from referral to decision
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Late notification</strong> - Always notify delays immediately in writing
-                </li>
-                <li className="pl-1">
-                  <strong>Poor records</strong> - Keep daily diaries, photos, and correspondence
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring subcontract terms</strong> - Read and understand your specific
+                <li>
+                  <strong>Ignoring subcontract terms</strong> — Read and understand your specific
                   contract
                 </li>
-                <li className="pl-1">
-                  <strong>Verbal instructions</strong> - Insist on written confirmation of
-                  variations
+                <li>
+                  <strong>Verbal instructions</strong> — Insist on written confirmation of variations
                 </li>
-                <li className="pl-1">
-                  <strong>Missing defects response</strong> - Maintain capability to respond during
+                <li>
+                  <strong>Missing defects response</strong> — Maintain capability to respond during
                   defects period
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Notify delays in writing immediately, keep daily diaries with photos and correspondence, read and understand the specific subcontract terms, insist every variation is confirmed in writing, and maintain capability to respond throughout the defects period."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Late JCT notice loses an EOT claim"
+            situation={
+              <>
+                A client design change in week 12 delays the LV switchroom layout by six weeks. You absorb the work, do not issue a formal Clause 2.27 notice, and recover most of the time through acceleration. At month nine, the project completes four weeks late. You submit an EOT claim of six weeks. The contract administrator rejects it: no contemporaneous notice, no progress impact records, no contemporaneous programme update.
+              </>
+            }
+            whatToDo={
+              <>
+                Issue Clause 2.27 notices the moment any delay event becomes apparent — even if you intend to mitigate. Maintain progress records (daily site diary, programme baselines, photographs). At each interim valuation, support the EOT with a programme update showing impact. Loss and expense follows the EOT under Clauses 4.20–4.26 — same notice discipline applies. Never rely on goodwill at the end of a project.
+              </>
+            }
+            whyItMatters={
+              <>
+                JCT EOT and loss-and-expense entitlement is procedural as much as factual. Late notices, missing records and absent programme updates lose claims that would otherwise be valid. Notice discipline is the cheapest insurance on any JCT project.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">JCT Contract Forms</p>
-                <ul className="space-y-0.5">
-                  <li>SBC - Standard Building Contract (traditional)</li>
-                  <li>DB - Design and Build Contract</li>
-                  <li>ICD - Intermediate Building Contract</li>
-                  <li>MW/MWD - Minor Works (with/without design)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Milestones</p>
-                <ul className="space-y-0.5">
-                  <li>Practical completion - 50% retention released</li>
-                  <li>Defects period - 12 months standard</li>
-                  <li>Making good certificate - issued when defects remedied</li>
-                  <li>Final certificate - remaining retention released</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+                    <KeyTakeaways
+            points={[
+              "JCT suite: SBC (large traditional), IC (medium), MW (small), DB (design-build), MP (major project), CM (construction management).",
+              "Section 2 = obligations, completion, EOT. Section 4 = payment, loss and expense. Section 5 = variations.",
+              "Relevant Events (Clause 2.29) entitle EOT; Relevant Matters (Clause 4.21) entitle loss and expense — separate tests.",
+              "Notices under Clause 2.27 must be issued \"forthwith\" — late notices weaken or defeat claims.",
+              "Schedule of Amendments houses bespoke risk allocation — always read before bidding.",
+              "Practical Completion (2.30) triggers DLP, half retention release, end of LADs.",
+              "Defects Liability Period typically 12 months from PC — defects must be made good.",
+              "JCT 2024 brings updated payment, dispute resolution and economic conditions provisions over JCT 2016.",
+            ]}
+          />
+
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section2-3">
-              Next: NEC Contracts
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section2-1')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Procurement routes
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section2-3')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                NEC contracts
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

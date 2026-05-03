@@ -1,7 +1,7 @@
 /**
  * Module 3 · Section 2 · Subsection 5 — Power Factor Correction Methods
  * HNC Electrical Engineering for Building Services (Pearson U4019 — Electrical & Electronic Principles)
- *   Static, switched and active PFC \u2014 the engineering choices behind a real switchroom
+ *   Static, switched and active PFC — the engineering choices behind a real switchroom
  *   capacitor bank, including detuning to handle harmonic-rich loads (LED drivers, VFDs).
  */
 
@@ -290,7 +290,7 @@ const HNCModule3Section2_5 = () => {
                 Plain capacitor banks on a system with significant harmonic content can
                 resonate with the supply impedance, dramatically over-stressing the cans and
                 blowing fuses. Detuning shifts the resonant frequency below the harmonic
-                spectrum, protecting the bank and acting as a partial harmonic filter \u2014
+                spectrum, protecting the bank and acting as a partial harmonic filter —
                 standard on any modern building services PFC retrofit.
               </>
             }
@@ -762,8 +762,8 @@ const HNCModule3Section2_5 = () => {
             whatToDo={
               <>
                 Calculate Q_C from the load profile across the day, picking step size to
-                match the smallest motor block (typically 25\u201350 kVAr per step). Specify
-                a stepped (contactor-switched) bank with 6\u20138 steps to track load
+                match the smallest motor block (typically 25–50 kVAr per step). Specify
+                a stepped (contactor-switched) bank with 6–8 steps to track load
                 smoothly. Add 7 % series detuning reactors to BS EN 61921, capacitors to
                 BS EN 60831-1, assembled enclosure to BS EN 61439-1. Locate at the main
                 LV switchboard rather than at each motor (load is too dynamic for fixed
@@ -777,7 +777,7 @@ const HNCModule3Section2_5 = () => {
                 The choice between static / stepped / active PFC, central vs local, and
                 plain vs detuned, drives both capital cost and operating performance for the
                 next 25 years. Get it wrong and you either over-spend on hardware or
-                under-correct and continue paying penalties \u2014 your design decisions need
+                under-correct and continue paying penalties — your design decisions need
                 to defend against both.
               </>
             }
@@ -791,14 +791,14 @@ const HNCModule3Section2_5 = () => {
 
           <KeyTakeaways
             points={[
-              'Static PFC (always-on capacitor bank): cheapest, used where the inductive load is roughly constant \u2014 risk of over-correction at low load.',
-              'Stepped PFC (multiple capacitor stages switched by contactor): standard for buildings with variable load \u2014 6\u20138 steps to track demand.',
-              'Active PFC (IGBT-based, fast electronics): smooth correction down to small kVAr, also corrects harmonics \u2014 used where load is highly variable or non-linear.',
-              'Central / bulk PFC at the main board: best where load is dynamic or distributed \u2014 simpler maintenance, single point of control.',
-              'Local PFC at the motor: best where the inductive load is large, constant and a long way from the source \u2014 cuts cable losses upstream.',
-              'Detuned PFC (7 % typical, 14 % for heavy harmonic content) shifts the bank\u2019s resonant frequency below the harmonic spectrum, protecting capacitors against resonance.',
+              'Static PFC (always-on capacitor bank): cheapest, used where the inductive load is roughly constant — risk of over-correction at low load.',
+              'Stepped PFC (multiple capacitor stages switched by contactor): standard for buildings with variable load — 6–8 steps to track demand.',
+              'Active PFC (IGBT-based, fast electronics): smooth correction down to small kVAr, also corrects harmonics — used where load is highly variable or non-linear.',
+              'Central / bulk PFC at the main board: best where load is dynamic or distributed — simpler maintenance, single point of control.',
+              'Local PFC at the motor: best where the inductive load is large, constant and a long way from the source — cuts cable losses upstream.',
+              'Detuned PFC (7 % typical, 14 % for heavy harmonic content) shifts the bank’s resonant frequency below the harmonic spectrum, protecting capacitors against resonance.',
               'BS EN 60831-1 governs the capacitor cans. BS EN 61921 governs the assembled PFC equipment. BS EN 61439-1 governs the enclosure.',
-              'Discharge resistors are mandatory \u2014 stored \u00bdCV\u00b2 energy in a large bank is lethal, so always wait the declared discharge time before touching terminals.',
+              'Discharge resistors are mandatory — stored ½CV² energy in a large bank is lethal, so always wait the declared discharge time before touching terminals.',
             ]}
           />
 

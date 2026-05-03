@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 7 · Section 6 · Subsection 4 — Coordination Studies
+ * HNC Electrical Engineering for Building Services (Power and Lighting Systems)
+ *   Short-circuit calculations, protective device coordination, software tools, and study documentation
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Coordination Studies - HNC Module 7 Section 6.4';
@@ -243,863 +256,318 @@ const faqs = [
 ];
 
 const HNCModule7Section6_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section6")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module7-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.6.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Coordination Studies
-          </h1>
-          <p className="text-white">
-            Short-circuit calculations, protective device coordination, software tools, and study
-            documentation
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 7 · Section 6 · Subsection 4"
+            title="Coordination Studies"
+            description="Short-circuit calculations, protective device coordination, software tools, and study documentation"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>IEC 60909:</strong> Standard for short-circuit calculations
-              </li>
-              <li className="pl-1">
-                <strong>Selectivity:</strong> Isolate only the faulted section
-              </li>
-              <li className="pl-1">
-                <strong>TCC curves:</strong> Plot operating time vs fault current
-              </li>
-              <li className="pl-1">
-                <strong>Software:</strong> ETAP, SKM, Amtech for analysis
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Apply IEC 60909 methodology for short-circuit current calculations",
+              "Analyse fault current contributions from transformers, generators, and motors",
+              "Interpret and construct time-current characteristic curves",
+              "Use coordination software tools (ETAP, SKM, Amtech) for protection studies",
+              "Achieve selectivity between series-connected protective devices",
+              "Document coordination studies for engineering records and O&M manuals",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Short-Circuit Calculations (IEC 60909)">
+            <p>IEC 60909 provides the internationally accepted methodology for calculating short-circuit currents in three-phase AC systems. Understanding these calculations is fundamental to protective device selection and coordination.</p>
+            <p><strong>Key short-circuit current parameters:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>I"k (initial symmetrical):</strong> RMS value at instant of fault - determines breaking capacity</li>
+              <li><strong>ip (peak):</strong> Maximum instantaneous value - determines making capacity and dynamic forces</li>
+              <li><strong>Ib (breaking):</strong> RMS value at circuit breaker contact separation</li>
+              <li><strong>Ik (steady-state):</strong> RMS value after transients decay - relevant for generator faults</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Fault levels:</strong> Typically 10-50 kA at LV switchboards
-              </li>
-              <li className="pl-1">
-                <strong>Time margins:</strong> 0.3-0.4 seconds minimum
-              </li>
-              <li className="pl-1">
-                <strong>Motor contribution:</strong> 4-6 × FLC initial
-              </li>
-              <li className="pl-1">
-                <strong>Documentation:</strong> Essential for O&M
-              </li>
+            <p><strong>IEC 60909 Calculation Methodology</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>1:</strong> Define system topology — Single-line diagram, voltage levels, network configuration</li>
+              <li><strong>2:</strong> Determine equipment impedances — Transformers (Uk%), cables (R, X), motors, utility source</li>
+              <li><strong>3:</strong> Convert to common base — Typically 100 MVA base, per-unit system</li>
+              <li><strong>4:</strong> Calculate equivalent impedance — Series/parallel combinations to fault point</li>
+              <li><strong>5:</strong> Apply voltage factor (c) — cmax = 1.05-1.1 for maximum, cmin = 0.95-1.0 for minimum</li>
+              <li><strong>6:</strong> Calculate I"k, ip, Ib — Different fault types: 3-phase, phase-earth, phase-phase</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Calculation Formula - Initial Symmetrical Short-Circuit Current</strong></p>
+            <p>I"k = (c × Un) / (√3 × Zk)</p>
+            <p>Where:</p>
+            <p>c = voltage factor (typically 1.1 for maximum)</p>
+            <p>Un = nominal voltage</p>
+            <p>Zk = total impedance to fault point</p>
+            <p><strong>Design principle:</strong> Always calculate both maximum (for equipment ratings) and minimum (for protection sensitivity) short-circuit currents at each location.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Apply IEC 60909 methodology for short-circuit current calculations',
-              'Analyse fault current contributions from transformers, generators, and motors',
-              'Interpret and construct time-current characteristic curves',
-              'Use coordination software tools (ETAP, SKM, Amtech) for protection studies',
-              'Achieve selectivity between series-connected protective devices',
-              'Document coordination studies for engineering records and O&M manuals',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Short-Circuit Calculations */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Short-Circuit Calculations (IEC 60909)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Fault Current Contribution Analysis">
+            <p>Multiple sources contribute to fault current in electrical systems. Understanding each source's contribution characteristics is essential for accurate fault level calculations and proper protective device selection.</p>
+            <p><strong>Utility (Grid) Contribution</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Sustained at I"k level</li>
+              <li>Obtain from DNO (fault level notice)</li>
+              <li>Typically dominates at MV/LV</li>
+              <li>Check for future increases</li>
+            </ul>
+            <p><strong>Transformer Contribution</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Limited by Uk% (impedance)</li>
+              <li>I"k ≈ kVA / (Uk% × √3 × V)</li>
+              <li>Typical Uk%: 4-6% distribution</li>
+              <li>Parallel transformers increase fault level</li>
+            </ul>
+            <p><strong>Motor Contribution</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Induction: 4-6 × FLC, decays in 3-5 cycles</li>
+              <li>Synchronous: higher, longer decay</li>
+              <li>Significant for large motor loads</li>
+              <li>Often modelled as single equivalent</li>
+            </ul>
+            <p><strong>Generator Contribution</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Subtransient (X"d): initial 1-2 cycles</li>
+              <li>Transient (X'd): 0.5-2 seconds</li>
+              <li>Synchronous (Xd): steady-state</li>
+              <li>Standby generators significant</li>
+            </ul>
+            <p><strong>X/R Ratio and DC Component</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>&lt; 5:</strong> LV final circuits, small transformers — 1.3 - 1.5 — Rapid (&lt; 1 cycle)</li>
+              <li><strong>5 - 15:</strong> LV distribution, medium transformers — 1.5 - 1.8 — Moderate (2-5 cycles)</li>
+              <li><strong>15 - 50:</strong> MV systems, large transformers — 1.8 - 2.0 — Slow (5-10 cycles)</li>
+              <li><strong>&gt; 50:</strong> Generator busbars, HV systems — &gt; 2.0 — Very slow (&gt; 10 cycles)</li>
+            </ul>
+            <p><strong>Best practice:</strong> The peak short-circuit current ip = κ × √2 × I"k, where κ depends on X/R ratio. Higher X/R ratios significantly increase dynamic stresses on equipment.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Protective Device Coordination">
+            <p>Coordination ensures that only the protective device immediately upstream of a fault operates, isolating the minimum portion of the system. This maintains supply to healthy circuits and is achieved through careful analysis of device characteristics.</p>
+            <p><strong>Coordination Methods</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Time grading:</strong> Upstream device has longer time delay — Overcurrent relays, adjustable trip units</li>
+              <li><strong>Current grading:</strong> Upstream device has higher pickup setting — Different fault levels at each location</li>
+              <li><strong>Energy (I²t):</strong> Downstream device limits energy to below upstream trip — MCB/fuse coordination, current-limiting</li>
+              <li><strong>Zone selective interlocking:</strong> Communication restrains upstream devices — Modern electronic trip units, relays</li>
+            </ul>
+            <p><strong>Time-Current Characteristic (TCC) Curves</strong></p>
+            <p>TCC curves plot operating time versus fault current on log-log scales:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>X-axis:</strong> Current (typically in multiples of rated current)</li>
+              <li><strong>Y-axis:</strong> Operating time (0.01 to 1000 seconds)</li>
+              <li><strong>Curve band:</strong> Tolerance between minimum and maximum operating times</li>
+              <li><strong>Coordination requirement:</strong> Downstream device curve must sit entirely below and left of upstream curve within fault range</li>
+            </ul>
+            <p><strong>Coordination time margins:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Electromechanical relays:</strong> 0.4 seconds minimum</li>
+              <li><strong>Static/digital relays:</strong> 0.3 seconds minimum</li>
+              <li><strong>Circuit breakers:</strong> 0.3-0.4 seconds (accounts for relay + breaker time)</li>
+              <li><strong>Fuses:</strong> Must account for pre-arcing and arcing time tolerances</li>
+            </ul>
+            <p><strong>Selectivity limit:</strong> The maximum fault current at which coordination is maintained. Above this level, both devices may operate simultaneously (partial selectivity).</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Software Tools and Documentation">
+            <p>Modern coordination studies rely on specialised software for accurate analysis and documentation. These tools model complex systems, calculate fault currents at multiple locations, and automatically generate TCC curves.</p>
+            <p><strong>Industry-Standard Software Packages</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>ETAP:</strong> ETAP/Schneider — Comprehensive analysis suite, real-time monitoring, arc flash</li>
+              <li><strong>SKM PowerTools:</strong> SKM Systems Analysis — DAPPER for coordination, extensive device libraries</li>
+              <li><strong>Amtech ProDesign:</strong> Trimble — UK-focused, BS 7671 compliance, protection coordination</li>
+              <li><strong>CYMTCC:</strong> Eaton — TCC curve plotting, coordination analysis</li>
+              <li><strong>EasyPower:</strong> ESA Inc — Short-circuit, coordination, arc flash integrated</li>
+            </ul>
+            <p><strong>Software Analysis Capabilities</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>IEC 60909 / IEEE fault calculations</li>
+              <li>Automatic TCC curve generation</li>
+              <li>Device library with manufacturer data</li>
+              <li>Selectivity verification</li>
+              <li>Arc flash incident energy</li>
+              <li>Report generation</li>
+            </ul>
+            <p><strong>Study Documentation Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Single-line diagram with fault levels</li>
+              <li>Protective device schedule</li>
+              <li>TCC coordination plots</li>
+              <li>Relay/trip unit settings</li>
+              <li>Selectivity matrices</li>
+              <li>Calculation assumptions</li>
+            </ul>
+            <p><strong>Coordination Study Report Contents</strong></p>
+            <p><strong>1. Introduction:</strong> Project scope, system description, design criteria</p>
+            <p><strong>2. System Data:</strong> Single-line diagram, equipment ratings, cable data, utility fault level</p>
+            <p><strong>3. Short-Circuit Analysis:</strong> Fault currents at each bus, calculation method (IEC 60909)</p>
+            <p><strong>4. Protective Device Schedule:</strong> All devices with ratings, types, settings, and I²t characteristics</p>
+            <p><strong>5. TCC Curves:</strong> Coordination plots for each series path, showing selectivity margins</p>
+            <p><strong>6. Selectivity Matrix:</strong> Table showing coordination status between device pairs</p>
+            <p><strong>7. Recommendations:</strong> Any coordination issues identified and proposed solutions</p>
+            <p><strong>Documentation tip:</strong> Include all input data assumptions so studies can be updated when system changes occur. Coordination studies should be living documents, revised whenever the system is modified.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              IEC 60909 provides the internationally accepted methodology for calculating
-              short-circuit currents in three-phase AC systems. Understanding these calculations is
-              fundamental to protective device selection and coordination.
+              <strong>Example 1: Transformer Fault Level Calculation</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Key short-circuit current parameters:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>I"k (initial symmetrical):</strong> RMS value at instant of fault -
-                  determines breaking capacity
-                </li>
-                <li className="pl-1">
-                  <strong>ip (peak):</strong> Maximum instantaneous value - determines making
-                  capacity and dynamic forces
-                </li>
-                <li className="pl-1">
-                  <strong>Ib (breaking):</strong> RMS value at circuit breaker contact separation
-                </li>
-                <li className="pl-1">
-                  <strong>Ik (steady-state):</strong> RMS value after transients decay - relevant
-                  for generator faults
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                IEC 60909 Calculation Methodology
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Step</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Process</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Key Considerations
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1</td>
-                      <td className="border border-white/10 px-3 py-2">Define system topology</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Single-line diagram, voltage levels, network configuration
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Determine equipment impedances
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Transformers (Uk%), cables (R, X), motors, utility source
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3</td>
-                      <td className="border border-white/10 px-3 py-2">Convert to common base</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Typically 100 MVA base, per-unit system
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Calculate equivalent impedance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Series/parallel combinations to fault point
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5</td>
-                      <td className="border border-white/10 px-3 py-2">Apply voltage factor (c)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        cmax = 1.05-1.1 for maximum, cmin = 0.95-1.0 for minimum
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6</td>
-                      <td className="border border-white/10 px-3 py-2">Calculate I"k, ip, Ib</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Different fault types: 3-phase, phase-earth, phase-phase
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Calculation Formula - Initial Symmetrical Short-Circuit Current
-              </p>
-              <div className="font-mono text-sm space-y-2">
-                <p className="text-white">I"k = (c × Un) / (√3 × Zk)</p>
-                <p className="text-white text-xs mt-2">Where:</p>
-                <p className="text-white text-xs">
-                  c = voltage factor (typically 1.1 for maximum)
-                </p>
-                <p className="text-white text-xs">Un = nominal voltage</p>
-                <p className="text-white text-xs">Zk = total impedance to fault point</p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design principle:</strong> Always calculate both maximum (for equipment
-              ratings) and minimum (for protection sensitivity) short-circuit currents at each
-              location.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Fault Current Contribution */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Fault Current Contribution Analysis
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Calculate the maximum prospective fault current at the LV terminals of an 800 kVA, 11/0.4 kV transformer with 5% impedance. Assume utility fault level is infinite.</p>
+            <p>Given:</p>
+            <p>Transformer rating S = 800 kVA</p>
+            <p>Secondary voltage Un = 400 V</p>
+            <p>Impedance Uk = 5%</p>
+            <p>Voltage factor c = 1.1 (maximum)</p>
+            <p>Calculation:</p>
+            <p>Rated secondary current In = S / (√3 × Un)</p>
+            <p>In = 800,000 / (1.732 × 400) = 1155 A</p>
+            <p>Initial symmetrical fault current:</p>
+            <p>I"k = (c × In) / Uk = (1.1 × 1155) / 0.05</p>
+            <p>I"k = 25.4 kA</p>
+            <p>Peak current (assuming X/R = 10, κ = 1.8):</p>
+            <p>ip = κ × √2 × I"k = 1.8 × 1.414 × 25.4</p>
+            <p>ip = 64.6 kA (peak)</p>
             <p>
-              Multiple sources contribute to fault current in electrical systems. Understanding each
-              source's contribution characteristics is essential for accurate fault level
-              calculations and proper protective device selection.
+              <strong>Example 2: Time Grading Coordination</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Utility (Grid) Contribution
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Sustained at I"k level</li>
-                  <li className="pl-1">Obtain from DNO (fault level notice)</li>
-                  <li className="pl-1">Typically dominates at MV/LV</li>
-                  <li className="pl-1">Check for future increases</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Transformer Contribution
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Limited by Uk% (impedance)</li>
-                  <li className="pl-1">I"k ≈ kVA / (Uk% × √3 × V)</li>
-                  <li className="pl-1">Typical Uk%: 4-6% distribution</li>
-                  <li className="pl-1">Parallel transformers increase fault level</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Motor Contribution</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Induction: 4-6 × FLC, decays in 3-5 cycles</li>
-                  <li className="pl-1">Synchronous: higher, longer decay</li>
-                  <li className="pl-1">Significant for large motor loads</li>
-                  <li className="pl-1">Often modelled as single equivalent</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Generator Contribution
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Subtransient (X"d): initial 1-2 cycles</li>
-                  <li className="pl-1">Transient (X'd): 0.5-2 seconds</li>
-                  <li className="pl-1">Synchronous (Xd): steady-state</li>
-                  <li className="pl-1">Standby generators significant</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                X/R Ratio and DC Component
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">X/R Ratio</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Source</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Peak Factor (κ)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">DC Decay</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">&lt; 5</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        LV final circuits, small transformers
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">1.3 - 1.5</td>
-                      <td className="border border-white/10 px-3 py-2">Rapid (&lt; 1 cycle)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5 - 15</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        LV distribution, medium transformers
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">1.5 - 1.8</td>
-                      <td className="border border-white/10 px-3 py-2">Moderate (2-5 cycles)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">15 - 50</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        MV systems, large transformers
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">1.8 - 2.0</td>
-                      <td className="border border-white/10 px-3 py-2">Slow (5-10 cycles)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">&gt; 50</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Generator busbars, HV systems
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">&gt; 2.0</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Very slow (&gt; 10 cycles)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> The peak short-circuit current ip = κ × √2 × I"k,
-              where κ depends on X/R ratio. Higher X/R ratios significantly increase dynamic
-              stresses on equipment.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Protective Device Coordination */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Protective Device Coordination
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Determine the time settings for three series-connected overcurrent relays to achieve coordination with 0.4 second margins.</p>
+            <p>System configuration:</p>
+            <p>Relay A (upstream) → Relay B (midstream) → Relay C (downstream)</p>
+            <p>Fault current at Relay C location = 10 kA</p>
+            <p>Setting calculation (working upstream from fault):</p>
+            <p>Relay C operating time at 10 kA: 0.3 seconds (fastest clearance)</p>
+            <p>Relay B time setting:</p>
+            <p>Minimum = Relay C time + margin = 0.3 + 0.4 = 0.7 seconds</p>
+            <p>Set Relay B time multiplier for 0.7s at 10 kA</p>
+            <p>Relay A time setting:</p>
+            <p>Minimum = Relay B time + margin = 0.7 + 0.4 = 1.1 seconds</p>
+            <p>Set Relay A time multiplier for 1.1s at 10 kA</p>
+            <p>Total fault clearance time at Relay C:</p>
+            <p>Relay C operates in 0.3s (+ breaker time ~0.05s) = 0.35s total</p>
             <p>
-              Coordination ensures that only the protective device immediately upstream of a fault
-              operates, isolating the minimum portion of the system. This maintains supply to
-              healthy circuits and is achieved through careful analysis of device characteristics.
+              <strong>Example 3: Motor Fault Contribution</strong>
             </p>
+            <p><strong>Scenario:</strong> Calculate the fault current contribution from a 200 kW induction motor group during the initial cycles of a nearby fault.</p>
+            <p>Given:</p>
+            <p>Motor group rating = 200 kW</p>
+            <p>Supply voltage = 400 V</p>
+            <p>Power factor = 0.85</p>
+            <p>Efficiency = 0.92</p>
+            <p>Motor contribution factor = 5 × FLC (typical induction)</p>
+            <p>Calculation:</p>
+            <p>Motor input power = 200 / 0.92 = 217.4 kVA</p>
+            <p>Motor FLC = 217,400 / (√3 × 400) = 314 A</p>
+            <p>Initial fault contribution:</p>
+            <p>Imotor = 5 × 314 = 1570 A</p>
+            <p>Motor contribution ≈ 1.6 kA (initial cycles)</p>
+            <p>Note: This decays to zero within 3-5 cycles</p>
+            <p>Must be added to utility contribution for total I"k</p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Coordination Methods</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Principle</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Time grading</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Upstream device has longer time delay
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Overcurrent relays, adjustable trip units
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Current grading</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Upstream device has higher pickup setting
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Different fault levels at each location
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Energy (I²t)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Downstream device limits energy to below upstream trip
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        MCB/fuse coordination, current-limiting
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Zone selective interlocking
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Communication restrains upstream devices
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Modern electronic trip units, relays
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Time-Current Characteristic (TCC) Curves
-              </p>
-              <div className="text-sm space-y-2">
-                <p className="text-white">
-                  TCC curves plot operating time versus fault current on log-log scales:
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>X-axis:</strong> Current (typically in multiples of rated current)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Y-axis:</strong> Operating time (0.01 to 1000 seconds)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Curve band:</strong> Tolerance between minimum and maximum operating
-                    times
-                  </li>
-                  <li className="pl-1">
-                    <strong>Coordination requirement:</strong> Downstream device curve must sit
-                    entirely below and left of upstream curve within fault range
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Coordination time margins:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Electromechanical relays:</strong> 0.4 seconds minimum
-                </li>
-                <li className="pl-1">
-                  <strong>Static/digital relays:</strong> 0.3 seconds minimum
-                </li>
-                <li className="pl-1">
-                  <strong>Circuit breakers:</strong> 0.3-0.4 seconds (accounts for relay + breaker
-                  time)
-                </li>
-                <li className="pl-1">
-                  <strong>Fuses:</strong> Must account for pre-arcing and arcing time tolerances
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Selectivity limit:</strong> The maximum fault current at which coordination is
-              maintained. Above this level, both devices may operate simultaneously (partial
-              selectivity).
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Software Tools and Documentation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Software Tools and Documentation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Modern coordination studies rely on specialised software for accurate analysis and
-              documentation. These tools model complex systems, calculate fault currents at multiple
-              locations, and automatically generate TCC curves.
+              <strong>Coordination Study Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Industry-Standard Software Packages
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Software</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Developer</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Features</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">ETAP</td>
-                      <td className="border border-white/10 px-3 py-2">ETAP/Schneider</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Comprehensive analysis suite, real-time monitoring, arc flash
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">SKM PowerTools</td>
-                      <td className="border border-white/10 px-3 py-2">SKM Systems Analysis</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        DAPPER for coordination, extensive device libraries
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Amtech ProDesign</td>
-                      <td className="border border-white/10 px-3 py-2">Trimble</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        UK-focused, BS 7671 compliance, protection coordination
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CYMTCC</td>
-                      <td className="border border-white/10 px-3 py-2">Eaton</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        TCC curve plotting, coordination analysis
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">EasyPower</td>
-                      <td className="border border-white/10 px-3 py-2">ESA Inc</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Short-circuit, coordination, arc flash integrated
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Software Analysis Capabilities
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">IEC 60909 / IEEE fault calculations</li>
-                  <li className="pl-1">Automatic TCC curve generation</li>
-                  <li className="pl-1">Device library with manufacturer data</li>
-                  <li className="pl-1">Selectivity verification</li>
-                  <li className="pl-1">Arc flash incident energy</li>
-                  <li className="pl-1">Report generation</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Study Documentation Requirements
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Single-line diagram with fault levels</li>
-                  <li className="pl-1">Protective device schedule</li>
-                  <li className="pl-1">TCC coordination plots</li>
-                  <li className="pl-1">Relay/trip unit settings</li>
-                  <li className="pl-1">Selectivity matrices</li>
-                  <li className="pl-1">Calculation assumptions</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Coordination Study Report Contents
-              </p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <strong>1. Introduction:</strong> Project scope, system description, design
-                  criteria
-                </p>
-                <p>
-                  <strong>2. System Data:</strong> Single-line diagram, equipment ratings, cable
-                  data, utility fault level
-                </p>
-                <p>
-                  <strong>3. Short-Circuit Analysis:</strong> Fault currents at each bus,
-                  calculation method (IEC 60909)
-                </p>
-                <p>
-                  <strong>4. Protective Device Schedule:</strong> All devices with ratings, types,
-                  settings, and I²t characteristics
-                </p>
-                <p>
-                  <strong>5. TCC Curves:</strong> Coordination plots for each series path, showing
-                  selectivity margins
-                </p>
-                <p>
-                  <strong>6. Selectivity Matrix:</strong> Table showing coordination status between
-                  device pairs
-                </p>
-                <p>
-                  <strong>7. Recommendations:</strong> Any coordination issues identified and
-                  proposed solutions
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Documentation tip:</strong> Include all input data assumptions so studies can
-              be updated when system changes occur. Coordination studies should be living documents,
-              revised whenever the system is modified.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Obtain utility fault level data from DNO (request maximum and minimum values)</li>
+              <li>Collect accurate equipment impedance data (transformers, cables, motors)</li>
+              <li>Calculate fault currents at all significant locations using IEC 60909</li>
+              <li>Select protective devices with appropriate interrupting ratings</li>
+              <li>Plot TCC curves for all series-connected devices</li>
+              <li>Verify coordination margins (minimum 0.3-0.4 seconds)</li>
+              <li>Document all settings and selectivity limits</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Voltage factor c: <strong>1.1 maximum, 0.95 minimum</strong> (LV systems)</li>
+              <li>Coordination margin: <strong>0.3-0.4 seconds</strong> minimum</li>
+              <li>Motor contribution: <strong>4-6 × FLC</strong> initial, decays in 3-5 cycles</li>
+              <li>Peak factor κ: <strong>1.3-2.0</strong> depending on X/R ratio</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Transformer Fault Level Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate the maximum prospective fault current at the LV
-                terminals of an 800 kVA, 11/0.4 kV transformer with 5% impedance. Assume utility
-                fault level is infinite.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Given:</p>
-                <p>Transformer rating S = 800 kVA</p>
-                <p>Secondary voltage Un = 400 V</p>
-                <p>Impedance Uk = 5%</p>
-                <p>Voltage factor c = 1.1 (maximum)</p>
-                <p className="mt-2 text-white">Calculation:</p>
-                <p>Rated secondary current In = S / (√3 × Un)</p>
-                <p>In = 800,000 / (1.732 × 400) = 1155 A</p>
-                <p className="mt-2">Initial symmetrical fault current:</p>
-                <p>I"k = (c × In) / Uk = (1.1 × 1155) / 0.05</p>
-                <p className="text-green-400">I"k = 25.4 kA</p>
-                <p className="mt-2 text-white">Peak current (assuming X/R = 10, κ = 1.8):</p>
-                <p>ip = κ × √2 × I"k = 1.8 × 1.414 × 25.4</p>
-                <p className="text-green-400">ip = 64.6 kA (peak)</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Time Grading Coordination
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Determine the time settings for three series-connected
-                overcurrent relays to achieve coordination with 0.4 second margins.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">System configuration:</p>
-                <p>Relay A (upstream) → Relay B (midstream) → Relay C (downstream)</p>
-                <p>Fault current at Relay C location = 10 kA</p>
-                <p className="mt-2 text-white">
-                  Setting calculation (working upstream from fault):
-                </p>
-                <p>Relay C operating time at 10 kA: 0.3 seconds (fastest clearance)</p>
-                <p className="mt-2">Relay B time setting:</p>
-                <p>Minimum = Relay C time + margin = 0.3 + 0.4 = 0.7 seconds</p>
-                <p className="text-green-400">Set Relay B time multiplier for 0.7s at 10 kA</p>
-                <p className="mt-2">Relay A time setting:</p>
-                <p>Minimum = Relay B time + margin = 0.7 + 0.4 = 1.1 seconds</p>
-                <p className="text-green-400">Set Relay A time multiplier for 1.1s at 10 kA</p>
-                <p className="mt-2 text-white">Total fault clearance time at Relay C:</p>
-                <p>Relay C operates in 0.3s (+ breaker time ~0.05s) = 0.35s total</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Motor Fault Contribution
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate the fault current contribution from a 200 kW
-                induction motor group during the initial cycles of a nearby fault.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Given:</p>
-                <p>Motor group rating = 200 kW</p>
-                <p>Supply voltage = 400 V</p>
-                <p>Power factor = 0.85</p>
-                <p>Efficiency = 0.92</p>
-                <p>Motor contribution factor = 5 × FLC (typical induction)</p>
-                <p className="mt-2 text-white">Calculation:</p>
-                <p>Motor input power = 200 / 0.92 = 217.4 kVA</p>
-                <p>Motor FLC = 217,400 / (√3 × 400) = 314 A</p>
-                <p className="mt-2">Initial fault contribution:</p>
-                <p>Imotor = 5 × 314 = 1570 A</p>
-                <p className="text-green-400">Motor contribution ≈ 1.6 kA (initial cycles)</p>
-                <p className="mt-2 text-white">Note: This decays to zero within 3-5 cycles</p>
-                <p>Must be added to utility contribution for total I"k</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Coordination Study Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Obtain utility fault level data from DNO (request maximum and minimum values)
-                </li>
-                <li className="pl-1">
-                  Collect accurate equipment impedance data (transformers, cables, motors)
-                </li>
-                <li className="pl-1">
-                  Calculate fault currents at all significant locations using IEC 60909
-                </li>
-                <li className="pl-1">
-                  Select protective devices with appropriate interrupting ratings
-                </li>
-                <li className="pl-1">Plot TCC curves for all series-connected devices</li>
-                <li className="pl-1">Verify coordination margins (minimum 0.3-0.4 seconds)</li>
-                <li className="pl-1">Document all settings and selectivity limits</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Ignoring motor contribution</strong> - can significantly increase fault levels</li>
+                <li><strong>Using outdated DNO fault levels</strong> - system changes may increase prospective fault current</li>
+                <li><strong>Insufficient coordination margins</strong> - device tolerances cause overlap</li>
+                <li><strong>Not documenting assumptions</strong> - studies cannot be verified or updated</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Voltage factor c: <strong>1.1 maximum, 0.95 minimum</strong> (LV systems)
-                </li>
-                <li className="pl-1">
-                  Coordination margin: <strong>0.3-0.4 seconds</strong> minimum
-                </li>
-                <li className="pl-1">
-                  Motor contribution: <strong>4-6 × FLC</strong> initial, decays in 3-5 cycles
-                </li>
-                <li className="pl-1">
-                  Peak factor κ: <strong>1.3-2.0</strong> depending on X/R ratio
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Ignoring motor contribution</strong> - can significantly increase fault
-                  levels
-                </li>
-                <li className="pl-1">
-                  <strong>Using outdated DNO fault levels</strong> - system changes may increase
-                  prospective fault current
-                </li>
-                <li className="pl-1">
-                  <strong>Insufficient coordination margins</strong> - device tolerances cause
-                  overlap
-                </li>
-                <li className="pl-1">
-                  <strong>Not documenting assumptions</strong> - studies cannot be verified or
-                  updated
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">IEC 60909 Parameters</p>
-                <ul className="space-y-0.5">
-                  <li>I"k - Initial symmetrical current</li>
-                  <li>ip - Peak short-circuit current</li>
-                  <li>Ib - Breaking current</li>
-                  <li>c - Voltage factor (1.0-1.1)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Coordination Software</p>
-                <ul className="space-y-0.5">
-                  <li>ETAP - Comprehensive analysis</li>
-                  <li>SKM PowerTools - DAPPER module</li>
-                  <li>Amtech ProDesign - UK focused</li>
-                  <li>EasyPower - Integrated suite</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section6-5">
-              Next: Protection Scheme Design
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section6-3")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Earthing systems
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section6-5")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Commissioning procedures
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

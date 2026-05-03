@@ -6,9 +6,11 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
-import { Target, MessageSquare, FileText, Clock, Award, Send, Check } from 'lucide-react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, Target, MessageSquare, FileText, Clock, Send, Check } from 'lucide-react';
+import { PageHero, itemVariants } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { useStudentQualification } from '@/hooks/useStudentQualification';
@@ -29,6 +31,7 @@ const TABS: { id: TabId; label: string; icon: typeof Target }[] = [
 ];
 
 const EPASimulator = () => {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const activeTab = (searchParams.get('tab') as TabId) || 'readiness';
   const setActiveTab = (tab: TabId) => setSearchParams({ tab }, { replace: false });
@@ -120,21 +123,26 @@ const EPASimulator = () => {
   return (
     <div className="max-w-2xl mx-auto animate-fade-in pb-20">
       {/* Header */}
-      <div className="px-4 pt-4 pb-2">
-        <div className="mb-3">
-          <SmartBackButton />
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-elec-yellow/20 rounded-xl shrink-0">
-            <Award className="h-7 w-7 text-elec-yellow" />
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold tracking-tight text-white">EPA Simulator</h1>
-            <p className="text-white text-sm">
-              Practise for your End Point Assessment with AI-powered mock sessions
-            </p>
-          </div>
-        </div>
+      <div className="px-4 sm:px-6 lg:px-8 pt-4 pb-2 space-y-6">
+        <motion.div variants={itemVariants}>
+          <Button
+            variant="ghost"
+            onClick={() => navigate('/apprentice')}
+            className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+          >
+            <ArrowLeft className="mr-2 h-5 w-5" />
+            Back
+          </Button>
+        </motion.div>
+
+        <motion.div variants={itemVariants}>
+          <PageHero
+            eyebrow="Apprentice · EPA"
+            title="EPA simulator"
+            description="Practise for your End Point Assessment with AI-powered mock sessions — readiness check, professional discussion and knowledge tests."
+            tone="yellow"
+          />
+        </motion.div>
       </div>
 
       {/* Tab Bar */}

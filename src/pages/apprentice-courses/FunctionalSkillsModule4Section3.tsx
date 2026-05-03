@@ -24,52 +24,52 @@ const FunctionalSkillsModule4Section3 = () => {
     {
       id: 1,
       question:
-        'A job requires \u00A3800 of materials. You want a 25% markup. What do you charge for materials?',
-      options: ['\u00A3900', '\u00A31,000', '\u00A31,067', '\u00A31,200'],
+        'A job requires £800 of materials. You want a 25% markup. What do you charge for materials?',
+      options: ['£900', '£1,000', '£1,067', '£1,200'],
       correctAnswer: 1,
       explanation:
-        'Markup is calculated on cost price. 25% markup on \u00A3800 = \u00A3800 \u00D7 1.25 = \u00A31,000. The \u00A3200 difference is your gross profit on materials.',
+        'Markup is calculated on cost price. 25% markup on £800 = £800 × 1.25 = £1,000. The £200 difference is your gross profit on materials.',
     },
     {
       id: 2,
       question:
-        'Your overheads are \u00A32,000/month. You work 20 days/month, 8 hours/day. You want to earn \u00A32,400/month net. What is your minimum hourly rate (before profit)?',
-      options: ['\u00A315.00/hr', '\u00A322.50/hr', '\u00A327.50/hr', '\u00A330.00/hr'],
+        'Your overheads are £2,000/month. You work 20 days/month, 8 hours/day. You want to earn £2,400/month net. What is your minimum hourly rate (before profit)?',
+      options: ['£15.00/hr', '£22.50/hr', '£27.50/hr', '£30.00/hr'],
       correctAnswer: 2,
       explanation:
-        'Total needed = \u00A32,400 (earnings) + \u00A32,000 (overheads) = \u00A34,400/month. Hours = 20 \u00D7 8 = 160. Rate = \u00A34,400 / 160 = \u00A327.50/hr. This covers your costs and desired earnings but includes no profit margin.',
+        'Total needed = £2,400 (earnings) + £2,000 (overheads) = £4,400/month. Hours = 20 × 8 = 160. Rate = £4,400 / 160 = £27.50/hr. This covers your costs and desired earnings but includes no profit margin.',
     },
     {
       id: 3,
       question:
-        'A quote totals \u00A32,500 net. You need to add VAT at 20%. What is the gross (VAT-inclusive) price?',
-      options: ['\u00A32,750', '\u00A33,000', '\u00A33,125', '\u00A32,600'],
+        'A quote totals £2,500 net. You need to add VAT at 20%. What is the gross (VAT-inclusive) price?',
+      options: ['£2,750', '£3,000', '£3,125', '£2,600'],
       correctAnswer: 1,
       explanation:
-        'VAT at 20% = \u00A32,500 \u00D7 0.20 = \u00A3500. Gross price = \u00A32,500 + \u00A3500 = \u00A33,000. Alternatively, \u00A32,500 \u00D7 1.20 = \u00A33,000.',
+        'VAT at 20% = £2,500 × 0.20 = £500. Gross price = £2,500 + £500 = £3,000. Alternatively, £2,500 × 1.20 = £3,000.',
     },
     {
       id: 4,
       question:
-        'A job has a total selling price of \u00A31,200. The cost of materials and labour is \u00A3960. What is the profit margin?',
+        'A job has a total selling price of £1,200. The cost of materials and labour is £960. What is the profit margin?',
       options: ['20%', '25%', '15%', '30%'],
       correctAnswer: 0,
       explanation:
-        'Margin = (Selling Price \u2013 Cost) / Selling Price \u00D7 100 = (1200 \u2013 960) / 1200 \u00D7 100 = 240 / 1200 \u00D7 100 = 20%. Note: the markup is 240/960 = 25%, which is different from the 20% margin.',
+        'Margin = (Selling Price – Cost) / Selling Price × 100 = (1200 – 960) / 1200 × 100 = 240 / 1200 × 100 = 20%. Note: the markup is 240/960 = 25%, which is different from the 20% margin.',
     },
     {
       id: 5,
       question:
-        'You quote \u00A34,500 fixed price for a rewire. During the job you discover the consumer unit needs upgrading, adding \u00A3450 in materials and 4 hours labour at \u00A340/hr. What should you do?',
+        'You quote £4,500 fixed price for a rewire. During the job you discover the consumer unit needs upgrading, adding £450 in materials and 4 hours labour at £40/hr. What should you do?',
       options: [
-        'Absorb the cost \u2014 it was a fixed price',
+        'Absorb the cost — it was a fixed price',
         'Issue a written variation order and get it signed before proceeding',
         'Add it to the final invoice without telling the customer',
         'Refuse to do the extra work',
       ],
       correctAnswer: 1,
       explanation:
-        'Any work outside the original scope should be covered by a written variation order, agreed and signed by the customer before you start the additional work. This protects both parties. The variation would be \u00A3450 + (4 \u00D7 \u00A340) = \u00A3610 plus any markup.',
+        'Any work outside the original scope should be covered by a written variation order, agreed and signed by the customer before you start the additional work. This protects both parties. The variation would be £450 + (4 × £40) = £610 plus any markup.',
     },
     {
       id: 6,
@@ -79,7 +79,7 @@ const FunctionalSkillsModule4Section3 = () => {
         'Estimate a total and add 10%',
         'List each item, quantity, unit cost, and total cost in a spreadsheet',
         'Ask the customer what they want to pay',
-        'Copy prices from last year\u2019s job',
+        'Copy prices from last year’s job',
       ],
       correctAnswer: 1,
       explanation:
@@ -96,16 +96,16 @@ const FunctionalSkillsModule4Section3 = () => {
       ],
       correctAnswer: 1,
       explanation:
-        'Markup is calculated as a percentage of the cost price. Margin is calculated as a percentage of the selling price. A 25% markup on \u00A3100 cost gives \u00A3125 selling price, but the margin is only 20% (\u00A325/\u00A3125). This distinction matters for profitability analysis.',
+        'Markup is calculated as a percentage of the cost price. Margin is calculated as a percentage of the selling price. A 25% markup on £100 cost gives £125 selling price, but the margin is only 20% (£25/£125). This distinction matters for profitability analysis.',
     },
     {
       id: 8,
       question:
-        'A customer wants a VAT-inclusive price of \u00A33,600 for a job. What is the net (ex-VAT) amount you should put on your invoice?',
-      options: ['\u00A32,880', '\u00A33,000', '\u00A33,120', '\u00A33,600'],
+        'A customer wants a VAT-inclusive price of £3,600 for a job. What is the net (ex-VAT) amount you should put on your invoice?',
+      options: ['£2,880', '£3,000', '£3,120', '£3,600'],
       correctAnswer: 1,
       explanation:
-        'To find the net amount from a VAT-inclusive figure, divide by 1.20. Net = \u00A33,600 / 1.20 = \u00A33,000. The VAT element is \u00A33,600 \u2013 \u00A33,000 = \u00A3600.',
+        'To find the net amount from a VAT-inclusive figure, divide by 1.20. Net = £3,600 / 1.20 = £3,000. The VAT element is £3,600 – £3,000 = £600.',
     },
   ];
 
@@ -367,10 +367,10 @@ const FunctionalSkillsModule4Section3 = () => {
         {/* InlineCheck after section 02 */}
         <InlineCheck
           id="cost-check-1"
-          question="Your monthly overheads are \u00A32,200 and you want to take home \u00A32,800/month. You work 21 billable days at 7 hours. What is your break-even hourly rate?"
-          options={['\u00A319.05/hr', '\u00A324.49/hr', '\u00A334.01/hr', '\u00A340.00/hr']}
+          question="Your monthly overheads are £2,200 and you want to take home £2,800/month. You work 21 billable days at 7 hours. What is your break-even hourly rate?"
+          options={['£19.05/hr', '£24.49/hr', '£34.01/hr', '£40.00/hr']}
           correctIndex={2}
-          explanation="Total needed = \u00A32,800 + \u00A32,200 = \u00A35,000/month. Billable hours = 21 \u00D7 7 = 147. Rate = \u00A35,000 / 147 = \u00A334.01/hr. This is before any profit margin."
+          explanation="Total needed = £2,800 + £2,200 = £5,000/month. Billable hours = 21 × 7 = 147. Rate = £5,000 / 147 = £34.01/hr. This is before any profit margin."
         />
 
         {/* ── 03 Markup vs Margin ── */}
@@ -580,10 +580,10 @@ const FunctionalSkillsModule4Section3 = () => {
         {/* InlineCheck after section 04 */}
         <InlineCheck
           id="cost-check-2"
-          question="A customer asks for the VAT-inclusive price. Your net quote is \u00A32,750. What is the gross price including 20% VAT?"
-          options={['\u00A32,950', '\u00A33,000', '\u00A33,300', '\u00A33,437.50']}
+          question="A customer asks for the VAT-inclusive price. Your net quote is £2,750. What is the gross price including 20% VAT?"
+          options={['£2,950', '£3,000', '£3,300', '£3,437.50']}
           correctIndex={2}
-          explanation="Gross = Net \u00D7 1.20 = \u00A32,750 \u00D7 1.20 = \u00A33,300. The VAT element is \u00A3550."
+          explanation="Gross = Net × 1.20 = £2,750 × 1.20 = £3,300. The VAT element is £550."
         />
 
         {/* ── 05 Creating Professional Quotes ── */}
@@ -766,10 +766,10 @@ const FunctionalSkillsModule4Section3 = () => {
         {/* InlineCheck after section 06 */}
         <InlineCheck
           id="cost-check-3"
-          question="You quote \u00A33,500 fixed price for a job you estimate at 4 days. Materials cost \u00A31,200. If you complete it in 3 days, what is your effective daily labour rate?"
-          options={['\u00A3575/day', '\u00A3766.67/day', '\u00A3875/day', '\u00A31,166.67/day']}
+          question="You quote £3,500 fixed price for a job you estimate at 4 days. Materials cost £1,200. If you complete it in 3 days, what is your effective daily labour rate?"
+          options={['£575/day', '£766.67/day', '£875/day', '£1,166.67/day']}
           correctIndex={1}
-          explanation="Labour income = \u00A33,500 \u2013 \u00A31,200 materials = \u00A32,300. Over 3 days = \u00A32,300 / 3 = \u00A3766.67/day. This is significantly more than the \u00A3575/day you would have earned if it took 4 days (\u00A32,300 / 4). Efficiency rewards you on fixed-price work."
+          explanation="Labour income = £3,500 – £1,200 materials = £2,300. Over 3 days = £2,300 / 3 = £766.67/day. This is significantly more than the £575/day you would have earned if it took 4 days (£2,300 / 4). Efficiency rewards you on fixed-price work."
         />
 
         {/* ── 07 Managing Variations ── */}

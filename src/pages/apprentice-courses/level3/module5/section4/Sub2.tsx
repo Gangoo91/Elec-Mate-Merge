@@ -28,8 +28,10 @@ import {
   FAQ,
   LearningOutcomes,
   ContentEyebrow,
+  VideoCard,
   SectionRule,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Zs measurement — no-trip vs trip techniques | Level 3 Module 5.4.2 | Elec-Mate';
@@ -541,6 +543,14 @@ export default function Sub2() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <VideoCard
+            url={videos.zeTest.url}
+            title={videos.zeTest.title}
+            channel={videos.zeTest.channel}
+            duration={videos.zeTest.duration}
+            topic={videos.zeTest.topic}
+          />
 
           <SectionRule />
 

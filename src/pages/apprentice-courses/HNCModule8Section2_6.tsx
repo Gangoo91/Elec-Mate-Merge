@@ -1,8 +1,21 @@
-import { ArrowLeft, Settings, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 8 · Section 2 · Subsection 6 — System Balancing
+ * HNC Electrical Engineering for Building Services (HVAC Systems)
+ *   Air balancing procedures, commissioning processes, and documentation requirements
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'System Balancing - HNC Module 8 Section 2.6';
@@ -246,1059 +259,322 @@ const faqs = [
 ];
 
 const HNCModule8Section2_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section2")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module8-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Settings className="h-4 w-4" />
-            <span>Module 8.2.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            System Balancing
-          </h1>
-          <p className="text-white">
-            Air balancing procedures, commissioning processes, and documentation requirements
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 8 · Section 2 · Subsection 6"
+            title="System Balancing"
+            description="Air balancing procedures, commissioning processes, and documentation requirements"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Balancing:</strong> Adjusting air flows to match design values
-              </li>
-              <li className="pl-1">
-                <strong>Proportional method:</strong> Most efficient balancing approach
-              </li>
-              <li className="pl-1">
-                <strong>Commissioning:</strong> Complete verification and handover process
-              </li>
-              <li className="pl-1">
-                <strong>Documentation:</strong> O&amp;M manuals and commissioning records
-              </li>
+          <ConceptBlock title="Air Balancing Fundamentals">
+            <p>Air balancing is the systematic process of adjusting the air flow rates in a ventilation system to match the design values. Without proper balancing, some areas may receive excessive air while others are starved, leading to comfort complaints, poor indoor air quality, and wasted energy.</p>
+            <p><strong>Why Air Balancing is Essential</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Thermal comfort:</strong> Correct air flow ensures heating/cooling capacity reaches each zone</li>
+              <li><strong>Indoor air quality:</strong> Fresh air is distributed to all occupied spaces</li>
+              <li><strong>Energy efficiency:</strong> Prevents over-supply to some areas requiring fan energy to be wasted</li>
+              <li><strong>Noise control:</strong> Excessive velocities cause noise; balancing keeps flows within design limits</li>
+              <li><strong>Pressure relationships:</strong> Maintains correct pressure differentials between spaces</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Standards</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>BSRIA BG 35:</strong> Commissioning Air Systems
-              </li>
-              <li className="pl-1">
-                <strong>BSRIA BG 2:</strong> Commissioning Building Services
-              </li>
-              <li className="pl-1">
-                <strong>CIBSE Code W:</strong> Water &amp; Air Commissioning
-              </li>
-              <li className="pl-1">
-                <strong>Building Regs F:</strong> Ventilation requirements
-              </li>
+            <p><strong>Balancing Hierarchy</strong></p>
+            <p>Air balancing should proceed in a logical sequence from the fan to the terminals:</p>
+            <p><strong>Fan</strong></p>
+            <p>Set total system flow</p>
+            <p><strong>Main branches</strong></p>
+            <p>Balance major duct runs</p>
+            <p><strong>Sub-branches</strong></p>
+            <p>Fine-tune distribution</p>
+            <p><strong>Terminals</strong></p>
+            <p>Final adjustment</p>
+            <p><strong>Air Flow Measurement Methods</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Pitot tube traverse:</strong> Rectangular and circular ducts — +/- 3-5%</li>
+              <li><strong>Rotating vane anemometer:</strong> Grilles, louvres, open ducts — +/- 5-10%</li>
+              <li><strong>Thermal anemometer:</strong> Low velocities, directional measurement — +/- 3-5%</li>
+              <li><strong>Flow hood (capture hood):</strong> Ceiling diffusers, grilles — +/- 5%</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Practical tip:</strong> Always allow instruments to acclimatise to ambient conditions before taking measurements. Sudden temperature changes can affect readings, particularly for thermal anemometers.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Apply the proportional balancing method to ventilation systems',
-              'Select and use appropriate air flow measurement instruments',
-              'Understand BSRIA commissioning procedures and requirements',
-              'Set up and adjust balancing dampers correctly',
-              'Complete commissioning records and documentation',
-              'Verify system performance against design criteria',
-              'Prepare O&M documentation for handover',
-              'Identify common balancing problems and solutions',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Air Balancing Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Air Balancing Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="The Proportional Balancing Method">
+            <p>The proportional balancing method, as described in BSRIA guides, is the most efficient approach for balancing air distribution systems. It minimises the number of adjustments required by working relative to an index terminal rather than absolute values.</p>
+            <p><strong>Proportional Balancing Procedure</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Pre-commissioning checks:</strong> Verify system is complete, clean, filters installed, dampers operational, and access available</li>
+              <li><strong>Set all dampers:</strong> Open all balancing dampers and regulating dampers fully</li>
+              <li><strong>Adjust fan to design total:</strong> Set fan speed so total system air flow matches design (typically using main duct measurement)</li>
+              <li><strong>Measure all terminals:</strong> Record air flow at every terminal and calculate percentage of design flow for each</li>
+              <li><strong>Identify index terminal:</strong> Find the terminal with the lowest percentage of design flow - this is the index</li>
+              <li><strong>Balance remaining terminals:</strong> Adjust each other terminal's damper until its percentage matches the index terminal</li>
+              <li><strong>Increase fan speed:</strong> If index is below 100%, increase fan speed to bring index to design flow</li>
+              <li><strong>Final check:</strong> Re-measure all terminals to verify they are within tolerance</li>
+            </ul>
+            <p><strong>Calculating Proportional Balance</strong></p>
+            <p>For each terminal, calculate:</p>
+            <p>% of design = (Measured / Design) x 100</p>
+            <p>Example: If design is 100 l/s and measured is 85 l/s, the percentage is 85%.</p>
+            <p><strong>Adjusting to Match Index</strong></p>
+            <p>Target flow for non-index terminals:</p>
+            <p>Target = Design x (Index % / 100)</p>
+            <p>Example: If index is at 85% and design is 150 l/s, target = 150 x 0.85 = 127.5 l/s</p>
+            <p><strong>Balancing Damper Types</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Single blade (butterfly):</strong> Simple, economical, can cause turbulence — Branch takeoffs, small ducts</li>
+              <li><strong>Multi-blade opposed:</strong> Better flow control, lower turbulence — Main branches, large ducts</li>
+              <li><strong>Iris damper:</strong> Concentrates flow centrally, good measurement point — Terminal units, laboratory systems</li>
+              <li><strong>Constant volume regulator:</strong> Self-adjusting to maintain set flow — Critical spaces, clean rooms</li>
+            </ul>
+            <p><strong>Remember:</strong> Always record damper positions (blade angle, turns open, or scale reading) on the commissioning sheets. This allows settings to be restored if dampers are disturbed during maintenance.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Commissioning Procedures (BSRIA Guidelines)">
+            <p>BSRIA (Building Services Research and Information Association) publishes comprehensive guides for commissioning building services. BSRIA BG 35/2021 specifically covers air distribution systems, while BG 2 provides an overall framework for commissioning management.</p>
+            <p><strong>BSRIA Commissioning Phases</strong></p>
+            <p><strong>Phase 1: Pre-commissioning</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Review design documentation and specifications</li>
+              <li>Inspect installation for completeness</li>
+              <li>Verify ductwork is sealed and pressure tested</li>
+              <li>Check filter installation and cleanliness</li>
+              <li>Confirm damper operation and accessibility</li>
+              <li>Verify electrical supplies and controls</li>
+              <li>Complete pre-commissioning checklists</li>
+            </ul>
+            <p><strong>Phase 2: Setting to Work</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Energise and run plant safely</li>
+              <li>Check fan rotation and operation</li>
+              <li>Verify motor currents within limits</li>
+              <li>Set fan speed for design total flow</li>
+              <li>Check safety devices operate correctly</li>
+              <li>Verify control sequences function</li>
+              <li>Run system continuously to stabilise</li>
+            </ul>
+            <p><strong>Phase 3: Regulation (Balancing)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Measure air flows throughout system</li>
+              <li>Apply proportional balancing method</li>
+              <li>Adjust dampers to achieve design flows</li>
+              <li>Lock damper positions after final adjustment</li>
+              <li>Record all settings and measurements</li>
+              <li>Re-check after damper locking</li>
+              <li>Verify tolerances are achieved</li>
+            </ul>
+            <p><strong>Phase 4: Testing and Verification</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Witness testing with client representative</li>
+              <li>Verify performance against specification</li>
+              <li>Test control sequences under various conditions</li>
+              <li>Check noise levels at critical locations</li>
+              <li>Verify building pressurisation</li>
+              <li>Issue commissioning certificates</li>
+              <li>Compile O&amp;M documentation</li>
+            </ul>
+            <p><strong>Pre-commissioning Checklist Items</strong></p>
+            <p><strong>Ductwork</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Installation complete and sealed</li>
+              <li>Pressure test passed (Class B or C)</li>
+              <li>Fire dampers installed and accessible</li>
+              <li>Flexible connections in place</li>
+              <li>Access doors fitted and sealed</li>
+            </ul>
+            <p><strong>Air handling unit</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Filters installed (correct grade)</li>
+              <li>Fan belts tensioned correctly</li>
+              <li>Coils clean and connected</li>
+              <li>Drain traps primed</li>
+              <li>Vibration isolators released</li>
+            </ul>
+            <p><strong>Controls</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Sensors installed and connected</li>
+              <li>Actuators installed and stroked</li>
+              <li>BMS points commissioned</li>
+              <li>Interlocks tested</li>
+              <li>Safety devices functional</li>
+            </ul>
+            <p><strong>Terminals</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>All grilles and diffusers installed</li>
+              <li>Balancing dampers accessible</li>
+              <li>VAV boxes connected and calibrated</li>
+              <li>Ceiling tiles in place</li>
+              <li>Room sealed and weather-tight</li>
+            </ul>
+            <p><strong>Commissioning Tolerances</strong></p>
+            <p>Typical commissioning tolerances per BSRIA guidelines: <br /> <strong>Individual terminals:</strong> +/- 10% of design flow <br /> <strong>Branch air flow:</strong> +/- 10% of design flow <br /> <strong>Total system air flow:</strong> +/- 5% of design flow <br /> Tighter tolerances may be specified for critical applications such as laboratories or clean rooms.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Performance Verification and O&amp;M Documentation">
+            <p>Performance verification confirms that the installed and commissioned system meets the design intent and specification requirements. This is documented through commissioning records and compiled into the O&amp;M (Operation and Maintenance) manual for handover to the client.</p>
+            <p><strong>Performance Verification Against Design</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Total supply air volume:</strong> Pitot traverse at main duct — +/- 5% of design</li>
+              <li><strong>Total extract air volume:</strong> Pitot traverse at main duct — +/- 5% of design</li>
+              <li><strong>Fresh air quantity:</strong> Measurement at intake or CO2 analysis — &gt; minimum required by Building Regs</li>
+              <li><strong>Individual terminal flows:</strong> Flow hood or anemometer traverse — +/- 10% of design</li>
+              <li><strong>Room pressurisation:</strong> Differential pressure measurement — As specified (e.g., +10 Pa)</li>
+              <li><strong>Fan external static pressure:</strong> Manometer at fan inlet/outlet — Within fan curve capability</li>
+              <li><strong>Noise levels:</strong> Sound level meter in occupied spaces — Meet NR criteria specified</li>
+            </ul>
+            <p><strong>Commissioning Record Requirements</strong></p>
+            <p>Each commissioning record sheet should include the following information:</p>
+            <p><strong>Project information</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Project name and address</li>
+              <li>System reference and description</li>
+              <li>Commissioning engineer name and company</li>
+              <li>Date of commissioning</li>
+              <li>Witness name (if applicable)</li>
+            </ul>
+            <p><strong>Equipment data</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>AHU/fan reference and location</li>
+              <li>Fan motor details and measured current</li>
+              <li>Fan speed setting</li>
+              <li>Filter pressure drop</li>
+              <li>Coil on/off flows and temperatures</li>
+            </ul>
+            <p><strong>Air flow measurements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Terminal/grille reference</li>
+              <li>Location description</li>
+              <li>Design air flow rate</li>
+              <li>Measured air flow rate</li>
+              <li>Percentage of design achieved</li>
+            </ul>
+            <p><strong>Damper settings</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Damper reference/location</li>
+              <li>Final position (angle/turns/scale)</li>
+              <li>Confirmation damper locked</li>
+              <li>Instrument used and calibration date</li>
+              <li>Signature of commissioning engineer</li>
+            </ul>
+            <p><strong>O&amp;M Manual Contents</strong></p>
+            <p>The Operation and Maintenance manual should include:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>System description:</strong> Overview of system function, design parameters, operating principles</li>
+              <li><strong>As-installed drawings:</strong> Updated layout drawings, schematics, wiring diagrams reflecting installation</li>
+              <li><strong>Equipment schedules:</strong> All equipment with model numbers, serial numbers, nameplate data</li>
+              <li><strong>Commissioning data:</strong> All commissioning record sheets and certificates</li>
+              <li><strong>Operating procedures:</strong> Start-up, shutdown, seasonal changeover, emergency procedures</li>
+              <li><strong>Maintenance schedules:</strong> Routine maintenance tasks, frequencies, and procedures</li>
+              <li><strong>Manufacturer data:</strong> Product data sheets, installation manuals, technical literature</li>
+              <li><strong>Spare parts:</strong> Recommended spares list with part numbers and suppliers</li>
+              <li><strong>Warranties and contacts:</strong> Warranty information, supplier contacts, service agreements</li>
+            </ul>
+            <p><strong>Building Regulations Compliance</strong></p>
+            <p>Approved Document F requires that commissioning notice be given to Building Control and that a commissioning certificate is provided demonstrating the ventilation system has been properly commissioned. The O&amp;M manual forms part of the building log book required under Part L.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Air balancing is the systematic process of adjusting the air flow rates in a
-              ventilation system to match the design values. Without proper balancing, some areas
-              may receive excessive air while others are starved, leading to comfort complaints,
-              poor indoor air quality, and wasted energy.
+              <strong>Example 1: Proportional Balancing Calculation</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Why Air Balancing is Essential</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Thermal comfort:</strong> Correct air flow ensures heating/cooling
-                  capacity reaches each zone
-                </li>
-                <li className="pl-1">
-                  <strong>Indoor air quality:</strong> Fresh air is distributed to all occupied
-                  spaces
-                </li>
-                <li className="pl-1">
-                  <strong>Energy efficiency:</strong> Prevents over-supply to some areas requiring
-                  fan energy to be wasted
-                </li>
-                <li className="pl-1">
-                  <strong>Noise control:</strong> Excessive velocities cause noise; balancing keeps
-                  flows within design limits
-                </li>
-                <li className="pl-1">
-                  <strong>Pressure relationships:</strong> Maintains correct pressure differentials
-                  between spaces
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Balancing Hierarchy</p>
-              <p className="text-sm text-white mb-3">
-                Air balancing should proceed in a logical sequence from the fan to the terminals:
-              </p>
-              <div className="grid sm:grid-cols-4 gap-4 text-sm">
-                <div className="text-center">
-                  <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center mx-auto mb-2">
-                    <span className="text-elec-yellow font-bold">1</span>
-                  </div>
-                  <p className="font-medium text-white">Fan</p>
-                  <p className="text-xs text-white">Set total system flow</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center mx-auto mb-2">
-                    <span className="text-elec-yellow font-bold">2</span>
-                  </div>
-                  <p className="font-medium text-white">Main branches</p>
-                  <p className="text-xs text-white">Balance major duct runs</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center mx-auto mb-2">
-                    <span className="text-elec-yellow font-bold">3</span>
-                  </div>
-                  <p className="font-medium text-white">Sub-branches</p>
-                  <p className="text-xs text-white">Fine-tune distribution</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center mx-auto mb-2">
-                    <span className="text-elec-yellow font-bold">4</span>
-                  </div>
-                  <p className="font-medium text-white">Terminals</p>
-                  <p className="text-xs text-white">Final adjustment</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Air Flow Measurement Methods
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Accuracy</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Pitot tube traverse
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rectangular and circular ducts
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">+/- 3-5%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Rotating vane anemometer
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Grilles, louvres, open ducts
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">+/- 5-10%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Thermal anemometer
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Low velocities, directional measurement
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">+/- 3-5%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Flow hood (capture hood)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ceiling diffusers, grilles
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">+/- 5%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Practical tip:</strong> Always allow instruments to acclimatise to ambient
-              conditions before taking measurements. Sudden temperature changes can affect readings,
-              particularly for thermal anemometers.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: The Proportional Balancing Method */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            The Proportional Balancing Method
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> A system has four terminals with the following design and measured flows:</p>
+            <p>Terminal A: Design 200 l/s, Measured 190 l/s = 95%</p>
+            <p>Terminal B: Design 150 l/s, Measured 160 l/s = 107%</p>
+            <p>Terminal C: Design 100 l/s, Measured 78 l/s = 78% (INDEX)</p>
+            <p>Terminal D: Design 150 l/s, Measured 142 l/s = 95%</p>
+            <p><strong>Solution:</strong> Terminal C at 78% is the index. Adjust other terminals to 78%:</p>
+            <p>Terminal A target: 200 x 0.78 = 156 l/s (reduce from 190)</p>
+            <p>Terminal B target: 150 x 0.78 = 117 l/s (reduce from 160)</p>
+            <p>Terminal D target: 150 x 0.78 = 117 l/s (reduce from 142)</p>
+            <p>After balancing, increase fan speed to bring index to 100 l/s</p>
+            <p>All terminals will then rise proportionally to design values</p>
             <p>
-              The proportional balancing method, as described in BSRIA guides, is the most efficient
-              approach for balancing air distribution systems. It minimises the number of
-              adjustments required by working relative to an index terminal rather than absolute
-              values.
+              <strong>Example 2: Pitot Tube Traverse Calculation</strong>
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Proportional Balancing Procedure
-              </p>
-              <ol className="text-sm text-white space-y-3 list-decimal list-outside ml-5">
-                <li className="pl-2">
-                  <strong>Pre-commissioning checks:</strong> Verify system is complete, clean,
-                  filters installed, dampers operational, and access available
-                </li>
-                <li className="pl-2">
-                  <strong>Set all dampers:</strong> Open all balancing dampers and regulating
-                  dampers fully
-                </li>
-                <li className="pl-2">
-                  <strong>Adjust fan to design total:</strong> Set fan speed so total system air
-                  flow matches design (typically using main duct measurement)
-                </li>
-                <li className="pl-2">
-                  <strong>Measure all terminals:</strong> Record air flow at every terminal and
-                  calculate percentage of design flow for each
-                </li>
-                <li className="pl-2">
-                  <strong>Identify index terminal:</strong> Find the terminal with the lowest
-                  percentage of design flow - this is the index
-                </li>
-                <li className="pl-2">
-                  <strong>Balance remaining terminals:</strong> Adjust each other terminal's damper
-                  until its percentage matches the index terminal
-                </li>
-                <li className="pl-2">
-                  <strong>Increase fan speed:</strong> If index is below 100%, increase fan speed to
-                  bring index to design flow
-                </li>
-                <li className="pl-2">
-                  <strong>Final check:</strong> Re-measure all terminals to verify they are within
-                  tolerance
-                </li>
-              </ol>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="font-medium text-elec-yellow mb-2">
-                  Calculating Proportional Balance
-                </p>
-                <div className="text-sm text-white space-y-2">
-                  <p>For each terminal, calculate:</p>
-                  <p className="font-mono bg-black/30 p-2 rounded">
-                    % of design = (Measured / Design) x 100
-                  </p>
-                  <p className="mt-2 text-xs text-white">
-                    Example: If design is 100 l/s and measured is 85 l/s, the percentage is 85%.
-                  </p>
-                </div>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="font-medium text-elec-yellow mb-2">Adjusting to Match Index</p>
-                <div className="text-sm text-white space-y-2">
-                  <p>Target flow for non-index terminals:</p>
-                  <p className="font-mono bg-black/30 p-2 rounded">
-                    Target = Design x (Index % / 100)
-                  </p>
-                  <p className="mt-2 text-xs text-white">
-                    Example: If index is at 85% and design is 150 l/s, target = 150 x 0.85 = 127.5
-                    l/s
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Balancing Damper Types</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Damper Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Characteristics
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Single blade (butterfly)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Simple, economical, can cause turbulence
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Branch takeoffs, small ducts
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Multi-blade opposed
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Better flow control, lower turbulence
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Main branches, large ducts
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Iris damper</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Concentrates flow centrally, good measurement point
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Terminal units, laboratory systems
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Constant volume regulator
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Self-adjusting to maintain set flow
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Critical spaces, clean rooms
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> Always record damper positions (blade angle, turns open, or
-              scale reading) on the commissioning sheets. This allows settings to be restored if
-              dampers are disturbed during maintenance.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Commissioning Procedures (BSRIA) */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Commissioning Procedures (BSRIA Guidelines)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> A rectangular duct measuring 600mm x 400mm has the following velocity pressure readings from a 9-point traverse:</p>
+            <p>Velocity pressures (Pa): 45, 52, 48, 50, 58, 52, 44, 50, 46</p>
+            <p>Step 1: Calculate velocity from each pressure:</p>
+            <p>v = 1.29 x sqrt(Pv) for standard air density</p>
+            <p>Velocities (m/s): 8.65, 9.30, 8.94, 9.12, 9.82, 9.30, 8.56, 9.12, 8.75</p>
+            <p>Step 2: Calculate average velocity:</p>
+            <p>v_avg = (8.65+9.30+8.94+9.12+9.82+9.30+8.56+9.12+8.75) / 9 = 9.06 m/s</p>
+            <p>Step 3: Calculate volume flow rate:</p>
+            <p>Q = A x v = (0.6 x 0.4) x 9.06 = 0.24 x 9.06 = 2.17 m3/s</p>
+            <p>Q = <strong>2170 l/s</strong></p>
             <p>
-              BSRIA (Building Services Research and Information Association) publishes comprehensive
-              guides for commissioning building services. BSRIA BG 35/2021 specifically covers air
-              distribution systems, while BG 2 provides an overall framework for commissioning
-              management.
+              <strong>Example 3: Verifying Fresh Air Percentage</strong>
             </p>
+            <p><strong>Scenario:</strong> An AHU has total supply of 5000 l/s. The minimum fresh air requirement is 20% (1000 l/s). Measured fresh air intake is 1150 l/s.</p>
+            <p>Actual fresh air percentage:</p>
+            <p>% Fresh air = (1150 / 5000) x 100 = 23%</p>
+            <p>Verification:</p>
+            <p>Measured: 1150 l/s</p>
+            <p>Required minimum: 1000 l/s</p>
+            <p>Excess: 1150 - 1000 = 150 l/s (15% above minimum)</p>
+            <p>Result: PASS - exceeds minimum fresh air requirement</p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BSRIA Commissioning Phases
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-lg bg-white/5">
-                  <p className="font-medium text-elec-yellow mb-2">Phase 1: Pre-commissioning</p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Review design documentation and specifications</li>
-                    <li>Inspect installation for completeness</li>
-                    <li>Verify ductwork is sealed and pressure tested</li>
-                    <li>Check filter installation and cleanliness</li>
-                    <li>Confirm damper operation and accessibility</li>
-                    <li>Verify electrical supplies and controls</li>
-                    <li>Complete pre-commissioning checklists</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded-lg bg-white/5">
-                  <p className="font-medium text-elec-yellow mb-2">Phase 2: Setting to Work</p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Energise and run plant safely</li>
-                    <li>Check fan rotation and operation</li>
-                    <li>Verify motor currents within limits</li>
-                    <li>Set fan speed for design total flow</li>
-                    <li>Check safety devices operate correctly</li>
-                    <li>Verify control sequences function</li>
-                    <li>Run system continuously to stabilise</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded-lg bg-white/5">
-                  <p className="font-medium text-elec-yellow mb-2">
-                    Phase 3: Regulation (Balancing)
-                  </p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Measure air flows throughout system</li>
-                    <li>Apply proportional balancing method</li>
-                    <li>Adjust dampers to achieve design flows</li>
-                    <li>Lock damper positions after final adjustment</li>
-                    <li>Record all settings and measurements</li>
-                    <li>Re-check after damper locking</li>
-                    <li>Verify tolerances are achieved</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded-lg bg-white/5">
-                  <p className="font-medium text-elec-yellow mb-2">
-                    Phase 4: Testing and Verification
-                  </p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Witness testing with client representative</li>
-                    <li>Verify performance against specification</li>
-                    <li>Test control sequences under various conditions</li>
-                    <li>Check noise levels at critical locations</li>
-                    <li>Verify building pressurisation</li>
-                    <li>Issue commissioning certificates</li>
-                    <li>Compile O&amp;M documentation</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Pre-commissioning Checklist Items
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="font-medium text-white mb-1">Ductwork</p>
-                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
-                    <li>Installation complete and sealed</li>
-                    <li>Pressure test passed (Class B or C)</li>
-                    <li>Fire dampers installed and accessible</li>
-                    <li>Flexible connections in place</li>
-                    <li>Access doors fitted and sealed</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium text-white mb-1">Air handling unit</p>
-                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
-                    <li>Filters installed (correct grade)</li>
-                    <li>Fan belts tensioned correctly</li>
-                    <li>Coils clean and connected</li>
-                    <li>Drain traps primed</li>
-                    <li>Vibration isolators released</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium text-white mb-1">Controls</p>
-                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
-                    <li>Sensors installed and connected</li>
-                    <li>Actuators installed and stroked</li>
-                    <li>BMS points commissioned</li>
-                    <li>Interlocks tested</li>
-                    <li>Safety devices functional</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium text-white mb-1">Terminals</p>
-                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
-                    <li>All grilles and diffusers installed</li>
-                    <li>Balancing dampers accessible</li>
-                    <li>VAV boxes connected and calibrated</li>
-                    <li>Ceiling tiles in place</li>
-                    <li>Room sealed and weather-tight</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+          <FAQ items={faqs} />
 
-            <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
-              <p className="text-sm font-medium text-amber-400 mb-1">Commissioning Tolerances</p>
-              <p className="text-sm text-white">
-                Typical commissioning tolerances per BSRIA guidelines:
-                <br />
-                <strong>Individual terminals:</strong> +/- 10% of design flow
-                <br />
-                <strong>Branch air flow:</strong> +/- 10% of design flow
-                <br />
-                <strong>Total system air flow:</strong> +/- 5% of design flow
-                <br />
-                Tighter tolerances may be specified for critical applications such as laboratories
-                or clean rooms.
-              </p>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Performance Verification and O&M Documentation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Performance Verification and O&amp;M Documentation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Performance verification confirms that the installed and commissioned system meets the
-              design intent and specification requirements. This is documented through commissioning
-              records and compiled into the O&amp;M (Operation and Maintenance) manual for handover
-              to the client.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Performance Verification Against Design
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Parameter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Verification Method
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Acceptance Criteria
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Total supply air volume
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pitot traverse at main duct
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">+/- 5% of design</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Total extract air volume
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pitot traverse at main duct
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">+/- 5% of design</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Fresh air quantity
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Measurement at intake or CO2 analysis
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        &gt; minimum required by Building Regs
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Individual terminal flows
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Flow hood or anemometer traverse
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">+/- 10% of design</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Room pressurisation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Differential pressure measurement
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        As specified (e.g., +10 Pa)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Fan external static pressure
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Manometer at fan inlet/outlet
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Within fan curve capability
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Noise levels</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sound level meter in occupied spaces
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Meet NR criteria specified
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Commissioning Record Requirements
-              </p>
-              <p className="text-sm text-white mb-3">
-                Each commissioning record sheet should include the following information:
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="font-medium text-white mb-1">Project information</p>
-                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
-                    <li>Project name and address</li>
-                    <li>System reference and description</li>
-                    <li>Commissioning engineer name and company</li>
-                    <li>Date of commissioning</li>
-                    <li>Witness name (if applicable)</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium text-white mb-1">Equipment data</p>
-                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
-                    <li>AHU/fan reference and location</li>
-                    <li>Fan motor details and measured current</li>
-                    <li>Fan speed setting</li>
-                    <li>Filter pressure drop</li>
-                    <li>Coil on/off flows and temperatures</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium text-white mb-1">Air flow measurements</p>
-                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
-                    <li>Terminal/grille reference</li>
-                    <li>Location description</li>
-                    <li>Design air flow rate</li>
-                    <li>Measured air flow rate</li>
-                    <li>Percentage of design achieved</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium text-white mb-1">Damper settings</p>
-                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
-                    <li>Damper reference/location</li>
-                    <li>Final position (angle/turns/scale)</li>
-                    <li>Confirmation damper locked</li>
-                    <li>Instrument used and calibration date</li>
-                    <li>Signature of commissioning engineer</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                O&amp;M Manual Contents
-              </p>
-              <p className="text-sm text-white mb-3">
-                The Operation and Maintenance manual should include:
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Section</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Contents</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        System description
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Overview of system function, design parameters, operating principles
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        As-installed drawings
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Updated layout drawings, schematics, wiring diagrams reflecting installation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Equipment schedules
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        All equipment with model numbers, serial numbers, nameplate data
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Commissioning data
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        All commissioning record sheets and certificates
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Operating procedures
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Start-up, shutdown, seasonal changeover, emergency procedures
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Maintenance schedules
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Routine maintenance tasks, frequencies, and procedures
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Manufacturer data
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Product data sheets, installation manuals, technical literature
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Spare parts</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Recommended spares list with part numbers and suppliers
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Warranties and contacts
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Warranty information, supplier contacts, service agreements
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-1">
-                Building Regulations Compliance
-              </p>
-              <p className="text-sm text-white">
-                Approved Document F requires that commissioning notice be given to Building Control
-                and that a commissioning certificate is provided demonstrating the ventilation
-                system has been properly commissioned. The O&amp;M manual forms part of the building
-                log book required under Part L.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Proportional Balancing Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A system has four terminals with the following design and
-                measured flows:
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white mb-3">
-                <p>Terminal A: Design 200 l/s, Measured 190 l/s = 95%</p>
-                <p>Terminal B: Design 150 l/s, Measured 160 l/s = 107%</p>
-                <p>Terminal C: Design 100 l/s, Measured 78 l/s = 78% (INDEX)</p>
-                <p>Terminal D: Design 150 l/s, Measured 142 l/s = 95%</p>
-              </div>
-              <p className="text-sm text-white mb-2">
-                <strong>Solution:</strong> Terminal C at 78% is the index. Adjust other terminals to
-                78%:
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Terminal A target: 200 x 0.78 = 156 l/s (reduce from 190)</p>
-                <p>Terminal B target: 150 x 0.78 = 117 l/s (reduce from 160)</p>
-                <p>Terminal D target: 150 x 0.78 = 117 l/s (reduce from 142)</p>
-                <p className="mt-2 text-white">
-                  After balancing, increase fan speed to bring index to 100 l/s
-                </p>
-                <p className="text-white">
-                  All terminals will then rise proportionally to design values
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Pitot Tube Traverse Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A rectangular duct measuring 600mm x 400mm has the
-                following velocity pressure readings from a 9-point traverse:
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white mb-3">
-                <p>Velocity pressures (Pa): 45, 52, 48, 50, 58, 52, 44, 50, 46</p>
-                <p className="mt-2">Step 1: Calculate velocity from each pressure:</p>
-                <p>v = 1.29 x sqrt(Pv) for standard air density</p>
-                <p className="mt-2">
-                  Velocities (m/s): 8.65, 9.30, 8.94, 9.12, 9.82, 9.30, 8.56, 9.12, 8.75
-                </p>
-              </div>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Step 2: Calculate average velocity:</p>
-                <p>v_avg = (8.65+9.30+8.94+9.12+9.82+9.30+8.56+9.12+8.75) / 9 = 9.06 m/s</p>
-                <p className="mt-2">Step 3: Calculate volume flow rate:</p>
-                <p>Q = A x v = (0.6 x 0.4) x 9.06 = 0.24 x 9.06 = 2.17 m3/s</p>
-                <p>
-                  Q = <strong>2170 l/s</strong>
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Verifying Fresh Air Percentage
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> An AHU has total supply of 5000 l/s. The minimum fresh
-                air requirement is 20% (1000 l/s). Measured fresh air intake is 1150 l/s.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Actual fresh air percentage:</p>
-                <p>% Fresh air = (1150 / 5000) x 100 = 23%</p>
-                <p className="mt-2">Verification:</p>
-                <p>Measured: 1150 l/s</p>
-                <p>Required minimum: 1000 l/s</p>
-                <p>Excess: 1150 - 1000 = 150 l/s (15% above minimum)</p>
-                <p className="mt-2 text-green-400">
-                  Result: PASS - exceeds minimum fresh air requirement
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Common Problems and Solutions */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">
-            Common Balancing Problems and Solutions
-          </h2>
-
-          <div className="space-y-4">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Problem: Index Terminal Cannot Reach Design Flow
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Possible causes:</strong>
-              </p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5 mb-2">
-                <li className="pl-1">Undersized ductwork on the index branch</li>
-                <li className="pl-1">Excessive resistance (elbows, transitions) in branch</li>
-                <li className="pl-1">Blockage or closed fire damper in branch</li>
-                <li className="pl-1">Fan undersized or operating below design speed</li>
-              </ul>
-              <p className="text-sm text-elec-yellow/70">
-                <strong>Solution:</strong> Investigate branch for restrictions. Check fan duty
-                against design. May require design review if system cannot be balanced.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Problem: Excessive Noise at Balanced Terminals
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Possible causes:</strong>
-              </p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5 mb-2">
-                <li className="pl-1">Dampers throttled too far creating turbulence</li>
-                <li className="pl-1">Velocity at grille face exceeds design limits</li>
-                <li className="pl-1">Damper location too close to terminal</li>
-                <li className="pl-1">Incorrect grille selection for the application</li>
-              </ul>
-              <p className="text-sm text-elec-yellow/70">
-                <strong>Solution:</strong> Move restriction upstream using branch dampers rather
-                than terminal dampers. Check face velocities against manufacturer limits. Consider
-                acoustic treatment.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Problem: System Flow Changes After Balancing
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Possible causes:</strong>
-              </p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5 mb-2">
-                <li className="pl-1">Filter loading increasing system resistance</li>
-                <li className="pl-1">Damper positions disturbed during other work</li>
-                <li className="pl-1">BMS control overriding manual settings</li>
-                <li className="pl-1">Belt slip or wear reducing fan speed</li>
-              </ul>
-              <p className="text-sm text-elec-yellow/70">
-                <strong>Solution:</strong> Establish regular maintenance schedules. Lock damper
-                positions. Document settings clearly. Check fan and motor regularly.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Key BSRIA Guides</p>
-                <ul className="space-y-0.5">
-                  <li>BG 35/2021: Commissioning Air Systems</li>
-                  <li>BG 2: Commissioning Building Services</li>
-                  <li>BG 29: Pre-commission Cleaning</li>
-                  <li>BG 49: Commissioning Water Systems</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Commissioning Tolerances</p>
-                <ul className="space-y-0.5">
-                  <li>Total system flow: +/- 5%</li>
-                  <li>Branch flows: +/- 10%</li>
-                  <li>Individual terminals: +/- 10%</li>
-                  <li>Fresh air: &gt; minimum specified</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Measurement Instruments</p>
-                <ul className="space-y-0.5">
-                  <li>Pitot tube + manometer: Duct traverse</li>
-                  <li>Rotating vane: Grilles, open areas</li>
-                  <li>Flow hood: Ceiling diffusers</li>
-                  <li>Thermal anemometer: Low velocity</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Proportional Balancing Steps</p>
-                <ul className="space-y-0.5">
-                  <li>1. Open all dampers, set total flow</li>
-                  <li>2. Measure all terminals</li>
-                  <li>3. Identify index (lowest %)</li>
-                  <li>4. Balance others to match index</li>
-                  <li>5. Increase fan to bring index to 100%</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Quiz */}
-        <section className="mb-10 mt-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section2-5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Ductwork Design
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section2">
-              Complete Section
-              <CheckCircle className="w-4 h-4 ml-2" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section2-5")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Ductwork design
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section3")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Air conditioning systems
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

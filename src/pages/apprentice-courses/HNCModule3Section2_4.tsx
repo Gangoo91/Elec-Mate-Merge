@@ -245,23 +245,23 @@ const HNCModule3Section2_4 = () => {
 
           <TLDR
             points={[
-              'You can distinguish real power P (W), reactive power Q (VAr) and apparent power S (VA) and assemble them into the power triangle: S\u00b2 = P\u00b2 + Q\u00b2.',
-              'You can compute power factor PF = P / S = cos\u03c6 and explain why an inductive motor load gives a lagging PF.',
+              'You can distinguish real power P (W), reactive power Q (VAr) and apparent power S (VA) and assemble them into the power triangle: S² = P² + Q².',
+              'You can compute power factor PF = P / S = cosφ and explain why an inductive motor load gives a lagging PF.',
               'You can identify the three big offenders for poor PF on a building: induction motors at part load, magnetic ballasts (legacy lighting), uncorrected LED drivers without active PFC.',
-              'You can quantify the cost of poor PF \u2014 oversized cable, oversized transformer, increased I\u00b2R losses, utility kVA penalty (typically applied above 100 kVA maximum demand).',
+              'You can quantify the cost of poor PF — oversized cable, oversized transformer, increased I²R losses, utility kVA penalty (typically applied above 100 kVA maximum demand).',
               'You can spot the difference between displacement PF (fundamental phase shift) and true PF (which includes harmonic distortion) on modern non-linear loads.',
             ]}
           />
 
           <RegsCallout
-            source="BS EN 61000-3-2 — Limits for harmonic current emissions (equipment input current \u2264 16 A per phase)"
-            clause="Class C equipment (lighting equipment) with active input power > 25 W shall comply with the harmonic current limits expressed as a percentage of the fundamental input current, including a third-harmonic limit of 30 % \u00d7 PF (circle) and individual limits on each higher order."
+            source="BS EN 61000-3-2 — Limits for harmonic current emissions (equipment input current ≤ 16 A per phase)"
+            clause="Class C equipment (lighting equipment) with active input power > 25 W shall comply with the harmonic current limits expressed as a percentage of the fundamental input current, including a third-harmonic limit of 30 % × PF (circle) and individual limits on each higher order."
             meaning={
               <>
                 Modern LED drivers and switching power supplies must build active PFC into
                 the input stage to comply with BS EN 61000-3-2. The standard is the reason an
                 LED-retrofit office no longer needs the same scale of bulk PFC banks that
-                fluorescent installations did \u2014 but it also means \u201ctrue\u201d PF on the supply
+                fluorescent installations did — but it also means “true” PF on the supply
                 now includes harmonic content, not just the fundamental phase shift.
               </>
             }
@@ -682,10 +682,10 @@ const HNCModule3Section2_4 = () => {
             title="Investigating an unexpected utility PF penalty on an office building"
             situation={
               <>
-                The facilities manager has flagged a \u00a3850-per-month \u201creactive power\u201d
+                The facilities manager has flagged a £850-per-month “reactive power”
                 charge on the latest electricity bill. The building is an LED-lit office with
                 two 30 kW chiller compressors and a large AHU bank. Average maximum demand
-                is 220 kVA, average true power 175 kW \u2014 PF = 175 / 220 = 0.795 lagging.
+                is 220 kVA, average true power 175 kW — PF = 175 / 220 = 0.795 lagging.
               </>
             }
             whatToDo={
@@ -693,20 +693,20 @@ const HNCModule3Section2_4 = () => {
                 Walk the switchroom: identify whether the existing PFC bank (if any) is
                 online, that capacitors are still healthy (no swollen cans, fuses intact)
                 and that contactors are switching as expected. Map total reactive demand:
-                Q = \u221a(S\u00b2 \u2212 P\u00b2) = \u221a(220\u00b2 \u2212 175\u00b2) \u2248 133 kVAr.
-                Size new or supplementary PFC: Q_C = P \u00d7 (tan\u03c6\u2081 \u2212 tan\u03c6\u2082) =
-                175 \u00d7 (0.762 \u2212 0.329) \u2248 76 kVAr to lift PF from 0.795 to 0.95.
-                Specify a stepped capacitor bank (typically 5 \u00d7 15 kVAr or
+                Q = √(S² − P²) = √(220² − 175²) ≈ 133 kVAr.
+                Size new or supplementary PFC: Q_C = P × (tanφ₁ − tanφ₂) =
+                175 × (0.762 − 0.329) ≈ 76 kVAr to lift PF from 0.795 to 0.95.
+                Specify a stepped capacitor bank (typically 5 × 15 kVAr or
                 detuned/harmonic-filtered if non-linear load is significant) to BS EN 61921.
                 Pay-back is usually under 18 months purely on the avoided penalty.
               </>
             }
             whyItMatters={
               <>
-                Power factor is a direct line on the utility bill \u2014 fix it and the saving
+                Power factor is a direct line on the utility bill — fix it and the saving
                 is real, repeatable and easy to quantify in the energy strategy. As the HNC
                 engineer, you are the one who sizes the bank, picks the standard and signs
-                off the install \u2014 the maths in this section is what gets that done.
+                off the install — the maths in this section is what gets that done.
               </>
             }
           />
@@ -720,12 +720,12 @@ const HNCModule3Section2_4 = () => {
           <KeyTakeaways
             points={[
               'Real power P (W) = work done. Reactive power Q (VAr) = energy stored and returned each cycle. Apparent power S (VA) = the supply has to provide both.',
-              'Power triangle: S\u00b2 = P\u00b2 + Q\u00b2. Phase angle \u03c6 sits between S (hypotenuse) and P (adjacent).',
-              'Power factor: PF = cos\u03c6 = P / S. PF = 1 means perfectly resistive. PF < 1 means reactive content the supply has to carry.',
+              'Power triangle: S² = P² + Q². Phase angle φ sits between S (hypotenuse) and P (adjacent).',
+              'Power factor: PF = cosφ = P / S. PF = 1 means perfectly resistive. PF < 1 means reactive content the supply has to carry.',
               'Lagging PF = inductive (motors, transformers, magnetic ballasts). Leading PF = capacitive (over-corrected installations, long lightly loaded cables).',
-              'Cost of poor PF: oversized cable, oversized transformer, higher I\u00b2R losses, and a direct utility kVA / kVAr penalty (typically above 100 kVA MD).',
-              'PFC sizing: Q_C = P \u00d7 (tan\u03c6\u2081 \u2212 tan\u03c6\u2082). Common target PF 0.95 \u2014 do not over-correct into leading PF.',
-              'BS EN 61000-3-2 makes modern LED drivers and switching supplies do their own active PFC \u2014 the bulk PFC bank story has moved from lighting to motors and chillers.',
+              'Cost of poor PF: oversized cable, oversized transformer, higher I²R losses, and a direct utility kVA / kVAr penalty (typically above 100 kVA MD).',
+              'PFC sizing: Q_C = P × (tanφ₁ − tanφ₂). Common target PF 0.95 — do not over-correct into leading PF.',
+              'BS EN 61000-3-2 makes modern LED drivers and switching supplies do their own active PFC — the bulk PFC bank story has moved from lighting to motors and chillers.',
               'True PF includes harmonic distortion. If significant non-linear load is present (VFDs, LED drivers), use a detuned or harmonic-filtered capacitor bank (BS EN 61921) instead of plain capacitors.',
             ]}
           />

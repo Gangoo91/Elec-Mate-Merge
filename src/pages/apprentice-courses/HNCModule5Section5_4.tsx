@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 5 · Section 5 · Subsection 4 — BMS Commissioning
+ * HNC Electrical Engineering for Building Services (Project Management — Pearson U4004 + BSE PM context)
+ *   Point-to-point verification, functional performance testing, graphics testing and integration — proving the BMS controls the building as designed.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'BMS Commissioning - HNC Module 5 Section 5.4';
@@ -212,917 +229,597 @@ const faqs = [
 ];
 
 const HNCModule5Section5_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section5')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module5-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 5.5.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            BMS Commissioning
-          </h1>
-          <p className="text-white">
-            Point-to-point verification, functional performance testing, graphics testing, and
-            system integration checks
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 5 · Section 5 · Subsection 4"
+            title="BMS Commissioning"
+            description="Point-to-point verification, functional performance testing, graphics testing, and system integration checks."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Point-to-point:</strong> Verify every field device to controller address
-              </li>
-              <li className="pl-1">
-                <strong>Functional testing:</strong> Validate control sequences under load
-              </li>
-              <li className="pl-1">
-                <strong>Graphics testing:</strong> Confirm accurate real-time display
-              </li>
-              <li className="pl-1">
-                <strong>Integration:</strong> Test all third-party system interfaces
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>HVAC systems:</strong> AHU, FCU, chiller, boiler sequences
-              </li>
-              <li className="pl-1">
-                <strong>Lighting control:</strong> DALI, KNX integration
-              </li>
-              <li className="pl-1">
-                <strong>Metering:</strong> Energy, water, gas sub-metering
-              </li>
-              <li className="pl-1">
-                <strong>Fire/security:</strong> Interface and interlock testing
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              "BMS commissioning sequence: point-to-point → functional performance → graphics → integration → tuning → witness.",
+              "Point-to-point: every input reads correctly, every output operates correctly — typically 2,000–10,000 points on a commercial building.",
+              "Functional performance testing: each control loop and sequence verified against the cause-and-effect schedule.",
+              "Graphics testing: every screen, every value, every navigation path checked — what the operator will see in service.",
+              "Integration testing: BMS to fire alarm, security, lifts, metering — interfaces are where most defects hide.",
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="CIBSE Commissioning Code C: Automatic Controls"
+            clause="CIBSE Code C provides guidance on the commissioning of automatic controls in building services including pre-commissioning checks, point-to-point testing, functional performance testing, sequence verification and seasonal commissioning."
+            meaning={
+              <>
+                Code C is the technical reference for BMS commissioning. The cause-and-effect schedule is the heart of functional testing — every sequence stated, every condition tested. A BMS commissioned without C-style discipline will work in default state but fail unpredictably under control sequences.
+              </>
+            }
+            cite="Source: CIBSE Commissioning Code C (refer to CIBSE published text for verbatim clauses)."
+          />
+
+
+          <LearningOutcomes
+            outcomes={[
               'Execute systematic point-to-point verification procedures',
               'Calibrate sensors and verify actuator stroke operation',
               'Conduct functional performance testing of control sequences',
               'Test graphics displays for accuracy and real-time updates',
               'Verify alarm configuration and notification routing',
               'Commission trend logging and data archival systems',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Point-to-Point Verification */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Point-to-Point Verification
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Point-to-Point Verification">
             <p>
               Point-to-point verification is the foundation of BMS commissioning. This systematic
               process confirms that every field device is correctly wired to its designated
               controller input or output, with accurate signal conditioning and engineering unit
               scaling.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Point-to-Point Testing Procedure:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Step 1:</strong> Obtain the points schedule with controller addresses
-                </li>
-                <li className="pl-1">
-                  <strong>Step 2:</strong> Verify physical connection at field device and controller
-                </li>
-                <li className="pl-1">
-                  <strong>Step 3:</strong> Apply known input and verify controller reading
-                </li>
-                <li className="pl-1">
-                  <strong>Step 4:</strong> Check engineering unit scaling and range
-                </li>
-                <li className="pl-1">
-                  <strong>Step 5:</strong> Document results and any discrepancies
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Input Types and Verification Methods
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Signal Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Test Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Acceptance Criteria
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4-20mA analogue</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Inject 4mA, 12mA, 20mA with calibrator
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reading within ±2% of full scale
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">0-10V analogue</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Apply 0V, 5V, 10V reference
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reading within ±2% of full scale
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PT100/PT1000 RTD</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Use decade box or reference probe
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Reading within ±0.5°C</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Digital input</td>
-                      <td className="border border-white/10 px-3 py-2">Force open/closed states</td>
-                      <td className="border border-white/10 px-3 py-2">Correct state indication</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pulse counter</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Generate known pulse count
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Count matches, units correct
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Sensor Calibration Checks
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-lg bg-white/5">
-                  <p className="text-sm font-medium text-white mb-2">Temperature Sensors</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Compare against calibrated reference thermometer</li>
-                    <li className="pl-1">Check at ambient and elevated temperature</li>
-                    <li className="pl-1">Verify response time (typically &lt;60 seconds)</li>
-                    <li className="pl-1">Confirm correct 2/3/4-wire configuration</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded-lg bg-white/5">
-                  <p className="text-sm font-medium text-white mb-2">Pressure Sensors</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Check zero offset with isolation valve closed</li>
-                    <li className="pl-1">Verify span against calibrated gauge</li>
-                    <li className="pl-1">Confirm correct pressure type (gauge/differential)</li>
-                    <li className="pl-1">Test at 25%, 50%, 75% of range</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Point-to-point testing procedure:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Step 1:</strong> Obtain the points schedule with controller addresses
+              </li>
+              <li>
+                <strong>Step 2:</strong> Verify physical connection at field device and controller
+              </li>
+              <li>
+                <strong>Step 3:</strong> Apply known input and verify controller reading
+              </li>
+              <li>
+                <strong>Step 4:</strong> Check engineering unit scaling and range
+              </li>
+              <li>
+                <strong>Step 5:</strong> Document results and any discrepancies
+              </li>
+            </ul>
+            <p>
+              <strong>Input types and verification methods:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>4-20mA analogue:</strong> Inject 4mA, 12mA, 20mA with calibrator — Reading
+                within ±2% of full scale
+              </li>
+              <li>
+                <strong>0-10V analogue:</strong> Apply 0V, 5V, 10V reference — Reading within ±2% of
+                full scale
+              </li>
+              <li>
+                <strong>PT100/PT1000 RTD:</strong> Use decade box or reference probe — Reading
+                within ±0.5°C
+              </li>
+              <li>
+                <strong>Digital input:</strong> Force open/closed states — Correct state indication
+              </li>
+              <li>
+                <strong>Pulse counter:</strong> Generate known pulse count — Count matches, units
+                correct
+              </li>
+            </ul>
+            <p>
+              <strong>Sensor calibration — temperature sensors:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Compare against calibrated reference thermometer</li>
+              <li>Check at ambient and elevated temperature</li>
+              <li>Verify response time (typically &lt;60 seconds)</li>
+              <li>Confirm correct 2/3/4-wire configuration</li>
+            </ul>
+            <p>
+              <strong>Sensor calibration — pressure sensors:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Check zero offset with isolation valve closed</li>
+              <li>Verify span against calibrated gauge</li>
+              <li>Confirm correct pressure type (gauge/differential)</li>
+              <li>Test at 25%, 50%, 75% of range</li>
+            </ul>
+            <p>
               <strong>Quality tip:</strong> Record all point-to-point results on signed test sheets.
               This documentation is essential for handover and future fault diagnosis.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Actuator Stroke Testing and Functional Performance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Actuator Testing and Control Sequence Verification
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Actuator Testing and Control Sequence Verification">
             <p>
               Actuator stroke testing confirms that control valves and dampers operate correctly
               across their full range. Functional performance testing then verifies complete control
               sequences under realistic operating conditions.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Actuator Stroke Test Procedure
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Full stroke:</strong> Command 0% to 100% and back, verify full travel
-                </li>
-                <li className="pl-1">
-                  <strong>Direction:</strong> Confirm opening/closing matches design intent
-                </li>
-                <li className="pl-1">
-                  <strong>Position feedback:</strong> Verify feedback signal matches command
-                </li>
-                <li className="pl-1">
-                  <strong>Fail position:</strong> Remove signal, confirm correct fail-safe state
-                </li>
-                <li className="pl-1">
-                  <strong>Smooth operation:</strong> Check for sticking, hunting, or noise
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Actuator Types and Fail Modes
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Actuator
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Fail-Safe Position
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LTHW heating valve</td>
-                      <td className="border border-white/10 px-3 py-2">Spring return, 0-10V</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Closed (prevent overheating)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CHW cooling valve</td>
-                      <td className="border border-white/10 px-3 py-2">Spring return, 0-10V</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Closed (prevent undercooling)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fresh air damper</td>
-                      <td className="border border-white/10 px-3 py-2">Spring return modulating</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Closed (weather protection)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fire/smoke damper</td>
-                      <td className="border border-white/10 px-3 py-2">Spring return on/off</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Closed (fire compartment)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Bypass damper</td>
-                      <td className="border border-white/10 px-3 py-2">Electric modulating</td>
-                      <td className="border border-white/10 px-3 py-2">Application dependent</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Functional Performance Test - AHU Example
-              </p>
-              <p className="text-sm text-white mb-3">
-                For an air handling unit, test the following sequences in order:
-              </p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Safety interlocks:</strong> Fire alarm input, smoke detection, filter DP
-                  trip
-                </li>
-                <li className="pl-1">
-                  <strong>Start/stop sequence:</strong> Damper opening, fan start delay, proving
-                </li>
-                <li className="pl-1">
-                  <strong>Heating sequence:</strong> Frost protection, pre-heat control, modulation
-                </li>
-                <li className="pl-1">
-                  <strong>Cooling sequence:</strong> Free cooling, mechanical cooling staging
-                </li>
-                <li className="pl-1">
-                  <strong>Economy cycle:</strong> Mixed air temperature control, damper modulation
-                </li>
-                <li className="pl-1">
-                  <strong>Humidity control:</strong> Humidification/dehumidification sequences
-                </li>
-                <li className="pl-1">
-                  <strong>Setback/unoccupied:</strong> Night setback, weekend operation
-                </li>
-              </ol>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Actuator stroke test procedure:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Full stroke:</strong> Command 0% to 100% and back, verify full travel
+              </li>
+              <li>
+                <strong>Direction:</strong> Confirm opening/closing matches design intent
+              </li>
+              <li>
+                <strong>Position feedback:</strong> Verify feedback signal matches command
+              </li>
+              <li>
+                <strong>Fail position:</strong> Remove signal, confirm correct fail-safe state
+              </li>
+              <li>
+                <strong>Smooth operation:</strong> Check for sticking, hunting, or noise
+              </li>
+            </ul>
+            <p>
+              <strong>Common actuator types and fail modes:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>LTHW heating valve:</strong> Spring return, 0-10V — Closed (prevent
+                overheating)
+              </li>
+              <li>
+                <strong>CHW cooling valve:</strong> Spring return, 0-10V — Closed (prevent
+                undercooling)
+              </li>
+              <li>
+                <strong>Fresh air damper:</strong> Spring return modulating — Closed (weather
+                protection)
+              </li>
+              <li>
+                <strong>Fire/smoke damper:</strong> Spring return on/off — Closed (fire compartment)
+              </li>
+              <li>
+                <strong>Bypass damper:</strong> Electric modulating — Application dependent
+              </li>
+            </ul>
+            <p>
+              <strong>Functional performance test — AHU example. For an air handling unit, test the
+              following sequences in order:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Safety interlocks:</strong> Fire alarm input, smoke detection, filter DP
+                trip
+              </li>
+              <li>
+                <strong>Start/stop sequence:</strong> Damper opening, fan start delay, proving
+              </li>
+              <li>
+                <strong>Heating sequence:</strong> Frost protection, pre-heat control, modulation
+              </li>
+              <li>
+                <strong>Cooling sequence:</strong> Free cooling, mechanical cooling staging
+              </li>
+              <li>
+                <strong>Economy cycle:</strong> Mixed air temperature control, damper modulation
+              </li>
+              <li>
+                <strong>Humidity control:</strong> Humidification/dehumidification sequences
+              </li>
+              <li>
+                <strong>Setback/unoccupied:</strong> Night setback, weekend operation
+              </li>
+            </ul>
+            <p>
               <strong>Testing tip:</strong> Use temporary setpoint overrides to force control
               sequences. Reset to design values after testing and document all changes.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Graphics Testing and Alarm Verification */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Graphics Testing and Alarm Verification
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Graphics Testing and Alarm Verification">
             <p>
               The BMS graphical interface is the operator's primary interaction with building
               systems. Graphics testing ensures accurate display of system status, while alarm
               testing verifies that abnormal conditions are detected and communicated appropriately.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Graphics Test Checklist
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">All points display correct live values</li>
-                  <li className="pl-1">Engineering units shown correctly (°C, Pa, l/s)</li>
-                  <li className="pl-1">Decimal places appropriate for resolution</li>
-                  <li className="pl-1">Update rate acceptable (&lt;5 seconds typical)</li>
-                  <li className="pl-1">Equipment status symbols change correctly</li>
-                  <li className="pl-1">Colour coding follows site standard</li>
-                  <li className="pl-1">Navigation between screens logical</li>
-                  <li className="pl-1">All hyperlinks and buttons functional</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Operator Controls Testing
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Setpoint adjustment within limits works</li>
-                  <li className="pl-1">Manual override commands execute</li>
-                  <li className="pl-1">Schedule editing saves correctly</li>
-                  <li className="pl-1">User access levels correctly restrict functions</li>
-                  <li className="pl-1">Trend graph displays historical data</li>
-                  <li className="pl-1">Report generation functions work</li>
-                  <li className="pl-1">System backup can be created</li>
-                  <li className="pl-1">Logout/timeout works correctly</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Alarm Testing Methodology
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Alarm Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Test Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Verify</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">High/low limit</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Adjust setpoint or simulate value
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Alarm at correct threshold
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Equipment fault</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Simulate run command/status mismatch
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fault detected within delay time
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Communication loss</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Disconnect controller network cable
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Offline alarm generated</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fire mode</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Trigger fire alarm interface
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Correct system response</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Security breach</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Open monitored door/panel
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Alarm with correct location
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Alarm Routing and Escalation</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Priority 1 (Critical):</strong> Immediate notification - SMS,
-                  auto-dialler, on-screen flash
-                </li>
-                <li className="pl-1">
-                  <strong>Priority 2 (Urgent):</strong> Within 15 minutes - Email, workstation alert
-                </li>
-                <li className="pl-1">
-                  <strong>Priority 3 (Non-urgent):</strong> Logged for review - Alarm summary, daily
-                  report
-                </li>
-                <li className="pl-1">
-                  <strong>Test each notification path:</strong> Confirm SMS delivery, email receipt,
-                  escalation timing
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Graphics test checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>All points display correct live values</li>
+              <li>Engineering units shown correctly (°C, Pa, l/s)</li>
+              <li>Decimal places appropriate for resolution</li>
+              <li>Update rate acceptable (&lt;5 seconds typical)</li>
+              <li>Equipment status symbols change correctly</li>
+              <li>Colour coding follows site standard</li>
+              <li>Navigation between screens logical</li>
+              <li>All hyperlinks and buttons functional</li>
+            </ul>
+            <p>
+              <strong>Operator controls testing:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Setpoint adjustment within limits works</li>
+              <li>Manual override commands execute</li>
+              <li>Schedule editing saves correctly</li>
+              <li>User access levels correctly restrict functions</li>
+              <li>Trend graph displays historical data</li>
+              <li>Report generation functions work</li>
+              <li>System backup can be created</li>
+              <li>Logout/timeout works correctly</li>
+            </ul>
+            <p>
+              <strong>Alarm testing methodology:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>High/low limit:</strong> Adjust setpoint or simulate value — Alarm at
+                correct threshold
+              </li>
+              <li>
+                <strong>Equipment fault:</strong> Simulate run command/status mismatch — Fault
+                detected within delay time
+              </li>
+              <li>
+                <strong>Communication loss:</strong> Disconnect controller network cable — Offline
+                alarm generated
+              </li>
+              <li>
+                <strong>Fire mode:</strong> Trigger fire alarm interface — Correct system response
+              </li>
+              <li>
+                <strong>Security breach:</strong> Open monitored door/panel — Alarm with correct
+                location
+              </li>
+            </ul>
+            <p>
+              <strong>Alarm routing and escalation:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Priority 1 (Critical):</strong> Immediate notification - SMS, auto-dialler,
+                on-screen flash
+              </li>
+              <li>
+                <strong>Priority 2 (Urgent):</strong> Within 15 minutes - Email, workstation alert
+              </li>
+              <li>
+                <strong>Priority 3 (Non-urgent):</strong> Logged for review - Alarm summary, daily
+                report
+              </li>
+              <li>
+                <strong>Test each notification path:</strong> Confirm SMS delivery, email receipt,
+                escalation timing
+              </li>
+            </ul>
+            <p>
               <strong>Best practice:</strong> Involve the building operator in graphics testing.
               Their feedback on usability is invaluable for optimising the interface.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Trend Logging and System Integration */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Trend Logging and System Integration
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Trend Logging and System Integration">
             <p>
               Trend logging captures historical data essential for energy analysis, fault diagnosis,
               and performance verification. System integration testing ensures the BMS communicates
               correctly with all connected building systems.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Trend Logging Configuration
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Point Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Interval
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Retention Period
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Energy meters</td>
-                      <td className="border border-white/10 px-3 py-2">15-30 minutes</td>
-                      <td className="border border-white/10 px-3 py-2">2-5 years (billing data)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Zone temperatures</td>
-                      <td className="border border-white/10 px-3 py-2">5-15 minutes</td>
-                      <td className="border border-white/10 px-3 py-2">3-12 months</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Plant status</td>
-                      <td className="border border-white/10 px-3 py-2">Change of value</td>
-                      <td className="border border-white/10 px-3 py-2">3-12 months</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Control outputs</td>
-                      <td className="border border-white/10 px-3 py-2">1-5 minutes (tuning)</td>
-                      <td className="border border-white/10 px-3 py-2">1-3 months</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">External conditions</td>
-                      <td className="border border-white/10 px-3 py-2">15-30 minutes</td>
-                      <td className="border border-white/10 px-3 py-2">12 months+</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Trend Logging Verification Tests
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Data capture:</strong> Verify values are being logged at specified
-                  intervals
-                </li>
-                <li className="pl-1">
-                  <strong>Timestamp accuracy:</strong> Confirm time synchronisation across all
-                  controllers
-                </li>
-                <li className="pl-1">
-                  <strong>Storage capacity:</strong> Calculate required storage, verify archival
-                  process
-                </li>
-                <li className="pl-1">
-                  <strong>Data export:</strong> Test CSV/Excel export for external analysis
-                </li>
-                <li className="pl-1">
-                  <strong>Graph display:</strong> Verify historical trends display correctly
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                System Integration Testing
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-lg bg-white/5">
-                  <p className="text-sm font-medium text-white mb-2">Fire Alarm Integration</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Fire mode signal stops AHUs</li>
-                    <li className="pl-1">Smoke dampers close on zone alarm</li>
-                    <li className="pl-1">Stairwell pressurisation activates</li>
-                    <li className="pl-1">Lift recall to ground floor</li>
-                    <li className="pl-1">Status displayed on BMS graphics</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded-lg bg-white/5">
-                  <p className="text-sm font-medium text-white mb-2">
-                    Lighting Control Integration
-                  </p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Occupancy status from DALI/KNX</li>
-                    <li className="pl-1">Scene selection commands</li>
-                    <li className="pl-1">Daylight dimming feedback</li>
-                    <li className="pl-1">Emergency lighting status</li>
-                    <li className="pl-1">After-hours override requests</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Integration Protocols
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Protocol</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Use</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Commissioning Check
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BACnet IP/MSTP</td>
-                      <td className="border border-white/10 px-3 py-2">Primary BMS network</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Device discovery, point mapping
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Modbus TCP/RTU</td>
-                      <td className="border border-white/10 px-3 py-2">Meters, VFDs, chillers</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Register addresses, scaling factors
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DALI</td>
-                      <td className="border border-white/10 px-3 py-2">Lighting control</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Group addressing, scene recall
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">KNX</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lighting, blinds, HVAC terminals
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Group addresses, telegram routing
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">M-Bus</td>
-                      <td className="border border-white/10 px-3 py-2">Heat/water/gas meters</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Primary address, data format
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Trend logging configuration:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Energy meters:</strong> 15-30 minutes — 2-5 years (billing data)
+              </li>
+              <li>
+                <strong>Zone temperatures:</strong> 5-15 minutes — 3-12 months
+              </li>
+              <li>
+                <strong>Plant status:</strong> Change of value — 3-12 months
+              </li>
+              <li>
+                <strong>Control outputs:</strong> 1-5 minutes (tuning) — 1-3 months
+              </li>
+              <li>
+                <strong>External conditions:</strong> 15-30 minutes — 12 months+
+              </li>
+            </ul>
+            <p>
+              <strong>Trend logging verification tests:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Data capture:</strong> Verify values are being logged at specified intervals
+              </li>
+              <li>
+                <strong>Timestamp accuracy:</strong> Confirm time synchronisation across all
+                controllers
+              </li>
+              <li>
+                <strong>Storage capacity:</strong> Calculate required storage, verify archival
+                process
+              </li>
+              <li>
+                <strong>Data export:</strong> Test CSV/Excel export for external analysis
+              </li>
+              <li>
+                <strong>Graph display:</strong> Verify historical trends display correctly
+              </li>
+            </ul>
+            <p>
+              <strong>Fire alarm integration:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Fire mode signal stops AHUs</li>
+              <li>Smoke dampers close on zone alarm</li>
+              <li>Stairwell pressurisation activates</li>
+              <li>Lift recall to ground floor</li>
+              <li>Status displayed on BMS graphics</li>
+            </ul>
+            <p>
+              <strong>Lighting control integration:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Occupancy status from DALI/KNX</li>
+              <li>Scene selection commands</li>
+              <li>Daylight dimming feedback</li>
+              <li>Emergency lighting status</li>
+              <li>After-hours override requests</li>
+            </ul>
+            <p>
+              <strong>Common integration protocols:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>BACnet IP/MSTP:</strong> Primary BMS network — Device discovery, point
+                mapping
+              </li>
+              <li>
+                <strong>Modbus TCP/RTU:</strong> Meters, VFDs, chillers — Register addresses,
+                scaling factors
+              </li>
+              <li>
+                <strong>DALI:</strong> Lighting control — Group addressing, scene recall
+              </li>
+              <li>
+                <strong>KNX:</strong> Lighting, blinds, HVAC terminals — Group addresses, telegram
+                routing
+              </li>
+              <li>
+                <strong>M-Bus:</strong> Heat/water/gas meters — Primary address, data format
+              </li>
+            </ul>
+            <p>
               <strong>Integration tip:</strong> Always test failure modes. What happens if
               communication is lost? Verify systems fail to a safe state and generate appropriate
               alarms.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — Point-to-point verification:</strong> Verify a duct temperature
+              sensor wired to controller input AI-03, scaled 0-50°C on 4-20mA.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1. Identify sensor location and verify wiring to AI-03 terminals</li>
+              <li>2. Connect 4-20mA calibrator in series with sensor</li>
+              <li>3. Inject 4mA → Controller should read 0°C (±1°C)</li>
+              <li>4. Inject 12mA → Controller should read 25°C (±1°C)</li>
+              <li>5. Inject 20mA → Controller should read 50°C (±1°C)</li>
+              <li>
+                <strong>Result:</strong> All readings within tolerance - PASS
+              </li>
+              <li>Document on test sheet with date, tester, and readings</li>
+            </ul>
+            <p>
+              <strong>Example 2 — Actuator stroke test:</strong> Test a heating valve actuator
+              (spring return, fail closed) with 0-10V position feedback.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1. Command 0% → Valve closes, feedback reads 0V (0%)</li>
+              <li>2. Command 50% → Valve opens to mid-position, feedback ~5V</li>
+              <li>3. Command 100% → Valve fully open, feedback reads 10V (100%)</li>
+              <li>4. Remove control signal → Valve returns to closed (spring return)</li>
+              <li>Full stroke time: 45 seconds (within specification)</li>
+              <li>No sticking or noise during travel</li>
+              <li>Feedback tracks within ±5% of command</li>
+              <li>
+                <strong>Result:</strong> Actuator operation correct - PASS
+              </li>
+            </ul>
+            <p>
+              <strong>Example 3 — Alarm test procedure:</strong> Test high temperature alarm for
+              server room (setpoint 25°C, alarm at 28°C).
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1. Current room temperature: 22°C (normal operation)</li>
+              <li>2. Lower alarm setpoint temporarily to 21°C</li>
+              <li>3. Verify alarm generates within 30 seconds:</li>
+              <li>On-screen: Red flashing indicator, audible alert</li>
+              <li>Email notification: Received by FM team</li>
+              <li>SMS: Received by on-call engineer</li>
+              <li>4. Acknowledge alarm → Flashing stops, remains red</li>
+              <li>5. Reset alarm setpoint to 28°C → Alarm clears</li>
+              <li>
+                <strong>Result:</strong> Alarm routing correct - PASS
+              </li>
+              <li>Note: Reset all setpoints to design values</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Point-to-Point Verification
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Verify a duct temperature sensor wired to controller
-                input AI-03, scaled 0-50°C on 4-20mA.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>1. Identify sensor location and verify wiring to AI-03 terminals</p>
-                <p>2. Connect 4-20mA calibrator in series with sensor</p>
-                <p>3. Inject 4mA → Controller should read 0°C (±1°C)</p>
-                <p>4. Inject 12mA → Controller should read 25°C (±1°C)</p>
-                <p>5. Inject 20mA → Controller should read 50°C (±1°C)</p>
-                <p className="mt-2 text-green-400">Result: All readings within tolerance - PASS</p>
-                <p className="text-white">
-                  Document on test sheet with date, tester, and readings
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Actuator Stroke Test
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Test a heating valve actuator (spring return, fail
-                closed) with 0-10V position feedback.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>1. Command 0% → Valve closes, feedback reads 0V (0%)</p>
-                <p>2. Command 50% → Valve opens to mid-position, feedback ~5V</p>
-                <p>3. Command 100% → Valve fully open, feedback reads 10V (100%)</p>
-                <p>4. Remove control signal → Valve returns to closed (spring return)</p>
-                <p className="mt-2">Observations:</p>
-                <p>- Full stroke time: 45 seconds (within specification)</p>
-                <p>- No sticking or noise during travel</p>
-                <p>- Feedback tracks within ±5% of command</p>
-                <p className="mt-2 text-green-400">Result: Actuator operation correct - PASS</p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Commissioning preparation checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Obtain latest points schedule and control strategy documents</li>
+              <li>Verify all controllers powered and communicating</li>
+              <li>Confirm plant is safe to operate (mechanical completion)</li>
+              <li>Coordinate with other trades for access and isolation</li>
+              <li>Prepare test equipment: calibrator, multimeter, laptop</li>
+              <li>Have blank test sheets ready for documentation</li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Analogue input accuracy: <strong>±2% of full scale</strong>
+              </li>
+              <li>
+                Temperature sensor tolerance: <strong>±0.5°C</strong>
+              </li>
+              <li>
+                Actuator position feedback: <strong>±5% of command</strong>
+              </li>
+              <li>
+                Graphics update rate: <strong>&lt;5 seconds</strong>
+              </li>
+              <li>
+                Trend log retention: <strong>3-12 months minimum</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Alarm Test Procedure
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Test high temperature alarm for server room (setpoint
-                25°C, alarm at 28°C).
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>1. Current room temperature: 22°C (normal operation)</p>
-                <p>2. Lower alarm setpoint temporarily to 21°C</p>
-                <p>3. Verify alarm generates within 30 seconds:</p>
-                <p> - On-screen: Red flashing indicator, audible alert</p>
-                <p> - Email notification: Received by FM team</p>
-                <p> - SMS: Received by on-call engineer</p>
-                <p>4. Acknowledge alarm → Flashing stops, remains red</p>
-                <p>5. Reset alarm setpoint to 28°C → Alarm clears</p>
-                <p className="mt-2 text-green-400">Result: Alarm routing correct - PASS</p>
-                <p className="text-white">Note: Reset all setpoints to design values</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Commissioning Preparation Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Obtain latest points schedule and control strategy documents
-                </li>
-                <li className="pl-1">Verify all controllers powered and communicating</li>
-                <li className="pl-1">Confirm plant is safe to operate (mechanical completion)</li>
-                <li className="pl-1">Coordinate with other trades for access and isolation</li>
-                <li className="pl-1">Prepare test equipment: calibrator, multimeter, laptop</li>
-                <li className="pl-1">Have blank test sheets ready for documentation</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Analogue input accuracy: <strong>±2% of full scale</strong>
-                </li>
-                <li className="pl-1">
-                  Temperature sensor tolerance: <strong>±0.5°C</strong>
-                </li>
-                <li className="pl-1">
-                  Actuator position feedback: <strong>±5% of command</strong>
-                </li>
-                <li className="pl-1">
-                  Graphics update rate: <strong>&lt;5 seconds</strong>
-                </li>
-                <li className="pl-1">
-                  Trend log retention: <strong>3-12 months minimum</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">
-                Common Commissioning Faults
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common commissioning faults"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Swapped wiring:</strong> Sensors connected to wrong controller addresses
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Incorrect scaling:</strong> 4-20mA range configured as 0-20mA
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Reversed actuators:</strong> Valve opens when it should close
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Missing interlocks:</strong> Safety functions not programmed
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Network conflicts:</strong> Duplicate IP addresses or device IDs
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Run point-to-point against the points schedule signal-by-signal, verify scaling at three injection points, prove fail-safe direction on every actuator, test interlocks before live sequences, and check device addressing for duplicates before commissioning."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="BMS handed over without integration testing — fire alarm fails to isolate"
+            situation={
+              <>
+                A new commercial building handover. BMS commissioned standalone, fire alarm commissioned standalone, integration "to be done at site" but never properly executed. Six weeks after handover, a fire alarm activation fails to shut down the supply AHUs. Investigation: the BMS does not act on the fire alarm signal — the integration was never tested.
+              </>
+            }
+            whatToDo={
+              <>
+                Integration testing is mandatory before handover. The cause-and-effect schedule lists every interface: fire→AHU shutdown, fire→damper close, fire→lift recall, security→access lock, BMS→meter→main. Test each combination. Witness with the client. Document the result. Any failure prevents handover. Update commissioning programme to allow time — typically 1–2 weeks for integration testing on a commercial building, longer on a hospital.
+              </>
+            }
+            whyItMatters={
+              <>
+                Integration is where commissioning lives or dies. A standalone-commissioned BMS may pass its own tests but fail in service when the building behaves as a system. Integration testing is what proves the building works as designed, not just that the components work in isolation.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Testing Sequence</p>
-                <ul className="space-y-0.5">
-                  <li>1. Point-to-point verification (static)</li>
-                  <li>2. Sensor calibration checks</li>
-                  <li>3. Actuator stroke testing</li>
-                  <li>4. Safety interlock testing</li>
-                  <li>5. Control sequence verification</li>
-                  <li>6. Graphics and alarm testing</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Documentation Required</p>
-                <ul className="space-y-0.5">
-                  <li>Signed point-to-point test sheets</li>
-                  <li>Functional performance test records</li>
-                  <li>Alarm test certificates</li>
-                  <li>Integration test results</li>
-                  <li>As-built points schedule</li>
-                  <li>Software backup and version record</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+                    <KeyTakeaways
+            points={[
+              "Sequence: point-to-point → functional → graphics → integration → tuning → witness.",
+              "Point-to-point: every input/output verified — 2,000–10,000 points on a commercial building.",
+              "Functional performance testing against cause-and-effect schedule.",
+              "Graphics testing: operator screens, values, navigation — what the FM team will see.",
+              "Integration testing with fire, security, lifts, metering — most defects hide here.",
+              "CIBSE Code C is the technical reference.",
+              "Tuning post-occupancy as building loads stabilise.",
+              "Witness testing with operator attendance — they need to see the building they will run.",
+            ]}
+          />
+
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section5-5">
-              Next: Handover Documentation
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section5')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Commissioning and handover
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section5-5')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Witness testing
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

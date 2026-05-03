@@ -752,7 +752,7 @@ export default function Sub2() {
                 everything risk damaging connected kit and producing misleading readings.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 643.3 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 643.3."
           />
 
           <SectionRule />

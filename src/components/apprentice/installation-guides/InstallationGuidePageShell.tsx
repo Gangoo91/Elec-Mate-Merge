@@ -1,23 +1,33 @@
 import { useState, type ReactNode } from 'react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
-import { AlertTriangle, type LucideIcon } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { ArrowLeft, AlertTriangle, type LucideIcon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
 import type { ToggleCardDef, SafetyNotice } from '@/types/installation-guides';
 
 interface InstallationGuidePageShellProps {
   title: string;
-  icon: LucideIcon;
+  /** @deprecated Decorative icon — no longer rendered in editorial layout. Kept for backwards compatibility. */
+  icon?: LucideIcon;
   cards: ToggleCardDef[];
   renderPanel: (cardId: string) => ReactNode;
   safetyNotice?: SafetyNotice;
+  eyebrow?: string;
+  description?: string;
+  backRoute?: string;
 }
 
 const InstallationGuidePageShell = ({
   title,
-  icon: Icon,
   cards,
   renderPanel,
   safetyNotice,
+  eyebrow = 'Apprentice · Installation',
+  description = 'Reflects BS 7671:2018+A4:2026. Walk through the planning, circuits, testing and reference material for this installation type.',
+  backRoute = '/apprentice',
 }: InstallationGuidePageShellProps) => {
+  const navigate = useNavigate();
   const [activeCardId, setActiveCardId] = useState<string | null>(cards[0]?.id ?? null);
 
   const toggleCard = (id: string) => {
@@ -25,15 +35,21 @@ const InstallationGuidePageShell = ({
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 animate-fade-in px-4 sm:px-6 lg:px-8 pb-20">
-      {/* ── Header ─────────────────────────────────────────────────── */}
-      <div className="flex items-center justify-between gap-3">
-        <SmartBackButton />
-        <div className="flex items-center gap-2">
-          <h1 className="text-lg font-bold text-white">{title}</h1>
-          <Icon className="h-5 w-5 text-elec-yellow shrink-0" />
-        </div>
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate(backRoute)}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
+
+      <motion.div variants={itemVariants}>
+        <PageHero eyebrow={eyebrow} title={title} description={description} tone="yellow" />
+      </motion.div>
 
       {/* ── Toggle Card Grid ───────────────────────────────────────── */}
       <div className="grid grid-cols-3 gap-2">
@@ -79,7 +95,7 @@ const InstallationGuidePageShell = ({
           </div>
         </div>
       )}
-    </div>
+    </PageFrame>
   );
 };
 

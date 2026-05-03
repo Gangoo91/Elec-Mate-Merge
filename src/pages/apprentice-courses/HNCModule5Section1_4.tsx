@@ -1,8 +1,7 @@
 /**
  * Module 5 · Section 1 · Subsection 4 — Resource Planning
- * HNC Electrical Engineering for Building Services (Project Management)
- *   Labour allocation, materials procurement, plant requirements and resource
- *   optimisation for building services projects.
+ * HNC Electrical Engineering for Building Services (Project Management — Pearson U4004 + BSE PM context)
+ *   Matching labour, plant and materials to the programme — the operational backbone of cost control and productive site delivery.
  */
 
 import { useNavigate } from 'react-router-dom';
@@ -11,11 +10,15 @@ import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
-  ConceptBlock,
   CommonMistake,
-  LearningOutcomes,
+  ConceptBlock,
   FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
   SectionRule,
+  TLDR,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -276,6 +279,28 @@ const HNCModule5Section1_4 = () => {
             description="Labour allocation, materials procurement, plant requirements and resource optimisation for building services projects."
             tone="purple"
           />
+
+          <TLDR
+            points={[
+              "Resource planning takes each work package and assigns labour grades, plant, materials and supervision against the programme bars.",
+              "Resource histograms reveal peaks and troughs — flat resource demand is cheaper, more sustainable and safer than a saw-tooth profile.",
+              "Resource-levelling within float smooths peaks; resource-smoothing extends the programme — choose deliberately, never by accident.",
+              "For MEP, lead-time materials (switchgear, cable, AHUs) need ordering against need-by dates derived from the programme, not \"as soon as possible\".",
+              "Productivity assumptions must be defensible — typical UK electrical second-fix is 0.4–0.6 hr/m² depending on density; calibrate against measured outputs, not optimism.",
+            ]}
+          />
+
+          <RegsCallout
+            source="CDM 2015 — Regulation 13(1) (Duties of a principal contractor)"
+            clause="The principal contractor must plan, manage and monitor the construction phase and coordinate matters relating to health and safety during the construction phase to ensure that, so far as is reasonably practicable, construction work is carried out without risks to health or safety."
+            meaning={
+              <>
+                Resource planning is one of the practical means by which a principal contractor evidences Reg 13 compliance. Over-loading a workface (too many trades in one zone) is a Reg 13 breach as much as a productivity problem — you cannot manage the construction phase if you have not planned the resources.
+              </>
+            }
+            cite="Source: Construction (Design and Management) Regulations 2015 — legislation.gov.uk"
+          />
+
 
           <LearningOutcomes
             outcomes={[
@@ -671,9 +696,44 @@ const HNCModule5Section1_4 = () => {
 
           <SectionRule />
 
+          <Scenario
+            title="Resource peak that triggers an HSE intervention"
+            situation={
+              <>
+                To recover a slipped programme, the project director instructs you to add a second shift of electricians on the Level 4 fit-out. Your resource histogram now shows 28 operatives concurrent in a 600 m² zone, alongside the mechanical second-fix gang of 12 and ceiling installers of 9. Within a week the HSE inspector visits after a near-miss with a falling tool — overcrowding is cited.
+              </>
+            }
+            whatToDo={
+              <>
+                Halt the doubling-up. Re-resource against the programme using zoning: split Level 4 into east and west halves with electrical leading east one week, mechanical the next, ceilings following. Update the resource histogram and the construction phase plan. Brief the foremen. The genuine recovery comes from sequence and zoning, not headcount.
+              </>
+            }
+            whyItMatters={
+              <>
+                Workface density is both a productivity issue (rework, wasted travel time, supervision dilution) and a CDM Reg 13 issue. The HSE will judge whether the principal contractor planned resources properly — your histogram and zoning plan is the answer.
+              </>
+            }
+          />
+
+          <SectionRule />
+
           <FAQ items={faqs} />
 
           <SectionRule />
+
+                    <KeyTakeaways
+            points={[
+              "Resource = labour (by grade), plant, materials, supervision — assigned to each work package against the programme.",
+              "Build a resource histogram — flat is cheap and safe; saw-tooth is expensive, dangerous and disruptive.",
+              "Levelling smooths within float; smoothing extends the programme. Choose the trade-off explicitly.",
+              "Lead-time materials ordered against need-by dates — not \"as soon as possible\" which lets float decay.",
+              "Productivity rates must be defensible — measured outputs from previous projects beat optimism every time.",
+              "Workface density is both a productivity and a CDM Reg 13 issue — overcrowding kills both output and people.",
+              "Plant utilisation: aim 70–85% — below is waste, above means breakdowns and clashes.",
+              "Subcontractor resource plans should be checked against your programme and zoning before they mobilise.",
+            ]}
+          />
+
 
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
 

@@ -1,8 +1,7 @@
 /**
  * Module 5 · Section 1 · Subsection 3 — Critical Path Method
- * HNC Electrical Engineering for Building Services (Project Management)
- *   Network analysis techniques for building services programme planning, float calculations,
- *   and schedule optimisation.
+ * HNC Electrical Engineering for Building Services (Project Management — Pearson U4004 + BSE PM context)
+ *   Network analysis, float calculations and schedule optimisation for building services programmes — knowing which activities actually drive the end date.
  */
 
 import { useNavigate } from 'react-router-dom';
@@ -11,11 +10,15 @@ import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
-  ConceptBlock,
   CommonMistake,
-  LearningOutcomes,
+  ConceptBlock,
   FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
   SectionRule,
+  TLDR,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -273,6 +276,28 @@ const HNCModule5Section1_3 = () => {
             description="Network analysis techniques for building services programme planning, float calculations, and schedule optimisation."
             tone="purple"
           />
+
+          <TLDR
+            points={[
+              "CPM identifies the longest chain of dependent activities — that chain dictates the project end date and zero-float activities cannot slip without delay to completion.",
+              "Forward pass calculates earliest start/finish, backward pass calculates latest start/finish — the difference is float.",
+              "Total float belongs to the project; free float belongs to the activity. Confuse the two and you give time away.",
+              "For MEP, switchgear lead-times, DNO connection dates and commissioning windows are nearly always on the critical path — manage them first.",
+              "Re-run CPM after every programme update — the critical path moves as work progresses.",
+            ]}
+          />
+
+          <RegsCallout
+            source="NEC4 ECC — Clause 32.1 (Revising the programme)"
+            clause="The Contractor shows on each revised programme — the actual progress achieved on each operation and its effect upon the timing of the remaining work, the effects of implemented compensation events and of notified early warning matters, how the Contractor plans to deal with any delays and to correct notified Defects, and any other changes which the Contractor proposes to make to the Accepted Programme."
+            meaning={
+              <>
+                Clause 32 forces a monthly programme refresh that re-runs the critical path against actuals. If you ignore CPM and submit a static Gantt month after month, the PM is entitled to reject it and withhold up to 25% of the price (Clause 50.5). CPM discipline is therefore not optional under NEC — it is the basis of payment certification.
+              </>
+            }
+            cite="Source: NEC4 Engineering and Construction Contract — Clause 32 (refer to NEC4 published text for verbatim use)."
+          />
+
 
           <LearningOutcomes
             outcomes={[
@@ -716,9 +741,44 @@ const HNCModule5Section1_3 = () => {
 
           <SectionRule />
 
+          <Scenario
+            title="The hidden critical path — a switchgear lead-time discovered too late"
+            situation={
+              <>
+                You take over a 14-month commercial fit-out at month four. The accepted programme shows a 26-week activity for the LV switchboard, but no logic linking it to the DNO connection. The QS reports the switchboard manufacturer has just quoted a 38-week lead time on the latest spec change.
+              </>
+            }
+            whatToDo={
+              <>
+                Run a fresh CPM with the actual switchboard duration. The new critical path now runs through switchboard manufacture → DNO witness → energisation → temporary supply → main commissioning. The end date slips by 12 weeks. Issue an early warning the same day, propose mitigation (split-pack alternative, interim supply, parallel commissioning), revise the programme under Clause 32 and quantify the time impact on a CE under Clause 60. Negotiate down to a 6-week net slip with mitigation.
+              </>
+            }
+            whyItMatters={
+              <>
+                Long-lead MEP equipment hides on the bar chart but lives on the critical path. CPM exposes it. Without CPM, you would have noticed the slip when the switchboard did not arrive — three months too late to mitigate, and with no audit trail to support a CE.
+              </>
+            }
+          />
+
+          <SectionRule />
+
           <FAQ items={faqs} />
 
           <SectionRule />
+
+                    <KeyTakeaways
+            points={[
+              "Critical path = longest chain of dependent activities = project end date.",
+              "Forward pass → ES/EF; backward pass → LS/LF; total float = LS – ES (or LF – EF).",
+              "Zero-float activities are critical — any slip directly delays completion.",
+              "Free float = slack that does not affect any successor; total float = slack that does not affect the end date.",
+              "For MEP: switchgear, DNO connection, generators, lifts, BMS commissioning are usually on or near critical.",
+              "Re-run CPM after each programme update — critical path migrates as actuals are entered.",
+              "Use float strategically: protect critical activities, accept controlled risk on high-float activities.",
+              "Under NEC4 Clause 32, monthly CPM-based revisions are mandatory — failure can trigger a 25% payment retention under Clause 50.5.",
+            ]}
+          />
+
 
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
 

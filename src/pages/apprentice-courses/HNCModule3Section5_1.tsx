@@ -40,7 +40,7 @@ const quickCheckQuestions = [
     ],
     correctIndex: 1,
     explanation:
-      "Faraday's law states that the induced EMF is proportional to the rate of change of magnetic flux linkage: e = -N(d\u03A6/dt). Faster changes produce larger EMFs.",
+      "Faraday's law states that the induced EMF is proportional to the rate of change of magnetic flux linkage: e = -N(dΦ/dt). Faster changes produce larger EMFs.",
   },
   {
     id: 'lenz-law',
@@ -53,7 +53,7 @@ const quickCheckQuestions = [
     ],
     correctIndex: 1,
     explanation:
-      "Lenz's law states that the direction of induced current is such that it opposes the change in flux that caused it. This is why there is a negative sign in e = -N(d\u03A6/dt).",
+      "Lenz's law states that the direction of induced current is such that it opposes the change in flux that caused it. This is why there is a negative sign in e = -N(dΦ/dt).",
   },
   {
     id: 'motional-emf',
@@ -62,7 +62,7 @@ const quickCheckQuestions = [
     options: ['0.4V', '4V', '8V', '40V'],
     correctIndex: 1,
     explanation:
-      'Using e = Blv: e = 0.8T \u00d7 0.5m \u00d7 10m/s = 4V. This is the motional EMF equation for a conductor cutting magnetic field lines.',
+      'Using e = Blv: e = 0.8T × 0.5m × 10m/s = 4V. This is the motional EMF equation for a conductor cutting magnetic field lines.',
   },
   {
     id: 'transformer-emf',
@@ -71,7 +71,7 @@ const quickCheckQuestions = [
     options: ['10V', '100V', '500V', '1000V'],
     correctIndex: 3,
     explanation:
-      "Using e = -N(d\u03A6/dt): e = 500 \u00d7 (0.02/0.01) = 500 \u00d7 2 = 1000V. The negative sign indicates direction per Lenz's law.",
+      "Using e = -N(dΦ/dt): e = 500 × (0.02/0.01) = 500 × 2 = 1000V. The negative sign indicates direction per Lenz's law.",
   },
 ];
 
@@ -95,7 +95,7 @@ const quizQuestions = [
       'A conductor of length 0.4m moves at 15 m/s perpendicular to a magnetic field of 1.2T. What EMF is induced?',
     options: ['4.8V', '7.2V', '12V', '18V'],
     correctAnswer: 1,
-    explanation: 'Using motional EMF formula: e = Blv = 1.2 \u00d7 0.4 \u00d7 15 = 7.2V',
+    explanation: 'Using motional EMF formula: e = Blv = 1.2 × 0.4 × 15 = 7.2V',
   },
   {
     id: 3,
@@ -108,11 +108,11 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'Laminations break up the paths for eddy currents, dramatically reducing I\u00b2R losses. Solid cores would allow large circulating currents that waste energy as heat.',
+      'Laminations break up the paths for eddy currents, dramatically reducing I²R losses. Solid cores would allow large circulating currents that waste energy as heat.',
   },
   {
     id: 4,
-    question: "The negative sign in Faraday's law (e = -N d\u03A6/dt) represents:",
+    question: "The negative sign in Faraday's law (e = -N dΦ/dt) represents:",
     options: [
       'Power loss in the circuit',
       "Lenz's law - opposition to change",
@@ -134,7 +134,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'Flux linkage (\u039b or N\u03A6) is the product of magnetic flux and the number of turns it links. It determines the total EMF induced in a multi-turn coil.',
+      'Flux linkage (Λ or NΦ) is the product of magnetic flux and the number of turns it links. It determines the total EMF induced in a multi-turn coil.',
   },
   {
     id: 6,
@@ -143,7 +143,7 @@ const quizQuestions = [
     options: ['6V', '60V', '100V', '600V'],
     correctAnswer: 1,
     explanation:
-      'e = -N(d\u03A6/dt) = -200 \u00d7 (0.02 - 0.05)/0.1 = -200 \u00d7 (-0.03)/0.1 = -200 \u00d7 (-0.3) = 60V (magnitude)',
+      'e = -N(dΦ/dt) = -200 × (0.02 - 0.05)/0.1 = -200 × (-0.03)/0.1 = -200 × (-0.3) = 60V (magnitude)',
   },
   {
     id: 7,
@@ -209,7 +209,7 @@ const faqs = [
   {
     question: 'How do eddy currents affect transformer efficiency?',
     answer:
-      'Eddy currents are circulating currents induced in the transformer core by the changing magnetic field. They cause I\u00b2R heating losses (eddy current losses). Laminating the core with thin, insulated sheets restricts eddy current paths and reduces these losses significantly.',
+      'Eddy currents are circulating currents induced in the transformer core by the changing magnetic field. They cause I²R heating losses (eddy current losses). Laminating the core with thin, insulated sheets restricts eddy current paths and reduces these losses significantly.',
   },
   {
     question: 'What determines the direction of induced current?',

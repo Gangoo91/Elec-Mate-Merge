@@ -271,9 +271,9 @@ export default function Sub4() {
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li><strong>1. Continuity of protective conductors</strong> (Reg 643.2.1) — R1+R2 method or simple continuity to a single point. Confirms CPC integrity.</li>
-              <li><strong>2. Continuity of ring final conductors</strong> (Reg 643.2.2) — three-step cross-connection test confirms ring topology.</li>
+              <li><strong>2. Continuity of ring final conductors</strong> (Reg 643.2.1) — three-step cross-connection test confirms ring topology.</li>
               <li><strong>3. Insulation resistance</strong> (Reg 643.3) — between live conductors and earth, between live conductors. 500 V DC for LV (250 V for circuits with electronics).</li>
-              <li><strong>4. Polarity</strong> (Reg 643.6) — confirms line connected to line terminal at every accessory; switches break line not neutral.</li>
+              <li><strong>4. Polarity</strong> (Section 643) — confirms line connected to line terminal at every accessory; switches break line not neutral.</li>
               <li><strong>5. Earth fault loop impedance</strong> (Reg 643.7.3) — Ze at origin, Zs at every protective device. Verify against Table 41.3 maximums.</li>
               <li><strong>6. Operation of RCDs</strong> (Reg 643.7.1, 643.8) — trip-time at I∆n and 1×IΔn. Verify against Table 643.7 maximums.</li>
             </ul>
@@ -281,10 +281,10 @@ export default function Sub4() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Reg 643.1 (Inspection and testing — general)"
-            clause={<>"Every electrical installation shall be inspected and tested during erection and on completion before being put into service to verify, so far as reasonably practicable, that the requirements of the Regulations have been met."</>}
-            meaning={<>Reg 643.1 is the parent duty that the test sequence (643.2 onwards) implements. For fault diagnosis, the same tests are used to verify the installation has not departed from compliance — the post-fault retest is itself a 643.1 verification.</>}
-            cite="Source: BS 7671:2018 incorporating Amendment 2:2022, Reg 643.1."
+            source="BS 7671:2018+A4:2026 — Regulation 134.2.1 (Inspection and testing)"
+            clause={<>"During erection and on completion of an installation or an addition or alteration to an installation, and before it is put into service, appropriate inspection and testing shall be carried out by one or more skilled persons competent to verify that the requirements of BS 7671 have been met. Appropriate certification shall be issued in accordance with Chapter 64."</>}
+            meaning={<>Reg 134.2.1 is the parent duty that the Chapter 64 test sequence implements. For fault diagnosis, the same tests are used to verify the installation has not departed from compliance — the post-fault retest is itself a 134.2.1 verification, and certification under Chapter 64 follows.</>}
+            cite="Source: BS 7671:2018+A4:2026 Part 1, Chapter 13, Regulation 134.2.1."
           />
 
           <InlineCheck {...checks[0]} />
@@ -303,7 +303,7 @@ export default function Sub4() {
               <li><strong>Simple continuity (R2)</strong> — measure from the CPC at the DB to a single point (an accessory's earth terminal). Confirms the CPC reaches the accessory but doesn\'t characterise the whole circuit.</li>
             </ul>
             <p>
-              Ring final continuity (BS 7671 643.2.2) uses the three-step cross-connection method:
+              Ring final continuity (BS 7671 Reg 643.2.1) uses the three-step cross-connection method:
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>Measure end-to-end of L (r1), N (rn), CPC (r2) — disconnect at DB.</li>
@@ -366,7 +366,7 @@ export default function Sub4() {
                 The Ra &times; I&Delta;n &le; 50&nbsp;V test is your TT-system back-stop. On a TT job where the EFLI looks borderline, calculate it: a 30&nbsp;mA RCD with Ra of 200&nbsp;&Omega; gives Ra &times; I&Delta;n = 6&nbsp;V &mdash; well inside the limit. The same RCD with a 1700&nbsp;&Omega; electrode gives 51&nbsp;V &mdash; fail, regardless of what the loop tester says.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Reg 411.5.3 (RCD-based fault protection), verbatim."
+            cite="Source: BS 7671:2018+A4:2026 — Reg 411.5.3 (RCD-based fault protection)."
           />
 
           <RegsCallout
@@ -381,7 +381,7 @@ export default function Sub4() {
                 A4:2026 simplified the RCD test to a single AC trip at rated I&Delta;n. The 5&times;I&Delta;n test is gone, Table 3A is gone, and the test pass criterion is whichever device-standard limit applies (BS EN 61008 / 61009 / 62423 / 7288). Update your firm&apos;s test pro forma if it still has a 5&times; column.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Reg 643.3 (RCD testing redraft), verbatim from facet."
+            cite="Source: BS 7671:2018+A4:2026 — Reg 643.3 (RCD testing redraft)."
           />
 
           <SectionRule />
@@ -392,7 +392,7 @@ export default function Sub4() {
             title="Verifying the protective device is actually protecting"
             onSite="An RCD that\'s slow to trip is more dangerous than no RCD at all — the customer believes they\'re protected. Trip-time testing is the L3 fault-diagnosis equivalent of putting your hand in front of a fan to check it\'s spinning the right speed."
           >
-            <p>BS 7671 643.7 / Table 643.7 maximum trip times:</p>
+            <p>BS 7671 Reg 643.7.1 / Table 643.7 maximum trip times:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>At I∆n (rated trip current, 30 mA): ≤ 300 ms (general type), ≤ 40 ms for type S.</li>
               <li>At 1×IΔn (150 mA on a 30 mA RCD): ≤ 40 ms (general type).</li>

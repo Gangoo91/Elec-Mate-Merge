@@ -365,7 +365,7 @@ export default function Sub1() {
                 A4:2026 split AFDDs into two categories: mandatory for HRRBs, HMOs, PBSA and care homes; recommended for everywhere else. On a fault-diagnosis visit to one of the mandatory categories, an absent AFDD is a non-compliance to record. On other premises, an absent AFDD is a recommendation to discuss &mdash; not a Code 2.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Reg 421.1.7 redraft, verbatim from facet."
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 421.1.7 (AFDD recommendation, redrafted in A4:2026)."
           />
 
           <RegsCallout

@@ -79,7 +79,9 @@ const renderPanel = (cardId: string) => {
 
 const DomesticInstallations = () => (
   <InstallationGuidePageShell
-    title="Domestic Installations"
+    title="Domestic installations"
+    eyebrow="Apprentice · Domestic"
+    description="Houses, flats, extensions and rewires. Part P, RCD requirements, ring finals, lighting, bathroom zones — everything you'll meet in a domestic property."
     icon={Home}
     cards={cards}
     renderPanel={renderPanel}

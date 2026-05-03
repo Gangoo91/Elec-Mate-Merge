@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 6 · Section 6 · Subsection 4 — Whole Life Carbon Assessment
+ * HNC Electrical Engineering for Building Services (Sustainability and Environmental Engineering)
+ *   RICS methodology, life cycle stages, data sources, benchmarking, and reduction strategies for building services
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Whole Life Carbon Assessment - HNC Module 6 Section 6.4';
@@ -247,994 +264,391 @@ const faqs = [
 ];
 
 const HNCModule6Section6_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section6")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module6-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.6.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Whole Life Carbon Assessment
-          </h1>
-          <p className="text-white">
-            RICS methodology, life cycle stages, data sources, benchmarking, and reduction
-            strategies for building services
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 6 · Section 6 · Subsection 4"
+            title="Whole Life Carbon Assessment"
+            description="RICS methodology, life cycle stages, data sources, benchmarking, and reduction strategies for building services"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>WLC:</strong> Embodied + operational carbon over 60 years
-              </li>
-              <li className="pl-1">
-                <strong>Modules A-D:</strong> Product, construction, use, end-of-life
-              </li>
-              <li className="pl-1">
-                <strong>Data sources:</strong> EPDs, ICE database, manufacturer data
-              </li>
-              <li className="pl-1">
-                <strong>LETI target:</strong> 600 kgCO2e/m2 by 2030
-              </li>
+          <TLDR
+            points={[
+              "Whole Life Carbon Assessment (WLCA) reports embodied + operational carbon across a building's lifecycle — A1–A5 (product/construction), B (use/maintenance), C (end-of-life), D (beyond system boundary) per EN 15978.",
+              "RICS Whole Life Carbon Assessment 2nd edition (effective July 2024) is the UK methodology — supersedes the 1st edition (2017) and is referenced by GLA London Plan, BREEAM, and increasingly tender requirements.",
+              "For new construction, embodied carbon (A1–A5) typically 25–50% of WLCA — and as operational carbon falls (lower grid intensity), embodied is becoming the dominant share, requiring early-stage design intervention.",
+            ]}
+          />
+
+          <RegsCallout
+            source="RICS Whole Life Carbon Assessment for the Built Environment (2nd edition, 2023, effective July 2024)"
+            clause="A whole life carbon assessment shall report embodied carbon emissions across product stages A1-A3 (cradle-to-gate), construction process stages A4-A5, use stages B1-B5 (use, maintenance, repair, replacement, refurbishment), end-of-life stages C1-C4, and module D (loads and benefits beyond the system boundary). The assessment shall be reported in kgCO₂e per m² gross internal area and shall use product-specific Environmental Product Declarations (EPDs) compliant with EN 15804 wherever available."
+            meaning={
+              <>
+                RICS WLCA 2nd edition is now the UK standard. EPDs are the primary data source; ICE database fallback only. Iterative assessment at Stage 2 (baseline), Stage 4 (detailed), Stage 6 (as-built) — informing design, not just reporting after the fact. London Plan requires WLCA submission for major referable schemes.
+              </>
+            }
+            cite="Source: RICS Whole Life Carbon Assessment for the Built Environment, 2nd edition (2023) — rics.org"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Apply RICS whole life carbon methodology to MEP projects",
+              "Identify and calculate carbon across all life cycle stages (Modules A-D)",
+              "Select appropriate data sources including EPDs and ICE database",
+              "Benchmark designs against LETI and RIBA 2030 targets",
+              "Implement embodied and operational carbon reduction strategies",
+              "Assess MEP system contributions to whole life carbon",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="RICS Methodology Fundamentals">
+            <p>The RICS Professional Statement "Whole life carbon assessment for the built environment" (2nd edition, 2023) provides the standardised methodology for calculating whole life carbon in UK construction projects. It aligns with BS EN 15978 and establishes consistent approaches for assessment, reporting, and benchmarking.</p>
+            <p><strong>RICS WLC Framework Components:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>System boundary:</strong> Defines what is included/excluded from assessment</li>
+              <li><strong>Study period:</strong> 60 years as standard (can vary for specific building types)</li>
+              <li><strong>Functional unit:</strong> kgCO2e per m2 GIA (Gross Internal Area)</li>
+              <li><strong>Life cycle modules:</strong> A1-A5, B1-B7, C1-C4, D as per EN 15978</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>MEP contribution:</strong> 15-25% of building WLC
-              </li>
-              <li className="pl-1">
-                <strong>Key drivers:</strong> Copper, refrigerants, replacement cycles
-              </li>
-              <li className="pl-1">
-                <strong>Reduction strategies:</strong> Right-sizing, material selection
-              </li>
-              <li className="pl-1">
-                <strong>Assessment stages:</strong> RIBA 2, 3, 4, completion
-              </li>
+            <p><strong>Assessment Requirements by RIBA Stage</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Stage 2 - Concept:</strong> Simplified (elemental) — Benchmark data, early estimates</li>
+              <li><strong>Stage 3 - Developed:</strong> Detailed (system level) — Generic database + some EPDs</li>
+              <li><strong>Stage 4 - Technical:</strong> Comprehensive (product level) — Product-specific EPDs preferred</li>
+              <li><strong>Completion:</strong> As-built verification — Actual products, quantities verified</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>WLC Calculation Formula</strong></p>
+            <p>WLC = Embodied Carbon + Operational Carbon</p>
+            <p>WLC = (A1-A5 + B1-B5 + C1-C4) + (B6 + B7)</p>
+            <p>Where:</p>
+            <p>A1-A5 = Product & construction stage</p>
+            <p>B1-B5 = Use stage (maintenance, replacement)</p>
+            <p>B6-B7 = Operational energy and water</p>
+            <p>C1-C4 = End-of-life stage</p>
+            <p><strong>Key principle:</strong> Module D (benefits beyond system boundary) must be reported separately and cannot offset Modules A-C.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Apply RICS whole life carbon methodology to MEP projects',
-              'Identify and calculate carbon across all life cycle stages (Modules A-D)',
-              'Select appropriate data sources including EPDs and ICE database',
-              'Benchmark designs against LETI and RIBA 2030 targets',
-              'Implement embodied and operational carbon reduction strategies',
-              'Assess MEP system contributions to whole life carbon',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: RICS Methodology Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            RICS Methodology Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Life Cycle Stages (Modules A-D)">
+            <p>EN 15978 defines life cycle stages using a modular structure. Understanding each module enables accurate carbon accounting and identifies reduction opportunities across the building's lifetime.</p>
+            <p><strong>Module A: Product and Construction Stage</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>A1:</strong> Raw material extraction — Copper ore mining, bauxite extraction</li>
+              <li><strong>A2:</strong> Transport to manufacturer — Ore to smelter, components to factory</li>
+              <li><strong>A3:</strong> Manufacturing — Cable production, AHU assembly, panel wiring</li>
+              <li><strong>A4:</strong> Transport to site — Factory to construction site delivery</li>
+              <li><strong>A5:</strong> Construction/installation — Site energy, waste, temporary works</li>
+            </ul>
+            <p><strong>Module B: Use Stage</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>B1:</strong> Use (refrigerant leakage)</li>
+              <li><strong>B2:</strong> Maintenance (filter changes, servicing)</li>
+              <li><strong>B3:</strong> Repair (component failures)</li>
+              <li><strong>B4:</strong> Replacement (equipment end-of-life)</li>
+              <li><strong>B5:</strong> Refurbishment (major upgrades)</li>
+              <li><strong>B6:</strong> Operational energy use</li>
+              <li><strong>B7:</strong> Operational water use</li>
+            </ul>
+            <p><strong>Module C & D: End-of-Life</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>C1:</strong> Deconstruction/demolition</li>
+              <li><strong>C2:</strong> Transport to waste processing</li>
+              <li><strong>C3:</strong> Waste processing for reuse/recycling</li>
+              <li><strong>C4:</strong> Disposal (landfill, incineration)</li>
+              <li><strong>D:</strong> Reuse/recycling benefits (reported separately)</li>
+            </ul>
+            <p><strong>Module B4 Replacement Calculation</strong></p>
+            <p>For a 60-year study period with MEP equipment lifespans:</p>
+            <p>Number of replacements = (Study period / Equipment life) - 1</p>
+            <p>Examples:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Chiller (25-year life): 60/25 - 1 = 1.4 → 1 replacement</li>
+              <li>LED luminaires (15-year life): 60/15 - 1 = 3 replacements</li>
+              <li>Cable tray (30-year life): 60/30 - 1 = 1 replacement</li>
+            </ul>
+            <p><strong>MEP impact:</strong> Module B4 often dominates MEP embodied carbon due to multiple replacement cycles - a key reason to specify durable equipment.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Data Sources and Calculation Methodology">
+            <p>Accurate WLC assessment requires reliable carbon data. A hierarchy of data sources ensures calculations use the best available information while maintaining transparency about data quality.</p>
+            <p><strong>Data Source Hierarchy (Best to Acceptable)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>1:</strong> Product-specific EPD — Highest — Daikin VRV EPD for specific model</li>
+              <li><strong>2:</strong> Manufacturer EPD (product group) — High — Schneider switchgear range EPD</li>
+              <li><strong>3:</strong> Industry-average EPD — Medium — FETA heat pump average EPD</li>
+              <li><strong>4:</strong> Generic database (ICE, Ecoinvent) — Acceptable — ICE v3.0 copper cable factor</li>
+              <li><strong>5:</strong> Proxy/estimated data — Low — Similar product extrapolation</li>
+            </ul>
+            <p><strong>Key MEP Carbon Factors (ICE v3.0)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Copper (primary): <strong>2.71 kgCO2e/kg</strong></li>
+              <li>Copper (recycled 60%): <strong>1.78 kgCO2e/kg</strong></li>
+              <li>Aluminium (primary): <strong>6.67 kgCO2e/kg</strong></li>
+              <li>Aluminium (recycled): <strong>0.43 kgCO2e/kg</strong></li>
+              <li>Steel (galvanised): <strong>2.76 kgCO2e/kg</strong></li>
+              <li>PVC: <strong>3.10 kgCO2e/kg</strong></li>
+              <li>XLPE insulation: <strong>2.50 kgCO2e/kg</strong></li>
+            </ul>
+            <p><strong>Refrigerant GWP Values (AR5)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>R-410A: <strong>2088</strong> GWP100</li>
+              <li>R-32: <strong>675</strong> GWP100</li>
+              <li>R-134a: <strong>1430</strong> GWP100</li>
+              <li>R-1234yf: <strong>4</strong> GWP100</li>
+              <li>R-290 (propane): <strong>3</strong> GWP100</li>
+              <li>R-744 (CO2): <strong>1</strong> GWP100</li>
+              <li>R-717 (ammonia): <strong>0</strong> GWP100</li>
+            </ul>
+            <p><strong>EPD Resources for MEP</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>EPD International:</strong> epd-international.com - Global programme operator</li>
+              <li><strong>IBU:</strong> ibu-epd.com - German EPD programme (many MEP products)</li>
+              <li><strong>BRE EPD:</strong> greenbooklive.com - UK-verified EPDs</li>
+              <li><strong>One Click LCA:</strong> Built-in database with 200,000+ materials</li>
+              <li><strong>EC3 (Embodied Carbon in Construction Calculator):</strong> Open database</li>
+            </ul>
+            <p><strong>Best practice:</strong> Document all data sources in the WLC report and clearly identify data quality levels for transparency and future updates.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Benchmarking and Reduction Strategies">
+            <p>Industry benchmarks provide targets for WLC performance. Understanding these benchmarks and implementing reduction strategies enables MEP designers to contribute to decarbonisation goals whilst maintaining system performance.</p>
+            <p><strong>LETI and RIBA Whole Life Carbon Targets</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Office:</strong> 1100 kgCO2e/m2 — 600 kgCO2e/m2 — 350 kgCO2e/m2</li>
+              <li><strong>Residential:</strong> 800 kgCO2e/m2 — 500 kgCO2e/m2 — 300 kgCO2e/m2</li>
+              <li><strong>School:</strong> 900 kgCO2e/m2 — 540 kgCO2e/m2 — 325 kgCO2e/m2</li>
+              <li><strong>Healthcare:</strong> 1400 kgCO2e/m2 — 800 kgCO2e/m2 — 500 kgCO2e/m2</li>
+            </ul>
+            <p><strong>MEP Carbon Reduction Hierarchy</strong></p>
+            <p><strong>1. Build Less (Demand Reduction)</strong></p>
+            <p>Fabric-first approach, passive design, reduce conditioned floor area</p>
+            <p><strong>2. Build Clever (Design Optimisation)</strong></p>
+            <p>Right-size systems, hybrid solutions, efficient distribution</p>
+            <p><strong>3. Build Efficiently (Low Carbon Materials)</strong></p>
+            <p>Low-GWP refrigerants, recycled content, aluminium cables</p>
+            <p><strong>4. Build for Longevity (Extended Life)</strong></p>
+            <p>Durable equipment, design for maintenance, modular systems</p>
+            <p><strong>MEP Embodied Carbon Strategies</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Specify <strong>low-GWP refrigerants</strong> (R-32, R-290)</li>
+              <li>Use <strong>aluminium submains</strong> where feasible</li>
+              <li>Specify <strong>high recycled content</strong> materials</li>
+              <li>Design for <strong>extended equipment life</strong></li>
+              <li>Use <strong>prefabricated modules</strong> (reduced waste)</li>
+              <li>Optimise <strong>cable sizing</strong> (balance Cu vs losses)</li>
+            </ul>
+            <p><strong>MEP Operational Carbon Strategies</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Support <strong>fabric-first</strong> to reduce loads</li>
+              <li>Maximise <strong>heat pump COPs</strong> (SCOP &gt;4)</li>
+              <li>Implement <strong>demand-controlled ventilation</strong></li>
+              <li>Use <strong>high-efficiency motors</strong> (IE4/IE5)</li>
+              <li>Integrate <strong>smart controls</strong> and BMS</li>
+              <li>Design for <strong>renewable energy</strong> integration</li>
+            </ul>
+            <p><strong>MEP Contribution to Building WLC (Typical Office)</strong></p>
+            <p><strong>Carbon payback:</strong> Technologies like PV and heat pumps have embodied carbon but typically achieve carbon payback within 2-5 years through operational savings - always assess whole life impact, not just upfront carbon.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              The RICS Professional Statement "Whole life carbon assessment for the built
-              environment" (2nd edition, 2023) provides the standardised methodology for calculating
-              whole life carbon in UK construction projects. It aligns with BS EN 15978 and
-              establishes consistent approaches for assessment, reporting, and benchmarking.
+              <strong>Example 1: Cable Embodied Carbon Calculation</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">RICS WLC Framework Components:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>System boundary:</strong> Defines what is included/excluded from
-                  assessment
-                </li>
-                <li className="pl-1">
-                  <strong>Study period:</strong> 60 years as standard (can vary for specific
-                  building types)
-                </li>
-                <li className="pl-1">
-                  <strong>Functional unit:</strong> kgCO2e per m2 GIA (Gross Internal Area)
-                </li>
-                <li className="pl-1">
-                  <strong>Life cycle modules:</strong> A1-A5, B1-B7, C1-C4, D as per EN 15978
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Assessment Requirements by RIBA Stage
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">RIBA Stage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Assessment Level
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Data Quality</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Stage 2 - Concept</td>
-                      <td className="border border-white/10 px-3 py-2">Simplified (elemental)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Benchmark data, early estimates
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Stage 3 - Developed</td>
-                      <td className="border border-white/10 px-3 py-2">Detailed (system level)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Generic database + some EPDs
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Stage 4 - Technical</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Comprehensive (product level)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Product-specific EPDs preferred
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Completion</td>
-                      <td className="border border-white/10 px-3 py-2">As-built verification</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Actual products, quantities verified
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">WLC Calculation Formula</p>
-              <div className="font-mono text-sm text-white">
-                <p>WLC = Embodied Carbon + Operational Carbon</p>
-                <p className="mt-2">WLC = (A1-A5 + B1-B5 + C1-C4) + (B6 + B7)</p>
-                <p className="mt-2 text-white">Where:</p>
-                <p className="ml-4 text-white">A1-A5 = Product & construction stage</p>
-                <p className="ml-4 text-white">B1-B5 = Use stage (maintenance, replacement)</p>
-                <p className="ml-4 text-white">B6-B7 = Operational energy and water</p>
-                <p className="ml-4 text-white">C1-C4 = End-of-life stage</p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key principle:</strong> Module D (benefits beyond system boundary) must be
-              reported separately and cannot offset Modules A-C.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Life Cycle Stages (Modules A-D) */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Life Cycle Stages (Modules A-D)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Calculate embodied carbon for 500m of 95mm2 4-core XLPE/SWA copper cable.</p>
+            <p>Given:</p>
+            <p>- Cable mass: 4.2 kg/m (from manufacturer data)</p>
+            <p>- Copper content: approximately 65% by mass</p>
+            <p>- Steel armour: approximately 20% by mass</p>
+            <p>- XLPE/PVC: approximately 15% by mass</p>
+            <p>Calculation:</p>
+            <p>Total cable mass = 500m x 4.2 kg/m = 2,100 kg</p>
+            <p>Copper = 2,100 x 0.65 x 2.71 kgCO2e/kg =  <span>3,700 kgCO2e</span></p>
+            <p>Steel = 2,100 x 0.20 x 2.76 kgCO2e/kg =  <span>1,159 kgCO2e</span></p>
+            <p>XLPE/PVC = 2,100 x 0.15 x 2.80 kgCO2e/kg =  <span>882 kgCO2e</span></p>
+            <p>Total A1-A3 = 5,741 kgCO2e (5.74 tCO2e)</p>
+            <p>Note: If using aluminium conductor equivalent:</p>
+            <p>Al mass for 95mm2 equivalent ≈ 50% of Cu mass</p>
+            <p>Al carbon = 1,050 x 0.43 (recycled) =  <span>451 kgCO2e</span></p>
+            <p>Saving: ~3,250 kgCO2e (87% reduction on conductor)</p>
             <p>
-              EN 15978 defines life cycle stages using a modular structure. Understanding each
-              module enables accurate carbon accounting and identifies reduction opportunities
-              across the building's lifetime.
+              <strong>Example 2: Refrigerant Leakage Impact (Module B1)</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Module A: Product and Construction Stage
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Module</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Stage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">MEP Examples</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">A1</td>
-                      <td className="border border-white/10 px-3 py-2">Raw material extraction</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Copper ore mining, bauxite extraction
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">A2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Transport to manufacturer
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ore to smelter, components to factory
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">A3</td>
-                      <td className="border border-white/10 px-3 py-2">Manufacturing</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable production, AHU assembly, panel wiring
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">A4</td>
-                      <td className="border border-white/10 px-3 py-2">Transport to site</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Factory to construction site delivery
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">A5</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Construction/installation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Site energy, waste, temporary works
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Module B: Use Stage</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>B1:</strong> Use (refrigerant leakage)
-                  </li>
-                  <li className="pl-1">
-                    <strong>B2:</strong> Maintenance (filter changes, servicing)
-                  </li>
-                  <li className="pl-1">
-                    <strong>B3:</strong> Repair (component failures)
-                  </li>
-                  <li className="pl-1">
-                    <strong>B4:</strong> Replacement (equipment end-of-life)
-                  </li>
-                  <li className="pl-1">
-                    <strong>B5:</strong> Refurbishment (major upgrades)
-                  </li>
-                  <li className="pl-1">
-                    <strong>B6:</strong> Operational energy use
-                  </li>
-                  <li className="pl-1">
-                    <strong>B7:</strong> Operational water use
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Module C & D: End-of-Life
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>C1:</strong> Deconstruction/demolition
-                  </li>
-                  <li className="pl-1">
-                    <strong>C2:</strong> Transport to waste processing
-                  </li>
-                  <li className="pl-1">
-                    <strong>C3:</strong> Waste processing for reuse/recycling
-                  </li>
-                  <li className="pl-1">
-                    <strong>C4:</strong> Disposal (landfill, incineration)
-                  </li>
-                  <li className="pl-1">
-                    <strong>D:</strong> Reuse/recycling benefits (reported separately)
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-2">
-                Module B4 Replacement Calculation
-              </p>
-              <div className="text-sm text-white">
-                <p>For a 60-year study period with MEP equipment lifespans:</p>
-                <p className="mt-2 font-mono">
-                  Number of replacements = (Study period / Equipment life) - 1
-                </p>
-                <p className="mt-2">Examples:</p>
-                <ul className="mt-1 space-y-1">
-                  <li>Chiller (25-year life): 60/25 - 1 = 1.4 → 1 replacement</li>
-                  <li>LED luminaires (15-year life): 60/15 - 1 = 3 replacements</li>
-                  <li>Cable tray (30-year life): 60/30 - 1 = 1 replacement</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>MEP impact:</strong> Module B4 often dominates MEP embodied carbon due to
-              multiple replacement cycles - a key reason to specify durable equipment.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Data Sources and Calculation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Data Sources and Calculation Methodology
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Compare lifetime refrigerant emissions for two 200kW chiller options.</p>
+            <p>Option A: R-410A chiller</p>
+            <p>- Refrigerant charge: 45 kg</p>
+            <p>- Annual leakage rate: 5%</p>
+            <p>- GWP: 2088</p>
+            <p>Initial charge carbon = 45 x 2088 = 93,960 kgCO2e</p>
+            <p>Annual leakage = 45 x 0.05 x 2088 = 4,698 kgCO2e/year</p>
+            <p>20-year leakage = 4,698 x 20 = <span>93,960 kgCO2e</span></p>
+            <p>Option B: R-32 chiller</p>
+            <p>- Refrigerant charge: 35 kg (lower charge)</p>
+            <p>- Annual leakage rate: 5%</p>
+            <p>- GWP: 675</p>
+            <p>Initial charge carbon = 35 x 675 = 23,625 kgCO2e</p>
+            <p>20-year leakage = 35 x 0.05 x 675 x 20 =  <span>23,625 kgCO2e</span></p>
+            <p>Refrigerant carbon saving: ~70,000 kgCO2e (70 tCO2e)</p>
             <p>
-              Accurate WLC assessment requires reliable carbon data. A hierarchy of data sources
-              ensures calculations use the best available information while maintaining transparency
-              about data quality.
+              <strong>Example 3: Module B4 Replacement Calculation</strong>
             </p>
+            <p><strong>Scenario:</strong> Calculate 60-year embodied carbon for LED lighting installation.</p>
+            <p>Given:</p>
+            <p>- 200 LED luminaires at 8 kgCO2e each (A1-A3)</p>
+            <p>- LED driver life: 15 years</p>
+            <p>- LED module life: 15 years</p>
+            <p>- Housing reuse potential: 60 years</p>
+            <p>Initial installation (A1-A3):</p>
+            <p>200 x 8 = <span>1,600 kgCO2e</span></p>
+            <p>Replacements over 60 years (B4):</p>
+            <p>Number of driver/module replacements = 60/15 - 1 = 3</p>
+            <p>Replacement carbon (driver + LED) = 4 kgCO2e per luminaire</p>
+            <p>B4 = 200 x 4 x 3 = <span>2,400 kgCO2e</span></p>
+            <p>Total lighting WLC:</p>
+            <p>A1-A3 + B4 = 1,600 + 2,400 = <span>4,000 kgCO2e</span></p>
+            <p>Note: B4 is 60% of total - longer-life LEDs reduce WLC significantly</p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Data Source Hierarchy (Best to Acceptable)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Priority</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Data Source</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Quality</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Example</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1</td>
-                      <td className="border border-white/10 px-3 py-2">Product-specific EPD</td>
-                      <td className="border border-white/10 px-3 py-2">Highest</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Daikin VRV EPD for specific model
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Manufacturer EPD (product group)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">High</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Schneider switchgear range EPD
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3</td>
-                      <td className="border border-white/10 px-3 py-2">Industry-average EPD</td>
-                      <td className="border border-white/10 px-3 py-2">Medium</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        FETA heat pump average EPD
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Generic database (ICE, Ecoinvent)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Acceptable</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        ICE v3.0 copper cable factor
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5</td>
-                      <td className="border border-white/10 px-3 py-2">Proxy/estimated data</td>
-                      <td className="border border-white/10 px-3 py-2">Low</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Similar product extrapolation
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Key MEP Carbon Factors (ICE v3.0)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Copper (primary): <strong>2.71 kgCO2e/kg</strong>
-                  </li>
-                  <li className="pl-1">
-                    Copper (recycled 60%): <strong>1.78 kgCO2e/kg</strong>
-                  </li>
-                  <li className="pl-1">
-                    Aluminium (primary): <strong>6.67 kgCO2e/kg</strong>
-                  </li>
-                  <li className="pl-1">
-                    Aluminium (recycled): <strong>0.43 kgCO2e/kg</strong>
-                  </li>
-                  <li className="pl-1">
-                    Steel (galvanised): <strong>2.76 kgCO2e/kg</strong>
-                  </li>
-                  <li className="pl-1">
-                    PVC: <strong>3.10 kgCO2e/kg</strong>
-                  </li>
-                  <li className="pl-1">
-                    XLPE insulation: <strong>2.50 kgCO2e/kg</strong>
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Refrigerant GWP Values (AR5)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    R-410A: <strong>2088</strong> GWP100
-                  </li>
-                  <li className="pl-1">
-                    R-32: <strong>675</strong> GWP100
-                  </li>
-                  <li className="pl-1">
-                    R-134a: <strong>1430</strong> GWP100
-                  </li>
-                  <li className="pl-1">
-                    R-1234yf: <strong>4</strong> GWP100
-                  </li>
-                  <li className="pl-1">
-                    R-290 (propane): <strong>3</strong> GWP100
-                  </li>
-                  <li className="pl-1">
-                    R-744 (CO2): <strong>1</strong> GWP100
-                  </li>
-                  <li className="pl-1">
-                    R-717 (ammonia): <strong>0</strong> GWP100
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">EPD Resources for MEP</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>EPD International:</strong> epd-international.com - Global programme
-                  operator
-                </li>
-                <li className="pl-1">
-                  <strong>IBU:</strong> ibu-epd.com - German EPD programme (many MEP products)
-                </li>
-                <li className="pl-1">
-                  <strong>BRE EPD:</strong> greenbooklive.com - UK-verified EPDs
-                </li>
-                <li className="pl-1">
-                  <strong>One Click LCA:</strong> Built-in database with 200,000+ materials
-                </li>
-                <li className="pl-1">
-                  <strong>EC3 (Embodied Carbon in Construction Calculator):</strong> Open database
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> Document all data sources in the WLC report and
-              clearly identify data quality levels for transparency and future updates.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Benchmarking and Reduction Strategies */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Benchmarking and Reduction Strategies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Industry benchmarks provide targets for WLC performance. Understanding these
-              benchmarks and implementing reduction strategies enables MEP designers to contribute
-              to decarbonisation goals whilst maintaining system performance.
+              <strong>WLC Assessment Checklist for MEP:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                LETI and RIBA Whole Life Carbon Targets
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Building Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">2020 Baseline</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">2030 Target</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">2050 Target</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Office</td>
-                      <td className="border border-white/10 px-3 py-2">1100 kgCO2e/m2</td>
-                      <td className="border border-white/10 px-3 py-2">600 kgCO2e/m2</td>
-                      <td className="border border-white/10 px-3 py-2">350 kgCO2e/m2</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Residential</td>
-                      <td className="border border-white/10 px-3 py-2">800 kgCO2e/m2</td>
-                      <td className="border border-white/10 px-3 py-2">500 kgCO2e/m2</td>
-                      <td className="border border-white/10 px-3 py-2">300 kgCO2e/m2</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">School</td>
-                      <td className="border border-white/10 px-3 py-2">900 kgCO2e/m2</td>
-                      <td className="border border-white/10 px-3 py-2">540 kgCO2e/m2</td>
-                      <td className="border border-white/10 px-3 py-2">325 kgCO2e/m2</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Healthcare</td>
-                      <td className="border border-white/10 px-3 py-2">1400 kgCO2e/m2</td>
-                      <td className="border border-white/10 px-3 py-2">800 kgCO2e/m2</td>
-                      <td className="border border-white/10 px-3 py-2">500 kgCO2e/m2</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                MEP Carbon Reduction Hierarchy
-              </p>
-              <div className="space-y-3">
-                <div className="p-3 rounded bg-green-500/10 border-l-4 border-green-500">
-                  <p className="text-sm font-medium text-green-400">
-                    1. Build Less (Demand Reduction)
-                  </p>
-                  <p className="text-sm text-white mt-1">
-                    Fabric-first approach, passive design, reduce conditioned floor area
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-blue-500/10 border-l-4 border-blue-500">
-                  <p className="text-sm font-medium text-blue-400">
-                    2. Build Clever (Design Optimisation)
-                  </p>
-                  <p className="text-sm text-white mt-1">
-                    Right-size systems, hybrid solutions, efficient distribution
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-yellow-500/10 border-l-4 border-yellow-500">
-                  <p className="text-sm font-medium text-yellow-400">
-                    3. Build Efficiently (Low Carbon Materials)
-                  </p>
-                  <p className="text-sm text-white mt-1">
-                    Low-GWP refrigerants, recycled content, aluminium cables
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-purple-500/10 border-l-4 border-purple-500">
-                  <p className="text-sm font-medium text-purple-400">
-                    4. Build for Longevity (Extended Life)
-                  </p>
-                  <p className="text-sm text-white mt-1">
-                    Durable equipment, design for maintenance, modular systems
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  MEP Embodied Carbon Strategies
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Specify <strong>low-GWP refrigerants</strong> (R-32, R-290)
-                  </li>
-                  <li className="pl-1">
-                    Use <strong>aluminium submains</strong> where feasible
-                  </li>
-                  <li className="pl-1">
-                    Specify <strong>high recycled content</strong> materials
-                  </li>
-                  <li className="pl-1">
-                    Design for <strong>extended equipment life</strong>
-                  </li>
-                  <li className="pl-1">
-                    Use <strong>prefabricated modules</strong> (reduced waste)
-                  </li>
-                  <li className="pl-1">
-                    Optimise <strong>cable sizing</strong> (balance Cu vs losses)
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  MEP Operational Carbon Strategies
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Support <strong>fabric-first</strong> to reduce loads
-                  </li>
-                  <li className="pl-1">
-                    Maximise <strong>heat pump COPs</strong> (SCOP &gt;4)
-                  </li>
-                  <li className="pl-1">
-                    Implement <strong>demand-controlled ventilation</strong>
-                  </li>
-                  <li className="pl-1">
-                    Use <strong>high-efficiency motors</strong> (IE4/IE5)
-                  </li>
-                  <li className="pl-1">
-                    Integrate <strong>smart controls</strong> and BMS
-                  </li>
-                  <li className="pl-1">
-                    Design for <strong>renewable energy</strong> integration
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                MEP Contribution to Building WLC (Typical Office)
-              </p>
-              <div className="text-sm space-y-2">
-                <div className="flex justify-between items-center">
-                  <span>Structure & envelope</span>
-                  <span className="font-mono">40-50%</span>
-                </div>
-                <div className="w-full bg-white/10 h-2 rounded">
-                  <div className="bg-white/50 h-2 rounded" style={{ width: '45%' }}></div>
-                </div>
-                <div className="flex justify-between items-center mt-3">
-                  <span>MEP systems (embodied)</span>
-                  <span className="font-mono">15-25%</span>
-                </div>
-                <div className="w-full bg-white/10 h-2 rounded">
-                  <div className="bg-elec-yellow h-2 rounded" style={{ width: '20%' }}></div>
-                </div>
-                <div className="flex justify-between items-center mt-3">
-                  <span>Operational energy</span>
-                  <span className="font-mono">25-35%</span>
-                </div>
-                <div className="w-full bg-white/10 h-2 rounded">
-                  <div className="bg-blue-400 h-2 rounded" style={{ width: '30%' }}></div>
-                </div>
-                <div className="flex justify-between items-center mt-3">
-                  <span>Finishes, fit-out, other</span>
-                  <span className="font-mono">10-15%</span>
-                </div>
-                <div className="w-full bg-white/10 h-2 rounded">
-                  <div className="bg-purple-400 h-2 rounded" style={{ width: '12%' }}></div>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Carbon payback:</strong> Technologies like PV and heat pumps have embodied
-              carbon but typically achieve carbon payback within 2-5 years through operational
-              savings - always assess whole life impact, not just upfront carbon.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Define system boundary - which MEP systems are included?</li>
+              <li>Establish study period (60 years standard) and equipment lifespans</li>
+              <li>Collect bill of quantities for all MEP elements</li>
+              <li>Source carbon data (prioritise EPDs over generic databases)</li>
+              <li>Calculate A1-A5 (upfront) carbon for all equipment and materials</li>
+              <li>Include B1 refrigerant leakage for HVAC systems</li>
+              <li>Calculate B4 replacement cycles based on equipment lifespans</li>
+              <li>Model B6 operational energy using dynamic simulation</li>
+              <li>Benchmark against LETI/RIBA targets for the building type</li>
+            </ul>
+            <p>
+              <strong>Key Benchmark Values:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>LETI 2030 WLC target: <strong>600 kgCO2e/m2</strong> (non-domestic)</li>
+              <li>MEP embodied carbon: <strong>15-25%</strong> of building total</li>
+              <li>MEP services benchmark: <strong>100-200 kgCO2e/m2</strong></li>
+              <li>Standard study period: <strong>60 years</strong></li>
+              <li>Typical equipment lives: HVAC plant 20-25 years, lighting 15 years</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Cable Embodied Carbon Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate embodied carbon for 500m of 95mm2 4-core
-                XLPE/SWA copper cable.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Given:</p>
-                <p>- Cable mass: 4.2 kg/m (from manufacturer data)</p>
-                <p>- Copper content: approximately 65% by mass</p>
-                <p>- Steel armour: approximately 20% by mass</p>
-                <p>- XLPE/PVC: approximately 15% by mass</p>
-                <p className="mt-2 text-white">Calculation:</p>
-                <p>Total cable mass = 500m x 4.2 kg/m = 2,100 kg</p>
-                <p className="mt-2">
-                  Copper = 2,100 x 0.65 x 2.71 kgCO2e/kg ={' '}
-                  <span className="text-green-400">3,700 kgCO2e</span>
-                </p>
-                <p>
-                  Steel = 2,100 x 0.20 x 2.76 kgCO2e/kg ={' '}
-                  <span className="text-green-400">1,159 kgCO2e</span>
-                </p>
-                <p>
-                  XLPE/PVC = 2,100 x 0.15 x 2.80 kgCO2e/kg ={' '}
-                  <span className="text-green-400">882 kgCO2e</span>
-                </p>
-                <p className="mt-2 text-green-400">Total A1-A3 = 5,741 kgCO2e (5.74 tCO2e)</p>
-                <p className="mt-2 text-white">Note: If using aluminium conductor equivalent:</p>
-                <p>Al mass for 95mm2 equivalent ≈ 50% of Cu mass</p>
-                <p>
-                  Al carbon = 1,050 x 0.43 (recycled) ={' '}
-                  <span className="text-blue-400">451 kgCO2e</span>
-                </p>
-                <p className="text-blue-400">Saving: ~3,250 kgCO2e (87% reduction on conductor)</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Refrigerant Leakage Impact (Module B1)
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Compare lifetime refrigerant emissions for two 200kW
-                chiller options.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Option A: R-410A chiller</p>
-                <p>- Refrigerant charge: 45 kg</p>
-                <p>- Annual leakage rate: 5%</p>
-                <p>- GWP: 2088</p>
-                <p className="mt-2">Initial charge carbon = 45 x 2088 = 93,960 kgCO2e</p>
-                <p>Annual leakage = 45 x 0.05 x 2088 = 4,698 kgCO2e/year</p>
-                <p>
-                  20-year leakage = 4,698 x 20 = <span className="text-red-400">93,960 kgCO2e</span>
-                </p>
-                <p className="mt-3 text-white">Option B: R-32 chiller</p>
-                <p>- Refrigerant charge: 35 kg (lower charge)</p>
-                <p>- Annual leakage rate: 5%</p>
-                <p>- GWP: 675</p>
-                <p className="mt-2">Initial charge carbon = 35 x 675 = 23,625 kgCO2e</p>
-                <p>
-                  20-year leakage = 35 x 0.05 x 675 x 20 ={' '}
-                  <span className="text-green-400">23,625 kgCO2e</span>
-                </p>
-                <p className="mt-2 text-green-400">
-                  Refrigerant carbon saving: ~70,000 kgCO2e (70 tCO2e)
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Module B4 Replacement Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate 60-year embodied carbon for LED lighting
-                installation.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Given:</p>
-                <p>- 200 LED luminaires at 8 kgCO2e each (A1-A3)</p>
-                <p>- LED driver life: 15 years</p>
-                <p>- LED module life: 15 years</p>
-                <p>- Housing reuse potential: 60 years</p>
-                <p className="mt-2 text-white">Initial installation (A1-A3):</p>
-                <p>
-                  200 x 8 = <span className="text-green-400">1,600 kgCO2e</span>
-                </p>
-                <p className="mt-2 text-white">Replacements over 60 years (B4):</p>
-                <p>Number of driver/module replacements = 60/15 - 1 = 3</p>
-                <p>Replacement carbon (driver + LED) = 4 kgCO2e per luminaire</p>
-                <p>
-                  B4 = 200 x 4 x 3 = <span className="text-green-400">2,400 kgCO2e</span>
-                </p>
-                <p className="mt-2 text-white">Total lighting WLC:</p>
-                <p>
-                  A1-A3 + B4 = 1,600 + 2,400 = <span className="text-green-400">4,000 kgCO2e</span>
-                </p>
-                <p className="text-white mt-2">
-                  Note: B4 is 60% of total - longer-life LEDs reduce WLC significantly
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                WLC Assessment Checklist for MEP
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Define system boundary - which MEP systems are included?</li>
-                <li className="pl-1">
-                  Establish study period (60 years standard) and equipment lifespans
-                </li>
-                <li className="pl-1">Collect bill of quantities for all MEP elements</li>
-                <li className="pl-1">
-                  Source carbon data (prioritise EPDs over generic databases)
-                </li>
-                <li className="pl-1">
-                  Calculate A1-A5 (upfront) carbon for all equipment and materials
-                </li>
-                <li className="pl-1">Include B1 refrigerant leakage for HVAC systems</li>
-                <li className="pl-1">
-                  Calculate B4 replacement cycles based on equipment lifespans
-                </li>
-                <li className="pl-1">Model B6 operational energy using dynamic simulation</li>
-                <li className="pl-1">Benchmark against LETI/RIBA targets for the building type</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Ignoring B4 replacements</strong> - can double MEP embodied carbon</li>
+                <li><strong>Using outdated carbon factors</strong> - grid decarbonisation changes B6</li>
+                <li><strong>Omitting refrigerant leakage</strong> - can be 50%+ of HVAC carbon</li>
+                <li><strong>Mixing data quality levels</strong> without documentation</li>
+                <li><strong>Including Module D in main totals</strong> - must report separately</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Key Benchmark Values</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  LETI 2030 WLC target: <strong>600 kgCO2e/m2</strong> (non-domestic)
-                </li>
-                <li className="pl-1">
-                  MEP embodied carbon: <strong>15-25%</strong> of building total
-                </li>
-                <li className="pl-1">
-                  MEP services benchmark: <strong>100-200 kgCO2e/m2</strong>
-                </li>
-                <li className="pl-1">
-                  Standard study period: <strong>60 years</strong>
-                </li>
-                <li className="pl-1">
-                  Typical equipment lives: HVAC plant 20-25 years, lighting 15 years
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Ignoring B4 replacements</strong> - can double MEP embodied carbon
-                </li>
-                <li className="pl-1">
-                  <strong>Using outdated carbon factors</strong> - grid decarbonisation changes B6
-                </li>
-                <li className="pl-1">
-                  <strong>Omitting refrigerant leakage</strong> - can be 50%+ of HVAC carbon
-                </li>
-                <li className="pl-1">
-                  <strong>Mixing data quality levels</strong> without documentation
-                </li>
-                <li className="pl-1">
-                  <strong>Including Module D in main totals</strong> - must report separately
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="WLCA at Stage 4 reveals embodied is now bigger than operational"
+            situation={
+              <>
+                A net-zero-aligned office building is targeting LETI Band B for both operational EUI (≤55 kWh/m²/year) and embodied carbon A1–A5 (≤625 kgCO₂e/m²). Stage 4 WLCA shows operational carbon (60-year life) at 850 kgCO₂e/m² (15 kWh/m²/year × 0.140 kgCO₂/kWh × 60 years), but embodied (A1–A5) at 720 kgCO₂e/m² — over the LETI band B target.
+              </>
+            }
+            whatToDo={
+              <>
+                Embodied carbon reduction strategies in M&E: (1) re-use rather than replace switchgear, distribution boards, key MEP plant where possible; (2) specify EPD-backed plant with high recycled content (chillers, AHUs); (3) substitute aluminium for copper cabling where current rating allows; (4) reduce belt-and-braces over-specification (containment sized for actual cable population, not 100% spare capacity); (5) refrigerant choice — R32, R454B, R290 over R410A. Combined, these typically yield 15-30% A1–A5 reduction. Re-model and verify against the LETI band.
+              </>
+            }
+            whyItMatters={
+              <>
+                Operational carbon falls every year as the grid decarbonises — embodied is once-and-done. For a building completing in 2026 with a 60-year life, embodied may already be larger than operational over the lifetime. M&E embodied is dominated by metals (switchgear, cabling, refrigeration plant); M&E designers must now manage embodied as a first-order design decision, not an afterthought.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Life Cycle Modules</p>
-                <ul className="space-y-0.5">
-                  <li>A1-A3: Product stage (cradle-to-gate)</li>
-                  <li>A4-A5: Construction stage</li>
-                  <li>B1-B7: Use stage (inc. operational)</li>
-                  <li>C1-C4: End-of-life stage</li>
-                  <li>D: Benefits beyond boundary</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">LETI 2030 Targets</p>
-                <ul className="space-y-0.5">
-                  <li>Office: 600 kgCO2e/m2</li>
-                  <li>Residential: 500 kgCO2e/m2</li>
-                  <li>School: 540 kgCO2e/m2</li>
-                  <li>Healthcare: 800 kgCO2e/m2</li>
-                  <li>Study period: 60 years</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              "WLCA = embodied + operational carbon over building life per EN 15978.",
+              "RICS WLCA 2nd edition (July 2024) is the UK methodology.",
+              "A1–A5 embodied = product + construction stages (the headline number).",
+              "B1–B5 use phase + C1–C4 end-of-life round out WLCA.",
+              "EPDs (EN 15804) primary data source; ICE database fallback.",
+              "M&E embodied dominated by metals — reuse > recycle > new with high recycled.",
+              "GLA London Plan + BREEAM + private clients increasingly mandate WLCA submission.",
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section6-5">
-              Next: Section 6.5
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section6-3")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Integrated design process
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section6-5")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Circular economy principles
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

@@ -31,11 +31,11 @@ const FunctionalSkillsModule1Section1 = () => {
     },
     {
       id: 3,
-      question: 'Using BIDMAS, what is the result of 2 + 3 \u00d7 4?',
+      question: 'Using BIDMAS, what is the result of 2 + 3 × 4?',
       options: ['20', '14', '24', '12'],
       correctAnswer: 1,
       explanation:
-        'BIDMAS tells us to perform Multiplication before Addition. So 3 \u00d7 4 = 12, then 2 + 12 = 14. A common mistake is to add first, giving 20.',
+        'BIDMAS tells us to perform Multiplication before Addition. So 3 × 4 = 12, then 2 + 12 = 14. A common mistake is to add first, giving 20.',
     },
     {
       id: 4,
@@ -44,7 +44,7 @@ const FunctionalSkillsModule1Section1 = () => {
       options: ['62.5m', '37.5m', '60m', '65m'],
       correctAnswer: 0,
       explanation:
-        '3/8 of 100m = (3 \u00f7 8) \u00d7 100 = 37.5m used. Remaining = 100 - 37.5 = 62.5m.',
+        '3/8 of 100m = (3 ÷ 8) × 100 = 37.5m used. Remaining = 100 - 37.5 = 62.5m.',
     },
     {
       id: 5,
@@ -53,7 +53,7 @@ const FunctionalSkillsModule1Section1 = () => {
       options: ['25A', '28A', '30A', '32A'],
       correctAnswer: 3,
       explanation:
-        'The fuse rating must be equal to or greater than the design current. 28.4A exceeds 25A and 30A is not a standard BS 88 rating, so the next standard rating above 28.4A is 32A. Never round down \u2014 the fuse would be undersized.',
+        'The fuse rating must be equal to or greater than the design current. 28.4A exceeds 25A and 30A is not a standard BS 88 rating, so the next standard rating above 28.4A is 32A. Never round down — the fuse would be undersized.',
     },
     {
       id: 6,
@@ -62,25 +62,25 @@ const FunctionalSkillsModule1Section1 = () => {
       options: ['75%', '80%', '85%', '90%'],
       correctAnswer: 1,
       explanation:
-        'Efficiency = (Power Out \u00f7 Power In) \u00d7 100 = (1,920 \u00f7 2,400) \u00d7 100 = 80%. The remaining 20% is lost as heat, sound and vibration.',
+        'Efficiency = (Power Out ÷ Power In) × 100 = (1,920 ÷ 2,400) × 100 = 80%. The remaining 20% is lost as heat, sound and vibration.',
     },
     {
       id: 7,
       question:
-        'The temperature in a cold workshop reads \u22125\u00b0C. A heater raises the temperature by 23\u00b0C. What is the new temperature?',
-      options: ['28\u00b0C', '18\u00b0C', '\u221228\u00b0C', '23\u00b0C'],
+        'The temperature in a cold workshop reads −5°C. A heater raises the temperature by 23°C. What is the new temperature?',
+      options: ['28°C', '18°C', '−28°C', '23°C'],
       correctAnswer: 1,
       explanation:
-        'Starting at \u22125\u00b0C and adding 23\u00b0C: \u22125 + 23 = 18\u00b0C. When adding a positive number to a negative number, subtract the smaller absolute value from the larger and keep the sign of the larger.',
+        'Starting at −5°C and adding 23°C: −5 + 23 = 18°C. When adding a positive number to a negative number, subtract the smaller absolute value from the larger and keep the sign of the larger.',
     },
     {
       id: 8,
       question:
-        'An estimate for a job includes 47 metres of cable at \u00a31.85 per metre. Using estimation (rounding to convenient numbers), approximately how much will the cable cost?',
-      options: ['About \u00a375', 'About \u00a390', 'About \u00a3100', 'About \u00a385'],
+        'An estimate for a job includes 47 metres of cable at £1.85 per metre. Using estimation (rounding to convenient numbers), approximately how much will the cable cost?',
+      options: ['About £75', 'About £90', 'About £100', 'About £85'],
       correctAnswer: 1,
       explanation:
-        'Round 47m to 50m and \u00a31.85 to \u00a31.80. 50 \u00d7 \u00a31.80 = \u00a390. The exact answer is \u00a386.95, so \u00a390 is the closest reasonable estimate. Estimation helps you quickly verify quotes and spot errors.',
+        'Round 47m to 50m and £1.85 to £1.80. 50 × £1.80 = £90. The exact answer is £86.95, so £90 is the closest reasonable estimate. Estimation helps you quickly verify quotes and spot errors.',
     },
   ];
 
@@ -544,7 +544,7 @@ const FunctionalSkillsModule1Section1 = () => {
           question="A 400V three-phase supply has a measured voltage drop of 14V. What is the percentage voltage drop?"
           options={['2.8%', '3.2%', '3.5%', '4.0%']}
           correctIndex={2}
-          explanation="Percentage drop = (14 \u00f7 400) \u00d7 100 = 3.5%. This is within the 5% limit set by BS 7671 for power circuits, but close to the 3% limit for lighting."
+          explanation="Percentage drop = (14 ÷ 400) × 100 = 3.5%. This is within the 5% limit set by BS 7671 for power circuits, but close to the 3% limit for lighting."
         />
 
         {/* Section 05 — BIDMAS Order of Operations */}
@@ -754,10 +754,10 @@ const FunctionalSkillsModule1Section1 = () => {
         {/* InlineCheck after section 06 */}
         <InlineCheck
           id="fs-m1s1-check3"
-          question="What is the result of \u22128 \u00d7 \u22123?"
-          options={['\u221224', '24', '\u221211', '11']}
+          question="What is the result of −8 × −3?"
+          options={['−24', '24', '−11', '11']}
           correctIndex={1}
-          explanation="When you multiply two negative numbers, the result is positive. \u22128 \u00d7 \u22123 = +24. Remember: same signs = positive, different signs = negative."
+          explanation="When you multiply two negative numbers, the result is positive. −8 × −3 = +24. Remember: same signs = positive, different signs = negative."
         />
 
         {/* Section 07 — Rounding & Estimation */}

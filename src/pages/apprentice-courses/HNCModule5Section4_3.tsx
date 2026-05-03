@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 5 · Section 4 · Subsection 3 — Material and Equipment Approval
+ * HNC Electrical Engineering for Building Services (Project Management — Pearson U4004 + BSE PM context)
+ *   Submittal processes, sample approval, mock-ups and specification compliance — the gate that stops non-conforming products being installed.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Material and Equipment Approval - HNC Module 5 Section 4.3';
@@ -250,769 +267,530 @@ const faqs = [
 ];
 
 const HNCModule5Section4_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section4')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module5-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 5.4.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Material and Equipment Approval
-          </h1>
-          <p className="text-white">
-            Submittal processes, sample approval, mock-up requirements, and specification compliance
-            for building services
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 5 · Section 4 · Subsection 3"
+            title="Material and Equipment Approval"
+            description="Submittal processes, sample approval, mock-up requirements, and specification compliance for building services."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Submittal register:</strong> Tracks all approval requests and status
-              </li>
-              <li className="pl-1">
-                <strong>Data sheets:</strong> Technical compliance evidence
-              </li>
-              <li className="pl-1">
-                <strong>Samples:</strong> Physical verification of quality
-              </li>
-              <li className="pl-1">
-                <strong>Mock-ups:</strong> Benchmark for installation standards
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Review period:</strong> Typically 7-14 days
-              </li>
-              <li className="pl-1">
-                <strong>Approval authority:</strong> Client's representative
-              </li>
-              <li className="pl-1">
-                <strong>Substitutions:</strong> Require formal approval
-              </li>
-              <li className="pl-1">
-                <strong>Records:</strong> Retained for defects period
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              "Submittal process: contractor submits product data, cut sheets, schedules and samples; design team reviews against specification; approves or rejects with comments.",
+              "Approval is \"approved\", \"approved as noted\" (with conditions), or \"rejected\" — never \"noted\" or \"received\" which carry no contractual force.",
+              "Long-lead items prioritised — submittals lodged early enough that approval, manufacture and delivery fit the programme.",
+              "Mock-ups for visible elements (luminaire types, control panels, finishes) — installed once, approved or rectified, then full installation proceeds.",
+              "NCRs raised when non-approved equipment is installed — full removal and re-installation at contractor cost.",
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Regulation 511.1 (General — Conformity to standards)"
+            clause="Every item of equipment shall comply with the appropriate British Standard, harmonised European Standard or its equivalent. The conformity of equipment shall be verified by means of a manufacturer’s declaration, certificate of conformity or other appropriate documentation."
+            meaning={
+              <>
+                BS 7671 requires every item of electrical equipment to comply with the relevant standard, with documented evidence of conformity. The submittal process is how this is verified at design stage; goods-in inspection verifies on delivery. UKCA/CE marking, manufacturer declarations and certificates of conformity are the audit trail.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 511.1."
+          />
+
+
+          <LearningOutcomes
+            outcomes={[
               'Establish and maintain a comprehensive submittal register',
               'Prepare technical data sheets for specification compliance',
               'Manage the sample approval process effectively',
               'Understand mock-up requirements for quality benchmarking',
               'Process alternative product and substitution requests',
               'Track approved status and maintain audit trails',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Submittal Register and Process */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Submittal Register and Process
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Submittal Register and Process">
             <p>
               The submittal register is the cornerstone of material and equipment approval
               management. It provides a comprehensive log of all items requiring approval, their
               current status, and a complete audit trail throughout the project lifecycle.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Submittal Register Contents:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Unique reference number:</strong> Sequential numbering system (e.g.,
-                  SUB-E-001)
-                </li>
-                <li className="pl-1">
-                  <strong>Specification clause:</strong> Reference to relevant specification section
-                </li>
-                <li className="pl-1">
-                  <strong>Description:</strong> Clear description of material or equipment
-                </li>
-                <li className="pl-1">
-                  <strong>Submission date:</strong> Date submittal was issued for review
-                </li>
-                <li className="pl-1">
-                  <strong>Required date:</strong> Date approval is needed for procurement
-                </li>
-                <li className="pl-1">
-                  <strong>Revision number:</strong> Track resubmissions (Rev A, B, C)
-                </li>
-                <li className="pl-1">
-                  <strong>Status:</strong> Current approval status
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Approval Status Categories
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Status</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Meaning</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Action Required
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">Approved</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fully compliant, no changes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Proceed with procurement</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-400">
-                        Approved as Noted
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Acceptable with comments</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Incorporate comments, then proceed
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-orange-400">
-                        Revise and Resubmit
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Changes required</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Address comments, resubmit
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">Rejected</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Does not meet specification
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Submit compliant alternative
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-blue-400">
-                        For Information
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">No approval required</td>
-                      <td className="border border-white/10 px-3 py-2">File for record</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Submittal register contents:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Unique reference number:</strong> Sequential numbering system (e.g.,
+                SUB-E-001)
+              </li>
+              <li>
+                <strong>Specification clause:</strong> Reference to relevant specification section
+              </li>
+              <li>
+                <strong>Description:</strong> Clear description of material or equipment
+              </li>
+              <li>
+                <strong>Submission date:</strong> Date submittal was issued for review
+              </li>
+              <li>
+                <strong>Required date:</strong> Date approval is needed for procurement
+              </li>
+              <li>
+                <strong>Revision number:</strong> Track resubmissions (Rev A, B, C)
+              </li>
+              <li>
+                <strong>Status:</strong> Current approval status
+              </li>
+            </ul>
+            <p>
+              <strong>Approval status categories:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Approved:</strong> Fully compliant, no changes — Proceed with procurement
+              </li>
+              <li>
+                <strong>Approved as Noted:</strong> Acceptable with comments — Incorporate comments,
+                then proceed
+              </li>
+              <li>
+                <strong>Revise and Resubmit:</strong> Changes required — Address comments, resubmit
+              </li>
+              <li>
+                <strong>Rejected:</strong> Does not meet specification — Submit compliant
+                alternative
+              </li>
+              <li>
+                <strong>For Information:</strong> No approval required — File for record
+              </li>
+            </ul>
+            <p>
               <strong>Programme impact:</strong> Allow 7-14 days for review. Factor submittal
               approval into procurement lead times.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Technical Data Sheets and Documentation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Technical Data Sheets and Documentation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Technical Data Sheets and Documentation">
             <p>
               Technical data sheets form the documentary evidence that proposed materials and
               equipment comply with specification requirements. Complete and accurate documentation
               is essential for efficient review and approval.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Electrical Equipment Data
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Rated voltage and current</li>
-                  <li className="pl-1">IP rating (ingress protection)</li>
-                  <li className="pl-1">Fault rating (kA)</li>
-                  <li className="pl-1">Operating temperature range</li>
-                  <li className="pl-1">Compliance certifications (BS/EN)</li>
-                  <li className="pl-1">CE/UKCA marking documentation</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Luminaire Data</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Photometric data (IES/LDT files)</li>
-                  <li className="pl-1">Lumen output and efficacy</li>
-                  <li className="pl-1">Colour temperature (CCT)</li>
-                  <li className="pl-1">Colour rendering index (CRI)</li>
-                  <li className="pl-1">Emergency conversion options</li>
-                  <li className="pl-1">DALI/control compatibility</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Required Submittal Documentation
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Document Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">When Required</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Product data sheet</td>
-                      <td className="border border-white/10 px-3 py-2">Technical specifications</td>
-                      <td className="border border-white/10 px-3 py-2">All equipment</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Declaration of conformity
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Regulatory compliance</td>
-                      <td className="border border-white/10 px-3 py-2">All CE/UKCA marked items</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Test certificates</td>
-                      <td className="border border-white/10 px-3 py-2">Third-party verification</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Switchgear, cables, containment
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Installation instructions
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Correct installation method
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">All equipment</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Maintenance schedule</td>
-                      <td className="border border-white/10 px-3 py-2">Lifecycle requirements</td>
-                      <td className="border border-white/10 px-3 py-2">Major plant items</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Warranty terms</td>
-                      <td className="border border-white/10 px-3 py-2">Guarantee conditions</td>
-                      <td className="border border-white/10 px-3 py-2">As specified</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Electrical equipment data:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Rated voltage and current</li>
+              <li>IP rating (ingress protection)</li>
+              <li>Fault rating (kA)</li>
+              <li>Operating temperature range</li>
+              <li>Compliance certifications (BS/EN)</li>
+              <li>CE/UKCA marking documentation</li>
+            </ul>
+            <p>
+              <strong>Luminaire data:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Photometric data (IES/LDT files)</li>
+              <li>Lumen output and efficacy</li>
+              <li>Colour temperature (CCT)</li>
+              <li>Colour rendering index (CRI)</li>
+              <li>Emergency conversion options</li>
+              <li>DALI/control compatibility</li>
+            </ul>
+            <p>
+              <strong>Required submittal documentation:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Product data sheet:</strong> Technical specifications — All equipment
+              </li>
+              <li>
+                <strong>Declaration of conformity:</strong> Regulatory compliance — All CE/UKCA
+                marked items
+              </li>
+              <li>
+                <strong>Test certificates:</strong> Third-party verification — Switchgear, cables,
+                containment
+              </li>
+              <li>
+                <strong>Installation instructions:</strong> Correct installation method — All
+                equipment
+              </li>
+              <li>
+                <strong>Maintenance schedule:</strong> Lifecycle requirements — Major plant items
+              </li>
+              <li>
+                <strong>Warranty terms:</strong> Guarantee conditions — As specified
+              </li>
+            </ul>
+            <p>
               <strong>Best practice:</strong> Compile all documentation into a single PDF with clear
               indexing. Highlight specification compliance on each data sheet.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Sample Approval and Mock-ups */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Sample Approval and Mock-ups
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Sample Approval and Mock-ups">
             <p>
               Physical samples and mock-up installations provide tangible verification of quality
               standards that cannot be fully assessed from documentation alone. They establish the
               benchmark against which all subsequent work will be measured.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Sample Approval Process</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Step 1:</strong> Submit sample with data sheet and specification reference
-                </li>
-                <li className="pl-1">
-                  <strong>Step 2:</strong> Client/engineer inspects for colour, finish, and quality
-                </li>
-                <li className="pl-1">
-                  <strong>Step 3:</strong> Written approval or comments issued
-                </li>
-                <li className="pl-1">
-                  <strong>Step 4:</strong> Approved sample retained as project benchmark
-                </li>
-                <li className="pl-1">
-                  <strong>Step 5:</strong> Delivered materials compared against approved sample
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Mock-up Requirements
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Cable Containment</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>3m minimum run of each type</li>
-                    <li>Include bends, tees, and crossings</li>
-                    <li>Earthing bonding connections</li>
-                    <li>Support bracket spacing</li>
-                    <li>Lid and cover alignment</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Feature Lighting</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Full luminaire with trim/bezel</li>
-                    <li>Ceiling integration detail</li>
-                    <li>Light output demonstration</li>
-                    <li>Control dimming range</li>
-                    <li>Emergency function (if applicable)</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Mock-up Approval Checklist
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Location:</strong> Representative of final installation conditions
-                </li>
-                <li className="pl-1">
-                  <strong>Coordination:</strong> Other trades' interfaces included
-                </li>
-                <li className="pl-1">
-                  <strong>Documentation:</strong> Photographic record before and after approval
-                </li>
-                <li className="pl-1">
-                  <strong>Sign-off:</strong> Written approval from client representative
-                </li>
-                <li className="pl-1">
-                  <strong>Retention:</strong> Mock-up retained until bulk installation accepted
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Sample approval process:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Step 1:</strong> Submit sample with data sheet and specification reference
+              </li>
+              <li>
+                <strong>Step 2:</strong> Client/engineer inspects for colour, finish, and quality
+              </li>
+              <li>
+                <strong>Step 3:</strong> Written approval or comments issued
+              </li>
+              <li>
+                <strong>Step 4:</strong> Approved sample retained as project benchmark
+              </li>
+              <li>
+                <strong>Step 5:</strong> Delivered materials compared against approved sample
+              </li>
+            </ul>
+            <p>
+              <strong>Typical mock-up — cable containment:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>3m minimum run of each type</li>
+              <li>Include bends, tees, and crossings</li>
+              <li>Earthing bonding connections</li>
+              <li>Support bracket spacing</li>
+              <li>Lid and cover alignment</li>
+            </ul>
+            <p>
+              <strong>Typical mock-up — feature lighting:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Full luminaire with trim/bezel</li>
+              <li>Ceiling integration detail</li>
+              <li>Light output demonstration</li>
+              <li>Control dimming range</li>
+              <li>Emergency function (if applicable)</li>
+            </ul>
+            <p>
+              <strong>Mock-up approval checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Location:</strong> Representative of final installation conditions
+              </li>
+              <li>
+                <strong>Coordination:</strong> Other trades' interfaces included
+              </li>
+              <li>
+                <strong>Documentation:</strong> Photographic record before and after approval
+              </li>
+              <li>
+                <strong>Sign-off:</strong> Written approval from client representative
+              </li>
+              <li>
+                <strong>Retention:</strong> Mock-up retained until bulk installation accepted
+              </li>
+            </ul>
+            <p>
               <strong>Commercial consideration:</strong> Where mock-ups form part of the permanent
               works, coordinate location to avoid abortive work and double handling.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Alternative Products and Specification Compliance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Alternative Products and Specification Compliance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Alternative Products and Specification Compliance">
             <p>
               When specified products are unavailable or the contractor wishes to propose
               alternatives, a formal substitution process ensures that replacement items meet or
               exceed the original specification requirements.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Substitution Request Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Reason for substitution (cost, availability, improved performance)
-                </li>
-                <li className="pl-1">Side-by-side comparison of technical specifications</li>
-                <li className="pl-1">Evidence of equal or better performance</li>
-                <li className="pl-1">Compliance with same standards and regulations</li>
-                <li className="pl-1">Impact on warranties and guarantees</li>
-                <li className="pl-1">Cost implication (saving or additional)</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Specification Compliance Verification
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Parameter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Specified</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Proposed</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Compliance</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">IP rating</td>
-                      <td className="border border-white/10 px-3 py-2">IP65</td>
-                      <td className="border border-white/10 px-3 py-2">IP66</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">Exceeds</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lumen output</td>
-                      <td className="border border-white/10 px-3 py-2">3000lm</td>
-                      <td className="border border-white/10 px-3 py-2">3100lm</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">Exceeds</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Colour temp</td>
-                      <td className="border border-white/10 px-3 py-2">4000K</td>
-                      <td className="border border-white/10 px-3 py-2">4000K</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">Meets</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CRI</td>
-                      <td className="border border-white/10 px-3 py-2">{'>'}90</td>
-                      <td className="border border-white/10 px-3 py-2">85</td>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">Below spec</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Warranty</td>
-                      <td className="border border-white/10 px-3 py-2">5 years</td>
-                      <td className="border border-white/10 px-3 py-2">5 years</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">Meets</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-2">
-                Example comparison table - CRI below specification would likely result in rejection
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Approved Status Tracking
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Approved products list:</strong> Maintained and updated throughout project
-                </li>
-                <li className="pl-1">
-                  <strong>Distribution:</strong> Issued to procurement, site teams, and QA manager
-                </li>
-                <li className="pl-1">
-                  <strong>Goods receipt:</strong> Check delivered materials against approved list
-                </li>
-                <li className="pl-1">
-                  <strong>Traceability:</strong> Retain batch numbers and delivery records
-                </li>
-                <li className="pl-1">
-                  <strong>Change control:</strong> Any changes require re-approval process
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Substitution request requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Reason for substitution (cost, availability, improved performance)</li>
+              <li>Side-by-side comparison of technical specifications</li>
+              <li>Evidence of equal or better performance</li>
+              <li>Compliance with same standards and regulations</li>
+              <li>Impact on warranties and guarantees</li>
+              <li>Cost implication (saving or additional)</li>
+            </ul>
+            <p>
+              <strong>Specification compliance verification — example:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>IP rating:</strong> Specified IP65 — Proposed IP66 — Exceeds
+              </li>
+              <li>
+                <strong>Lumen output:</strong> Specified 3000lm — Proposed 3100lm — Exceeds
+              </li>
+              <li>
+                <strong>Colour temp:</strong> Specified 4000K — Proposed 4000K — Meets
+              </li>
+              <li>
+                <strong>CRI:</strong> Specified &gt;90 — Proposed 85 — Below spec
+              </li>
+              <li>
+                <strong>Warranty:</strong> Specified 5 years — Proposed 5 years — Meets
+              </li>
+              <li>Example: CRI below specification would likely result in rejection</li>
+            </ul>
+            <p>
+              <strong>Approved status tracking:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Approved products list:</strong> Maintained and updated throughout project
+              </li>
+              <li>
+                <strong>Distribution:</strong> Issued to procurement, site teams, and QA manager
+              </li>
+              <li>
+                <strong>Goods receipt:</strong> Check delivered materials against approved list
+              </li>
+              <li>
+                <strong>Traceability:</strong> Retain batch numbers and delivery records
+              </li>
+              <li>
+                <strong>Change control:</strong> Any changes require re-approval process
+              </li>
+            </ul>
+            <p>
               <strong>Key principle:</strong> Never install materials without prior approval. The
               cost of removal always exceeds the cost of waiting for approval.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — Managing a rejected submittal:</strong> Cable tray submittal
+              rejected - specified perforated base but submitted solid base.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Review rejection comments carefully</li>
+              <li>Identify correct product from same manufacturer (perforated variant)</li>
+              <li>Prepare revised submittal (Rev B) with correct data sheet</li>
+              <li>Submittal cover sheet notes: "Resubmission addressing rejection comments.</li>
+              <li>Now submitting perforated cable tray per specification</li>
+              <li>clause 5.2.3. See highlighted compliance on data sheet."</li>
+              <li>
+                <strong>Action:</strong> Submit within 3 working days to maintain programme
+              </li>
+            </ul>
+            <p>
+              <strong>Example 2 — Substitution request:</strong> Specified distribution board has
+              16-week lead time; alternative available in 4 weeks.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Specified:</strong> Manufacturer A, Type DB-250
+              </li>
+              <li>
+                <strong>Proposed:</strong> Manufacturer B, Type PowerBoard-250
+              </li>
+              <li>
+                <strong>Reason:</strong> Lead time reduction (16 weeks to 4 weeks)
+              </li>
+              <li>Same fault rating (25kA)</li>
+              <li>Same IP rating (IP41)</li>
+              <li>Compatible outgoing ways</li>
+              <li>Both BS EN 61439 compliant</li>
+              <li>
+                <strong>Cost impact:</strong> +£450 per board (6 boards = £2,700)
+              </li>
+              <li>
+                <strong>Action:</strong> Submit with programme showing critical path impact
+              </li>
+            </ul>
+            <p>
+              <strong>Example 3 — Mock-up coordination:</strong> Exposed stainless steel containment
+              in reception area requires mock-up approval.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>4m straight run with support brackets at 1.2m centres</li>
+              <li>One 90° bend with radius piece</li>
+              <li>One tee junction</li>
+              <li>Earth bonding at each joint</li>
+              <li>
+                <strong>Location:</strong> Plant room corridor (not visible in final scheme)
+              </li>
+              <li>
+                <strong>Witness inspection — Architect:</strong> finish and alignment
+              </li>
+              <li>
+                <strong>Witness inspection — M&E Engineer:</strong> technical compliance
+              </li>
+              <li>
+                <strong>Witness inspection — Client:</strong> overall acceptance
+              </li>
+              <li>
+                <strong>Action:</strong> Photograph and file approval signatures before bulk install
+              </li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Managing a Rejected Submittal
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Cable tray submittal rejected - specified perforated base
-                but submitted solid base.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>1. Review rejection comments carefully</p>
-                <p>2. Identify correct product from same manufacturer (perforated variant)</p>
-                <p>3. Prepare revised submittal (Rev B) with correct data sheet</p>
-                <p className="mt-2">Submittal cover sheet notes:</p>
-                <p className="text-white">"Resubmission addressing rejection comments.</p>
-                <p className="text-white">
-                  Now submitting perforated cable tray per specification
-                </p>
-                <p className="text-white">
-                  clause 5.2.3. See highlighted compliance on data sheet."
-                </p>
-                <p className="mt-2 text-green-400">
-                  → Submit within 3 working days to maintain programme
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Substitution Request
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Specified distribution board has 16-week lead time;
-                alternative available in 4 weeks.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Substitution Request Form:</p>
-                <p className="mt-2">
-                  <span className="text-white">Specified:</span> Manufacturer A, Type DB-250
-                </p>
-                <p>
-                  <span className="text-white">Proposed:</span> Manufacturer B, Type
-                  PowerBoard-250
-                </p>
-                <p>
-                  <span className="text-white">Reason:</span> Lead time reduction (16 weeks to 4
-                  weeks)
-                </p>
-                <p className="mt-2">Technical comparison attached showing:</p>
-                <p>- Same fault rating (25kA)</p>
-                <p>- Same IP rating (IP41)</p>
-                <p>- Compatible outgoing ways</p>
-                <p>- Both BS EN 61439 compliant</p>
-                <p className="mt-2">
-                  <span className="text-white">Cost impact:</span> +£450 per board (6 boards =
-                  £2,700)
-                </p>
-                <p className="mt-2 text-green-400">
-                  → Submit with programme showing critical path impact
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Submittal preparation checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Reference the specification clause requiring the submittal</li>
+              <li>Include complete product data sheets (not just brochures)</li>
+              <li>Highlight compliance with each specification requirement</li>
+              <li>Attach all relevant certificates and test reports</li>
+              <li>Include installation and maintenance information</li>
+              <li>Submit as searchable PDF with clear indexing</li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Review period: <strong>7-14 days</strong> (check contract)
+              </li>
+              <li>
+                Resubmission target: <strong>3-5 working days</strong>
+              </li>
+              <li>
+                Sample retention: <strong>Until bulk installation accepted</strong>
+              </li>
+              <li>
+                Record retention: <strong>Through defects liability period</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Mock-up Coordination
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Exposed stainless steel containment in reception area
-                requires mock-up approval.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Mock-up scope:</p>
-                <p>- 4m straight run with support brackets at 1.2m centres</p>
-                <p>- One 90° bend with radius piece</p>
-                <p>- One tee junction</p>
-                <p>- Earth bonding at each joint</p>
-                <p className="mt-2">Location: Plant room corridor (not visible in final scheme)</p>
-                <p className="mt-2">Witness inspection:</p>
-                <p>- Architect: finish and alignment</p>
-                <p>- M&E Engineer: technical compliance</p>
-                <p>- Client: overall acceptance</p>
-                <p className="mt-2 text-green-400">
-                  → Photograph and file approval signatures before bulk install
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Submittal Preparation Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Reference the specification clause requiring the submittal</li>
-                <li className="pl-1">Include complete product data sheets (not just brochures)</li>
-                <li className="pl-1">Highlight compliance with each specification requirement</li>
-                <li className="pl-1">Attach all relevant certificates and test reports</li>
-                <li className="pl-1">Include installation and maintenance information</li>
-                <li className="pl-1">Submit as searchable PDF with clear indexing</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Review period: <strong>7-14 days</strong> (check contract)
-                </li>
-                <li className="pl-1">
-                  Resubmission target: <strong>3-5 working days</strong>
-                </li>
-                <li className="pl-1">
-                  Sample retention: <strong>Until bulk installation accepted</strong>
-                </li>
-                <li className="pl-1">
-                  Record retention: <strong>Through defects liability period</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Submitting marketing brochures</strong> — Use technical data sheets
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Not referencing specification</strong> — Always cite the clause
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Installing before approval</strong> — Risk of costly removal
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring approval conditions</strong> — 'Approved as noted' means action
                   required
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Poor record keeping</strong> — Maintain complete audit trail
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Submit technical data sheets (not brochures) cited against the spec clause, wait for written approval before installing, action all 'approved as noted' comments, and keep the submittal register live throughout the job."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Unapproved switchgear installed — full removal demanded"
+            situation={
+              <>
+                The electrical sub orders LV switchgear from an alternative manufacturer to the specified one because of lead time. They do not submit for approval. The switchgear arrives, is installed and is energised. At witness testing, the design team identifies the switchgear is non-compliant — short-circuit rating below specification. The client demands removal and replacement.
+              </>
+            }
+            whatToDo={
+              <>
+                Confirm the contractual position: installing non-approved equipment is a defect; the cost of removal, replacement and re-installation is the subcontractor's. Issue an NCR. Audit the supply chain to find any other unapproved substitutions. Re-brief the entire site team and supply chain on the submittal process — no order placed without approved submittal. Update the procurement procedure to require approved submittal as a gate before purchase order release.
+              </>
+            }
+            whyItMatters={
+              <>
+                Submittal discipline is what keeps the client's building compliant with the specification, BS 7671 and the contract. A bypassed submittal is not a process irritation — it is a contractual breach with cost consequences. Better the lead-time impact of waiting for approval than the cost-and-programme impact of rip-out.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Submittal Process</p>
-                <ul className="space-y-0.5">
-                  <li>Maintain comprehensive submittal register</li>
-                  <li>Include spec reference and compliance evidence</li>
-                  <li>Allow 7-14 days for review</li>
-                  <li>Track status and revision history</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Samples and Mock-ups</p>
-                <ul className="space-y-0.5">
-                  <li>Physical verification of quality standards</li>
-                  <li>Written approval required before bulk install</li>
-                  <li>Retain as benchmark throughout project</li>
-                  <li>Photograph and document approval</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+                    <KeyTakeaways
+            points={[
+              "Submittal = product data, cut sheets, schedules, samples for design team review against spec.",
+              "Approval status: approved / approved as noted / rejected — never \"noted\" or \"received\".",
+              "Long-lead items prioritised — approval + manufacture + delivery must fit programme.",
+              "Mock-ups for visible elements installed, approved, then rolled out at scale.",
+              "Non-approved equipment installed = NCR + removal + re-installation at contractor cost.",
+              "BS 7671 Reg 511.1 requires equipment compliance with relevant standards, documented.",
+              "Submittal register tracks every item: status, dates, comments, resolution.",
+              "Procurement gate: no PO released until submittal approved (or risk-based exception logged).",
+            ]}
+          />
+
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section4-4">
-              Next: Testing and Commissioning
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section4')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Quality management
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section4-4')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Installation quality
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

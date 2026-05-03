@@ -1,8 +1,21 @@
-import { ArrowLeft, Shield, CheckCircle, AlertTriangle, Thermometer, Zap } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 8 · Section 4 · Subsection 4 — Motor Protection
+ * HNC Electrical Engineering for Building Services (HVAC Systems)
+ *   Comprehensive protection systems for HVAC motors: overload, phase failure, earth fault and thermistor protection
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Motor Protection - HNC Module 8 Section 4.4 | HVAC Systems';
@@ -250,961 +263,345 @@ const faqs = [
 ];
 
 const HNCModule8Section4_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section4")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module8-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
+
+          <PageHero
+            eyebrow="Module 8 · Section 4 · Subsection 4"
+            title="Motor Protection"
+            description="Comprehensive protection systems for HVAC motors: overload, phase failure, earth fault and thermistor protection"
+            tone="purple"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Explain thermal and electronic overload relay operation",
+              "Select appropriate overload class for motor applications",
+              "Understand phase failure and phase reversal protection",
+              "Apply thermistor protection using PTC and NTC sensors",
+              "Design earth fault protection for motor circuits",
+              "Specify motor protection relays to BS 7671 requirements",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Overload Protection">
+            <p>Overload protection prevents motor damage from sustained overcurrent conditions that cause excessive winding temperatures. Unlike short-circuit protection, overload devices have intentional time delays to permit normal motor starting currents.</p>
+            <p><strong>Thermal Overload Relays</strong></p>
+            <p>Thermal overload relays use bimetallic strips heated by motor current. As current increases, the strips bend until they trip the relay contacts. This provides an inverse-time characteristic that matches motor heating patterns.</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Operation:</strong> Bimetallic strips bend proportionally to I²t heating</li>
+              <li><strong>Reset:</strong> Manual or automatic after cooling period</li>
+              <li><strong>Adjustment:</strong> Current dial typically 0.8-1.0× motor FLC</li>
+              <li><strong>Temperature compensation:</strong> Ambient compensated types available</li>
+              <li><strong>Limitations:</strong> Fixed trip class, no phase loss detection</li>
+            </ul>
+            <p><strong>Electronic Overload Relays</strong></p>
+            <p>Electronic overload relays use current transformers and microprocessor control to provide accurate, adjustable protection with additional features not possible with thermal types.</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Current measurement:</strong> True RMS via current transformers</li>
+              <li><strong>Trip class:</strong> Adjustable Class 5, 10, 15, 20, 30</li>
+              <li><strong>Phase loss:</strong> Built-in single-phasing detection</li>
+              <li><strong>Ground fault:</strong> Optional earth leakage monitoring</li>
+              <li><strong>Communications:</strong> Modbus, Profibus for BMS integration</li>
+              <li><strong>Diagnostics:</strong> Trip history, current display, fault logs</li>
+            </ul>
+            <p><strong>Overload Trip Classes</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Class 5:</strong> &lt; 5 seconds — Submersible pumps, quick-start motors</li>
+              <li><strong>Class 10:</strong> &lt; 10 seconds — General purpose, most HVAC applications</li>
+              <li><strong>Class 20:</strong> &lt; 20 seconds — Moderate inertia loads, larger fans</li>
+              <li><strong>Class 30:</strong> &lt; 30 seconds — High inertia, heavy flywheel loads</li>
+            </ul>
+            <p><strong>Setting Overload Relays</strong></p>
+            <p>Set the overload current to the motor nameplate full load current (FLC), not the cable or circuit breaker rating. If the motor FLC is between dial settings, set to the next highest value. Never exceed 1.0× FLC setting unless motor is underloaded.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Phase Failure and Reversal Protection">
+            <p>Three-phase motors are vulnerable to supply faults that can cause rapid overheating or incorrect operation. Phase monitoring relays detect these conditions and prevent motor damage.</p>
+            <p><strong>Single-Phasing (Phase Failure)</strong></p>
+            <p>Single-phasing occurs when one supply phase is lost due to a blown fuse, loose connection, or supply fault. The motor attempts to continue running on two phases with severe consequences.</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Effect:</strong> Remaining windings carry up to 173% normal current</li>
+              <li><strong>Heating:</strong> Localised hotspots cause rapid insulation degradation</li>
+              <li><strong>Torque:</strong> Reduced to approximately 50% of normal</li>
+              <li><strong>Starting:</strong> Motor will not start from rest on two phases</li>
+              <li><strong>Detection:</strong> Current imbalance or negative sequence monitoring</li>
+            </ul>
+            <p><strong>Phase Imbalance</strong></p>
+            <p>Even small voltage imbalances between phases cause disproportionate current imbalances and additional motor heating. Phase monitoring relays can detect this condition.</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>1%:</strong> 6-10% — +2%</li>
+              <li><strong>2%:</strong> 12-20% — +8%</li>
+              <li><strong>3%:</strong> 18-30% — +18%</li>
+              <li><strong>5%:</strong> 30-50% — +50%</li>
+            </ul>
+            <p>Motors should be derated or protected if supply imbalance exceeds 2%</p>
+            <p><strong>Phase Sequence (Reversal) Protection</strong></p>
+            <p>Phase sequence relays ensure the motor rotates in the correct direction by detecting the order of phase voltages. Incorrect sequence prevents the motor from starting.</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Pumps:</strong> Reverse rotation causes cavitation or dry running</li>
+              <li><strong>Fans:</strong> Incorrect airflow direction, reduced efficiency</li>
+              <li><strong>Lifts:</strong> Dangerous incorrect travel direction</li>
+              <li><strong>Conveyors:</strong> Product damage, safety hazards</li>
+              <li><strong>Compressors:</strong> Oil pump failure, bearing damage</li>
+            </ul>
+            <p><strong>Phase Monitoring Relay Functions</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Phase failure (single-phasing)</li>
+              <li>Phase sequence (rotation direction)</li>
+              <li>Phase imbalance (voltage asymmetry)</li>
+              <li>Under/over voltage protection</li>
+              <li>Under/over frequency detection</li>
+            </ul>
+            <p><strong>Typical Settings</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Phase loss: Instant trip</li>
+              <li>Phase imbalance: 5-10% threshold</li>
+              <li>Undervoltage: 85-90% nominal</li>
+              <li>Overvoltage: 105-110% nominal</li>
+              <li>Trip delay: 0.1-10 seconds adjustable</li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Thermistor Protection (PTC and NTC)">
+            <p>Thermistors embedded in motor windings provide direct temperature measurement, detecting overheating regardless of the cause - overload, blocked ventilation, high ambient, or phase imbalance. This is the most reliable form of winding protection.</p>
+            <p><strong>PTC Thermistors (Positive Temperature Coefficient)</strong></p>
+            <p>PTC thermistors exhibit a sharp resistance increase at a specific temperature. Below this point, resistance is low (typically 100-250Ω). Above the switching temperature, resistance increases rapidly to several thousand ohms.</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Normal operation:</strong> Low resistance (50-250Ω per sensor)</li>
+              <li><strong>Trip point:</strong> Sharp increase at rated temperature</li>
+              <li><strong>Tripped state:</strong> High resistance (&gt;3000Ω)</li>
+              <li><strong>Connection:</strong> Three sensors in series to relay</li>
+              <li><strong>Response time:</strong> Relatively slow (seconds to minutes)</li>
+            </ul>
+            <p><strong>PTC Temperature Ratings by Insulation Class</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Class B:</strong> 130°C — 120°C - 125°C</li>
+              <li><strong>Class F:</strong> 155°C — 145°C - 150°C</li>
+              <li><strong>Class H:</strong> 180°C — 170°C - 175°C</li>
+            </ul>
+            <p>PTC sensors trip 5-10°C below maximum to prevent insulation damage</p>
+            <p><strong>NTC Thermistors (Negative Temperature Coefficient)</strong></p>
+            <p>NTC thermistors have gradually decreasing resistance as temperature rises, providing continuous analogue temperature measurement rather than a switching function.</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Characteristic:</strong> Smooth resistance decrease with temperature</li>
+              <li><strong>Use:</strong> Temperature monitoring and display</li>
+              <li><strong>Advantage:</strong> Continuous measurement, trend analysis</li>
+              <li><strong>Application:</strong> BMS integration, predictive maintenance</li>
+              <li><strong>Typical values:</strong> 10kΩ at 25°C, 1-2kΩ at 100°C</li>
+            </ul>
+            <p><strong>Thermistor Relay Operation</strong></p>
+            <p>The thermistor relay monitors total resistance of the series-connected sensors:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Normal:</strong> Total R typically 300-750Ω (3 × 100-250Ω)</li>
+              <li><strong>Pre-warning:</strong> Optional alarm at 1500Ω</li>
+              <li><strong>Trip:</strong> Relay operates above 3000-3600Ω</li>
+              <li><strong>Open circuit:</strong> Infinite R = trips (fail-safe)</li>
+              <li><strong>Short circuit:</strong> Very low R = may trip or alarm</li>
+            </ul>
+            <p><strong>Best practice:</strong> Use thermistor protection in combination with overload relays for comprehensive coverage - thermistors catch slow thermal build-up, overloads catch rapid current increases.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Earth Fault Protection and Motor Protection Relays">
+            <p>Earth fault protection detects insulation breakdown allowing current to flow to earth. Motor protection relays (MPRs) combine multiple protection functions in a single device for comprehensive motor circuit protection.</p>
+            <p><strong>Earth Fault Protection Methods</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>RCDs (Residual Current Devices):</strong> <span> Detect imbalance between line and neutral currents indicating earth leakage. Standard 30mA for personnel protection, 100-300mA for equipment protection. May nuisance trip with VSD harmonic currents. </span></li>
+              <li><strong>Core Balance CT (CBCT):</strong> <span> All phase and neutral conductors pass through a single CT. Any earth fault current creates an imbalance detected by the relay. More suitable for motor circuits than standard RCDs. </span></li>
+              <li><strong>Zero Sequence CT:</strong> <span> Measures the sum of three phase currents. In a balanced system this equals zero. Earth faults create a non-zero sum current proportional to fault severity. </span></li>
+            </ul>
+            <p><strong>BS 7671 Earth Fault Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Personnel protection:</strong> 30mA / 40ms — Socket outlets, portable equipment</li>
+              <li><strong>Fixed equipment:</strong> 100-300mA — Fire protection, motors</li>
+              <li><strong>TT system motors:</strong> ≤1A typically — Based on Ra value</li>
+              <li><strong>VSD applications:</strong> Type B RCD — DC sensitive type required</li>
+            </ul>
+            <p><strong>Motor Protection Relay (MPR) Functions</strong></p>
+            <p>Modern MPRs combine multiple protection functions with programmable settings, fault logging, and communication interfaces. They provide comprehensive motor protection in a single device.</p>
+            <p><strong>Standard Protection Functions</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Thermal overload (49)</li>
+              <li>Phase failure (47)</li>
+              <li>Phase imbalance (46)</li>
+              <li>Earth fault (50N/51N)</li>
+              <li>Undercurrent (37)</li>
+              <li>Stall/locked rotor (51LR)</li>
+            </ul>
+            <p><strong>Advanced Features</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Thermistor input (RTD/PTC)</li>
+              <li>Motor thermal model</li>
+              <li>Starts per hour limiting</li>
+              <li>Power measurement (kW)</li>
+              <li>Modbus/Profibus comms</li>
+              <li>Event and fault logging</li>
+            </ul>
+            <p><strong>Short-Circuit Protection Required</strong></p>
+            <p>Motor protection relays and overload devices do NOT provide short-circuit protection. Fast-acting fuses or MCCBs with adequate breaking capacity must be installed upstream to interrupt fault currents. Verify coordination between short-circuit device and overload relay for proper protection discrimination.</p>
+            <p><strong>Complete Motor Circuit Protection</strong></p>
+            <p>A properly protected motor circuit includes:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Isolator:</strong> For safe maintenance isolation (lockable)</li>
+              <li><strong>Short-circuit protection:</strong> Fuses or MCCB rated for Isc</li>
+              <li><strong>Contactor:</strong> For motor switching, rated for AC-3 duty</li>
+              <li><strong>Overload relay:</strong> Thermal, electronic, or MPR</li>
+              <li><strong>Earth fault:</strong> RCD, CBCT, or built-in to MPR</li>
+              <li><strong>Thermistor protection:</strong> For critical motors</li>
+              <li><strong>Phase monitoring:</strong> Where rotation critical</li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1: Overload Relay Selection</strong>
+            </p>
+            <p><strong>Question:</strong> An AHU supply fan motor is rated 11kW, 400V, FLC 21A, Class F insulation. The fan has moderate inertia and takes 12 seconds to reach full speed. Select appropriate overload protection.</p>
+            <p>Motor FLC: 21A</p>
+            <p>Starting time: 12 seconds (exceeds Class 10 limit)</p>
+            <p>Selection:</p>
+            <p>• Trip class: <strong>Class 20</strong> (allows up to 20s at 7.2× FLC)</p>
+            <p>• Current setting: <strong>21A</strong> (match motor nameplate)</p>
+            <p>• Reset type: Manual (investigate before restart)</p>
+            <p>Consider electronic relay for:</p>
+            <p>• Phase loss detection</p>
+            <p>• BMS communication</p>
+            <p>• Adjustable class if starting varies</p>
+            <p>
+              <strong>Example 2: Thermistor Circuit Verification</strong>
+            </p>
+            <p><strong>Question:</strong> A motor has three PTC thermistors connected in series. During commissioning, the thermistor relay shows total circuit resistance of 720Ω. Is this acceptable?</p>
+            <p>Given: Total resistance = 720Ω with 3 sensors</p>
+            <p>Per sensor: 720 ÷ 3 = <strong>240Ω per thermistor</strong></p>
+            <p>Typical PTC values at ambient:</p>
+            <p>• Normal range: 100-250Ω per sensor</p>
+            <p>• Total normal: 300-750Ω</p>
+            <p>✓ 720Ω is within normal range</p>
+            <p>Warning levels to monitor:</p>
+            <p>• Pre-alarm: {'>'}1500Ω total</p>
+            <p>• Trip: {'>'}3000Ω total</p>
+            <p>Record baseline value for future comparison</p>
+            <p>
+              <strong>Example 3: Earth Fault Setting Calculation</strong>
+            </p>
+            <p><strong>Question:</strong> A 22kW motor on a TT system has earth electrode resistance Ra = 20Ω. What maximum earth fault current setting will ensure disconnection within 0.4s?</p>
+            <p>BS 7671 requirement: Ra × Ia ≤ 50V</p>
+            <p>Where Ia = operating current of protective device</p>
+            <p>Rearranging: Ia ≤ 50V ÷ Ra</p>
+            <p>Ia ≤ 50 ÷ 20 = <strong>2.5A maximum</strong></p>
+            <p>Selection:</p>
+            <p>• Use 300mA RCD (provides safety margin)</p>
+            <p>• Or CBCT with 500mA setting</p>
+            <p>• Verify 0.4s disconnection at calculated current</p>
+            <p>Consider time-delayed RCD to avoid VSD nuisance trips</p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Motor Protection Selection Checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Overload:</strong> Set to motor FLC, select class for starting time</li>
+              <li><strong>Phase failure:</strong> Required for all three-phase motors</li>
+              <li><strong>Phase sequence:</strong> Required where rotation direction critical</li>
+              <li><strong>Earth fault:</strong> Based on system type and application</li>
+              <li><strong>Thermistors:</strong> Recommended for critical motors, required for some</li>
+              <li><strong>Short-circuit:</strong> Always required upstream of overload device</li>
+            </ul>
+            <p>
+              <strong>Commissioning Checks:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Verify overload current matches motor nameplate FLC</li>
+              <li>Confirm trip class appropriate for motor starting time</li>
+              <li>Test phase failure relay by disconnecting one phase (motor stopped)</li>
+              <li>Measure thermistor circuit resistance and record baseline</li>
+              <li>Test RCD/earth fault device using test button</li>
+              <li>Verify phase sequence for correct rotation direction</li>
+              <li>Document all settings and test results</li>
+            </ul>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Wrong current setting:</strong> Using cable or CB rating instead of motor FLC</li>
+                <li><strong>Class too low:</strong> Nuisance trips during normal motor starting</li>
+                <li><strong>No phase protection:</strong> Single-phasing causes rapid motor failure</li>
+                <li><strong>Ignoring thermistors:</strong> Not connecting available motor sensors</li>
+                <li><strong>Wrong RCD type:</strong> Standard RCD with VSD causes nuisance trips</li>
+                <li><strong>Auto reset enabled:</strong> Motor restarts without fault investigation</li>
+              </ul>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
+
+          <SectionRule />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section4-3")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Variable speed drives
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section4-5")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Energy efficiency
+              </div>
+            </button>
+          </div>
+        </PageFrame>
       </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 8.4.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Motor Protection
-          </h1>
-          <p className="text-white">
-            Comprehensive protection systems for HVAC motors: overload, phase failure, earth fault
-            and thermistor protection
-          </p>
-        </header>
-
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Overload:</strong> Thermal or electronic relays prevent winding damage
-              </li>
-              <li className="pl-1">
-                <strong>Phase failure:</strong> Detects single-phasing before motor overheats
-              </li>
-              <li className="pl-1">
-                <strong>Earth fault:</strong> RCDs or dedicated relays for insulation failure
-              </li>
-              <li className="pl-1">
-                <strong>Thermistors:</strong> Direct winding temperature monitoring
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">HVAC Applications</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>AHU fans:</strong> Class 10-20 overload, phase monitoring
-              </li>
-              <li className="pl-1">
-                <strong>Chiller compressors:</strong> Comprehensive MPR protection
-              </li>
-              <li className="pl-1">
-                <strong>Pumps:</strong> Dry-running and overload protection
-              </li>
-              <li className="pl-1">
-                <strong>Cooling towers:</strong> Phase sequence for correct rotation
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Explain thermal and electronic overload relay operation',
-              'Select appropriate overload class for motor applications',
-              'Understand phase failure and phase reversal protection',
-              'Apply thermistor protection using PTC and NTC sensors',
-              'Design earth fault protection for motor circuits',
-              'Specify motor protection relays to BS 7671 requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
-
-        {/* Section 1: Overload Protection */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Overload Protection
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Overload protection prevents motor damage from sustained overcurrent conditions that
-              cause excessive winding temperatures. Unlike short-circuit protection, overload
-              devices have intentional time delays to permit normal motor starting currents.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Thermal Overload Relays
-              </p>
-              <p className="text-sm text-white mb-3">
-                Thermal overload relays use bimetallic strips heated by motor current. As current
-                increases, the strips bend until they trip the relay contacts. This provides an
-                inverse-time characteristic that matches motor heating patterns.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Operation:</strong> Bimetallic strips bend proportionally to I²t heating
-                </li>
-                <li className="pl-1">
-                  <strong>Reset:</strong> Manual or automatic after cooling period
-                </li>
-                <li className="pl-1">
-                  <strong>Adjustment:</strong> Current dial typically 0.8-1.0× motor FLC
-                </li>
-                <li className="pl-1">
-                  <strong>Temperature compensation:</strong> Ambient compensated types available
-                </li>
-                <li className="pl-1">
-                  <strong>Limitations:</strong> Fixed trip class, no phase loss detection
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Electronic Overload Relays
-              </p>
-              <p className="text-sm text-white mb-3">
-                Electronic overload relays use current transformers and microprocessor control to
-                provide accurate, adjustable protection with additional features not possible with
-                thermal types.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Current measurement:</strong> True RMS via current transformers
-                </li>
-                <li className="pl-1">
-                  <strong>Trip class:</strong> Adjustable Class 5, 10, 15, 20, 30
-                </li>
-                <li className="pl-1">
-                  <strong>Phase loss:</strong> Built-in single-phasing detection
-                </li>
-                <li className="pl-1">
-                  <strong>Ground fault:</strong> Optional earth leakage monitoring
-                </li>
-                <li className="pl-1">
-                  <strong>Communications:</strong> Modbus, Profibus for BMS integration
-                </li>
-                <li className="pl-1">
-                  <strong>Diagnostics:</strong> Trip history, current display, fault logs
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Overload Trip Classes</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Class</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Trip Time at 7.2× FLC
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Class 5</td>
-                      <td className="border border-white/10 px-3 py-2">&lt; 5 seconds</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Submersible pumps, quick-start motors
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Class 10</td>
-                      <td className="border border-white/10 px-3 py-2">&lt; 10 seconds</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        General purpose, most HVAC applications
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Class 20</td>
-                      <td className="border border-white/10 px-3 py-2">&lt; 20 seconds</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Moderate inertia loads, larger fans
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Class 30</td>
-                      <td className="border border-white/10 px-3 py-2">&lt; 30 seconds</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High inertia, heavy flywheel loads
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
-              <div className="flex gap-3">
-                <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-sm font-medium text-orange-300 mb-1">
-                    Setting Overload Relays
-                  </p>
-                  <p className="text-sm text-white">
-                    Set the overload current to the motor nameplate full load current (FLC), not the
-                    cable or circuit breaker rating. If the motor FLC is between dial settings, set
-                    to the next highest value. Never exceed 1.0× FLC setting unless motor is
-                    underloaded.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Phase Failure and Reversal Protection */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Phase Failure and Reversal Protection
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Three-phase motors are vulnerable to supply faults that can cause rapid overheating or
-              incorrect operation. Phase monitoring relays detect these conditions and prevent motor
-              damage.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Single-Phasing (Phase Failure)
-              </p>
-              <p className="text-sm text-white mb-3">
-                Single-phasing occurs when one supply phase is lost due to a blown fuse, loose
-                connection, or supply fault. The motor attempts to continue running on two phases
-                with severe consequences.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Effect:</strong> Remaining windings carry up to 173% normal current
-                </li>
-                <li className="pl-1">
-                  <strong>Heating:</strong> Localised hotspots cause rapid insulation degradation
-                </li>
-                <li className="pl-1">
-                  <strong>Torque:</strong> Reduced to approximately 50% of normal
-                </li>
-                <li className="pl-1">
-                  <strong>Starting:</strong> Motor will not start from rest on two phases
-                </li>
-                <li className="pl-1">
-                  <strong>Detection:</strong> Current imbalance or negative sequence monitoring
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Phase Imbalance</p>
-              <p className="text-sm text-white mb-3">
-                Even small voltage imbalances between phases cause disproportionate current
-                imbalances and additional motor heating. Phase monitoring relays can detect this
-                condition.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Voltage Imbalance
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Current Imbalance
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Temperature Rise
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1%</td>
-                      <td className="border border-white/10 px-3 py-2">6-10%</td>
-                      <td className="border border-white/10 px-3 py-2">+2%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2%</td>
-                      <td className="border border-white/10 px-3 py-2">12-20%</td>
-                      <td className="border border-white/10 px-3 py-2">+8%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3%</td>
-                      <td className="border border-white/10 px-3 py-2">18-30%</td>
-                      <td className="border border-white/10 px-3 py-2">+18%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5%</td>
-                      <td className="border border-white/10 px-3 py-2">30-50%</td>
-                      <td className="border border-white/10 px-3 py-2">+50%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-2">
-                Motors should be derated or protected if supply imbalance exceeds 2%
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Phase Sequence (Reversal) Protection
-              </p>
-              <p className="text-sm text-white mb-3">
-                Phase sequence relays ensure the motor rotates in the correct direction by detecting
-                the order of phase voltages. Incorrect sequence prevents the motor from starting.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Pumps:</strong> Reverse rotation causes cavitation or dry running
-                </li>
-                <li className="pl-1">
-                  <strong>Fans:</strong> Incorrect airflow direction, reduced efficiency
-                </li>
-                <li className="pl-1">
-                  <strong>Lifts:</strong> Dangerous incorrect travel direction
-                </li>
-                <li className="pl-1">
-                  <strong>Conveyors:</strong> Product damage, safety hazards
-                </li>
-                <li className="pl-1">
-                  <strong>Compressors:</strong> Oil pump failure, bearing damage
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Phase Monitoring Relay Functions
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Phase failure (single-phasing)</li>
-                  <li className="pl-1">Phase sequence (rotation direction)</li>
-                  <li className="pl-1">Phase imbalance (voltage asymmetry)</li>
-                  <li className="pl-1">Under/over voltage protection</li>
-                  <li className="pl-1">Under/over frequency detection</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Typical Settings</p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Phase loss: Instant trip</li>
-                  <li className="pl-1">Phase imbalance: 5-10% threshold</li>
-                  <li className="pl-1">Undervoltage: 85-90% nominal</li>
-                  <li className="pl-1">Overvoltage: 105-110% nominal</li>
-                  <li className="pl-1">Trip delay: 0.1-10 seconds adjustable</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Thermistor Protection */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Thermistor Protection (PTC and NTC)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Thermistors embedded in motor windings provide direct temperature measurement,
-              detecting overheating regardless of the cause - overload, blocked ventilation, high
-              ambient, or phase imbalance. This is the most reliable form of winding protection.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                PTC Thermistors (Positive Temperature Coefficient)
-              </p>
-              <p className="text-sm text-white mb-3">
-                PTC thermistors exhibit a sharp resistance increase at a specific temperature. Below
-                this point, resistance is low (typically 100-250Ω). Above the switching temperature,
-                resistance increases rapidly to several thousand ohms.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Normal operation:</strong> Low resistance (50-250Ω per sensor)
-                </li>
-                <li className="pl-1">
-                  <strong>Trip point:</strong> Sharp increase at rated temperature
-                </li>
-                <li className="pl-1">
-                  <strong>Tripped state:</strong> High resistance (&gt;3000Ω)
-                </li>
-                <li className="pl-1">
-                  <strong>Connection:</strong> Three sensors in series to relay
-                </li>
-                <li className="pl-1">
-                  <strong>Response time:</strong> Relatively slow (seconds to minutes)
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                PTC Temperature Ratings by Insulation Class
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Insulation Class
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Max Winding Temp
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        PTC Trip Temperature
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Class B</td>
-                      <td className="border border-white/10 px-3 py-2">130°C</td>
-                      <td className="border border-white/10 px-3 py-2">120°C - 125°C</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Class F</td>
-                      <td className="border border-white/10 px-3 py-2">155°C</td>
-                      <td className="border border-white/10 px-3 py-2">145°C - 150°C</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Class H</td>
-                      <td className="border border-white/10 px-3 py-2">180°C</td>
-                      <td className="border border-white/10 px-3 py-2">170°C - 175°C</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-2">
-                PTC sensors trip 5-10°C below maximum to prevent insulation damage
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                NTC Thermistors (Negative Temperature Coefficient)
-              </p>
-              <p className="text-sm text-white mb-3">
-                NTC thermistors have gradually decreasing resistance as temperature rises, providing
-                continuous analogue temperature measurement rather than a switching function.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Characteristic:</strong> Smooth resistance decrease with temperature
-                </li>
-                <li className="pl-1">
-                  <strong>Use:</strong> Temperature monitoring and display
-                </li>
-                <li className="pl-1">
-                  <strong>Advantage:</strong> Continuous measurement, trend analysis
-                </li>
-                <li className="pl-1">
-                  <strong>Application:</strong> BMS integration, predictive maintenance
-                </li>
-                <li className="pl-1">
-                  <strong>Typical values:</strong> 10kΩ at 25°C, 1-2kΩ at 100°C
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <div className="flex items-start gap-3 p-4 rounded-lg bg-white/5">
-                <Thermometer className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">Thermistor Relay Operation</p>
-                  <p className="text-sm text-white mb-2">
-                    The thermistor relay monitors total resistance of the series-connected sensors:
-                  </p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">
-                      <strong>Normal:</strong> Total R typically 300-750Ω (3 × 100-250Ω)
-                    </li>
-                    <li className="pl-1">
-                      <strong>Pre-warning:</strong> Optional alarm at 1500Ω
-                    </li>
-                    <li className="pl-1">
-                      <strong>Trip:</strong> Relay operates above 3000-3600Ω
-                    </li>
-                    <li className="pl-1">
-                      <strong>Open circuit:</strong> Infinite R = trips (fail-safe)
-                    </li>
-                    <li className="pl-1">
-                      <strong>Short circuit:</strong> Very low R = may trip or alarm
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> Use thermistor protection in combination with overload
-              relays for comprehensive coverage - thermistors catch slow thermal build-up, overloads
-              catch rapid current increases.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Earth Fault Protection and Motor Protection Relays */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Earth Fault Protection and Motor Protection Relays
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Earth fault protection detects insulation breakdown allowing current to flow to earth.
-              Motor protection relays (MPRs) combine multiple protection functions in a single
-              device for comprehensive motor circuit protection.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Earth Fault Protection Methods
-              </p>
-              <ul className="text-sm text-white space-y-2 list-none ml-0">
-                <li className="pl-0 p-3 rounded bg-white/5">
-                  <strong className="text-elec-yellow/90">RCDs (Residual Current Devices):</strong>
-                  <span className="text-white block mt-1">
-                    Detect imbalance between line and neutral currents indicating earth leakage.
-                    Standard 30mA for personnel protection, 100-300mA for equipment protection. May
-                    nuisance trip with VSD harmonic currents.
-                  </span>
-                </li>
-                <li className="pl-0 p-3 rounded bg-white/5">
-                  <strong className="text-elec-yellow/90">Core Balance CT (CBCT):</strong>
-                  <span className="text-white block mt-1">
-                    All phase and neutral conductors pass through a single CT. Any earth fault
-                    current creates an imbalance detected by the relay. More suitable for motor
-                    circuits than standard RCDs.
-                  </span>
-                </li>
-                <li className="pl-0 p-3 rounded bg-white/5">
-                  <strong className="text-elec-yellow/90">Zero Sequence CT:</strong>
-                  <span className="text-white block mt-1">
-                    Measures the sum of three phase currents. In a balanced system this equals zero.
-                    Earth faults create a non-zero sum current proportional to fault severity.
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BS 7671 Earth Fault Requirements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Max Earth Fault Rating
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Personnel protection</td>
-                      <td className="border border-white/10 px-3 py-2">30mA / 40ms</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Socket outlets, portable equipment
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fixed equipment</td>
-                      <td className="border border-white/10 px-3 py-2">100-300mA</td>
-                      <td className="border border-white/10 px-3 py-2">Fire protection, motors</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">TT system motors</td>
-                      <td className="border border-white/10 px-3 py-2">≤1A typically</td>
-                      <td className="border border-white/10 px-3 py-2">Based on Ra value</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">VSD applications</td>
-                      <td className="border border-white/10 px-3 py-2">Type B RCD</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        DC sensitive type required
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Motor Protection Relay (MPR) Functions
-              </p>
-              <p className="text-sm text-white mb-3">
-                Modern MPRs combine multiple protection functions with programmable settings, fault
-                logging, and communication interfaces. They provide comprehensive motor protection
-                in a single device.
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-lg bg-white/5">
-                  <p className="text-sm font-medium text-white mb-2">
-                    Standard Protection Functions
-                  </p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Thermal overload (49)</li>
-                    <li className="pl-1">Phase failure (47)</li>
-                    <li className="pl-1">Phase imbalance (46)</li>
-                    <li className="pl-1">Earth fault (50N/51N)</li>
-                    <li className="pl-1">Undercurrent (37)</li>
-                    <li className="pl-1">Stall/locked rotor (51LR)</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded-lg bg-white/5">
-                  <p className="text-sm font-medium text-white mb-2">Advanced Features</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Thermistor input (RTD/PTC)</li>
-                    <li className="pl-1">Motor thermal model</li>
-                    <li className="pl-1">Starts per hour limiting</li>
-                    <li className="pl-1">Power measurement (kW)</li>
-                    <li className="pl-1">Modbus/Profibus comms</li>
-                    <li className="pl-1">Event and fault logging</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
-              <div className="flex gap-3">
-                <Zap className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-sm font-medium text-orange-300 mb-1">
-                    Short-Circuit Protection Required
-                  </p>
-                  <p className="text-sm text-white">
-                    Motor protection relays and overload devices do NOT provide short-circuit
-                    protection. Fast-acting fuses or MCCBs with adequate breaking capacity must be
-                    installed upstream to interrupt fault currents. Verify coordination between
-                    short-circuit device and overload relay for proper protection discrimination.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Complete Motor Circuit Protection
-              </p>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm text-white mb-3">
-                  A properly protected motor circuit includes:
-                </p>
-                <ol className="text-sm text-white space-y-1.5 list-decimal list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Isolator:</strong> For safe maintenance isolation (lockable)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Short-circuit protection:</strong> Fuses or MCCB rated for Isc
-                  </li>
-                  <li className="pl-1">
-                    <strong>Contactor:</strong> For motor switching, rated for AC-3 duty
-                  </li>
-                  <li className="pl-1">
-                    <strong>Overload relay:</strong> Thermal, electronic, or MPR
-                  </li>
-                  <li className="pl-1">
-                    <strong>Earth fault:</strong> RCD, CBCT, or built-in to MPR
-                  </li>
-                  <li className="pl-1">
-                    <strong>Thermistor protection:</strong> For critical motors
-                  </li>
-                  <li className="pl-1">
-                    <strong>Phase monitoring:</strong> Where rotation critical
-                  </li>
-                </ol>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Overload Relay Selection
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> An AHU supply fan motor is rated 11kW, 400V, FLC 21A,
-                Class F insulation. The fan has moderate inertia and takes 12 seconds to reach full
-                speed. Select appropriate overload protection.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Motor FLC: 21A</p>
-                <p>Starting time: 12 seconds (exceeds Class 10 limit)</p>
-                <p className="mt-2">Selection:</p>
-                <p>
-                  • Trip class: <strong>Class 20</strong> (allows up to 20s at 7.2× FLC)
-                </p>
-                <p>
-                  • Current setting: <strong>21A</strong> (match motor nameplate)
-                </p>
-                <p>• Reset type: Manual (investigate before restart)</p>
-                <p className="mt-2">Consider electronic relay for:</p>
-                <p>• Phase loss detection</p>
-                <p>• BMS communication</p>
-                <p>• Adjustable class if starting varies</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Thermistor Circuit Verification
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A motor has three PTC thermistors connected in series.
-                During commissioning, the thermistor relay shows total circuit resistance of 720Ω.
-                Is this acceptable?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Given: Total resistance = 720Ω with 3 sensors</p>
-                <p>
-                  Per sensor: 720 ÷ 3 = <strong>240Ω per thermistor</strong>
-                </p>
-                <p className="mt-2">Typical PTC values at ambient:</p>
-                <p>• Normal range: 100-250Ω per sensor</p>
-                <p>• Total normal: 300-750Ω</p>
-                <p className="mt-2 text-green-400">✓ 720Ω is within normal range</p>
-                <p className="mt-2">Warning levels to monitor:</p>
-                <p>• Pre-alarm: {'>'}1500Ω total</p>
-                <p>• Trip: {'>'}3000Ω total</p>
-                <p className="mt-2 text-white">Record baseline value for future comparison</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Earth Fault Setting Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 22kW motor on a TT system has earth electrode
-                resistance Ra = 20Ω. What maximum earth fault current setting will ensure
-                disconnection within 0.4s?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>BS 7671 requirement: Ra × Ia ≤ 50V</p>
-                <p>Where Ia = operating current of protective device</p>
-                <p className="mt-2">Rearranging: Ia ≤ 50V ÷ Ra</p>
-                <p>
-                  Ia ≤ 50 ÷ 20 = <strong>2.5A maximum</strong>
-                </p>
-                <p className="mt-2">Selection:</p>
-                <p>• Use 300mA RCD (provides safety margin)</p>
-                <p>• Or CBCT with 500mA setting</p>
-                <p>• Verify 0.4s disconnection at calculated current</p>
-                <p className="mt-2 text-white">
-                  Consider time-delayed RCD to avoid VSD nuisance trips
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Motor Protection Selection Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Overload:</strong> Set to motor FLC, select class for starting time
-                </li>
-                <li className="pl-1">
-                  <strong>Phase failure:</strong> Required for all three-phase motors
-                </li>
-                <li className="pl-1">
-                  <strong>Phase sequence:</strong> Required where rotation direction critical
-                </li>
-                <li className="pl-1">
-                  <strong>Earth fault:</strong> Based on system type and application
-                </li>
-                <li className="pl-1">
-                  <strong>Thermistors:</strong> Recommended for critical motors, required for some
-                </li>
-                <li className="pl-1">
-                  <strong>Short-circuit:</strong> Always required upstream of overload device
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Commissioning Checks</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Verify overload current matches motor nameplate FLC</li>
-                <li className="pl-1">Confirm trip class appropriate for motor starting time</li>
-                <li className="pl-1">
-                  Test phase failure relay by disconnecting one phase (motor stopped)
-                </li>
-                <li className="pl-1">Measure thermistor circuit resistance and record baseline</li>
-                <li className="pl-1">Test RCD/earth fault device using test button</li>
-                <li className="pl-1">Verify phase sequence for correct rotation direction</li>
-                <li className="pl-1">Document all settings and test results</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Wrong current setting:</strong> Using cable or CB rating instead of motor
-                  FLC
-                </li>
-                <li className="pl-1">
-                  <strong>Class too low:</strong> Nuisance trips during normal motor starting
-                </li>
-                <li className="pl-1">
-                  <strong>No phase protection:</strong> Single-phasing causes rapid motor failure
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring thermistors:</strong> Not connecting available motor sensors
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong RCD type:</strong> Standard RCD with VSD causes nuisance trips
-                </li>
-                <li className="pl-1">
-                  <strong>Auto reset enabled:</strong> Motor restarts without fault investigation
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Overload Classes</p>
-                <ul className="space-y-0.5">
-                  <li>Class 10: General HVAC, &lt;10s start</li>
-                  <li>Class 20: Moderate inertia, 10-20s start</li>
-                  <li>Class 30: High inertia, 20-30s start</li>
-                  <li>Set current: Motor nameplate FLC</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Thermistor Values</p>
-                <ul className="space-y-0.5">
-                  <li>PTC normal: 100-250Ω per sensor</li>
-                  <li>Trip threshold: &gt;3000Ω total</li>
-                  <li>Class F motor: 145-150°C trip</li>
-                  <li>Open circuit: Fail-safe (trips)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Motor Protection Knowledge Check" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section4-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Variable Speed Drives
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section4-5">
-              Next: Energy Efficiency
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
     </div>
   );
 };

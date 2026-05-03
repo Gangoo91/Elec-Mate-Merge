@@ -58,8 +58,8 @@ export function HubHero({ studentName, courseName, latestVerdict, latestGrade }:
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.2 }}
       >
-        <div className="text-[10px] lg:text-[11px] font-medium uppercase tracking-[0.18em] text-purple-300/85">
-          From your college
+        <div className="text-[10px] lg:text-[11px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+          Apprentice · From your college
         </div>
         <h1 className="mt-1 sm:mt-1.5 text-[22px] sm:text-[28px] lg:text-[40px] font-semibold text-white tracking-tight leading-[1.1]">
           {firstName ? `${firstName}'s college hub` : 'My college hub'}

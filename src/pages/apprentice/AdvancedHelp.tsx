@@ -1,107 +1,89 @@
-import React from 'react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
-import { Card, CardContent } from '@/components/ui/card';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Badge } from '@/components/ui/badge';
-import { Bot, Lightbulb, Sparkles, GraduationCap } from 'lucide-react';
+import {
+  PageFrame,
+  PageHero,
+  itemVariants,
+} from '@/components/college/primitives';
 import DailyAITipsTab from '@/components/apprentice/ojt/enhanced/DailyAITipsTab';
 import HelpBotTab from '@/components/apprentice/ojt/enhanced/HelpBotTab';
 
-const AdvancedHelp = () => {
+export default function AdvancedHelp() {
+  const navigate = useNavigate();
+
   return (
-    <div className="max-w-6xl mx-auto flex flex-col min-h-0 flex-1 h-[calc(100dvh-var(--header-height,56px))] animate-fade-in">
-      {/* Compact Header - Hidden on mobile, visible on desktop */}
-      <div className="hidden sm:block relative overflow-hidden rounded-xl border border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 via-white/5 to-elec-yellow/5 p-6 mb-6">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
 
-        <div className="relative z-10">
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-3">
-              <SmartBackButton />
-              <div className="flex items-center gap-2">
-                <div className="p-2 rounded-lg bg-elec-yellow/20">
-                  <Sparkles className="h-5 w-5 text-elec-yellow" />
-                </div>
-                <h1 className="text-2xl font-bold tracking-tight">AI Study Centre</h1>
-              </div>
-            </div>
-            <Badge
-              variant="outline"
-              className="border-elec-yellow/50 text-elec-yellow text-xs px-2 py-0.5 shrink-0"
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · AI Study Centre"
+          title="Ask Dave, your AI mentor"
+          description="20-year veteran electrical mentor on tap. Get expert guidance on theory, exams, BS 7671 and the things you can't ask your supervisor twice."
+          tone="yellow"
+        />
+      </motion.div>
+
+      <motion.div variants={itemVariants}>
+        <Tabs defaultValue="helpbot" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 h-11 bg-white/[0.04] border border-white/[0.08] rounded-2xl p-1">
+            <TabsTrigger
+              value="helpbot"
+              className="text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black h-9 rounded-xl touch-manipulation"
             >
-              <Bot className="h-3 w-3 mr-1" />
-              AI Enhanced
-            </Badge>
-          </div>
+              Ask Dave
+            </TabsTrigger>
+            <TabsTrigger
+              value="tips"
+              className="text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black h-9 rounded-xl touch-manipulation"
+            >
+              Daily tips
+            </TabsTrigger>
+          </TabsList>
 
-          <p className="text-white text-sm mt-3 max-w-xl">
-            AI-powered learning tools built specifically for UK electrical apprentices. Get expert
-            guidance from Dave, your 20-year veteran electrical mentor.
-          </p>
-        </div>
-      </div>
-
-      {/* Mobile-only minimal header with back button */}
-      <div className="sm:hidden flex items-center gap-2 px-1 py-1.5 shrink-0">
-        <SmartBackButton />
-        <div className="flex items-center gap-1.5">
-          <Sparkles className="h-4 w-4 text-elec-yellow" />
-          <span className="text-sm font-semibold">AI Study Centre</span>
-        </div>
-      </div>
-
-      {/* Main Tabs Section */}
-      <Tabs defaultValue="helpbot" className="w-full flex-1 flex flex-col">
-        <TabsList className="grid w-full grid-cols-2 h-9 sm:h-11 bg-white/5 border border-white/10 rounded-xl">
-          <TabsTrigger
+          <TabsContent
             value="helpbot"
-            className="flex items-center gap-1.5 sm:gap-2 data-[state=active]:bg-elec-yellow/20 data-[state=active]:text-elec-yellow h-7 sm:h-9 rounded-lg touch-manipulation"
+            className="mt-5 sm:mt-6 rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_10%)] overflow-hidden"
           >
-            <Bot className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-            <span className="text-xs sm:text-sm">Ask Dave</span>
-          </TabsTrigger>
-          <TabsTrigger
-            value="tips"
-            className="flex items-center gap-1.5 sm:gap-2 data-[state=active]:bg-elec-yellow/20 data-[state=active]:text-elec-yellow h-7 sm:h-9 rounded-lg touch-manipulation"
-          >
-            <Lightbulb className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-            <span className="text-xs sm:text-sm">Daily Tips</span>
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="helpbot" className="mt-1 sm:mt-4 flex-1 min-h-0">
-          <div className="h-full sm:border sm:border-border/30 sm:rounded-xl sm:overflow-hidden">
             <HelpBotTab />
-          </div>
-        </TabsContent>
+          </TabsContent>
 
-        <TabsContent value="tips" className="mt-1 sm:mt-4">
-          <DailyAITipsTab />
-        </TabsContent>
-      </Tabs>
+          <TabsContent value="tips" className="mt-5 sm:mt-6">
+            <DailyAITipsTab />
+          </TabsContent>
+        </Tabs>
+      </motion.div>
 
-      {/* Footer Note - Hidden on Mobile for Space */}
-      <Card className="hidden sm:block border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">
-        <CardContent className="p-4">
-          <div className="flex items-start gap-3">
-            <div className="p-2 rounded-lg bg-elec-yellow/10 shrink-0">
-              <GraduationCap className="h-5 w-5 text-elec-yellow" />
-            </div>
-            <div>
-              <h3 className="font-medium text-sm text-elec-yellow mb-1">
-                Learning Support, Not Replacement
-              </h3>
-              <p className="text-xs text-white">
-                These AI tools are designed to complement your apprenticeship training, not replace
-                it. Always verify critical information with your supervisor or official
-                documentation.
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+      <motion.div
+        variants={itemVariants}
+        className="rounded-2xl border border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/[0.06] via-amber-500/[0.02] to-transparent px-5 py-4 sm:px-6 sm:py-5"
+      >
+        <div className="flex items-baseline gap-2 mb-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+            Note
+          </span>
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            · Learning support, not replacement
+          </span>
+        </div>
+        <p className="text-[12.5px] leading-relaxed text-white/70 max-w-3xl">
+          These AI tools complement your apprenticeship training — they don't replace it. Always
+          verify safety-critical information with your supervisor or the official BS 7671 / IET
+          guidance.
+        </p>
+      </motion.div>
+    </PageFrame>
   );
-};
-
-export default AdvancedHelp;
+}

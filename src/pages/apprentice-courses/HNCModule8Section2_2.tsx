@@ -1,18 +1,21 @@
-import {
-  ArrowLeft,
-  Box,
-  CheckCircle,
-  Wind,
-  Thermometer,
-  Filter,
-  Volume2,
-  Settings,
-  Zap,
-} from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 8 · Section 2 · Subsection 2 — Air Handling Units
+ * HNC Electrical Engineering for Building Services (HVAC Systems)
+ *   AHU components, configurations, coil selection, filtration and acoustic considerations
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Air Handling Units - HNC Module 8 Section 2.2';
@@ -236,1101 +239,305 @@ const faqs = [
 ];
 
 const HNCModule8Section2_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section2")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module8-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Box className="h-4 w-4" />
-            <span>Module 8.2.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Air Handling Units
-          </h1>
-          <p className="text-white">
-            AHU components, configurations, coil selection, filtration and acoustic considerations
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 8 · Section 2 · Subsection 2"
+            title="Air Handling Units"
+            description="AHU components, configurations, coil selection, filtration and acoustic considerations"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Components:</strong> Dampers, filters, coils, fans, attenuators
-              </li>
-              <li className="pl-1">
-                <strong>Configurations:</strong> Draw-through, blow-through, modular
-              </li>
-              <li className="pl-1">
-                <strong>Filtration:</strong> G4 coarse, F7 fine, HEPA for critical
-              </li>
-              <li className="pl-1">
-                <strong>Electrical:</strong> VSDs, BMS integration, safety interlocks
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Identify and explain the function of all AHU components",
+              "Select appropriate filter grades for different applications",
+              "Understand heating and cooling coil selection criteria",
+              "Specify acoustic treatment for noise control",
+              "Design electrical supplies and control systems for AHUs",
+              "Commission and verify AHU performance against design data",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="AHU Components and Functions">
+            <p>Air Handling Units (AHUs) are factory-assembled enclosures containing components to condition and distribute air for heating, ventilation and air conditioning systems. Understanding each component's function is essential for proper selection, installation and maintenance.</p>
+            <p><strong>Primary AHU Components:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Intake/mixing section:</strong> Fresh air inlet with weather louvres, mixing dampers for recirculated air</li>
+              <li><strong>Filter section:</strong> Pre-filters (G4) and main filters (F7/F9) to remove airborne particles</li>
+              <li><strong>Heating coil:</strong> LTHW, steam, or electric heater battery for air heating</li>
+              <li><strong>Cooling coil:</strong> Chilled water or DX refrigerant coil for cooling and dehumidification</li>
+              <li><strong>Humidifier:</strong> Steam injection or evaporative humidifier for moisture addition</li>
+              <li><strong>Supply fan:</strong> Centrifugal or plug fan to deliver air at required volume and pressure</li>
+              <li><strong>Attenuators:</strong> Acoustic silencers to reduce noise transmission</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Selection:</strong> Based on air volume, heating/cooling loads
-              </li>
-              <li className="pl-1">
-                <strong>Acoustics:</strong> Attenuators critical for occupied spaces
-              </li>
-              <li className="pl-1">
-                <strong>Controls:</strong> Economiser, demand ventilation, frost protection
-              </li>
-              <li className="pl-1">
-                <strong>Compliance:</strong> Part L energy, Part F ventilation rates
-              </li>
+            <p><strong>Component Arrangement - Typical Sequence</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>1:</strong> Intake louvre/damper — Weather protection, isolation, air volume control</li>
+              <li><strong>2:</strong> Mixing box — Blend fresh and recirculated air</li>
+              <li><strong>3:</strong> Pre-filter (G4) — Remove coarse particles, protect main filter</li>
+              <li><strong>4:</strong> Heating coil — Pre-heat (frost protection), main heating</li>
+              <li><strong>5:</strong> Cooling coil — Sensible and latent cooling</li>
+              <li><strong>6:</strong> Droplet eliminator — Prevent condensate carryover</li>
+              <li><strong>7:</strong> Main filter (F7) — Fine particle filtration</li>
+              <li><strong>8:</strong> Supply fan — Air movement at design volume/pressure</li>
+              <li><strong>9:</strong> Attenuator — Noise reduction before distribution</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Damper Types and Applications</strong></p>
+            <p>Volume Control Dampers:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Opposed blade - linear characteristic</li>
+              <li>• Parallel blade - quick acting</li>
+              <li>• Modulating for flow control</li>
+              <li>• Two-position for isolation</li>
+            </ul>
+            <p>Fire and Smoke Dampers:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Fire dampers - fusible link/motorised</li>
+              <li>• Smoke dampers - BMS controlled</li>
+              <li>• Combined fire/smoke dampers</li>
+              <li>• Require regular testing (6/12 monthly)</li>
+            </ul>
+            <p><strong>Design consideration:</strong> AHU component arrangement affects performance and maintenance. Ensure adequate access for filter changes, coil cleaning, and fan belt adjustment. Minimum 600mm clear space is required for service access.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Identify and explain the function of all AHU components',
-              'Select appropriate filter grades for different applications',
-              'Understand heating and cooling coil selection criteria',
-              'Specify acoustic treatment for noise control',
-              'Design electrical supplies and control systems for AHUs',
-              'Commission and verify AHU performance against design data',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: AHU Components */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            AHU Components and Functions
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Air Handling Units (AHUs) are factory-assembled enclosures containing components to
-              condition and distribute air for heating, ventilation and air conditioning systems.
-              Understanding each component's function is essential for proper selection,
-              installation and maintenance.
-            </p>
+          <ConceptBlock title="Heating and Cooling Coil Selection">
+            <p>Coil selection is critical to AHU performance. Heating and cooling coils must be sized to meet design loads whilst maintaining acceptable face velocities and pressure drops. Understanding coil characteristics enables optimal selection.</p>
+            <p><strong>Heating Coils</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>LTHW (low temperature hot water) most common</li>
+              <li>Typical flow temperature: 70-80°C</li>
+              <li>Face velocity: 2.5-3.5 m/s acceptable</li>
+              <li>Steam coils for rapid response</li>
+              <li>Electric heaters for small loads/no pipework</li>
+              <li>Frost coil for outdoor air pre-heat</li>
+            </ul>
+            <p><strong>Cooling Coils</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Chilled water (CHW) most common</li>
+              <li>Typical flow temperature: 6-12°C</li>
+              <li>Face velocity: 2.0-2.5 m/s maximum</li>
+              <li>Direct expansion (DX) for smaller units</li>
+              <li>Condensate drainage essential</li>
+              <li>Droplet eliminator required below dew point</li>
+            </ul>
+            <p><strong>Coil Selection Parameters</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Face velocity:</strong> 2.5-3.5 m/s — 2.0-2.5 m/s</li>
+              <li><strong>Rows typical:</strong> 1-2 rows — 4-8 rows</li>
+              <li><strong>Fin spacing:</strong> 2.5-4 fins/cm — 3-5 fins/cm</li>
+              <li><strong>Pressure drop (air):</strong> 50-100 Pa — 100-200 Pa</li>
+              <li><strong>Water velocity:</strong> 0.5-1.5 m/s — 0.5-1.5 m/s</li>
+            </ul>
+            <p><strong>Coil Capacity Calculation</strong></p>
+            <p>Sensible heat transfer:</p>
+            <p>Q = m × Cp × ΔT</p>
+            <p>Where:</p>
+            <p>Q = Heat transfer rate (kW)</p>
+            <p>m = Mass flow rate of air (kg/s)</p>
+            <p>Cp = Specific heat capacity (1.02 kJ/kg·K for air)</p>
+            <p>ΔT = Temperature difference (K or °C)</p>
+            <p>Example: 2.5 m³/s at 1.2 kg/m³, heating from 10°C to 20°C</p>
+            <p>m = 2.5 × 1.2 = 3.0 kg/s</p>
+            <p>Q = 3.0 × 1.02 × 10 = 30.6 kW</p>
+            <p><strong>Critical Design Considerations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Frost protection:</strong> Pre-heat coil or face/bypass damper for sub-zero outdoor air</li>
+              <li><strong>Condensate:</strong> Cooling coils must drain to trapped condensate line</li>
+              <li><strong>Carryover:</strong> Keep cooling coil face velocity &lt;2.5 m/s to prevent droplet carryover</li>
+              <li><strong>Control valves:</strong> Size for design flow with authority &gt;0.5</li>
+              <li><strong>Water treatment:</strong> Essential to prevent coil fouling and corrosion</li>
+            </ul>
+            <p><strong>Selection tip:</strong> Use manufacturer's selection software for accurate coil sizing. Input design conditions and verify that selected coil meets duty within acceptable pressure drop limits for both air and water sides.</p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Primary AHU Components:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Intake/mixing section:</strong> Fresh air inlet with weather louvres,
-                  mixing dampers for recirculated air
-                </li>
-                <li className="pl-1">
-                  <strong>Filter section:</strong> Pre-filters (G4) and main filters (F7/F9) to
-                  remove airborne particles
-                </li>
-                <li className="pl-1">
-                  <strong>Heating coil:</strong> LTHW, steam, or electric heater battery for air
-                  heating
-                </li>
-                <li className="pl-1">
-                  <strong>Cooling coil:</strong> Chilled water or DX refrigerant coil for cooling
-                  and dehumidification
-                </li>
-                <li className="pl-1">
-                  <strong>Humidifier:</strong> Steam injection or evaporative humidifier for
-                  moisture addition
-                </li>
-                <li className="pl-1">
-                  <strong>Supply fan:</strong> Centrifugal or plug fan to deliver air at required
-                  volume and pressure
-                </li>
-                <li className="pl-1">
-                  <strong>Attenuators:</strong> Acoustic silencers to reduce noise transmission
-                </li>
-              </ul>
-            </div>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Component Arrangement - Typical Sequence
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Position</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Component</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1</td>
-                      <td className="border border-white/10 px-3 py-2">Intake louvre/damper</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Weather protection, isolation, air volume control
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2</td>
-                      <td className="border border-white/10 px-3 py-2">Mixing box</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Blend fresh and recirculated air
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3</td>
-                      <td className="border border-white/10 px-3 py-2">Pre-filter (G4)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Remove coarse particles, protect main filter
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4</td>
-                      <td className="border border-white/10 px-3 py-2">Heating coil</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pre-heat (frost protection), main heating
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5</td>
-                      <td className="border border-white/10 px-3 py-2">Cooling coil</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sensible and latent cooling
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6</td>
-                      <td className="border border-white/10 px-3 py-2">Droplet eliminator</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Prevent condensate carryover
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">7</td>
-                      <td className="border border-white/10 px-3 py-2">Main filter (F7)</td>
-                      <td className="border border-white/10 px-3 py-2">Fine particle filtration</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">8</td>
-                      <td className="border border-white/10 px-3 py-2">Supply fan</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Air movement at design volume/pressure
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">9</td>
-                      <td className="border border-white/10 px-3 py-2">Attenuator</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Noise reduction before distribution
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Damper Types and Applications
-              </p>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-white">Volume Control Dampers:</p>
-                  <ul className="text-white space-y-1 mt-2">
-                    <li>• Opposed blade - linear characteristic</li>
-                    <li>• Parallel blade - quick acting</li>
-                    <li>• Modulating for flow control</li>
-                    <li>• Two-position for isolation</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-white">Fire and Smoke Dampers:</p>
-                  <ul className="text-white space-y-1 mt-2">
-                    <li>• Fire dampers - fusible link/motorised</li>
-                    <li>• Smoke dampers - BMS controlled</li>
-                    <li>• Combined fire/smoke dampers</li>
-                    <li>• Require regular testing (6/12 monthly)</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+          <ConceptBlock title="Filtration Systems and Filter Grades">
+            <p>Air filtration protects building occupants, maintains indoor air quality, and preserves HVAC equipment. Filter selection depends on application requirements, with multi-stage filtration providing optimal performance and economy.</p>
+            <p><strong>Filter Classifications (EN ISO 16890)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>G4:</strong> ISO Coarse &gt;50% — Coarse — Pre-filter, equipment protection</li>
+              <li><strong>F7:</strong> ePM1 50-65% — Fine — Offices, retail, general HVAC</li>
+              <li><strong>F9:</strong> ePM1 &gt;80% — Fine — Healthcare, laboratories</li>
+              <li><strong>H13:</strong> HEPA 99.95% — HEPA — Operating theatres, cleanrooms</li>
+              <li><strong>H14:</strong> HEPA 99.995% — HEPA — Pharmaceutical, aseptic areas</li>
+            </ul>
+            <p><strong>Multi-Stage Filtration Strategy</strong></p>
+            <p><strong>Stage 1: Pre-filter</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• G4 panel or bag filter</li>
+              <li>• Removes coarse particles (&gt;10μm)</li>
+              <li>• Protects main filter</li>
+              <li>• Low cost, easy replacement</li>
+              <li>• Change every 1-3 months</li>
+            </ul>
+            <p><strong>Stage 2: Main Filter</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• F7 or F9 bag/compact filter</li>
+              <li>• Removes fine particles (1-10μm)</li>
+              <li>• Main air quality protection</li>
+              <li>• Higher cost, longer life</li>
+              <li>• Change every 6-12 months</li>
+            </ul>
+            <p><strong>Stage 3: Final Filter</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• HEPA terminal filter</li>
+              <li>• Removes ultrafine particles</li>
+              <li>• Critical applications only</li>
+              <li>• Highest cost</li>
+              <li>• Change every 2-5 years</li>
+            </ul>
+            <p><strong>Application Filter Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Office/retail:</strong> G4 — F7 — -</li>
+              <li><strong>Hospital wards:</strong> G4 — F7/F9 — -</li>
+              <li><strong>Operating theatre:</strong> G4 — F9 — H13/H14</li>
+              <li><strong>Cleanroom ISO 7:</strong> G4 — F9 — H13</li>
+              <li><strong>Cleanroom ISO 5:</strong> G4 — F9 — H14/ULPA</li>
+            </ul>
+            <p><strong>Filter Pressure Drop Monitoring</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Initial pressure drop:</strong> Clean filter pressure drop at design velocity</li>
+              <li><strong>Final pressure drop:</strong> Maximum allowable before replacement (typically 2-3× initial)</li>
+              <li><strong>Differential pressure switch:</strong> Provides alarm when filter approaches final pressure drop</li>
+              <li><strong>BMS integration:</strong> Continuous monitoring enables predictive maintenance</li>
+              <li><strong>Energy impact:</strong> Dirty filters increase fan energy consumption significantly</li>
+            </ul>
+            <p><strong>Maintenance note:</strong> Filter replacement is a significant operational cost. Using pre-filters extends main filter life by 50% or more. Always replace pre-filters before they become fully loaded to protect downstream components.</p>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design consideration:</strong> AHU component arrangement affects performance
-              and maintenance. Ensure adequate access for filter changes, coil cleaning, and fan
-              belt adjustment. Minimum 600mm clear space is required for service access.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 2: Heating and Cooling Coils */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Heating and Cooling Coil Selection
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Coil selection is critical to AHU performance. Heating and cooling coils must be sized
-              to meet design loads whilst maintaining acceptable face velocities and pressure drops.
-              Understanding coil characteristics enables optimal selection.
-            </p>
+          <ConceptBlock title="Acoustic Treatment and Electrical Systems">
+            <p>AHU acoustic treatment and electrical systems are essential for occupant comfort and reliable operation. Noise control must be designed holistically, considering all transmission paths. Electrical systems must provide safe, efficient power distribution with appropriate controls.</p>
+            <p><strong>Acoustic Treatment Components</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Rectangular attenuator:</strong> Ductwork noise reduction — 15-25 dB (frequency dependent)</li>
+              <li><strong>Circular attenuator:</strong> Spigot/branch attenuation — 10-20 dB</li>
+              <li><strong>Acoustic lining:</strong> Ductwork internal absorption — 3-10 dB per metre</li>
+              <li><strong>Flexible connection:</strong> Vibration isolation — Structure-borne break</li>
+              <li><strong>Anti-vibration mounts:</strong> Fan/motor isolation — 85-95% vibration reduction</li>
+            </ul>
+            <p><strong>Noise Transmission Paths</strong></p>
+            <p>Airborne Paths:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Supply ductwork to diffusers</li>
+              <li>• Return ductwork from grilles</li>
+              <li>• AHU casing breakout</li>
+              <li>• Ductwork breakout through walls</li>
+            </ul>
+            <p>Structure-borne Paths:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Fan vibration through mounts</li>
+              <li>• Ductwork connections</li>
+              <li>• Pipework connections</li>
+              <li>• Building structure transmission</li>
+            </ul>
+            <p><strong>AHU Electrical Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Supply fan motor:</strong> 400V 3-phase — Largest electrical load, VSD recommended</li>
+              <li><strong>Extract fan motor:</strong> 400V 3-phase — VSD for VAV systems</li>
+              <li><strong>Control panel:</strong> 230V single-phase — BMS interface, safety circuits</li>
+              <li><strong>Damper actuators:</strong> 24V AC or 230V — Spring-return for fire dampers</li>
+              <li><strong>Electric heater:</strong> 400V 3-phase — SCR control, airflow interlock required</li>
+              <li><strong>Humidifier:</strong> 400V 3-phase — Steam generator has high power demand</li>
+            </ul>
+            <p><strong>Control Panel Requirements</strong></p>
+            <p><strong>Power Components</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Main isolator (lockable)</li>
+              <li>• Motor starters or VSDs</li>
+              <li>• Motor protection (overload, phase loss)</li>
+              <li>• Control circuit transformer</li>
+              <li>• Circuit breakers for auxiliaries</li>
+            </ul>
+            <p><strong>Control Components</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• BMS interface (BACnet/Modbus)</li>
+              <li>• Safety interlock relay</li>
+              <li>• Fire alarm interface</li>
+              <li>• Differential pressure switches</li>
+              <li>• Temperature sensors/transmitters</li>
+            </ul>
+            <p><strong>Safety Interlocks Required</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Airflow proving:</strong> Electric heater disabled without adequate airflow</li>
+              <li><strong>Frost protection:</strong> Coil frost stat stops fan, opens LTHW valve</li>
+              <li><strong>Fire alarm:</strong> Fans stop, fire dampers close on fire signal</li>
+              <li><strong>Smoke detection:</strong> Duct smoke detectors stop AHU</li>
+              <li><strong>Filter alarm:</strong> High differential pressure indicates blocked filter</li>
+              <li><strong>Motor protection:</strong> Overload and phase failure protection</li>
+            </ul>
+            <p><strong>VSD Benefits for AHU Fans</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Energy savings:</strong> Fan power varies with cube of speed (affinity laws)</li>
+              <li><strong>Soft start:</strong> Reduced mechanical stress, no starting current surge</li>
+              <li><strong>Precise control:</strong> Maintain duct pressure or CO₂ setpoint</li>
+              <li><strong>Noise reduction:</strong> Lower speed = lower noise</li>
+              <li><strong>Extended belt life:</strong> Gradual acceleration reduces wear</li>
+            </ul>
+            <p><strong>Commissioning requirement:</strong> All safety interlocks must be tested and witnessed during commissioning. Document test results including: fire alarm response, frost stat operation, filter pressure switch setpoints, and motor protection settings.</p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Heating Coils</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">LTHW (low temperature hot water) most common</li>
-                  <li className="pl-1">Typical flow temperature: 70-80°C</li>
-                  <li className="pl-1">Face velocity: 2.5-3.5 m/s acceptable</li>
-                  <li className="pl-1">Steam coils for rapid response</li>
-                  <li className="pl-1">Electric heaters for small loads/no pipework</li>
-                  <li className="pl-1">Frost coil for outdoor air pre-heat</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cooling Coils</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Chilled water (CHW) most common</li>
-                  <li className="pl-1">Typical flow temperature: 6-12°C</li>
-                  <li className="pl-1">Face velocity: 2.0-2.5 m/s maximum</li>
-                  <li className="pl-1">Direct expansion (DX) for smaller units</li>
-                  <li className="pl-1">Condensate drainage essential</li>
-                  <li className="pl-1">Droplet eliminator required below dew point</li>
-                </ul>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Coil Selection Parameters
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Parameter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Heating Coil</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Cooling Coil</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Face velocity</td>
-                      <td className="border border-white/10 px-3 py-2">2.5-3.5 m/s</td>
-                      <td className="border border-white/10 px-3 py-2">2.0-2.5 m/s</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Rows typical</td>
-                      <td className="border border-white/10 px-3 py-2">1-2 rows</td>
-                      <td className="border border-white/10 px-3 py-2">4-8 rows</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fin spacing</td>
-                      <td className="border border-white/10 px-3 py-2">2.5-4 fins/cm</td>
-                      <td className="border border-white/10 px-3 py-2">3-5 fins/cm</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pressure drop (air)</td>
-                      <td className="border border-white/10 px-3 py-2">50-100 Pa</td>
-                      <td className="border border-white/10 px-3 py-2">100-200 Pa</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Water velocity</td>
-                      <td className="border border-white/10 px-3 py-2">0.5-1.5 m/s</td>
-                      <td className="border border-white/10 px-3 py-2">0.5-1.5 m/s</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Coil Capacity Calculation
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Sensible heat transfer:</p>
-                <p>Q = m × Cp × ΔT</p>
-                <p className="mt-2">Where:</p>
-                <p>Q = Heat transfer rate (kW)</p>
-                <p>m = Mass flow rate of air (kg/s)</p>
-                <p>Cp = Specific heat capacity (1.02 kJ/kg·K for air)</p>
-                <p>ΔT = Temperature difference (K or °C)</p>
-                <p className="mt-2 text-white">
-                  Example: 2.5 m³/s at 1.2 kg/m³, heating from 10°C to 20°C
-                </p>
-                <p>m = 2.5 × 1.2 = 3.0 kg/s</p>
-                <p>Q = 3.0 × 1.02 × 10 = 30.6 kW</p>
-              </div>
-            </div>
+          <FAQ items={faqs} />
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Critical Design Considerations
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Frost protection:</strong> Pre-heat coil or face/bypass damper for
-                  sub-zero outdoor air
-                </li>
-                <li className="pl-1">
-                  <strong>Condensate:</strong> Cooling coils must drain to trapped condensate line
-                </li>
-                <li className="pl-1">
-                  <strong>Carryover:</strong> Keep cooling coil face velocity &lt;2.5 m/s to prevent
-                  droplet carryover
-                </li>
-                <li className="pl-1">
-                  <strong>Control valves:</strong> Size for design flow with authority &gt;0.5
-                </li>
-                <li className="pl-1">
-                  <strong>Water treatment:</strong> Essential to prevent coil fouling and corrosion
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Selection tip:</strong> Use manufacturer's selection software for accurate
-              coil sizing. Input design conditions and verify that selected coil meets duty within
-              acceptable pressure drop limits for both air and water sides.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Filtration */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Filtration Systems and Filter Grades
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Air filtration protects building occupants, maintains indoor air quality, and
-              preserves HVAC equipment. Filter selection depends on application requirements, with
-              multi-stage filtration providing optimal performance and economy.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Filter Classifications (EN ISO 16890)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Old Class</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">ISO 16890</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">G4</td>
-                      <td className="border border-white/10 px-3 py-2">ISO Coarse &gt;50%</td>
-                      <td className="border border-white/10 px-3 py-2">Coarse</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pre-filter, equipment protection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">F7</td>
-                      <td className="border border-white/10 px-3 py-2">ePM1 50-65%</td>
-                      <td className="border border-white/10 px-3 py-2">Fine</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Offices, retail, general HVAC
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">F9</td>
-                      <td className="border border-white/10 px-3 py-2">ePM1 &gt;80%</td>
-                      <td className="border border-white/10 px-3 py-2">Fine</td>
-                      <td className="border border-white/10 px-3 py-2">Healthcare, laboratories</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">H13</td>
-                      <td className="border border-white/10 px-3 py-2">HEPA 99.95%</td>
-                      <td className="border border-white/10 px-3 py-2">HEPA</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Operating theatres, cleanrooms
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">H14</td>
-                      <td className="border border-white/10 px-3 py-2">HEPA 99.995%</td>
-                      <td className="border border-white/10 px-3 py-2">HEPA</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pharmaceutical, aseptic areas
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Multi-Stage Filtration Strategy
-              </p>
-              <div className="grid sm:grid-cols-3 gap-4 text-sm">
-                <div>
-                  <p className="text-white font-medium mb-1">Stage 1: Pre-filter</p>
-                  <ul className="text-white space-y-1">
-                    <li>• G4 panel or bag filter</li>
-                    <li>• Removes coarse particles (&gt;10μm)</li>
-                    <li>• Protects main filter</li>
-                    <li>• Low cost, easy replacement</li>
-                    <li>• Change every 1-3 months</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-white font-medium mb-1">Stage 2: Main Filter</p>
-                  <ul className="text-white space-y-1">
-                    <li>• F7 or F9 bag/compact filter</li>
-                    <li>• Removes fine particles (1-10μm)</li>
-                    <li>• Main air quality protection</li>
-                    <li>• Higher cost, longer life</li>
-                    <li>• Change every 6-12 months</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-white font-medium mb-1">Stage 3: Final Filter</p>
-                  <ul className="text-white space-y-1">
-                    <li>• HEPA terminal filter</li>
-                    <li>• Removes ultrafine particles</li>
-                    <li>• Critical applications only</li>
-                    <li>• Highest cost</li>
-                    <li>• Change every 2-5 years</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Application Filter Requirements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Pre-filter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Main Filter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Terminal</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Office/retail</td>
-                      <td className="border border-white/10 px-3 py-2">G4</td>
-                      <td className="border border-white/10 px-3 py-2">F7</td>
-                      <td className="border border-white/10 px-3 py-2">-</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hospital wards</td>
-                      <td className="border border-white/10 px-3 py-2">G4</td>
-                      <td className="border border-white/10 px-3 py-2">F7/F9</td>
-                      <td className="border border-white/10 px-3 py-2">-</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Operating theatre</td>
-                      <td className="border border-white/10 px-3 py-2">G4</td>
-                      <td className="border border-white/10 px-3 py-2">F9</td>
-                      <td className="border border-white/10 px-3 py-2">H13/H14</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cleanroom ISO 7</td>
-                      <td className="border border-white/10 px-3 py-2">G4</td>
-                      <td className="border border-white/10 px-3 py-2">F9</td>
-                      <td className="border border-white/10 px-3 py-2">H13</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cleanroom ISO 5</td>
-                      <td className="border border-white/10 px-3 py-2">G4</td>
-                      <td className="border border-white/10 px-3 py-2">F9</td>
-                      <td className="border border-white/10 px-3 py-2">H14/ULPA</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Filter Pressure Drop Monitoring
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Initial pressure drop:</strong> Clean filter pressure drop at design
-                  velocity
-                </li>
-                <li className="pl-1">
-                  <strong>Final pressure drop:</strong> Maximum allowable before replacement
-                  (typically 2-3× initial)
-                </li>
-                <li className="pl-1">
-                  <strong>Differential pressure switch:</strong> Provides alarm when filter
-                  approaches final pressure drop
-                </li>
-                <li className="pl-1">
-                  <strong>BMS integration:</strong> Continuous monitoring enables predictive
-                  maintenance
-                </li>
-                <li className="pl-1">
-                  <strong>Energy impact:</strong> Dirty filters increase fan energy consumption
-                  significantly
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Maintenance note:</strong> Filter replacement is a significant operational
-              cost. Using pre-filters extends main filter life by 50% or more. Always replace
-              pre-filters before they become fully loaded to protect downstream components.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Acoustic Considerations and Electrical Requirements */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Acoustic Treatment and Electrical Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              AHU acoustic treatment and electrical systems are essential for occupant comfort and
-              reliable operation. Noise control must be designed holistically, considering all
-              transmission paths. Electrical systems must provide safe, efficient power distribution
-              with appropriate controls.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Acoustic Treatment Components
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Component</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Function</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Attenuation
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Rectangular attenuator</td>
-                      <td className="border border-white/10 px-3 py-2">Ductwork noise reduction</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        15-25 dB (frequency dependent)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Circular attenuator</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Spigot/branch attenuation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">10-20 dB</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Acoustic lining</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ductwork internal absorption
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">3-10 dB per metre</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Flexible connection</td>
-                      <td className="border border-white/10 px-3 py-2">Vibration isolation</td>
-                      <td className="border border-white/10 px-3 py-2">Structure-borne break</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Anti-vibration mounts</td>
-                      <td className="border border-white/10 px-3 py-2">Fan/motor isolation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        85-95% vibration reduction
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Noise Transmission Paths</p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-white">Airborne Paths:</p>
-                  <ul className="text-white space-y-1 mt-2">
-                    <li>• Supply ductwork to diffusers</li>
-                    <li>• Return ductwork from grilles</li>
-                    <li>• AHU casing breakout</li>
-                    <li>• Ductwork breakout through walls</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-white">Structure-borne Paths:</p>
-                  <ul className="text-white space-y-1 mt-2">
-                    <li>• Fan vibration through mounts</li>
-                    <li>• Ductwork connections</li>
-                    <li>• Pipework connections</li>
-                    <li>• Building structure transmission</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                AHU Electrical Requirements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Component</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Supply</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Supply fan motor</td>
-                      <td className="border border-white/10 px-3 py-2">400V 3-phase</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Largest electrical load, VSD recommended
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Extract fan motor</td>
-                      <td className="border border-white/10 px-3 py-2">400V 3-phase</td>
-                      <td className="border border-white/10 px-3 py-2">VSD for VAV systems</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Control panel</td>
-                      <td className="border border-white/10 px-3 py-2">230V single-phase</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        BMS interface, safety circuits
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Damper actuators</td>
-                      <td className="border border-white/10 px-3 py-2">24V AC or 230V</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Spring-return for fire dampers
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Electric heater</td>
-                      <td className="border border-white/10 px-3 py-2">400V 3-phase</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        SCR control, airflow interlock required
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Humidifier</td>
-                      <td className="border border-white/10 px-3 py-2">400V 3-phase</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Steam generator has high power demand
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Control Panel Requirements
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-white font-medium mb-1">Power Components</p>
-                  <ul className="text-white space-y-1">
-                    <li>• Main isolator (lockable)</li>
-                    <li>• Motor starters or VSDs</li>
-                    <li>• Motor protection (overload, phase loss)</li>
-                    <li>• Control circuit transformer</li>
-                    <li>• Circuit breakers for auxiliaries</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-white font-medium mb-1">Control Components</p>
-                  <ul className="text-white space-y-1">
-                    <li>• BMS interface (BACnet/Modbus)</li>
-                    <li>• Safety interlock relay</li>
-                    <li>• Fire alarm interface</li>
-                    <li>• Differential pressure switches</li>
-                    <li>• Temperature sensors/transmitters</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Safety Interlocks Required
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Airflow proving:</strong> Electric heater disabled without adequate
-                  airflow
-                </li>
-                <li className="pl-1">
-                  <strong>Frost protection:</strong> Coil frost stat stops fan, opens LTHW valve
-                </li>
-                <li className="pl-1">
-                  <strong>Fire alarm:</strong> Fans stop, fire dampers close on fire signal
-                </li>
-                <li className="pl-1">
-                  <strong>Smoke detection:</strong> Duct smoke detectors stop AHU
-                </li>
-                <li className="pl-1">
-                  <strong>Filter alarm:</strong> High differential pressure indicates blocked filter
-                </li>
-                <li className="pl-1">
-                  <strong>Motor protection:</strong> Overload and phase failure protection
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-2">VSD Benefits for AHU Fans</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Energy savings:</strong> Fan power varies with cube of speed (affinity
-                  laws)
-                </li>
-                <li className="pl-1">
-                  <strong>Soft start:</strong> Reduced mechanical stress, no starting current surge
-                </li>
-                <li className="pl-1">
-                  <strong>Precise control:</strong> Maintain duct pressure or CO₂ setpoint
-                </li>
-                <li className="pl-1">
-                  <strong>Noise reduction:</strong> Lower speed = lower noise
-                </li>
-                <li className="pl-1">
-                  <strong>Extended belt life:</strong> Gradual acceleration reduces wear
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Commissioning requirement:</strong> All safety interlocks must be tested and
-              witnessed during commissioning. Document test results including: fire alarm response,
-              frost stat operation, filter pressure switch setpoints, and motor protection settings.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* AHU Configurations Section */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">AHU Configurations</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Draw-Through vs Blow-Through
-              </h3>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-white font-medium mb-1">Draw-Through Configuration</p>
-                  <ul className="text-white space-y-1">
-                    <li>• Fan downstream of coils/filters</li>
-                    <li>• Coil section under negative pressure</li>
-                    <li>• More even airflow across coil face</li>
-                    <li>• Fan motor heat added to supply air</li>
-                    <li>• Most common configuration</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-white font-medium mb-1">Blow-Through Configuration</p>
-                  <ul className="text-white space-y-1">
-                    <li>• Fan upstream of coils/filters</li>
-                    <li>• Coil section under positive pressure</li>
-                    <li>• Fan heat absorbed by coils</li>
-                    <li>• Requires stronger filter frames</li>
-                    <li>• Used where precise temperature control needed</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">System Types</h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Constant Volume (CAV)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fixed airflow, variable temperature
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Single zone, simple requirements
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Variable Air Volume (VAV)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Variable airflow via terminal boxes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multi-zone offices, energy efficient
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Dual Duct</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Separate hot and cold ducts, zone mixing
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Laboratories, precise control needed
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Multi-zone</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Zone dampers at AHU, hot/cold decks
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multiple zones from single AHU
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">100% Fresh Air</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        No recirculation, heat recovery
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Laboratories, kitchens, hospitals
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Commissioning Section */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Commissioning Requirements</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Pre-Commissioning Checks
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Verify AHU installation complete and all access panels fitted
-                </li>
-                <li className="pl-1">
-                  Check filter installation - correct grade, secure fitting, no bypass
-                </li>
-                <li className="pl-1">Confirm coil pipework complete, flushed, and filled</li>
-                <li className="pl-1">Verify condensate drainage trapped and connected</li>
-                <li className="pl-1">Check fan belt tension and alignment</li>
-                <li className="pl-1">Confirm all dampers operate freely through full range</li>
-                <li className="pl-1">Verify electrical connections complete, correctly phased</li>
-                <li className="pl-1">Check anti-vibration mounts and flexible connections</li>
-              </ul>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Commissioning Tests</h3>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">AHU Commissioning Record</p>
-                <p className="mt-2">AHU Reference: _____________ Location: _____________</p>
-                <p className="mt-2">Test | Design | Measured | Acceptable</p>
-                <p>-----|--------|----------|----------</p>
-                <p>Supply air volume (m³/s) | _____ | _____ | ±10%</p>
-                <p>Fan total pressure (Pa) | _____ | _____ | ±10%</p>
-                <p>Motor current (A) | _____ | _____ | &lt;FLC</p>
-                <p>Filter ΔP - clean (Pa) | _____ | _____ | Per spec</p>
-                <p>Heating coil on/off (°C) | ___/__ | ___/__ | ±1°C</p>
-                <p>Cooling coil on/off (°C) | ___/__ | ___/__ | ±1°C</p>
-                <p>Fresh air % | _____ | _____ | Per design</p>
-                <p>Noise level (dB(A)) | _____ | _____ | Per spec</p>
-                <p className="mt-2 text-white">
-                  Safety interlocks tested: Fire □ Frost □ Smoke □ Filter □
-                </p>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Verification Points
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Air volume:</strong> Measure at AHU discharge or key branch take-offs
-                </li>
-                <li className="pl-1">
-                  <strong>Fan pressure:</strong> Measure total pressure rise across fan
-                </li>
-                <li className="pl-1">
-                  <strong>Coil performance:</strong> On/off temperatures at design load conditions
-                </li>
-                <li className="pl-1">
-                  <strong>Control response:</strong> Verify BMS setpoints achieve stable control
-                </li>
-                <li className="pl-1">
-                  <strong>Noise:</strong> Sound pressure level in nearest occupied space
-                </li>
-                <li className="pl-1">
-                  <strong>Vibration:</strong> Confirm isolation effective, no transmission
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Filter Grades</p>
-                <ul className="space-y-0.5">
-                  <li>G4 - Coarse (pre-filter)</li>
-                  <li>F7 - Fine (offices, retail)</li>
-                  <li>F9 - Very fine (healthcare)</li>
-                  <li>H13/H14 - HEPA (theatres, cleanrooms)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Coil Face Velocities</p>
-                <ul className="space-y-0.5">
-                  <li>Heating coils: 2.5-3.5 m/s</li>
-                  <li>Cooling coils: 2.0-2.5 m/s max</li>
-                  <li>Higher = more pressure drop</li>
-                  <li>Lower = larger coil face area</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Components</p>
-                <ul className="space-y-0.5">
-                  <li>Dampers (mixing, fire, volume)</li>
-                  <li>Filters (multi-stage)</li>
-                  <li>Coils (heating, cooling)</li>
-                  <li>Fan (supply, extract)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Safety Interlocks</p>
-                <ul className="space-y-0.5">
-                  <li>Airflow proving (electric heater)</li>
-                  <li>Frost protection (coils)</li>
-                  <li>Fire alarm interface</li>
-                  <li>Smoke detection</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex justify-between pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 2
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section2-1")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Ventilation principles
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section2-3")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Fan selection
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

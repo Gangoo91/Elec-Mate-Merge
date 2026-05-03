@@ -769,7 +769,7 @@ export default function Sub3() {
                 combining the AFDD and the RCD function in a single unit.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 421.1.7 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 421.1.7."
           />
 
           <SectionRule />

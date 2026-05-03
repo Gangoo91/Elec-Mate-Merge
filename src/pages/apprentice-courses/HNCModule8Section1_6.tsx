@@ -1,8 +1,21 @@
-import { ArrowLeft, Settings, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 8 · Section 1 · Subsection 6 — System Commissioning
+ * HNC Electrical Engineering for Building Services (HVAC Systems)
+ *   Professional commissioning procedures for heating systems in compliance with BSRIA and Building Regulations
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'System Commissioning - HNC Module 8 Section 1.6';
@@ -253,1059 +266,383 @@ const faqs = [
 ];
 
 const HNCModule8Section1_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section1")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module8-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Settings className="h-4 w-4" />
-            <span>Module 8.1.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            System Commissioning
-          </h1>
-          <p className="text-white">
-            Professional commissioning procedures for heating systems in compliance with BSRIA and
-            Building Regulations
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 8 · Section 1 · Subsection 6"
+            title="System Commissioning"
+            description="Professional commissioning procedures for heating systems in compliance with BSRIA and Building Regulations"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Flushing:</strong> Remove debris at &gt;1.0 m/s velocity
-              </li>
-              <li className="pl-1">
-                <strong>Pressure test:</strong> 1.5x working pressure for 1+ hour
-              </li>
-              <li className="pl-1">
-                <strong>Balancing:</strong> Achieve design flows within +/- 10%
-              </li>
-              <li className="pl-1">
-                <strong>Documentation:</strong> Building log book for Part L compliance
-              </li>
+          <ConceptBlock title="System Flushing and Pre-Commissioning Cleaning">
+            <p>System flushing is a critical pre-commissioning procedure that removes debris, flux residues, jointing compounds and other installation contaminants from pipework before the system is put into service. BSRIA BG 29 provides comprehensive guidance for pre-commissioning cleaning.</p>
+            <p><strong>Why Flushing is Essential</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Debris removal:</strong> Swarf, solder, flux residue and pipe scale can block valves, pumps and heat exchangers</li>
+              <li><strong>Pump protection:</strong> Abrasive particles damage pump impellers and seals</li>
+              <li><strong>Heat transfer:</strong> Deposits reduce heat exchanger efficiency</li>
+              <li><strong>Corrosion prevention:</strong> Flux residues are corrosive and must be removed</li>
+              <li><strong>Warranty compliance:</strong> Many manufacturers require evidence of proper flushing</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Standards</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>BSRIA BG 29:</strong> Pre-commissioning cleaning
-              </li>
-              <li className="pl-1">
-                <strong>BSRIA BG 2:</strong> Commissioning water systems
-              </li>
-              <li className="pl-1">
-                <strong>BS 7593:</strong> Water treatment for heating
-              </li>
-              <li className="pl-1">
-                <strong>Building Regs Part L:</strong> Compliance requirements
-              </li>
+            <p><strong>BSRIA Flushing Procedure</strong></p>
+            <p><strong>Flushing Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Minimum velocity: <strong>1.0 m/s</strong> (preferably 1.5 m/s)</li>
+              <li>Flow must reach all parts of the system</li>
+              <li>Continue until discharge runs clear</li>
+              <li>Isolate sensitive equipment (heat meters, etc.)</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Flushing Methods</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Mains pressure:</strong> For smaller systems if velocity achieved</li>
+              <li><strong>Dedicated flushing pump:</strong> Higher velocities possible</li>
+              <li><strong>Sequential isolation:</strong> Ensures all branches flushed</li>
+              <li><strong>Reverse flow:</strong> Helps dislodge stubborn debris</li>
+            </ul>
+            <p><strong>Flushing Sequence</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Step 1:</strong> Install temporary strainers at pump suctions and before sensitive equipment</li>
+              <li><strong>Step 2:</strong> Connect flushing supply to lowest fill point</li>
+              <li><strong>Step 3:</strong> Open all valves (lockshields, zone valves, TRVs fully open)</li>
+              <li><strong>Step 4:</strong> Flush mains and risers first, then individual branches</li>
+              <li><strong>Step 5:</strong> Continue until discharge water is clear (visually inspect and/or turbidity test)</li>
+              <li><strong>Step 6:</strong> Remove temporary strainers and inspect permanent strainers</li>
+            </ul>
+            <p><strong>Chemical Cleaning</strong></p>
+            <p>For heavily contaminated systems or where water-only flushing is insufficient, chemical cleaning may be required:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Cleaning agent:</strong> Proprietary system cleaner circulated at elevated temperature</li>
+              <li><strong>Contact time:</strong> Follow manufacturer's instructions (typically 1-2 hours)</li>
+              <li><strong>Neutralisation:</strong> Drain, flush thoroughly, test pH before refilling</li>
+              <li><strong>Disposal:</strong> Discharge in accordance with environmental regulations</li>
+            </ul>
+            <p><strong>Documentation:</strong> Record flushing dates, methods used, duration and visual inspection results. Photograph the discharge water at start and end of flushing for evidence of cleanliness achieved.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Apply BSRIA flushing procedures to remove installation debris',
-              'Conduct hydraulic pressure tests to identify leaks',
-              'Implement correct water treatment in accordance with BS 7593',
-              'Balance heating systems to achieve design flow rates',
-              'Perform witnessed performance testing',
-              'Prepare compliant handover documentation for Building Regulations',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 01: System Flushing */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            System Flushing and Pre-Commissioning Cleaning
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Filling, Pressurising and Water Treatment">
+            <p>After successful flushing, the system must be correctly filled, vented, pressure tested and treated with appropriate chemicals. This stage establishes the baseline system integrity and water quality essential for long-term reliable operation.</p>
+            <p><strong>System Filling Procedure</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Fill point:</strong> Connect to lowest point to allow air to rise and escape</li>
+              <li><strong>Fill rate:</strong> Slow enough to allow air venting (avoid air entrainment)</li>
+              <li><strong>Air venting:</strong> Open all manual air vents, check AAVs are functioning</li>
+              <li><strong>Fill pressure:</strong> Target cold fill pressure (typically 1-1.5 bar for domestic, as designed for commercial)</li>
+              <li><strong>Circulation:</strong> Run pump to circulate and release dissolved air</li>
+            </ul>
+            <p><strong>Hydraulic Pressure Testing</strong></p>
+            <p><strong>Test Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Test pressure: <strong>1.5x working pressure</strong> or 3 bar minimum</li>
+              <li>Duration: Minimum <strong>1 hour</strong> (some specs require 2 hours)</li>
+              <li>Acceptable drop: None (allow for temperature effects)</li>
+              <li>Gauge accuracy: Calibrated test gauge required</li>
+            </ul>
+            <p><strong>Test Procedure</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Isolate expansion vessel and PRV</li>
+              <li>Fill system completely (no air)</li>
+              <li>Pressurise using hydraulic test pump</li>
+              <li>Record pressure at start and end</li>
+              <li>Inspect all joints and connections</li>
+            </ul>
+            <p><strong>Water Treatment Requirements (BS 7593)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Corrosion inhibitor:</strong> Essential for all sealed systems to protect ferrous metals</li>
+              <li><strong>Concentration:</strong> Manufacturer's recommended level, verified by on-site test</li>
+              <li><strong>Biocide:</strong> May be required to prevent bacterial growth</li>
+              <li><strong>Scale inhibitor:</strong> In hard water areas to prevent limescale buildup</li>
+              <li><strong>Antifreeze:</strong> Where freeze protection required (e.g., solar thermal, exposed locations)</li>
+            </ul>
+            <p><strong>Water Quality Testing</strong></p>
+            <p>Water quality should be tested and recorded at commissioning and during routine maintenance:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Inhibitor concentration:</strong> Proprietary test kit — Manufacturer's specification</li>
+              <li><strong>pH:</strong> pH strips or meter — 7.5 - 9.0 (typically)</li>
+              <li><strong>Total dissolved solids:</strong> TDS meter — &lt;500 ppm (varies)</li>
+              <li><strong>Appearance:</strong> Visual inspection — Clear, no sediment</li>
+            </ul>
+            <p><strong>Record keeping:</strong> Document all water treatment products used, concentrations achieved and test results. Affix a permanent label to the system stating treatment type and date for future maintenance reference.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="System Balancing to Design Flow Rates">
+            <p>System balancing ensures that each circuit and terminal unit receives its design flow rate, enabling the heating system to deliver the intended heat output to each space. BSRIA BG 2 provides the industry-standard procedures for commissioning water systems.</p>
+            <p><strong>Why Balancing Matters</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Heat distribution:</strong> Without balancing, circuits nearest the pump receive excessive flow while remote circuits are starved</li>
+              <li><strong>Comfort:</strong> Imbalanced systems cause hot and cold spots, leading to occupant complaints</li>
+              <li><strong>Efficiency:</strong> Overflowing circuits waste pump energy; underflowing circuits require higher temperatures</li>
+              <li><strong>Control:</strong> Balanced systems respond predictably to control signals</li>
+            </ul>
+            <p><strong>Balancing Methods</strong></p>
+            <p><strong>Proportional Balancing</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Set index circuit valve fully open</li>
+              <li>Measure flow rate (or calculate from delta-T)</li>
+              <li>Adjust other valves proportionally</li>
+              <li>Work from index towards pump</li>
+              <li>Recheck after all adjustments</li>
+            </ul>
+            <p><strong>PICV (Pressure Independent) Systems</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>PICVs automatically limit flow to set point</li>
+              <li>Set dial to design flow rate</li>
+              <li>No proportional adjustment required</li>
+              <li>Verify flow with measurement device</li>
+              <li>Check differential pressure across PICV</li>
+            </ul>
+            <p><strong>Flow Measurement Methods</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Fixed orifice valves:</strong> Measure differential pressure across orifice, use valve chart to determine flow</li>
+              <li><strong>Ultrasonic flow meter:</strong> Clamp-on device measures flow non-invasively</li>
+              <li><strong>Temperature differential:</strong> Calculate flow from Q = m x Cp x delta-T (requires accurate thermometers)</li>
+              <li><strong>Commissioning sets:</strong> Dedicated valves with integrated measurement ports</li>
+            </ul>
+            <p><strong>Balancing Procedure (Proportional Method)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Step 1:</strong> Identify index circuit (longest run, highest resistance path)</li>
+              <li><strong>Step 2:</strong> Set index circuit regulating valve fully open</li>
+              <li><strong>Step 3:</strong> Set pump to design duty (speed or head)</li>
+              <li><strong>Step 4:</strong> Measure flow rate on index circuit</li>
+              <li><strong>Step 5:</strong> Adjust total system flow to achieve index design flow</li>
+              <li><strong>Step 6:</strong> Working from index towards pump, adjust each valve to achieve proportional flow</li>
+              <li><strong>Step 7:</strong> Recheck all readings after complete balance</li>
+            </ul>
+            <p><strong>Design Flow Rate Calculation</strong></p>
+            <p>Flow rate (l/s) = Heat output (kW) / (Cp x delta-T)</p>
+            <p>Where: Cp = 4.19 kJ/kg.K for water</p>
+            <p>delta-T = Design temperature differential (typically 10-20 degrees C)</p>
+            <p>Example: 10 kW radiator, 20 degrees C differential</p>
+            <p>Flow = 10 / (4.19 x 20) = 0.119 l/s = <strong>7.2 l/min</strong></p>
+            <p><strong>Acceptable Tolerances</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Flow rate:</strong> +/- 10% of design value</li>
+              <li><strong>Temperature differential:</strong> Within design range under load</li>
+              <li><strong>Pump pressure:</strong> Able to achieve design flow at design head</li>
+            </ul>
+            <p><strong>Record all values:</strong> Document design flow rate, measured flow rate, valve position (turns open) and differential pressure for each circuit. These records are essential for future troubleshooting and re-commissioning.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Performance Testing and Handover Documentation">
+            <p>Performance testing verifies that the complete heating system achieves its design intent under realistic operating conditions. Comprehensive handover documentation ensures compliance with Building Regulations and provides the building operator with the information needed for effective ongoing management.</p>
+            <p><strong>Witnessed Performance Testing</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Purpose:</strong> Demonstrate system meets design performance with client/engineer witness</li>
+              <li><strong>Conditions:</strong> Test under realistic load conditions (heating season or artificial load)</li>
+              <li><strong>Parameters:</strong> Temperatures, flow rates, pressures, control response, noise levels</li>
+              <li><strong>Witness:</strong> Client, consulting engineer or clerk of works to sign off results</li>
+            </ul>
+            <p><strong>Performance Test Checklist</strong></p>
+            <p><strong>Heat Generation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Boiler/heat pump firing and modulating correctly</li>
+              <li>Flow and return temperatures as designed</li>
+              <li>Flue gas analysis (combustion appliances)</li>
+              <li>Safety controls functioning (high limit, frost, etc.)</li>
+            </ul>
+            <p><strong>Distribution and Controls</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Pump operating at design duty</li>
+              <li>Zone valves responding to thermostats</li>
+              <li>TRVs modulating correctly</li>
+              <li>BMS/controls operating as programmed</li>
+              <li>Optimiser and compensator functioning</li>
+            </ul>
+            <p><strong>Building Regulations Part L Requirements</strong></p>
+            <p>Part L of the Building Regulations requires heating systems to be commissioned and documented:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Commissioning:</strong> Systems must be commissioned by a competent person</li>
+              <li><strong>Notice:</strong> Building Control must be notified of commissioning completion</li>
+              <li><strong>Certificate:</strong> Commissioning certificate required (domestic: Benchmark, commercial: BSRIA format)</li>
+              <li><strong>Building log book:</strong> Required for commercial buildings with O&M information</li>
+            </ul>
+            <p><strong>Commissioning Records Required</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Pressure test certificate:</strong> Test pressure, duration, result, gauge calibration — Essential</li>
+              <li><strong>Flushing record:</strong> Method, duration, cleanliness achieved — Essential</li>
+              <li><strong>Water treatment record:</strong> Products used, concentrations, test results — Essential (BS 7593)</li>
+              <li><strong>Balancing report:</strong> Design vs achieved flow rates, valve positions — Essential</li>
+              <li><strong>Performance test results:</strong> Witnessed test data, signatures — Commercial projects</li>
+              <li><strong>Control settings:</strong> Set points, schedules, parameters — Essential</li>
+            </ul>
+            <p><strong>Building Log Book Contents</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>As-built drawings:</strong> Showing actual installed equipment and routing</li>
+              <li><strong>Equipment schedules:</strong> Makes, models, serial numbers, ratings</li>
+              <li><strong>O&M manuals:</strong> For all significant plant items</li>
+              <li><strong>Commissioning records:</strong> All test results and certificates</li>
+              <li><strong>Control system documentation:</strong> Descriptions, schematics, programming</li>
+              <li><strong>Maintenance schedules:</strong> Recommended maintenance frequencies and procedures</li>
+              <li><strong>Energy metering:</strong> Meter schedules and reading instructions</li>
+            </ul>
+            <p><strong>Client Training Requirements</strong></p>
+            <p>Handover should include training for building operators:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>System operation:</strong> Normal start-up, shutdown and seasonal changeover</li>
+              <li><strong>Controls:</strong> Setting time schedules, temperatures, operating modes</li>
+              <li><strong>Routine maintenance:</strong> Filter cleaning, pressure checks, visual inspections</li>
+              <li><strong>Fault finding:</strong> Common problems and initial troubleshooting steps</li>
+              <li><strong>Emergency procedures:</strong> Isolation, safety controls, who to contact</li>
+            </ul>
+            <p><strong>Compliance evidence:</strong> Retain copies of all commissioning documentation for a minimum of 6 years (longer for commercial buildings). These records may be required for compliance audits, warranty claims or future system modifications.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              System flushing is a critical pre-commissioning procedure that removes debris, flux
-              residues, jointing compounds and other installation contaminants from pipework before
-              the system is put into service. BSRIA BG 29 provides comprehensive guidance for
-              pre-commissioning cleaning.
+              <strong>Example 1: Calculating Design Flow Rate</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Why Flushing is Essential</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Debris removal:</strong> Swarf, solder, flux residue and pipe scale can
-                  block valves, pumps and heat exchangers
-                </li>
-                <li className="pl-1">
-                  <strong>Pump protection:</strong> Abrasive particles damage pump impellers and
-                  seals
-                </li>
-                <li className="pl-1">
-                  <strong>Heat transfer:</strong> Deposits reduce heat exchanger efficiency
-                </li>
-                <li className="pl-1">
-                  <strong>Corrosion prevention:</strong> Flux residues are corrosive and must be
-                  removed
-                </li>
-                <li className="pl-1">
-                  <strong>Warranty compliance:</strong> Many manufacturers require evidence of
-                  proper flushing
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BSRIA Flushing Procedure
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">Flushing Requirements</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">
-                      Minimum velocity: <strong>1.0 m/s</strong> (preferably 1.5 m/s)
-                    </li>
-                    <li className="pl-1">Flow must reach all parts of the system</li>
-                    <li className="pl-1">Continue until discharge runs clear</li>
-                    <li className="pl-1">Isolate sensitive equipment (heat meters, etc.)</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">Flushing Methods</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">
-                      <strong>Mains pressure:</strong> For smaller systems if velocity achieved
-                    </li>
-                    <li className="pl-1">
-                      <strong>Dedicated flushing pump:</strong> Higher velocities possible
-                    </li>
-                    <li className="pl-1">
-                      <strong>Sequential isolation:</strong> Ensures all branches flushed
-                    </li>
-                    <li className="pl-1">
-                      <strong>Reverse flow:</strong> Helps dislodge stubborn debris
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Flushing Sequence</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Step 1:</strong> Install temporary strainers at pump suctions and before
-                  sensitive equipment
-                </li>
-                <li className="pl-1">
-                  <strong>Step 2:</strong> Connect flushing supply to lowest fill point
-                </li>
-                <li className="pl-1">
-                  <strong>Step 3:</strong> Open all valves (lockshields, zone valves, TRVs fully
-                  open)
-                </li>
-                <li className="pl-1">
-                  <strong>Step 4:</strong> Flush mains and risers first, then individual branches
-                </li>
-                <li className="pl-1">
-                  <strong>Step 5:</strong> Continue until discharge water is clear (visually inspect
-                  and/or turbidity test)
-                </li>
-                <li className="pl-1">
-                  <strong>Step 6:</strong> Remove temporary strainers and inspect permanent
-                  strainers
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Chemical Cleaning</p>
-              <p className="text-sm text-white mb-3">
-                For heavily contaminated systems or where water-only flushing is insufficient,
-                chemical cleaning may be required:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Cleaning agent:</strong> Proprietary system cleaner circulated at elevated
-                  temperature
-                </li>
-                <li className="pl-1">
-                  <strong>Contact time:</strong> Follow manufacturer's instructions (typically 1-2
-                  hours)
-                </li>
-                <li className="pl-1">
-                  <strong>Neutralisation:</strong> Drain, flush thoroughly, test pH before refilling
-                </li>
-                <li className="pl-1">
-                  <strong>Disposal:</strong> Discharge in accordance with environmental regulations
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Documentation:</strong> Record flushing dates, methods used, duration and
-              visual inspection results. Photograph the discharge water at start and end of flushing
-              for evidence of cleanliness achieved.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 02: Filling, Pressurising and Water Treatment */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Filling, Pressurising and Water Treatment
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Question:</strong> A radiator has a heat output of 2.5 kW. The system is designed for 80 degrees C flow and 60 degrees C return temperatures. Calculate the design flow rate.</p>
+            <p>Design delta-T = 80 - 60 = 20 degrees C</p>
+            <p>Flow rate = Heat output / (Cp x delta-T)</p>
+            <p>Flow rate = 2.5 kW / (4.19 kJ/kg.K x 20 K)</p>
+            <p>Flow rate = 2.5 / 83.8 = 0.0298 kg/s</p>
+            <p>Converting to practical units (assuming water density 1 kg/L):</p>
+            <p>Flow rate = 0.0298 L/s x 60 = <strong>1.79 L/min</strong></p>
             <p>
-              After successful flushing, the system must be correctly filled, vented, pressure
-              tested and treated with appropriate chemicals. This stage establishes the baseline
-              system integrity and water quality essential for long-term reliable operation.
+              <strong>Example 2: Pressure Test Requirements</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                System Filling Procedure
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Fill point:</strong> Connect to lowest point to allow air to rise and
-                  escape
-                </li>
-                <li className="pl-1">
-                  <strong>Fill rate:</strong> Slow enough to allow air venting (avoid air
-                  entrainment)
-                </li>
-                <li className="pl-1">
-                  <strong>Air venting:</strong> Open all manual air vents, check AAVs are
-                  functioning
-                </li>
-                <li className="pl-1">
-                  <strong>Fill pressure:</strong> Target cold fill pressure (typically 1-1.5 bar for
-                  domestic, as designed for commercial)
-                </li>
-                <li className="pl-1">
-                  <strong>Circulation:</strong> Run pump to circulate and release dissolved air
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Hydraulic Pressure Testing
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">Test Requirements</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">
-                      Test pressure: <strong>1.5x working pressure</strong> or 3 bar minimum
-                    </li>
-                    <li className="pl-1">
-                      Duration: Minimum <strong>1 hour</strong> (some specs require 2 hours)
-                    </li>
-                    <li className="pl-1">Acceptable drop: None (allow for temperature effects)</li>
-                    <li className="pl-1">Gauge accuracy: Calibrated test gauge required</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">Test Procedure</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Isolate expansion vessel and PRV</li>
-                    <li className="pl-1">Fill system completely (no air)</li>
-                    <li className="pl-1">Pressurise using hydraulic test pump</li>
-                    <li className="pl-1">Record pressure at start and end</li>
-                    <li className="pl-1">Inspect all joints and connections</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Water Treatment Requirements (BS 7593)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Corrosion inhibitor:</strong> Essential for all sealed systems to protect
-                  ferrous metals
-                </li>
-                <li className="pl-1">
-                  <strong>Concentration:</strong> Manufacturer's recommended level, verified by
-                  on-site test
-                </li>
-                <li className="pl-1">
-                  <strong>Biocide:</strong> May be required to prevent bacterial growth
-                </li>
-                <li className="pl-1">
-                  <strong>Scale inhibitor:</strong> In hard water areas to prevent limescale buildup
-                </li>
-                <li className="pl-1">
-                  <strong>Antifreeze:</strong> Where freeze protection required (e.g., solar
-                  thermal, exposed locations)
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Water Quality Testing</p>
-              <p className="text-sm text-white mb-3">
-                Water quality should be tested and recorded at commissioning and during routine
-                maintenance:
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Parameter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Test Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Acceptable Range
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Inhibitor concentration</td>
-                      <td className="border border-white/10 px-3 py-2">Proprietary test kit</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Manufacturer's specification
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">pH</td>
-                      <td className="border border-white/10 px-3 py-2">pH strips or meter</td>
-                      <td className="border border-white/10 px-3 py-2">7.5 - 9.0 (typically)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Total dissolved solids</td>
-                      <td className="border border-white/10 px-3 py-2">TDS meter</td>
-                      <td className="border border-white/10 px-3 py-2">&lt;500 ppm (varies)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Appearance</td>
-                      <td className="border border-white/10 px-3 py-2">Visual inspection</td>
-                      <td className="border border-white/10 px-3 py-2">Clear, no sediment</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Record keeping:</strong> Document all water treatment products used,
-              concentrations achieved and test results. Affix a permanent label to the system
-              stating treatment type and date for future maintenance reference.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 03: System Balancing */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            System Balancing to Design Flow Rates
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Question:</strong> A sealed heating system has a maximum working pressure of 2.5 bar and is protected by a 3 bar pressure relief valve. What test pressure should be used and why?</p>
+            <p>Standard requirement: 1.5 x working pressure OR 3 bar minimum</p>
+            <p>Calculation: 1.5 x 2.5 bar = 3.75 bar</p>
+            <p>However, the PRV is set at 3 bar, so testing at 3.75 bar would:</p>
+            <p>- Either lift the PRV, or</p>
+            <p>- Require removing/isolating the PRV during test</p>
+            <p>Practical approach:</p>
+            <p>1. Isolate or remove the PRV</p>
+            <p>2. Test at <strong>3.75 bar for 1 hour minimum</strong></p>
+            <p>3. Reinstall/reconnect PRV before system operation</p>
+            <p>4. Record that PRV was isolated during test</p>
             <p>
-              System balancing ensures that each circuit and terminal unit receives its design flow
-              rate, enabling the heating system to deliver the intended heat output to each space.
-              BSRIA BG 2 provides the industry-standard procedures for commissioning water systems.
+              <strong>Example 3: Proportional Balancing</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Why Balancing Matters</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Heat distribution:</strong> Without balancing, circuits nearest the pump
-                  receive excessive flow while remote circuits are starved
-                </li>
-                <li className="pl-1">
-                  <strong>Comfort:</strong> Imbalanced systems cause hot and cold spots, leading to
-                  occupant complaints
-                </li>
-                <li className="pl-1">
-                  <strong>Efficiency:</strong> Overflowing circuits waste pump energy; underflowing
-                  circuits require higher temperatures
-                </li>
-                <li className="pl-1">
-                  <strong>Control:</strong> Balanced systems respond predictably to control signals
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Balancing Methods</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">Proportional Balancing</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Set index circuit valve fully open</li>
-                    <li className="pl-1">Measure flow rate (or calculate from delta-T)</li>
-                    <li className="pl-1">Adjust other valves proportionally</li>
-                    <li className="pl-1">Work from index towards pump</li>
-                    <li className="pl-1">Recheck after all adjustments</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">
-                    PICV (Pressure Independent) Systems
-                  </p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">PICVs automatically limit flow to set point</li>
-                    <li className="pl-1">Set dial to design flow rate</li>
-                    <li className="pl-1">No proportional adjustment required</li>
-                    <li className="pl-1">Verify flow with measurement device</li>
-                    <li className="pl-1">Check differential pressure across PICV</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Flow Measurement Methods
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Fixed orifice valves:</strong> Measure differential pressure across
-                  orifice, use valve chart to determine flow
-                </li>
-                <li className="pl-1">
-                  <strong>Ultrasonic flow meter:</strong> Clamp-on device measures flow
-                  non-invasively
-                </li>
-                <li className="pl-1">
-                  <strong>Temperature differential:</strong> Calculate flow from Q = m x Cp x
-                  delta-T (requires accurate thermometers)
-                </li>
-                <li className="pl-1">
-                  <strong>Commissioning sets:</strong> Dedicated valves with integrated measurement
-                  ports
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Balancing Procedure (Proportional Method)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Step 1:</strong> Identify index circuit (longest run, highest resistance
-                  path)
-                </li>
-                <li className="pl-1">
-                  <strong>Step 2:</strong> Set index circuit regulating valve fully open
-                </li>
-                <li className="pl-1">
-                  <strong>Step 3:</strong> Set pump to design duty (speed or head)
-                </li>
-                <li className="pl-1">
-                  <strong>Step 4:</strong> Measure flow rate on index circuit
-                </li>
-                <li className="pl-1">
-                  <strong>Step 5:</strong> Adjust total system flow to achieve index design flow
-                </li>
-                <li className="pl-1">
-                  <strong>Step 6:</strong> Working from index towards pump, adjust each valve to
-                  achieve proportional flow
-                </li>
-                <li className="pl-1">
-                  <strong>Step 7:</strong> Recheck all readings after complete balance
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Design Flow Rate Calculation
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Flow rate (l/s) = Heat output (kW) / (Cp x delta-T)</p>
-                <p className="mt-2">Where: Cp = 4.19 kJ/kg.K for water</p>
-                <p>delta-T = Design temperature differential (typically 10-20 degrees C)</p>
-                <p className="mt-2 text-white">
-                  Example: 10 kW radiator, 20 degrees C differential
-                </p>
-                <p>
-                  Flow = 10 / (4.19 x 20) = 0.119 l/s = <strong>7.2 l/min</strong>
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Acceptable Tolerances</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Flow rate:</strong> +/- 10% of design value
-                </li>
-                <li className="pl-1">
-                  <strong>Temperature differential:</strong> Within design range under load
-                </li>
-                <li className="pl-1">
-                  <strong>Pump pressure:</strong> Able to achieve design flow at design head
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Record all values:</strong> Document design flow rate, measured flow rate,
-              valve position (turns open) and differential pressure for each circuit. These records
-              are essential for future troubleshooting and re-commissioning.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 04: Performance Testing and Handover Documentation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Performance Testing and Handover Documentation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Question:</strong> A system has three radiator circuits with design flow rates of 2.0, 1.5 and 1.0 L/min respectively. The index circuit (2.0 L/min) valve is fully open. When measured, it achieves 2.2 L/min. The second circuit reads 1.8 L/min with its valve fully open. Calculate the required adjustment.</p>
+            <p>Index circuit: Design 2.0 L/min, Measured 2.2 L/min</p>
+            <p>Ratio = 2.2 / 2.0 = 1.10 (10% over design - acceptable)</p>
+            <p>Circuit 2: Design 1.5 L/min, Measured 1.8 L/min</p>
+            <p>Proportional target = 1.5 x 1.10 = 1.65 L/min</p>
+            <p>Current reading = 1.8 L/min</p>
+            <p>Action: Throttle Circuit 2 valve until flow reads <strong>1.65 L/min</strong></p>
+            <p>Note: After adjusting, recheck index circuit as system</p>
+            <p>resistance will have changed slightly.</p>
             <p>
-              Performance testing verifies that the complete heating system achieves its design
-              intent under realistic operating conditions. Comprehensive handover documentation
-              ensures compliance with Building Regulations and provides the building operator with
-              the information needed for effective ongoing management.
+              <strong>Example 4: Flushing Velocity Check</strong>
             </p>
+            <p><strong>Question:</strong> A 22mm copper pipe circuit requires flushing. The available flushing pump delivers 15 L/min. Is this adequate for BSRIA-compliant flushing?</p>
+            <p>22mm copper pipe internal diameter approx 20mm = 0.02m</p>
+            <p>Cross-sectional area = pi x r squared</p>
+            <p>Area = 3.14159 x (0.01)squared = 0.000314 m squared</p>
+            <p>Flow rate = 15 L/min = 0.25 L/s = 0.00025 m cubed/s</p>
+            <p>Velocity = Flow rate / Area</p>
+            <p>Velocity = 0.00025 / 0.000314 = <strong>0.80 m/s</strong></p>
+            <p>This is below the 1.0 m/s BSRIA minimum.</p>
+            <p>Either use a higher capacity pump or flush smaller</p>
+            <p>sections individually to achieve adequate velocity.</p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Witnessed Performance Testing
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Purpose:</strong> Demonstrate system meets design performance with
-                  client/engineer witness
-                </li>
-                <li className="pl-1">
-                  <strong>Conditions:</strong> Test under realistic load conditions (heating season
-                  or artificial load)
-                </li>
-                <li className="pl-1">
-                  <strong>Parameters:</strong> Temperatures, flow rates, pressures, control
-                  response, noise levels
-                </li>
-                <li className="pl-1">
-                  <strong>Witness:</strong> Client, consulting engineer or clerk of works to sign
-                  off results
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Performance Test Checklist
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">Heat Generation</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Boiler/heat pump firing and modulating correctly</li>
-                    <li className="pl-1">Flow and return temperatures as designed</li>
-                    <li className="pl-1">Flue gas analysis (combustion appliances)</li>
-                    <li className="pl-1">Safety controls functioning (high limit, frost, etc.)</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">Distribution and Controls</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Pump operating at design duty</li>
-                    <li className="pl-1">Zone valves responding to thermostats</li>
-                    <li className="pl-1">TRVs modulating correctly</li>
-                    <li className="pl-1">BMS/controls operating as programmed</li>
-                    <li className="pl-1">Optimiser and compensator functioning</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Regulations Part L Requirements
-              </p>
-              <p className="text-sm text-white mb-3">
-                Part L of the Building Regulations requires heating systems to be commissioned and
-                documented:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Commissioning:</strong> Systems must be commissioned by a competent person
-                </li>
-                <li className="pl-1">
-                  <strong>Notice:</strong> Building Control must be notified of commissioning
-                  completion
-                </li>
-                <li className="pl-1">
-                  <strong>Certificate:</strong> Commissioning certificate required (domestic:
-                  Benchmark, commercial: BSRIA format)
-                </li>
-                <li className="pl-1">
-                  <strong>Building log book:</strong> Required for commercial buildings with O&M
-                  information
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Commissioning Records Required
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Document</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Content</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Requirement</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pressure test certificate
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Test pressure, duration, result, gauge calibration
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Essential</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Flushing record</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Method, duration, cleanliness achieved
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Essential</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Water treatment record</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Products used, concentrations, test results
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Essential (BS 7593)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Balancing report</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Design vs achieved flow rates, valve positions
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Essential</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Performance test results</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Witnessed test data, signatures
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Commercial projects</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Control settings</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Set points, schedules, parameters
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Essential</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Log Book Contents
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>As-built drawings:</strong> Showing actual installed equipment and routing
-                </li>
-                <li className="pl-1">
-                  <strong>Equipment schedules:</strong> Makes, models, serial numbers, ratings
-                </li>
-                <li className="pl-1">
-                  <strong>O&M manuals:</strong> For all significant plant items
-                </li>
-                <li className="pl-1">
-                  <strong>Commissioning records:</strong> All test results and certificates
-                </li>
-                <li className="pl-1">
-                  <strong>Control system documentation:</strong> Descriptions, schematics,
-                  programming
-                </li>
-                <li className="pl-1">
-                  <strong>Maintenance schedules:</strong> Recommended maintenance frequencies and
-                  procedures
-                </li>
-                <li className="pl-1">
-                  <strong>Energy metering:</strong> Meter schedules and reading instructions
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Client Training Requirements
-              </p>
-              <p className="text-sm text-white mb-3">
-                Handover should include training for building operators:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>System operation:</strong> Normal start-up, shutdown and seasonal
-                  changeover
-                </li>
-                <li className="pl-1">
-                  <strong>Controls:</strong> Setting time schedules, temperatures, operating modes
-                </li>
-                <li className="pl-1">
-                  <strong>Routine maintenance:</strong> Filter cleaning, pressure checks, visual
-                  inspections
-                </li>
-                <li className="pl-1">
-                  <strong>Fault finding:</strong> Common problems and initial troubleshooting steps
-                </li>
-                <li className="pl-1">
-                  <strong>Emergency procedures:</strong> Isolation, safety controls, who to contact
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Compliance evidence:</strong> Retain copies of all commissioning documentation
-              for a minimum of 6 years (longer for commercial buildings). These records may be
-              required for compliance audits, warranty claims or future system modifications.
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Commissioning Sequence:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>1. Pre-commissioning:</strong> Install strainers, clean pipework, flush system thoroughly</li>
+              <li><strong>2. Pressure test:</strong> Hydraulic test at 1.5x working pressure for minimum 1 hour</li>
+              <li><strong>3. Fill and treat:</strong> Fill from lowest point, vent air, add water treatment</li>
+              <li><strong>4. Static commissioning:</strong> Check all components installed correctly, valves operational</li>
+              <li><strong>5. Dynamic commissioning:</strong> Run system, set controls, balance flow rates</li>
+              <li><strong>6. Performance testing:</strong> Verify design performance under load</li>
+              <li><strong>7. Documentation:</strong> Complete all records, prepare handover pack</li>
+            </ul>
+            <p>
+              <strong>Essential Equipment:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Flow measurement:</strong> Ultrasonic meter, differential pressure gauge, commissioning valve charts</li>
+              <li><strong>Temperature:</strong> Digital thermometers, infrared thermometer, surface probes</li>
+              <li><strong>Pressure:</strong> Calibrated test gauge, hydraulic test pump</li>
+              <li><strong>Water quality:</strong> Inhibitor test kit, pH strips, TDS meter</li>
+              <li><strong>Electrical:</strong> Multimeter for control circuit verification</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Calculating Design Flow Rate
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A radiator has a heat output of 2.5 kW. The system is
-                designed for 80 degrees C flow and 60 degrees C return temperatures. Calculate the
-                design flow rate.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Design delta-T = 80 - 60 = 20 degrees C</p>
-                <p className="mt-2">Flow rate = Heat output / (Cp x delta-T)</p>
-                <p>Flow rate = 2.5 kW / (4.19 kJ/kg.K x 20 K)</p>
-                <p>Flow rate = 2.5 / 83.8 = 0.0298 kg/s</p>
-                <p className="mt-2">
-                  Converting to practical units (assuming water density 1 kg/L):
-                </p>
-                <p>
-                  Flow rate = 0.0298 L/s x 60 = <strong>1.79 L/min</strong>
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Pressure Test Requirements
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A sealed heating system has a maximum working pressure of
-                2.5 bar and is protected by a 3 bar pressure relief valve. What test pressure should
-                be used and why?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Standard requirement: 1.5 x working pressure OR 3 bar minimum</p>
-                <p className="mt-2">Calculation: 1.5 x 2.5 bar = 3.75 bar</p>
-                <p className="mt-2">
-                  However, the PRV is set at 3 bar, so testing at 3.75 bar would:
-                </p>
-                <p>- Either lift the PRV, or</p>
-                <p>- Require removing/isolating the PRV during test</p>
-                <p className="mt-2">Practical approach:</p>
-                <p>1. Isolate or remove the PRV</p>
-                <p>
-                  2. Test at <strong>3.75 bar for 1 hour minimum</strong>
-                </p>
-                <p>3. Reinstall/reconnect PRV before system operation</p>
-                <p>4. Record that PRV was isolated during test</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Proportional Balancing
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A system has three radiator circuits with design flow
-                rates of 2.0, 1.5 and 1.0 L/min respectively. The index circuit (2.0 L/min) valve is
-                fully open. When measured, it achieves 2.2 L/min. The second circuit reads 1.8 L/min
-                with its valve fully open. Calculate the required adjustment.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Index circuit: Design 2.0 L/min, Measured 2.2 L/min</p>
-                <p>Ratio = 2.2 / 2.0 = 1.10 (10% over design - acceptable)</p>
-                <p className="mt-2">Circuit 2: Design 1.5 L/min, Measured 1.8 L/min</p>
-                <p>Proportional target = 1.5 x 1.10 = 1.65 L/min</p>
-                <p>Current reading = 1.8 L/min</p>
-                <p className="mt-2">
-                  Action: Throttle Circuit 2 valve until flow reads <strong>1.65 L/min</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Note: After adjusting, recheck index circuit as system
-                </p>
-                <p className="text-white">resistance will have changed slightly.</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 4: Flushing Velocity Check
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 22mm copper pipe circuit requires flushing. The
-                available flushing pump delivers 15 L/min. Is this adequate for BSRIA-compliant
-                flushing?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>22mm copper pipe internal diameter approx 20mm = 0.02m</p>
-                <p>Cross-sectional area = pi x r squared</p>
-                <p>Area = 3.14159 x (0.01)squared = 0.000314 m squared</p>
-                <p className="mt-2">Flow rate = 15 L/min = 0.25 L/s = 0.00025 m cubed/s</p>
-                <p className="mt-2">Velocity = Flow rate / Area</p>
-                <p>
-                  Velocity = 0.00025 / 0.000314 = <strong>0.80 m/s</strong>
-                </p>
-                <p className="mt-2 text-amber-400">This is below the 1.0 m/s BSRIA minimum.</p>
-                <p className="text-white">Either use a higher capacity pump or flush smaller</p>
-                <p className="text-white">sections individually to achieve adequate velocity.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Commissioning Sequence
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>1. Pre-commissioning:</strong> Install strainers, clean pipework, flush
-                  system thoroughly
-                </li>
-                <li className="pl-1">
-                  <strong>2. Pressure test:</strong> Hydraulic test at 1.5x working pressure for
-                  minimum 1 hour
-                </li>
-                <li className="pl-1">
-                  <strong>3. Fill and treat:</strong> Fill from lowest point, vent air, add water
-                  treatment
-                </li>
-                <li className="pl-1">
-                  <strong>4. Static commissioning:</strong> Check all components installed
-                  correctly, valves operational
-                </li>
-                <li className="pl-1">
-                  <strong>5. Dynamic commissioning:</strong> Run system, set controls, balance flow
-                  rates
-                </li>
-                <li className="pl-1">
-                  <strong>6. Performance testing:</strong> Verify design performance under load
-                </li>
-                <li className="pl-1">
-                  <strong>7. Documentation:</strong> Complete all records, prepare handover pack
-                </li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Inadequate flushing:</strong> Leads to pump damage, blocked heat exchangers, valve failures</li>
+                <li><strong>No water treatment:</strong> Causes corrosion, sludge buildup, system failure</li>
+                <li><strong>Skipping pressure test:</strong> Leaks may only appear under operating pressure/temperature</li>
+                <li><strong>Poor balancing:</strong> Results in comfort complaints, inefficient operation</li>
+                <li><strong>Incomplete records:</strong> Creates compliance issues, maintenance problems</li>
+                <li><strong>No client training:</strong> System operated incorrectly, premature failures</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Equipment</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Flow measurement:</strong> Ultrasonic meter, differential pressure gauge,
-                  commissioning valve charts
-                </li>
-                <li className="pl-1">
-                  <strong>Temperature:</strong> Digital thermometers, infrared thermometer, surface
-                  probes
-                </li>
-                <li className="pl-1">
-                  <strong>Pressure:</strong> Calibrated test gauge, hydraulic test pump
-                </li>
-                <li className="pl-1">
-                  <strong>Water quality:</strong> Inhibitor test kit, pH strips, TDS meter
-                </li>
-                <li className="pl-1">
-                  <strong>Electrical:</strong> Multimeter for control circuit verification
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">
-                Common Commissioning Errors
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Inadequate flushing:</strong> Leads to pump damage, blocked heat
-                  exchangers, valve failures
-                </li>
-                <li className="pl-1">
-                  <strong>No water treatment:</strong> Causes corrosion, sludge buildup, system
-                  failure
-                </li>
-                <li className="pl-1">
-                  <strong>Skipping pressure test:</strong> Leaks may only appear under operating
-                  pressure/temperature
-                </li>
-                <li className="pl-1">
-                  <strong>Poor balancing:</strong> Results in comfort complaints, inefficient
-                  operation
-                </li>
-                <li className="pl-1">
-                  <strong>Incomplete records:</strong> Creates compliance issues, maintenance
-                  problems
-                </li>
-                <li className="pl-1">
-                  <strong>No client training:</strong> System operated incorrectly, premature
-                  failures
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Key Parameters</p>
-                <ul className="space-y-0.5">
-                  <li>Flushing velocity: &gt;1.0 m/s minimum</li>
-                  <li>Test pressure: 1.5x working or 3 bar min</li>
-                  <li>Test duration: 1 hour minimum</li>
-                  <li>Balancing tolerance: +/- 10% of design</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Standards</p>
-                <ul className="space-y-0.5">
-                  <li>BSRIA BG 29: Pre-commissioning cleaning</li>
-                  <li>BSRIA BG 2: Commissioning water systems</li>
-                  <li>BS 7593: Water treatment requirements</li>
-                  <li>Building Regs Part L: Compliance</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section1-5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Heating Controls
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section1">
-              Complete Section 1
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section1-5")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Heating controls
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section2")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Ventilation systems
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

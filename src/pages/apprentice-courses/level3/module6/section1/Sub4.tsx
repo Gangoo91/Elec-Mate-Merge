@@ -172,7 +172,7 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question: 'The L3 designer\u2019s pack should evidence accessibility decisions through:',
+    question: 'The L3 designer’s pack should evidence accessibility decisions through:',
     options: [
       'Verbal explanation to the customer.',
       'Documented Approved Document M (or BS 8300 for non-residential) compliance per zone, lux calculations against CIBSE / SLL targets, accessibility-aid schedule (induction loops, pull-cords, visible alarm beacons, doorbell modes), and an Equality Act anticipatory-duty statement on the design cover sheet.',
@@ -244,7 +244,7 @@ export default function Sub4() {
             points={[
               "The Equality Act 2010 imposes an anticipatory duty — design must be inclusive for foreseeable disabled users, not just current ones. Approved Document M (dwellings Vol 1, non-residential Vol 2) is the construction-specific guidance; BS 8300 is the deeper technical standard for non-residential buildings.",
               "Switches and socket-outlets in new dwellings sit between 450 and 1200 mm above finished floor level (the accessible reach range). Cat 3 wheelchair user dwellings add a 350 mm corner setback rule, two-way switching from bed positions, dual-mode doorbells (audible plus visible) and accessible technology provisions.",
-              "Emergency lighting (BS 5266-1) — 1 lux on the centre-line of escape routes for 3 hours, 0.5 lux anti-panic, 15 lux high-risk task. Accessibility lens layers on contrast, viewing angle, signage visibility for partially-sighted evacuees. Hearing loops (BS 7594), accessible WC pull-cord systems, audible-and-visible fire alarms (BS 5839-6) all sit on the L3 designer\u2019s schedule.",
+              "Emergency lighting (BS 5266-1) — 1 lux on the centre-line of escape routes for 3 hours, 0.5 lux anti-panic, 15 lux high-risk task. Accessibility lens layers on contrast, viewing angle, signage visibility for partially-sighted evacuees. Hearing loops (BS 7594), accessible WC pull-cord systems, audible-and-visible fire alarms (BS 5839-6) all sit on the L3 designer’s schedule.",
             ]}
           />
 
@@ -431,7 +431,7 @@ export default function Sub4() {
               <li><strong>Assistive-technology cabling</strong> — Cat 6 / 6A data cabling provision for smart home interfaces, voice control systems, environmental control units (ECUs) in adapted dwellings.</li>
             </ul>
             <p>
-              Each entry on the schedule references the standard (BS 7594, BS 8300, BS 5839-6, BS 9999), the location, the device specification and the periodic test routine. The schedule lives in the design pack and accompanies the EIC into the customer\u2019s file.
+              Each entry on the schedule references the standard (BS 7594, BS 8300, BS 5839-6, BS 9999), the location, the device specification and the periodic test routine. The schedule lives in the design pack and accompanies the EIC into the customer’s file.
             </p>
           </ConceptBlock>
 
@@ -603,7 +603,7 @@ export default function Sub4() {
             }
             whyItMatters={
               <>
-                The chain\u2019s Equality Act compliance team will audit the documentation rather than the install. They want to see the schedule, the standards cited, the Equality Act statement and the lux calc. A design that is technically perfect but undocumented fails their audit. A design that explicitly maps each accessibility decision to the standard and to the regulatory duty satisfies the audit and protects the chain from future complaint. This is the kind of design discipline that wins repeat work from professional clients.
+                The chain’s Equality Act compliance team will audit the documentation rather than the install. They want to see the schedule, the standards cited, the Equality Act statement and the lux calc. A design that is technically perfect but undocumented fails their audit. A design that explicitly maps each accessibility decision to the standard and to the regulatory duty satisfies the audit and protects the chain from future complaint. This is the kind of design discipline that wins repeat work from professional clients.
               </>
             }
           />

@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 6 · Section 3 · Subsection 6 — BREEAM Evidence and Certification
+ * HNC Electrical Engineering for Building Services (Sustainability and Environmental Engineering)
+ *   Documentation requirements, design stage vs post-construction evidence, assessor verification, and achieving certification
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'BREEAM Evidence and Certification - HNC Module 6 Section 3.6';
@@ -259,878 +276,368 @@ const faqs = [
 ];
 
 const HNCModule6Section3_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section3")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module6-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.3.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            BREEAM Evidence and Certification
-          </h1>
-          <p className="text-white">
-            Documentation requirements, design stage vs post-construction evidence, assessor
-            verification, and achieving certification
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 6 · Section 3 · Subsection 6"
+            title="BREEAM Evidence and Certification"
+            description="Documentation requirements, design stage vs post-construction evidence, assessor verification, and achieving certification"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Design Stage:</strong> Evidence of design intent and specifications
-              </li>
-              <li className="pl-1">
-                <strong>Post-Construction:</strong> Verification of actual implementation
-              </li>
-              <li className="pl-1">
-                <strong>Documentation:</strong> Written, signed, and auditable evidence only
-              </li>
-              <li className="pl-1">
-                <strong>Certification:</strong> Independent assessor verification to BRE
-              </li>
+          <TLDR
+            points={[
+              "BREEAM evidence is the responsibility of the design team and contractor — collected by the licensed Assessor, submitted to BRE for QA, and certificated in two stages (Design Stage and Post-Construction).",
+              "Each credit has a defined evidence schedule (calculations, drawings, specifications, test certificates, photographs, declarations) — missing or non-compliant evidence loses the credit even if the technical performance was achieved.",
+              "Design-Stage certification before construction starts is critical — credits depending on procurement (responsibly sourced materials, low-VOC specifications) cannot be earned retroactively at Post-Construction.",
+            ]}
+          />
+
+          <RegsCallout
+            source="BREEAM UK New Construction 2018 — Evidence requirements + QA"
+            clause="The BREEAM Assessor shall collect, review and submit evidence to BRE Global for each claimed credit in accordance with the credit-specific evidence schedule. Evidence shall be of sufficient quality, completeness and traceability to allow an independent reviewer to verify compliance. Where evidence is found to be insufficient at QA, BRE Global may require additional evidence, withdraw the credit, or in cases of repeated non-compliance, suspend the Assessor licence."
+            meaning={
+              <>
+                Evidence quality is QA-tested by BRE before certification. Common failure modes: photos without metadata or location reference, calculations without inputs/assumptions, drawings without revision control, declarations without signatures. The assessor cannot fix these on submission day — the evidence pack must be assembled progressively from design stage through construction.
+              </>
+            }
+            cite="Source: BREEAM UK NC 2018 Technical Manual, Issue 4.0 — breeam.com"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Identify documentation requirements for BREEAM credits",
+              "Distinguish between Design Stage and Post-Construction evidence",
+              "Apply assessor verification standards to evidence preparation",
+              "Develop evidence schedules for building services credits",
+              "Understand certification timeline and process requirements",
+              "Avoid common evidence issues that delay certification",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Documentation Requirements">
+            <p>BREEAM assessment requires comprehensive documentation to demonstrate compliance with credit criteria. Evidence must be written, verifiable, and submitted in formats that allow independent audit. Verbal commitments, unsigned documents, and undated records are not acceptable.</p>
+            <p><strong>Evidence Types Required for Building Services Credits:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Design specifications:</strong> Signed technical specifications with performance requirements</li>
+              <li><strong>Calculations:</strong> Energy models, lighting calculations, water consumption analyses</li>
+              <li><strong>Drawings:</strong> Design drawings at DS, as-built drawings at PCS</li>
+              <li><strong>Product data:</strong> Manufacturer datasheets, certifications, test reports</li>
+              <li><strong>Commissioning records:</strong> Test certificates, commissioning reports, handover documentation</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>MEP evidence:</strong> Specifications, calculations, commissioning
-              </li>
-              <li className="pl-1">
-                <strong>Key categories:</strong> Energy, Health & Wellbeing, Water
-              </li>
-              <li className="pl-1">
-                <strong>Timelines:</strong> 4-6 weeks DS, 6-8 weeks PCS
-              </li>
-              <li className="pl-1">
-                <strong>Ratings:</strong> Pass (30%), Good (45%), Very Good (55%), Excellent (70%)
-              </li>
+            <p><strong>Evidence Quality Standards</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Dated:</strong> Clear issue date visible — Specification Rev C - 15/03/2024</li>
+              <li><strong>Signed/Authorised:</strong> Named responsible person — Approved by: J. Smith CEng</li>
+              <li><strong>Project-specific:</strong> References project name/number — Project: Manchester Office - Ref: 12345</li>
+              <li><strong>Complete:</strong> All relevant information included — Full meter schedule with all locations</li>
+              <li><strong>Traceable:</strong> Clear reference system — Drawing ME-101 Rev D correlates to spec clause 5.3</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Key principle:</strong> If evidence cannot be independently verified by reading the document alone, it is insufficient for BREEAM assessment.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Identify documentation requirements for BREEAM credits',
-              'Distinguish between Design Stage and Post-Construction evidence',
-              'Apply assessor verification standards to evidence preparation',
-              'Develop evidence schedules for building services credits',
-              'Understand certification timeline and process requirements',
-              'Avoid common evidence issues that delay certification',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Documentation Requirements */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Documentation Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Design Stage Evidence">
+            <p>Design Stage (DS) assessment confirms that the building design will achieve targeted BREEAM credits when built as specified. Evidence must demonstrate design intent, specification compliance, and contractual commitment to achieving performance requirements.</p>
+            <p><strong>Specifications</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Signed M&E specifications</li>
+              <li>Employer's Requirements</li>
+              <li>Performance standards stated</li>
+              <li>Contractual obligations clear</li>
+            </ul>
+            <p><strong>Design Calculations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Energy modelling (SBEM/DSM)</li>
+              <li>Lighting design calculations</li>
+              <li>Wat 01 water calculations</li>
+              <li>Ventilation airflow analysis</li>
+            </ul>
+            <p><strong>Design Drawings</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Schematic layouts</li>
+              <li>Equipment schedules</li>
+              <li>Meter locations shown</li>
+              <li>Control strategies illustrated</li>
+            </ul>
+            <p><strong>Building Services Design Stage Evidence by Credit</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Ene 01 Energy Performance:</strong> SBEM/DSM calculations — M&E specifications, plant schedules</li>
+              <li><strong>Ene 02 Sub-metering:</strong> Metering strategy document — Meter schedule, schematic drawings</li>
+              <li><strong>Hea 01 Visual Comfort:</strong> Lighting design calculations — Luminaire specifications, control strategy</li>
+              <li><strong>Hea 02 Indoor Air Quality:</strong> Ventilation design calculations — AHU schedules, fresh air rates</li>
+              <li><strong>Wat 01 Water Consumption:</strong> BREEAM Wat 01 Calculator — Sanitaryware specifications</li>
+            </ul>
+            <p><strong>Timing:</strong> Design Stage assessment should be completed at RIBA Stage 4 (Technical Design) before construction contracts are let.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Post-Construction Stage Evidence">
+            <p>Post-Construction Stage (PCS) assessment verifies that Design Stage commitments have been implemented as specified. Evidence must demonstrate actual installation, commissioning results, and operational compliance with credited performance levels.</p>
+            <p><strong>PCS Evidence Hierarchy</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Level 1:</strong> As-built drawings (shows what was installed)</li>
+              <li><strong>Level 2:</strong> Commissioning certificates (proves it works)</li>
+              <li><strong>Level 3:</strong> Site photographs (visual verification)</li>
+              <li><strong>Level 4:</strong> O&M manuals (handover documentation)</li>
+            </ul>
+            <p><strong>Post-Construction Evidence Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>As-built drawings:</strong> Final installation drawings showing actual meter locations, equipment positions, and system configurations</li>
+              <li><strong>Commissioning records:</strong> Signed certificates demonstrating systems meet specified performance</li>
+              <li><strong>Test results:</strong> Air tightness testing, water flow rates, lux level surveys, thermal imaging</li>
+              <li><strong>Installation records:</strong> Delivery notes, installation sign-off sheets, quality records</li>
+              <li><strong>Site photographs:</strong> Dated images showing installed systems with specification references</li>
+            </ul>
+            <p><strong>Building Services PCS Evidence Examples</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Ene 01 Energy Performance:</strong> Final EPC, as-built SBEM, air tightness test — Energy assessor</li>
+              <li><strong>Ene 02 Sub-metering:</strong> Meter commissioning certificates, as-built schedule — M&E contractor</li>
+              <li><strong>Hea 01 Visual Comfort:</strong> Lux level survey results, lighting commissioning — Electrical contractor</li>
+              <li><strong>Hea 02 Indoor Air Quality:</strong> Ventilation commissioning, air quality testing — Mechanical contractor</li>
+              <li><strong>Wat 01 Water Consumption:</strong> Flow rate test results, sanitaryware installation photos — Plumbing contractor</li>
+            </ul>
+            <p><strong>Critical note:</strong> PCS evidence must correlate with Design Stage specifications. Any deviations must be documented with explanation of how credit compliance is maintained.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Assessor Verification and Certification">
+            <p>Licensed BREEAM assessors independently verify submitted evidence against credit criteria before submitting the assessment to BRE for Quality Assurance audit. The certification process involves multiple verification stages to ensure assessment integrity.</p>
+            <p><strong>Certification Process Timeline</strong></p>
+            <p><strong>Design Stage Certificate</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1. Evidence submission to assessor</li>
+              <li>2. Assessor review and queries (2-4 weeks)</li>
+              <li>3. Evidence completion and sign-off</li>
+              <li>4. Submission to BRE QA (1-2 weeks)</li>
+              <li>5. BRE QA review and queries (2-3 weeks)</li>
+              <li>6. Certificate issue (1 week)</li>
+              <li>Total: 6-10 weeks typical</li>
+            </ul>
+            <p><strong>Post-Construction Certificate</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1. Practical completion achieved</li>
+              <li>2. PCS evidence collection (2-8 weeks)</li>
+              <li>3. Assessor review and site visit</li>
+              <li>4. Evidence completion (2-4 weeks)</li>
+              <li>5. BRE QA submission (2-3 weeks)</li>
+              <li>6. Final certificate issue (1 week)</li>
+              <li>Total: 8-16 weeks from PC</li>
+            </ul>
+            <p><strong>Assessor Verification Checks</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Evidence authenticity:</strong> Dates, signatures, project references — Unsigned documents, generic templates</li>
+              <li><strong>Criteria compliance:</strong> Evidence matches credit requirements — Partial compliance, missing elements</li>
+              <li><strong>Calculation accuracy:</strong> Methodology and inputs verified — Errors in BREEAM calculators</li>
+              <li><strong>Consistency:</strong> Evidence documents align — Specifications contradict drawings</li>
+              <li><strong>Completeness:</strong> All required evidence present — Missing commissioning records</li>
+            </ul>
+            <p><strong>BREEAM Rating Thresholds</strong></p>
+            <p><strong>Pass:</strong> 30% of available credits</p>
+            <p><strong>Good:</strong> 45% of available credits</p>
+            <p><strong>Very Good:</strong> 55% of available credits</p>
+            <p><strong>Excellent:</strong> 70% of available credits</p>
+            <p><strong>Outstanding:</strong> 85% of available credits</p>
+            <p>Note: Minimum standards must be achieved in certain credits regardless of overall percentage.</p>
+            <p><strong>BRE QA:</strong> All assessments undergo BRE Quality Assurance audit. Approximately 10% receive detailed technical audit which may raise additional queries.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              BREEAM assessment requires comprehensive documentation to demonstrate compliance with
-              credit criteria. Evidence must be written, verifiable, and submitted in formats that
-              allow independent audit. Verbal commitments, unsigned documents, and undated records
-              are not acceptable.
+              <strong>Example 1: Energy Sub-metering Evidence Package</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Evidence Types Required for Building Services Credits:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Design specifications:</strong> Signed technical specifications with
-                  performance requirements
-                </li>
-                <li className="pl-1">
-                  <strong>Calculations:</strong> Energy models, lighting calculations, water
-                  consumption analyses
-                </li>
-                <li className="pl-1">
-                  <strong>Drawings:</strong> Design drawings at DS, as-built drawings at PCS
-                </li>
-                <li className="pl-1">
-                  <strong>Product data:</strong> Manufacturer datasheets, certifications, test
-                  reports
-                </li>
-                <li className="pl-1">
-                  <strong>Commissioning records:</strong> Test certificates, commissioning reports,
-                  handover documentation
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Evidence Quality Standards
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Requirement</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Standard</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Example</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Dated</td>
-                      <td className="border border-white/10 px-3 py-2">Clear issue date visible</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Specification Rev C - 15/03/2024
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Signed/Authorised</td>
-                      <td className="border border-white/10 px-3 py-2">Named responsible person</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Approved by: J. Smith CEng
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Project-specific</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        References project name/number
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Project: Manchester Office - Ref: 12345
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Complete</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        All relevant information included
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full meter schedule with all locations
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Traceable</td>
-                      <td className="border border-white/10 px-3 py-2">Clear reference system</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Drawing ME-101 Rev D correlates to spec clause 5.3
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key principle:</strong> If evidence cannot be independently verified by
-              reading the document alone, it is insufficient for BREEAM assessment.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Design Stage Evidence */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Design Stage Evidence
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Compile evidence for Ene 02 Sub-metering credits (3 credits targeted).</p>
+            <p>Design Stage Evidence:</p>
+            <p>1. Metering Strategy Document (dated, signed)</p>
+            <p>- Lists all energy uses over 10% of total</p>
+            <p>- Identifies meter locations and types</p>
+            <p>- States BMS integration requirements</p>
+            <p>2. Electrical Specification Clause 5.7</p>
+            <p>- "Sub-meters to all substantial loads (heating,</p>
+            <p>cooling, lighting, small power, lifts, etc.)"</p>
+            <p>3. Schematic Drawing ME-SK-101</p>
+            <p>- Shows meter positions on distribution schematic</p>
+            <p>Post-Construction Stage Evidence:</p>
+            <p>4. As-built Meter Schedule (Rev Final)</p>
+            <p>- Lists 24 meters installed with references</p>
+            <p>5. Commissioning Certificates</p>
+            <p>- Meter calibration certificates</p>
+            <p>- BMS point verification sheets</p>
+            <p>6. Site Photographs</p>
+            <p>- Dated photos of installed meters with labels</p>
+            <p>Result: 3 credits achieved - full sub-metering coverage verified</p>
             <p>
-              Design Stage (DS) assessment confirms that the building design will achieve targeted
-              BREEAM credits when built as specified. Evidence must demonstrate design intent,
-              specification compliance, and contractual commitment to achieving performance
-              requirements.
+              <strong>Example 2: Lighting Design Evidence for Hea 01</strong>
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Specifications</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Signed M&E specifications</li>
-                  <li className="pl-1">Employer's Requirements</li>
-                  <li className="pl-1">Performance standards stated</li>
-                  <li className="pl-1">Contractual obligations clear</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Design Calculations</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Energy modelling (SBEM/DSM)</li>
-                  <li className="pl-1">Lighting design calculations</li>
-                  <li className="pl-1">Wat 01 water calculations</li>
-                  <li className="pl-1">Ventilation airflow analysis</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Design Drawings</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Schematic layouts</li>
-                  <li className="pl-1">Equipment schedules</li>
-                  <li className="pl-1">Meter locations shown</li>
-                  <li className="pl-1">Control strategies illustrated</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Design Stage Evidence by Credit
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Credit</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Primary Evidence
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Supporting Evidence
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ene 01 Energy Performance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">SBEM/DSM calculations</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        M&E specifications, plant schedules
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ene 02 Sub-metering</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Metering strategy document
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Meter schedule, schematic drawings
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hea 01 Visual Comfort</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lighting design calculations
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Luminaire specifications, control strategy
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Hea 02 Indoor Air Quality
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ventilation design calculations
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        AHU schedules, fresh air rates
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Wat 01 Water Consumption</td>
-                      <td className="border border-white/10 px-3 py-2">BREEAM Wat 01 Calculator</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sanitaryware specifications
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Timing:</strong> Design Stage assessment should be completed at RIBA Stage 4
-              (Technical Design) before construction contracts are let.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Post-Construction Stage Evidence */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Post-Construction Stage Evidence
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Prepare Visual Comfort evidence for office building.</p>
+            <p>Design Stage Package:</p>
+            <p>1. Lighting Design Report (by qualified designer)</p>
+            <p>Target lux levels per space type:</p>
+            <p>- Offices: 500 lux maintained, UGR &lt;19</p>
+            <p>- Circulation: 200 lux maintained</p>
+            <p>- Meeting rooms: 500 lux, dimming provision</p>
+            <p>2. DIALux Calculation Outputs</p>
+            <p>- Room-by-room calculations with uniformity</p>
+            <p>- UGR calculations for desk positions</p>
+            <p>3. Luminaire Schedule with Product Data</p>
+            <p>- TM66 circularity data (if targeting exemplary)</p>
+            <p>- Photometric files referenced</p>
+            <p>Post-Construction Stage Package:</p>
+            <p>4. Commissioning Lux Level Survey</p>
+            <p>- Measured values per space (signed by engineer)</p>
+            <p>- Results exceed design targets</p>
+            <p>5. Lighting Control Commissioning</p>
+            <p>- Dimming function tested and verified</p>
+            <p>- Scene setting completed</p>
+            <p>Result: Credits achieved - design targets met on site</p>
             <p>
-              Post-Construction Stage (PCS) assessment verifies that Design Stage commitments have
-              been implemented as specified. Evidence must demonstrate actual installation,
-              commissioning results, and operational compliance with credited performance levels.
+              <strong>Example 3: Resolving a PCS Evidence Gap</strong>
             </p>
+            <p><strong>Scenario:</strong> Design Stage specified DALI lighting controls, but contractor installed standard switching.</p>
+            <p>Issue Identified:</p>
+            <p>- DS specification: DALI dimming throughout</p>
+            <p>- PCS reality: Manual switching only in some areas</p>
+            <p>Impact Assessment:</p>
+            <p>- Hea 01 Credit 2 (zoned control) at risk</p>
+            <p>- ENE 01 assumptions may be affected</p>
+            <p>Resolution Options:</p>
+            <p>Option A: Remediation</p>
+            <p>- Retrofit DALI drivers and controls</p>
+            <p>- Commission and evidence as specified</p>
+            <p>- Credit maintained</p>
+            <p>Option B: Accept credit loss</p>
+            <p>- Document variation with explanation</p>
+            <p>- Withdraw credit from final assessment</p>
+            <p>- Check overall rating impact</p>
+            <p>Lesson: Early site monitoring prevents PCS surprises</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">PCS Evidence Hierarchy</p>
-              <div className="text-sm space-y-1">
-                <p>
-                  <span className="text-white">Level 1:</span>{' '}
-                  <span className="text-white">As-built drawings (shows what was installed)</span>
-                </p>
-                <p>
-                  <span className="text-white">Level 2:</span>{' '}
-                  <span className="text-white">Commissioning certificates (proves it works)</span>
-                </p>
-                <p>
-                  <span className="text-white">Level 3:</span>{' '}
-                  <span className="text-white">Site photographs (visual verification)</span>
-                </p>
-                <p>
-                  <span className="text-white">Level 4:</span>{' '}
-                  <span className="text-white">O&M manuals (handover documentation)</span>
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Post-Construction Evidence Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>As-built drawings:</strong> Final installation drawings showing actual
-                  meter locations, equipment positions, and system configurations
-                </li>
-                <li className="pl-1">
-                  <strong>Commissioning records:</strong> Signed certificates demonstrating systems
-                  meet specified performance
-                </li>
-                <li className="pl-1">
-                  <strong>Test results:</strong> Air tightness testing, water flow rates, lux level
-                  surveys, thermal imaging
-                </li>
-                <li className="pl-1">
-                  <strong>Installation records:</strong> Delivery notes, installation sign-off
-                  sheets, quality records
-                </li>
-                <li className="pl-1">
-                  <strong>Site photographs:</strong> Dated images showing installed systems with
-                  specification references
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services PCS Evidence Examples
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Credit</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        PCS Evidence Required
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Responsible Party
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ene 01 Energy Performance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Final EPC, as-built SBEM, air tightness test
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Energy assessor</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ene 02 Sub-metering</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Meter commissioning certificates, as-built schedule
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">M&E contractor</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hea 01 Visual Comfort</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lux level survey results, lighting commissioning
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Electrical contractor</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Hea 02 Indoor Air Quality
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ventilation commissioning, air quality testing
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Mechanical contractor</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Wat 01 Water Consumption</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Flow rate test results, sanitaryware installation photos
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Plumbing contractor</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Critical note:</strong> PCS evidence must correlate with Design Stage
-              specifications. Any deviations must be documented with explanation of how credit
-              compliance is maintained.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Assessor Verification and Certification */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Assessor Verification and Certification
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Licensed BREEAM assessors independently verify submitted evidence against credit
-              criteria before submitting the assessment to BRE for Quality Assurance audit. The
-              certification process involves multiple verification stages to ensure assessment
-              integrity.
+              <strong>Evidence Collection Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Certification Process Timeline
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Design Stage Certificate</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>1. Evidence submission to assessor</li>
-                    <li>2. Assessor review and queries (2-4 weeks)</li>
-                    <li>3. Evidence completion and sign-off</li>
-                    <li>4. Submission to BRE QA (1-2 weeks)</li>
-                    <li>5. BRE QA review and queries (2-3 weeks)</li>
-                    <li>6. Certificate issue (1 week)</li>
-                    <li className="font-medium text-elec-yellow/80 pt-2">
-                      Total: 6-10 weeks typical
-                    </li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Post-Construction Certificate</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>1. Practical completion achieved</li>
-                    <li>2. PCS evidence collection (2-8 weeks)</li>
-                    <li>3. Assessor review and site visit</li>
-                    <li>4. Evidence completion (2-4 weeks)</li>
-                    <li>5. BRE QA submission (2-3 weeks)</li>
-                    <li>6. Final certificate issue (1 week)</li>
-                    <li className="font-medium text-elec-yellow/80 pt-2">
-                      Total: 8-16 weeks from PC
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Assessor Verification Checks
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Verification Area
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Assessor Check</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Common Issues</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Evidence authenticity</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dates, signatures, project references
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Unsigned documents, generic templates
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Criteria compliance</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Evidence matches credit requirements
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Partial compliance, missing elements
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Calculation accuracy</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Methodology and inputs verified
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Errors in BREEAM calculators
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Consistency</td>
-                      <td className="border border-white/10 px-3 py-2">Evidence documents align</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Specifications contradict drawings
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Completeness</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        All required evidence present
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Missing commissioning records
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BREEAM Rating Thresholds
-              </p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <strong>Pass:</strong> 30% of available credits
-                </p>
-                <p>
-                  <strong>Good:</strong> 45% of available credits
-                </p>
-                <p>
-                  <strong>Very Good:</strong> 55% of available credits
-                </p>
-                <p>
-                  <strong>Excellent:</strong> 70% of available credits
-                </p>
-                <p>
-                  <strong>Outstanding:</strong> 85% of available credits
-                </p>
-                <p className="text-white mt-2 italic">
-                  Note: Minimum standards must be achieved in certain credits regardless of overall
-                  percentage.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>BRE QA:</strong> All assessments undergo BRE Quality Assurance audit.
-              Approximately 10% receive detailed technical audit which may raise additional queries.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Create evidence tracker at project start with responsible parties</li>
+              <li>Include BREEAM requirements in tender documentation</li>
+              <li>Schedule evidence review meetings at key project stages</li>
+              <li>Collect evidence progressively - don't wait until practical completion</li>
+              <li>Maintain clear document version control and references</li>
+              <li>Photograph installations during construction (before concealment)</li>
+            </ul>
+            <p>
+              <strong>Key Deadlines to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Project registration: <strong>Before practical completion</strong></li>
+              <li>Design Stage submission: <strong>RIBA Stage 4</strong> (before construction)</li>
+              <li>PCS evidence submission: <strong>Within 12 months</strong> of practical completion</li>
+              <li>Final certificate: <strong>Typically 3-4 months</strong> after complete evidence submission</li>
+            </ul>
+            <p>
+              <strong>Common Evidence Problems to Avoid:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Unsigned documents</strong> - All evidence requires named responsible person</li>
+              <li><strong>Generic specifications</strong> - Must be project-specific with clear references</li>
+              <li><strong>Undated photographs</strong> - Site photos must include date stamps</li>
+              <li><strong>Missing commissioning records</strong> - Systems must be proven to work as designed</li>
+              <li><strong>Inconsistent documents</strong> - Specifications must match drawings and as-built records</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <Scenario
+            title="BRE QA challenge wipes out 6 credits at submission"
+            situation={
+              <>
+                A development is targeting Excellent (70%). Pre-submission scoring shows 73% — 3% margin. After BRE Global QA review, six credits are withdrawn for evidence quality issues: three for inadequate procurement records (no signed declarations from suppliers), two for missing photographs (verbal confirmation only), one for outdated calculation (Stage 3 calc, not as-built). Final score 67% — Very Good, not Excellent.
+              </>
+            }
+            whatToDo={
+              <>
+                Two-stage response: (1) immediate — appeal where there is genuine new evidence available (e.g. retrospective supplier declarations, post-completion site survey); (2) negotiate with the planning authority for a variation. Lesson: every credit on a tight margin must have its evidence pack QA-checked by the Assessor before submission, against a credit-by-credit checklist of BRE expectations. Build the evidence pack as construction proceeds, not at the end.
+              </>
+            }
+            whyItMatters={
+              <>
+                BREEAM is won and lost on evidence quality. Clients (and contractors) often think compliance equals certification — it does not. BRE's QA process is rigorous; the assessor is your QA shield, not a rubber stamp. Budget time and fee for evidence collection from RIBA Stage 4 onwards.
+              </>
+            }
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <FAQ items={faqs} />
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Energy Sub-metering Evidence Package
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Compile evidence for Ene 02 Sub-metering credits (3
-                credits targeted).
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Design Stage Evidence:</p>
-                <p className="mt-2">1. Metering Strategy Document (dated, signed)</p>
-                <p className="ml-4">- Lists all energy uses over 10% of total</p>
-                <p className="ml-4">- Identifies meter locations and types</p>
-                <p className="ml-4">- States BMS integration requirements</p>
-                <p className="mt-2">2. Electrical Specification Clause 5.7</p>
-                <p className="ml-4">- "Sub-meters to all substantial loads (heating,</p>
-                <p className="ml-4"> cooling, lighting, small power, lifts, etc.)"</p>
-                <p className="mt-2">3. Schematic Drawing ME-SK-101</p>
-                <p className="ml-4">- Shows meter positions on distribution schematic</p>
-                <p className="mt-2 text-white">Post-Construction Stage Evidence:</p>
-                <p className="mt-2">4. As-built Meter Schedule (Rev Final)</p>
-                <p className="ml-4">- Lists 24 meters installed with references</p>
-                <p className="mt-2">5. Commissioning Certificates</p>
-                <p className="ml-4">- Meter calibration certificates</p>
-                <p className="ml-4">- BMS point verification sheets</p>
-                <p className="mt-2">6. Site Photographs</p>
-                <p className="ml-4">- Dated photos of installed meters with labels</p>
-                <p className="mt-2 text-green-400">
-                  Result: 3 credits achieved - full sub-metering coverage verified
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Lighting Design Evidence for Hea 01
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Prepare Visual Comfort evidence for office building.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Design Stage Package:</p>
-                <p className="mt-2">1. Lighting Design Report (by qualified designer)</p>
-                <p className="ml-4">Target lux levels per space type:</p>
-                <p className="ml-4">- Offices: 500 lux maintained, UGR &lt;19</p>
-                <p className="ml-4">- Circulation: 200 lux maintained</p>
-                <p className="ml-4">- Meeting rooms: 500 lux, dimming provision</p>
-                <p className="mt-2">2. DIALux Calculation Outputs</p>
-                <p className="ml-4">- Room-by-room calculations with uniformity</p>
-                <p className="ml-4">- UGR calculations for desk positions</p>
-                <p className="mt-2">3. Luminaire Schedule with Product Data</p>
-                <p className="ml-4">- TM66 circularity data (if targeting exemplary)</p>
-                <p className="ml-4">- Photometric files referenced</p>
-                <p className="mt-2 text-white">Post-Construction Stage Package:</p>
-                <p className="mt-2">4. Commissioning Lux Level Survey</p>
-                <p className="ml-4">- Measured values per space (signed by engineer)</p>
-                <p className="ml-4">- Results exceed design targets</p>
-                <p className="mt-2">5. Lighting Control Commissioning</p>
-                <p className="ml-4">- Dimming function tested and verified</p>
-                <p className="ml-4">- Scene setting completed</p>
-                <p className="mt-2 text-green-400">
-                  Result: Credits achieved - design targets met on site
-                </p>
-              </div>
-            </div>
+          <KeyTakeaways
+            points={[
+              "Two-stage certification: Design Stage (pre-construction) + Post-Construction (post-handover).",
+              "Each credit has a defined evidence schedule — calculations, drawings, specs, certificates, photos, declarations.",
+              "Procurement-dependent credits cannot be earned retroactively — must be locked at order stage.",
+              "BRE QA review can withdraw credits even after Assessor submission.",
+              "Evidence pack assembled progressively — never at the end.",
+              "Credit-by-credit checklist with the Assessor before each submission stage.",
+            ]}
+          />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Resolving a PCS Evidence Gap
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Design Stage specified DALI lighting controls, but
-                contractor installed standard switching.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Issue Identified:</p>
-                <p className="ml-4">- DS specification: DALI dimming throughout</p>
-                <p className="ml-4">- PCS reality: Manual switching only in some areas</p>
-                <p className="mt-2 text-white">Impact Assessment:</p>
-                <p className="ml-4">- Hea 01 Credit 2 (zoned control) at risk</p>
-                <p className="ml-4">- ENE 01 assumptions may be affected</p>
-                <p className="mt-2 text-white">Resolution Options:</p>
-                <p className="mt-2">Option A: Remediation</p>
-                <p className="ml-4 text-green-400">- Retrofit DALI drivers and controls</p>
-                <p className="ml-4 text-green-400">- Commission and evidence as specified</p>
-                <p className="ml-4 text-green-400">- Credit maintained</p>
-                <p className="mt-2">Option B: Accept credit loss</p>
-                <p className="ml-4 text-red-400">- Document variation with explanation</p>
-                <p className="ml-4 text-red-400">- Withdraw credit from final assessment</p>
-                <p className="ml-4 text-red-400">- Check overall rating impact</p>
-                <p className="mt-2 text-elec-yellow">
-                  Lesson: Early site monitoring prevents PCS surprises
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Evidence Collection Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Create evidence tracker at project start with responsible parties
-                </li>
-                <li className="pl-1">Include BREEAM requirements in tender documentation</li>
-                <li className="pl-1">Schedule evidence review meetings at key project stages</li>
-                <li className="pl-1">
-                  Collect evidence progressively - don't wait until practical completion
-                </li>
-                <li className="pl-1">Maintain clear document version control and references</li>
-                <li className="pl-1">
-                  Photograph installations during construction (before concealment)
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Deadlines to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Project registration: <strong>Before practical completion</strong>
-                </li>
-                <li className="pl-1">
-                  Design Stage submission: <strong>RIBA Stage 4</strong> (before construction)
-                </li>
-                <li className="pl-1">
-                  PCS evidence submission: <strong>Within 12 months</strong> of practical completion
-                </li>
-                <li className="pl-1">
-                  Final certificate: <strong>Typically 3-4 months</strong> after complete evidence
-                  submission
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">
-                Common Evidence Problems to Avoid
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Unsigned documents</strong> - All evidence requires named responsible
-                  person
-                </li>
-                <li className="pl-1">
-                  <strong>Generic specifications</strong> - Must be project-specific with clear
-                  references
-                </li>
-                <li className="pl-1">
-                  <strong>Undated photographs</strong> - Site photos must include date stamps
-                </li>
-                <li className="pl-1">
-                  <strong>Missing commissioning records</strong> - Systems must be proven to work as
-                  designed
-                </li>
-                <li className="pl-1">
-                  <strong>Inconsistent documents</strong> - Specifications must match drawings and
-                  as-built records
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Evidence Standards</p>
-                <ul className="space-y-0.5">
-                  <li>Dated - clear issue date visible</li>
-                  <li>Signed - named responsible person</li>
-                  <li>Project-specific - referenced correctly</li>
-                  <li>Complete - all information included</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Rating Thresholds</p>
-                <ul className="space-y-0.5">
-                  <li>Pass: 30% | Good: 45%</li>
-                  <li>Very Good: 55%</li>
-                  <li>Excellent: 70%</li>
-                  <li>Outstanding: 85%</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section4-1">
-              Next: Section 4.1
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section3-5")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Health and wellbeing
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section4-1")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Carbon fundamentals
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

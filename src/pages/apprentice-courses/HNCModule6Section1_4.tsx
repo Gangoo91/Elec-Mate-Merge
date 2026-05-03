@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 6 · Section 1 · Subsection 4 — Air Permeability
+ * HNC Electrical Engineering for Building Services (Sustainability and Environmental Engineering)
+ *   Air tightness testing, design air permeability, testing procedures, and achieving targets during construction
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Air Permeability - HNC Module 6 Section 1.4';
@@ -254,997 +271,406 @@ const faqs = [
 ];
 
 const HNCModule6Section1_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section1")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module6-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.1.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Air Permeability
-          </h1>
-          <p className="text-white">
-            Air tightness testing, design air permeability, testing procedures, and achieving
-            targets during construction
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 6 · Section 1 · Subsection 4"
+            title="Air Permeability"
+            description="Air tightness testing, design air permeability, testing procedures, and achieving targets during construction"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Air permeability:</strong> m³/h.m² @ 50Pa
-              </li>
-              <li className="pl-1">
-                <strong>Part L limit (dwellings):</strong> 8 m³/h.m² @ 50Pa
-              </li>
-              <li className="pl-1">
-                <strong>Testing:</strong> Blower door at 50 Pascal pressure
-              </li>
-              <li className="pl-1">
-                <strong>ATTMA:</strong> Certified testing to TSL1/TSL2
-              </li>
+          <TLDR
+            points={[
+              "Air permeability is measured by blower-door test per ATTMA TSL1 (dwellings) or TSL2 (non-dom) at a 50 Pa pressure differential, expressed as m³/(h·m²) of envelope area.",
+              "Part L 2021 sets the legal maximum at 8 m³/h·m² for new dwellings; the notional building assumes 5 to drive ambitious design. Below 3 you must demonstrate adequate ventilation under Part F.",
+              "As buildings get tighter, ventilation strategy becomes critical — MVHR (mechanical ventilation with heat recovery) is now the default for dwellings achieving <5.",
+            ]}
+          />
+
+          <RegsCallout
+            source="Approved Document L Volume 1 — Air permeability testing requirements"
+            clause="A pressure test should be carried out on every dwelling, except where Building Control accepts a representative sample test for development of multiple identical dwellings. The test shall be carried out by a person registered under a scheme approved by the Secretary of State (e.g. ATTMA) using the methodology in ATTMA TSL1."
+            meaning={
+              <>
+                Every-plot testing is now the default — the old representative-sample concession is rare. Use an ATTMA-registered tester, retain the certificate for Building Control, and feed the as-tested figure into the as-built SAP. A failed test halts the completion process until remediation and re-test is done.
+              </>
+            }
+            cite="Source: Approved Document L Volume 1: 2021 — gov.uk; ATTMA TSL1 testing standard"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Understand air permeability standards and Part L requirements",
+              "Explain blower door testing methodology and equipment",
+              "Apply ATTMA testing procedures and certification requirements",
+              "Identify common air leakage paths in building envelopes",
+              "Coordinate MEP installations to maintain air barrier integrity",
+              "Implement strategies to achieve design air permeability targets",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Air Permeability Fundamentals">
+            <p>Air permeability measures the rate at which air passes through the building envelope when a pressure difference is applied. It is a key indicator of building envelope quality and directly impacts energy performance, thermal comfort, and indoor air quality.</p>
+            <p><strong>Key terminology:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Air permeability (q50):</strong> Air leakage rate per m² of envelope area at 50Pa (m³/h.m²)</li>
+              <li><strong>Air leakage index:</strong> Air leakage rate per m² of floor area at 50Pa (used for non-domestic)</li>
+              <li><strong>n50 (air changes):</strong> Volume air changes per hour at 50Pa (ACH)</li>
+              <li><strong>Air barrier:</strong> The continuous layer that prevents air movement through the envelope</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Service penetrations:</strong> Primary leakage source
-              </li>
-              <li className="pl-1">
-                <strong>MEP coordination:</strong> Essential for compliance
-              </li>
-              <li className="pl-1">
-                <strong>Pre-testing:</strong> Before finishes conceal air barrier
-              </li>
-              <li className="pl-1">
-                <strong>MVHR impact:</strong> Airtightness critical for performance
-              </li>
+            <p><strong>Building Regulations Air Permeability Limits</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>New dwellings (Part L1A):</strong> 8 m³/h.m² @ 50Pa — 3-5 m³/h.m² @ 50Pa — ~0.6 ACH (n50)</li>
+              <li><strong>New non-domestic (Part L2A):</strong> 8 m³/h.m² @ 50Pa — 3-5 m³/h.m² @ 50Pa — ~0.6 ACH (n50)</li>
+              <li><strong>Existing dwellings (Part L1B):</strong> Not mandatory — Varies by scope — N/A</li>
+              <li><strong>Extensions &gt;50m²:</strong> 8 m³/h.m² @ 50Pa — Match existing or better — N/A</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Why Airtightness Matters</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Energy efficiency:</strong> Uncontrolled air leakage can account for 30-50% of heat loss</li>
+              <li><strong>Thermal comfort:</strong> Draughts cause cold spots and discomfort</li>
+              <li><strong>Moisture control:</strong> Air leakage can transport moisture into building fabric causing condensation</li>
+              <li><strong>MVHR performance:</strong> Mechanical ventilation requires airtight envelope to function correctly</li>
+              <li><strong>Acoustic performance:</strong> Air paths also transmit sound</li>
+            </ul>
+            <p><strong>Design principle:</strong> The design air permeability used in SAP/SBEM calculations must be achieved on site - unrealistic targets lead to compliance issues at completion.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Understand air permeability standards and Part L requirements',
-              'Explain blower door testing methodology and equipment',
-              'Apply ATTMA testing procedures and certification requirements',
-              'Identify common air leakage paths in building envelopes',
-              'Coordinate MEP installations to maintain air barrier integrity',
-              'Implement strategies to achieve design air permeability targets',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Air Permeability Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Air Permeability Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Blower Door Testing Methodology">
+            <p>Blower door testing is the standard method for measuring building air permeability. A calibrated fan is temporarily installed in an external door opening to pressurise or depressurise the building, and the airflow required to maintain the pressure difference is measured.</p>
+            <p><strong>Equipment</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Calibrated fan unit</li>
+              <li>Adjustable door panel/frame</li>
+              <li>Digital manometer</li>
+              <li>Flow measurement rings</li>
+              <li>Data logging software</li>
+            </ul>
+            <p><strong>Building Preparation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Close all windows/doors</li>
+              <li>Seal intended openings</li>
+              <li>Close trickle vents</li>
+              <li>Seal drainage traps</li>
+              <li>Turn off combustion appliances</li>
+            </ul>
+            <p><strong>Test Procedure</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Measure zero-flow baseline</li>
+              <li>Pressurise/depressurise</li>
+              <li>Multiple pressure stages</li>
+              <li>Record flow at each stage</li>
+              <li>Calculate q50 result</li>
+            </ul>
+            <p><strong>Test Procedure Steps</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>1. Preparation:</strong> Building survey, seal openings, record conditions — Ensure test validity and repeatability</li>
+              <li><strong>2. Equipment setup:</strong> Install fan in door, connect manometer — Create controlled pressure boundary</li>
+              <li><strong>3. Baseline reading:</strong> Measure natural pressure difference (fan off) — Account for wind/stack effects</li>
+              <li><strong>4. Pressurisation:</strong> Fan blows air in, readings at 10-60Pa increments — Establish flow/pressure relationship</li>
+              <li><strong>5. Depressurisation:</strong> Fan extracts air, readings at same increments — Verify results, identify one-way leaks</li>
+              <li><strong>6. Calculation:</strong> Average pressurisation and depressurisation — Determine q50 air permeability result</li>
+            </ul>
+            <p><strong>Leak Detection During Testing</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Smoke pencils:</strong> Handheld smoke generators show air movement at leakage points</li>
+              <li><strong>Theatrical smoke:</strong> Fill depressurised building, watch where smoke exits</li>
+              <li><strong>Thermal imaging:</strong> Cold air infiltration shows as temperature differences</li>
+              <li><strong>Anemometer:</strong> Measure air velocity at suspected leakage points</li>
+            </ul>
+            <p><strong>Best practice:</strong> Conduct both pressurisation and depressurisation tests - the average provides the most representative result and differences can indicate one-way leakage paths.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="ATTMA Testing Procedures and Certification">
+            <p>The Air Tightness Testing & Measurement Association (ATTMA) sets the technical standards for air permeability testing in the UK. ATTMA certification ensures testers are competent, use calibrated equipment, and follow standardised procedures acceptable to Building Control.</p>
+            <p><strong>ATTMA Technical Standards</strong></p>
+            <p><strong>TSL1 - Dwellings</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Whole dwelling testing</li>
+              <li>Minimum 50Pa test pressure</li>
+              <li>Results in m³/h.m² @ 50Pa</li>
+              <li>Envelope area calculation</li>
+            </ul>
+            <p><strong>TSL2 - Non-Domestic</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Whole building or zone testing</li>
+              <li>Representative sample options</li>
+              <li>Results in m³/h.m² @ 50Pa</li>
+              <li>Floor area index option</li>
+            </ul>
+            <p><strong>ATTMA Certification Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Tester certification:</strong> Individual testers must pass ATTMA examination and maintain competence</li>
+              <li><strong>Equipment calibration:</strong> Fan units and manometers must have current calibration certificates</li>
+              <li><strong>Lodgement:</strong> Test results must be lodged on ATTMA register within 5 working days</li>
+              <li><strong>Quality assurance:</strong> Random audits of tests by ATTMA technical committee</li>
+              <li><strong>Insurance:</strong> Testers must hold appropriate professional indemnity insurance</li>
+            </ul>
+            <p><strong>Test Certificate Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Property identification:</strong> Full address, UPRN, plot number (if applicable)</li>
+              <li><strong>Test details:</strong> Date, time, weather conditions, internal/external temperatures</li>
+              <li><strong>Building data:</strong> Envelope area, internal volume, floor area</li>
+              <li><strong>Equipment:</strong> Fan serial number, calibration certificate reference</li>
+              <li><strong>Results:</strong> q50 value, n50 value, uncertainty, pass/fail against target</li>
+              <li><strong>Certification:</strong> Tester name, ATTMA number, signature, lodgement reference</li>
+            </ul>
+            <p><strong>Sample Testing for Large Developments</strong></p>
+            <p>For developments of multiple similar dwellings, sample testing may be acceptable:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Minimum 3 units or 50% of units (whichever is greater) for small developments</li>
+              <li>Representative sample of each dwelling type and construction method</li>
+              <li>Include end-terrace, mid-terrace, and different floor levels</li>
+              <li>First test must pass before sample approach is accepted</li>
+              <li>If any sample fails, 100% testing may be required</li>
+            </ul>
+            <p><strong>Compliance note:</strong> Building Control will only accept test certificates from ATTMA-registered testers lodged on the ATTMA register - informal tests have no regulatory standing.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Achieving Targets and MEP Coordination">
+            <p>Achieving design air permeability targets requires coordinated effort across all trades throughout construction. For building services engineers, understanding common leakage paths and sealing requirements for MEP penetrations is essential for maintaining air barrier integrity.</p>
+            <p><strong>Common Air Leakage Paths</strong></p>
+            <p><strong>Structural Junctions</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Wall to floor junctions</li>
+              <li>Wall to ceiling junctions</li>
+              <li>Wall to roof connections</li>
+              <li>Foundation/slab perimeters</li>
+              <li>Party wall junctions</li>
+              <li>Window and door frames</li>
+            </ul>
+            <p><strong>Service Penetrations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Electrical cables and back boxes</li>
+              <li>Plumbing pipes (water, waste, gas)</li>
+              <li>HVAC ductwork and pipework</li>
+              <li>Flues and chimneys</li>
+              <li>Data and communications cables</li>
+              <li>Extract fan penetrations</li>
+            </ul>
+            <p><strong>MEP Sealing Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Electrical back boxes:</strong> Airtight back boxes or membrane seals — Multiple cable entries need individual sealing</li>
+              <li><strong>Cable penetrations:</strong> Proprietary grommets or mastic sealant — Size grommets to match cable diameter</li>
+              <li><strong>Pipe penetrations:</strong> Pipe collars, sleeves with internal seal — Allow for thermal movement on hot pipes</li>
+              <li><strong>Ductwork penetrations:</strong> Airtight grilles, sealed sleeves — Coordinate fire damper requirements</li>
+              <li><strong>Service risers:</strong> Fire-rated sealant with airtight properties — Combine fire stopping and air sealing</li>
+              <li><strong>Recessed lighting:</strong> Airtight downlight covers or IC-rated fittings — Maintain ventilation for non-IC fittings</li>
+            </ul>
+            <p><strong>Construction Stage Coordination</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Design:</strong> Define air barrier line, specify sealing details — Coordinate penetration locations, specify airtight products</li>
+              <li><strong>First fix:</strong> Install air barrier, make penetrations — Complete all penetrations before air barrier closes</li>
+              <li><strong>Air barrier complete:</strong> Pre-test before finishes, identify issues — Seal all service penetrations, inspect work</li>
+              <li><strong>Second fix:</strong> Maintain air barrier during fitting out — No new penetrations through air barrier</li>
+              <li><strong>Completion:</strong> Final ATTMA test for compliance — Support leak detection, remedial sealing if needed</li>
+            </ul>
+            <p><strong>Best Practice: Airtightness Champion</strong></p>
+            <p>Appoint an airtightness champion or coordinator with responsibility to:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Brief all trades on airtightness requirements and their role</li>
+              <li>Conduct regular inspections of air barrier installation and sealing</li>
+              <li>Coordinate MEP penetrations with air barrier installation timing</li>
+              <li>Organise pre-testing at appropriate construction stages</li>
+              <li>Document issues and ensure remedial action is taken</li>
+              <li>Liaise with ATTMA tester for final compliance testing</li>
+            </ul>
+            <p><strong>Critical coordination:</strong> MEP services that penetrate the air barrier after it is sealed - or that are installed without proper sealing - are the leading cause of air permeability test failures on otherwise well-constructed buildings.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Air permeability measures the rate at which air passes through the building envelope
-              when a pressure difference is applied. It is a key indicator of building envelope
-              quality and directly impacts energy performance, thermal comfort, and indoor air
-              quality.
+              <strong>Example 1: Calculating Air Permeability Result</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key terminology:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Air permeability (q50):</strong> Air leakage rate per m² of envelope area
-                  at 50Pa (m³/h.m²)
-                </li>
-                <li className="pl-1">
-                  <strong>Air leakage index:</strong> Air leakage rate per m² of floor area at 50Pa
-                  (used for non-domestic)
-                </li>
-                <li className="pl-1">
-                  <strong>n50 (air changes):</strong> Volume air changes per hour at 50Pa (ACH)
-                </li>
-                <li className="pl-1">
-                  <strong>Air barrier:</strong> The continuous layer that prevents air movement
-                  through the envelope
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Regulations Air Permeability Limits
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Building Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Part L Limit</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Design Target
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Passivhaus Standard
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">New dwellings (Part L1A)</td>
-                      <td className="border border-white/10 px-3 py-2">8 m³/h.m² @ 50Pa</td>
-                      <td className="border border-white/10 px-3 py-2">3-5 m³/h.m² @ 50Pa</td>
-                      <td className="border border-white/10 px-3 py-2">~0.6 ACH (n50)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        New non-domestic (Part L2A)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">8 m³/h.m² @ 50Pa</td>
-                      <td className="border border-white/10 px-3 py-2">3-5 m³/h.m² @ 50Pa</td>
-                      <td className="border border-white/10 px-3 py-2">~0.6 ACH (n50)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Existing dwellings (Part L1B)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Not mandatory</td>
-                      <td className="border border-white/10 px-3 py-2">Varies by scope</td>
-                      <td className="border border-white/10 px-3 py-2">N/A</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Extensions &gt;50m²</td>
-                      <td className="border border-white/10 px-3 py-2">8 m³/h.m² @ 50Pa</td>
-                      <td className="border border-white/10 px-3 py-2">Match existing or better</td>
-                      <td className="border border-white/10 px-3 py-2">N/A</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Why Airtightness Matters</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Energy efficiency:</strong> Uncontrolled air leakage can account for
-                  30-50% of heat loss
-                </li>
-                <li className="pl-1">
-                  <strong>Thermal comfort:</strong> Draughts cause cold spots and discomfort
-                </li>
-                <li className="pl-1">
-                  <strong>Moisture control:</strong> Air leakage can transport moisture into
-                  building fabric causing condensation
-                </li>
-                <li className="pl-1">
-                  <strong>MVHR performance:</strong> Mechanical ventilation requires airtight
-                  envelope to function correctly
-                </li>
-                <li className="pl-1">
-                  <strong>Acoustic performance:</strong> Air paths also transmit sound
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design principle:</strong> The design air permeability used in SAP/SBEM
-              calculations must be achieved on site - unrealistic targets lead to compliance issues
-              at completion.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Blower Door Testing Methodology */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Blower Door Testing Methodology
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> A detached dwelling with envelope area 320 m² tested at 50Pa shows air leakage rate of 1,280 m³/h.</p>
+            <p>Given:</p>
+            <p>Air leakage rate (Q50) = 1,280 m³/h</p>
+            <p>Envelope area = 320 m²</p>
+            <p>Air permeability calculation:</p>
+            <p>q50 = Q50 / Envelope area</p>
+            <p>q50 = 1,280 / 320</p>
+            <p>q50 = 4.0 m³/h.m² @ 50Pa</p>
+            <p>Assessment:</p>
+            <p>Part L limit: 8.0 m³/h.m² @ 50Pa</p>
+            <p>Result: PASS (4.0 &lt; 8.0)</p>
+            <p>This is a good result for standard construction</p>
             <p>
-              Blower door testing is the standard method for measuring building air permeability. A
-              calibrated fan is temporarily installed in an external door opening to pressurise or
-              depressurise the building, and the airflow required to maintain the pressure
-              difference is measured.
+              <strong>Example 2: Air Changes Calculation</strong>
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Equipment</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Calibrated fan unit</li>
-                  <li className="pl-1">Adjustable door panel/frame</li>
-                  <li className="pl-1">Digital manometer</li>
-                  <li className="pl-1">Flow measurement rings</li>
-                  <li className="pl-1">Data logging software</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Building Preparation</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Close all windows/doors</li>
-                  <li className="pl-1">Seal intended openings</li>
-                  <li className="pl-1">Close trickle vents</li>
-                  <li className="pl-1">Seal drainage traps</li>
-                  <li className="pl-1">Turn off combustion appliances</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Test Procedure</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Measure zero-flow baseline</li>
-                  <li className="pl-1">Pressurise/depressurise</li>
-                  <li className="pl-1">Multiple pressure stages</li>
-                  <li className="pl-1">Record flow at each stage</li>
-                  <li className="pl-1">Calculate q50 result</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Test Procedure Steps</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Step</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Action</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1. Preparation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Building survey, seal openings, record conditions
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ensure test validity and repeatability
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2. Equipment setup</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Install fan in door, connect manometer
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Create controlled pressure boundary
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3. Baseline reading</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Measure natural pressure difference (fan off)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Account for wind/stack effects
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4. Pressurisation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fan blows air in, readings at 10-60Pa increments
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Establish flow/pressure relationship
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5. Depressurisation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fan extracts air, readings at same increments
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Verify results, identify one-way leaks
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6. Calculation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Average pressurisation and depressurisation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Determine q50 air permeability result
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Leak Detection During Testing
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Smoke pencils:</strong> Handheld smoke generators show air movement at
-                  leakage points
-                </li>
-                <li className="pl-1">
-                  <strong>Theatrical smoke:</strong> Fill depressurised building, watch where smoke
-                  exits
-                </li>
-                <li className="pl-1">
-                  <strong>Thermal imaging:</strong> Cold air infiltration shows as temperature
-                  differences
-                </li>
-                <li className="pl-1">
-                  <strong>Anemometer:</strong> Measure air velocity at suspected leakage points
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> Conduct both pressurisation and depressurisation tests
-              - the average provides the most representative result and differences can indicate
-              one-way leakage paths.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: ATTMA Testing Procedures */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            ATTMA Testing Procedures and Certification
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Same dwelling with internal volume 480 m³. Calculate n50 air changes.</p>
+            <p>Given:</p>
+            <p>Air leakage rate (Q50) = 1,280 m³/h</p>
+            <p>Internal volume = 480 m³</p>
+            <p>Air changes calculation:</p>
+            <p>n50 = Q50 / Internal volume</p>
+            <p>n50 = 1,280 / 480</p>
+            <p>n50 = 2.67 ACH @ 50Pa</p>
+            <p>Comparison:</p>
+            <p>Passivhaus standard: ~0.6 ACH @ 50Pa</p>
+            <p>Good UK new build: 2-4 ACH @ 50Pa</p>
+            <p>Average existing: 10-15 ACH @ 50Pa</p>
             <p>
-              The Air Tightness Testing & Measurement Association (ATTMA) sets the technical
-              standards for air permeability testing in the UK. ATTMA certification ensures testers
-              are competent, use calibrated equipment, and follow standardised procedures acceptable
-              to Building Control.
+              <strong>Example 3: Failed Test Response</strong>
             </p>
+            <p><strong>Scenario:</strong> Pre-test shows 6.5 m³/h.m² @ 50Pa against design target of 5.0 m³/h.m². Identify remediation approach.</p>
+            <p>Assessment:</p>
+            <p>Result: 6.5 m³/h.m² @ 50Pa</p>
+            <p>Target: 5.0 m³/h.m² @ 50Pa</p>
+            <p>Shortfall: 1.5 m³/h.m² (30% above target)</p>
+            <p>Leak detection process:</p>
+            <p>1. Depressurise building to -50Pa</p>
+            <p>2. Systematic smoke pencil survey</p>
+            <p>3. Check all service penetrations</p>
+            <p>4. Inspect window/door seals</p>
+            <p>5. Examine wall/floor junctions</p>
+            <p>Findings:</p>
+            <p>- 12 unsealed electrical back boxes</p>
+            <p>- Plumbing penetrations to bathroom</p>
+            <p>- Kitchen extract duct not sealed</p>
+            <p>Remediation:</p>
+            <p>1. Install airtight back box seals</p>
+            <p>2. Seal pipe penetrations with mastic</p>
+            <p>3. Seal duct penetration with collar</p>
+            <p>Re-test result: 4.2 m³/h.m² @ 50Pa - PASS</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">ATTMA Technical Standards</p>
-              <div className="grid sm:grid-cols-2 gap-4 mt-2">
-                <div>
-                  <p className="font-medium text-white mb-1">TSL1 - Dwellings</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Whole dwelling testing</li>
-                    <li>Minimum 50Pa test pressure</li>
-                    <li>Results in m³/h.m² @ 50Pa</li>
-                    <li>Envelope area calculation</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium text-white mb-1">TSL2 - Non-Domestic</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Whole building or zone testing</li>
-                    <li>Representative sample options</li>
-                    <li>Results in m³/h.m² @ 50Pa</li>
-                    <li>Floor area index option</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                ATTMA Certification Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Tester certification:</strong> Individual testers must pass ATTMA
-                  examination and maintain competence
-                </li>
-                <li className="pl-1">
-                  <strong>Equipment calibration:</strong> Fan units and manometers must have current
-                  calibration certificates
-                </li>
-                <li className="pl-1">
-                  <strong>Lodgement:</strong> Test results must be lodged on ATTMA register within 5
-                  working days
-                </li>
-                <li className="pl-1">
-                  <strong>Quality assurance:</strong> Random audits of tests by ATTMA technical
-                  committee
-                </li>
-                <li className="pl-1">
-                  <strong>Insurance:</strong> Testers must hold appropriate professional indemnity
-                  insurance
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Test Certificate Requirements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Certificate Element
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Required Information
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Property identification</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full address, UPRN, plot number (if applicable)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Test details</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Date, time, weather conditions, internal/external temperatures
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Building data</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Envelope area, internal volume, floor area
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Equipment</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fan serial number, calibration certificate reference
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Results</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        q50 value, n50 value, uncertainty, pass/fail against target
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Certification</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Tester name, ATTMA number, signature, lodgement reference
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Sample Testing for Large Developments
-              </p>
-              <div className="text-sm text-white space-y-2">
-                <p>
-                  For developments of multiple similar dwellings, sample testing may be acceptable:
-                </p>
-                <ul className="list-disc list-outside ml-5 space-y-1">
-                  <li>
-                    Minimum 3 units or 50% of units (whichever is greater) for small developments
-                  </li>
-                  <li>Representative sample of each dwelling type and construction method</li>
-                  <li>Include end-terrace, mid-terrace, and different floor levels</li>
-                  <li>First test must pass before sample approach is accepted</li>
-                  <li>If any sample fails, 100% testing may be required</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Compliance note:</strong> Building Control will only accept test certificates
-              from ATTMA-registered testers lodged on the ATTMA register - informal tests have no
-              regulatory standing.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Achieving Targets and MEP Coordination */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Achieving Targets and MEP Coordination
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Achieving design air permeability targets requires coordinated effort across all
-              trades throughout construction. For building services engineers, understanding common
-              leakage paths and sealing requirements for MEP penetrations is essential for
-              maintaining air barrier integrity.
+              <strong>Air Permeability Testing Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Air Leakage Paths
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Structural Junctions</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Wall to floor junctions</li>
-                    <li>Wall to ceiling junctions</li>
-                    <li>Wall to roof connections</li>
-                    <li>Foundation/slab perimeters</li>
-                    <li>Party wall junctions</li>
-                    <li>Window and door frames</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Service Penetrations</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Electrical cables and back boxes</li>
-                    <li>Plumbing pipes (water, waste, gas)</li>
-                    <li>HVAC ductwork and pipework</li>
-                    <li>Flues and chimneys</li>
-                    <li>Data and communications cables</li>
-                    <li>Extract fan penetrations</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">MEP Sealing Requirements</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse mt-2">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Penetration Type
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Recommended Sealing Method
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Key Considerations
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Electrical back boxes</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Airtight back boxes or membrane seals
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multiple cable entries need individual sealing
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cable penetrations</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Proprietary grommets or mastic sealant
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Size grommets to match cable diameter
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pipe penetrations</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pipe collars, sleeves with internal seal
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Allow for thermal movement on hot pipes
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ductwork penetrations</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Airtight grilles, sealed sleeves
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Coordinate fire damper requirements
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Service risers</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fire-rated sealant with airtight properties
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Combine fire stopping and air sealing
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Recessed lighting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Airtight downlight covers or IC-rated fittings
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Maintain ventilation for non-IC fittings
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Construction Stage Coordination
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Stage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Airtightness Actions
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        MEP Responsibility
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Design</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Define air barrier line, specify sealing details
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Coordinate penetration locations, specify airtight products
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">First fix</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Install air barrier, make penetrations
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Complete all penetrations before air barrier closes
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Air barrier complete</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pre-test before finishes, identify issues
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Seal all service penetrations, inspect work
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Second fix</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Maintain air barrier during fitting out
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        No new penetrations through air barrier
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Completion</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Final ATTMA test for compliance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Support leak detection, remedial sealing if needed
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-2">
-                Best Practice: Airtightness Champion
-              </p>
-              <p className="text-sm text-white mb-2">
-                Appoint an airtightness champion or coordinator with responsibility to:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Brief all trades on airtightness requirements and their role
-                </li>
-                <li className="pl-1">
-                  Conduct regular inspections of air barrier installation and sealing
-                </li>
-                <li className="pl-1">
-                  Coordinate MEP penetrations with air barrier installation timing
-                </li>
-                <li className="pl-1">Organise pre-testing at appropriate construction stages</li>
-                <li className="pl-1">Document issues and ensure remedial action is taken</li>
-                <li className="pl-1">Liaise with ATTMA tester for final compliance testing</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Critical coordination:</strong> MEP services that penetrate the air barrier
-              after it is sealed - or that are installed without proper sealing - are the leading
-              cause of air permeability test failures on otherwise well-constructed buildings.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Confirm design air permeability target from SAP/SBEM calculations</li>
+              <li>Identify air barrier line on drawings - understand what is inside/outside</li>
+              <li>Schedule pre-test after air barrier complete, before finishes</li>
+              <li>Ensure all MEP penetrations are complete before pre-test</li>
+              <li>Arrange ATTMA-certified tester with adequate notice</li>
+              <li>Prepare building - close openings, seal traps, weather conditions suitable</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Part L limit (dwellings): <strong>8 m³/h.m² @ 50Pa</strong></li>
+              <li>Typical design target: <strong>3-5 m³/h.m² @ 50Pa</strong></li>
+              <li>Passivhaus standard: <strong>~0.6 ACH (n50)</strong></li>
+              <li>Test pressure: <strong>50 Pascals</strong></li>
+              <li>ATTMA lodgement: <strong>Within 5 working days</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Calculating Air Permeability Result
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A detached dwelling with envelope area 320 m² tested at
-                50Pa shows air leakage rate of 1,280 m³/h.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Given:</p>
-                <p className="ml-4">Air leakage rate (Q50) = 1,280 m³/h</p>
-                <p className="ml-4">Envelope area = 320 m²</p>
-                <p className="mt-2">Air permeability calculation:</p>
-                <p className="ml-4">q50 = Q50 / Envelope area</p>
-                <p className="ml-4">q50 = 1,280 / 320</p>
-                <p className="ml-4 text-green-400">q50 = 4.0 m³/h.m² @ 50Pa</p>
-                <p className="mt-2">Assessment:</p>
-                <p className="ml-4">Part L limit: 8.0 m³/h.m² @ 50Pa</p>
-                <p className="ml-4 text-green-400">Result: PASS (4.0 &lt; 8.0)</p>
-                <p className="mt-2 text-white">
-                  This is a good result for standard construction
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Air Changes Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Same dwelling with internal volume 480 m³. Calculate n50
-                air changes.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Given:</p>
-                <p className="ml-4">Air leakage rate (Q50) = 1,280 m³/h</p>
-                <p className="ml-4">Internal volume = 480 m³</p>
-                <p className="mt-2">Air changes calculation:</p>
-                <p className="ml-4">n50 = Q50 / Internal volume</p>
-                <p className="ml-4">n50 = 1,280 / 480</p>
-                <p className="ml-4 text-green-400">n50 = 2.67 ACH @ 50Pa</p>
-                <p className="mt-2">Comparison:</p>
-                <p className="ml-4">Passivhaus standard: ~0.6 ACH @ 50Pa</p>
-                <p className="ml-4">Good UK new build: 2-4 ACH @ 50Pa</p>
-                <p className="ml-4">Average existing: 10-15 ACH @ 50Pa</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Failed Test Response
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Pre-test shows 6.5 m³/h.m² @ 50Pa against design target
-                of 5.0 m³/h.m². Identify remediation approach.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Assessment:</p>
-                <p className="ml-4">Result: 6.5 m³/h.m² @ 50Pa</p>
-                <p className="ml-4">Target: 5.0 m³/h.m² @ 50Pa</p>
-                <p className="ml-4 text-red-400">Shortfall: 1.5 m³/h.m² (30% above target)</p>
-                <p className="mt-2">Leak detection process:</p>
-                <p className="ml-4">1. Depressurise building to -50Pa</p>
-                <p className="ml-4">2. Systematic smoke pencil survey</p>
-                <p className="ml-4">3. Check all service penetrations</p>
-                <p className="ml-4">4. Inspect window/door seals</p>
-                <p className="ml-4">5. Examine wall/floor junctions</p>
-                <p className="mt-2">Findings:</p>
-                <p className="ml-4 text-orange-400">- 12 unsealed electrical back boxes</p>
-                <p className="ml-4 text-orange-400">- Plumbing penetrations to bathroom</p>
-                <p className="ml-4 text-orange-400">- Kitchen extract duct not sealed</p>
-                <p className="mt-2">Remediation:</p>
-                <p className="ml-4">1. Install airtight back box seals</p>
-                <p className="ml-4">2. Seal pipe penetrations with mastic</p>
-                <p className="ml-4">3. Seal duct penetration with collar</p>
-                <p className="mt-2 text-green-400">Re-test result: 4.2 m³/h.m² @ 50Pa - PASS</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Air Permeability Testing Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Confirm design air permeability target from SAP/SBEM calculations
-                </li>
-                <li className="pl-1">
-                  Identify air barrier line on drawings - understand what is inside/outside
-                </li>
-                <li className="pl-1">
-                  Schedule pre-test after air barrier complete, before finishes
-                </li>
-                <li className="pl-1">Ensure all MEP penetrations are complete before pre-test</li>
-                <li className="pl-1">Arrange ATTMA-certified tester with adequate notice</li>
-                <li className="pl-1">
-                  Prepare building - close openings, seal traps, weather conditions suitable
-                </li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Late MEP installation</strong> - penetrating sealed air barrier causes failures</li>
+                <li><strong>No pre-testing</strong> - discovering issues after finishes is costly</li>
+                <li><strong>Incorrect sealing products</strong> - decorator's caulk is not an air sealant</li>
+                <li><strong>Unrealistic design targets</strong> - over-optimistic values cause compliance issues</li>
+                <li><strong>Unclear responsibility</strong> - airtightness falls between trades without coordination</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Part L limit (dwellings): <strong>8 m³/h.m² @ 50Pa</strong>
-                </li>
-                <li className="pl-1">
-                  Typical design target: <strong>3-5 m³/h.m² @ 50Pa</strong>
-                </li>
-                <li className="pl-1">
-                  Passivhaus standard: <strong>~0.6 ACH (n50)</strong>
-                </li>
-                <li className="pl-1">
-                  Test pressure: <strong>50 Pascals</strong>
-                </li>
-                <li className="pl-1">
-                  ATTMA lodgement: <strong>Within 5 working days</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Late MEP installation</strong> - penetrating sealed air barrier causes
-                  failures
-                </li>
-                <li className="pl-1">
-                  <strong>No pre-testing</strong> - discovering issues after finishes is costly
-                </li>
-                <li className="pl-1">
-                  <strong>Incorrect sealing products</strong> - decorator's caulk is not an air
-                  sealant
-                </li>
-                <li className="pl-1">
-                  <strong>Unrealistic design targets</strong> - over-optimistic values cause
-                  compliance issues
-                </li>
-                <li className="pl-1">
-                  <strong>Unclear responsibility</strong> - airtightness falls between trades
-                  without coordination
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="MVHR commissioning at 4.2 m³/h·m² — high CO₂ in bedrooms"
+            situation={
+              <>
+                A four-bed detached achieves an air permeability of 4.2 m³/h·m² — excellent for SAP. MVHR is installed but CO₂ monitoring during the first six weeks of occupation shows bedroom CO₂ peaking at 1,800 ppm overnight (target ≤1,000 ppm). The homeowner reports stuffiness and condensation on bedroom windows.
+              </>
+            }
+            whatToDo={
+              <>
+                Commissioning issue, not fabric failure. Verify: (1) MVHR commissioned to BPEC standards with measured air-flow rates per terminal matching the design schedule; (2) duct routes are not crushed or kinked; (3) supply terminals in bedrooms are not blocked by furniture; (4) boost mode is functional and used appropriately. If commissioned correctly and still failing, increase the design supply rate or step up to an MVHR with higher-capacity boost mode. Part F compliance is the responsibility of the M&E designer regardless of fabric performance.
+              </>
+            }
+            whyItMatters={
+              <>
+                Tight fabric without working ventilation is a health hazard. Indoor air pollutants, moisture and CO₂ accumulate, leading to mould, occupant complaints and warranty claims. Part L and Part F must be designed and commissioned together — neither stands alone.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Air Permeability Standards</p>
-                <ul className="space-y-0.5">
-                  <li>Part L limit: 8 m³/h.m² @ 50Pa</li>
-                  <li>Good practice: 3-5 m³/h.m² @ 50Pa</li>
-                  <li>Passivhaus: ~0.6 ACH @ 50Pa</li>
-                  <li>Test standard: ATTMA TSL1/TSL2</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Common Leakage Sources</p>
-                <ul className="space-y-0.5">
-                  <li>Service penetrations (MEP)</li>
-                  <li>Window/door frames</li>
-                  <li>Wall/floor/ceiling junctions</li>
-                  <li>Recessed lighting and extract fans</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              "Test method: blower door at 50 Pa, ATTMA TSL1 (dwellings) or TSL2 (non-dom).",
+              "Limiting value: 8 m³/h·m² for new dwellings — anything above fails Part L.",
+              "Notional value: 5 m³/h·m² (design target with safety margin).",
+              "Below 5: MVHR is essentially mandatory to meet Part F.",
+              "Below 3: enhanced ventilation strategy + indoor air quality monitoring strongly recommended.",
+              "Commission MVHR per BPEC standards — measured flow per terminal, not just system fan speed.",
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section1-5">
-              Next: Section 1.5
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section1-3")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Fabric performance
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section1-5")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Building services compliance
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

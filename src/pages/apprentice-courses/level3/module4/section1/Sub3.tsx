@@ -292,18 +292,18 @@ export default function Sub3() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Reg 462.1.1 (Isolation)"
+            source="BS 7671:2018+A4:2026 — Regulations 462.1 (Provisions for isolation) and 537.2.4 (Devices for isolation — prevention of unwanted closure)"
             clause={
               <>
-                "Every circuit shall be capable of being isolated from each of the live supply conductors except where Regulation 461 applies. Provision shall be made for the disconnection of the neutral conductor where it cannot be relied upon to be at earth potential."
+                "462.1 Each electrical installation shall have provisions for isolation from each supply. 537.2.4 Devices for isolation shall be selected and/or installed so as to prevent unwanted or unintentional closure (see Regulation 462.3). This may be achieved by locating the device in a lockable space or lockable enclosure or by padlocking or by other suitable means."
               </>
             }
             meaning={
               <>
-                Two requirements. First &mdash; every circuit must have a means of isolation from EVERY live conductor (line and neutral on TT systems where the neutral isn\'t reliably at earth potential). Second &mdash; on TN-S and TN-C-S where the neutral IS at earth potential, you only need to isolate the line. The L3 apprentice needs to know which supply arrangement they\'re working on, and isolate accordingly.
+                Two requirements work together. First &mdash; Reg 462.1 says every installation must have provisions for isolation from each supply. Second &mdash; Reg 537.2.4 says the isolation device itself must be selected and installed so it can&apos;t be unintentionally closed (lockable enclosure, padlock or equivalent). The L3 apprentice needs to know that &lsquo;isolation&rsquo; isn&apos;t just turning a switch off &mdash; it&apos;s using a device that&apos;s designed and installed to stay off.
               </>
             }
-            cite="Source: BS 7671:2018 incorporating Amendment 2:2022, Reg 462.1.1 — verbatim from the bs7671_regulations dataset."
+            cite="Source: BS 7671:2018+A4:2026 Part 4, Chapter 46, Regulations 462.1 and 537.2.4."
           />
 
           <SectionRule />
@@ -375,7 +375,7 @@ export default function Sub3() {
                 Lock-off is mandated by BS 7671, not just by good practice. A padlock through the MCB hasp, a captive-key main switch, a Brady SafeKey lockout box across the consumer unit &mdash; pick one and use it every isolation, every time. An &ldquo;I just popped the breaker off&rdquo; isolation does not satisfy 537.2.4.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Reg 537.2.4, verbatim."
+            cite="Source: BS 7671:2018+A4:2026 — Reg 537.2.4."
           />
 
           <RegsCallout
@@ -390,7 +390,7 @@ export default function Sub3() {
                 On any isolation that touches the MET or main bonding (boilers, gas / water cocks, sub-main isolation), the safety-electrical-connection labels must remain in place when you put the installation back. If you&apos;ve had to remove a label to access a connection, replace it before you sign the job off &mdash; missing labels are a Code 3 on a future EICR and a real hazard for the next sparks.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Reg 514.13.1, verbatim."
+            cite="Source: BS 7671:2018+A4:2026 — Reg 514.13.1."
           />
 
           <SectionRule />

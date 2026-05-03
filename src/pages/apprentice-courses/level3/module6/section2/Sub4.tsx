@@ -637,7 +637,7 @@ export default function Sub4() {
                 failure.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 132.2(c)(iv) — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 132.2(c)(iv)."
           />
 
           <SectionRule />

@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 6 · Section 3 · Subsection 4 — BREEAM Materials and Waste
+ * HNC Electrical Engineering for Building Services (Sustainability and Environmental Engineering)
+ *   Responsible sourcing, life cycle impacts, construction waste management, operational waste, and circular economy principles
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'BREEAM Materials and Waste - HNC Module 6 Section 3.4';
@@ -244,894 +261,366 @@ const faqs = [
 ];
 
 const HNCModule6Section3_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section3")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module6-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.3.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            BREEAM Materials and Waste
-          </h1>
-          <p className="text-white">
-            Responsible sourcing, life cycle impacts, construction waste management, operational
-            waste, and circular economy principles
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 6 · Section 3 · Subsection 4"
+            title="BREEAM Materials and Waste"
+            description="Responsible sourcing, life cycle impacts, construction waste management, operational waste, and circular economy principles"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Mat 01:</strong> Life Cycle Assessment of construction products
-              </li>
-              <li className="pl-1">
-                <strong>Mat 03:</strong> Responsible sourcing certification (BES 6001)
-              </li>
-              <li className="pl-1">
-                <strong>Wst 01:</strong> Construction waste diversion targets (70-95%)
-              </li>
-              <li className="pl-1">
-                <strong>Wst 02:</strong> Operational waste storage and recycling
-              </li>
+          <TLDR
+            points={[
+              "Mat 01 (life-cycle impacts) uses the Green Guide / IMPACT methodology; Mat 03 (responsible sourcing) requires BES 6001 certification on key materials; Mat 05 (durability) checks design for protection of the building fabric.",
+              "Wst 01–05 covers construction-waste management (segregation + recycling), recycled aggregates, operational waste (storage facilities), speculative finishes, and adaptability to future uses.",
+              "These two categories together drive procurement specifications more than any other BREEAM area — material substitution at construction stage is the single most common cause of credit loss.",
+            ]}
+          />
+
+          <RegsCallout
+            source="Site Waste Management Plans + BES 6001 + BREEAM Mat/Wst credits"
+            clause="For BREEAM Mat 03, the value of the project responsibly sourced materials shall be calculated as the proportion of total Mat 03 eligible material spend that is certified to BES 6001 or equivalent recognised responsible sourcing scheme. For BREEAM Wst 01, a Site Waste Management Plan shall be implemented identifying waste arisings, segregation strategy, recovery rate targets, and reporting at least monthly to demonstrate ≥70% diversion from landfill by tonnage."
+            meaning={
+              <>
+                BES 6001 is the UK responsible sourcing standard — applies to concrete, steel, timber, masonry. The contractor must collect certificates from suppliers at order stage and assemble the evidence pack for the assessor. SWMPs are no longer legally mandatory (repealed 2013) but are required for BREEAM and for many client/local-authority planning conditions.
+              </>
+            }
+            cite="Source: BES 6001 Issue 4.0 (BRE); BREEAM UK NC 2018 Mat & Wst credits — breeam.com"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Apply Mat 01 LCA methodology to MEP material specification",
+              "Understand Environmental Product Declarations and EN 15804",
+              "Implement Mat 03 responsible sourcing for cables and containment",
+              "Develop Wst 01 compliant construction waste management plans",
+              "Design Wst 02 operational waste facilities in building services",
+              "Apply circular economy principles to MEP design and installation",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Life Cycle Assessment and Mat 01">
+            <p>BREEAM Mat 01 (Environmental Impacts from Construction Products) drives the selection of materials with lower environmental burdens across their entire life cycle. This requires understanding Life Cycle Assessment (LCA) methodology and the role of Environmental Product Declarations (EPDs) in demonstrating compliance.</p>
+            <p><strong>Life cycle stages assessed under EN 15804:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>A1-A3 (Product stage):</strong> Raw material extraction, transport to factory, manufacturing</li>
+              <li><strong>A4-A5 (Construction stage):</strong> Transport to site, installation processes</li>
+              <li><strong>B1-B7 (Use stage):</strong> Maintenance, repair, replacement, refurbishment, operational impacts</li>
+              <li><strong>C1-C4 (End of life):</strong> Deconstruction, transport, waste processing, disposal</li>
+              <li><strong>D (Beyond system boundary):</strong> Reuse, recovery, recycling potential</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">MEP Relevance</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>EPDs:</strong> Required for cables, containment, equipment
-              </li>
-              <li className="pl-1">
-                <strong>Copper/Steel:</strong> Key materials for responsible sourcing
-              </li>
-              <li className="pl-1">
-                <strong>Waste:</strong> Cable offcuts, packaging, equipment crates
-              </li>
-              <li className="pl-1">
-                <strong>Circular:</strong> Design for disassembly and recovery
-              </li>
+            <p><strong>Environmental Impact Categories</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Global Warming Potential (GWP):</strong> kg CO2 eq — Embodied carbon of cables, equipment</li>
+              <li><strong>Ozone Depletion Potential (ODP):</strong> kg CFC-11 eq — Refrigerants, insulation blowing agents</li>
+              <li><strong>Acidification Potential (AP):</strong> kg SO2 eq — Metal processing emissions</li>
+              <li><strong>Eutrophication Potential (EP):</strong> kg PO4 eq — Manufacturing process discharges</li>
+              <li><strong>Abiotic Depletion (elements):</strong> kg Sb eq — Copper, rare earth elements usage</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Mat 01 Credit Guidance</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>1-3 credits:</strong> Complete LCA using recognised methodology and EPD data</li>
+              <li><strong>Additional credits:</strong> Demonstrate material selection improvements based on LCA</li>
+              <li><strong>Exemplary:</strong> Third-party verified whole building LCA with ambitious targets</li>
+            </ul>
+            <p><strong>Specification impact:</strong> MEP materials typically contribute 15-25% of total building embodied carbon, making informed specification crucial for Mat 01 performance.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Apply Mat 01 LCA methodology to MEP material specification',
-              'Understand Environmental Product Declarations and EN 15804',
-              'Implement Mat 03 responsible sourcing for cables and containment',
-              'Develop Wst 01 compliant construction waste management plans',
-              'Design Wst 02 operational waste facilities in building services',
-              'Apply circular economy principles to MEP design and installation',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Life Cycle Assessment and Mat 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Life Cycle Assessment and Mat 01
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Responsible Sourcing - Mat 03">
+            <p>Mat 03 (Responsible Sourcing of Construction Products) ensures materials are sourced from organisations with robust environmental management systems and verified sustainable supply chains. This applies directly to key MEP materials including copper, steel, aluminium, and plastics.</p>
+            <p><strong>Tier 1: Basic</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Legal timber evidence</li>
+              <li>Supplier environmental policy</li>
+              <li>Basic material traceability</li>
+              <li>Minimal credits available</li>
+            </ul>
+            <p><strong>Tier 2: Certified EMS</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>ISO 14001 certification</li>
+              <li>Supply chain assessment</li>
+              <li>Documented procedures</li>
+              <li>Moderate credits</li>
+            </ul>
+            <p><strong>Tier 3: Full Certification</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>BES 6001 certification</li>
+              <li>Full supply chain verification</li>
+              <li>Social responsibility included</li>
+              <li>Maximum credits</li>
+            </ul>
+            <p><strong>Key MEP Materials for Responsible Sourcing</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Copper:</strong> Cables, busbars, pipework — Copper Mark, BES 6001</li>
+              <li><strong>Steel:</strong> Containment, supports, ductwork — BES 6001, ResponsibleSteel</li>
+              <li><strong>Aluminium:</strong> Cables, heat exchangers, luminaires — ASI Certification, BES 6001</li>
+              <li><strong>Plastics (PVC, XLPE):</strong> Cable insulation, conduit, trunking — VinylPlus, BES 6001</li>
+              <li><strong>Timber:</strong> Packing, temporary supports — FSC, PEFC</li>
+            </ul>
+            <p><strong>Procurement Specification Clause</strong></p>
+            <p>"All copper cables shall be sourced from manufacturers holding current BES 6001 certification at minimum 'Very Good' rating, with Copper Mark certification preferred. Evidence of certification shall be submitted with material submittals."</p>
+            <p><strong>Credit strategy:</strong> Focus responsible sourcing requirements on the largest material volumes - cables, containment, and ductwork typically offer the greatest credit opportunity for MEP packages.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Construction Waste Management - Wst 01">
+            <p>Wst 01 (Construction Waste Management) requires a comprehensive approach to minimising, managing, and reporting construction waste. MEP contractors generate significant waste streams including cable offcuts, packaging, and equipment crates that must be properly managed.</p>
+            <p><strong>Resource Management Plan Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Pre-construction waste forecast by material type</li>
+              <li>Waste minimisation strategies and targets</li>
+              <li>Reuse and recycling opportunities identified</li>
+              <li>Designated waste storage and segregation areas</li>
+              <li>Monitoring procedures and reporting frequency</li>
+              <li>Roles and responsibilities for waste management</li>
+            </ul>
+            <p><strong>Wst 01 Credit Benchmarks</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Minimum standard:</strong> 70% from landfill — No specific target</li>
+              <li><strong>Good practice:</strong> 85% from landfill — &lt;7.5 tonnes per 100m2</li>
+              <li><strong>Best practice:</strong> 95% from landfill — &lt;5.5 tonnes per 100m2</li>
+              <li><strong>Exemplary:</strong> &gt;95% from landfill — &lt;3.5 tonnes per 100m2</li>
+            </ul>
+            <p><strong>MEP Waste Streams and Management</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Copper offcuts:</strong> Cable installation — Segregate for recycling (high value)</li>
+              <li><strong>Cable drums:</strong> Cable deliveries — Return to supplier (take-back scheme)</li>
+              <li><strong>Cardboard/packaging:</strong> Equipment deliveries — Compact and recycle</li>
+              <li><strong>Plastic packaging:</strong> Accessories, fittings — Segregate by type for recycling</li>
+              <li><strong>Steel offcuts:</strong> Containment, supports — Scrap metal recycling</li>
+              <li><strong>WEEE:</strong> Replaced equipment — Licensed WEEE contractor</li>
+            </ul>
+            <p><strong>Documentation tip:</strong> Maintain waste transfer notes for all movements off site. Photograph segregated waste storage areas for BREEAM evidence submissions.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Operational Waste and Circular Economy">
+            <p>Wst 02 (Operational Waste) addresses the provision of facilities for waste segregation and recycling during building occupation. Circular economy principles extend this thinking to consider how MEP materials can be designed for disassembly, reuse, and recovery at end of building life.</p>
+            <p><strong>Wst 02 Operational Waste Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Dedicated space for recyclable waste storage (sized to building occupancy)</li>
+              <li>Segregated bins/containers for minimum waste streams (paper, glass, plastic, metals)</li>
+              <li>Accessible collection points on each occupied floor</li>
+              <li>Adequate lighting and ventilation to waste storage areas</li>
+              <li>Clear signage and user guidance</li>
+              <li>Consideration of composting facilities for organic waste</li>
+            </ul>
+            <p><strong>Circular Economy Principles for MEP</strong></p>
+            <p><strong>Design for Disassembly</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>- Mechanical fixings over adhesives</li>
+              <li>- Modular, replaceable components</li>
+              <li>- Accessible connections</li>
+              <li>- Documented material locations</li>
+              <li>- Standard sizes and fittings</li>
+            </ul>
+            <p><strong>Material Recovery Potential</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>- Copper: Infinitely recyclable</li>
+              <li>- Steel: High recycling rates</li>
+              <li>- Aluminium: Full recyclability</li>
+              <li>- Equipment: Refurbishment potential</li>
+              <li>- Plastics: Type segregation needed</li>
+            </ul>
+            <p><strong>MEP Circular Economy Strategies</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Specify recycled content:</strong> Recycled copper cables, steel — Reduces virgin material demand</li>
+              <li><strong>Modular distribution:</strong> Plug-and-play wiring systems — Enables reconfiguration and reuse</li>
+              <li><strong>Equipment leasing:</strong> Lighting as a service — Manufacturer retains ownership/recovery</li>
+              <li><strong>Material passports:</strong> BIM-based material tracking — Enables future recovery planning</li>
+              <li><strong>Standardisation:</strong> Common component sizes — Facilitates spare parts and reuse</li>
+            </ul>
+            <p><strong>Material Passport Example - Distribution Board</strong></p>
+            <p><strong>Asset:</strong> DB-L2-01 (Level 2 Main Distribution Board)</p>
+            <p><strong>Manufacturer:</strong> [Supplier name], Model: [Model reference]</p>
+            <p><strong>Materials:</strong> Steel enclosure (22kg, galvanised), Copper busbars (8kg), MCCB/MCB units (15 units)</p>
+            <p><strong>Recycled content:</strong> Steel 45% post-consumer, Copper 30% recycled</p>
+            <p><strong>Disassembly:</strong> Bolted connections, accessible from front, no adhesives</p>
+            <p><strong>End of life:</strong> Steel/copper fully recyclable, MCBs to WEEE recovery</p>
+            <p><strong>Certifications:</strong> Steel - BES 6001 Very Good, Copper - Copper Mark</p>
+            <p><strong>Future-proofing:</strong> Design flexibility into MEP systems to accommodate future technology changes without complete replacement, extending useful life and deferring material consumption.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              BREEAM Mat 01 (Environmental Impacts from Construction Products) drives the selection
-              of materials with lower environmental burdens across their entire life cycle. This
-              requires understanding Life Cycle Assessment (LCA) methodology and the role of
-              Environmental Product Declarations (EPDs) in demonstrating compliance.
+              <strong>Example 1: EPD Comparison for Cable Selection</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Life cycle stages assessed under EN 15804:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>A1-A3 (Product stage):</strong> Raw material extraction, transport to
-                  factory, manufacturing
-                </li>
-                <li className="pl-1">
-                  <strong>A4-A5 (Construction stage):</strong> Transport to site, installation
-                  processes
-                </li>
-                <li className="pl-1">
-                  <strong>B1-B7 (Use stage):</strong> Maintenance, repair, replacement,
-                  refurbishment, operational impacts
-                </li>
-                <li className="pl-1">
-                  <strong>C1-C4 (End of life):</strong> Deconstruction, transport, waste processing,
-                  disposal
-                </li>
-                <li className="pl-1">
-                  <strong>D (Beyond system boundary):</strong> Reuse, recovery, recycling potential
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Environmental Impact Categories
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Impact Category
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Unit</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">MEP Relevance</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Global Warming Potential (GWP)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">kg CO2 eq</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Embodied carbon of cables, equipment
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ozone Depletion Potential (ODP)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">kg CFC-11 eq</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Refrigerants, insulation blowing agents
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Acidification Potential (AP)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">kg SO2 eq</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Metal processing emissions
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Eutrophication Potential (EP)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">kg PO4 eq</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Manufacturing process discharges
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Abiotic Depletion (elements)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">kg Sb eq</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Copper, rare earth elements usage
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Mat 01 Credit Guidance</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>1-3 credits:</strong> Complete LCA using recognised methodology and EPD
-                  data
-                </li>
-                <li className="pl-1">
-                  <strong>Additional credits:</strong> Demonstrate material selection improvements
-                  based on LCA
-                </li>
-                <li className="pl-1">
-                  <strong>Exemplary:</strong> Third-party verified whole building LCA with ambitious
-                  targets
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Specification impact:</strong> MEP materials typically contribute 15-25% of
-              total building embodied carbon, making informed specification crucial for Mat 01
-              performance.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Responsible Sourcing - Mat 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Responsible Sourcing - Mat 03
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Compare two cable suppliers for 100m of 4-core 16mm2 armoured cable based on EPD data.</p>
+            <p>Supplier A EPD (per 100m cable):</p>
+            <p>GWP (A1-A3): 245 kg CO2eq</p>
+            <p>Recycled copper content: 25%</p>
+            <p>BES 6001 certification: Good</p>
+            <p>Supplier B EPD (per 100m cable):</p>
+            <p>GWP (A1-A3): 198 kg CO2eq</p>
+            <p>Recycled copper content: 45%</p>
+            <p>BES 6001 certification: Very Good</p>
+            <p>Recommendation: Supplier B offers 19% lower embodied carbon,</p>
+            <p>higher recycled content, and better responsible sourcing tier</p>
             <p>
-              Mat 03 (Responsible Sourcing of Construction Products) ensures materials are sourced
-              from organisations with robust environmental management systems and verified
-              sustainable supply chains. This applies directly to key MEP materials including
-              copper, steel, aluminium, and plastics.
+              <strong>Example 2: Construction Waste Forecast</strong>
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Tier 1: Basic</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Legal timber evidence</li>
-                  <li className="pl-1">Supplier environmental policy</li>
-                  <li className="pl-1">Basic material traceability</li>
-                  <li className="pl-1">Minimal credits available</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Tier 2: Certified EMS
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">ISO 14001 certification</li>
-                  <li className="pl-1">Supply chain assessment</li>
-                  <li className="pl-1">Documented procedures</li>
-                  <li className="pl-1">Moderate credits</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Tier 3: Full Certification
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">BES 6001 certification</li>
-                  <li className="pl-1">Full supply chain verification</li>
-                  <li className="pl-1">Social responsibility included</li>
-                  <li className="pl-1">Maximum credits</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key MEP Materials for Responsible Sourcing
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Material</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Certification Options
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Copper</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cables, busbars, pipework
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Copper Mark, BES 6001</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Steel</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Containment, supports, ductwork
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        BES 6001, ResponsibleSteel
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Aluminium</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cables, heat exchangers, luminaires
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        ASI Certification, BES 6001
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Plastics (PVC, XLPE)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable insulation, conduit, trunking
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">VinylPlus, BES 6001</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Timber</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Packing, temporary supports
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">FSC, PEFC</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-2">
-                Procurement Specification Clause
-              </p>
-              <p className="text-sm text-white italic">
-                "All copper cables shall be sourced from manufacturers holding current BES 6001
-                certification at minimum 'Very Good' rating, with Copper Mark certification
-                preferred. Evidence of certification shall be submitted with material submittals."
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Credit strategy:</strong> Focus responsible sourcing requirements on the
-              largest material volumes - cables, containment, and ductwork typically offer the
-              greatest credit opportunity for MEP packages.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Construction Waste Management - Wst 01 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Construction Waste Management - Wst 01
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Forecast MEP waste for 5,000m2 office fit-out and set diversion targets.</p>
+            <p>Forecast waste by type:</p>
+            <p>Copper cable offcuts: 150 kg → 100% recycling</p>
+            <p>Steel containment offcuts: 400 kg → 100% recycling</p>
+            <p>Cardboard packaging: 600 kg → 100% recycling</p>
+            <p>Plastic packaging: 200 kg → 80% recycling</p>
+            <p>Cable drums: 50 units → 100% return to supplier</p>
+            <p>Mixed non-recyclable: 100 kg → Energy from waste</p>
+            <p>Total forecast: 1,450 kg + drums</p>
+            <p>Target diversion from landfill: 95%</p>
+            <p>Achieved by: Metal recycling, cardboard baling, drum returns</p>
             <p>
-              Wst 01 (Construction Waste Management) requires a comprehensive approach to
-              minimising, managing, and reporting construction waste. MEP contractors generate
-              significant waste streams including cable offcuts, packaging, and equipment crates
-              that must be properly managed.
+              <strong>Example 3: Circular Economy Design Decision</strong>
             </p>
+            <p><strong>Scenario:</strong> Design lighting installation for future adaptability and end-of-life recovery.</p>
+            <p>Traditional approach:</p>
+            <p>- Recessed fittings with plaster-in frames</p>
+            <p>- Hardwired connections</p>
+            <p>- Fixed ceiling grid</p>
+            <p>End of life: Difficult recovery, damaged removal</p>
+            <p>Circular economy approach:</p>
+            <p>- Clip-in suspended fittings</p>
+            <p>- Plug-and-play wiring (e.g., Wieland connectors)</p>
+            <p>- Accessible ceiling system</p>
+            <p>End of life: Intact removal, reuse potential</p>
+            <p>Additional benefit: Easy reconfiguration during tenancy changes</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Resource Management Plan Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Pre-construction waste forecast by material type</li>
-                <li className="pl-1">Waste minimisation strategies and targets</li>
-                <li className="pl-1">Reuse and recycling opportunities identified</li>
-                <li className="pl-1">Designated waste storage and segregation areas</li>
-                <li className="pl-1">Monitoring procedures and reporting frequency</li>
-                <li className="pl-1">Roles and responsibilities for waste management</li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Wst 01 Credit Benchmarks
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Benchmark</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Diversion Rate</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Waste Generated
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Minimum standard</td>
-                      <td className="border border-white/10 px-3 py-2">70% from landfill</td>
-                      <td className="border border-white/10 px-3 py-2">No specific target</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Good practice</td>
-                      <td className="border border-white/10 px-3 py-2">85% from landfill</td>
-                      <td className="border border-white/10 px-3 py-2">&lt;7.5 tonnes per 100m2</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Best practice</td>
-                      <td className="border border-white/10 px-3 py-2">95% from landfill</td>
-                      <td className="border border-white/10 px-3 py-2">&lt;5.5 tonnes per 100m2</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Exemplary</td>
-                      <td className="border border-white/10 px-3 py-2">&gt;95% from landfill</td>
-                      <td className="border border-white/10 px-3 py-2">&lt;3.5 tonnes per 100m2</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                MEP Waste Streams and Management
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Waste Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Sources</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Best Practice</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Copper offcuts</td>
-                      <td className="border border-white/10 px-3 py-2">Cable installation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Segregate for recycling (high value)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cable drums</td>
-                      <td className="border border-white/10 px-3 py-2">Cable deliveries</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Return to supplier (take-back scheme)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cardboard/packaging</td>
-                      <td className="border border-white/10 px-3 py-2">Equipment deliveries</td>
-                      <td className="border border-white/10 px-3 py-2">Compact and recycle</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Plastic packaging</td>
-                      <td className="border border-white/10 px-3 py-2">Accessories, fittings</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Segregate by type for recycling
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Steel offcuts</td>
-                      <td className="border border-white/10 px-3 py-2">Containment, supports</td>
-                      <td className="border border-white/10 px-3 py-2">Scrap metal recycling</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">WEEE</td>
-                      <td className="border border-white/10 px-3 py-2">Replaced equipment</td>
-                      <td className="border border-white/10 px-3 py-2">Licensed WEEE contractor</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Documentation tip:</strong> Maintain waste transfer notes for all movements
-              off site. Photograph segregated waste storage areas for BREEAM evidence submissions.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Operational Waste and Circular Economy */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Operational Waste and Circular Economy
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Wst 02 (Operational Waste) addresses the provision of facilities for waste segregation
-              and recycling during building occupation. Circular economy principles extend this
-              thinking to consider how MEP materials can be designed for disassembly, reuse, and
-              recovery at end of building life.
+              <strong>Mat 01 Implementation Checklist:</strong>
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Wst 02 Operational Waste Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Dedicated space for recyclable waste storage (sized to building occupancy)
-                </li>
-                <li className="pl-1">
-                  Segregated bins/containers for minimum waste streams (paper, glass, plastic,
-                  metals)
-                </li>
-                <li className="pl-1">Accessible collection points on each occupied floor</li>
-                <li className="pl-1">Adequate lighting and ventilation to waste storage areas</li>
-                <li className="pl-1">Clear signage and user guidance</li>
-                <li className="pl-1">Consideration of composting facilities for organic waste</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Circular Economy Principles for MEP
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-lg bg-white/5">
-                  <p className="text-sm font-medium text-white mb-2">Design for Disassembly</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>- Mechanical fixings over adhesives</li>
-                    <li>- Modular, replaceable components</li>
-                    <li>- Accessible connections</li>
-                    <li>- Documented material locations</li>
-                    <li>- Standard sizes and fittings</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded-lg bg-white/5">
-                  <p className="text-sm font-medium text-white mb-2">Material Recovery Potential</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>- Copper: Infinitely recyclable</li>
-                    <li>- Steel: High recycling rates</li>
-                    <li>- Aluminium: Full recyclability</li>
-                    <li>- Equipment: Refurbishment potential</li>
-                    <li>- Plastics: Type segregation needed</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                MEP Circular Economy Strategies
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Strategy</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Benefit</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Specify recycled content</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Recycled copper cables, steel
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reduces virgin material demand
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Modular distribution</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Plug-and-play wiring systems
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Enables reconfiguration and reuse
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Equipment leasing</td>
-                      <td className="border border-white/10 px-3 py-2">Lighting as a service</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Manufacturer retains ownership/recovery
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Material passports</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        BIM-based material tracking
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Enables future recovery planning
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Standardisation</td>
-                      <td className="border border-white/10 px-3 py-2">Common component sizes</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Facilitates spare parts and reuse
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Material Passport Example - Distribution Board
-              </p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <strong>Asset:</strong> DB-L2-01 (Level 2 Main Distribution Board)
-                </p>
-                <p>
-                  <strong>Manufacturer:</strong> [Supplier name], Model: [Model reference]
-                </p>
-                <p>
-                  <strong>Materials:</strong> Steel enclosure (22kg, galvanised), Copper busbars
-                  (8kg), MCCB/MCB units (15 units)
-                </p>
-                <p>
-                  <strong>Recycled content:</strong> Steel 45% post-consumer, Copper 30% recycled
-                </p>
-                <p>
-                  <strong>Disassembly:</strong> Bolted connections, accessible from front, no
-                  adhesives
-                </p>
-                <p>
-                  <strong>End of life:</strong> Steel/copper fully recyclable, MCBs to WEEE recovery
-                </p>
-                <p>
-                  <strong>Certifications:</strong> Steel - BES 6001 Very Good, Copper - Copper Mark
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Future-proofing:</strong> Design flexibility into MEP systems to accommodate
-              future technology changes without complete replacement, extending useful life and
-              deferring material consumption.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Identify major material quantities from design specifications</li>
+              <li>Request EPDs from manufacturers during procurement</li>
+              <li>Verify EPDs are EN 15804 compliant and cover A1-A3 minimum</li>
+              <li>Calculate building-level environmental impacts using approved tool</li>
+              <li>Document specification improvements based on LCA comparison</li>
+              <li>Retain all EPDs and calculations for BREEAM submission</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Wst 01 minimum diversion: <strong>70% from landfill</strong></li>
+              <li>Best practice diversion: <strong>95% from landfill</strong></li>
+              <li>Mat 03 top tier: <strong>BES 6001 or equivalent third-party certification</strong></li>
+              <li>EPD standard: <strong>EN 15804</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: EPD Comparison for Cable Selection
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Compare two cable suppliers for 100m of 4-core 16mm2
-                armoured cable based on EPD data.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Supplier A EPD (per 100m cable):</p>
-                <p className="ml-4">GWP (A1-A3): 245 kg CO2eq</p>
-                <p className="ml-4">Recycled copper content: 25%</p>
-                <p className="ml-4">BES 6001 certification: Good</p>
-                <p className="mt-2">Supplier B EPD (per 100m cable):</p>
-                <p className="ml-4">GWP (A1-A3): 198 kg CO2eq</p>
-                <p className="ml-4">Recycled copper content: 45%</p>
-                <p className="ml-4">BES 6001 certification: Very Good</p>
-                <p className="mt-2 text-green-400">
-                  Recommendation: Supplier B offers 19% lower embodied carbon,
-                </p>
-                <p className="text-green-400">
-                  higher recycled content, and better responsible sourcing tier
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Construction Waste Forecast
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Forecast MEP waste for 5,000m2 office fit-out and set
-                diversion targets.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Forecast waste by type:</p>
-                <p className="ml-4">Copper cable offcuts: 150 kg → 100% recycling</p>
-                <p className="ml-4">Steel containment offcuts: 400 kg → 100% recycling</p>
-                <p className="ml-4">Cardboard packaging: 600 kg → 100% recycling</p>
-                <p className="ml-4">Plastic packaging: 200 kg → 80% recycling</p>
-                <p className="ml-4">Cable drums: 50 units → 100% return to supplier</p>
-                <p className="ml-4">Mixed non-recyclable: 100 kg → Energy from waste</p>
-                <p className="mt-2">Total forecast: 1,450 kg + drums</p>
-                <p>Target diversion from landfill: 95%</p>
-                <p className="text-green-400">
-                  Achieved by: Metal recycling, cardboard baling, drum returns
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Circular Economy Design Decision
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Design lighting installation for future adaptability and
-                end-of-life recovery.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Traditional approach:</p>
-                <p className="ml-4">- Recessed fittings with plaster-in frames</p>
-                <p className="ml-4">- Hardwired connections</p>
-                <p className="ml-4">- Fixed ceiling grid</p>
-                <p className="ml-4">End of life: Difficult recovery, damaged removal</p>
-                <p className="mt-2">Circular economy approach:</p>
-                <p className="ml-4">- Clip-in suspended fittings</p>
-                <p className="ml-4">- Plug-and-play wiring (e.g., Wieland connectors)</p>
-                <p className="ml-4">- Accessible ceiling system</p>
-                <p className="ml-4">End of life: Intact removal, reuse potential</p>
-                <p className="mt-2 text-green-400">
-                  Additional benefit: Easy reconfiguration during tenancy changes
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Mat 01 Implementation Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Identify major material quantities from design specifications
-                </li>
-                <li className="pl-1">Request EPDs from manufacturers during procurement</li>
-                <li className="pl-1">Verify EPDs are EN 15804 compliant and cover A1-A3 minimum</li>
-                <li className="pl-1">
-                  Calculate building-level environmental impacts using approved tool
-                </li>
-                <li className="pl-1">
-                  Document specification improvements based on LCA comparison
-                </li>
-                <li className="pl-1">Retain all EPDs and calculations for BREEAM submission</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Late EPD requests</strong> - Request EPDs at tender stage, not after installation</li>
+                <li><strong>Incomplete waste records</strong> - Ensure all waste movements have transfer notes</li>
+                <li><strong>Mixed waste skips</strong> - Segregation is essential for recycling credits</li>
+                <li><strong>Ignoring packaging</strong> - Packaging waste can exceed installation waste</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Wst 01 minimum diversion: <strong>70% from landfill</strong>
-                </li>
-                <li className="pl-1">
-                  Best practice diversion: <strong>95% from landfill</strong>
-                </li>
-                <li className="pl-1">
-                  Mat 03 top tier: <strong>BES 6001 or equivalent third-party certification</strong>
-                </li>
-                <li className="pl-1">
-                  EPD standard: <strong>EN 15804</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Late EPD requests</strong> - Request EPDs at tender stage, not after
-                  installation
-                </li>
-                <li className="pl-1">
-                  <strong>Incomplete waste records</strong> - Ensure all waste movements have
-                  transfer notes
-                </li>
-                <li className="pl-1">
-                  <strong>Mixed waste skips</strong> - Segregation is essential for recycling
-                  credits
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring packaging</strong> - Packaging waste can exceed installation
-                  waste
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="Steel frame substituted from BES 6001 to non-certified supplier"
+            situation={
+              <>
+                During value engineering, the steel frame supplier was changed from a BES 6001-certified mill to a non-certified one for a £35k saving. The Mat 03 credit budgeted on the original supplier is now lost — and dropping it cascades the rating from Excellent to Very Good, breaching the planning condition.
+              </>
+            }
+            whatToDo={
+              <>
+                Reverse the substitution if at all possible — the £35k saving has now caused planning re-application risk worth multiples of that. If reversal is not commercially viable, look for replacement Mat 03 wins on other packages (responsibly sourced concrete, masonry, timber). If insufficient, downgrade and seek a planning variation. Lesson: every value engineering change on a BREEAM project must go through the Assessor for credit-impact assessment before it is approved.
+              </>
+            }
+            whyItMatters={
+              <>
+                BREEAM and value engineering are not friends. Cost-out exercises late in design routinely strip credits the team thought were locked. Build a no-substitution clause into BREEAM-critical packages, or require Assessor approval for any change. The procurement specification is the BREEAM specification.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">BREEAM Materials Issues</p>
-                <ul className="space-y-0.5">
-                  <li>Mat 01 - Life Cycle Assessment (EPDs)</li>
-                  <li>Mat 03 - Responsible Sourcing (BES 6001)</li>
-                  <li>Mat 05 - Designing for Durability</li>
-                  <li>Mat 06 - Material Efficiency</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">BREEAM Waste Issues</p>
-                <ul className="space-y-0.5">
-                  <li>Wst 01 - Construction Waste (70-95% diversion)</li>
-                  <li>Wst 02 - Operational Waste Storage</li>
-                  <li>Wst 03 - Operational Waste (where applicable)</li>
-                  <li>Wst 05 - Adaptation to Climate Change</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              "Mat 01: life-cycle impacts via Green Guide / IMPACT.",
+              "Mat 03: BES 6001 responsible sourcing — applies to concrete, steel, timber, masonry.",
+              "Mat 05: durability and protection of building fabric (impact-resistant linings, dado rails etc.).",
+              "Wst 01: SWMP + ≥70% diversion from landfill — monthly reporting required.",
+              "Wst 02: recycled aggregates ≥25% by mass for high-grade applications.",
+              "Wst 03: operational waste storage facilities sized per occupancy.",
+              "Value engineering substitutions destroy credits — every change needs Assessor approval.",
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section3-5">
-              Next: BREEAM Pollution
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section3-3")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Energy category
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section3-5")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Health and wellbeing
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

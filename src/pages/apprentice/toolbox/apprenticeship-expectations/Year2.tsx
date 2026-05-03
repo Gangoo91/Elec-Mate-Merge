@@ -25,7 +25,8 @@ import {
   Award,
   Clock,
 } from 'lucide-react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import {
   MobileAccordion,
@@ -35,6 +36,7 @@ import {
 } from '@/components/ui/mobile-accordion';
 
 const Year2 = () => {
+  const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [expandedMonth, setExpandedMonth] = useState<number | null>(0);
   const [expandedChallenge, setExpandedChallenge] = useState<number | null>(null);
@@ -942,8 +944,15 @@ const Year2 = () => {
 
   return (
     <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8 animate-fade-in px-4 sm:px-6 lg:px-8 pb-20 sm:pb-8">
-      <div className="flex flex-col items-center justify-center mb-4 sm:mb-6">
-        <SmartBackButton />
+      <div className="flex items-center mb-4 sm:mb-6">
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice/toolbox/apprenticeship-expectations')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
       </div>
 
       {renderHeroSection()}

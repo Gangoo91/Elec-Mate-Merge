@@ -1,12 +1,14 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { Search, SlidersHorizontal, Wrench, Star, Shield, Zap } from 'lucide-react';
+import { ArrowLeft, Search, SlidersHorizontal, Wrench, Star, Shield, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToolsData } from '@/hooks/useToolsData';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
 import ToolsFeaturedCarousel from '@/components/electrician-tools/ToolsFeaturedCarousel';
 import ToolsGrid from '@/components/electrician-tools/ToolsGrid';
 import EssentialToolsQuickRef from '@/components/electrician-tools/EssentialToolsQuickRef';
@@ -17,6 +19,7 @@ import QuickToolFinder from '@/components/electrician-tools/QuickToolFinder';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const HandTools = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedFilter, setSelectedFilter] = useState<string>('all');
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -120,21 +123,26 @@ const HandTools = () => {
   const gridTools = handTools.slice(6);
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8 animate-fade-in px-4 sm:px-6 lg:px-8 pb-20">
-      {/* Hero Header */}
-      <div className="flex flex-col items-center justify-center mb-6 text-center">
-        <div className="p-3 bg-elec-yellow/20 rounded-2xl mb-4">
-          <Wrench className="h-8 w-8 sm:h-10 sm:w-10 text-elec-yellow" />
-        </div>
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
-          Hand Tools for Electricians
-        </h1>
-        <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
-          Professional hand tools with UK prices. Everything you need for electrical work from
-          quality suppliers.
-        </p>
-        <SmartBackButton />
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice/toolbox/tools-guide')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
+
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Hand tools"
+          title="Hand tools"
+          description="Screwdrivers, pliers, strippers, cutters — the kit that lives in your pouch. UK prices, real suppliers, what's worth buying twice and what isn't."
+          tone="yellow"
+        />
+      </motion.div>
 
       {/* Quick Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
@@ -274,7 +282,7 @@ const HandTools = () => {
           )}
         </div>
       )}
-    </div>
+    </PageFrame>
   );
 };
 

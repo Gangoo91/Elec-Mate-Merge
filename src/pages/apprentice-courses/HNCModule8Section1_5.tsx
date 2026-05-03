@@ -1,8 +1,21 @@
-import { ArrowLeft, Radio, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 8 · Section 1 · Subsection 5 — Heating Controls
+ * HNC Electrical Engineering for Building Services (HVAC Systems)
+ *   Weather compensation, optimum start, zone control, BMS integration and smart heating technologies
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Heating Controls - HNC Module 8 Section 1.5';
@@ -275,1000 +288,422 @@ const faqs = [
 ];
 
 const HNCModule8Section1_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section1")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module8-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Radio className="h-4 w-4" />
-            <span>Module 8.1.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Heating Controls
-          </h1>
-          <p className="text-white">
-            Weather compensation, optimum start, zone control, BMS integration and smart heating
-            technologies
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 8 · Section 1 · Subsection 5"
+            title="Heating Controls"
+            description="Weather compensation, optimum start, zone control, BMS integration and smart heating technologies"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Weather comp:</strong> Adjusts flow temp based on outdoor temperature
-              </li>
-              <li className="pl-1">
-                <strong>Optimum start:</strong> Calculates latest start time for occupancy
-              </li>
-              <li className="pl-1">
-                <strong>OpenTherm:</strong> Modulating control protocol for boilers
-              </li>
-              <li className="pl-1">
-                <strong>Part L:</strong> Minimum 2 zones required for new systems
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Explain weather compensation principles and heating curve selection",
+              "Design optimum start/stop control strategies for buildings",
+              "Apply Building Regulations Part L requirements for heating controls",
+              "Understand Boiler Plus legislation and compliant solutions",
+              "Implement zone control strategies for energy efficiency",
+              "Integrate heating systems with BMS using standard protocols",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Weather Compensation and Load Compensation">
+            <p>Compensated control systems adjust boiler flow temperature to match actual heating demand, rather than operating at a fixed high temperature. This reduces boiler cycling, improves condensing operation, and can deliver 10-15% energy savings compared to fixed temperature control.</p>
+            <p><strong>Weather Compensation Principles</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Outdoor sensor:</strong> Measures external temperature, typically mounted on north-facing wall</li>
+              <li><strong>Heating curve:</strong> Defines relationship between outdoor temp and flow temp setpoint</li>
+              <li><strong>Lower flow temps:</strong> Enable condensing boiler to operate in condensing mode more often</li>
+              <li><strong>Reduced cycling:</strong> Continuous modulation replaces on/off operation</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Regulations</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Building Regs Part L:</strong> Conservation of fuel and power
-              </li>
-              <li className="pl-1">
-                <strong>Boiler Plus:</strong> Enhanced controls for combi boilers
-              </li>
-              <li className="pl-1">
-                <strong>BS EN 12828:</strong> Heating systems design
-              </li>
-              <li className="pl-1">
-                <strong>CIBSE Guide H:</strong> Building control systems
-              </li>
+            <p><strong>Heating Curve Selection</strong></p>
+            <p><strong>Curve Gradient:</strong> Determines how flow temp responds to outdoor temp</p>
+            <p>Building Type | Typical Curve Gradient</p>
+            <p>Well-insulated modern: 0.5 - 0.8</p>
+            <p>Standard insulation: 0.8 - 1.2</p>
+            <p>Poor insulation/oversized rads: 1.2 - 1.8</p>
+            <p>Very poor insulation: 1.8 - 2.5</p>
+            <p>Example: At -5°C outdoor, curve 1.0 might set 55°C flow</p>
+            <p>Same conditions, curve 1.5 might set 70°C flow</p>
+            <p><strong>Load Compensation (Room Compensation)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Adjusts flow temperature based on room temperature feedback</li>
+              <li>As room approaches setpoint, flow temperature reduces</li>
+              <li>Prevents temperature overshoot and improves comfort</li>
+              <li>Can be combined with weather compensation for optimal control</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>OpenTherm Protocol</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Boiler modulation:</strong> No - full power or off — Yes - variable output</li>
+              <li><strong>Flow temp control:</strong> Fixed at boiler — Controlled by thermostat</li>
+              <li><strong>Cycling frequency:</strong> High - frequent on/off — Low - continuous operation</li>
+              <li><strong>Condensing efficiency:</strong> Lower - high temps — Higher - lower temps</li>
+              <li><strong>Diagnostic info:</strong> None — Yes - fault codes, temps</li>
+            </ul>
+            <p><strong>Efficiency gain:</strong> OpenTherm with weather compensation can improve seasonal efficiency by 10-15% compared to basic on/off control with a fixed flow temperature.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Explain weather compensation principles and heating curve selection',
-              'Design optimum start/stop control strategies for buildings',
-              'Apply Building Regulations Part L requirements for heating controls',
-              'Understand Boiler Plus legislation and compliant solutions',
-              'Implement zone control strategies for energy efficiency',
-              'Integrate heating systems with BMS using standard protocols',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Weather Compensation and Load Compensation */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Weather Compensation and Load Compensation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Optimum Start/Stop and Time Control">
+            <p>Optimum start control calculates the latest time to start the heating system so the building reaches the desired temperature at the beginning of the occupancy period. This avoids wasting energy by starting heating too early, while ensuring comfort when occupants arrive.</p>
+            <p><strong>Optimum Start Factors</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Current indoor temperature</li>
+              <li>Required setpoint temperature</li>
+              <li>Outdoor temperature</li>
+              <li>Building thermal mass</li>
+              <li>Heating system capacity</li>
+              <li>Historical performance data</li>
+            </ul>
+            <p><strong>Optimum Stop Benefits</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Heating stops before end of occupancy</li>
+              <li>Building thermal mass maintains comfort</li>
+              <li>Typical stop 30-60 minutes early</li>
+              <li>Temperature drifts to setback level</li>
+              <li>Significant energy savings</li>
+              <li>Reduces peak demand</li>
+            </ul>
+            <p><strong>Optimum Start Calculation Example</strong></p>
+            <p>Building parameters:</p>
+            <p>Occupancy starts: 08:00</p>
+            <p>Required temp: 21°C</p>
+            <p>Current indoor: 16°C</p>
+            <p>Outdoor temp: 2°C</p>
+            <p>Building heat-up rate: 1.5°C per hour (learned)</p>
+            <p>Temperature rise needed: 21 - 16 = 5°C</p>
+            <p>Preheat time: 5 ÷ 1.5 = 3.3 hours</p>
+            <p>Optimum start time: 08:00 - 3h 20min = 04:40</p>
+            <p>Without optimum start, might have started at 06:00 (fixed)</p>
+            <p><strong>Self-Learning Algorithms</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Controller records actual heat-up times under different conditions</li>
+              <li>Builds a model of building thermal response</li>
+              <li>Adapts to seasonal changes and building modifications</li>
+              <li>Typically requires 2-4 weeks to optimise fully</li>
+              <li>May use weather forecasts for predictive control</li>
+            </ul>
+            <p><strong>Time Control Requirements (Part L)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Space heating:</strong> Programmer with on/off times — 7-day programming with optimum start</li>
+              <li><strong>Hot water:</strong> Independent timing from heating — Separate programmer, cylinder stat</li>
+              <li><strong>Zones:</strong> Independent time control per zone — Zone programmers or multi-zone controller</li>
+            </ul>
+            <p><strong>Energy saving:</strong> Optimum start/stop typically saves 5-10% of heating energy compared to fixed time schedules, with greater savings in heavyweight buildings.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Zone Control and Building Regulations">
+            <p>Zone control divides a building into areas with independent temperature and time control. Building Regulations Part L requires new and replacement heating systems to include zoning, typically separating living areas from bedrooms, or different floors.</p>
+            <p><strong>Building Regulations Part L Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Minimum 2 zones:</strong> For dwellings over 150m², separate heating zones required</li>
+              <li><strong>Independent control:</strong> Each zone needs independent time and temperature control</li>
+              <li><strong>Room thermostats:</strong> At least one in a zone without TRVs</li>
+              <li><strong>TRVs:</strong> Required on all radiators except in rooms with room thermostats</li>
+              <li><strong>Boiler interlock:</strong> Wiring must prevent boiler firing when no demand</li>
+              <li><strong>Hot water:</strong> Separate timing from space heating with cylinder thermostat</li>
+            </ul>
+            <p><strong>Boiler Plus Legislation (England from April 2018)</strong></p>
+            <p><strong>Applies to:</strong> All gas and oil boiler installations in existing dwellings</p>
+            <p><strong>Combi boilers must have one of:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Weather compensation</li>
+              <li>Load compensation</li>
+              <li>Flue gas heat recovery system</li>
+              <li>Smart thermostat with automation and optimisation features</li>
+            </ul>
+            <p><strong>System/regular boilers:</strong> Not currently required but recommended</p>
+            <p>Note: Scotland has its own Building Standards; Wales follows England</p>
+            <p><strong>Zone Valve Types and Selection</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>2-port motorised:</strong> Open/closed, one per zone — Standard zone control, 22mm/28mm</li>
+              <li><strong>3-port mid-position:</strong> A only, B only, or A+B — Heating/hot water selection</li>
+              <li><strong>3-port diverter:</strong> A only or B only (not both) — Priority DHW systems</li>
+              <li><strong>Thermostatic radiator valve:</strong> Modulates on room temp — Individual radiator control</li>
+            </ul>
+            <p><strong>Wiring Centre Functions</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Central connection point for heating controls</li>
+              <li>Provides boiler interlock through switched live circuit</li>
+              <li>Coordinates zone valves, thermostats, and programmer</li>
+              <li>Ensures pump runs only when zone valve is open</li>
+              <li>Common types: 5-wire and 8-wire systems for S and Y plans</li>
+            </ul>
+            <p><strong>S Plan (2 x 2-port valves)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Separate valve for heating and hot water</li>
+              <li>Full independent control</li>
+              <li>Easy to expand with additional zones</li>
+              <li>Preferred for larger systems</li>
+            </ul>
+            <p><strong>Y Plan (3-port mid-position)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Single valve controls both circuits</li>
+              <li>Simpler installation</li>
+              <li>Mid-position allows simultaneous operation</li>
+              <li>Limited expansion options</li>
+            </ul>
+            <p><strong>Compliance note:</strong> Always check local Building Control requirements. Replacement boilers must meet current Part L and Boiler Plus standards, even if the original system was compliant at installation.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="BMS Integration and Smart Controls">
+            <p>Building Management Systems (BMS) provide centralised monitoring and control of heating alongside other building services. Smart controls use connectivity and data analytics to optimise comfort and efficiency, meeting Boiler Plus requirements when properly specified.</p>
+            <p><strong>BMS Communication Protocols</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>BACnet/IP:</strong> Ethernet (Cat5e/6) — Building-wide HVAC control</li>
+              <li><strong>BACnet MS/TP:</strong> RS-485 twisted pair — Field device connection</li>
+              <li><strong>Modbus RTU:</strong> RS-485 twisted pair — Equipment monitoring</li>
+              <li><strong>Modbus TCP:</strong> Ethernet — Plant room integration</li>
+              <li><strong>KNX:</strong> TP/RF/IP variants — Building automation</li>
+              <li><strong>OpenTherm:</strong> 2-wire connection — Thermostat-boiler interface</li>
+            </ul>
+            <p><strong>BMS Functions for Heating Systems</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Monitoring:</strong> Temperatures, valve positions, boiler status, energy consumption</li>
+              <li><strong>Control:</strong> Setpoints, schedules, optimum start, weather compensation</li>
+              <li><strong>Alarming:</strong> Fault detection, temperature excursions, equipment failures</li>
+              <li><strong>Trending:</strong> Historical data logging for analysis and reporting</li>
+              <li><strong>Integration:</strong> Coordination with ventilation, lighting, fire systems</li>
+              <li><strong>Remote access:</strong> Web interface, mobile apps, cloud connectivity</li>
+            </ul>
+            <p><strong>Smart Thermostat Features (Boiler Plus Compliant)</strong></p>
+            <p><strong>Automation features:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Learning algorithms that adapt to occupant behaviour</li>
+              <li>Geofencing using smartphone location</li>
+              <li>Occupancy detection via sensors</li>
+              <li>Integration with calendars and schedules</li>
+            </ul>
+            <p><strong>Optimisation features:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Weather-adjusted heating curves</li>
+              <li>Self-learning optimum start</li>
+              <li>Energy usage reporting and insights</li>
+              <li>OpenTherm modulation control</li>
+            </ul>
+            <p>Examples: Nest, Hive, tado, Honeywell T6R</p>
+            <p><strong>Wireless Protocols</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Z-Wave (mesh)</li>
+              <li>Zigbee (mesh)</li>
+              <li>WiFi (direct)</li>
+              <li>RF (433/868MHz)</li>
+              <li>Thread/Matter</li>
+            </ul>
+            <p><strong>Cloud Services</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Remote access</li>
+              <li>Data storage</li>
+              <li>Firmware updates</li>
+              <li>Voice control</li>
+              <li>IFTTT integration</li>
+            </ul>
+            <p><strong>Energy Efficiency</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Demand response</li>
+              <li>Load shifting</li>
+              <li>Grid services</li>
+              <li>Tariff optimisation</li>
+              <li>Solar integration</li>
+            </ul>
+            <p><strong>Cybersecurity Considerations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Secure network segmentation for BMS systems</li>
+              <li>Regular firmware updates and patching</li>
+              <li>Strong authentication and access control</li>
+              <li>Encrypted communications (TLS/SSL)</li>
+              <li>GDPR compliance for occupancy/usage data</li>
+            </ul>
+            <p><strong>Integration tip:</strong> When specifying BMS integration, ensure heating equipment has the required communication interfaces. Many modern boilers support BACnet, Modbus, or OpenTherm natively; older equipment may need gateway devices.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Compensated control systems adjust boiler flow temperature to match actual heating
-              demand, rather than operating at a fixed high temperature. This reduces boiler
-              cycling, improves condensing operation, and can deliver 10-15% energy savings compared
-              to fixed temperature control.
+              <strong>Example 1: Heating Curve Selection</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Weather Compensation Principles
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Outdoor sensor:</strong> Measures external temperature, typically mounted
-                  on north-facing wall
-                </li>
-                <li className="pl-1">
-                  <strong>Heating curve:</strong> Defines relationship between outdoor temp and flow
-                  temp setpoint
-                </li>
-                <li className="pl-1">
-                  <strong>Lower flow temps:</strong> Enable condensing boiler to operate in
-                  condensing mode more often
-                </li>
-                <li className="pl-1">
-                  <strong>Reduced cycling:</strong> Continuous modulation replaces on/off operation
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Heating Curve Selection</p>
-              <div className="font-mono text-sm space-y-2">
-                <p className="text-white">
-                  <strong>Curve Gradient:</strong> Determines how flow temp responds to outdoor temp
-                </p>
-                <p className="text-white mt-2">Building Type | Typical Curve Gradient</p>
-                <p className="text-white">Well-insulated modern: 0.5 - 0.8</p>
-                <p className="text-white">Standard insulation: 0.8 - 1.2</p>
-                <p className="text-white">Poor insulation/oversized rads: 1.2 - 1.8</p>
-                <p className="text-white">Very poor insulation: 1.8 - 2.5</p>
-                <p className="text-green-400 mt-2">
-                  Example: At -5°C outdoor, curve 1.0 might set 55°C flow
-                </p>
-                <p className="text-green-400">Same conditions, curve 1.5 might set 70°C flow</p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Load Compensation (Room Compensation)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Adjusts flow temperature based on room temperature feedback
-                </li>
-                <li className="pl-1">As room approaches setpoint, flow temperature reduces</li>
-                <li className="pl-1">Prevents temperature overshoot and improves comfort</li>
-                <li className="pl-1">
-                  Can be combined with weather compensation for optimal control
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">OpenTherm Protocol</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">On/Off Control</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        OpenTherm Control
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Boiler modulation</td>
-                      <td className="border border-white/10 px-3 py-2">No - full power or off</td>
-                      <td className="border border-white/10 px-3 py-2">Yes - variable output</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Flow temp control</td>
-                      <td className="border border-white/10 px-3 py-2">Fixed at boiler</td>
-                      <td className="border border-white/10 px-3 py-2">Controlled by thermostat</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cycling frequency</td>
-                      <td className="border border-white/10 px-3 py-2">High - frequent on/off</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Low - continuous operation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Condensing efficiency</td>
-                      <td className="border border-white/10 px-3 py-2">Lower - high temps</td>
-                      <td className="border border-white/10 px-3 py-2">Higher - lower temps</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Diagnostic info</td>
-                      <td className="border border-white/10 px-3 py-2">None</td>
-                      <td className="border border-white/10 px-3 py-2">Yes - fault codes, temps</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Efficiency gain:</strong> OpenTherm with weather compensation can improve
-              seasonal efficiency by 10-15% compared to basic on/off control with a fixed flow
-              temperature.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Optimum Start/Stop and Time Control */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Optimum Start/Stop and Time Control
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Select the heating curve for a 1990s semi-detached house with standard insulation and correctly sized radiators.</p>
+            <p>Building characteristics:</p>
+            <p>Construction: 1990s cavity wall with partial fill</p>
+            <p>Insulation: Reasonable but not modern standards</p>
+            <p>Radiators: Sized for 75/65/20°C (flow/return/room)</p>
+            <p>Design outdoor temp: -3°C</p>
+            <p>Curve selection:</p>
+            <p>Standard insulation building: Curve gradient 0.8 - 1.2</p>
+            <p>Select: <strong>Curve 1.0</strong> as starting point</p>
+            <p>Expected performance:</p>
+            <p>At -3°C outdoor: Flow temp ~55-60°C</p>
+            <p>At +10°C outdoor: Flow temp ~35-40°C</p>
+            <p>Adjust based on observation:</p>
+            <p>If rooms too cool in cold weather: Increase to 1.2</p>
+            <p>If rooms overheat: Decrease to 0.8</p>
             <p>
-              Optimum start control calculates the latest time to start the heating system so the
-              building reaches the desired temperature at the beginning of the occupancy period.
-              This avoids wasting energy by starting heating too early, while ensuring comfort when
-              occupants arrive.
+              <strong>Example 2: Zone Valve Sizing</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Optimum Start Factors
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Current indoor temperature</li>
-                  <li className="pl-1">Required setpoint temperature</li>
-                  <li className="pl-1">Outdoor temperature</li>
-                  <li className="pl-1">Building thermal mass</li>
-                  <li className="pl-1">Heating system capacity</li>
-                  <li className="pl-1">Historical performance data</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Optimum Stop Benefits
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Heating stops before end of occupancy</li>
-                  <li className="pl-1">Building thermal mass maintains comfort</li>
-                  <li className="pl-1">Typical stop 30-60 minutes early</li>
-                  <li className="pl-1">Temperature drifts to setback level</li>
-                  <li className="pl-1">Significant energy savings</li>
-                  <li className="pl-1">Reduces peak demand</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Optimum Start Calculation Example
-              </p>
-              <div className="font-mono text-sm space-y-2">
-                <p className="text-white">Building parameters:</p>
-                <p className="text-white">Occupancy starts: 08:00</p>
-                <p className="text-white">Required temp: 21°C</p>
-                <p className="text-white">Current indoor: 16°C</p>
-                <p className="text-white">Outdoor temp: 2°C</p>
-                <p className="text-white">Building heat-up rate: 1.5°C per hour (learned)</p>
-                <p className="mt-2 text-white">Temperature rise needed: 21 - 16 = 5°C</p>
-                <p className="text-white">Preheat time: 5 ÷ 1.5 = 3.3 hours</p>
-                <p className="text-green-400 mt-2">Optimum start time: 08:00 - 3h 20min = 04:40</p>
-                <p className="text-white">
-                  Without optimum start, might have started at 06:00 (fixed)
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Self-Learning Algorithms
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Controller records actual heat-up times under different conditions
-                </li>
-                <li className="pl-1">Builds a model of building thermal response</li>
-                <li className="pl-1">Adapts to seasonal changes and building modifications</li>
-                <li className="pl-1">Typically requires 2-4 weeks to optimise fully</li>
-                <li className="pl-1">May use weather forecasts for predictive control</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Time Control Requirements (Part L)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Minimum Control
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Best Practice</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Space heating</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Programmer with on/off times
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        7-day programming with optimum start
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hot water</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Independent timing from heating
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Separate programmer, cylinder stat
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Zones</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Independent time control per zone
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Zone programmers or multi-zone controller
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Energy saving:</strong> Optimum start/stop typically saves 5-10% of heating
-              energy compared to fixed time schedules, with greater savings in heavyweight
-              buildings.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Zone Control and Building Regulations */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Zone Control and Building Regulations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Size zone valves for a domestic S-plan system with heating and hot water zones.</p>
+            <p>System data:</p>
+            <p>Heating load: 15kW</p>
+            <p>Hot water cylinder: Indirect 180L</p>
+            <p>Boiler flow rate: 1200 L/hr at delta-T 20K</p>
+            <p>Heating zone flow calculation:</p>
+            <p>Flow = Power / (4.2 x delta-T)</p>
+            <p>Flow = 15000 / (4.2 x 20) = 179 L/hr</p>
+            <p>Add 20% margin: 215 L/hr = 3.6 L/min</p>
+            <p>Valve selection:</p>
+            <p>Heating zone: 22mm 2-port valve (Kv = 2.5 to 4.0)</p>
+            <p>Check pressure drop at 3.6 L/min is acceptable (&lt;10 kPa)</p>
+            <p>Hot water zone:</p>
+            <p>Coil load typically 3kW for 180L cylinder</p>
+            <p>22mm valve adequate; 28mm if high recovery rate needed</p>
+            <p>Result: 2 x 22mm zone valves (S-plan wiring)</p>
             <p>
-              Zone control divides a building into areas with independent temperature and time
-              control. Building Regulations Part L requires new and replacement heating systems to
-              include zoning, typically separating living areas from bedrooms, or different floors.
+              <strong>Example 3: Boiler Plus Compliance</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Regulations Part L Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Minimum 2 zones:</strong> For dwellings over 150m², separate heating zones
-                  required
-                </li>
-                <li className="pl-1">
-                  <strong>Independent control:</strong> Each zone needs independent time and
-                  temperature control
-                </li>
-                <li className="pl-1">
-                  <strong>Room thermostats:</strong> At least one in a zone without TRVs
-                </li>
-                <li className="pl-1">
-                  <strong>TRVs:</strong> Required on all radiators except in rooms with room
-                  thermostats
-                </li>
-                <li className="pl-1">
-                  <strong>Boiler interlock:</strong> Wiring must prevent boiler firing when no
-                  demand
-                </li>
-                <li className="pl-1">
-                  <strong>Hot water:</strong> Separate timing from space heating with cylinder
-                  thermostat
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Boiler Plus Legislation (England from April 2018)
-              </p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <strong>Applies to:</strong> All gas and oil boiler installations in existing
-                  dwellings
-                </p>
-                <p>
-                  <strong>Combi boilers must have one of:</strong>
-                </p>
-                <ul className="list-disc list-outside ml-5 space-y-1 mt-2">
-                  <li className="pl-1">Weather compensation</li>
-                  <li className="pl-1">Load compensation</li>
-                  <li className="pl-1">Flue gas heat recovery system</li>
-                  <li className="pl-1">
-                    Smart thermostat with automation and optimisation features
-                  </li>
-                </ul>
-                <p className="mt-2">
-                  <strong>System/regular boilers:</strong> Not currently required but recommended
-                </p>
-                <p className="text-orange-400 mt-2">
-                  Note: Scotland has its own Building Standards; Wales follows England
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Zone Valve Types and Selection
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Valve Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Operation</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2-port motorised</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Open/closed, one per zone
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Standard zone control, 22mm/28mm
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3-port mid-position</td>
-                      <td className="border border-white/10 px-3 py-2">A only, B only, or A+B</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heating/hot water selection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3-port diverter</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        A only or B only (not both)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Priority DHW systems</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Thermostatic radiator valve
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Modulates on room temp</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Individual radiator control
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Wiring Centre Functions
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Central connection point for heating controls</li>
-                <li className="pl-1">Provides boiler interlock through switched live circuit</li>
-                <li className="pl-1">Coordinates zone valves, thermostats, and programmer</li>
-                <li className="pl-1">Ensures pump runs only when zone valve is open</li>
-                <li className="pl-1">Common types: 5-wire and 8-wire systems for S and Y plans</li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  S Plan (2 x 2-port valves)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Separate valve for heating and hot water</li>
-                  <li className="pl-1">Full independent control</li>
-                  <li className="pl-1">Easy to expand with additional zones</li>
-                  <li className="pl-1">Preferred for larger systems</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Y Plan (3-port mid-position)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Single valve controls both circuits</li>
-                  <li className="pl-1">Simpler installation</li>
-                  <li className="pl-1">Mid-position allows simultaneous operation</li>
-                  <li className="pl-1">Limited expansion options</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Compliance note:</strong> Always check local Building Control requirements.
-              Replacement boilers must meet current Part L and Boiler Plus standards, even if the
-              original system was compliant at installation.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: BMS Integration and Smart Controls */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            BMS Integration and Smart Controls
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Specify compliant controls for a combi boiler installation in England.</p>
+            <p>Installation requirements:</p>
+            <p>Boiler: 30kW combi with OpenTherm</p>
+            <p>Property: 3-bed semi, single heating zone</p>
+            <p>Customer request: Smart phone control</p>
+            <p>Boiler Plus options:</p>
+            <p>1. Weather compensation built into boiler</p>
+            <p>2. Load compensating thermostat</p>
+            <p>3. Smart thermostat with automation + optimisation</p>
+            <p>Selected solution:</p>
+            <p>Smart thermostat (e.g., tado, Nest, Hive)</p>
+            <p>Verification checklist:</p>
+            <p>Has automation: Learning schedule/geofencing</p>
+            <p>Has optimisation: Weather-adjusted start times</p>
+            <p>OpenTherm compatible: Yes - modulating control</p>
+            <p>Part L compliant: Room stat + TRVs + boiler interlock</p>
+            <p>Document compliance on certificate/handover</p>
             <p>
-              Building Management Systems (BMS) provide centralised monitoring and control of
-              heating alongside other building services. Smart controls use connectivity and data
-              analytics to optimise comfort and efficiency, meeting Boiler Plus requirements when
-              properly specified.
+              <strong>Example 4: BMS Integration Specification</strong>
             </p>
+            <p><strong>Scenario:</strong> Specify BMS connection for a commercial boiler plant room.</p>
+            <p>Plant room equipment:</p>
+            <p>2 x 200kW cascade boilers</p>
+            <p>4 x Variable speed pumps</p>
+            <p>Weather compensation controller</p>
+            <p>8 x Zone control valves</p>
+            <p>BMS requirements:</p>
+            <p>Protocol: BACnet/IP at supervisory level</p>
+            <p>Protocol: Modbus RTU for boiler interface</p>
+            <p>Protocol: BACnet MS/TP for zone controllers</p>
+            <p>Points list (per boiler):</p>
+            <p>AI: Flow temp, return temp, outdoor temp, flue temp</p>
+            <p>DI: Boiler run status, fault status, flame status</p>
+            <p>AO: Flow temp setpoint, modulation demand</p>
+            <p>DO: Enable/disable, reset</p>
+            <p>Network architecture:</p>
+            <p>Boilers &gt; Gateway (Modbus to BACnet)</p>
+            <p>Gateway &gt; Building controller (BACnet/IP)</p>
+            <p>Zone controllers &gt; MS/TP network &gt; Router &gt; BACnet/IP</p>
+            <p>Specify: Graphics, trending, alarms, schedules, reports</p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BMS Communication Protocols
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Protocol</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Physical Layer</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BACnet/IP</td>
-                      <td className="border border-white/10 px-3 py-2">Ethernet (Cat5e/6)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Building-wide HVAC control
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BACnet MS/TP</td>
-                      <td className="border border-white/10 px-3 py-2">RS-485 twisted pair</td>
-                      <td className="border border-white/10 px-3 py-2">Field device connection</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Modbus RTU</td>
-                      <td className="border border-white/10 px-3 py-2">RS-485 twisted pair</td>
-                      <td className="border border-white/10 px-3 py-2">Equipment monitoring</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Modbus TCP</td>
-                      <td className="border border-white/10 px-3 py-2">Ethernet</td>
-                      <td className="border border-white/10 px-3 py-2">Plant room integration</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">KNX</td>
-                      <td className="border border-white/10 px-3 py-2">TP/RF/IP variants</td>
-                      <td className="border border-white/10 px-3 py-2">Building automation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">OpenTherm</td>
-                      <td className="border border-white/10 px-3 py-2">2-wire connection</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Thermostat-boiler interface
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BMS Functions for Heating Systems
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Monitoring:</strong> Temperatures, valve positions, boiler status, energy
-                  consumption
-                </li>
-                <li className="pl-1">
-                  <strong>Control:</strong> Setpoints, schedules, optimum start, weather
-                  compensation
-                </li>
-                <li className="pl-1">
-                  <strong>Alarming:</strong> Fault detection, temperature excursions, equipment
-                  failures
-                </li>
-                <li className="pl-1">
-                  <strong>Trending:</strong> Historical data logging for analysis and reporting
-                </li>
-                <li className="pl-1">
-                  <strong>Integration:</strong> Coordination with ventilation, lighting, fire
-                  systems
-                </li>
-                <li className="pl-1">
-                  <strong>Remote access:</strong> Web interface, mobile apps, cloud connectivity
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Smart Thermostat Features (Boiler Plus Compliant)
-              </p>
-              <div className="text-sm space-y-2">
-                <p className="text-white">
-                  <strong>Automation features:</strong>
-                </p>
-                <ul className="list-disc list-outside ml-5 space-y-1">
-                  <li className="pl-1">Learning algorithms that adapt to occupant behaviour</li>
-                  <li className="pl-1">Geofencing using smartphone location</li>
-                  <li className="pl-1">Occupancy detection via sensors</li>
-                  <li className="pl-1">Integration with calendars and schedules</li>
-                </ul>
-                <p className="text-white mt-2">
-                  <strong>Optimisation features:</strong>
-                </p>
-                <ul className="list-disc list-outside ml-5 space-y-1">
-                  <li className="pl-1">Weather-adjusted heating curves</li>
-                  <li className="pl-1">Self-learning optimum start</li>
-                  <li className="pl-1">Energy usage reporting and insights</li>
-                  <li className="pl-1">OpenTherm modulation control</li>
-                </ul>
-                <p className="text-green-400 mt-2">Examples: Nest, Hive, tado, Honeywell T6R</p>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Wireless Protocols</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Z-Wave (mesh)</li>
-                  <li className="pl-1">Zigbee (mesh)</li>
-                  <li className="pl-1">WiFi (direct)</li>
-                  <li className="pl-1">RF (433/868MHz)</li>
-                  <li className="pl-1">Thread/Matter</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cloud Services</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Remote access</li>
-                  <li className="pl-1">Data storage</li>
-                  <li className="pl-1">Firmware updates</li>
-                  <li className="pl-1">Voice control</li>
-                  <li className="pl-1">IFTTT integration</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Energy Efficiency</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Demand response</li>
-                  <li className="pl-1">Load shifting</li>
-                  <li className="pl-1">Grid services</li>
-                  <li className="pl-1">Tariff optimisation</li>
-                  <li className="pl-1">Solar integration</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cybersecurity Considerations
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Secure network segmentation for BMS systems</li>
-                <li className="pl-1">Regular firmware updates and patching</li>
-                <li className="pl-1">Strong authentication and access control</li>
-                <li className="pl-1">Encrypted communications (TLS/SSL)</li>
-                <li className="pl-1">GDPR compliance for occupancy/usage data</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Integration tip:</strong> When specifying BMS integration, ensure heating
-              equipment has the required communication interfaces. Many modern boilers support
-              BACnet, Modbus, or OpenTherm natively; older equipment may need gateway devices.
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Control System Selection Checklist:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Confirm boiler communication capability (OpenTherm, on/off, Modbus)</li>
+              <li>Check Part L zone control requirements for building size</li>
+              <li>Verify Boiler Plus compliance option for combi installations</li>
+              <li>Assess customer smartphone/smart home preferences</li>
+              <li>Consider future BMS or smart home integration requirements</li>
+              <li>Specify compatible wiring centre for zone valve configuration</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Weather compensation saves: <strong>10-15%</strong> vs fixed temperature</li>
+              <li>Optimum start saves: <strong>5-10%</strong> vs fixed schedules</li>
+              <li>Part L minimum zones: <strong>2 zones</strong> for &gt;150m² dwellings</li>
+              <li>Cylinder thermostat setting: <strong>60°C</strong> (Legionella control)</li>
+              <li>Heating curve for modern builds: <strong>0.5-0.8</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Heating Curve Selection
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Select the heating curve for a 1990s semi-detached house
-                with standard insulation and correctly sized radiators.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Building characteristics:</p>
-                <p className="mt-2">Construction: 1990s cavity wall with partial fill</p>
-                <p>Insulation: Reasonable but not modern standards</p>
-                <p>Radiators: Sized for 75/65/20°C (flow/return/room)</p>
-                <p>Design outdoor temp: -3°C</p>
-                <p className="mt-2">Curve selection:</p>
-                <p>Standard insulation building: Curve gradient 0.8 - 1.2</p>
-                <p>
-                  Select: <strong>Curve 1.0</strong> as starting point
-                </p>
-                <p className="mt-2">Expected performance:</p>
-                <p>At -3°C outdoor: Flow temp ~55-60°C</p>
-                <p>At +10°C outdoor: Flow temp ~35-40°C</p>
-                <p className="text-green-400 mt-2">Adjust based on observation:</p>
-                <p className="text-white">If rooms too cool in cold weather: Increase to 1.2</p>
-                <p className="text-white">If rooms overheat: Decrease to 0.8</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Zone Valve Sizing
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Size zone valves for a domestic S-plan system with
-                heating and hot water zones.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">System data:</p>
-                <p className="mt-2">Heating load: 15kW</p>
-                <p>Hot water cylinder: Indirect 180L</p>
-                <p>Boiler flow rate: 1200 L/hr at delta-T 20K</p>
-                <p className="mt-2">Heating zone flow calculation:</p>
-                <p>Flow = Power / (4.2 x delta-T)</p>
-                <p>Flow = 15000 / (4.2 x 20) = 179 L/hr</p>
-                <p>Add 20% margin: 215 L/hr = 3.6 L/min</p>
-                <p className="mt-2">Valve selection:</p>
-                <p>Heating zone: 22mm 2-port valve (Kv = 2.5 to 4.0)</p>
-                <p>Check pressure drop at 3.6 L/min is acceptable (&lt;10 kPa)</p>
-                <p className="mt-2">Hot water zone:</p>
-                <p>Coil load typically 3kW for 180L cylinder</p>
-                <p>22mm valve adequate; 28mm if high recovery rate needed</p>
-                <p className="text-green-400 mt-2">Result: 2 x 22mm zone valves (S-plan wiring)</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Boiler Plus Compliance
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Specify compliant controls for a combi boiler
-                installation in England.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Installation requirements:</p>
-                <p className="mt-2">Boiler: 30kW combi with OpenTherm</p>
-                <p>Property: 3-bed semi, single heating zone</p>
-                <p>Customer request: Smart phone control</p>
-                <p className="mt-2">Boiler Plus options:</p>
-                <p>1. Weather compensation built into boiler</p>
-                <p>2. Load compensating thermostat</p>
-                <p>3. Smart thermostat with automation + optimisation</p>
-                <p className="mt-2">Selected solution:</p>
-                <p>Smart thermostat (e.g., tado, Nest, Hive)</p>
-                <p className="mt-2">Verification checklist:</p>
-                <p className="text-green-400">Has automation: Learning schedule/geofencing</p>
-                <p className="text-green-400">Has optimisation: Weather-adjusted start times</p>
-                <p className="text-green-400">OpenTherm compatible: Yes - modulating control</p>
-                <p className="text-green-400">
-                  Part L compliant: Room stat + TRVs + boiler interlock
-                </p>
-                <p className="mt-2 text-white">Document compliance on certificate/handover</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 4: BMS Integration Specification
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Specify BMS connection for a commercial boiler plant
-                room.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Plant room equipment:</p>
-                <p className="mt-2">2 x 200kW cascade boilers</p>
-                <p>4 x Variable speed pumps</p>
-                <p>Weather compensation controller</p>
-                <p>8 x Zone control valves</p>
-                <p className="mt-2">BMS requirements:</p>
-                <p>Protocol: BACnet/IP at supervisory level</p>
-                <p>Protocol: Modbus RTU for boiler interface</p>
-                <p>Protocol: BACnet MS/TP for zone controllers</p>
-                <p className="mt-2">Points list (per boiler):</p>
-                <p>AI: Flow temp, return temp, outdoor temp, flue temp</p>
-                <p>DI: Boiler run status, fault status, flame status</p>
-                <p>AO: Flow temp setpoint, modulation demand</p>
-                <p>DO: Enable/disable, reset</p>
-                <p className="mt-2">Network architecture:</p>
-                <p>Boilers &gt; Gateway (Modbus to BACnet)</p>
-                <p>Gateway &gt; Building controller (BACnet/IP)</p>
-                <p>Zone controllers &gt; MS/TP network &gt; Router &gt; BACnet/IP</p>
-                <p className="text-green-400 mt-2">
-                  Specify: Graphics, trending, alarms, schedules, reports
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Control System Selection Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Confirm boiler communication capability (OpenTherm, on/off, Modbus)
-                </li>
-                <li className="pl-1">Check Part L zone control requirements for building size</li>
-                <li className="pl-1">
-                  Verify Boiler Plus compliance option for combi installations
-                </li>
-                <li className="pl-1">Assess customer smartphone/smart home preferences</li>
-                <li className="pl-1">Consider future BMS or smart home integration requirements</li>
-                <li className="pl-1">
-                  Specify compatible wiring centre for zone valve configuration
-                </li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>No boiler interlock:</strong> Boiler fires even when no demand - wire controls correctly</li>
+                <li><strong>TRV in thermostat room:</strong> Causes control conflict - leave thermostat room without TRV</li>
+                <li><strong>Wrong heating curve:</strong> Too steep = overheating; too shallow = underheating</li>
+                <li><strong>Outdoor sensor location:</strong> Not north-facing or affected by sun/heat sources</li>
+                <li><strong>Ignoring Boiler Plus:</strong> Installations without compliant controls fail inspection</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Weather compensation saves: <strong>10-15%</strong> vs fixed temperature
-                </li>
-                <li className="pl-1">
-                  Optimum start saves: <strong>5-10%</strong> vs fixed schedules
-                </li>
-                <li className="pl-1">
-                  Part L minimum zones: <strong>2 zones</strong> for &gt;150m² dwellings
-                </li>
-                <li className="pl-1">
-                  Cylinder thermostat setting: <strong>60°C</strong> (Legionella control)
-                </li>
-                <li className="pl-1">
-                  Heating curve for modern builds: <strong>0.5-0.8</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>No boiler interlock:</strong> Boiler fires even when no demand - wire
-                  controls correctly
-                </li>
-                <li className="pl-1">
-                  <strong>TRV in thermostat room:</strong> Causes control conflict - leave
-                  thermostat room without TRV
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong heating curve:</strong> Too steep = overheating; too shallow =
-                  underheating
-                </li>
-                <li className="pl-1">
-                  <strong>Outdoor sensor location:</strong> Not north-facing or affected by sun/heat
-                  sources
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring Boiler Plus:</strong> Installations without compliant controls
-                  fail inspection
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Control Strategies</p>
-                <ul className="space-y-0.5">
-                  <li>Weather comp: Flow temp vs outdoor temp</li>
-                  <li>Load comp: Flow temp vs room temp error</li>
-                  <li>Optimum start: Latest start for comfort at occupancy</li>
-                  <li>OpenTherm: Modulating boiler control</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Regulatory Requirements</p>
-                <ul className="space-y-0.5">
-                  <li>Part L: 2+ zones, TRVs, boiler interlock</li>
-                  <li>Boiler Plus: Compensation or smart controls</li>
-                  <li>Cylinder stat: 60°C for Legionella</li>
-                  <li>Independent HW timing required</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section1-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Radiator Systems
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section1-6">
-              Next: System Commissioning
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section1-4")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Radiator systems
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section1-6")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                System commissioning
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

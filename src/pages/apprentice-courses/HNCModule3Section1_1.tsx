@@ -216,20 +216,20 @@ const HNCModule3Section1_1 = () => {
 
           <TLDR
             points={[
-              'You can define V, I, R and P in SI units and move between them confidently using Ohm\u2019s law and the three power equations (P = VI, P = I\u00b2R, P = V\u00b2/R).',
-              'You can pick the right UK supply voltage for the application \u2014 230 V single-phase, 400 V three-phase, 24 V DC for BMS, 110 V CTE for site tools, SELV for special locations.',
-              'You can size a circuit from a load: convert kW to amps, allow for power factor, check Ib \u2264 In \u2264 Iz against BS 7671 cable tables.',
+              'You can define V, I, R and P in SI units and move between them confidently using Ohm’s law and the three power equations (P = VI, P = I²R, P = V²/R).',
+              'You can pick the right UK supply voltage for the application — 230 V single-phase, 400 V three-phase, 24 V DC for BMS, 110 V CTE for site tools, SELV for special locations.',
+              'You can size a circuit from a load: convert kW to amps, allow for power factor, check Ib ≤ In ≤ Iz against BS 7671 cable tables.',
               'You can do a back-of-envelope voltage-drop check using cable mO/m values and the go-and-return rule.',
-              'You can estimate energy use (kWh) and lighting power density (W/m\u00b2) for early-stage building services design.',
+              'You can estimate energy use (kWh) and lighting power density (W/m²) for early-stage building services design.',
             ]}
           />
 
           <RegsCallout
             source="BS EN 50160 — Voltage characteristics of electricity supplied by public distribution systems"
-            clause="UK declared low-voltage supply: 230 V single-phase / 400 V three-phase, 50 Hz, with a tolerance of \u00b110 % under normal operating conditions (207-253 V)."
+            clause="UK declared low-voltage supply: 230 V single-phase / 400 V three-phase, 50 Hz, with a tolerance of ±10 % under normal operating conditions (207-253 V)."
             meaning={
               <>
-                Equipment is rated to operate across the full \u00b110 % band, so HNC sizing
+                Equipment is rated to operate across the full ±10 % band, so HNC sizing
                 calculations should use 230 V nominal and check worst-case voltage drop down to
                 207 V at the furthest outlet. Anything outside that band is a power-quality issue,
                 not a normal design assumption.
@@ -577,23 +577,23 @@ const HNCModule3Section1_1 = () => {
                 You are the building services engineer on a Cat-B office fit-out. The tenant
                 has declared 80 kW of total connected load (lighting, small power, comfort
                 cooling fan-coils) at an assumed 0.9 power factor, fed from a 400 V three-phase
-                sub-main run 35 m from the landlord\u2019s riser distribution board.
+                sub-main run 35 m from the landlord’s riser distribution board.
               </>
             }
             whatToDo={
               <>
-                Convert load to line current: I<sub>L</sub> = P / (\u221a3 \u00d7 V<sub>L</sub>{' '}
-                \u00d7 cos \u03c6) = 80 000 / (1.732 \u00d7 400 \u00d7 0.9) \u2248 128 A. Pick
+                Convert load to line current: I<sub>L</sub> = P / (√3 × V<sub>L</sub>{' '}
+                × cos φ) = 80 000 / (1.732 × 400 × 0.9) ≈ 128 A. Pick
                 the next standard protective device above 128 A (typically 160 A MCCB), then
-                select a cable from BS 7671 Appendix 4 with I<sub>z</sub> \u2265 160 A under the
+                select a cable from BS 7671 Appendix 4 with I<sub>z</sub> ≥ 160 A under the
                 actual installation method, ambient and grouping factors. Finally check
-                voltage drop over 35 m using the cable\u2019s mV/A/m figure \u00d7 length \u00d7
+                voltage drop over 35 m using the cable’s mV/A/m figure × length ×
                 I<sub>b</sub> against the 5 % limit for power circuits in BS 7671 Appendix 12.
               </>
             }
             whyItMatters={
               <>
-                Getting these four basics right \u2014 V, I, R and P \u2014 is the difference
+                Getting these four basics right — V, I, R and P — is the difference
                 between a sub-main that serves the tenant for 25 years and one that nuisance-trips,
                 cooks its insulation or fails the voltage drop check on commissioning. The numbers
                 also sit inside the Part L energy submission, so they are auditable, not throwaway.
@@ -609,14 +609,14 @@ const HNCModule3Section1_1 = () => {
 
           <KeyTakeaways
             points={[
-              'Voltage is potential difference (V), current is rate of charge flow (A), resistance is opposition (\u03a9), power is rate of energy transfer (W) \u2014 all four are bound together by Ohm\u2019s law and the three power equations.',
-              'UK declared supply: 230 V \u00b110 % single-phase, 400 V three-phase line, 50 Hz \u2014 design at nominal but check worst case at 207 V.',
-              'Single-phase: I = P / V. Three-phase: I = P / (\u221a3 \u00d7 V\u2097 \u00d7 cos \u03c6). Always include power factor on inductive loads.',
-              'Cable selection rule: I\u1d47 \u2264 I\u2099 \u2264 I_z (design current \u2264 device rating \u2264 cable capacity at site conditions).',
-              'I\u00b2R losses scale with the square of current \u2014 doubling the load quadruples the heat in the cable. Drives both cable sizing and voltage drop.',
-              'Voltage drop limits (BS 7671 Appendix 12): 3 % lighting, 5 % power \u2014 always use the go-and-return distance for single-phase calcs.',
-              'Energy is power \u00d7 time (kWh) \u2014 the unit billed by the supply utility and reported in the Part L energy submission.',
-              'Power density (W/m\u00b2) is the early-stage tool for sizing landlord supplies before the lighting and HVAC schedules are issued.',
+              'Voltage is potential difference (V), current is rate of charge flow (A), resistance is opposition (Ω), power is rate of energy transfer (W) — all four are bound together by Ohm’s law and the three power equations.',
+              'UK declared supply: 230 V ±10 % single-phase, 400 V three-phase line, 50 Hz — design at nominal but check worst case at 207 V.',
+              'Single-phase: I = P / V. Three-phase: I = P / (√3 × Vₗ × cos φ). Always include power factor on inductive loads.',
+              'Cable selection rule: Iᵇ ≤ Iₙ ≤ I_z (design current ≤ device rating ≤ cable capacity at site conditions).',
+              'I²R losses scale with the square of current — doubling the load quadruples the heat in the cable. Drives both cable sizing and voltage drop.',
+              'Voltage drop limits (BS 7671 Appendix 12): 3 % lighting, 5 % power — always use the go-and-return distance for single-phase calcs.',
+              'Energy is power × time (kWh) — the unit billed by the supply utility and reported in the Part L energy submission.',
+              'Power density (W/m²) is the early-stage tool for sizing landlord supplies before the lighting and HVAC schedules are issued.',
             ]}
           />
 

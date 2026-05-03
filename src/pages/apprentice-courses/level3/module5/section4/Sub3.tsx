@@ -291,14 +291,20 @@ export default function Sub3() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 643.7.3 (extract concerning RCD verification)"
-            clause="The effectiveness of an RCD shall be verified by a test that simulates a residual current at the rated residual operating current (I delta n) of the device. The disconnection time shall not exceed the values stated in Chapter 41 of BS 7671 for the type of installation and circuit being protected."
+            source="BS 7671:2018+A4:2026 — Regulation 643.7.3 (RCD verification under ADS)"
+            clause={`The effectiveness of automatic disconnection of supply by RCDs shall be verified using suitable test equipment according to BS EN 61557-6 (see Regulation 643.1) to confirm that the relevant requirements of Chapter 41 are met, taking into account the operating characteristic of the device.
+
+NOTE: Regardless of RCD Type, effectiveness is deemed to have been verified where an RCD disconnects within the time stated below with an alternating current test at rated residual operating current (IΔn):
+(a) for general non-delay type, 300 ms maximum;
+(b) for delay 'S' type RCD, between 130 ms minimum and 500 ms maximum.`}
             meaning={
               <>
-                Single AC test at 1 x I delta n. Trip time against Table 41.1. The older multi-test
-                sequence (1/2, 1, 5 x I delta n) is removed in A4:2026 — verification is the single
-                test, recorded against the system disconnection time requirement and the device
-                product spec. This is the simplified A4:2026 method that supersedes earlier guidance.
+                Single AC test at the rated residual operating current (IΔn). The acceptance
+                limits live in the regulation NOTE: 300 ms maximum for general non-delay RCDs;
+                130 ms minimum to 500 ms maximum for time-delayed 'S' type. The earlier multi-test
+                sequence (½, 1, 5 × IΔn) is no longer required by A4:2026 — verification is the
+                single AC test at IΔn, with the device deemed effective if it trips within the
+                NOTE limits. Verification instrument must comply with BS EN 61557-6.
               </>
             }
             cite="Source: BS 7671:2018+A4:2026 Part 6, Chapter 64, Regulation 643.7.3."

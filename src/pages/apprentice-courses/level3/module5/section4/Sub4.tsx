@@ -492,14 +492,17 @@ export default function Sub4() {
 
           <RegsCallout
             source="BS 7671:2018+A4:2026 — Regulation 532.6 (Arc Fault Detection Devices)"
-            clause="AFDDs shall comply with BS EN 62606 (Arc Fault Detection Devices). The selection of AFDDs shall be based on the characteristics of the circuit to be protected, in particular the rated current and the type of load."
+            clause="Regulations 421.1.7, 532.6 and 651.2(e) require confirmation that arc fault detection device(s) are operational. On completion the installer shall confirm AFDDs show the correct operational indication and are capable of being tested or monitored in accordance with manufacturer instructions and relevant regulations. BS EN 62606:2013 + A1:2017 (general requirements for AFDDs) is referenced by BS 7671 at 421.1.7, 532.6 and Table 537.4."
             meaning={
               <>
-                Reg 532.6 sets the product compliance and selection requirements for AFDDs.
-                Devices must conform to BS EN 62606. Selection based on circuit characteristics
-                — rated current matched to the circuit\'s overcurrent rating, type appropriate
-                to the load. Combined with Reg 421.1.7 (location recommendation), Reg 532.6
-                governs the device-level requirements when AFDDs are installed.
+                Reg 532.6 sits in Chapter 53 (Selection and erection — protection, isolation,
+                switching, control and monitoring) and works alongside Reg 421.1.7 (location
+                recommendation) and Reg 651.2(e) (initial verification confirmation). The
+                regulatory triad covers: <strong>where</strong> AFDDs are recommended (421.1.7),{' '}
+                <strong>what</strong> the device must comply with (532.6, referencing BS EN
+                62606) and <strong>how</strong> operation is confirmed at initial verification
+                (651.2(e)). On site you confirm via the manufacturer test button and the
+                operational indicator.
               </>
             }
             cite="Source: BS 7671:2018+A4:2026 Chapter 53, Regulation 532.6."

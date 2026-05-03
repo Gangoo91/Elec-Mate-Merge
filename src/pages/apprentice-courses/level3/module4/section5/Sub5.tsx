@@ -291,18 +291,18 @@ export default function Sub5() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 644.1"
+            source="BS 7671:2018+A4:2026 — Regulations 644.1.1 (Defects to be corrected before Certificate issued) and 651.4 (Recording defects in a report)"
             clause={
               <>
-                "Upon completion of the verification of a new installation or changes to an existing installation, an Electrical Installation Certificate, together with a schedule of inspections (see Regulation 643.1) and a schedule of test results (see Regulation 643.2), based upon the model forms given in Appendix 6, shall be given by the person responsible for the verification, to the person ordering the work."
+                "644.1.1 For a new installation, any defect or omission revealed during the inspection and testing shall be corrected before the Certificate is issued. 651.4 Details of any damage, deterioration, defects or dangerous conditions shall be recorded in a report."
               </>
             }
             meaning={
               <>
-                BS 7671 Section 644 mandates the certificate as the documentary closure of inspection and testing. The model forms in Appendix 6 (updated to A4:2026) are the standard format. The certificate goes to the person ordering the work (the customer / Duty Holder) and the test schedules accompany it. For minor works, Section 644.4 specifies the Minor Works Certificate as the appropriate form. Without the certificate, the verification under BS 7671 643 has not been documentarily closed and the work is incomplete in regulatory terms.
+                Reg 644.1.1 is the rectification duty &mdash; defects revealed during inspection and testing must be corrected before the Certificate is issued. Reg 651.4 is the reporting duty &mdash; damage, deterioration, defects or dangerous conditions get recorded in a report. Together they bracket the post-verification work: rectify what you can before issuing the cert; record what you can&apos;t (or what was outside scope) on the report. For minor works the MWC is the form; the test schedules accompany it. Without the certificate and any associated report, the verification under BS 7671 has not been documentarily closed.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026, Regulation 644.1 — IET Wiring Regulations 18th Edition Amendment 4."
+            cite="Source: BS 7671:2018+A4:2026 Part 6, Regulations 644.1.1 and (where applicable) 651.4."
           />
 
           <InlineCheck
@@ -370,7 +370,7 @@ export default function Sub5() {
                 Landlords must have an EICR every five years (or sooner if the previous EICR specified an earlier re-inspection date), and must rectify any C1, C2 or FI finding within 28 days (or sooner if the report specifies). Failure carries a fine of up to &pound;30,000 per breach. The Schedule of Remedial Works + Minor Works Certificate is the landlord's proof of compliance and their defence against the fine. For an L3 apprentice rectifying landlord work, documentary turnaround speed matters as much as physical rectification speed.
               </>
             }
-            cite="Source: Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020, Reg 3 — verbatim from legislation.gov.uk."
+            cite="Source: Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020, Reg 3."
           />
 
           <InlineCheck
@@ -537,7 +537,7 @@ export default function Sub5() {
                 Whatever you discovered alongside the headline fault &mdash; the borderline IR reading on a different circuit, the missing label at the MET, the two breakers in the wrong slots &mdash; goes on the report. Reg 651.4 is the regulation that converts &ldquo;noticed it but it wasn&apos;t my call-out&rdquo; into &ldquo;recorded it on the customer&apos;s record&rdquo;.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Reg 651.4, verbatim."
+            cite="Source: BS 7671:2018+A4:2026 — Reg 651.4."
           />
 
           <SectionRule />

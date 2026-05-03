@@ -424,19 +424,18 @@ export default function Sub5() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 643.2 (Test instruments)"
-            clause="The test instruments used for inspection and testing shall be in good order and shall meet the requirements of the relevant parts of BS EN 61557 series. Test instruments shall be calibrated to a known standard at intervals appropriate to the use of the instrument."
+            source="BS 7671:2018+A4:2026 — Regulation 651.3 (Periodic inspection and testing — safety and instruments)"
+            clause="Periodic inspection and testing shall not cause danger to persons or livestock and shall not cause damage to property or equipment even if the circuit is defective. Measuring instruments and monitoring equipment and methods shall be chosen in accordance with the relevant parts of BS EN 61557. If other measuring equipment is used, it shall provide no less a degree of performance and safety."
             meaning={
               <>
-                Reg 643.2 puts a positive duty on the inspector to use suitable, calibrated
-                instruments. The certificate has to identify the specific instrument used — make,
+                Reg 651.3 puts a positive duty on the inspector to use suitable instruments per BS EN 61557 (or equivalent), and to ensure inspection and testing does not cause danger or damage even if the circuit is defective. The certificate has to identify the specific instrument used — make,
                 model, serial number, last calibration date. This is what lets the test results be
                 trusted and audited. Most firms use certification software that auto-fills the
                 instrument fields from the firm's instrument register; verify the right instrument
                 is recorded for the actual work.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Part 6, Chapter 64, Regulation 643.2."
+            cite="Source: BS 7671:2018+A4:2026 Part 6, Chapter 65, Regulation 651.3."
           />
 
           <InlineCheck

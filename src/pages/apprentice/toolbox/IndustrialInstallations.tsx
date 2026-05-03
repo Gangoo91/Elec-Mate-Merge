@@ -100,7 +100,10 @@ const renderPanel = (cardId: string) => {
 
 const IndustrialInstallations = () => (
   <InstallationGuidePageShell
-    title="Industrial Installations"
+    title="Industrial installations"
+    eyebrow="Apprentice · Industrial"
+    backRoute="/apprentice/toolbox"
+    description="Heavy plant, factories, ATEX zones, motor control. Hazardous areas, IP/IK ratings, prospective fault current — the work where mistakes cost more than just a callback."
     icon={Factory}
     cards={cards}
     renderPanel={renderPanel}

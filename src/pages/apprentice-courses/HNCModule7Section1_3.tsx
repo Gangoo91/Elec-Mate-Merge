@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 7 · Section 1 · Subsection 3 — Cable Sizing Calculations
+ * HNC Electrical Engineering for Building Services (Power and Lighting Systems)
+ *   Current-carrying capacity, voltage drop, correction factors, thermal constraints and BS 7671 methodology
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Cable Sizing Calculations - HNC Module 7 Section 1.3';
@@ -241,907 +254,343 @@ const faqs = [
 ];
 
 const HNCModule7Section1_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section1")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module7-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.1.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Cable Sizing Calculations
-          </h1>
-          <p className="text-white">
-            Current-carrying capacity, voltage drop, correction factors, thermal constraints and BS
-            7671 methodology
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 7 · Section 1 · Subsection 3"
+            title="Cable Sizing Calculations"
+            description="Current-carrying capacity, voltage drop, correction factors, thermal constraints and BS 7671 methodology"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Design current (Ib):</strong> Current circuit will carry in normal service
-              </li>
-              <li className="pl-1">
-                <strong>Correction factors:</strong> Ca, Cg, Ci, Cc reduce effective capacity
-              </li>
-              <li className="pl-1">
-                <strong>Voltage drop:</strong> Max 5% for final circuits (11.5V at 230V)
-              </li>
-              <li className="pl-1">
-                <strong>Adiabatic equation:</strong> Ensures fault current withstand
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Apply BS 7671 cable sizing methodology systematically",
+              "Calculate effective current-carrying capacity with correction factors",
+              "Determine voltage drop and assess compliance",
+              "Use the adiabatic equation for fault current protection",
+              "Select appropriate reference methods for installation conditions",
+              "Verify cable selection satisfies all three sizing criteria",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Fundamental Principles of Cable Sizing">
+            <p>Cable sizing is a critical design task that ensures cables can safely carry the intended current without overheating, maintain acceptable voltage at the load, and withstand fault currents until the protective device operates. BS 7671 provides a systematic methodology based on three fundamental checks.</p>
+            <p><strong>The three cable sizing criteria:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Current-carrying capacity:</strong> Cable must carry load current without exceeding temperature limits</li>
+              <li><strong>Voltage drop:</strong> Voltage at load must remain within acceptable limits</li>
+              <li><strong>Fault current protection:</strong> Cable must withstand fault current for disconnection time</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Formula</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>It ≥ In / (Ca × Cg × Ci × Cc)</strong>
-              </li>
-              <li className="pl-1">
-                <strong>VD = (mV/A/m × Ib × L) / 1000</strong>
-              </li>
-              <li className="pl-1">
-                <strong>S = √(I²t) / k</strong> (adiabatic)
-              </li>
-              <li className="pl-1">
-                <strong>Three checks:</strong> Capacity, VD, fault withstand
-              </li>
+            <p><strong>Key Current Values in Cable Sizing</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Ib:</strong> Design current — Current the circuit is intended to carry in normal service</li>
+              <li><strong>In:</strong> Rated current — Nominal current rating of the protective device</li>
+              <li><strong>Iz:</strong> Effective capacity — Actual current-carrying capacity after applying correction factors</li>
+              <li><strong>It:</strong> Tabulated current — Current rating from BS 7671 tables for given installation method</li>
+              <li><strong>I2:</strong> Operating current — Current causing effective operation of protective device</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Fundamental Coordination Requirement</strong></p>
+            <p>For safe operation, the following relationship must be satisfied:</p>
+            <p>Ib ≤ In ≤ Iz</p>
+            <p>The design current must not exceed the protective device rating, which must not exceed the cable's effective current-carrying capacity.</p>
+            <p><strong>Design approach:</strong> Start with the load current, select an appropriate protective device, then determine the minimum cable size to satisfy all three criteria.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Apply BS 7671 cable sizing methodology systematically',
-              'Calculate effective current-carrying capacity with correction factors',
-              'Determine voltage drop and assess compliance',
-              'Use the adiabatic equation for fault current protection',
-              'Select appropriate reference methods for installation conditions',
-              'Verify cable selection satisfies all three sizing criteria',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Fundamental Principles */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Fundamental Principles of Cable Sizing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Correction Factors and Current Capacity">
+            <p>The tabulated current ratings in BS 7671 Appendix 4 are based on specific reference conditions. When actual installation conditions differ, correction factors must be applied to determine the effective current-carrying capacity. These factors account for reduced heat dissipation.</p>
+            <p><strong>Ca - Ambient Temperature</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Reference: 30°C for most installations</li>
+              <li>Higher ambient = lower Ca value</li>
+              <li>Table 4B1 (thermoplastic insulation)</li>
+              <li>Table 4B2 (thermosetting insulation)</li>
+              <li>Example: 40°C = Ca 0.87 (PVC)</li>
+            </ul>
+            <p><strong>Cg - Grouping Factor</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Multiple circuits reduce cooling</li>
+              <li>Tables 4C1 to 4C5</li>
+              <li>More circuits = lower Cg value</li>
+              <li>Example: 6 cables = Cg 0.57</li>
+              <li>Spacing can improve rating</li>
+            </ul>
+            <p><strong>Ci - Thermal Insulation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Cables in contact with insulation</li>
+              <li>One side: Ci = 0.75 (50mm depth)</li>
+              <li>Surrounded &gt;0.5m: Ci = 0.5</li>
+              <li>Table 52.2 in BS 7671</li>
+              <li>Severe derating applies</li>
+            </ul>
+            <p><strong>Cc - BS 3036 Fuse Factor</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Semi-enclosed (rewirable) fuses only</li>
+              <li>Cc = 0.725</li>
+              <li>Fusing factor is 2 (not 1.45)</li>
+              <li>MCBs/RCBOs: Cc = 1.0</li>
+              <li>Cartridge fuses: Cc = 1.0</li>
+            </ul>
+            <p><strong>Cable Sizing Formula</strong></p>
+            <p>It ≥ In / (Ca × Cg × Ci × Cc)</p>
+            <p>The minimum tabulated current rating (It) must be greater than or equal to the protective device rating divided by the product of all applicable correction factors.</p>
+            <p><strong>Common Correction Factor Values</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Ca:</strong> 35°C ambient (PVC) — 0.94</li>
+              <li><strong>Ca:</strong> 40°C ambient (PVC) — 0.87</li>
+              <li><strong>Cg:</strong> 2 circuits touching — 0.80</li>
+              <li><strong>Cg:</strong> 4 circuits in conduit — 0.65</li>
+              <li><strong>Ci:</strong> One side thermal insulation — 0.75</li>
+              <li><strong>Cc:</strong> BS 3036 fuse protection — 0.725</li>
+            </ul>
+            <p><strong>Important:</strong> When no special conditions exist, correction factors equal 1.0 and the tabulated rating applies directly.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Voltage Drop Calculations">
+            <p>Voltage drop occurs as current flows through the impedance of cable conductors. Excessive voltage drop reduces equipment efficiency, causes lamps to dim, motors to run hot, and may prevent proper operation. BS 7671 Regulation 525 limits voltage drop to maintain adequate voltage at the point of utilisation.</p>
+            <p><strong>BS 7671 Voltage Drop Limits</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Lighting circuits:</strong> 3% — 6.9V</li>
+              <li><strong>Other circuits:</strong> 5% — 11.5V</li>
+              <li><strong>Where supply is within +10%/-6%:</strong> 3% + 5% combined — 18.4V total</li>
+            </ul>
+            <p><strong>Voltage Drop Formula</strong></p>
+            <p>VD = (mV/A/m × Ib × L) / 1000</p>
+            <p>Where mV/A/m is the tabulated voltage drop per ampere per metre from BS 7671 Appendix 4, Ib is the design current, and L is the cable length in metres.</p>
+            <p><strong>Example Voltage Drop Values (mV/A/m)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>1.5mm²:</strong> 29 mV/A/m — 25 mV/A/m</li>
+              <li><strong>2.5mm²:</strong> 18 mV/A/m — 15 mV/A/m</li>
+              <li><strong>4mm²:</strong> 11 mV/A/m — 9.5 mV/A/m</li>
+              <li><strong>6mm²:</strong> 7.3 mV/A/m — 6.4 mV/A/m</li>
+              <li><strong>10mm²:</strong> 4.4 mV/A/m — 3.8 mV/A/m</li>
+              <li><strong>16mm²:</strong> 2.8 mV/A/m — 2.4 mV/A/m</li>
+            </ul>
+            <p><strong>Voltage Drop Considerations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Starting conditions:</strong> Motor starting currents cause higher transient voltage drop</li>
+              <li><strong>Diversity:</strong> May use actual load rather than circuit rating if justified</li>
+              <li><strong>Route length:</strong> Use actual cable length, not straight-line distance</li>
+              <li><strong>Temperature:</strong> Higher conductor temperature increases resistance slightly</li>
+              <li><strong>Power factor:</strong> For AC circuits, voltage drop has both resistive and reactive components</li>
+            </ul>
+            <p><strong>Practical note:</strong> On long cable runs, voltage drop often determines the cable size rather than current-carrying capacity.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Thermal Constraints and the Adiabatic Equation">
+            <p>During a fault, very high currents flow through the cable conductors. This current generates heat so rapidly that there is no time for it to dissipate to surroundings - the process is essentially adiabatic. The cable must be sized to absorb this energy without the conductor temperature exceeding safe limits for the insulation.</p>
+            <p><strong>The Adiabatic Equation</strong></p>
+            <p>S = √(I²t) / k</p>
+            <p><strong>S</strong> = Minimum conductor cross-sectional area (mm²)</p>
+            <p><strong>I</strong> = Fault current in amperes (RMS for AC)</p>
+            <p><strong>t</strong> = Operating time of protective device (seconds)</p>
+            <p><strong>k</strong> = Factor dependent on conductor and insulation materials</p>
+            <p><strong>k Values from BS 7671 Table 43.1</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Copper:</strong> 115 — 143 — 115</li>
+              <li><strong>Aluminium:</strong> 76 — 94 — -</li>
+            </ul>
+            <p><strong>Disconnection Times (BS 7671 Regulation 411)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Final circuits ≤32A:</strong> 0.4s — 0.2s</li>
+              <li><strong>Final circuits &gt;32A:</strong> 5s — 1s</li>
+              <li><strong>Distribution circuits:</strong> 5s — 1s</li>
+            </ul>
+            <p><strong>Worked Example: Adiabatic Check</strong></p>
+            <p><strong>Given:</strong> Prospective fault current = 2000A, disconnection time = 0.4s, PVC-insulated copper cable, selected cable = 4mm²</p>
+            <p>k = 115 (copper/PVC from Table 43.1)</p>
+            <p>S = √(I²t) / k</p>
+            <p>S = √(2000² × 0.4) / 115</p>
+            <p>S = √(1,600,000) / 115</p>
+            <p>S = 1264.9 / 115</p>
+            <p>S = 11.0mm²</p>
+            <p>Result: 4mm² FAILS - minimum 16mm² required</p>
+            <p><strong>When Adiabatic Check is Critical</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Near supply origin:</strong> High fault currents near transformer/intake</li>
+              <li><strong>Long disconnection times:</strong> 5s for distribution circuits</li>
+              <li><strong>Fuse protection:</strong> Slower than MCB magnetic trip</li>
+              <li><strong>Small cables:</strong> Limited thermal mass</li>
+              <li><strong>CPC sizing:</strong> Often the critical conductor for fault withstand</li>
+            </ul>
+            <p><strong>Verification requirement:</strong> For every circuit, the selected cable must satisfy: Actual S ≥ Calculated minimum S from the adiabatic equation.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Cable sizing is a critical design task that ensures cables can safely carry the
-              intended current without overheating, maintain acceptable voltage at the load, and
-              withstand fault currents until the protective device operates. BS 7671 provides a
-              systematic methodology based on three fundamental checks.
+              <strong>Example 1: Complete Cable Sizing Calculation</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                The three cable sizing criteria:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Current-carrying capacity:</strong> Cable must carry load current without
-                  exceeding temperature limits
-                </li>
-                <li className="pl-1">
-                  <strong>Voltage drop:</strong> Voltage at load must remain within acceptable
-                  limits
-                </li>
-                <li className="pl-1">
-                  <strong>Fault current protection:</strong> Cable must withstand fault current for
-                  disconnection time
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Current Values in Cable Sizing
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Symbol</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Term</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Definition</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">Ib</td>
-                      <td className="border border-white/10 px-3 py-2">Design current</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Current the circuit is intended to carry in normal service
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">In</td>
-                      <td className="border border-white/10 px-3 py-2">Rated current</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Nominal current rating of the protective device
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">Iz</td>
-                      <td className="border border-white/10 px-3 py-2">Effective capacity</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Actual current-carrying capacity after applying correction factors
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">It</td>
-                      <td className="border border-white/10 px-3 py-2">Tabulated current</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Current rating from BS 7671 tables for given installation method
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">I2</td>
-                      <td className="border border-white/10 px-3 py-2">Operating current</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Current causing effective operation of protective device
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Fundamental Coordination Requirement
-              </p>
-              <p className="text-sm text-white">
-                For safe operation, the following relationship must be satisfied:
-              </p>
-              <p className="text-center font-mono text-lg mt-2 text-white">Ib ≤ In ≤ Iz</p>
-              <p className="text-sm text-white mt-2">
-                The design current must not exceed the protective device rating, which must not
-                exceed the cable's effective current-carrying capacity.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design approach:</strong> Start with the load current, select an appropriate
-              protective device, then determine the minimum cable size to satisfy all three
-              criteria.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Correction Factors */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Correction Factors and Current Capacity
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Size a cable for a 9kW single-phase load, 40m from distribution board. Installation: Clipped direct, 35°C ambient, grouped with 3 other circuits.</p>
+            <p>Step 1: Calculate design current (Ib)</p>
+            <p>Ib = P / V = 9000 / 230 = 39.1A</p>
+            <p>Step 2: Select protective device</p>
+            <p>In = 40A (MCB Type B)</p>
+            <p>Step 3: Determine correction factors</p>
+            <p>Ca = 0.94 (35°C ambient, Table 4B1)</p>
+            <p>Cg = 0.65 (4 circuits grouped, Table 4C1)</p>
+            <p>Ci = 1.0 (no thermal insulation)</p>
+            <p>Cc = 1.0 (MCB protection)</p>
+            <p>Step 4: Calculate minimum It</p>
+            <p>It ≥ In / (Ca × Cg × Ci × Cc)</p>
+            <p>It ≥ 40 / (0.94 × 0.65 × 1.0 × 1.0)</p>
+            <p>It ≥ 40 / 0.611 = 65.5A</p>
+            <p>Step 5: Select cable from Table 4D2A (Method C)</p>
+            <p>10mm² = 63A (insufficient)</p>
+            <p>16mm² = 85A (satisfactory)</p>
+            <p>Step 6: Check voltage drop</p>
+            <p>16mm² mV/A/m = 2.8</p>
+            <p>VD = (2.8 × 39.1 × 40) / 1000 = 4.4V</p>
+            <p>4.4V &lt; 11.5V limit - PASS</p>
+            <p>FINAL SELECTION: 16mm² cable</p>
             <p>
-              The tabulated current ratings in BS 7671 Appendix 4 are based on specific reference
-              conditions. When actual installation conditions differ, correction factors must be
-              applied to determine the effective current-carrying capacity. These factors account
-              for reduced heat dissipation.
+              <strong>Example 2: Voltage Drop Limiting Factor</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Ca - Ambient Temperature
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Reference: 30°C for most installations</li>
-                  <li className="pl-1">Higher ambient = lower Ca value</li>
-                  <li className="pl-1">Table 4B1 (thermoplastic insulation)</li>
-                  <li className="pl-1">Table 4B2 (thermosetting insulation)</li>
-                  <li className="pl-1">Example: 40°C = Ca 0.87 (PVC)</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cg - Grouping Factor</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Multiple circuits reduce cooling</li>
-                  <li className="pl-1">Tables 4C1 to 4C5</li>
-                  <li className="pl-1">More circuits = lower Cg value</li>
-                  <li className="pl-1">Example: 6 cables = Cg 0.57</li>
-                  <li className="pl-1">Spacing can improve rating</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Ci - Thermal Insulation
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Cables in contact with insulation</li>
-                  <li className="pl-1">One side: Ci = 0.75 (50mm depth)</li>
-                  <li className="pl-1">Surrounded &gt;0.5m: Ci = 0.5</li>
-                  <li className="pl-1">Table 52.2 in BS 7671</li>
-                  <li className="pl-1">Severe derating applies</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Cc - BS 3036 Fuse Factor
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Semi-enclosed (rewirable) fuses only</li>
-                  <li className="pl-1">Cc = 0.725</li>
-                  <li className="pl-1">Fusing factor is 2 (not 1.45)</li>
-                  <li className="pl-1">MCBs/RCBOs: Cc = 1.0</li>
-                  <li className="pl-1">Cartridge fuses: Cc = 1.0</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Cable Sizing Formula</p>
-              <p className="text-center font-mono text-lg text-white">
-                It ≥ In / (Ca × Cg × Ci × Cc)
-              </p>
-              <p className="text-sm text-white mt-2">
-                The minimum tabulated current rating (It) must be greater than or equal to the
-                protective device rating divided by the product of all applicable correction
-                factors.
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Correction Factor Values
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Factor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Condition</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Value</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ca</td>
-                      <td className="border border-white/10 px-3 py-2">35°C ambient (PVC)</td>
-                      <td className="border border-white/10 px-3 py-2">0.94</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ca</td>
-                      <td className="border border-white/10 px-3 py-2">40°C ambient (PVC)</td>
-                      <td className="border border-white/10 px-3 py-2">0.87</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cg</td>
-                      <td className="border border-white/10 px-3 py-2">2 circuits touching</td>
-                      <td className="border border-white/10 px-3 py-2">0.80</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cg</td>
-                      <td className="border border-white/10 px-3 py-2">4 circuits in conduit</td>
-                      <td className="border border-white/10 px-3 py-2">0.65</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ci</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        One side thermal insulation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.75</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cc</td>
-                      <td className="border border-white/10 px-3 py-2">BS 3036 fuse protection</td>
-                      <td className="border border-white/10 px-3 py-2">0.725</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Important:</strong> When no special conditions exist, correction factors equal
-              1.0 and the tabulated rating applies directly.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Voltage Drop */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Voltage Drop Calculations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> 20A circuit, 80m cable run, no derating factors apply.</p>
+            <p>Current capacity check:</p>
+            <p>It ≥ 20A → 2.5mm² (27A rating) sufficient</p>
+            <p>Voltage drop check for 2.5mm²:</p>
+            <p>VD = (18 × 20 × 80) / 1000 = 28.8V</p>
+            <p>28.8V &gt; 11.5V - FAILS</p>
+            <p>Try 4mm²:</p>
+            <p>VD = (11 × 20 × 80) / 1000 = 17.6V</p>
+            <p>17.6V &gt; 11.5V - FAILS</p>
+            <p>Try 6mm²:</p>
+            <p>VD = (7.3 × 20 × 80) / 1000 = 11.7V</p>
+            <p>11.7V &gt; 11.5V - FAILS (marginally)</p>
+            <p>Try 10mm²:</p>
+            <p>VD = (4.4 × 20 × 80) / 1000 = 7.0V</p>
+            <p>7.0V &lt; 11.5V - PASS</p>
+            <p>SELECTION: 10mm² (4× larger than thermal requirement)</p>
             <p>
-              Voltage drop occurs as current flows through the impedance of cable conductors.
-              Excessive voltage drop reduces equipment efficiency, causes lamps to dim, motors to
-              run hot, and may prevent proper operation. BS 7671 Regulation 525 limits voltage drop
-              to maintain adequate voltage at the point of utilisation.
+              <strong>Example 3: Three-Phase Motor Circuit</strong>
             </p>
+            <p><strong>Scenario:</strong> 15kW three-phase motor, FLC = 28A, 25m run, 45°C ambient.</p>
+            <p>Design current:</p>
+            <p>Ib = 28A (motor FLC from nameplate)</p>
+            <p>In = 32A (MCB selected)</p>
+            <p>Correction factors:</p>
+            <p>Ca = 0.79 (45°C, Table 4B1)</p>
+            <p>Cg = 1.0 (single circuit)</p>
+            <p>Minimum tabulated current:</p>
+            <p>It ≥ 32 / 0.79 = 40.5A</p>
+            <p>From Table 4D2A (4-core SWA):</p>
+            <p>6mm² = 41A - satisfactory</p>
+            <p>Voltage drop (using 3-phase mV/A/m):</p>
+            <p>VD = (6.4 × 28 × 25) / 1000 = 4.5V</p>
+            <p>4.5V &lt; 11.5V - PASS</p>
+            <p>Starting voltage drop (6× FLC):</p>
+            <p>VD start = (6.4 × 168 × 25) / 1000 = 26.9V</p>
+            <p>11.7% drop at starting - acceptable for DOL start</p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BS 7671 Voltage Drop Limits
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Circuit Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Maximum Drop</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">At 230V</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lighting circuits</td>
-                      <td className="border border-white/10 px-3 py-2">3%</td>
-                      <td className="border border-white/10 px-3 py-2">6.9V</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Other circuits</td>
-                      <td className="border border-white/10 px-3 py-2">5%</td>
-                      <td className="border border-white/10 px-3 py-2">11.5V</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Where supply is within +10%/-6%
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">3% + 5% combined</td>
-                      <td className="border border-white/10 px-3 py-2">18.4V total</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Voltage Drop Formula</p>
-              <p className="text-center font-mono text-lg text-white">
-                VD = (mV/A/m × Ib × L) / 1000
-              </p>
-              <p className="text-sm text-white mt-2">
-                Where mV/A/m is the tabulated voltage drop per ampere per metre from BS 7671
-                Appendix 4, Ib is the design current, and L is the cable length in metres.
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example Voltage Drop Values (mV/A/m)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Cable Size</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Single Phase (PVC)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Three Phase (PVC)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1.5mm²</td>
-                      <td className="border border-white/10 px-3 py-2">29 mV/A/m</td>
-                      <td className="border border-white/10 px-3 py-2">25 mV/A/m</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2.5mm²</td>
-                      <td className="border border-white/10 px-3 py-2">18 mV/A/m</td>
-                      <td className="border border-white/10 px-3 py-2">15 mV/A/m</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4mm²</td>
-                      <td className="border border-white/10 px-3 py-2">11 mV/A/m</td>
-                      <td className="border border-white/10 px-3 py-2">9.5 mV/A/m</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6mm²</td>
-                      <td className="border border-white/10 px-3 py-2">7.3 mV/A/m</td>
-                      <td className="border border-white/10 px-3 py-2">6.4 mV/A/m</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">10mm²</td>
-                      <td className="border border-white/10 px-3 py-2">4.4 mV/A/m</td>
-                      <td className="border border-white/10 px-3 py-2">3.8 mV/A/m</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">16mm²</td>
-                      <td className="border border-white/10 px-3 py-2">2.8 mV/A/m</td>
-                      <td className="border border-white/10 px-3 py-2">2.4 mV/A/m</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Voltage Drop Considerations
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Starting conditions:</strong> Motor starting currents cause higher
-                  transient voltage drop
-                </li>
-                <li className="pl-1">
-                  <strong>Diversity:</strong> May use actual load rather than circuit rating if
-                  justified
-                </li>
-                <li className="pl-1">
-                  <strong>Route length:</strong> Use actual cable length, not straight-line distance
-                </li>
-                <li className="pl-1">
-                  <strong>Temperature:</strong> Higher conductor temperature increases resistance
-                  slightly
-                </li>
-                <li className="pl-1">
-                  <strong>Power factor:</strong> For AC circuits, voltage drop has both resistive
-                  and reactive components
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Practical note:</strong> On long cable runs, voltage drop often determines the
-              cable size rather than current-carrying capacity.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Thermal Constraints and Fault Protection */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Thermal Constraints and the Adiabatic Equation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              During a fault, very high currents flow through the cable conductors. This current
-              generates heat so rapidly that there is no time for it to dissipate to surroundings -
-              the process is essentially adiabatic. The cable must be sized to absorb this energy
-              without the conductor temperature exceeding safe limits for the insulation.
+              <strong>Cable Sizing Procedure Summary:</strong>
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">The Adiabatic Equation</p>
-              <p className="text-center font-mono text-lg text-white">S = √(I²t) / k</p>
-              <div className="text-sm text-white mt-3 space-y-1">
-                <p>
-                  <strong>S</strong> = Minimum conductor cross-sectional area (mm²)
-                </p>
-                <p>
-                  <strong>I</strong> = Fault current in amperes (RMS for AC)
-                </p>
-                <p>
-                  <strong>t</strong> = Operating time of protective device (seconds)
-                </p>
-                <p>
-                  <strong>k</strong> = Factor dependent on conductor and insulation materials
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                k Values from BS 7671 Table 43.1
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Conductor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">PVC (70°C)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        XLPE/EPR (90°C)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Mineral (PVC sheath)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Copper</td>
-                      <td className="border border-white/10 px-3 py-2">115</td>
-                      <td className="border border-white/10 px-3 py-2">143</td>
-                      <td className="border border-white/10 px-3 py-2">115</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Aluminium</td>
-                      <td className="border border-white/10 px-3 py-2">76</td>
-                      <td className="border border-white/10 px-3 py-2">94</td>
-                      <td className="border border-white/10 px-3 py-2">-</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Disconnection Times (BS 7671 Regulation 411)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Circuit Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">TN System</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">TT System</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Final circuits ≤32A</td>
-                      <td className="border border-white/10 px-3 py-2">0.4s</td>
-                      <td className="border border-white/10 px-3 py-2">0.2s</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Final circuits &gt;32A</td>
-                      <td className="border border-white/10 px-3 py-2">5s</td>
-                      <td className="border border-white/10 px-3 py-2">1s</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Distribution circuits</td>
-                      <td className="border border-white/10 px-3 py-2">5s</td>
-                      <td className="border border-white/10 px-3 py-2">1s</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Worked Example: Adiabatic Check
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Given:</strong> Prospective fault current = 2000A, disconnection time =
-                0.4s, PVC-insulated copper cable, selected cable = 4mm²
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>k = 115 (copper/PVC from Table 43.1)</p>
-                <p className="mt-2">S = √(I²t) / k</p>
-                <p>S = √(2000² × 0.4) / 115</p>
-                <p>S = √(1,600,000) / 115</p>
-                <p>S = 1264.9 / 115</p>
-                <p>S = 11.0mm²</p>
-                <p className="mt-2 text-red-400">Result: 4mm² FAILS - minimum 16mm² required</p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                When Adiabatic Check is Critical
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Near supply origin:</strong> High fault currents near transformer/intake
-                </li>
-                <li className="pl-1">
-                  <strong>Long disconnection times:</strong> 5s for distribution circuits
-                </li>
-                <li className="pl-1">
-                  <strong>Fuse protection:</strong> Slower than MCB magnetic trip
-                </li>
-                <li className="pl-1">
-                  <strong>Small cables:</strong> Limited thermal mass
-                </li>
-                <li className="pl-1">
-                  <strong>CPC sizing:</strong> Often the critical conductor for fault withstand
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Verification requirement:</strong> For every circuit, the selected cable must
-              satisfy: Actual S ≥ Calculated minimum S from the adiabatic equation.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Determine design current Ib from connected load</li>
+              <li>Select protective device with In ≥ Ib</li>
+              <li>Identify installation method (Reference Method)</li>
+              <li>Determine all applicable correction factors</li>
+              <li>Calculate minimum It = In / (Ca × Cg × Ci × Cc)</li>
+              <li>Select cable from appropriate table where It(table) ≥ It(calculated)</li>
+              <li>Verify voltage drop is within limits</li>
+              <li>Check fault current withstand using adiabatic equation</li>
+              <li>Select largest size from all three checks</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Voltage drop limit (final circuits): <strong>5% (11.5V at 230V)</strong></li>
+              <li>Voltage drop limit (lighting): <strong>3% (6.9V at 230V)</strong></li>
+              <li>k factor (copper/PVC): <strong>115</strong></li>
+              <li>k factor (copper/XLPE): <strong>143</strong></li>
+              <li>BS 3036 correction (Cc): <strong>0.725</strong></li>
+              <li>Reference ambient temperature: <strong>30°C</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Complete Cable Sizing Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Size a cable for a 9kW single-phase load, 40m from
-                distribution board. Installation: Clipped direct, 35°C ambient, grouped with 3 other
-                circuits.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Step 1: Calculate design current (Ib)</p>
-                <p>Ib = P / V = 9000 / 230 = 39.1A</p>
-                <p className="mt-2 text-white">Step 2: Select protective device</p>
-                <p>In = 40A (MCB Type B)</p>
-                <p className="mt-2 text-white">Step 3: Determine correction factors</p>
-                <p>Ca = 0.94 (35°C ambient, Table 4B1)</p>
-                <p>Cg = 0.65 (4 circuits grouped, Table 4C1)</p>
-                <p>Ci = 1.0 (no thermal insulation)</p>
-                <p>Cc = 1.0 (MCB protection)</p>
-                <p className="mt-2 text-white">Step 4: Calculate minimum It</p>
-                <p>It ≥ In / (Ca × Cg × Ci × Cc)</p>
-                <p>It ≥ 40 / (0.94 × 0.65 × 1.0 × 1.0)</p>
-                <p>It ≥ 40 / 0.611 = 65.5A</p>
-                <p className="mt-2 text-white">
-                  Step 5: Select cable from Table 4D2A (Method C)
-                </p>
-                <p>10mm² = 63A (insufficient)</p>
-                <p className="text-green-400">16mm² = 85A (satisfactory)</p>
-                <p className="mt-2 text-white">Step 6: Check voltage drop</p>
-                <p>16mm² mV/A/m = 2.8</p>
-                <p>VD = (2.8 × 39.1 × 40) / 1000 = 4.4V</p>
-                <p className="text-green-400">4.4V &lt; 11.5V limit - PASS</p>
-                <p className="mt-2 text-green-400">FINAL SELECTION: 16mm² cable</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Voltage Drop Limiting Factor
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> 20A circuit, 80m cable run, no derating factors apply.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Current capacity check:</p>
-                <p>It ≥ 20A → 2.5mm² (27A rating) sufficient</p>
-                <p className="mt-2 text-white">Voltage drop check for 2.5mm²:</p>
-                <p>VD = (18 × 20 × 80) / 1000 = 28.8V</p>
-                <p className="text-red-400">28.8V &gt; 11.5V - FAILS</p>
-                <p className="mt-2 text-white">Try 4mm²:</p>
-                <p>VD = (11 × 20 × 80) / 1000 = 17.6V</p>
-                <p className="text-red-400">17.6V &gt; 11.5V - FAILS</p>
-                <p className="mt-2 text-white">Try 6mm²:</p>
-                <p>VD = (7.3 × 20 × 80) / 1000 = 11.7V</p>
-                <p className="text-red-400">11.7V &gt; 11.5V - FAILS (marginally)</p>
-                <p className="mt-2 text-white">Try 10mm²:</p>
-                <p>VD = (4.4 × 20 × 80) / 1000 = 7.0V</p>
-                <p className="text-green-400">7.0V &lt; 11.5V - PASS</p>
-                <p className="mt-2 text-green-400">
-                  SELECTION: 10mm² (4× larger than thermal requirement)
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Three-Phase Motor Circuit
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> 15kW three-phase motor, FLC = 28A, 25m run, 45°C ambient.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Design current:</p>
-                <p>Ib = 28A (motor FLC from nameplate)</p>
-                <p>In = 32A (MCB selected)</p>
-                <p className="mt-2 text-white">Correction factors:</p>
-                <p>Ca = 0.79 (45°C, Table 4B1)</p>
-                <p>Cg = 1.0 (single circuit)</p>
-                <p className="mt-2 text-white">Minimum tabulated current:</p>
-                <p>It ≥ 32 / 0.79 = 40.5A</p>
-                <p className="mt-2 text-white">From Table 4D2A (4-core SWA):</p>
-                <p className="text-green-400">6mm² = 41A - satisfactory</p>
-                <p className="mt-2 text-white">Voltage drop (using 3-phase mV/A/m):</p>
-                <p>VD = (6.4 × 28 × 25) / 1000 = 4.5V</p>
-                <p className="text-green-400">4.5V &lt; 11.5V - PASS</p>
-                <p className="mt-2 text-white">Starting voltage drop (6× FLC):</p>
-                <p>VD start = (6.4 × 168 × 25) / 1000 = 26.9V</p>
-                <p className="text-white">11.7% drop at starting - acceptable for DOL start</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cable Sizing Procedure Summary
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Determine design current Ib from connected load</li>
-                <li className="pl-1">Select protective device with In ≥ Ib</li>
-                <li className="pl-1">Identify installation method (Reference Method)</li>
-                <li className="pl-1">Determine all applicable correction factors</li>
-                <li className="pl-1">Calculate minimum It = In / (Ca × Cg × Ci × Cc)</li>
-                <li className="pl-1">
-                  Select cable from appropriate table where It(table) ≥ It(calculated)
-                </li>
-                <li className="pl-1">Verify voltage drop is within limits</li>
-                <li className="pl-1">Check fault current withstand using adiabatic equation</li>
-                <li className="pl-1">Select largest size from all three checks</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Using Ib instead of In</strong> for calculating minimum It</li>
+                <li><strong>Forgetting grouping factors</strong> when cables share containment</li>
+                <li><strong>Using wrong reference method</strong> for installation conditions</li>
+                <li><strong>Ignoring thermal insulation</strong> in modern buildings</li>
+                <li><strong>Not checking all three criteria</strong> before final selection</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Voltage drop limit (final circuits): <strong>5% (11.5V at 230V)</strong>
-                </li>
-                <li className="pl-1">
-                  Voltage drop limit (lighting): <strong>3% (6.9V at 230V)</strong>
-                </li>
-                <li className="pl-1">
-                  k factor (copper/PVC): <strong>115</strong>
-                </li>
-                <li className="pl-1">
-                  k factor (copper/XLPE): <strong>143</strong>
-                </li>
-                <li className="pl-1">
-                  BS 3036 correction (Cc): <strong>0.725</strong>
-                </li>
-                <li className="pl-1">
-                  Reference ambient temperature: <strong>30°C</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Using Ib instead of In</strong> for calculating minimum It
-                </li>
-                <li className="pl-1">
-                  <strong>Forgetting grouping factors</strong> when cables share containment
-                </li>
-                <li className="pl-1">
-                  <strong>Using wrong reference method</strong> for installation conditions
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring thermal insulation</strong> in modern buildings
-                </li>
-                <li className="pl-1">
-                  <strong>Not checking all three criteria</strong> before final selection
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Key Formulae</p>
-                <ul className="space-y-0.5 font-mono">
-                  <li>It ≥ In / (Ca × Cg × Ci × Cc)</li>
-                  <li>VD = (mV/A/m × Ib × L) / 1000</li>
-                  <li>S = √(I²t) / k</li>
-                  <li>Ib ≤ In ≤ Iz</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">BS 7671 Tables</p>
-                <ul className="space-y-0.5">
-                  <li>4B1/4B2 - Ambient temperature (Ca)</li>
-                  <li>4C1-4C5 - Grouping factors (Cg)</li>
-                  <li>52.2 - Thermal insulation (Ci)</li>
-                  <li>4D1-4J4 - Current ratings (It)</li>
-                  <li>43.1 - k factors for adiabatic</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section1-4">
-              Next: Protection Coordination
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section1-2")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Busbar systems
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section1-4")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Discrimination studies
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

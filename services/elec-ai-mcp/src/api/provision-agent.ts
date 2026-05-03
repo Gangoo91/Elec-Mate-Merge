@@ -375,18 +375,22 @@ exec /opt/elec-ai/mcp-call "$@"
     }
 
     // 8. Fix ownership — Docker runs as root, OpenClaw gateway runs as
-    //    openclaw (uid 1000). We chown only the things THIS provision wrote:
-    //    the user's workspace, agent dir, and openclaw.json. We deliberately
-    //    do NOT recursively chown plugin-runtime-deps any more — that's
-    //    OpenClaw's own bundled runtime, only needs a one-time fix at deploy
-    //    (which the initial install does). Walking it on every signup added
-    //    ~10-15s with no benefit.
+    //    openclaw (uid 1000). The gateway re-extracts plugin-runtime-deps on
+    //    every restart (whatsapp, anthropic, memory-core), and if those files
+    //    end up root-owned the gateway can't unlink them on next start →
+    //    "validation: whatsapp" plugin failure → no inbound WhatsApp gets
+    //    delivered until someone manually chowns. We pay the small cost of
+    //    walking plugin-runtime-deps on every signup to keep that working.
     try {
       execSync(`chown -R 1000:1000 ${workspaceDir}`);
       const agentDir = join(OPENCLAW_HOME, 'agents', user_id);
       execSync(`chown -R 1000:1000 ${agentDir}`);
       execSync(`chown 1000:1000 ${OPENCLAW_CONFIG}`);
-      console.log(`[provision] Fixed ownership: workspace, agent dir, openclaw.json`);
+      const pluginDepsDir = join(OPENCLAW_HOME, 'plugin-runtime-deps');
+      execSync(`chown -R 1000:1000 ${pluginDepsDir} 2>/dev/null || true`);
+      console.log(
+        `[provision] Fixed ownership: workspace, agent dir, openclaw.json, plugin-runtime-deps`
+      );
     } catch (chownErr) {
       // Non-fatal — log but continue (dirs may still work if permissions are open)
       console.error(`[provision] chown failed: ${(chownErr as Error).message}`);

@@ -1,178 +1,124 @@
 import { useNavigate } from 'react-router-dom';
-import { Card, CardContent } from '@/components/ui/card';
-import { CheckCircle, ChevronRight, Zap } from 'lucide-react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { motion } from 'framer-motion';
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  PageFrame,
+  PageHero,
+  SectionHeader,
+  HubGrid,
+  HubCard,
+  itemVariants,
+  type Tone,
+} from '@/components/college/primitives';
 
 interface Section {
+  number: string;
+  eyebrow: string;
   title: string;
   slug: string;
-  icon: string;
-  colour: string;
-  border: string;
-  readTime: string;
+  description: string;
+  meta: string;
+  tone: Tone;
 }
 
-const sections: Section[] = [
+const SECTIONS: Section[] = [
   {
-    title: 'EPA Components',
+    number: '01',
+    eyebrow: 'What it is',
+    title: 'EPA components',
     slug: 'components',
-    icon: '📋',
-    colour: 'text-blue-400',
-    border: 'border-blue-500/30',
-    readTime: '10 min read',
+    description:
+      'AM2E practical, knowledge test and professional discussion — what each one tests and how they fit together.',
+    meta: '10 min read',
+    tone: 'blue',
   },
   {
-    title: 'Grading & Results',
+    number: '02',
+    eyebrow: 'How it scores',
+    title: 'Grading & results',
     slug: 'grading',
-    icon: '🏆',
-    colour: 'text-amber-400',
-    border: 'border-amber-500/30',
-    readTime: '8 min read',
+    description:
+      'Pass, merit, distinction — what each grade actually means, how the components weight, and what you need to hit each band.',
+    meta: '8 min read',
+    tone: 'emerald',
   },
   {
-    title: 'Preparation Guide',
+    number: '03',
+    eyebrow: 'Get ready',
+    title: 'Preparation guide',
     slug: 'preparation',
-    icon: '📖',
-    colour: 'text-green-400',
-    border: 'border-green-500/30',
-    readTime: '10 min read',
+    description:
+      'How to revise the knowledge test, practise the AM2E, rehearse the professional discussion — without burning out in the last fortnight.',
+    meta: '10 min read',
+    tone: 'amber',
   },
   {
-    title: 'Gateway & Readiness',
+    number: '04',
+    eyebrow: 'Sign-off',
+    title: 'Gateway & readiness',
     slug: 'gateway',
-    icon: '🚪',
-    colour: 'text-purple-400',
-    border: 'border-purple-500/30',
-    readTime: '8 min read',
+    description:
+      'What gateway sign-off requires, how to know you\'re ready, and what to do if your tutor or employer disagrees with your verdict.',
+    meta: '8 min read',
+    tone: 'purple',
   },
   {
-    title: 'Mistakes, Tips & FAQs',
+    number: '05',
+    eyebrow: 'War stories',
+    title: 'Mistakes, tips & FAQs',
     slug: 'tips',
-    icon: '💡',
-    colour: 'text-red-400',
-    border: 'border-red-500/30',
-    readTime: '7 min read',
+    description:
+      'The things people fail on most, the small habits that pay off on the day, and answers to the questions every apprentice asks.',
+    meta: '7 min read',
+    tone: 'orange',
   },
 ];
 
 const EndPointAssessment = () => {
   const navigate = useNavigate();
-
   return (
-    <div className="animate-fade-in max-w-2xl mx-auto px-4 pb-20 space-y-6 text-left">
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <SmartBackButton />
-        <h1 className="text-2xl font-bold tracking-tight text-white">
-          End Point Assessment
-        </h1>
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice/toolbox')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
 
-      {/* Intro Card */}
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
-          <h2 className="text-lg font-semibold text-white">
-            Your Final Assessment
-          </h2>
-          <p className="text-white text-sm leading-relaxed">
-            End Point Assessment (EPA) is the independent final assessment of
-            your apprenticeship. Conducted by an EPAO, it confirms you have
-            achieved the Knowledge, Skills, and Behaviours required by the Level
-            3 Installation Electrician / Maintenance Electrician standard
-            (ST0152).
-          </p>
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · EPA"
+          title="The final test"
+          description="End Point Assessment is the gate that turns 'apprentice' into 'electrician'. Three components, one grade, one shot at distinction. Everything you need to know, in the order you need to know it."
+          tone="yellow"
+        />
+      </motion.div>
 
-          {/* Quick Facts */}
-          <div className="bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg p-4">
-            <h3 className="text-elec-yellow font-semibold text-sm mb-3">
-              Key Facts
-            </h3>
-            <ul className="space-y-2">
-              {[
-                '3 assessment components',
-                '3-month assessment window',
-                'Graded: Pass, Merit, or Distinction',
-                'Must pass Gateway before EPA begins',
-                'AM2 practical assessment required before Gateway',
-                'Funded within the £23,000 funding band',
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="flex items-center gap-2 text-sm text-white"
-                >
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* EPA Simulator CTA */}
-      <button
-        onClick={() => navigate('/apprentice/epa-simulator')}
-        className="w-full flex items-center gap-3 p-4 rounded-lg bg-purple-500/10 border border-purple-500/30
-          touch-manipulation active:scale-[0.98] transition-transform min-h-[44px] text-left"
-      >
-        <div className="h-12 w-12 rounded-xl bg-purple-500/20 flex items-center justify-center flex-shrink-0">
-          <Zap className="h-6 w-6 text-purple-400" />
-        </div>
-        <div className="flex-1 min-w-0">
-          <span className="font-medium text-sm text-purple-400">
-            EPA Readiness Simulator
-          </span>
-          <p className="text-white text-xs mt-0.5">
-            AI-powered mock discussions, knowledge tests & readiness dashboard
-          </p>
-        </div>
-        <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
-      </button>
-
-      {/* Section Header */}
-      <div className="flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full bg-elec-yellow" />
-        <h2 className="text-base font-semibold text-white">Explore Sections</h2>
-      </div>
-
-      {/* Section Cards */}
-      <div className="space-y-2">
-        {sections.map((section) => (
-          <button
-            key={section.slug}
-            onClick={() =>
-              navigate(
-                `/apprentice/toolbox/end-point-assessment/${section.slug}`
-              )
-            }
-            className={`w-full flex items-center gap-3 p-4 rounded-lg bg-white/5 ${section.border} border
-              touch-manipulation active:scale-[0.98] transition-transform min-h-[44px] text-left`}
-          >
-            <span className="text-xl flex-shrink-0">{section.icon}</span>
-            <div className="flex-1 min-w-0">
-              <span className={`font-medium text-sm ${section.colour}`}>
-                {section.title}
-              </span>
-              <p className="text-white text-xs mt-0.5">{section.readTime}</p>
-            </div>
-            <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
-          </button>
-        ))}
-      </div>
-
-      {/* Footer Disclaimer */}
-      <Card className="border-white/10 bg-white/5">
-        <CardContent className="p-4">
-          <p className="text-white text-xs leading-relaxed">
-            Based on the Level 3 Installation Electrician / Maintenance
-            Electrician apprenticeship standard (ST0152 v1.2) and current EPA
-            assessment plans. Assessment details may vary by EPAO — always
-            confirm specific requirements with your training provider and
-            assessment organisation.
-          </p>
-        </CardContent>
-      </Card>
-    </div>
+      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
+        <SectionHeader eyebrow="Sections" title="Five chapters" />
+        <HubGrid columns={2}>
+          {SECTIONS.map((s) => (
+            <HubCard
+              key={s.slug}
+              number={s.number}
+              eyebrow={s.eyebrow}
+              title={s.title}
+              description={s.description}
+              meta={s.meta}
+              tone={s.tone}
+              onClick={() =>
+                navigate(`/apprentice/toolbox/end-point-assessment/${s.slug}`)
+              }
+            />
+          ))}
+        </HubGrid>
+      </motion.section>
+    </PageFrame>
   );
 };
 

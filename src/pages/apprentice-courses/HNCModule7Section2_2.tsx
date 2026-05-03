@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 7 · Section 2 · Subsection 2 — Fire Alarm Systems
+ * HNC Electrical Engineering for Building Services (Power and Lighting Systems)
+ *   BS 5839 categories, detector types, zoning, cause and effect, voice alarm and system integration
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Fire Alarm Systems - HNC Module 7 Section 2.2';
@@ -242,967 +255,314 @@ const faqs = [
 ];
 
 const HNCModule7Section2_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section2")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module7-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.2.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Fire Alarm Systems
-          </h1>
-          <p className="text-white">
-            BS 5839 categories, detector types, zoning, cause and effect, voice alarm and system
-            integration
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 7 · Section 2 · Subsection 2"
+            title="Fire Alarm Systems"
+            description="BS 5839 categories, detector types, zoning, cause and effect, voice alarm and system integration"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>BS 5839-1:</strong> Code of practice for fire detection and alarm
-              </li>
-              <li className="pl-1">
-                <strong>Categories:</strong> L1-L5 (life), M (manual), P1-P2 (property)
-              </li>
-              <li className="pl-1">
-                <strong>Detection:</strong> Optical, ionisation, heat, multi-sensor
-              </li>
-              <li className="pl-1">
-                <strong>Integration:</strong> HVAC, access, lifts, voice alarm
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Explain BS 5839-1 system categories and their applications",
+              "Select appropriate detector types for different environments",
+              "Apply zoning requirements and calculate zone boundaries",
+              "Develop cause and effect matrices for system integration",
+              "Understand voice alarm requirements under BS 5839-8",
+              "Design fire alarm interfaces with building services",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="BS 5839-1 System Categories">
+            <p>BS 5839-1 defines system categories based on the protection objectives. Life safety categories (L) prioritise occupant evacuation, whilst property protection categories (P) focus on minimising fire damage. Category M provides manual alarm only.</p>
+            <p><strong>Life Safety Categories (L1-L5)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>L1:</strong> All areas including voids, roof spaces, cupboards — High-risk premises, hospitals, residential care</li>
+              <li><strong>L2:</strong> Escape routes, rooms opening onto them, high-risk areas — Hotels, hostels, HMOs, boarding houses</li>
+              <li><strong>L3:</strong> Escape routes only — Factories, warehouses with clear escape paths</li>
+              <li><strong>L4:</strong> Escape routes within dwellings — Domestic premises (linked to Building Regs)</li>
+              <li><strong>L5:</strong> Specific areas defined by fire risk assessment — Bespoke protection, server rooms, plant areas</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Zoning:</strong> Max 2,000 m² per zone
-              </li>
-              <li className="pl-1">
-                <strong>Standby:</strong> 24 hours + 30 minutes alarm
-              </li>
-              <li className="pl-1">
-                <strong>Sound level:</strong> 65 dB(A) or 5 dB above background
-              </li>
-              <li className="pl-1">
-                <strong>Voice alarm:</strong> BS 5839-8 requirements
-              </li>
+            <p><strong>Property and Manual Categories</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>P1:</strong> All areas (property protection throughout) — Museums, heritage buildings, warehouses</li>
+              <li><strong>P2:</strong> High-risk areas only (property) — Storage areas, plant rooms, specific risks</li>
+              <li><strong>M:</strong> Manual call points only, no automatic detection — Low-risk, single-storey, good visibility</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Design principle:</strong> The system category is determined by the fire risk assessment, not simply the building type. A combined category (e.g., L2/P2) may be specified where different areas have different protection requirements.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Explain BS 5839-1 system categories and their applications',
-              'Select appropriate detector types for different environments',
-              'Apply zoning requirements and calculate zone boundaries',
-              'Develop cause and effect matrices for system integration',
-              'Understand voice alarm requirements under BS 5839-8',
-              'Design fire alarm interfaces with building services',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: BS 5839-1 System Categories */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            BS 5839-1 System Categories
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Detector Types and Selection">
+            <p>Selecting the appropriate detector type requires understanding both the fire characteristics likely to occur and the environmental conditions that could cause false alarms. Different detector technologies respond to different fire signatures.</p>
+            <p><strong>Optical Smoke Detectors</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Light-scattering principle</li>
+              <li>Best for smouldering fires</li>
+              <li>Large visible smoke particles</li>
+              <li>Most common general-purpose type</li>
+              <li>Prone to dust false alarms</li>
+            </ul>
+            <p><strong>Ionisation Smoke Detectors</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Radioactive source ionises air</li>
+              <li>Best for fast-flaming fires</li>
+              <li>Small invisible particles</li>
+              <li>Rarely specified (disposal issues)</li>
+              <li>Very sensitive to cooking fumes</li>
+            </ul>
+            <p><strong>Heat Detectors</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Fixed temperature or rate-of-rise</li>
+              <li>Immune to smoke false alarms</li>
+              <li>Slower response than smoke types</li>
+              <li>Ideal for kitchens, garages, plant</li>
+              <li>Various temperature grades (A1-G)</li>
+            </ul>
+            <p><strong>Multi-Sensor Detectors</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Combines optical + heat sensing</li>
+              <li>Algorithm distinguishes fire from false alarm</li>
+              <li>Configurable sensitivity modes</li>
+              <li>Reduces unwanted alarms by 50-80%</li>
+              <li>Premium cost but often justified</li>
+            </ul>
+            <p><strong>Detector Selection Guide</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Office, corridor:</strong> Optical or multi-sensor — General purpose, good response</li>
+              <li><strong>Kitchen:</strong> Heat detector — Immune to cooking fumes</li>
+              <li><strong>Plant room:</strong> Heat detector (rate-of-rise) — Tolerates fumes, dust, temperature</li>
+              <li><strong>Server room:</strong> Aspirating (VESDA) — Very early warning, high airflow</li>
+              <li><strong>Warehouse (high ceiling):</strong> Beam detector or aspirating — Point detectors impractical at height</li>
+            </ul>
+            <p><strong>Best practice:</strong> Always consider false alarm sources when selecting detectors. Unwanted alarms cost money, cause disruption, and lead to complacency.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Zoning Requirements and Cause and Effect">
+            <p>Fire alarm zoning determines how the building is divided for alarm indication and fire brigade response. Cause and effect matrices define system behaviour when alarms occur in different zones, controlling outputs such as sounders, door releases, and building services interfaces.</p>
+            <p><strong>BS 5839-1 Zoning Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Maximum zone area:</strong> 2,000 m² floor area</li>
+              <li><strong>Maximum search distance:</strong> Should allow location within 1-2 minutes</li>
+              <li><strong>Floor separation:</strong> Each floor should be a separate zone (exceptions for atriums)</li>
+              <li><strong>Stairwells:</strong> Each stairwell should be a separate zone</li>
+              <li><strong>Fire compartments:</strong> Zone boundaries should align with compartment walls</li>
+              <li><strong>Conventional systems:</strong> Maximum 32 devices per zone</li>
+            </ul>
+            <p><strong>Cause and Effect Matrix Example</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Zone 1 - Ground Floor:</strong> Yes — Yes — Yes — Yes</li>
+              <li><strong>Zone 2 - First Floor:</strong> Yes — Yes — Yes — Yes</li>
+              <li><strong>Zone 5 - Kitchen:</strong> Delayed 3min — Yes — No — Extract only</li>
+              <li><strong>Zone 8 - Plant Room:</strong> Yes — Yes — Yes — Yes</li>
+              <li><strong>MCP Any Zone:</strong> Immediate — Yes — Yes — Yes</li>
+            </ul>
+            <p><strong>Typical System Outputs (Effects)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Sounders and beacons:</strong> Alert occupants to evacuate</li>
+              <li><strong>Fire door holders:</strong> Release doors to maintain compartmentation</li>
+              <li><strong>Lift recall:</strong> Return lifts to ground floor, prevent further use</li>
+              <li><strong>HVAC shutdown:</strong> Stop air handling to prevent smoke spread</li>
+              <li><strong>Smoke dampers:</strong> Close dampers in ductwork</li>
+              <li><strong>Stairwell pressurisation:</strong> Activate to keep escape routes clear</li>
+              <li><strong>Access control:</strong> Release doors on escape routes</li>
+              <li><strong>Voice alarm:</strong> Trigger evacuation messages</li>
+            </ul>
+            <p><strong>Integration tip:</strong> The cause and effect matrix should be developed collaboratively between fire alarm, mechanical, and controls engineers to ensure all system interactions are properly defined.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Voice Alarm and System Integration">
+            <p>Voice alarm systems (BS 5839-8) provide spoken evacuation messages instead of or alongside traditional sounders. They enable phased evacuation, multilingual announcements, and situation-specific messages. System integration connects the fire alarm to other building services for coordinated emergency response.</p>
+            <p><strong>BS 5839-8 Voice Alarm Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Intelligibility:</strong> STIPA (Speech Transmission Index for PA) &gt; 0.5 minimum</li>
+              <li><strong>Sound level:</strong> 65 dB(A) or 5 dB above background (as per Part 1)</li>
+              <li><strong>Message structure:</strong> Alert tone, spoken message, alert tone (A-M-A pattern)</li>
+              <li><strong>Message duration:</strong> Should not exceed 30 seconds</li>
+              <li><strong>Standby power:</strong> Same as fire alarm (24 hours + 30 minutes)</li>
+              <li><strong>Fault tolerance:</strong> Single fault should not disable more than one zone</li>
+            </ul>
+            <p><strong>When Voice Alarm is Required</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Phased evacuation buildings</li>
+              <li>Sleeping accommodation (hotels)</li>
+              <li>High background noise areas</li>
+              <li>Complex buildings, multiple routes</li>
+              <li>Multilingual requirements</li>
+              <li>Fire risk assessment recommendation</li>
+            </ul>
+            <p><strong>Voice Alarm Message Types</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Alert:</strong> "Attention please, this is a fire alert..."</li>
+              <li><strong>Evacuate:</strong> "Please leave the building immediately..."</li>
+              <li><strong>All-clear:</strong> "The emergency has ended..."</li>
+              <li><strong>Phased:</strong> Zone-specific instructions</li>
+              <li><strong>Live PA:</strong> Manual announcements if needed</li>
+            </ul>
+            <p><strong>Fire Alarm Integration Interfaces</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>HVAC / AHU:</strong> Volt-free contact or BACnet — Shutdown fans, close dampers</li>
+              <li><strong>Smoke dampers:</strong> 24V DC or volt-free — Close to prevent smoke spread</li>
+              <li><strong>Lifts:</strong> Dedicated fire service switch — Recall to ground, doors open</li>
+              <li><strong>Access control:</strong> Volt-free or network — Unlock escape route doors</li>
+              <li><strong>BMS:</strong> BACnet, Modbus, or volt-free — Log alarms, coordinate response</li>
+              <li><strong>Emergency lighting:</strong> Automatic (loss of supply) — Illuminate escape routes</li>
+              <li><strong>Gas suppression:</strong> Dedicated interface panel — Trigger release after delay</li>
+            </ul>
+            <p><strong>Critical consideration:</strong> All fire alarm interfaces must be fail-safe. Loss of power or signal should result in the safe condition (doors release, dampers close, lifts recall).</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              BS 5839-1 defines system categories based on the protection objectives. Life safety
-              categories (L) prioritise occupant evacuation, whilst property protection categories
-              (P) focus on minimising fire damage. Category M provides manual alarm only.
+              <strong>Example 1: Determining System Category</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Life Safety Categories (L1-L5)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Category</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Coverage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">L1</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        All areas including voids, roof spaces, cupboards
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High-risk premises, hospitals, residential care
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">L2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Escape routes, rooms opening onto them, high-risk areas
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Hotels, hostels, HMOs, boarding houses
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">L3</td>
-                      <td className="border border-white/10 px-3 py-2">Escape routes only</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Factories, warehouses with clear escape paths
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">L4</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Escape routes within dwellings
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Domestic premises (linked to Building Regs)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">L5</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Specific areas defined by fire risk assessment
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Bespoke protection, server rooms, plant areas
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Property and Manual Categories
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Category</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Coverage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">P1</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        All areas (property protection throughout)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Museums, heritage buildings, warehouses
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">P2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High-risk areas only (property)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Storage areas, plant rooms, specific risks
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">M</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Manual call points only, no automatic detection
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Low-risk, single-storey, good visibility
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design principle:</strong> The system category is determined by the fire risk
-              assessment, not simply the building type. A combined category (e.g., L2/P2) may be
-              specified where different areas have different protection requirements.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Detector Types and Selection */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Detector Types and Selection
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> A 4-storey office building with open-plan offices, meeting rooms, a ground floor reception, plant room, and basement car park. Determine the appropriate BS 5839-1 category.</p>
+            <p>Fire Risk Assessment Considerations:</p>
+            <p>- Office occupancy: awake, familiar with building</p>
+            <p>- Multiple escape routes available</p>
+            <p>- No sleeping accommodation</p>
+            <p>- No high-risk processes</p>
+            <p>Category Selection:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>L3</strong> L2</li>
+            </ul>
+            <p>Plant room: <span>P2</span> (property protection of high-risk area)</p>
+            <p>Car park: <span>P2</span> or separate system per BS 5839-6</p>
+            <p>Recommendation: Combined L3/P2 system</p>
+            <p>(Detection in escape routes, plus specific areas)</p>
             <p>
-              Selecting the appropriate detector type requires understanding both the fire
-              characteristics likely to occur and the environmental conditions that could cause
-              false alarms. Different detector technologies respond to different fire signatures.
+              <strong>Example 2: Zone Calculation</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Optical Smoke Detectors
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Light-scattering principle</li>
-                  <li className="pl-1">Best for smouldering fires</li>
-                  <li className="pl-1">Large visible smoke particles</li>
-                  <li className="pl-1">Most common general-purpose type</li>
-                  <li className="pl-1">Prone to dust false alarms</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Ionisation Smoke Detectors
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Radioactive source ionises air</li>
-                  <li className="pl-1">Best for fast-flaming fires</li>
-                  <li className="pl-1">Small invisible particles</li>
-                  <li className="pl-1">Rarely specified (disposal issues)</li>
-                  <li className="pl-1">Very sensitive to cooking fumes</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Heat Detectors</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Fixed temperature or rate-of-rise</li>
-                  <li className="pl-1">Immune to smoke false alarms</li>
-                  <li className="pl-1">Slower response than smoke types</li>
-                  <li className="pl-1">Ideal for kitchens, garages, plant</li>
-                  <li className="pl-1">Various temperature grades (A1-G)</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Multi-Sensor Detectors
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Combines optical + heat sensing</li>
-                  <li className="pl-1">Algorithm distinguishes fire from false alarm</li>
-                  <li className="pl-1">Configurable sensitivity modes</li>
-                  <li className="pl-1">Reduces unwanted alarms by 50-80%</li>
-                  <li className="pl-1">Premium cost but often justified</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Detector Selection Guide
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Environment</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Recommended Type
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Reason</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Office, corridor</td>
-                      <td className="border border-white/10 px-3 py-2">Optical or multi-sensor</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        General purpose, good response
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Kitchen</td>
-                      <td className="border border-white/10 px-3 py-2">Heat detector</td>
-                      <td className="border border-white/10 px-3 py-2">Immune to cooking fumes</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Plant room</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heat detector (rate-of-rise)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Tolerates fumes, dust, temperature
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Server room</td>
-                      <td className="border border-white/10 px-3 py-2">Aspirating (VESDA)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Very early warning, high airflow
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Warehouse (high ceiling)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Beam detector or aspirating
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Point detectors impractical at height
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> Always consider false alarm sources when selecting
-              detectors. Unwanted alarms cost money, cause disruption, and lead to complacency.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Zoning and Cause and Effect */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Zoning Requirements and Cause and Effect
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> A warehouse measuring 80m x 50m (4,000 m²) single storey. Calculate the minimum number of zones required.</p>
+            <p>Total floor area = 80m x 50m = 4,000 m²</p>
+            <p>Maximum zone area = 2,000 m² (BS 5839-1)</p>
+            <p>Minimum zones = 4,000 ÷ 2,000 = <span>2 zones</span></p>
+            <p>Practical considerations:</p>
+            <p>- Consider fire compartment boundaries</p>
+            <p>- Search distance for fire brigade</p>
+            <p>- Racking layout and access routes</p>
+            <p>Recommendation: 4 zones (quadrants)</p>
+            <p>Provides better location indication</p>
             <p>
-              Fire alarm zoning determines how the building is divided for alarm indication and fire
-              brigade response. Cause and effect matrices define system behaviour when alarms occur
-              in different zones, controlling outputs such as sounders, door releases, and building
-              services interfaces.
+              <strong>Example 3: Battery Capacity Calculation</strong>
             </p>
+            <p><strong>Scenario:</strong> Calculate battery capacity for a fire alarm system with 2A standby current and 8A alarm current.</p>
+            <p>Standby capacity = 2A x 24 hours = 48 Ah</p>
+            <p>Alarm capacity = 8A x 0.5 hours = 4 Ah</p>
+            <p>Sub-total = 48 + 4 = 52 Ah</p>
+            <p>Add 25% safety margin:</p>
+            <p>52 x 1.25 = <span>65 Ah minimum</span></p>
+            <p>Select next standard size up:</p>
+            <p>Specify 2 x 38 Ah batteries (76 Ah total)</p>
+            <p>(Twin batteries for redundancy)</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                BS 5839-1 Zoning Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Maximum zone area:</strong> 2,000 m² floor area
-                </li>
-                <li className="pl-1">
-                  <strong>Maximum search distance:</strong> Should allow location within 1-2 minutes
-                </li>
-                <li className="pl-1">
-                  <strong>Floor separation:</strong> Each floor should be a separate zone
-                  (exceptions for atriums)
-                </li>
-                <li className="pl-1">
-                  <strong>Stairwells:</strong> Each stairwell should be a separate zone
-                </li>
-                <li className="pl-1">
-                  <strong>Fire compartments:</strong> Zone boundaries should align with compartment
-                  walls
-                </li>
-                <li className="pl-1">
-                  <strong>Conventional systems:</strong> Maximum 32 devices per zone
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cause and Effect Matrix Example
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Cause (Input)</th>
-                      <th className="border border-white/10 px-3 py-2 text-center">Sounders All</th>
-                      <th className="border border-white/10 px-3 py-2 text-center">Door Holders</th>
-                      <th className="border border-white/10 px-3 py-2 text-center">Lift Recall</th>
-                      <th className="border border-white/10 px-3 py-2 text-center">HVAC Stop</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Zone 1 - Ground Floor</td>
-                      <td className="border border-white/10 px-3 py-2 text-center text-green-400">
-                        Yes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-center text-green-400">
-                        Yes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-center text-green-400">
-                        Yes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-center text-green-400">
-                        Yes
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Zone 2 - First Floor</td>
-                      <td className="border border-white/10 px-3 py-2 text-center text-green-400">
-                        Yes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-center text-green-400">
-                        Yes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-center text-green-400">
-                        Yes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-center text-green-400">
-                        Yes
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Zone 5 - Kitchen</td>
-                      <td className="border border-white/10 px-3 py-2 text-center text-yellow-400">
-                        Delayed 3min
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-center text-green-400">
-                        Yes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-center text-red-400">
-                        No
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-center text-yellow-400">
-                        Extract only
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Zone 8 - Plant Room</td>
-                      <td className="border border-white/10 px-3 py-2 text-center text-green-400">
-                        Yes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-center text-green-400">
-                        Yes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-center text-green-400">
-                        Yes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-center text-green-400">
-                        Yes
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MCP Any Zone</td>
-                      <td className="border border-white/10 px-3 py-2 text-center text-green-400">
-                        Immediate
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-center text-green-400">
-                        Yes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-center text-green-400">
-                        Yes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-center text-green-400">
-                        Yes
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical System Outputs (Effects)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Sounders and beacons:</strong> Alert occupants to evacuate
-                </li>
-                <li className="pl-1">
-                  <strong>Fire door holders:</strong> Release doors to maintain compartmentation
-                </li>
-                <li className="pl-1">
-                  <strong>Lift recall:</strong> Return lifts to ground floor, prevent further use
-                </li>
-                <li className="pl-1">
-                  <strong>HVAC shutdown:</strong> Stop air handling to prevent smoke spread
-                </li>
-                <li className="pl-1">
-                  <strong>Smoke dampers:</strong> Close dampers in ductwork
-                </li>
-                <li className="pl-1">
-                  <strong>Stairwell pressurisation:</strong> Activate to keep escape routes clear
-                </li>
-                <li className="pl-1">
-                  <strong>Access control:</strong> Release doors on escape routes
-                </li>
-                <li className="pl-1">
-                  <strong>Voice alarm:</strong> Trigger evacuation messages
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Integration tip:</strong> The cause and effect matrix should be developed
-              collaboratively between fire alarm, mechanical, and controls engineers to ensure all
-              system interactions are properly defined.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Voice Alarm and System Integration */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Voice Alarm and System Integration
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Voice alarm systems (BS 5839-8) provide spoken evacuation messages instead of or
-              alongside traditional sounders. They enable phased evacuation, multilingual
-              announcements, and situation-specific messages. System integration connects the fire
-              alarm to other building services for coordinated emergency response.
+              <strong>Fire Alarm Design Checklist:</strong>
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BS 5839-8 Voice Alarm Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Intelligibility:</strong> STIPA (Speech Transmission Index for PA) &gt;
-                  0.5 minimum
-                </li>
-                <li className="pl-1">
-                  <strong>Sound level:</strong> 65 dB(A) or 5 dB above background (as per Part 1)
-                </li>
-                <li className="pl-1">
-                  <strong>Message structure:</strong> Alert tone, spoken message, alert tone (A-M-A
-                  pattern)
-                </li>
-                <li className="pl-1">
-                  <strong>Message duration:</strong> Should not exceed 30 seconds
-                </li>
-                <li className="pl-1">
-                  <strong>Standby power:</strong> Same as fire alarm (24 hours + 30 minutes)
-                </li>
-                <li className="pl-1">
-                  <strong>Fault tolerance:</strong> Single fault should not disable more than one
-                  zone
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  When Voice Alarm is Required
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Phased evacuation buildings</li>
-                  <li className="pl-1">Sleeping accommodation (hotels)</li>
-                  <li className="pl-1">High background noise areas</li>
-                  <li className="pl-1">Complex buildings, multiple routes</li>
-                  <li className="pl-1">Multilingual requirements</li>
-                  <li className="pl-1">Fire risk assessment recommendation</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Voice Alarm Message Types
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Alert:</strong> "Attention please, this is a fire alert..."
-                  </li>
-                  <li className="pl-1">
-                    <strong>Evacuate:</strong> "Please leave the building immediately..."
-                  </li>
-                  <li className="pl-1">
-                    <strong>All-clear:</strong> "The emergency has ended..."
-                  </li>
-                  <li className="pl-1">
-                    <strong>Phased:</strong> Zone-specific instructions
-                  </li>
-                  <li className="pl-1">
-                    <strong>Live PA:</strong> Manual announcements if needed
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Fire Alarm Integration Interfaces
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Interface Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Action on Fire Alarm
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">HVAC / AHU</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Volt-free contact or BACnet
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Shutdown fans, close dampers
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Smoke dampers</td>
-                      <td className="border border-white/10 px-3 py-2">24V DC or volt-free</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Close to prevent smoke spread
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lifts</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dedicated fire service switch
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Recall to ground, doors open
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Access control</td>
-                      <td className="border border-white/10 px-3 py-2">Volt-free or network</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Unlock escape route doors
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BMS</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        BACnet, Modbus, or volt-free
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Log alarms, coordinate response
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Emergency lighting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Automatic (loss of supply)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Illuminate escape routes</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Gas suppression</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dedicated interface panel
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Trigger release after delay
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Critical consideration:</strong> All fire alarm interfaces must be fail-safe.
-              Loss of power or signal should result in the safe condition (doors release, dampers
-              close, lifts recall).
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Obtain fire risk assessment and determine required category</li>
+              <li>Review building plans for compartmentation and escape routes</li>
+              <li>Define zones based on area, floors, and compartments</li>
+              <li>Select detector types considering environment and false alarm risk</li>
+              <li>Develop cause and effect matrix with all stakeholders</li>
+              <li>Calculate battery capacity with safety margin</li>
+              <li>Coordinate interfaces with mechanical and controls packages</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Maximum zone area: <strong>2,000 m²</strong></li>
+              <li>Standby battery: <strong>24 hours + 30 minutes alarm</strong></li>
+              <li>Sound level: <strong>65 dB(A) or 5 dB above background</strong></li>
+              <li>Sleeping areas: <strong>75 dB(A) at bed-head</strong></li>
+              <li>Conventional zone limit: <strong>32 devices</strong></li>
+              <li>Voice alarm STIPA: <strong>&gt; 0.5</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Determining System Category
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A 4-storey office building with open-plan offices,
-                meeting rooms, a ground floor reception, plant room, and basement car park.
-                Determine the appropriate BS 5839-1 category.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Fire Risk Assessment Considerations:</p>
-                <p className="mt-2">- Office occupancy: awake, familiar with building</p>
-                <p>- Multiple escape routes available</p>
-                <p>- No sleeping accommodation</p>
-                <p>- No high-risk processes</p>
-                <p className="mt-2 text-white">Category Selection:</p>
-                <p className="ml-4">
-                  Office floors: <span className="text-green-400">L3</span> (escape routes) or{' '}
-                  <span className="text-green-400">L2</span> if enhanced protection required
-                </p>
-                <p className="ml-4">
-                  Plant room: <span className="text-green-400">P2</span> (property protection of
-                  high-risk area)
-                </p>
-                <p className="ml-4">
-                  Car park: <span className="text-green-400">P2</span> or separate system per BS
-                  5839-6
-                </p>
-                <p className="mt-2 text-green-400">Recommendation: Combined L3/P2 system</p>
-                <p className="text-white">(Detection in escape routes, plus specific areas)</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Zone Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A warehouse measuring 80m x 50m (4,000 m²) single storey.
-                Calculate the minimum number of zones required.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Total floor area = 80m x 50m = 4,000 m²</p>
-                <p>Maximum zone area = 2,000 m² (BS 5839-1)</p>
-                <p className="mt-2">
-                  Minimum zones = 4,000 ÷ 2,000 = <span className="text-green-400">2 zones</span>
-                </p>
-                <p className="mt-2 text-white">Practical considerations:</p>
-                <p className="ml-4">- Consider fire compartment boundaries</p>
-                <p className="ml-4">- Search distance for fire brigade</p>
-                <p className="ml-4">- Racking layout and access routes</p>
-                <p className="mt-2 text-yellow-400">Recommendation: 4 zones (quadrants)</p>
-                <p className="text-white">Provides better location indication</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Battery Capacity Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate battery capacity for a fire alarm system with
-                2A standby current and 8A alarm current.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Standby capacity = 2A x 24 hours = 48 Ah</p>
-                <p>Alarm capacity = 8A x 0.5 hours = 4 Ah</p>
-                <p className="mt-2">Sub-total = 48 + 4 = 52 Ah</p>
-                <p className="mt-2">Add 25% safety margin:</p>
-                <p>
-                  52 x 1.25 = <span className="text-green-400">65 Ah minimum</span>
-                </p>
-                <p className="mt-2 text-white">Select next standard size up:</p>
-                <p className="text-green-400">Specify 2 x 38 Ah batteries (76 Ah total)</p>
-                <p className="text-white">(Twin batteries for redundancy)</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Fire Alarm Design Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Obtain fire risk assessment and determine required category
-                </li>
-                <li className="pl-1">
-                  Review building plans for compartmentation and escape routes
-                </li>
-                <li className="pl-1">Define zones based on area, floors, and compartments</li>
-                <li className="pl-1">
-                  Select detector types considering environment and false alarm risk
-                </li>
-                <li className="pl-1">Develop cause and effect matrix with all stakeholders</li>
-                <li className="pl-1">Calculate battery capacity with safety margin</li>
-                <li className="pl-1">
-                  Coordinate interfaces with mechanical and controls packages
-                </li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Wrong detector type:</strong> Optical detectors in kitchens cause repeated false alarms</li>
+                <li><strong>Poor zone design:</strong> Zones crossing fire compartments reduce effectiveness</li>
+                <li><strong>Incomplete cause and effect:</strong> Missing interfaces leave systems uncoordinated</li>
+                <li><strong>Undersized batteries:</strong> Failing to include all loads and safety margin</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Maximum zone area: <strong>2,000 m²</strong>
-                </li>
-                <li className="pl-1">
-                  Standby battery: <strong>24 hours + 30 minutes alarm</strong>
-                </li>
-                <li className="pl-1">
-                  Sound level: <strong>65 dB(A) or 5 dB above background</strong>
-                </li>
-                <li className="pl-1">
-                  Sleeping areas: <strong>75 dB(A) at bed-head</strong>
-                </li>
-                <li className="pl-1">
-                  Conventional zone limit: <strong>32 devices</strong>
-                </li>
-                <li className="pl-1">
-                  Voice alarm STIPA: <strong>&gt; 0.5</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Wrong detector type:</strong> Optical detectors in kitchens cause repeated
-                  false alarms
-                </li>
-                <li className="pl-1">
-                  <strong>Poor zone design:</strong> Zones crossing fire compartments reduce
-                  effectiveness
-                </li>
-                <li className="pl-1">
-                  <strong>Incomplete cause and effect:</strong> Missing interfaces leave systems
-                  uncoordinated
-                </li>
-                <li className="pl-1">
-                  <strong>Undersized batteries:</strong> Failing to include all loads and safety
-                  margin
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">BS 5839-1 Categories</p>
-                <ul className="space-y-0.5">
-                  <li>L1: All areas (highest life protection)</li>
-                  <li>L2: Escape routes + high-risk areas</li>
-                  <li>L3: Escape routes only</li>
-                  <li>L4: Domestic escape routes</li>
-                  <li>L5: Specific areas (bespoke)</li>
-                  <li>P1/P2: Property protection</li>
-                  <li>M: Manual call points only</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Detector Types</p>
-                <ul className="space-y-0.5">
-                  <li>Optical: smouldering fires, most common</li>
-                  <li>Ionisation: fast-flaming (rarely used)</li>
-                  <li>Heat: kitchens, plant, garages</li>
-                  <li>Multi-sensor: false alarm reduction</li>
-                  <li>Aspirating: very early warning</li>
-                  <li>Beam: high ceilings, large areas</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section2-3">
-              Next: Emergency Lighting Systems
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section2-1")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Emergency lighting design
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section2-3")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Life safety power
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

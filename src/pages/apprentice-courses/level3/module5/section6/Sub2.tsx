@@ -359,7 +359,7 @@ export default function Sub2() {
                 books. The handover pack is the delivery vehicle for the Reg 132.1 documentation.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 132.1 framework — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 132.1 framework."
           />
 
           <InlineCheck

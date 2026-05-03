@@ -294,19 +294,23 @@ export default function Sub1() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 643.7.3 (extract concerning Earth Fault Loop Impedance) and Table 41.3 (Maximum Zs values)"
-            clause="The earth fault loop impedance Zs shall be measured for every circuit at the furthest point in order to confirm compliance with Regulation 411.4 and the disconnection times of Regulation 411.3.2.2. Zs values measured shall be compared with the maximum Zs values stated in Table 41.3 for the protective device, with the cable conductor temperature correction applied. Where direct comparison is made between measured Zs and Table 41.3 values, the rule of thumb Zs(measured) ≤ 0.8 × Zs(table) may be applied to allow for the difference between the cable conductor temperature at test and the assumed operating temperature."
+            source="BS 7671:2018+A4:2026 — Regulation 643.7.1 (Verification of ADS by Zs measurement) and Table 41.3 (Maximum Zs values). The 0.8 multiplier is IET GN3 guidance, not a BS 7671 regulation."
+            clause={`BS 7671 Reg 643.7.1: The verification of the effectiveness of the measures for fault protection by automatic disconnection of supply is effected as follows — (a) TN system: Compliance with Regulation 411.4 shall be verified by (i) measurement of the earth fault loop impedance (see Regulation 643.7.3); (ii) verification of the characteristics and/or the effectiveness of the associated protective device. Table 41.3 lists the maximum measured Zs values that satisfy Regulation 411.4 disconnection times for the listed protective devices.
+
+IET GN3 guidance (separate from BS 7671): A practical "rule of thumb" of Zs(measured) ≤ 0.8 × Zs(table) is commonly applied on site to allow for the difference between the cable conductor temperature at test (ambient) and the 70 °C operating temperature assumed by the Table 41.3 values. This 0.8 factor is GUIDANCE, not a BS 7671 regulation — the strict regulatory comparison is against Table 41.3 with temperature correction per GN3 Appendix B.`}
             meaning={
               <>
-                Live Zs verification per circuit, compared against Table 41.3 with temperature
-                correction. The 0.8 multiplier is the practical correction electricians use on
-                site — Table 41.3 values assume conductor at 70 °C operating temperature, while
-                measured Zs is taken at ambient (typically 15-25 °C). The 0.8 factor gives
-                approximately the right margin for typical PVC-insulated cable. For more rigorous
-                correction, use GN3 Appendix B per-degree coefficients.
+                Live Zs verification per circuit, compared against Table 41.3. Two distinct
+                things in the same RegsCallout:{' '}
+                <strong>(1) the regulation</strong> (Reg 643.7.1 + Table 41.3) sets the duty —
+                measure Zs, confirm it satisfies Regulation 411.4 via Table 41.3.{' '}
+                <strong>(2) the 0.8 multiplier</strong> is GN3 guidance, NOT BS 7671 — Table 41.3
+                values assume conductors at 70 °C operating temperature while measured Zs is taken
+                at ambient (typically 15–25 °C), and 0.8 is a practical correction. For rigorous
+                correction use GN3 Appendix B per-degree coefficients.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Part 6, Chapter 64, Regulation 643.7.3, with Table 41.3 limits."
+            cite="Source: BS 7671:2018+A4:2026 Part 6, Chapter 64, Regulation 643.7.1 and Table 41.3. The 0.8 multiplier is IET Guidance Note 3 guidance, not a BS 7671 regulation."
           />
 
           <SectionRule />
@@ -774,7 +778,7 @@ export default function Sub1() {
                 the inspector&apos;s daily work.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 411.3.1.2 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 411.3.1.2."
           />
 
           <RegsCallout
@@ -795,7 +799,7 @@ export default function Sub1() {
                 method.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 643.3 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 643.3."
           />
 
           <SectionRule />

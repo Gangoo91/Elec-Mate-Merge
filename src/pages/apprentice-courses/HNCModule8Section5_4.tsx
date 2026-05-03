@@ -1,8 +1,21 @@
-import { ArrowLeft, Network, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 8 · Section 5 · Subsection 4 — Communication Protocols
+ * HNC Electrical Engineering for Building Services (HVAC Systems)
+ *   BACnet, Modbus, LonWorks, KNX, protocol gateways and multi-vendor integration
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Communication Protocols - HNC Module 8 Section 5.4';
@@ -230,1110 +243,293 @@ const faqs = [
 ];
 
 const HNCModule8Section5_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section5")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module8-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Network className="h-4 w-4" />
-            <span>Module 8.5.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Communication Protocols
-          </h1>
-          <p className="text-white">
-            BACnet, Modbus, LonWorks, KNX, protocol gateways and multi-vendor integration
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 8 · Section 5 · Subsection 4"
+            title="Communication Protocols"
+            description="BACnet, Modbus, LonWorks, KNX, protocol gateways and multi-vendor integration"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>BACnet:</strong> Purpose-built for building automation, ASHRAE standard
-              </li>
-              <li className="pl-1">
-                <strong>Modbus:</strong> Simple, widely supported, industrial heritage
-              </li>
-              <li className="pl-1">
-                <strong>KNX:</strong> European standard for building control, distributed
-                intelligence
-              </li>
-              <li className="pl-1">
-                <strong>Gateways:</strong> Enable multi-protocol integration
-              </li>
+          <ConceptBlock title="BACnet - Building Automation and Control Network">
+            <p>BACnet is an open protocol specifically designed for building automation, developed by ASHRAE and published as ANSI/ASHRAE Standard 135. It provides a standardised method for building automation devices to communicate, regardless of manufacturer, enabling true interoperability in commercial building systems.</p>
+            <p><strong>BACnet Transport Layers</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>BACnet/IP:</strong> Ethernet (UDP/IP) — 100 Mbps - 1 Gbps — Backbone, head-end, supervisory</li>
+              <li><strong>BACnet MS/TP:</strong> RS-485 — 9.6 - 76.8 kbps — Field devices, controllers, sensors</li>
+              <li><strong>BACnet/SC:</strong> WebSocket/TLS — Network dependent — Secure communications, cloud connectivity</li>
+              <li><strong>BACnet Ethernet:</strong> Ethernet (802.3) — 10/100 Mbps — Legacy installations (now rare)</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Open protocols:</strong> Reduce vendor lock-in, enable competition
-              </li>
-              <li className="pl-1">
-                <strong>Integration:</strong> Connect chillers, AHUs, meters, lighting
-              </li>
-              <li className="pl-1">
-                <strong>Cybersecurity:</strong> Network isolation and access control
-              </li>
-              <li className="pl-1">
-                <strong>Documentation:</strong> Points lists and PICS essential
-              </li>
+            <p><strong>BACnet Object Model</strong></p>
+            <p>BACnet uses an object-oriented approach where all data is organised into standardised objects with defined properties. This enables consistent access to data across different manufacturers.</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Analog Input (AI):</strong> Sensor readings (temperature, pressure) — Room temperature sensor</li>
+              <li><strong>Analog Output (AO):</strong> Modulating control outputs — Valve position command</li>
+              <li><strong>Binary Input (BI):</strong> On/off status readings — Fan running status</li>
+              <li><strong>Binary Output (BO):</strong> On/off control outputs — Pump start/stop command</li>
+              <li><strong>Schedule:</strong> Time-based control schedules — AHU operating times</li>
+              <li><strong>Trend Log:</strong> Historical data storage — Temperature logging</li>
+              <li><strong>Notification Class:</strong> Alarm routing configuration — Critical alarm distribution</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>BACnet Device Profiles (ASHRAE 135.1)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>B-AWS:</strong> Advanced Workstation - full graphical interface capability</li>
+              <li><strong>B-OWS:</strong> Operator Workstation - operator interface functions</li>
+              <li><strong>B-BC:</strong> Building Controller - DDC controller with multiple control loops</li>
+              <li><strong>B-AAC:</strong> Advanced Application Controller - complex control applications</li>
+              <li><strong>B-ASC:</strong> Application Specific Controller - single application (e.g., VAV box)</li>
+              <li><strong>B-SS:</strong> Smart Sensor - intelligent sensor with network interface</li>
+            </ul>
+            <p><strong>Specification tip:</strong> Always request the BACnet PICS (Protocol Implementation Conformance Statement) from vendors. This document details exactly which objects, services, and profiles the device supports, enabling verification of interoperability before procurement.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Compare BACnet, Modbus, LonWorks and KNX protocol characteristics',
-              'Understand BACnet transport layers: IP vs MS/TP applications',
-              'Differentiate Modbus RTU and TCP for integration projects',
-              'Explain the role of protocol gateways in multi-vendor systems',
-              'Evaluate open versus proprietary system implications',
-              'Apply protocol selection criteria for building services projects',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: BACnet Protocol */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            BACnet - Building Automation and Control Network
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Modbus - Industrial Communication Standard">
+            <p>Modbus is a serial communication protocol originally developed by Modicon in 1979 for programmable logic controllers. Despite its age, it remains extremely popular in building services for integrating meters, chillers, boilers, and industrial equipment due to its simplicity and widespread support.</p>
+            <p><strong>Modbus Variants Comparison</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Physical layer:</strong> RS-485 / RS-232 — RS-485 / RS-232 — Ethernet (TCP/IP)</li>
+              <li><strong>Data encoding:</strong> Binary (compact) — ASCII (human readable) — Binary in TCP frame</li>
+              <li><strong>Max devices:</strong> 247 per bus — 247 per bus — Unlimited (IP-based)</li>
+              <li><strong>Speed:</strong> Up to 115.2 kbps — Up to 19.2 kbps — 10/100/1000 Mbps</li>
+              <li><strong>Cable length:</strong> 1200m (RS-485) — 1200m (RS-485) — 100m per segment</li>
+              <li><strong>Error checking:</strong> CRC-16 — LRC — TCP checksum</li>
+              <li><strong>Common use:</strong> Field devices, meters — Legacy systems — Modern installations</li>
+            </ul>
+            <p><strong>Modbus Data Model</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Coils:</strong> 00001-09999 — Read/Write — Digital outputs (on/off commands)</li>
+              <li><strong>Discrete Inputs:</strong> 10001-19999 — Read Only — Digital inputs (status)</li>
+              <li><strong>Input Registers:</strong> 30001-39999 — Read Only — Analog inputs (sensor values)</li>
+              <li><strong>Holding Registers:</strong> 40001-49999 — Read/Write — Setpoints, configuration</li>
+            </ul>
+            <p><strong>Common Function Codes</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>01 (0x01):</strong> Read Coils - read multiple digital outputs</li>
+              <li><strong>02 (0x02):</strong> Read Discrete Inputs - read multiple digital inputs</li>
+              <li><strong>03 (0x03):</strong> Read Holding Registers - read setpoints and configuration</li>
+              <li><strong>04 (0x04):</strong> Read Input Registers - read sensor values</li>
+              <li><strong>05 (0x05):</strong> Write Single Coil - write one digital output</li>
+              <li><strong>06 (0x06):</strong> Write Single Register - write one holding register</li>
+              <li><strong>16 (0x10):</strong> Write Multiple Registers - write block of registers</li>
+            </ul>
+            <p><strong>RS-485 Wiring Best Practice</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Use shielded twisted pair cable (STP) with shield grounded at one end only</li>
+              <li>Daisy-chain topology (not star) - cable from device to device</li>
+              <li>Install 120 ohm termination resistors at both ends of the bus</li>
+              <li>Keep cable runs under 1200m total; reduce speed for longer distances</li>
+              <li>Avoid cable runs parallel to power cables to minimise interference</li>
+            </ul>
+            <p><strong>Integration tip:</strong> Always obtain the Modbus register map from the equipment manufacturer. This document lists all available registers, their addresses, data types (integer, float, scaled), and engineering units - essential for correct integration.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="LonWorks, KNX and M-Bus Protocols">
+            <p>Beyond BACnet and Modbus, several other protocols play important roles in building automation. LonWorks and KNX are complete building control systems with distributed intelligence, whilst M-Bus is specifically designed for utility metering applications.</p>
+            <p><strong>LonWorks (Local Operating Network)</strong></p>
+            <p>LonWorks is a networking platform specifically designed for building and industrial control applications, developed by Echelon Corporation and now maintained by LonMark International.</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Standard:</strong> ISO/IEC 14908 (LonTalk protocol)</li>
+              <li><strong>Physical layers:</strong> TP/FT-10 (twisted pair), IP, power line</li>
+              <li><strong>TP/FT-10 speed:</strong> 78 kbps</li>
+              <li><strong>Max devices per segment:</strong> 64 per subnet (128 with repeaters)</li>
+              <li><strong>Architecture:</strong> Peer-to-peer (no master required)</li>
+              <li><strong>Intelligence:</strong> Distributed - each device has Neuron chip</li>
+              <li><strong>Interoperability:</strong> LonMark certified profiles</li>
+            </ul>
+            <p><strong>KNX (Konnex)</strong></p>
+            <p>KNX is the worldwide standard for home and building control, combining three previous European standards (EIB, EHS, BatiBUS). It is particularly strong in lighting control, blind/shutter control, and HVAC room control applications.</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Standard:</strong> ISO/IEC 14543-3 (EN 50090, EN 13321-1)</li>
+              <li><strong>Physical layers:</strong> TP (twisted pair), PL (power line), RF (radio), IP</li>
+              <li><strong>TP speed:</strong> 9.6 kbps</li>
+              <li><strong>Topology:</strong> Line &gt; Area &gt; Backbone (hierarchical)</li>
+              <li><strong>Devices per line:</strong> 64 devices maximum</li>
+              <li><strong>Lines per area:</strong> 15 lines maximum</li>
+              <li><strong>Areas per system:</strong> 15 areas maximum</li>
+              <li><strong>Max system size:</strong> 57,375 devices (15 x 15 x 255)</li>
+              <li><strong>Bus power:</strong> 29V DC carried on bus cable</li>
+            </ul>
+            <p><strong>M-Bus (Meter Bus)</strong></p>
+            <p>M-Bus is a European standard (EN 13757) specifically designed for remote reading of utility meters. It is commonly used for heat meters, water meters, gas meters, and electricity sub-meters in commercial buildings.</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Standard:</strong> EN 13757-2 (physical), EN 13757-3 (application)</li>
+              <li><strong>Physical layer:</strong> Two-wire bus (polarity independent)</li>
+              <li><strong>Speed:</strong> 300 to 9600 bps</li>
+              <li><strong>Max devices:</strong> 250 per segment</li>
+              <li><strong>Cable length:</strong> Up to 1000m (baud rate dependent)</li>
+              <li><strong>Power:</strong> Bus powered (meters draw from bus)</li>
+              <li><strong>Architecture:</strong> Master-slave (master polls slaves)</li>
+            </ul>
+            <p><strong>When to Use KNX</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Lighting control systems</li>
+              <li>Blind and shutter automation</li>
+              <li>Room-level HVAC control</li>
+              <li>Hotel room management</li>
+              <li>Residential smart home applications</li>
+            </ul>
+            <p><strong>When to Use M-Bus</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Tenant sub-metering systems</li>
+              <li>Heat and cooling meter networks</li>
+              <li>Water consumption monitoring</li>
+              <li>Energy management systems</li>
+              <li>Billing and cost allocation</li>
+            </ul>
+            <p><strong>Integration consideration:</strong> Both KNX and M-Bus commonly require gateways to integrate with BACnet or Modbus-based BMS systems. Ensure gateway capacity and points are specified correctly, and budget for gateway configuration during commissioning.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Protocol Gateways and Multi-Vendor Integration">
+            <p>Modern buildings typically contain equipment from multiple manufacturers using different communication protocols. Protocol gateways are essential devices that translate between protocols, enabling a unified BMS to monitor and control all building systems regardless of their native communication standards.</p>
+            <p><strong>Gateway Types and Applications</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Modbus to BACnet:</strong> Modbus RTU/TCP — BACnet/IP — Chillers, boilers, meters to BMS</li>
+              <li><strong>M-Bus to BACnet:</strong> M-Bus — BACnet/IP — Heat meters, utility sub-metering</li>
+              <li><strong>KNX to BACnet:</strong> KNX TP — BACnet/IP — Lighting control, blinds to BMS</li>
+              <li><strong>BACnet router:</strong> BACnet MS/TP — BACnet/IP — Field devices to IP backbone</li>
+              <li><strong>LonWorks to BACnet:</strong> LonWorks — BACnet/IP — Legacy LonWorks integration</li>
+              <li><strong>DALI to BACnet:</strong> DALI — BACnet/IP — Lighting control integration</li>
+            </ul>
+            <p><strong>Gateway Selection Criteria</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Point capacity:</strong> Number of data points that can be translated (allow 20% spare)</li>
+              <li><strong>Polling speed:</strong> How quickly data can be refreshed (critical for control applications)</li>
+              <li><strong>Configuration interface:</strong> Web-based preferred for ease of maintenance</li>
+              <li><strong>Diagnostic features:</strong> Communication statistics, error logging, troubleshooting</li>
+              <li><strong>Redundancy:</strong> Failover options for critical applications</li>
+              <li><strong>Vendor support:</strong> Configuration services, firmware updates, technical support</li>
+            </ul>
+            <p><strong>Open vs Proprietary Systems</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Vendor choice:</strong> Multiple vendors, competitive tendering — Single vendor, limited competition</li>
+              <li><strong>Long-term support:</strong> Alternative suppliers available — Dependent on original vendor</li>
+              <li><strong>Lifecycle cost:</strong> Lower through competition — Higher due to vendor lock-in</li>
+              <li><strong>Initial integration:</strong> May require more configuration — Often simpler within system</li>
+              <li><strong>Feature set:</strong> Standardised, may lag innovation — May offer unique features</li>
+              <li><strong>Interoperability:</strong> Designed for multi-vendor — Limited to vendor ecosystem</li>
+            </ul>
+            <p><strong>Multi-Vendor Integration Best Practice</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Specification:</strong> Mandate open protocols (BACnet, Modbus) in tender documents</li>
+              <li><strong>Points list:</strong> Require detailed points lists from all equipment suppliers early</li>
+              <li><strong>Integration testing:</strong> Allocate time for point-to-point verification during commissioning</li>
+              <li><strong>Single integrator:</strong> Appoint one party responsible for all protocol integration</li>
+              <li><strong>Documentation:</strong> Require network diagrams, gateway configurations, and register maps</li>
+              <li><strong>Training:</strong> Ensure FM team understands all integrated systems</li>
+            </ul>
+            <p><strong>Typical Commercial Building Integration Architecture</strong></p>
+            <p>BMS Head-End (BACnet/IP) ──┬── BACnet/IP Backbone</p>
+            <p>│</p>
+            <p>├── AHU Controllers (BACnet/IP native)</p>
+            <p>├── VAV Controllers (BACnet MS/TP via router)</p>
+            <p>├── Chiller (Modbus TCP via gateway)</p>
+            <p>├── Boiler Plant (Modbus RTU via gateway)</p>
+            <p>├── Lighting Control (KNX via gateway)</p>
+            <p>├── Energy Meters (M-Bus via gateway)</p>
+            <p>└── Fire Alarm Panel (Modbus TCP via gateway)</p>
+            <p><strong>Project success factor:</strong> Early engagement with all equipment suppliers to obtain points lists and protocol specifications is critical. Integration issues discovered late in a project are expensive and time-consuming to resolve.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Practical guidance">
             <p>
-              BACnet is an open protocol specifically designed for building automation, developed by
-              ASHRAE and published as ANSI/ASHRAE Standard 135. It provides a standardised method
-              for building automation devices to communicate, regardless of manufacturer, enabling
-              true interoperability in commercial building systems.
+              <strong>Protocol Selection Guide:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BACnet Transport Layers
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Transport</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Physical Layer</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Speed</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BACnet/IP</td>
-                      <td className="border border-white/10 px-3 py-2">Ethernet (UDP/IP)</td>
-                      <td className="border border-white/10 px-3 py-2">100 Mbps - 1 Gbps</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Backbone, head-end, supervisory
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BACnet MS/TP</td>
-                      <td className="border border-white/10 px-3 py-2">RS-485</td>
-                      <td className="border border-white/10 px-3 py-2">9.6 - 76.8 kbps</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Field devices, controllers, sensors
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BACnet/SC</td>
-                      <td className="border border-white/10 px-3 py-2">WebSocket/TLS</td>
-                      <td className="border border-white/10 px-3 py-2">Network dependent</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Secure communications, cloud connectivity
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BACnet Ethernet</td>
-                      <td className="border border-white/10 px-3 py-2">Ethernet (802.3)</td>
-                      <td className="border border-white/10 px-3 py-2">10/100 Mbps</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Legacy installations (now rare)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">BACnet Object Model</p>
-              <p className="text-sm text-white mb-3">
-                BACnet uses an object-oriented approach where all data is organised into
-                standardised objects with defined properties. This enables consistent access to data
-                across different manufacturers.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Object Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Example Use</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Analog Input (AI)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sensor readings (temperature, pressure)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Room temperature sensor</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Analog Output (AO)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Modulating control outputs
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Valve position command</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Binary Input (BI)</td>
-                      <td className="border border-white/10 px-3 py-2">On/off status readings</td>
-                      <td className="border border-white/10 px-3 py-2">Fan running status</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Binary Output (BO)</td>
-                      <td className="border border-white/10 px-3 py-2">On/off control outputs</td>
-                      <td className="border border-white/10 px-3 py-2">Pump start/stop command</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Schedule</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Time-based control schedules
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">AHU operating times</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Trend Log</td>
-                      <td className="border border-white/10 px-3 py-2">Historical data storage</td>
-                      <td className="border border-white/10 px-3 py-2">Temperature logging</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Notification Class</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Alarm routing configuration
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Critical alarm distribution
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BACnet Device Profiles (ASHRAE 135.1)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>B-AWS:</strong> Advanced Workstation - full graphical interface capability
-                </li>
-                <li className="pl-1">
-                  <strong>B-OWS:</strong> Operator Workstation - operator interface functions
-                </li>
-                <li className="pl-1">
-                  <strong>B-BC:</strong> Building Controller - DDC controller with multiple control
-                  loops
-                </li>
-                <li className="pl-1">
-                  <strong>B-AAC:</strong> Advanced Application Controller - complex control
-                  applications
-                </li>
-                <li className="pl-1">
-                  <strong>B-ASC:</strong> Application Specific Controller - single application
-                  (e.g., VAV box)
-                </li>
-                <li className="pl-1">
-                  <strong>B-SS:</strong> Smart Sensor - intelligent sensor with network interface
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Specification tip:</strong> Always request the BACnet PICS (Protocol
-              Implementation Conformance Statement) from vendors. This document details exactly
-              which objects, services, and profiles the device supports, enabling verification of
-              interoperability before procurement.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Modbus Protocol */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Modbus - Industrial Communication Standard
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>BACnet:</strong> Primary choice for new commercial BMS installations</li>
+              <li><strong>Modbus:</strong> Industrial equipment, meters, chillers, boilers integration</li>
+              <li><strong>KNX:</strong> Lighting control, blinds, room-level automation</li>
+              <li><strong>M-Bus:</strong> Utility metering, sub-metering, energy monitoring</li>
+              <li><strong>LonWorks:</strong> Legacy systems, specific applications</li>
+            </ul>
             <p>
-              Modbus is a serial communication protocol originally developed by Modicon in 1979 for
-              programmable logic controllers. Despite its age, it remains extremely popular in
-              building services for integrating meters, chillers, boilers, and industrial equipment
-              due to its simplicity and widespread support.
+              <strong>Key Values to Remember:</strong>
             </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>BACnet MS/TP: <strong>38,400 or 76,800 bps</strong> over RS-485</li>
+              <li>Modbus RTU: <strong>247 addresses</strong> maximum per bus</li>
+              <li>RS-485 cable: <strong>1200m</strong> maximum length</li>
+              <li>KNX line: <strong>64 devices</strong> maximum</li>
+              <li>M-Bus segment: <strong>250 meters</strong> maximum</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Modbus Variants Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Modbus RTU</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Modbus ASCII</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Modbus TCP</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Physical layer</td>
-                      <td className="border border-white/10 px-3 py-2">RS-485 / RS-232</td>
-                      <td className="border border-white/10 px-3 py-2">RS-485 / RS-232</td>
-                      <td className="border border-white/10 px-3 py-2">Ethernet (TCP/IP)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Data encoding</td>
-                      <td className="border border-white/10 px-3 py-2">Binary (compact)</td>
-                      <td className="border border-white/10 px-3 py-2">ASCII (human readable)</td>
-                      <td className="border border-white/10 px-3 py-2">Binary in TCP frame</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Max devices</td>
-                      <td className="border border-white/10 px-3 py-2">247 per bus</td>
-                      <td className="border border-white/10 px-3 py-2">247 per bus</td>
-                      <td className="border border-white/10 px-3 py-2">Unlimited (IP-based)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Speed</td>
-                      <td className="border border-white/10 px-3 py-2">Up to 115.2 kbps</td>
-                      <td className="border border-white/10 px-3 py-2">Up to 19.2 kbps</td>
-                      <td className="border border-white/10 px-3 py-2">10/100/1000 Mbps</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cable length</td>
-                      <td className="border border-white/10 px-3 py-2">1200m (RS-485)</td>
-                      <td className="border border-white/10 px-3 py-2">1200m (RS-485)</td>
-                      <td className="border border-white/10 px-3 py-2">100m per segment</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Error checking</td>
-                      <td className="border border-white/10 px-3 py-2">CRC-16</td>
-                      <td className="border border-white/10 px-3 py-2">LRC</td>
-                      <td className="border border-white/10 px-3 py-2">TCP checksum</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Common use</td>
-                      <td className="border border-white/10 px-3 py-2">Field devices, meters</td>
-                      <td className="border border-white/10 px-3 py-2">Legacy systems</td>
-                      <td className="border border-white/10 px-3 py-2">Modern installations</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Modbus Data Model</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Register Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Address Range</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Access</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Use</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Coils</td>
-                      <td className="border border-white/10 px-3 py-2">00001-09999</td>
-                      <td className="border border-white/10 px-3 py-2">Read/Write</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Digital outputs (on/off commands)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Discrete Inputs</td>
-                      <td className="border border-white/10 px-3 py-2">10001-19999</td>
-                      <td className="border border-white/10 px-3 py-2">Read Only</td>
-                      <td className="border border-white/10 px-3 py-2">Digital inputs (status)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Input Registers</td>
-                      <td className="border border-white/10 px-3 py-2">30001-39999</td>
-                      <td className="border border-white/10 px-3 py-2">Read Only</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Analog inputs (sensor values)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Holding Registers</td>
-                      <td className="border border-white/10 px-3 py-2">40001-49999</td>
-                      <td className="border border-white/10 px-3 py-2">Read/Write</td>
-                      <td className="border border-white/10 px-3 py-2">Setpoints, configuration</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Common Function Codes</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>01 (0x01):</strong> Read Coils - read multiple digital outputs
-                </li>
-                <li className="pl-1">
-                  <strong>02 (0x02):</strong> Read Discrete Inputs - read multiple digital inputs
-                </li>
-                <li className="pl-1">
-                  <strong>03 (0x03):</strong> Read Holding Registers - read setpoints and
-                  configuration
-                </li>
-                <li className="pl-1">
-                  <strong>04 (0x04):</strong> Read Input Registers - read sensor values
-                </li>
-                <li className="pl-1">
-                  <strong>05 (0x05):</strong> Write Single Coil - write one digital output
-                </li>
-                <li className="pl-1">
-                  <strong>06 (0x06):</strong> Write Single Register - write one holding register
-                </li>
-                <li className="pl-1">
-                  <strong>16 (0x10):</strong> Write Multiple Registers - write block of registers
-                </li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Missing points lists</strong> - Obtain early from all equipment suppliers</li>
+                <li><strong>Assuming interoperability</strong> - Always verify with PICS/register maps</li>
+                <li><strong>Inadequate commissioning time</strong> - Integration testing takes longer than expected</li>
+                <li><strong>No gateway spare capacity</strong> - Allow 20% spare points for future changes</li>
+                <li><strong>Poor documentation</strong> - Network diagrams and configurations essential for FM</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                RS-485 Wiring Best Practice
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Use shielded twisted pair cable (STP) with shield grounded at one end only
-                </li>
-                <li className="pl-1">
-                  Daisy-chain topology (not star) - cable from device to device
-                </li>
-                <li className="pl-1">
-                  Install 120 ohm termination resistors at both ends of the bus
-                </li>
-                <li className="pl-1">
-                  Keep cable runs under 1200m total; reduce speed for longer distances
-                </li>
-                <li className="pl-1">
-                  Avoid cable runs parallel to power cables to minimise interference
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Integration tip:</strong> Always obtain the Modbus register map from the
-              equipment manufacturer. This document lists all available registers, their addresses,
-              data types (integer, float, scaled), and engineering units - essential for correct
-              integration.
-            </p>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        {/* Section 3: LonWorks, KNX and M-Bus */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            LonWorks, KNX and M-Bus Protocols
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Beyond BACnet and Modbus, several other protocols play important roles in building
-              automation. LonWorks and KNX are complete building control systems with distributed
-              intelligence, whilst M-Bus is specifically designed for utility metering applications.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                LonWorks (Local Operating Network)
-              </p>
-              <p className="text-sm text-white mb-3">
-                LonWorks is a networking platform specifically designed for building and industrial
-                control applications, developed by Echelon Corporation and now maintained by LonMark
-                International.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        LonWorks Specification
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Standard</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        ISO/IEC 14908 (LonTalk protocol)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Physical layers</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        TP/FT-10 (twisted pair), IP, power line
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">TP/FT-10 speed</td>
-                      <td className="border border-white/10 px-3 py-2">78 kbps</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Max devices per segment</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        64 per subnet (128 with repeaters)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Architecture</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Peer-to-peer (no master required)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Intelligence</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Distributed - each device has Neuron chip
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Interoperability</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        LonMark certified profiles
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">KNX (Konnex)</p>
-              <p className="text-sm text-white mb-3">
-                KNX is the worldwide standard for home and building control, combining three
-                previous European standards (EIB, EHS, BatiBUS). It is particularly strong in
-                lighting control, blind/shutter control, and HVAC room control applications.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        KNX Specification
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Standard</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        ISO/IEC 14543-3 (EN 50090, EN 13321-1)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Physical layers</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        TP (twisted pair), PL (power line), RF (radio), IP
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">TP speed</td>
-                      <td className="border border-white/10 px-3 py-2">9.6 kbps</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Topology</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Line &gt; Area &gt; Backbone (hierarchical)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Devices per line</td>
-                      <td className="border border-white/10 px-3 py-2">64 devices maximum</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lines per area</td>
-                      <td className="border border-white/10 px-3 py-2">15 lines maximum</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Areas per system</td>
-                      <td className="border border-white/10 px-3 py-2">15 areas maximum</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Max system size</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        57,375 devices (15 x 15 x 255)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Bus power</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        29V DC carried on bus cable
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">M-Bus (Meter Bus)</p>
-              <p className="text-sm text-white mb-3">
-                M-Bus is a European standard (EN 13757) specifically designed for remote reading of
-                utility meters. It is commonly used for heat meters, water meters, gas meters, and
-                electricity sub-meters in commercial buildings.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        M-Bus Specification
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Standard</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        EN 13757-2 (physical), EN 13757-3 (application)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Physical layer</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Two-wire bus (polarity independent)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Speed</td>
-                      <td className="border border-white/10 px-3 py-2">300 to 9600 bps</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Max devices</td>
-                      <td className="border border-white/10 px-3 py-2">250 per segment</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cable length</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Up to 1000m (baud rate dependent)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Power</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Bus powered (meters draw from bus)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Architecture</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Master-slave (master polls slaves)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">When to Use KNX</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Lighting control systems</li>
-                  <li className="pl-1">Blind and shutter automation</li>
-                  <li className="pl-1">Room-level HVAC control</li>
-                  <li className="pl-1">Hotel room management</li>
-                  <li className="pl-1">Residential smart home applications</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">When to Use M-Bus</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Tenant sub-metering systems</li>
-                  <li className="pl-1">Heat and cooling meter networks</li>
-                  <li className="pl-1">Water consumption monitoring</li>
-                  <li className="pl-1">Energy management systems</li>
-                  <li className="pl-1">Billing and cost allocation</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Integration consideration:</strong> Both KNX and M-Bus commonly require
-              gateways to integrate with BACnet or Modbus-based BMS systems. Ensure gateway capacity
-              and points are specified correctly, and budget for gateway configuration during
-              commissioning.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Protocol Gateways and System Integration */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Protocol Gateways and Multi-Vendor Integration
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Modern buildings typically contain equipment from multiple manufacturers using
-              different communication protocols. Protocol gateways are essential devices that
-              translate between protocols, enabling a unified BMS to monitor and control all
-              building systems regardless of their native communication standards.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Gateway Types and Applications
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Gateway Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">From</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">To</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Common Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Modbus to BACnet</td>
-                      <td className="border border-white/10 px-3 py-2">Modbus RTU/TCP</td>
-                      <td className="border border-white/10 px-3 py-2">BACnet/IP</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Chillers, boilers, meters to BMS
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">M-Bus to BACnet</td>
-                      <td className="border border-white/10 px-3 py-2">M-Bus</td>
-                      <td className="border border-white/10 px-3 py-2">BACnet/IP</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heat meters, utility sub-metering
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">KNX to BACnet</td>
-                      <td className="border border-white/10 px-3 py-2">KNX TP</td>
-                      <td className="border border-white/10 px-3 py-2">BACnet/IP</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lighting control, blinds to BMS
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BACnet router</td>
-                      <td className="border border-white/10 px-3 py-2">BACnet MS/TP</td>
-                      <td className="border border-white/10 px-3 py-2">BACnet/IP</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Field devices to IP backbone
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LonWorks to BACnet</td>
-                      <td className="border border-white/10 px-3 py-2">LonWorks</td>
-                      <td className="border border-white/10 px-3 py-2">BACnet/IP</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Legacy LonWorks integration
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DALI to BACnet</td>
-                      <td className="border border-white/10 px-3 py-2">DALI</td>
-                      <td className="border border-white/10 px-3 py-2">BACnet/IP</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lighting control integration
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Gateway Selection Criteria
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Point capacity:</strong> Number of data points that can be translated
-                  (allow 20% spare)
-                </li>
-                <li className="pl-1">
-                  <strong>Polling speed:</strong> How quickly data can be refreshed (critical for
-                  control applications)
-                </li>
-                <li className="pl-1">
-                  <strong>Configuration interface:</strong> Web-based preferred for ease of
-                  maintenance
-                </li>
-                <li className="pl-1">
-                  <strong>Diagnostic features:</strong> Communication statistics, error logging,
-                  troubleshooting
-                </li>
-                <li className="pl-1">
-                  <strong>Redundancy:</strong> Failover options for critical applications
-                </li>
-                <li className="pl-1">
-                  <strong>Vendor support:</strong> Configuration services, firmware updates,
-                  technical support
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Open vs Proprietary Systems
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Open Protocols</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Proprietary Systems
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Vendor choice</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multiple vendors, competitive tendering
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Single vendor, limited competition
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Long-term support</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Alternative suppliers available
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dependent on original vendor
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lifecycle cost</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lower through competition
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher due to vendor lock-in
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Initial integration</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        May require more configuration
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Often simpler within system
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Feature set</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Standardised, may lag innovation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        May offer unique features
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Interoperability</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Designed for multi-vendor
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Limited to vendor ecosystem
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Multi-Vendor Integration Best Practice
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Specification:</strong> Mandate open protocols (BACnet, Modbus) in tender
-                  documents
-                </li>
-                <li className="pl-1">
-                  <strong>Points list:</strong> Require detailed points lists from all equipment
-                  suppliers early
-                </li>
-                <li className="pl-1">
-                  <strong>Integration testing:</strong> Allocate time for point-to-point
-                  verification during commissioning
-                </li>
-                <li className="pl-1">
-                  <strong>Single integrator:</strong> Appoint one party responsible for all protocol
-                  integration
-                </li>
-                <li className="pl-1">
-                  <strong>Documentation:</strong> Require network diagrams, gateway configurations,
-                  and register maps
-                </li>
-                <li className="pl-1">
-                  <strong>Training:</strong> Ensure FM team understands all integrated systems
-                </li>
-              </ul>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Commercial Building Integration Architecture
-              </h3>
-              <div className="text-sm text-white font-mono bg-black/30 p-3 rounded">
-                <p className="mb-2">BMS Head-End (BACnet/IP) ──┬── BACnet/IP Backbone</p>
-                <p className="mb-2"> │</p>
-                <p className="mb-2">├── AHU Controllers (BACnet/IP native)</p>
-                <p className="mb-2">├── VAV Controllers (BACnet MS/TP via router)</p>
-                <p className="mb-2">├── Chiller (Modbus TCP via gateway)</p>
-                <p className="mb-2">├── Boiler Plant (Modbus RTU via gateway)</p>
-                <p className="mb-2">├── Lighting Control (KNX via gateway)</p>
-                <p className="mb-2">├── Energy Meters (M-Bus via gateway)</p>
-                <p className="mb-2">└── Fire Alarm Panel (Modbus TCP via gateway)</p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Project success factor:</strong> Early engagement with all equipment suppliers
-              to obtain points lists and protocol specifications is critical. Integration issues
-              discovered late in a project are expensive and time-consuming to resolve.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Protocol Selection Guide
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>BACnet:</strong> Primary choice for new commercial BMS installations
-                </li>
-                <li className="pl-1">
-                  <strong>Modbus:</strong> Industrial equipment, meters, chillers, boilers
-                  integration
-                </li>
-                <li className="pl-1">
-                  <strong>KNX:</strong> Lighting control, blinds, room-level automation
-                </li>
-                <li className="pl-1">
-                  <strong>M-Bus:</strong> Utility metering, sub-metering, energy monitoring
-                </li>
-                <li className="pl-1">
-                  <strong>LonWorks:</strong> Legacy systems, specific applications
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  BACnet MS/TP: <strong>38,400 or 76,800 bps</strong> over RS-485
-                </li>
-                <li className="pl-1">
-                  Modbus RTU: <strong>247 addresses</strong> maximum per bus
-                </li>
-                <li className="pl-1">
-                  RS-485 cable: <strong>1200m</strong> maximum length
-                </li>
-                <li className="pl-1">
-                  KNX line: <strong>64 devices</strong> maximum
-                </li>
-                <li className="pl-1">
-                  M-Bus segment: <strong>250 meters</strong> maximum
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">
-                Common Integration Mistakes
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Missing points lists</strong> - Obtain early from all equipment suppliers
-                </li>
-                <li className="pl-1">
-                  <strong>Assuming interoperability</strong> - Always verify with PICS/register maps
-                </li>
-                <li className="pl-1">
-                  <strong>Inadequate commissioning time</strong> - Integration testing takes longer
-                  than expected
-                </li>
-                <li className="pl-1">
-                  <strong>No gateway spare capacity</strong> - Allow 20% spare points for future
-                  changes
-                </li>
-                <li className="pl-1">
-                  <strong>Poor documentation</strong> - Network diagrams and configurations
-                  essential for FM
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Protocol Characteristics</p>
-                <ul className="space-y-0.5">
-                  <li>BACnet - purpose-built, object model, PICS</li>
-                  <li>Modbus - simple, register-based, widely supported</li>
-                  <li>KNX - distributed intelligence, lighting/blinds</li>
-                  <li>M-Bus - utility metering, bus-powered</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Integration Essentials</p>
-                <ul className="space-y-0.5">
-                  <li>Obtain points lists and PICS early</li>
-                  <li>Specify open protocols in tenders</li>
-                  <li>Allow gateway spare capacity (20%)</li>
-                  <li>Budget for integration testing time</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section5-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Actuators and Output Devices
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section5-5">
-              Next: Control Strategies
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section5-3")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Actuators and output devices
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section5-5")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Control strategies
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

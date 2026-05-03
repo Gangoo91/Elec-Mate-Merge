@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 7 · Section 4 · Subsection 3 — Daylight Harvesting
+ * HNC Electrical Engineering for Building Services (Power and Lighting Systems)
+ *   Photocell types, closed-loop control, sensor placement and integration with artificial lighting
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Daylight Harvesting - HNC Module 7 Section 4.3';
@@ -257,898 +270,323 @@ const faqs = [
 ];
 
 const HNCModule7Section4_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section4")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module7-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.4.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Daylight Harvesting
-          </h1>
-          <p className="text-white">
-            Photocell types, closed-loop control, sensor placement and integration with artificial
-            lighting
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 7 · Section 4 · Subsection 3"
+            title="Daylight Harvesting"
+            description="Photocell types, closed-loop control, sensor placement and integration with artificial lighting"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Purpose:</strong> Reduce artificial lighting when daylight is sufficient
-              </li>
-              <li className="pl-1">
-                <strong>Closed-loop:</strong> Sensor measures actual workspace illuminance
-              </li>
-              <li className="pl-1">
-                <strong>Open-loop:</strong> Sensor measures incoming daylight only
-              </li>
-              <li className="pl-1">
-                <strong>Energy savings:</strong> 30-60% in perimeter zones
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Identify photocell types and their operating characteristics",
+              "Distinguish between open-loop and closed-loop control strategies",
+              "Apply sensor placement principles for stable control",
+              "Calibrate daylight harvesting systems for target illuminance",
+              "Integrate daylight control with DALI and occupancy sensing",
+              "Ensure Part L compliance for daylight-linked lighting control",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Photocell Types and Operating Principles">
+            <p>Daylight harvesting relies on photosensors (photocells) to measure light levels and adjust artificial lighting accordingly. Different sensor technologies suit different applications, and understanding their characteristics is essential for effective system design.</p>
+            <p><strong>Common Photocell Technologies:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Silicon photodiodes:</strong> Fast response, visible light sensitivity matching human eye, stable output, preferred for precision control</li>
+              <li><strong>Cadmium sulphide (CdS) cells:</strong> Slower response, wider spectral range including infrared, lower cost, legacy applications</li>
+              <li><strong>Phototransistors:</strong> Built-in amplification, good sensitivity, used in compact sensor packages</li>
+              <li><strong>Integrated photosensor ICs:</strong> Digital output, temperature compensation, programmable sensitivity, modern DALI sensors</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Part L:</strong> Requires daylight-linked control in daylit areas
-              </li>
-              <li className="pl-1">
-                <strong>Target:</strong> Maintain 500 lux for general offices
-              </li>
-              <li className="pl-1">
-                <strong>Integration:</strong> Works with DALI, occupancy sensing
-              </li>
-              <li className="pl-1">
-                <strong>Commissioning:</strong> Critical for occupant acceptance
-              </li>
+            <p><strong>Photosensor Characteristics</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Spectral response:</strong> Wavelength sensitivity range — Should match human eye (photopic) for accurate lux readings</li>
+              <li><strong>Field of view:</strong> Angular coverage of sensor — Determines area measured; affects mounting angle</li>
+              <li><strong>Sensitivity range:</strong> Lux range (e.g., 10-2000 lux) — Must cover expected illuminance variations</li>
+              <li><strong>Response time:</strong> Speed of output change — Fast response needs controller filtering to prevent hunting</li>
+              <li><strong>Cosine correction:</strong> Angle-dependent response matching — Required for accurate illuminance measurement at angles</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>DALI Light Sensors</strong></p>
+            <p>Modern DALI-2 light sensors communicate digitally, providing calibrated lux values directly to controllers. They include temperature compensation, configurable sensitivity curves, and can report illuminance values for multiple zones. DALI sensors eliminate analogue signal issues and simplify commissioning through software calibration.</p>
+            <p><strong>Design consideration:</strong> Sensors with photopic correction (V-lambda curve matching) provide readings that correlate with perceived brightness, essential for maintaining visual comfort.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Identify photocell types and their operating characteristics',
-              'Distinguish between open-loop and closed-loop control strategies',
-              'Apply sensor placement principles for stable control',
-              'Calibrate daylight harvesting systems for target illuminance',
-              'Integrate daylight control with DALI and occupancy sensing',
-              'Ensure Part L compliance for daylight-linked lighting control',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Photocell Types and Operating Principles */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Photocell Types and Operating Principles
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Open-Loop vs Closed-Loop Control">
+            <p>Daylight harvesting systems use two fundamental control strategies: open-loop (feedforward) and closed-loop (feedback). Each has distinct advantages and limitations that affect system design, commissioning, and energy savings potential.</p>
+            <p><strong>Open-Loop Control</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Sensor measures incoming daylight only</li>
+              <li>Mounted on facade, roof, or in skylight</li>
+              <li>Pre-calculated relationship to workspace</li>
+              <li>Cannot detect obstructions or changes</li>
+              <li>Simpler commissioning, less accurate</li>
+            </ul>
+            <p><strong>Closed-Loop Control</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Sensor measures actual workspace illuminance</li>
+              <li>Ceiling-mounted facing work plane</li>
+              <li>Maintains constant target lux level</li>
+              <li>Adapts to furniture, blinds, dirt on glazing</li>
+              <li>Requires careful positioning to avoid hunting</li>
+            </ul>
+            <p><strong>Control Strategy Comparison</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Accuracy:</strong> Lower - relies on calibration assumptions — Higher - measures actual conditions</li>
+              <li><strong>Adaptation:</strong> Cannot adapt to interior changes — Automatically adapts</li>
+              <li><strong>Stability:</strong> Inherently stable (no feedback) — Risk of hunting if poorly commissioned</li>
+              <li><strong>Commissioning:</strong> Simpler - set transfer function — More complex - requires calibration</li>
+              <li><strong>Best application:</strong> Skylights, atria, consistent spaces — Offices, variable spaces, high accuracy needs</li>
+            </ul>
+            <p><strong>Hybrid Approaches</strong></p>
+            <p>Some advanced systems combine both approaches: using open-loop sensing for rapid response to changing outdoor conditions, while closed-loop sensors trim the output for accurate maintained illuminance. This provides fast, stable response whilst adapting to interior conditions.</p>
+            <p><strong>Best practice:</strong> Closed-loop systems are preferred for occupied spaces where visual comfort is critical. Open-loop suits areas where sensor access to the work plane is difficult or where stable conditions prevail.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Sensor Placement and Calibration">
+            <p>Correct sensor placement is critical for stable, effective daylight harvesting. Poor positioning causes hunting, occupant complaints, and reduced energy savings. The sensor must represent typical illuminance conditions within its controlled zone without detecting its own lighting adjustments.</p>
+            <p><strong>Sensor Positioning Guidelines</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Distance from luminaires:</strong> Minimum 1.5m from controlled luminaires to reduce feedback</li>
+              <li><strong>Angle towards windows:</strong> Tilt 30-60 degrees toward daylight source for closed-loop</li>
+              <li><strong>Avoid direct sun patches:</strong> Position where direct sunlight won't strike sensor</li>
+              <li><strong>Representative location:</strong> Measure typical workspace illuminance, not extremes</li>
+              <li><strong>One sensor per zone:</strong> Each daylight zone should have independent control</li>
+            </ul>
+            <p><strong>Daylight Zone Definition</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Primary daylight zone:</strong> 0-3m — Full daylight harvesting, often OFF during daylight</li>
+              <li><strong>Secondary daylight zone:</strong> 3-6m — Proportional dimming, significant savings</li>
+              <li><strong>Transition zone:</strong> 6-9m — Limited dimming, may require supplementary control</li>
+              <li><strong>Core zone:</strong> &gt;9m — Minimal daylight benefit, occupancy control preferred</li>
+            </ul>
+            <p><strong>Calibration Process:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Step 1:</strong> Measure target illuminance at task level with calibrated lux meter (e.g., 500 lux)</li>
+              <li><strong>Step 2:</strong> Under dark conditions, set artificial lighting to achieve target</li>
+              <li><strong>Step 3:</strong> Record sensor reading at this condition as reference point</li>
+              <li><strong>Step 4:</strong> Set proportional gain and time constants for smooth response</li>
+              <li><strong>Step 5:</strong> Configure deadband (typically +/- 50 lux) to prevent hunting</li>
+              <li><strong>Step 6:</strong> Set fade time (10-30 seconds) for imperceptible transitions</li>
+              <li><strong>Step 7:</strong> Test under varying daylight conditions and adjust as required</li>
+            </ul>
+            <p><strong>Avoiding Hunting</strong></p>
+            <p>Hunting (oscillation) occurs when the sensor detects changes caused by its own controlled luminaires. Prevention: position sensors to primarily detect daylight changes, not artificial light; use appropriate time delays (30-60 seconds minimum between adjustments); configure adequate deadband; reduce proportional gain if oscillation persists.</p>
+            <p><strong>Commissioning tip:</strong> Document sensor locations, setpoints, and calibration values for future maintenance. Seasonal recalibration may be needed as daylight patterns change.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Integration with Artificial Lighting and BMS">
+            <p>Effective daylight harvesting requires seamless integration with other lighting control functions and building management systems. The control hierarchy must prioritise safety, then energy efficiency, whilst maintaining occupant comfort and override capabilities.</p>
+            <p><strong>Control Hierarchy (Priority Order)</strong></p>
+            <p><strong>1. Safety Functions</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Emergency lighting activation</li>
+              <li>Fire alarm response (full on)</li>
+              <li>Evacuation lighting modes</li>
+            </ul>
+            <p><strong>2. Occupancy Control</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Lights off when unoccupied</li>
+              <li>Auto-on or manual-on selection</li>
+              <li>Timeout period management</li>
+            </ul>
+            <p><strong>3. Daylight Harvesting</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Continuous dimming control</li>
+              <li>Target lux maintenance</li>
+              <li>Zone-by-zone adjustment</li>
+            </ul>
+            <p><strong>4. User Override</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Manual scene selection</li>
+              <li>Temporary level adjustment</li>
+              <li>Timed override restoration</li>
+            </ul>
+            <p><strong>DALI Integration</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>DALI light sensor:</strong> Measures illuminance, reports to controller — Primary input for control algorithm</li>
+              <li><strong>Application controller:</strong> Processes sensor data, issues commands — Executes daylight control algorithm</li>
+              <li><strong>Luminaire drivers:</strong> Receive arc power commands — Dim to commanded level (0-100%)</li>
+              <li><strong>Occupancy sensor:</strong> Detects presence/absence — Enables/disables daylight control</li>
+              <li><strong>BMS gateway:</strong> Protocol translation, monitoring — Energy monitoring, global scheduling</li>
+            </ul>
+            <p><strong>Energy Savings Potential</strong></p>
+            <p><strong>Perimeter zones (0-6m from windows):</strong> 30-60% reduction in lighting energy</p>
+            <p><strong>Intermediate zones (6-9m):</strong> 15-30% reduction</p>
+            <p><strong>Core zones (&gt;9m):</strong> 10-20% with skylights, minimal with side windows only</p>
+            <p><strong>Combined with occupancy:</strong> Up to 70% total savings in some applications</p>
+            <p><strong>Part L Compliance Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Automatic daylight-linked dimming or switching in areas with adequate daylight</li>
+              <li>Control zones relating to daylight availability patterns</li>
+              <li>Photoelectric control to reduce lighting output when daylight exceeds design illuminance</li>
+              <li>Commissioning to demonstrate controls operate correctly</li>
+              <li>Documentation of control setpoints and calibration</li>
+            </ul>
+            <p><strong>BMS integration:</strong> Provide BACnet or Modbus connection points for energy monitoring, alarm reporting, and schedule coordination. The BMS should not directly control dimming levels but can provide global overrides and energy data collection.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Daylight harvesting relies on photosensors (photocells) to measure light levels and
-              adjust artificial lighting accordingly. Different sensor technologies suit different
-              applications, and understanding their characteristics is essential for effective
-              system design.
+              <strong>Example 1: Office Floor Daylight Zone Design</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Common Photocell Technologies:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Silicon photodiodes:</strong> Fast response, visible light sensitivity
-                  matching human eye, stable output, preferred for precision control
-                </li>
-                <li className="pl-1">
-                  <strong>Cadmium sulphide (CdS) cells:</strong> Slower response, wider spectral
-                  range including infrared, lower cost, legacy applications
-                </li>
-                <li className="pl-1">
-                  <strong>Phototransistors:</strong> Built-in amplification, good sensitivity, used
-                  in compact sensor packages
-                </li>
-                <li className="pl-1">
-                  <strong>Integrated photosensor ICs:</strong> Digital output, temperature
-                  compensation, programmable sensitivity, modern DALI sensors
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Photosensor Characteristics
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Characteristic</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Importance</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Spectral response</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Wavelength sensitivity range
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Should match human eye (photopic) for accurate lux readings
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Field of view</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Angular coverage of sensor
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Determines area measured; affects mounting angle
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Sensitivity range</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lux range (e.g., 10-2000 lux)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Must cover expected illuminance variations
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Response time</td>
-                      <td className="border border-white/10 px-3 py-2">Speed of output change</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fast response needs controller filtering to prevent hunting
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cosine correction</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Angle-dependent response matching
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Required for accurate illuminance measurement at angles
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">DALI Light Sensors</p>
-              <p className="text-sm text-white">
-                Modern DALI-2 light sensors communicate digitally, providing calibrated lux values
-                directly to controllers. They include temperature compensation, configurable
-                sensitivity curves, and can report illuminance values for multiple zones. DALI
-                sensors eliminate analogue signal issues and simplify commissioning through software
-                calibration.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design consideration:</strong> Sensors with photopic correction (V-lambda
-              curve matching) provide readings that correlate with perceived brightness, essential
-              for maintaining visual comfort.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Open-Loop vs Closed-Loop Control */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Open-Loop vs Closed-Loop Control
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Open-plan office, 15m deep from south-facing curtain wall, 500 lux target.</p>
+            <p>Zone Layout Design:</p>
+            <p>Zone A: 0-4m from window (perimeter)</p>
+            <p>- Full daylight harvesting</p>
+            <p>- Often at minimum output during daylight</p>
+            <p>- Estimated savings: 50-60%</p>
+            <p>Zone B: 4-8m from window (intermediate)</p>
+            <p>- Proportional daylight control</p>
+            <p>- Typically 40-70% output</p>
+            <p>- Estimated savings: 25-35%</p>
+            <p>Zone C: 8-15m from window (core)</p>
+            <p>- Limited daylight benefit</p>
+            <p>- Occupancy control primary strategy</p>
+            <p>- Estimated savings: 10-15%</p>
+            <p>Sensor placement: One sensor per zone, ceiling-mounted,</p>
+            <p>angled 45° toward windows, 2m minimum from luminaires</p>
             <p>
-              Daylight harvesting systems use two fundamental control strategies: open-loop
-              (feedforward) and closed-loop (feedback). Each has distinct advantages and limitations
-              that affect system design, commissioning, and energy savings potential.
+              <strong>Example 2: Closed-Loop Calibration Procedure</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Open-Loop Control</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Sensor measures incoming daylight only</li>
-                  <li className="pl-1">Mounted on facade, roof, or in skylight</li>
-                  <li className="pl-1">Pre-calculated relationship to workspace</li>
-                  <li className="pl-1">Cannot detect obstructions or changes</li>
-                  <li className="pl-1">Simpler commissioning, less accurate</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Closed-Loop Control</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Sensor measures actual workspace illuminance</li>
-                  <li className="pl-1">Ceiling-mounted facing work plane</li>
-                  <li className="pl-1">Maintains constant target lux level</li>
-                  <li className="pl-1">Adapts to furniture, blinds, dirt on glazing</li>
-                  <li className="pl-1">Requires careful positioning to avoid hunting</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Control Strategy Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Open-Loop</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Closed-Loop</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Accuracy</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lower - relies on calibration assumptions
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher - measures actual conditions
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Adaptation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cannot adapt to interior changes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Automatically adapts</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Stability</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Inherently stable (no feedback)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Risk of hunting if poorly commissioned
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Commissioning</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Simpler - set transfer function
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        More complex - requires calibration
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Best application</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Skylights, atria, consistent spaces
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Offices, variable spaces, high accuracy needs
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
-              <p className="text-sm font-medium text-amber-400 mb-2">Hybrid Approaches</p>
-              <p className="text-sm text-white">
-                Some advanced systems combine both approaches: using open-loop sensing for rapid
-                response to changing outdoor conditions, while closed-loop sensors trim the output
-                for accurate maintained illuminance. This provides fast, stable response whilst
-                adapting to interior conditions.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> Closed-loop systems are preferred for occupied spaces
-              where visual comfort is critical. Open-loop suits areas where sensor access to the
-              work plane is difficult or where stable conditions prevail.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Sensor Placement and Calibration */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Sensor Placement and Calibration
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Commission DALI daylight harvesting in Zone B (4-8m from window).</p>
+            <p>Step 1: Night-time calibration</p>
+            <p>- Blinds fully closed, no daylight</p>
+            <p>- Set luminaires to 100% output</p>
+            <p>- Measure: 650 lux at desk level</p>
+            <p>- Record sensor reading: 85 (arbitrary units)</p>
+            <p>Step 2: Calculate reference</p>
+            <p>- Target: 500 lux maintained</p>
+            <p>- Reference ratio: 500/650 = 76.9%</p>
+            <p>- Sensor setpoint: 85 x 0.769 = 65 units</p>
+            <p>Step 3: Configure controller</p>
+            <p>- Setpoint: 65 units</p>
+            <p>- Deadband: +/- 5 units (~50 lux)</p>
+            <p>- Fade time: 20 seconds</p>
+            <p>- Minimum output: 10%</p>
+            <p>Step 4: Daytime verification - 500 lux maintained</p>
             <p>
-              Correct sensor placement is critical for stable, effective daylight harvesting. Poor
-              positioning causes hunting, occupant complaints, and reduced energy savings. The
-              sensor must represent typical illuminance conditions within its controlled zone
-              without detecting its own lighting adjustments.
+              <strong>Example 3: Energy Savings Calculation</strong>
             </p>
+            <p><strong>Scenario:</strong> Calculate annual savings for daylight harvesting in 500m² office.</p>
+            <p>Baseline lighting load:</p>
+            <p>- 500m² @ 10 W/m² = 5,000W installed</p>
+            <p>- Operating hours: 2,500 hrs/year</p>
+            <p>- Baseline consumption: 12,500 kWh/year</p>
+            <p>Zone analysis (assuming 50% perimeter):</p>
+            <p>- Zone A (250m²): 45% average dimming savings</p>
+            <p>- Zone B (250m²): 20% average dimming savings</p>
+            <p>Energy saved:</p>
+            <p>- Zone A: 6,250 kWh x 0.45 = 2,813 kWh</p>
+            <p>- Zone B: 6,250 kWh x 0.20 = 1,250 kWh</p>
+            <p>- Total saving: 4,063 kWh/year (32.5%)</p>
+            <p>At £0.15/kWh: £609/year saving</p>
+            <p>CO₂ reduction: 0.94 tonnes/year (0.233 kg/kWh)</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Sensor Positioning Guidelines
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Distance from luminaires:</strong> Minimum 1.5m from controlled luminaires
-                  to reduce feedback
-                </li>
-                <li className="pl-1">
-                  <strong>Angle towards windows:</strong> Tilt 30-60 degrees toward daylight source
-                  for closed-loop
-                </li>
-                <li className="pl-1">
-                  <strong>Avoid direct sun patches:</strong> Position where direct sunlight won't
-                  strike sensor
-                </li>
-                <li className="pl-1">
-                  <strong>Representative location:</strong> Measure typical workspace illuminance,
-                  not extremes
-                </li>
-                <li className="pl-1">
-                  <strong>One sensor per zone:</strong> Each daylight zone should have independent
-                  control
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Daylight Zone Definition
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Zone Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Distance from Window
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Control Strategy
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Primary daylight zone</td>
-                      <td className="border border-white/10 px-3 py-2">0-3m</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full daylight harvesting, often OFF during daylight
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Secondary daylight zone</td>
-                      <td className="border border-white/10 px-3 py-2">3-6m</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Proportional dimming, significant savings
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Transition zone</td>
-                      <td className="border border-white/10 px-3 py-2">6-9m</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Limited dimming, may require supplementary control
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Core zone</td>
-                      <td className="border border-white/10 px-3 py-2">&gt;9m</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Minimal daylight benefit, occupancy control preferred
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Calibration Process:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Step 1:</strong> Measure target illuminance at task level with calibrated
-                  lux meter (e.g., 500 lux)
-                </li>
-                <li className="pl-1">
-                  <strong>Step 2:</strong> Under dark conditions, set artificial lighting to achieve
-                  target
-                </li>
-                <li className="pl-1">
-                  <strong>Step 3:</strong> Record sensor reading at this condition as reference
-                  point
-                </li>
-                <li className="pl-1">
-                  <strong>Step 4:</strong> Set proportional gain and time constants for smooth
-                  response
-                </li>
-                <li className="pl-1">
-                  <strong>Step 5:</strong> Configure deadband (typically +/- 50 lux) to prevent
-                  hunting
-                </li>
-                <li className="pl-1">
-                  <strong>Step 6:</strong> Set fade time (10-30 seconds) for imperceptible
-                  transitions
-                </li>
-                <li className="pl-1">
-                  <strong>Step 7:</strong> Test under varying daylight conditions and adjust as
-                  required
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Avoiding Hunting</p>
-              <p className="text-sm text-white">
-                Hunting (oscillation) occurs when the sensor detects changes caused by its own
-                controlled luminaires. Prevention: position sensors to primarily detect daylight
-                changes, not artificial light; use appropriate time delays (30-60 seconds minimum
-                between adjustments); configure adequate deadband; reduce proportional gain if
-                oscillation persists.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Commissioning tip:</strong> Document sensor locations, setpoints, and
-              calibration values for future maintenance. Seasonal recalibration may be needed as
-              daylight patterns change.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Integration with Artificial Lighting and BMS */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Integration with Artificial Lighting and BMS
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Effective daylight harvesting requires seamless integration with other lighting
-              control functions and building management systems. The control hierarchy must
-              prioritise safety, then energy efficiency, whilst maintaining occupant comfort and
-              override capabilities.
+              <strong>Design Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Control Hierarchy (Priority Order)
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">1. Safety Functions</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Emergency lighting activation</li>
-                    <li>Fire alarm response (full on)</li>
-                    <li>Evacuation lighting modes</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">2. Occupancy Control</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Lights off when unoccupied</li>
-                    <li>Auto-on or manual-on selection</li>
-                    <li>Timeout period management</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">3. Daylight Harvesting</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Continuous dimming control</li>
-                    <li>Target lux maintenance</li>
-                    <li>Zone-by-zone adjustment</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">4. User Override</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Manual scene selection</li>
-                    <li>Temporary level adjustment</li>
-                    <li>Timed override restoration</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">DALI Integration</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Component</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Function</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Daylight Harvesting Role
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DALI light sensor</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Measures illuminance, reports to controller
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Primary input for control algorithm
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Application controller</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Processes sensor data, issues commands
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Executes daylight control algorithm
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Luminaire drivers</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Receive arc power commands
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dim to commanded level (0-100%)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Occupancy sensor</td>
-                      <td className="border border-white/10 px-3 py-2">Detects presence/absence</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Enables/disables daylight control
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BMS gateway</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Protocol translation, monitoring
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Energy monitoring, global scheduling
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-2">Energy Savings Potential</p>
-              <div className="text-sm text-white space-y-2">
-                <p>
-                  <strong>Perimeter zones (0-6m from windows):</strong> 30-60% reduction in lighting
-                  energy
-                </p>
-                <p>
-                  <strong>Intermediate zones (6-9m):</strong> 15-30% reduction
-                </p>
-                <p>
-                  <strong>Core zones (&gt;9m):</strong> 10-20% with skylights, minimal with side
-                  windows only
-                </p>
-                <p>
-                  <strong>Combined with occupancy:</strong> Up to 70% total savings in some
-                  applications
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Part L Compliance Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Automatic daylight-linked dimming or switching in areas with adequate daylight
-                </li>
-                <li className="pl-1">Control zones relating to daylight availability patterns</li>
-                <li className="pl-1">
-                  Photoelectric control to reduce lighting output when daylight exceeds design
-                  illuminance
-                </li>
-                <li className="pl-1">Commissioning to demonstrate controls operate correctly</li>
-                <li className="pl-1">Documentation of control setpoints and calibration</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>BMS integration:</strong> Provide BACnet or Modbus connection points for
-              energy monitoring, alarm reporting, and schedule coordination. The BMS should not
-              directly control dimming levels but can provide global overrides and energy data
-              collection.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Define daylight zones based on window proximity and glazing ratio</li>
+              <li>Specify luminaires with wide dimming range (1-100% preferred)</li>
+              <li>Select photosensors with appropriate spectral response and field of view</li>
+              <li>Plan sensor positions avoiding direct sunlight and controlled luminaires</li>
+              <li>Document target lux levels per zone per BS EN 12464-1</li>
+              <li>Coordinate with blind control for solar gain management</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Target illuminance: <strong>500 lux</strong> for general offices (BS EN 12464-1)</li>
+              <li>Fade time: <strong>10-30 seconds</strong> for imperceptible transitions</li>
+              <li>Deadband: <strong>+/- 10-20%</strong> of setpoint to prevent hunting</li>
+              <li>Perimeter zone depth: <strong>4-6m</strong> from windows typical</li>
+              <li>Energy savings: <strong>30-60%</strong> in perimeter zones</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Office Floor Daylight Zone Design
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Open-plan office, 15m deep from south-facing curtain
-                wall, 500 lux target.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Zone Layout Design:</p>
-                <p className="mt-2">Zone A: 0-4m from window (perimeter)</p>
-                <p className="ml-4">- Full daylight harvesting</p>
-                <p className="ml-4">- Often at minimum output during daylight</p>
-                <p className="ml-4">- Estimated savings: 50-60%</p>
-                <p className="mt-2">Zone B: 4-8m from window (intermediate)</p>
-                <p className="ml-4">- Proportional daylight control</p>
-                <p className="ml-4">- Typically 40-70% output</p>
-                <p className="ml-4">- Estimated savings: 25-35%</p>
-                <p className="mt-2">Zone C: 8-15m from window (core)</p>
-                <p className="ml-4">- Limited daylight benefit</p>
-                <p className="ml-4">- Occupancy control primary strategy</p>
-                <p className="ml-4">- Estimated savings: 10-15%</p>
-                <p className="mt-2 text-green-400">
-                  Sensor placement: One sensor per zone, ceiling-mounted,
-                </p>
-                <p className="text-green-400">
-                  angled 45° toward windows, 2m minimum from luminaires
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Closed-Loop Calibration Procedure
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Commission DALI daylight harvesting in Zone B (4-8m from
-                window).
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Step 1: Night-time calibration</p>
-                <p className="ml-4">- Blinds fully closed, no daylight</p>
-                <p className="ml-4">- Set luminaires to 100% output</p>
-                <p className="ml-4">- Measure: 650 lux at desk level</p>
-                <p className="ml-4">- Record sensor reading: 85 (arbitrary units)</p>
-                <p className="mt-2">Step 2: Calculate reference</p>
-                <p className="ml-4">- Target: 500 lux maintained</p>
-                <p className="ml-4">- Reference ratio: 500/650 = 76.9%</p>
-                <p className="ml-4">- Sensor setpoint: 85 x 0.769 = 65 units</p>
-                <p className="mt-2">Step 3: Configure controller</p>
-                <p className="ml-4">- Setpoint: 65 units</p>
-                <p className="ml-4">- Deadband: +/- 5 units (~50 lux)</p>
-                <p className="ml-4">- Fade time: 20 seconds</p>
-                <p className="ml-4">- Minimum output: 10%</p>
-                <p className="mt-2 text-green-400">
-                  Step 4: Daytime verification - 500 lux maintained
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Energy Savings Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate annual savings for daylight harvesting in 500m²
-                office.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Baseline lighting load:</p>
-                <p className="ml-4">- 500m² @ 10 W/m² = 5,000W installed</p>
-                <p className="ml-4">- Operating hours: 2,500 hrs/year</p>
-                <p className="ml-4">- Baseline consumption: 12,500 kWh/year</p>
-                <p className="mt-2">Zone analysis (assuming 50% perimeter):</p>
-                <p className="ml-4">- Zone A (250m²): 45% average dimming savings</p>
-                <p className="ml-4">- Zone B (250m²): 20% average dimming savings</p>
-                <p className="mt-2">Energy saved:</p>
-                <p className="ml-4">- Zone A: 6,250 kWh x 0.45 = 2,813 kWh</p>
-                <p className="ml-4">- Zone B: 6,250 kWh x 0.20 = 1,250 kWh</p>
-                <p className="ml-4">- Total saving: 4,063 kWh/year (32.5%)</p>
-                <p className="mt-2 text-green-400">At £0.15/kWh: £609/year saving</p>
-                <p className="text-green-400">CO₂ reduction: 0.94 tonnes/year (0.233 kg/kWh)</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Design Checklist</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Define daylight zones based on window proximity and glazing ratio
-                </li>
-                <li className="pl-1">
-                  Specify luminaires with wide dimming range (1-100% preferred)
-                </li>
-                <li className="pl-1">
-                  Select photosensors with appropriate spectral response and field of view
-                </li>
-                <li className="pl-1">
-                  Plan sensor positions avoiding direct sunlight and controlled luminaires
-                </li>
-                <li className="pl-1">Document target lux levels per zone per BS EN 12464-1</li>
-                <li className="pl-1">Coordinate with blind control for solar gain management</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Sensor beneath skylights</strong> - Direct sun causes unstable control</li>
+                <li><strong>Fast fade times</strong> - Noticeable changes distract occupants</li>
+                <li><strong>Single zone for deep spaces</strong> - Daylight varies significantly with depth</li>
+                <li><strong>No user override</strong> - Occupants feel lack of control</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Target illuminance: <strong>500 lux</strong> for general offices (BS EN 12464-1)
-                </li>
-                <li className="pl-1">
-                  Fade time: <strong>10-30 seconds</strong> for imperceptible transitions
-                </li>
-                <li className="pl-1">
-                  Deadband: <strong>+/- 10-20%</strong> of setpoint to prevent hunting
-                </li>
-                <li className="pl-1">
-                  Perimeter zone depth: <strong>4-6m</strong> from windows typical
-                </li>
-                <li className="pl-1">
-                  Energy savings: <strong>30-60%</strong> in perimeter zones
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Sensor beneath skylights</strong> - Direct sun causes unstable control
-                </li>
-                <li className="pl-1">
-                  <strong>Fast fade times</strong> - Noticeable changes distract occupants
-                </li>
-                <li className="pl-1">
-                  <strong>Single zone for deep spaces</strong> - Daylight varies significantly with
-                  depth
-                </li>
-                <li className="pl-1">
-                  <strong>No user override</strong> - Occupants feel lack of control
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Control Strategies</p>
-                <ul className="space-y-0.5">
-                  <li>Open-loop: sensor measures incoming daylight</li>
-                  <li>Closed-loop: sensor measures workspace illuminance</li>
-                  <li>Deadband prevents constant adjustment</li>
-                  <li>Fade time 10-30s for comfort</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Zone Guidelines</p>
-                <ul className="space-y-0.5">
-                  <li>Primary: 0-4m from window (50-60% savings)</li>
-                  <li>Secondary: 4-8m (25-35% savings)</li>
-                  <li>Core: &gt;8m (occupancy control preferred)</li>
-                  <li>Part L requires daylight control in daylit areas</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section4-4">
-              Next: Section 4.4
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section4-2")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Occupancy sensing
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section4-4")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Scene setting
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

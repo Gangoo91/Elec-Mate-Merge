@@ -302,7 +302,7 @@ export default function Sub5() {
                 Competence under Reg 16 covers the WHOLE planning skill, not just the technical knowledge of the meter. Foreseeing the consequences of isolation on the building&apos;s systems and the customer&apos;s business is part of competence; failing to plan is a Reg 16 issue regardless of whether anyone was hurt. An L3 apprentice does this kind of planning under documented supervision &mdash; which is also what Reg 16 requires when the apprentice doesn&apos;t yet have the experience.
               </>
             }
-            cite="Source: Electricity at Work Regulations 1989 (S.I. 1989/635), Reg 16 — verbatim from legislation.gov.uk."
+            cite="Source: Electricity at Work Regulations 1989 (S.I. 1989/635), Reg 16."
           />
 
           <InlineCheck
@@ -377,7 +377,7 @@ export default function Sub5() {
                 GS38 is normally cited for test instruments and probe design, but it also carries the planning duty &mdash; you check, before starting, that arrangements are in place to deal with the loss of supply. That sentence is the regulatory anchor for the &lsquo;coordinate with the building&rsquo;s responsible person&rsquo; obligation. The L3 apprentice doing fault diagnosis on a building with life-safety systems treats GS38 as both an instrument standard AND a planning standard.
               </>
             }
-            cite="Source: HSE GS38 (4th edition, 2015) — verbatim from hse.gov.uk."
+            cite="Source: HSE GS38 (4th edition, 2015)."
           />
 
           <InlineCheck
@@ -519,7 +519,7 @@ export default function Sub5() {
           </ConceptBlock>
 
           <RegsCallout
-            source="GN3 (IET Guidance Note 3) — record-keeping anchor"
+            source="IET Guidance Note 3 (Inspection and Testing) — referencing HSE HSR25 'Memorandum of guidance on the Electricity at Work Regulations 1989'"
             clause={
               <>
                 "The HSE&apos;s publication HSR25 recommends that records of all maintenance, including test results, be kept throughout the working life of an installation. This recommendation supports compliance with the Electricity at Work Regulations 1989 (EAWR), Regulation 4(2)."
@@ -530,7 +530,7 @@ export default function Sub5() {
                 Your isolation event IS a maintenance event in EAWR terms &mdash; you&apos;ve interacted with the system to keep it safe, you&apos;ve restored it, you&apos;ve tested it. The HSR25 / EAWR Reg 4(2) framework wants those records kept for the working life of the installation. The job sheet is the entry-level record; on a larger contract the firm&apos;s asset-management system holds the master copy. Either way, the contemporaneous note is the audit trail.
               </>
             }
-            cite="Source: GN3 (IET Guidance Note 3, BS 7671:2018+A4:2026 edition) — quoted from the published guidance."
+            cite="Source: IET Guidance Note 3 (Inspection and Testing) referencing HSE HSR25 (Memorandum of guidance on the Electricity at Work Regulations 1989)."
           />
 
           <RegsCallout
@@ -545,7 +545,7 @@ export default function Sub5() {
                 Article 17 puts the maintenance duty (which includes isolation and re-instatement of fire-alarm and emergency-lighting systems) on the &lsquo;responsible person&rsquo; for the premises &mdash; usually the owner, occupier or appointed M&amp;E manager. As the L3 electrician you support that duty by coordinating with the responsible person before isolation; you do not assume the duty yourself.
               </>
             }
-            cite="Source: Regulatory Reform (Fire Safety) Order 2005 (S.I. 2005/1541), Article 17 — verbatim from legislation.gov.uk."
+            cite="Source: Regulatory Reform (Fire Safety) Order 2005 (S.I. 2005/1541), Article 17."
           />
 
           <RegsCallout
@@ -560,7 +560,7 @@ export default function Sub5() {
                 Reg 134.1.1 is the &lsquo;good workmanship&rsquo; anchor BS 7671 inherits as a competence test. Restoration of supply after fault diagnosis is part of erection in the wider sense &mdash; it has to be done by a skilled person, with proper materials, and to the standard the regulation expects. A sloppy restoration that leaves a circuit live but tests not done, or a fire-alarm panel still in engineer mode after you&apos;ve left, is a Reg 134.1.1 failing.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026, Reg 134.1.1 — verbatim from the published Regulations."
+            cite="Source: BS 7671:2018+A4:2026, Reg 134.1.1."
           />
 
           <SectionRule />

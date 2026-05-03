@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ChevronDown, Search, Zap, CheckCircle, Clock, PlayCircle } from 'lucide-react';
+import { ChevronDown, Search, CheckCircle } from 'lucide-react';
 import { allBS7671Tests, type BS7671Test } from '@/data/bs7671-testing/allBS7671Tests';
 import InteractiveTestingGuide from './InteractiveTestingGuide';
 import type { useBS7671Progress } from './hooks/useBS7671Progress';
@@ -11,16 +10,6 @@ import type { useBS7671Progress } from './hooks/useBS7671Progress';
 interface TestingProceduresPanelProps {
   progress: ReturnType<typeof useBS7671Progress>;
 }
-
-const difficultyConfig: Record<string, { bg: string; text: string; border: string }> = {
-  Beginner: { bg: 'bg-green-500/10', text: 'text-green-400', border: 'border-green-500/30' },
-  Intermediate: {
-    bg: 'bg-elec-yellow/10',
-    text: 'text-elec-yellow',
-    border: 'border-elec-yellow/30',
-  },
-  Advanced: { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/30' },
-};
 
 const TestingProceduresPanel = ({ progress }: TestingProceduresPanelProps) => {
   const [search, setSearch] = useState('');

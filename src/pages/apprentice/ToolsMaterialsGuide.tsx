@@ -1,7 +1,10 @@
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
+  ArrowLeft,
   Wrench,
   CheckCircle,
   Cable,
@@ -11,8 +14,14 @@ import {
   AlertTriangle,
   BadgePoundSterling,
 } from 'lucide-react';
+import {
+  PageFrame,
+  PageHero,
+  itemVariants,
+} from '@/components/college/primitives';
 
 const ToolsMaterialsGuide = () => {
+  const navigate = useNavigate();
   const essentialTools = [
     'Multifunction tester (insulation, continuity, RCD testing)',
     'Voltage tester and proving unit (GS38 compliant)',
@@ -97,20 +106,26 @@ const ToolsMaterialsGuide = () => {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6 animate-fade-in p-4">
-      <div className="text-center mb-6 sm:mb-8">
-        <div className="flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-          <Wrench className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-elec-yellow">
-            Tools & Materials Guide
-          </h1>
-        </div>
-        <p className="text-sm sm:text-base md:text-lg text-white max-w-4xl mx-auto mb-4 sm:mb-6 px-2">
-          Essential tools, equipment and materials for professional electrical installations.
-          Complete guide to building your electrical toolkit for UK installations.
-        </p>
-        <SmartBackButton />
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate(-1)}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
+
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Toolkit"
+          title="Tools & materials guide"
+          description="Essential tools, equipment and materials for professional UK electrical installations. Complete guide to building your apprentice toolkit — basics first, specialists later."
+          tone="yellow"
+        />
+      </motion.div>
 
       {/* Essential Tools Overview */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -354,7 +369,7 @@ const ToolsMaterialsGuide = () => {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </PageFrame>
   );
 };
 

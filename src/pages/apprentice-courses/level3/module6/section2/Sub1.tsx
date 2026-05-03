@@ -54,7 +54,7 @@ const checks = [
     question:
       'Where do the diversity factors used on a design pack legitimately come from?',
     options: [
-      'The designer\u2019s gut feel.',
+      'The designer’s gut feel.',
       'IET On-Site Guide Table A1 (typical dwelling), IET Guidance Note 1 Section 7 (broader installations), manufacturer-specific data for special loads, and project-specific measurement data on existing installations.',
       'BS 7671 itself — there is a single diversity table.',
       'Industry custom only.',
@@ -130,7 +130,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "Cooker diversity is one of the OSG\u2019s most-used entries because cooker nameplates are large but actual peak draw (all rings + oven + grill) rarely happens. The 10 A + 30 percent + 5 A formula reflects realistic kitchen behaviour. Verify against the current OSG edition for exact wording.",
+      "Cooker diversity is one of the OSG’s most-used entries because cooker nameplates are large but actual peak draw (all rings + oven + grill) rarely happens. The 10 A + 30 percent + 5 A formula reflects realistic kitchen behaviour. Verify against the current OSG edition for exact wording.",
   },
   {
     id: 5,
@@ -195,7 +195,7 @@ const faqs = [
   {
     question: 'How do I document a diversity assumption that conflicts with the OSG?',
     answer:
-      "If you have a defensible reason to depart from the OSG default — perhaps utility meter data over 12 months for an existing installation, or manufacturer-specific load data for a heat pump — document it clearly: cite the source data, explain the basis for the departure, and record it in the design pack with the reasoning. The departure must be defensible to a competent peer reviewer, not just to you. \u201cOur typical demand for this build type is X kVA per dwelling unit\u201d is fine if you have the data; \u201cI think it will be smaller\u201d is not.",
+      "If you have a defensible reason to depart from the OSG default — perhaps utility meter data over 12 months for an existing installation, or manufacturer-specific load data for a heat pump — document it clearly: cite the source data, explain the basis for the departure, and record it in the design pack with the reasoning. The departure must be defensible to a competent peer reviewer, not just to you. “Our typical demand for this build type is X kVA per dwelling unit” is fine if you have the data; “I think it will be smaller” is not.",
   },
   {
     question: 'What diversity should I apply to a future EV charger that may or may not be installed?',
@@ -215,7 +215,7 @@ const faqs = [
   {
     question: 'How do I check my diversity assumption against reality?',
     answer:
-      "On existing installations, request a 12-month meter half-hour data export from the customer\u2019s energy supplier (smart meter data). The peak half-hour reading is your real-world maximum demand. Compare against your design assumption. On new builds, the only way to validate is post-handover — check 6-12 months after occupation and revise your standard diversity assumptions for similar future projects if the data shows you were materially out. Most designers iterate their diversity factors based on a small portfolio of post-occupancy data; the designers with the best diversity discipline build accurate but lean designs that win on margin.",
+      "On existing installations, request a 12-month meter half-hour data export from the customer’s energy supplier (smart meter data). The peak half-hour reading is your real-world maximum demand. Compare against your design assumption. On new builds, the only way to validate is post-handover — check 6-12 months after occupation and revise your standard diversity assumptions for similar future projects if the data shows you were materially out. Most designers iterate their diversity factors based on a small portfolio of post-occupancy data; the designers with the best diversity discipline build accurate but lean designs that win on margin.",
   },
 ];
 
@@ -295,7 +295,7 @@ export default function Sub1() {
             clause="For economic and reliable design of an installation within thermal limits and admissible voltage drop, the maximum demand shall be determined as required by Regulation 311.1. When determining the maximum demand of an installation or part thereof, diversity may be taken into account."
             meaning={
               <>
-                Reg 311.1 explicitly authorises (and effectively requires) the designer to use diversity. The wording \u201cmay be taken into account\u201d sounds permissive but in practice not applying diversity for typical installations would oversize the supply, the cables and the devices to the point of being unreasonable — failing the implicit Reg 132 requirement that the design be appropriate. Document the diversity factors you use and their source.
+                Reg 311.1 explicitly authorises (and effectively requires) the designer to use diversity. The wording “may be taken into account” sounds permissive but in practice not applying diversity for typical installations would oversize the supply, the cables and the devices to the point of being unreasonable — failing the implicit Reg 132 requirement that the design be appropriate. Document the diversity factors you use and their source.
               </>
             }
             cite="Source: BS 7671:2018+A4:2026 Part 3, Regulation 311.1. See also Appendix 1 (British Standards) and the IET On-Site Guide Table A1."
@@ -319,10 +319,10 @@ export default function Sub1() {
               <strong>3. Manufacturer-specific data.</strong> Essential for special loads where industry tables do not capture the realistic profile. Heat pumps, EV chargers (especially load-managed OZEV-compliant chargers), induction hobs (high transient demand), data-centre IT loads (high crest factor and PSU oversizing), induction motor starters, welders.
             </p>
             <p>
-              <strong>4. Project-specific measurement data.</strong> For an existing installation being upgraded or modified, the customer\u2019s 12-month half-hour smart meter data export is the gold standard for actual peak demand. The peak half-hour figure is the realistic maximum demand. Beats every table.
+              <strong>4. Project-specific measurement data.</strong> For an existing installation being upgraded or modified, the customer’s 12-month half-hour smart meter data export is the gold standard for actual peak demand. The peak half-hour figure is the realistic maximum demand. Beats every table.
             </p>
             <p>
-              Document the source on every diversity assumption. \u201cOSG Table A1, 2024 edition, ring final entry\u201d is a defensible citation; \u201ctypical figure\u201d is not.
+              Document the source on every diversity assumption. “OSG Table A1, 2024 edition, ring final entry” is a defensible citation; “typical figure” is not.
             </p>
           </ConceptBlock>
 
@@ -370,7 +370,7 @@ export default function Sub1() {
                 Load-managed EV chargers, heat pumps and battery storage all change the daily and yearly load profile in ways traditional diversity factors do not capture. Reg 132.3(c) requires the designer to record those daily and yearly variations as part of the design — including how a load-management scheme behaves at peak window, off-peak window and on a cold-snap morning. Record the load-managed setpoint AND the worst-case fall-back demand (manufacturer datasheet) so the supply margin is honest.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Part 1, Chapter 13, Regulation 132.3(c) — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Part 1, Chapter 13, Regulation 132.3(c)."
           />
 
           <InlineCheck
@@ -419,12 +419,12 @@ export default function Sub1() {
             }
             whatToDo={
               <>
-                Final-circuit Ib by category. Cooking circuits: induction hobs run with high coincidence at lunch service, manufacturer typical diversity around 70 percent across three hobs (because not all four rings on every hob run at full demand) gives 21 kW out of 21 kW connected =\u00a0 91 A at 230 V or 31 A per phase if balanced across three phases. Refrigeration: 100 percent demand because compressors cycle independently with low coincidence between fridges = 35 A. Ring finals: 30 percent + 40 percent + 30 percent of subsequents at typical EPOS and small appliance use = around 25 A peak across three rings. Lighting: 100 percent demand at evening operation = 18 A. AV / EPOS / fire alarm: low load, individual circuit Ib less than 6 A each.\n\nSub-main Ib for DB-K: cooking 91 A + refrigeration 35 A + dishwasher 13 A + 1 ring 11 A + lighting 6 A. Sum = 156 A, but apply 0.85 sub-main coincidence factor (not all categories peak at the same instant) = 133 A. Sub-main Ib for DB-F: 2 rings 14 A + lighting 12 A + AV / EPOS 8 A + sign 9 A = 43 A.\n\nOrigin Ib: 133 + 43 = 176 A. Apply 0.9 origin coincidence factor (DB-K and DB-F peak slightly offset — kitchen at lunch service, front-of-house all afternoon) = 158 A. Round up to 160 A. Need 60 A or 80 A per phase three-phase service.
+                Final-circuit Ib by category. Cooking circuits: induction hobs run with high coincidence at lunch service, manufacturer typical diversity around 70 percent across three hobs (because not all four rings on every hob run at full demand) gives 21 kW out of 21 kW connected =  91 A at 230 V or 31 A per phase if balanced across three phases. Refrigeration: 100 percent demand because compressors cycle independently with low coincidence between fridges = 35 A. Ring finals: 30 percent + 40 percent + 30 percent of subsequents at typical EPOS and small appliance use = around 25 A peak across three rings. Lighting: 100 percent demand at evening operation = 18 A. AV / EPOS / fire alarm: low load, individual circuit Ib less than 6 A each.\n\nSub-main Ib for DB-K: cooking 91 A + refrigeration 35 A + dishwasher 13 A + 1 ring 11 A + lighting 6 A. Sum = 156 A, but apply 0.85 sub-main coincidence factor (not all categories peak at the same instant) = 133 A. Sub-main Ib for DB-F: 2 rings 14 A + lighting 12 A + AV / EPOS 8 A + sign 9 A = 43 A.\n\nOrigin Ib: 133 + 43 = 176 A. Apply 0.9 origin coincidence factor (DB-K and DB-F peak slightly offset — kitchen at lunch service, front-of-house all afternoon) = 158 A. Round up to 160 A. Need 60 A or 80 A per phase three-phase service.
               </>
             }
             whyItMatters={
               <>
-                Without the level-by-level diversity stack, the designer might add nameplate kW and conclude the cafe needs a 250 A supply. The actual realistic peak is 160 A. The DNO upgrade cost difference between a 100 A and a 200 A three-phase service is in the £1000-2000 range; between 200 A and 400 A often £5000-15000+. The diversity calc done properly is one of the highest-leverage design activities you do — it directly determines the supply order and the customer\u2019s connection cost.
+                Without the level-by-level diversity stack, the designer might add nameplate kW and conclude the cafe needs a 250 A supply. The actual realistic peak is 160 A. The DNO upgrade cost difference between a 100 A and a 200 A three-phase service is in the £1000-2000 range; between 200 A and 400 A often £5000-15000+. The diversity calc done properly is one of the highest-leverage design activities you do — it directly determines the supply order and the customer’s connection cost.
               </>
             }
           />
@@ -437,7 +437,7 @@ export default function Sub1() {
             title="Sizing on connected load, not maximum demand"
             whatHappens={
               <>
-                A junior designer adds the kW of every nameplate on the spec, divides by 230, and proposes a 200 A single-phase service for a typical 4-bed dwelling. The DNO laughs (no such thing exists), the customer is quoted £8000 for a three-phase upgrade that is not actually needed, the project either stalls or gets re-engineered at the designer\u2019s cost.
+                A junior designer adds the kW of every nameplate on the spec, divides by 230, and proposes a 200 A single-phase service for a typical 4-bed dwelling. The DNO laughs (no such thing exists), the customer is quoted £8000 for a three-phase upgrade that is not actually needed, the project either stalls or gets re-engineered at the designer’s cost.
               </>
             }
             doInstead={

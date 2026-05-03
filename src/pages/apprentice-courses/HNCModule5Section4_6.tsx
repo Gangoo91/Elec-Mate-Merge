@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 5 · Section 4 · Subsection 6 — Defects and Snagging
+ * HNC Electrical Engineering for Building Services (Project Management — Pearson U4004 + BSE PM context)
+ *   Identifying, tracking and resolving defects through snagging, de-snagging and the defects liability period — the discipline that protects the handover and the retention.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Defects and Snagging - HNC Module 5 Section 4.6';
@@ -249,946 +266,636 @@ const faqs = [
 ];
 
 const HNCModule5Section4_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section4')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module5-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 5.4.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Defects and Snagging
-          </h1>
-          <p className="text-white">
-            Defect identification, snagging procedures, tracking systems, rectification management
-            and close-out documentation
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 5 · Section 4 · Subsection 6"
+            title="Defects and Snagging"
+            description="Defect identification, snagging procedures, tracking systems, rectification management and close-out documentation."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Snagging:</strong> Systematic identification of incomplete/defective work
-              </li>
-              <li className="pl-1">
-                <strong>Categories:</strong> A (Critical), B (Major), C (Minor)
-              </li>
-              <li className="pl-1">
-                <strong>DLP:</strong> Typically 12 months post-practical completion
-              </li>
-              <li className="pl-1">
-                <strong>Close-out:</strong> Formal sign-off and documentation
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Electrical:</strong> Labelling, testing, terminations, containment
-              </li>
-              <li className="pl-1">
-                <strong>Mechanical:</strong> Commissioning values, insulation, brackets
-              </li>
-              <li className="pl-1">
-                <strong>Controls:</strong> BMS points, sensor calibration, graphics
-              </li>
-              <li className="pl-1">
-                <strong>Coordination:</strong> Clashes, access, maintainability
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              "Snagging = identifying defects against specification, standard and visual quality. Conducted progressively, not just at handover.",
+              "Snag list categorised: critical (safety/function), major (specification deviation), minor (visual/cosmetic) — different rectification timelines.",
+              "Tracking system: snag ID, location, description, photograph, responsible party, target date, status, sign-off — typically a digital tool.",
+              "De-snagging follows snagging — every snag rectified, re-inspected, signed off — no snag closed without verification.",
+              "Defects Liability Period (DLP) typically 12 months from PC; latent defects discovered during DLP are rectified at contractor cost.",
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="JCT Standard Building Contract 2024 — Clause 2.38 (Defects, shrinkages or other faults)"
+            clause="Any defects, shrinkages or other faults in the Works which appear within the Rectification Period and which are due to materials, goods or workmanship not in accordance with the Contract or to frost occurring before Practical Completion, shall be specified by the Architect/Contract Administrator in a Schedule of Defects which the Architect/Contract Administrator shall deliver to the Contractor not later than 14 days after the expiration of the Rectification Period. The Contractor shall make good such defects, shrinkages or other faults at no cost to the Employer."
+            meaning={
+              <>
+                The Rectification Period (commonly 12 months) is the contractor's opportunity to make good defects without cost dispute. After the Schedule of Defects is issued, the contractor must rectify within a reasonable period. Failure to rectify entitles the client to engage others and deduct from retention. Manage the DLP actively — not as an afterthought.
+              </>
+            }
+            cite="Source: JCT Standard Building Contract 2024 (refer to JCT published text for verbatim clauses)."
+          />
+
+
+          <LearningOutcomes
+            outcomes={[
               'Plan and conduct effective snagging walkthroughs',
               'Categorise defects using industry-standard A/B/C classification',
               'Implement defect tracking systems and software',
               'Manage rectification timeframes and responsibilities',
               'Complete formal close-out documentation',
               'Understand defects liability period obligations',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Snagging Walkthrough Procedures */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Snagging Walkthrough Procedures
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Snagging Walkthrough Procedures">
             <p>
               Snagging is the systematic process of identifying work that is incomplete, damaged, or
               does not comply with the contract specification. Effective snagging protects all
               parties by creating a clear record of the installation's condition at handover.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Walkthrough timing:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Pre-snagging (internal):</strong> 4-6 weeks before PC - contractor's own
-                  QA inspection
-                </li>
-                <li className="pl-1">
-                  <strong>Initial snagging:</strong> 2-4 weeks before PC - joint walkthrough with
-                  client
-                </li>
-                <li className="pl-1">
-                  <strong>Pre-completion snagging:</strong> 1 week before PC - verify rectification
-                </li>
-                <li className="pl-1">
-                  <strong>Practical completion:</strong> Final inspection and handover
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Walkthrough Protocol</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Stage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Activities</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Participants</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Preparation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Review drawings, specifications, O&M requirements
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        M&E supervisor, QA manager
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Walkthrough</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Systematic inspection room-by-room or system-by-system
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Client, contractor, M&E subcontractor
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Recording</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Document defects with photos, location, description
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Designated recorder (tablet/app)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Review</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Agree categorisation, responsibilities, timeframes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">All parties together</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Distribution</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Issue formal snagging list within 24-48 hours
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        QA manager or contract administrator
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Inspection Checklist
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">Electrical</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Distribution board labelling complete</li>
-                    <li className="pl-1">Circuit identification schedules fitted</li>
-                    <li className="pl-1">Test certificates available</li>
-                    <li className="pl-1">Containment lids and covers in place</li>
-                    <li className="pl-1">Fire stopping around penetrations</li>
-                    <li className="pl-1">Emergency lighting functional</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">Mechanical</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Valves labelled and accessible</li>
-                    <li className="pl-1">Insulation complete and tagged</li>
-                    <li className="pl-1">Brackets and supports painted</li>
-                    <li className="pl-1">Commissioning values achieved</li>
-                    <li className="pl-1">Grilles and diffusers clean</li>
-                    <li className="pl-1">Access panels identified</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Walkthrough timing:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Pre-snagging (internal):</strong> 4-6 weeks before PC - contractor's own QA
+                inspection
+              </li>
+              <li>
+                <strong>Initial snagging:</strong> 2-4 weeks before PC - joint walkthrough with
+                client
+              </li>
+              <li>
+                <strong>Pre-completion snagging:</strong> 1 week before PC - verify rectification
+              </li>
+              <li>
+                <strong>Practical completion:</strong> Final inspection and handover
+              </li>
+            </ul>
+            <p>
+              <strong>Walkthrough protocol:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Preparation:</strong> Review drawings, specifications, O&M requirements —
+                M&E supervisor, QA manager
+              </li>
+              <li>
+                <strong>Walkthrough:</strong> Systematic inspection room-by-room or system-by-system
+                — Client, contractor, M&E subcontractor
+              </li>
+              <li>
+                <strong>Recording:</strong> Document defects with photos, location, description —
+                Designated recorder (tablet/app)
+              </li>
+              <li>
+                <strong>Review:</strong> Agree categorisation, responsibilities, timeframes — All
+                parties together
+              </li>
+              <li>
+                <strong>Distribution:</strong> Issue formal snagging list within 24-48 hours — QA
+                manager or contract administrator
+              </li>
+            </ul>
+            <p>
+              <strong>Building services inspection checklist — electrical:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Distribution board labelling complete</li>
+              <li>Circuit identification schedules fitted</li>
+              <li>Test certificates available</li>
+              <li>Containment lids and covers in place</li>
+              <li>Fire stopping around penetrations</li>
+              <li>Emergency lighting functional</li>
+            </ul>
+            <p>
+              <strong>Building services inspection checklist — mechanical:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Valves labelled and accessible</li>
+              <li>Insulation complete and tagged</li>
+              <li>Brackets and supports painted</li>
+              <li>Commissioning values achieved</li>
+              <li>Grilles and diffusers clean</li>
+              <li>Access panels identified</li>
+            </ul>
+            <p>
               <strong>Best practice:</strong> Conduct walkthroughs in consistent lighting
               conditions. Bring a torch for ceiling voids and risers.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Defect Categorisation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Defect Categorisation (A/B/C)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Defect Categorisation (A/B/C)">
             <p>
               Categorising defects ensures critical issues are addressed first and resources are
               allocated appropriately. The A/B/C system is widely used across the UK construction
               industry.
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-                <p className="text-sm font-medium text-red-400 mb-2">Category A - Critical</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Affects safety or security</li>
-                  <li className="pl-1">Prevents building operation</li>
-                  <li className="pl-1">Must rectify before occupation</li>
-                  <li className="pl-1">Timeframe: Immediate</li>
-                </ul>
-                <p className="text-xs text-white mt-2 italic">
-                  Example: Non-functional emergency lighting, exposed live conductors
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
-                <p className="text-sm font-medium text-amber-400 mb-2">Category B - Major</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Affects function or quality</li>
-                  <li className="pl-1">Does not prevent occupation</li>
-                  <li className="pl-1">Should rectify promptly</li>
-                  <li className="pl-1">Timeframe: Within 14 days</li>
-                </ul>
-                <p className="text-xs text-white mt-2 italic">
-                  Example: BMS point not commissioned, incorrect valve setting
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-                <p className="text-sm font-medium text-blue-400 mb-2">Category C - Minor</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Cosmetic or minor incomplete</li>
-                  <li className="pl-1">Does not affect function</li>
-                  <li className="pl-1">Rectify within DLP</li>
-                  <li className="pl-1">Timeframe: Within 28 days</li>
-                </ul>
-                <p className="text-xs text-white mt-2 italic">
-                  Example: Missing cable label, minor paintwork damage
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Defect Examples by Category
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Cat A (Critical)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Cat B (Major)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Cat C (Minor)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Electrical</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fire alarm fault, RCD not tripping
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Missing test certs, incorrect glands
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable ties untrimmed, minor labelling
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mechanical</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        No heating/cooling, water leak
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Flow rates incorrect, noise issues
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Valve tag missing, insulation damage
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fire Systems</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Detector not responding, damper stuck
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cause and effect incomplete
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Device address label faded
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Controls/BMS</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Critical alarm not reporting
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Setpoint incorrect, trend not logging
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Graphic text error, icon colour wrong
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Category A — Critical:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Affects safety or security</li>
+              <li>Prevents building operation</li>
+              <li>Must rectify before occupation</li>
+              <li>Timeframe: Immediate</li>
+              <li>Example: Non-functional emergency lighting, exposed live conductors</li>
+            </ul>
+            <p>
+              <strong>Category B — Major:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Affects function or quality</li>
+              <li>Does not prevent occupation</li>
+              <li>Should rectify promptly</li>
+              <li>Timeframe: Within 14 days</li>
+              <li>Example: BMS point not commissioned, incorrect valve setting</li>
+            </ul>
+            <p>
+              <strong>Category C — Minor:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Cosmetic or minor incomplete</li>
+              <li>Does not affect function</li>
+              <li>Rectify within DLP</li>
+              <li>Timeframe: Within 28 days</li>
+              <li>Example: Missing cable label, minor paintwork damage</li>
+            </ul>
+            <p>
+              <strong>Building services defect examples by category:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Electrical — Cat A:</strong> Fire alarm fault, RCD not tripping
+              </li>
+              <li>
+                <strong>Electrical — Cat B:</strong> Missing test certs, incorrect glands
+              </li>
+              <li>
+                <strong>Electrical — Cat C:</strong> Cable ties untrimmed, minor labelling
+              </li>
+              <li>
+                <strong>Mechanical — Cat A:</strong> No heating/cooling, water leak
+              </li>
+              <li>
+                <strong>Mechanical — Cat B:</strong> Flow rates incorrect, noise issues
+              </li>
+              <li>
+                <strong>Mechanical — Cat C:</strong> Valve tag missing, insulation damage
+              </li>
+              <li>
+                <strong>Fire Systems — Cat A:</strong> Detector not responding, damper stuck
+              </li>
+              <li>
+                <strong>Fire Systems — Cat B:</strong> Cause and effect incomplete
+              </li>
+              <li>
+                <strong>Fire Systems — Cat C:</strong> Device address label faded
+              </li>
+              <li>
+                <strong>Controls/BMS — Cat A:</strong> Critical alarm not reporting
+              </li>
+              <li>
+                <strong>Controls/BMS — Cat B:</strong> Setpoint incorrect, trend not logging
+              </li>
+              <li>
+                <strong>Controls/BMS — Cat C:</strong> Graphic text error, icon colour wrong
+              </li>
+            </ul>
+            <p>
               <strong>Note:</strong> Category boundaries should be agreed at project start. What is
               critical for a hospital may be minor for a warehouse.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Tracking Systems and Rectification */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Tracking Systems and Rectification Management
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Tracking Systems and Rectification Management">
             <p>
               Modern defect tracking systems replace paper-based snagging lists, providing real-time
               visibility, automatic notifications, and comprehensive audit trails essential for
               project close-out and potential dispute resolution.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Snagging Software
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Snagstream</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Mobile app with offline capability</li>
-                    <li>Photo/video attachment</li>
-                    <li>Drawing mark-up</li>
-                    <li>Automatic contractor notifications</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Procore / Aconex / Viewpoint</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Integrated project management</li>
-                    <li>Workflow automation</li>
-                    <li>Dashboard reporting</li>
-                    <li>Document linking (specs, drawings)</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Defect Tracking Workflow
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Status</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Responsibility</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Open</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Defect raised, awaiting assignment
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Contract administrator</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Assigned</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Allocated to responsible party
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Main contractor / subcontractor
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">In Progress</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rectification work underway
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Subcontractor</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ready for Inspection</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Work complete, awaiting sign-off
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Client / CA to inspect</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Closed</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Verified and formally accepted
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Contract administrator</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Rejected</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rectification not accepted, returns to Assigned
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Subcontractor to redo</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Rectification Timeframes (Typical)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Category A:</strong> Immediate / before occupation (0-48 hours)
-                </li>
-                <li className="pl-1">
-                  <strong>Category B:</strong> Within 14 days of notification
-                </li>
-                <li className="pl-1">
-                  <strong>Category C:</strong> Within 28 days of notification
-                </li>
-                <li className="pl-1">
-                  <strong>DLP defects:</strong> Within 28 days unless complex
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Performance Indicators (KPIs)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">KPI</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Target</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Measurement</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Snag-free areas</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        &gt;80% at first inspection
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Areas passed / areas inspected
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">First-time fix rate</td>
-                      <td className="border border-white/10 px-3 py-2">&gt;90%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Closed first attempt / total closed
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Average close-out time</td>
-                      <td className="border border-white/10 px-3 py-2">&lt;7 days</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Days from raised to closed
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Overdue defects</td>
-                      <td className="border border-white/10 px-3 py-2">&lt;5%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Past target date / total open
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Snagstream features:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Mobile app with offline capability</li>
+              <li>Photo/video attachment</li>
+              <li>Drawing mark-up</li>
+              <li>Automatic contractor notifications</li>
+            </ul>
+            <p>
+              <strong>Procore / Aconex / Viewpoint features:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Integrated project management</li>
+              <li>Workflow automation</li>
+              <li>Dashboard reporting</li>
+              <li>Document linking (specs, drawings)</li>
+            </ul>
+            <p>
+              <strong>Defect tracking workflow:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Open:</strong> Defect raised, awaiting assignment — Contract administrator
+              </li>
+              <li>
+                <strong>Assigned:</strong> Allocated to responsible party — Main contractor /
+                subcontractor
+              </li>
+              <li>
+                <strong>In Progress:</strong> Rectification work underway — Subcontractor
+              </li>
+              <li>
+                <strong>Ready for Inspection:</strong> Work complete, awaiting sign-off — Client /
+                CA to inspect
+              </li>
+              <li>
+                <strong>Closed:</strong> Verified and formally accepted — Contract administrator
+              </li>
+              <li>
+                <strong>Rejected:</strong> Rectification not accepted, returns to Assigned —
+                Subcontractor to redo
+              </li>
+            </ul>
+            <p>
+              <strong>Rectification timeframes (typical):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Category A:</strong> Immediate / before occupation (0-48 hours)
+              </li>
+              <li>
+                <strong>Category B:</strong> Within 14 days of notification
+              </li>
+              <li>
+                <strong>Category C:</strong> Within 28 days of notification
+              </li>
+              <li>
+                <strong>DLP defects:</strong> Within 28 days unless complex
+              </li>
+            </ul>
+            <p>
+              <strong>Key performance indicators (KPIs):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Snag-free areas:</strong> Target &gt;80% at first inspection — Areas passed
+                / areas inspected
+              </li>
+              <li>
+                <strong>First-time fix rate:</strong> Target &gt;90% — Closed first attempt / total
+                closed
+              </li>
+              <li>
+                <strong>Average close-out time:</strong> Target &lt;7 days — Days from raised to
+                closed
+              </li>
+              <li>
+                <strong>Overdue defects:</strong> Target &lt;5% — Past target date / total open
+              </li>
+            </ul>
+            <p>
               <strong>Project tip:</strong> Weekly defect status meetings with all parties keeps
               momentum. Display live dashboard statistics to drive accountability.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Close-out Documentation and DLP */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Close-out Documentation and Defects Liability Period
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Close-out Documentation and Defects Liability Period">
             <p>
               Formal close-out documentation provides the audit trail confirming all defects have
               been addressed. The defects liability period extends the contractor's obligations
               beyond practical completion to catch latent issues that emerge during operation.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Close-out Documentation Package
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Snagging register:</strong> Complete list with all items closed
-                </li>
-                <li className="pl-1">
-                  <strong>Defect sign-off certificates:</strong> Individual or batch sign-off
-                </li>
-                <li className="pl-1">
-                  <strong>Photographic evidence:</strong> Before and after rectification
-                </li>
-                <li className="pl-1">
-                  <strong>Re-test certificates:</strong> Where defects affected tested systems
-                </li>
-                <li className="pl-1">
-                  <strong>Updated O&M manuals:</strong> Reflecting any changes during rectification
-                </li>
-                <li className="pl-1">
-                  <strong>Close-out report:</strong> Summary of defect quantities, categories,
-                  resolution times
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Defects Liability Period (DLP)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Standard duration:</strong> 12 months from Practical Completion
-                </li>
-                <li className="pl-1">
-                  <strong>Extended DLP:</strong> Some clients specify 24 months for complex M&E
-                </li>
-                <li className="pl-1">
-                  <strong>Contractor obligation:</strong> Return to rectify defects notified during
-                  period
-                </li>
-                <li className="pl-1">
-                  <strong>Exclusions:</strong> Damage from misuse, fair wear and tear, third-party
-                  interference
-                </li>
-                <li className="pl-1">
-                  <strong>Retention release:</strong> Final retention released at end of DLP (Making
-                  Good certificate)
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">DLP Management Process</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Stage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Timing</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Activities</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DLP commencement</td>
-                      <td className="border border-white/10 px-3 py-2">At Practical Completion</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Confirm start date, contact details, reporting procedure
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ongoing monitoring</td>
-                      <td className="border border-white/10 px-3 py-2">Throughout DLP</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Client reports defects, contractor responds
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Seasonal commissioning</td>
-                      <td className="border border-white/10 px-3 py-2">6 months post-PC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Verify heating/cooling in opposite season
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pre-DLP expiry inspection
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Month 11</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Final joint inspection to identify outstanding issues
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Making Good certificate</td>
-                      <td className="border border-white/10 px-3 py-2">End of DLP</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        CA confirms all defects rectified, triggers final retention release
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Latent Defects and Limitation Periods
-              </p>
-              <p className="text-sm text-white mb-2">
-                Beyond the DLP, contractors may still be liable for latent defects (hidden issues)
-                under:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Contract (simple):</strong> 6 years from breach
-                </li>
-                <li className="pl-1">
-                  <strong>Contract (under seal/deed):</strong> 12 years from breach
-                </li>
-                <li className="pl-1">
-                  <strong>Negligence (tort):</strong> 6 years from damage becoming apparent
-                </li>
-                <li className="pl-1">
-                  <strong>Building Safety Act 2022:</strong> Extended liability for higher-risk
-                  buildings
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Close-out documentation package:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Snagging register:</strong> Complete list with all items closed
+              </li>
+              <li>
+                <strong>Defect sign-off certificates:</strong> Individual or batch sign-off
+              </li>
+              <li>
+                <strong>Photographic evidence:</strong> Before and after rectification
+              </li>
+              <li>
+                <strong>Re-test certificates:</strong> Where defects affected tested systems
+              </li>
+              <li>
+                <strong>Updated O&M manuals:</strong> Reflecting any changes during rectification
+              </li>
+              <li>
+                <strong>Close-out report:</strong> Summary of defect quantities, categories,
+                resolution times
+              </li>
+            </ul>
+            <p>
+              <strong>Defects Liability Period (DLP):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Standard duration:</strong> 12 months from Practical Completion
+              </li>
+              <li>
+                <strong>Extended DLP:</strong> Some clients specify 24 months for complex M&E
+              </li>
+              <li>
+                <strong>Contractor obligation:</strong> Return to rectify defects notified during
+                period
+              </li>
+              <li>
+                <strong>Exclusions:</strong> Damage from misuse, fair wear and tear, third-party
+                interference
+              </li>
+              <li>
+                <strong>Retention release:</strong> Final retention released at end of DLP (Making
+                Good certificate)
+              </li>
+            </ul>
+            <p>
+              <strong>DLP management process:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>DLP commencement (At PC):</strong> Confirm start date, contact details,
+                reporting procedure
+              </li>
+              <li>
+                <strong>Ongoing monitoring (throughout DLP):</strong> Client reports defects,
+                contractor responds
+              </li>
+              <li>
+                <strong>Seasonal commissioning (6 months post-PC):</strong> Verify heating/cooling
+                in opposite season
+              </li>
+              <li>
+                <strong>Pre-DLP expiry inspection (Month 11):</strong> Final joint inspection to
+                identify outstanding issues
+              </li>
+              <li>
+                <strong>Making Good certificate (End of DLP):</strong> CA confirms all defects
+                rectified, triggers final retention release
+              </li>
+            </ul>
+            <p>
+              <strong>Latent defects and limitation periods:</strong> Beyond the DLP, contractors
+              may still be liable for latent defects (hidden issues) under:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Contract (simple):</strong> 6 years from breach
+              </li>
+              <li>
+                <strong>Contract (under seal/deed):</strong> 12 years from breach
+              </li>
+              <li>
+                <strong>Negligence (tort):</strong> 6 years from damage becoming apparent
+              </li>
+              <li>
+                <strong>Building Safety Act 2022:</strong> Extended liability for higher-risk
+                buildings
+              </li>
+            </ul>
+            <p>
               <strong>Record retention:</strong> Keep all defect records for at least 12 years for
               contracts under deed, longer for higher-risk buildings.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — Defect categorisation:</strong> During snagging of a new office
+              building, the following electrical issues are found. Categorise each.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1. Emergency exit sign not illuminated → Category A (Critical) - Safety system non-functional</li>
+              <li>
+                2. Distribution board schedule shows incorrect circuit descriptions → Category B
+                (Major) - Affects operation/maintenance
+              </li>
+              <li>
+                3. Cable tray lid missing in riser cupboard → Category C (Minor) - Does not affect
+                function
+              </li>
+              <li>
+                4. Final circuit test certificate not provided → Category B (Major) - Compliance
+                documentation missing
+              </li>
+            </ul>
+            <p>
+              <strong>Example 2 — DLP timeline:</strong> Practical Completion achieved 15 March
+              2024. When does the DLP expire and what are key milestones?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Practical Completion: 15 March 2024</li>
+              <li>DLP Duration: 12 months (standard)</li>
+              <li>Seasonal commissioning (summer): September 2024</li>
+              <li>Pre-expiry inspection: February 2025 (Month 11)</li>
+              <li>
+                <strong>DLP expiry:</strong> 15 March 2025
+              </li>
+              <li>Making Good Certificate issued: March 2025</li>
+              <li>Final retention released: March 2025</li>
+            </ul>
+            <p>
+              <strong>Example 3 — Defect close-out:</strong> Defect #247 - BMS point for AHU-01
+              supply fan showing incorrect status. Document the close-out.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Defect Reference:</strong> SNL-247
+              </li>
+              <li>
+                <strong>Category:</strong> B (Major)
+              </li>
+              <li>
+                <strong>Location:</strong> Rooftop plant, AHU-01
+              </li>
+              <li>
+                <strong>Description:</strong> BMS graphic shows supply fan OFF when physically
+                running
+              </li>
+              <li>
+                <strong>Root cause:</strong> Digital input wired to NC contact instead of NO
+              </li>
+              <li>Controls engineer rewired DI to NO contact</li>
+              <li>Tested fan start/stop sequence - status now correct</li>
+              <li>BMS trend verified over 24 hours</li>
+              <li>
+                <strong>Evidence:</strong> Photos before/after, trend log extract
+              </li>
+              <li>
+                <strong>Sign-off:</strong> Inspected by J. Smith (Client FM) - 12/03/2025
+              </li>
+              <li>
+                <strong>Status:</strong> CLOSED
+              </li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Defect Categorisation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> During snagging of a new office building, the following
-                electrical issues are found. Categorise each.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>1. Emergency exit sign not illuminated</p>
-                <p className="text-red-400">
-                  {' '}
-                  → Category A (Critical) - Safety system non-functional
-                </p>
-                <p className="mt-2">
-                  2. Distribution board schedule shows incorrect circuit descriptions
-                </p>
-                <p className="text-amber-400">
-                  {' '}
-                  → Category B (Major) - Affects operation/maintenance
-                </p>
-                <p className="mt-2">3. Cable tray lid missing in riser cupboard</p>
-                <p className="text-blue-400"> → Category C (Minor) - Does not affect function</p>
-                <p className="mt-2">4. Final circuit test certificate not provided</p>
-                <p className="text-amber-400">
-                  {' '}
-                  → Category B (Major) - Compliance documentation missing
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: DLP Timeline
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Practical Completion achieved 15 March 2024. When does
-                the DLP expire and what are key milestones?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Practical Completion: 15 March 2024</p>
-                <p>DLP Duration: 12 months (standard)</p>
-                <p className="mt-2">Key dates:</p>
-                <p>• Seasonal commissioning (summer): September 2024</p>
-                <p>• Pre-expiry inspection: February 2025 (Month 11)</p>
-                <p>
-                  • DLP expiry: <strong>15 March 2025</strong>
-                </p>
-                <p>• Making Good Certificate issued: March 2025</p>
-                <p>• Final retention released: March 2025</p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Snagging walkthrough checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Bring current drawings, specifications, and O&M requirements</li>
+              <li>Use tablet/smartphone with snagging app for efficiency</li>
+              <li>Photograph every defect with location context</li>
+              <li>Agree categorisation and responsibility on the spot where possible</li>
+              <li>Issue formal list within 24-48 hours while memory is fresh</li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Standard DLP: <strong>12 months</strong>
+              </li>
+              <li>
+                Retention typically held: <strong>2.5-5%</strong>
+              </li>
+              <li>
+                Category A rectification: <strong>Immediate</strong>
+              </li>
+              <li>
+                Category B rectification: <strong>14 days</strong>
+              </li>
+              <li>
+                Category C rectification: <strong>28 days</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Defect Close-out
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Defect #247 - BMS point for AHU-01 supply fan showing
-                incorrect status. Document the close-out.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Defect Reference:</strong> SNL-247
-                </p>
-                <p>
-                  <strong>Category:</strong> B (Major)
-                </p>
-                <p>
-                  <strong>Location:</strong> Rooftop plant, AHU-01
-                </p>
-                <p>
-                  <strong>Description:</strong> BMS graphic shows supply fan OFF when physically
-                  running
-                </p>
-                <p>
-                  <strong>Root cause:</strong> Digital input wired to NC contact instead of NO
-                </p>
-                <p className="mt-2">
-                  <strong>Rectification:</strong>
-                </p>
-                <p>• Controls engineer rewired DI to NO contact</p>
-                <p>• Tested fan start/stop sequence - status now correct</p>
-                <p>• BMS trend verified over 24 hours</p>
-                <p className="mt-2">
-                  <strong>Evidence:</strong> Photos before/after, trend log extract
-                </p>
-                <p>
-                  <strong>Sign-off:</strong> Inspected by J. Smith (Client FM) - 12/03/2025
-                </p>
-                <p className="text-green-400">
-                  <strong>Status:</strong> CLOSED
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Snagging Walkthrough Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Bring current drawings, specifications, and O&M requirements
-                </li>
-                <li className="pl-1">Use tablet/smartphone with snagging app for efficiency</li>
-                <li className="pl-1">Photograph every defect with location context</li>
-                <li className="pl-1">
-                  Agree categorisation and responsibility on the spot where possible
-                </li>
-                <li className="pl-1">Issue formal list within 24-48 hours while memory is fresh</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Standard DLP: <strong>12 months</strong>
-                </li>
-                <li className="pl-1">
-                  Retention typically held: <strong>2.5-5%</strong>
-                </li>
-                <li className="pl-1">
-                  Category A rectification: <strong>Immediate</strong>
-                </li>
-                <li className="pl-1">
-                  Category B rectification: <strong>14 days</strong>
-                </li>
-                <li className="pl-1">
-                  Category C rectification: <strong>28 days</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Late snagging</strong> — Start too late, no time for rectification before
                   PC
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Poor documentation</strong> — Vague descriptions make disputes likely
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>No photographs</strong> — Losing evidence if defect disputed
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Verbal agreements</strong> — Always confirm in writing
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring DLP obligations</strong> — Failing to respond damages reputation
                   and triggers retention withholding
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Start snagging 4-6 weeks before PC, photograph every item with location context, agree A/B/C categorisation in writing, and stay responsive throughout the 12-month DLP to protect retention and reputation."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="DLP defects unaddressed — retention released to third party"
+            situation={
+              <>
+                You handed over a school MEP package six months ago. The school's facilities manager has logged 47 defects via email but you have not responded. At the 12-month inspection, the architect schedules the defects and gives you 14 days to rectify. You miss the deadline. The school engages a different MEP contractor; the cost is deducted from your retention plus 20% for client management. Net cost to you: £35k against £28k retention — a £7k loss to settle.
+              </>
+            }
+            whatToDo={
+              <>
+                Treat DLP as a managed phase, not a passive period. Maintain a defects register from PC onwards. Respond to every defect notification within 5 working days — visit, assess, schedule rectification. Communicate with the FM regularly. At 11 months, conduct a pre-end-of-DLP inspection to find anything before the architect does. The end-of-DLP report is a closure event, not a surprise.
+              </>
+            }
+            whyItMatters={
+              <>
+                Retention release is the project's bottom-line margin. DLP defects unaddressed eat retention faster than budget overruns. Active DLP management protects margin and reputation — a satisfied client at end-of-DLP is the foundation of repeat business.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Defect Categories</p>
-                <ul className="space-y-0.5">
-                  <li>Cat A - Critical - Safety/security - Immediate</li>
-                  <li>Cat B - Major - Function affected - 14 days</li>
-                  <li>Cat C - Minor - Cosmetic - 28 days</li>
-                  <li>Always agree categories at project start</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Close-out Process</p>
-                <ul className="space-y-0.5">
-                  <li>Identify → Categorise → Assign → Track</li>
-                  <li>Rectify → Verify → Close</li>
-                  <li>Photographic evidence essential</li>
-                  <li>Formal sign-off for audit trail</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+                    <KeyTakeaways
+            points={[
+              "Snagging = identifying defects against spec, standard and visual quality.",
+              "Categorise: critical / major / minor — different rectification timelines.",
+              "Digital snag tracking: ID, location, photo, party, target, status, sign-off.",
+              "De-snagging: every snag rectified, re-inspected, signed off — no closure without verification.",
+              "DLP typically 12 months from PC; defects rectified at contractor cost.",
+              "JCT Clause 2.38 — Schedule of Defects delivered within 14 days of end of Rectification Period.",
+              "Manage DLP actively: defects register, 5-day response, 11-month pre-inspection.",
+              "Failure to rectify = client engages others, deducts from retention plus management fee.",
+            ]}
+          />
+
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Quality Management
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section4')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Quality management
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section5')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Commissioning and handover
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

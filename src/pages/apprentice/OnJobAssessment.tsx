@@ -1,7 +1,14 @@
 import { useState } from 'react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
-import { ClipboardCheck, AlertTriangle, BookOpen, Shield, CheckCircle } from 'lucide-react';
+import { ArrowLeft, ClipboardCheck, AlertTriangle, BookOpen, Shield, CheckCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  PageFrame,
+  PageHero,
+  itemVariants,
+} from '@/components/college/primitives';
 import { useAssessmentProgress } from '@/components/apprentice/assessment/hooks/useAssessmentProgress';
 import { getTotalItemCount } from '@/components/apprentice/assessment/data/siteAssessmentChecklist';
 import SiteAssessmentWizard from '@/components/apprentice/assessment/SiteAssessmentWizard';
@@ -57,21 +64,28 @@ const OnJobAssessment = () => {
     },
   ];
 
+  const navigate = useNavigate();
   return (
-    <div className="bg-gradient-to-br from-background via-background/98 to-background/95">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6 animate-fade-in">
-        {/* Header */}
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3 min-w-0">
-            <div className="p-2.5 rounded-xl bg-green-500/10 border border-green-500/20 flex-shrink-0">
-              <ClipboardCheck className="h-6 w-6 text-green-400" />
-            </div>
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white truncate">
-              Site Assessment Tools
-            </h1>
-          </div>
-          <SmartBackButton className="flex-shrink-0" />
-        </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice/on-job-tools')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
+
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Site Assessment"
+          title="Pre-job site assessment"
+          description="Site checklist, risk assessment flow, and a quick-reference card stack — pre-job prep that catches the things you'd otherwise notice halfway up the ladder."
+          tone="yellow"
+        />
+      </motion.div>
 
         {/* Progress Strip */}
         <div className="flex items-center gap-4 p-3 rounded-xl bg-white/5 border border-white/10">
@@ -159,8 +173,7 @@ const OnJobAssessment = () => {
             </div>
           </CardContent>
         </Card>
-      </div>
-    </div>
+    </PageFrame>
   );
 };
 

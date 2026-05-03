@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 6 · Section 4 · Subsection 5 — Carbon Offsetting
+ * HNC Electrical Engineering for Building Services (Sustainability and Environmental Engineering)
+ *   Offset types, quality standards, additionality, permanence and the role of offsetting in net-zero strategies
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Carbon Offsetting - HNC Module 6 Section 4.5';
@@ -258,852 +275,369 @@ const faqs = [
 ];
 
 const HNCModule6Section4_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section4")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module6-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.4.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Carbon Offsetting
-          </h1>
-          <p className="text-white">
-            Offset types, quality standards, additionality, permanence and the role of offsetting in
-            net-zero strategies
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 6 · Section 4 · Subsection 5"
+            title="Carbon Offsetting"
+            description="Offset types, quality standards, additionality, permanence and the role of offsetting in net-zero strategies"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Avoidance offsets:</strong> Prevent emissions occurring elsewhere
-              </li>
-              <li className="pl-1">
-                <strong>Removal offsets:</strong> Extract CO2 from atmosphere
-              </li>
-              <li className="pl-1">
-                <strong>Quality criteria:</strong> Additionality, permanence, verification
-              </li>
-              <li className="pl-1">
-                <strong>Net-zero role:</strong> Last resort for residual emissions only
-              </li>
+          <TLDR
+            points={[
+              "Carbon offsets are credits from emission-reduction or removal projects (renewable energy, reforestation, direct air capture) used to \"offset\" residual emissions that cannot be eliminated at source — measured in tonnes CO₂e.",
+              "Quality varies enormously — robust offsets must demonstrate additionality (would not have happened without the funding), permanence (removal is durable), and verification (independent audit) under standards such as Verra VCS, Gold Standard, or Woodland Carbon Code (UK).",
+              "In SBTi-aligned strategy, offsets are explicitly the last resort — applicable only to residual emissions after the science-based reduction trajectory (typically ≤10% of base-year emissions by 2050), and ideally removals (DAC, biochar, BECCS) not avoidance.",
+            ]}
+          />
+
+          <RegsCallout
+            source="ISO 14068-1:2023 Carbon Neutrality + Advertising Standards Authority guidance"
+            clause="A claim of carbon neutrality shall be supported by a documented emissions reduction plan demonstrating action to reduce emissions in line with relevant climate science, with offsetting used only for residual emissions after maximum feasible reduction. Offsets shall be of demonstrated quality (verified to a recognised standard, additional, permanent, with no double-counting) and shall be retired and reported transparently. Misleading claims of neutrality or net-zero may breach the CAP Code or the BCAP Code and be subject to ASA enforcement."
+            meaning={
+              <>
+                ISO 14068 (replacing PAS 2060) is the international standard for substantiated carbon-neutrality claims. The ASA has banned multiple "carbon-neutral" marketing claims in the UK for relying on low-quality offsets without supporting reduction action — effectively making rigorous offsetting compliance a marketing-and-legal issue, not just an environmental one.
+              </>
+            }
+            cite="Source: ISO 14068-1:2023 — iso.org; ASA rulings on environmental claims — asa.org.uk"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Distinguish between avoidance and removal carbon offsets",
+              "Evaluate offset quality using additionality and permanence criteria",
+              "Apply verification standards including Gold Standard and VCS",
+              "Position offsetting correctly within the mitigation hierarchy",
+              "Assess criticisms and limitations of carbon offset approaches",
+              "Integrate offsetting into organisational net-zero strategies",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Carbon Offset Types">
+            <p>Carbon offsets represent verified emission reductions or removals that can be used to compensate for emissions occurring elsewhere. The fundamental distinction lies between offsets that prevent emissions from happening (avoidance/reduction) and those that remove existing CO2 from the atmosphere.</p>
+            <p><strong>Two fundamental offset categories:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Avoidance/reduction offsets:</strong> Prevent emissions that would otherwise occur - protecting forests, displacing fossil fuels with renewables, improving efficiency</li>
+              <li><strong>Removal offsets:</strong> Extract CO2 already in the atmosphere - afforestation, direct air capture, enhanced weathering, biochar</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Embodied carbon:</strong> May require offsetting residual emissions
-              </li>
-              <li className="pl-1">
-                <strong>Operational carbon:</strong> Reduce first through efficiency
-              </li>
-              <li className="pl-1">
-                <strong>Client requirements:</strong> Net-zero building targets
-              </li>
-              <li className="pl-1">
-                <strong>Standards:</strong> PAS 2060, PAS 2080 compliance
-              </li>
+            <p><strong>Common Offset Project Types</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Avoidance:</strong> Renewable energy — Displaces fossil fuel generation</li>
+              <li><strong>REDD+ (avoided deforestation):</strong> Prevents forest carbon release</li>
+              <li><strong>Clean cookstoves:</strong> Reduces fuel consumption</li>
+              <li><strong>Methane capture (landfill/agriculture):</strong> Destroys potent GHG</li>
+              <li><strong>Removal:</strong> Afforestation/reforestation — Trees absorb atmospheric CO2</li>
+              <li><strong>Direct air capture (DAC):</strong> Chemical capture from ambient air</li>
+              <li><strong>Biochar:</strong> Stable carbon in soil</li>
+              <li><strong>Enhanced weathering:</strong> Mineral carbonation</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Critical distinction:</strong> For genuine net-zero claims, only removal offsets can balance residual emissions - avoidance offsets reduce global emissions but do not neutralise the buyer's own emissions.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Distinguish between avoidance and removal carbon offsets',
-              'Evaluate offset quality using additionality and permanence criteria',
-              'Apply verification standards including Gold Standard and VCS',
-              'Position offsetting correctly within the mitigation hierarchy',
-              'Assess criticisms and limitations of carbon offset approaches',
-              'Integrate offsetting into organisational net-zero strategies',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Carbon Offset Types */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Carbon Offset Types
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Quality Criteria and Standards">
+            <p>Not all carbon offsets deliver equivalent climate benefits. Robust quality criteria distinguish credible offsets from those that may not represent real emission reductions. Understanding these criteria is essential for responsible procurement.</p>
+            <p><strong>Additionality</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Would project happen without offset revenue?</li>
+              <li>Must demonstrate financial/barrier additionality</li>
+              <li>Excludes legally required actions</li>
+              <li>Most debated quality criterion</li>
+            </ul>
+            <p><strong>Permanence</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>How long will carbon stay stored?</li>
+              <li>Forests: reversal risk (fire, disease)</li>
+              <li>Geological storage: 1,000+ years</li>
+              <li>Buffer pools mitigate reversal risk</li>
+            </ul>
+            <p><strong>Verification</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Independent third-party assessment</li>
+              <li>Quantification methodology review</li>
+              <li>Ongoing monitoring requirements</li>
+              <li>Registry tracking and retirement</li>
+            </ul>
+            <p><strong>No Leakage or Double Counting</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Leakage: emissions shift elsewhere</li>
+              <li>Double counting: multiple claims</li>
+              <li>Corresponding adjustments under Paris Agreement</li>
+              <li>Unique serial number per credit</li>
+            </ul>
+            <p><strong>Major Verification Standards</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Verified Carbon Standard (VCS/Verra):</strong> All project types — Largest voluntary market registry, 1B+ credits issued</li>
+              <li><strong>Gold Standard:</strong> Development co-benefits — Requires UN SDG contributions, premium pricing</li>
+              <li><strong>American Carbon Registry (ACR):</strong> North American projects — Compliance and voluntary markets</li>
+              <li><strong>Climate Action Reserve (CAR):</strong> North American projects — California compliance programme eligible</li>
+              <li><strong>Puro.earth:</strong> Carbon removals only — Engineered removal focus, 100+ year permanence</li>
+            </ul>
+            <p><strong>Quality guidance:</strong> Prioritise certified credits with clear additionality demonstration, appropriate permanence for your claims, and transparent registry tracking to retirement.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Offsetting in Net-Zero Strategies">
+            <p>Carbon offsetting occupies a specific position within the mitigation hierarchy - it should address residual emissions only after all practicable reduction measures have been implemented. Understanding this hierarchy is critical for credible net-zero strategies.</p>
+            <p><strong>The Mitigation Hierarchy</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Priority 1:</strong> AVOID</li>
+              <li><strong>Priority 2:</strong> REDUCE</li>
+              <li><strong>Priority 3:</strong> SUBSTITUTE</li>
+              <li><strong>Priority 4:</strong> OFFSET</li>
+            </ul>
+            <p><strong>SBTi Net-Zero Standard Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>90%+ reduction:</strong> Scope 1 and 2 emissions must be reduced by at least 90% before offsetting</li>
+              <li><strong>Removal only:</strong> Only carbon removal offsets (not avoidance) can be used for residual emissions</li>
+              <li><strong>High quality:</strong> Removals must meet strict permanence and verification criteria</li>
+              <li><strong>Beyond value chain:</strong> Separate from internal abatement investments</li>
+            </ul>
+            <p><strong>Offset Portfolio Evolution (Oxford Principles)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Near-term (2025):</strong> Primarily avoidance with some removal — Mix of short and long-lived</li>
+              <li><strong>Medium-term (2030):</strong> Increasing removal proportion — Shift toward long-lived storage</li>
+              <li><strong>Long-term (2040+):</strong> Predominantly or exclusively removal — Long-lived storage dominant</li>
+              <li><strong>Net-zero target year:</strong> High-quality removal only — Permanent geological/equivalent</li>
+            </ul>
+            <p><strong>Building services application:</strong> For MEP contractors pursuing net-zero, prioritise operational energy efficiency, low-carbon materials, and supplier engagement before considering offsets for genuinely unavoidable embodied or operational emissions.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Criticisms, Limitations and Best Practice">
+            <p>Carbon offsetting faces significant criticisms that must be understood to use offsets responsibly. These limitations do not invalidate offsetting entirely but require careful consideration and transparent communication.</p>
+            <p><strong>Key Criticisms of Carbon Offsetting</strong></p>
+            <p><strong>Additionality Challenges</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Counterfactual baseline inherently uncertain</li>
+              <li>Some projects would occur anyway</li>
+              <li>Gaming of additionality tests</li>
+              <li>Renewable energy additionality declining</li>
+            </ul>
+            <p><strong>Permanence Risks</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Forest fires increasing with climate change</li>
+              <li>Reversal undermines climate benefit</li>
+              <li>Buffer pools may be insufficient</li>
+              <li>Long-term monitoring uncertain</li>
+            </ul>
+            <p><strong>Moral Hazard</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>'Licence to pollute' criticism</li>
+              <li>May delay genuine decarbonisation</li>
+              <li>Perception of buying way out</li>
+              <li>Greenwashing concerns</li>
+            </ul>
+            <p><strong>Market Integrity Issues</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Quality varies significantly</li>
+              <li>Opaque pricing</li>
+              <li>Double counting risks</li>
+              <li>Regulatory fragmentation</li>
+            </ul>
+            <p><strong>Recent Controversies</strong></p>
+            <p>Investigative reporting has revealed quality issues in major offset programmes, including REDD+ projects credited for protecting forests that faced little deforestation threat. The Integrity Council for the Voluntary Carbon Market (ICVCM) is developing Core Carbon Principles to improve standards. Organisations should conduct due diligence beyond relying solely on certification.</p>
+            <p><strong>Best Practice Guidance for Offset Use</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Mitigation hierarchy first:</strong> Document reduction efforts before offsetting; set internal carbon price to drive efficiency</li>
+              <li><strong>High-quality credits only:</strong> Verify certification, review project documentation, check registry status</li>
+              <li><strong>Transition toward removals:</strong> Plan portfolio evolution from avoidance to removal over time</li>
+              <li><strong>Transparent communication:</strong> Report offsets separately from reductions; avoid misleading neutrality claims</li>
+              <li><strong>Due diligence:</strong> Go beyond certification to assess project-specific risks and co-benefits</li>
+            </ul>
+            <p><strong>Practical guidance:</strong> Treat offsetting as insurance for unavoidable emissions, not a substitute for decarbonisation. Allocate budget to removal offsets and plan for price increases as demand grows.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Carbon offsets represent verified emission reductions or removals that can be used to
-              compensate for emissions occurring elsewhere. The fundamental distinction lies between
-              offsets that prevent emissions from happening (avoidance/reduction) and those that
-              remove existing CO2 from the atmosphere.
+              <strong>Example 1: Evaluating Offset Quality</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Two fundamental offset categories:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Avoidance/reduction offsets:</strong> Prevent emissions that would
-                  otherwise occur - protecting forests, displacing fossil fuels with renewables,
-                  improving efficiency
-                </li>
-                <li className="pl-1">
-                  <strong>Removal offsets:</strong> Extract CO2 already in the atmosphere -
-                  afforestation, direct air capture, enhanced weathering, biochar
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Offset Project Types
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Category</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Project Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Mechanism</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2" rowSpan={4}>
-                        Avoidance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Renewable energy</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Displaces fossil fuel generation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        REDD+ (avoided deforestation)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Prevents forest carbon release
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Clean cookstoves</td>
-                      <td className="border border-white/10 px-3 py-2">Reduces fuel consumption</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Methane capture (landfill/agriculture)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Destroys potent GHG</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2" rowSpan={4}>
-                        Removal
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Afforestation/reforestation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Trees absorb atmospheric CO2
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Direct air capture (DAC)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Chemical capture from ambient air
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Biochar</td>
-                      <td className="border border-white/10 px-3 py-2">Stable carbon in soil</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Enhanced weathering</td>
-                      <td className="border border-white/10 px-3 py-2">Mineral carbonation</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Critical distinction:</strong> For genuine net-zero claims, only removal
-              offsets can balance residual emissions - avoidance offsets reduce global emissions but
-              do not neutralise the buyer's own emissions.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Quality Criteria */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Quality Criteria and Standards
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> An MEP contractor is offered forest protection offsets at GBP 8/tCO2e. Assess quality.</p>
+            <p>Quality assessment checklist:</p>
+            <p>1. Certification: Check for VCS/Gold Standard certification</p>
+            <p>2. Additionality: Review project documentation</p>
+            <p>- Was forest genuinely at risk of deforestation?</p>
+            <p>- What is the baseline methodology?</p>
+            <p>Warning: Very low price may indicate quality issues</p>
+            <p>3. Permanence: Assess reversal risk</p>
+            <p>- What is the buffer pool percentage?</p>
+            <p>- Fire/disease history in region?</p>
+            <p>4. Registry: Verify on Verra/Gold Standard registry</p>
+            <p>- Unique serial numbers assigned?</p>
+            <p>- Will credits be retired in your name?</p>
+            <p>Recommendation: Request third-party verification report</p>
+            <p>Consider paying premium for higher-quality credits</p>
             <p>
-              Not all carbon offsets deliver equivalent climate benefits. Robust quality criteria
-              distinguish credible offsets from those that may not represent real emission
-              reductions. Understanding these criteria is essential for responsible procurement.
+              <strong>Example 2: Building an Offset Strategy</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Additionality</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Would project happen without offset revenue?</li>
-                  <li className="pl-1">Must demonstrate financial/barrier additionality</li>
-                  <li className="pl-1">Excludes legally required actions</li>
-                  <li className="pl-1">Most debated quality criterion</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Permanence</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">How long will carbon stay stored?</li>
-                  <li className="pl-1">Forests: reversal risk (fire, disease)</li>
-                  <li className="pl-1">Geological storage: 1,000+ years</li>
-                  <li className="pl-1">Buffer pools mitigate reversal risk</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Verification</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Independent third-party assessment</li>
-                  <li className="pl-1">Quantification methodology review</li>
-                  <li className="pl-1">Ongoing monitoring requirements</li>
-                  <li className="pl-1">Registry tracking and retirement</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  No Leakage or Double Counting
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Leakage: emissions shift elsewhere</li>
-                  <li className="pl-1">Double counting: multiple claims</li>
-                  <li className="pl-1">Corresponding adjustments under Paris Agreement</li>
-                  <li className="pl-1">Unique serial number per credit</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Major Verification Standards
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Standard</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Focus</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Features</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Verified Carbon Standard (VCS/Verra)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">All project types</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Largest voluntary market registry, 1B+ credits issued
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Gold Standard</td>
-                      <td className="border border-white/10 px-3 py-2">Development co-benefits</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Requires UN SDG contributions, premium pricing
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        American Carbon Registry (ACR)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">North American projects</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Compliance and voluntary markets
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Climate Action Reserve (CAR)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">North American projects</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        California compliance programme eligible
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Puro.earth</td>
-                      <td className="border border-white/10 px-3 py-2">Carbon removals only</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Engineered removal focus, 100+ year permanence
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Quality guidance:</strong> Prioritise certified credits with clear
-              additionality demonstration, appropriate permanence for your claims, and transparent
-              registry tracking to retirement.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Offsetting in Net-Zero Strategies */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Offsetting in Net-Zero Strategies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Develop an offset strategy for a building services company targeting net-zero by 2040.</p>
+            <p>Phase 1 (2024-2027): Foundation</p>
+            <p>- Complete Scope 1, 2, 3 inventory</p>
+            <p>- Set science-based reduction targets</p>
+            <p>- Begin offset procurement for engagement</p>
+            <p>- Mix: 70% avoidance, 30% removal</p>
+            <p>Phase 2 (2028-2033): Transition</p>
+            <p>- Achieve 50% absolute reduction</p>
+            <p>- Increase removal proportion</p>
+            <p>- Mix: 40% avoidance, 60% removal</p>
+            <p>Phase 3 (2034-2040): Net-Zero</p>
+            <p>- Achieve 90%+ reduction</p>
+            <p>- Removals only for residual emissions</p>
+            <p>- Mix: 100% high-permanence removal</p>
+            <p>Budget planning: Assume 3-5x price increase for removals by 2040</p>
             <p>
-              Carbon offsetting occupies a specific position within the mitigation hierarchy - it
-              should address residual emissions only after all practicable reduction measures have
-              been implemented. Understanding this hierarchy is critical for credible net-zero
-              strategies.
+              <strong>Example 3: Calculating Residual Emissions</strong>
             </p>
+            <p><strong>Scenario:</strong> Calculate offset requirements for a net-zero building project.</p>
+            <p>Project: Commercial office building MEP installation</p>
+            <p>Embodied carbon assessment:</p>
+            <p>Total embodied carbon: 450 tCO2e</p>
+            <p>Reduction through design: -120 tCO2e (27%)</p>
+            <p>Low-carbon materials: -85 tCO2e (19%)</p>
+            <p>Supplier engagement: -45 tCO2e (10%)</p>
+            <p>-----</p>
+            <p>Residual to offset: 200 tCO2e (44%)</p>
+            <p>Offset procurement:</p>
+            <p>Removal credits required: 200 tCO2e</p>
+            <p>Assumed price (2024): GBP 120/tCO2e</p>
+            <p>Total offset budget: GBP 24,000</p>
+            <p>Demonstrate 56% reduction before offsetting</p>
+            <p>Document in sustainability report with reduction evidence</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">The Mitigation Hierarchy</p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">Priority 1:</span>{' '}
-                  <span className="text-white">AVOID</span> - Eliminate emission sources entirely
-                </p>
-                <p>
-                  <span className="text-white">Priority 2:</span>{' '}
-                  <span className="text-white">REDUCE</span> - Minimise emissions through efficiency
-                </p>
-                <p>
-                  <span className="text-white">Priority 3:</span>{' '}
-                  <span className="text-white">SUBSTITUTE</span> - Switch to lower-carbon
-                  alternatives
-                </p>
-                <p>
-                  <span className="text-white">Priority 4:</span>{' '}
-                  <span className="text-white">OFFSET</span> - Neutralise genuinely residual
-                  emissions
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                SBTi Net-Zero Standard Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>90%+ reduction:</strong> Scope 1 and 2 emissions must be reduced by at
-                  least 90% before offsetting
-                </li>
-                <li className="pl-1">
-                  <strong>Removal only:</strong> Only carbon removal offsets (not avoidance) can be
-                  used for residual emissions
-                </li>
-                <li className="pl-1">
-                  <strong>High quality:</strong> Removals must meet strict permanence and
-                  verification criteria
-                </li>
-                <li className="pl-1">
-                  <strong>Beyond value chain:</strong> Separate from internal abatement investments
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Offset Portfolio Evolution (Oxford Principles)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Timeframe</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Avoidance vs Removal
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Storage Duration
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Near-term (2025)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Primarily avoidance with some removal
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Mix of short and long-lived
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Medium-term (2030)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Increasing removal proportion
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Shift toward long-lived storage
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Long-term (2040+)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Predominantly or exclusively removal
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Long-lived storage dominant
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Net-zero target year</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High-quality removal only
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Permanent geological/equivalent
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Building services application:</strong> For MEP contractors pursuing net-zero,
-              prioritise operational energy efficiency, low-carbon materials, and supplier
-              engagement before considering offsets for genuinely unavoidable embodied or
-              operational emissions.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Criticisms and Limitations */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Criticisms, Limitations and Best Practice
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Carbon offsetting faces significant criticisms that must be understood to use offsets
-              responsibly. These limitations do not invalidate offsetting entirely but require
-              careful consideration and transparent communication.
+              <strong>Offset Quality Assessment Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Criticisms of Carbon Offsetting
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Additionality Challenges</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Counterfactual baseline inherently uncertain</li>
-                    <li>Some projects would occur anyway</li>
-                    <li>Gaming of additionality tests</li>
-                    <li>Renewable energy additionality declining</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Permanence Risks</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Forest fires increasing with climate change</li>
-                    <li>Reversal undermines climate benefit</li>
-                    <li>Buffer pools may be insufficient</li>
-                    <li>Long-term monitoring uncertain</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Moral Hazard</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>'Licence to pollute' criticism</li>
-                    <li>May delay genuine decarbonisation</li>
-                    <li>Perception of buying way out</li>
-                    <li>Greenwashing concerns</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Market Integrity Issues</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Quality varies significantly</li>
-                    <li>Opaque pricing</li>
-                    <li>Double counting risks</li>
-                    <li>Regulatory fragmentation</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Recent Controversies</p>
-              <p className="text-sm text-white">
-                Investigative reporting has revealed quality issues in major offset programmes,
-                including REDD+ projects credited for protecting forests that faced little
-                deforestation threat. The Integrity Council for the Voluntary Carbon Market (ICVCM)
-                is developing Core Carbon Principles to improve standards. Organisations should
-                conduct due diligence beyond relying solely on certification.
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Best Practice Guidance for Offset Use
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Principle</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Implementation</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Mitigation hierarchy first
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Document reduction efforts before offsetting; set internal carbon price to
-                        drive efficiency
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        High-quality credits only
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Verify certification, review project documentation, check registry status
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Transition toward removals
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Plan portfolio evolution from avoidance to removal over time
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Transparent communication
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Report offsets separately from reductions; avoid misleading neutrality
-                        claims
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Due diligence</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Go beyond certification to assess project-specific risks and co-benefits
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Practical guidance:</strong> Treat offsetting as insurance for unavoidable
-              emissions, not a substitute for decarbonisation. Allocate budget to removal offsets
-              and plan for price increases as demand grows.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Verify certification by recognised standard (VCS, Gold Standard, etc.)</li>
+              <li>Review additionality documentation and baseline methodology</li>
+              <li>Assess permanence risk and buffer pool adequacy</li>
+              <li>Check registry for unique serial numbers and retirement process</li>
+              <li>Evaluate co-benefits (biodiversity, community development)</li>
+              <li>Consider price as quality indicator (very cheap = higher risk)</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>SBTi net-zero: <strong>90%+ reduction</strong> required before offsetting</li>
+              <li>Permanence target: <strong>100+ years</strong> (ideally 1,000+)</li>
+              <li>Buffer pools: <strong>10-20%</strong> of credits held for reversal</li>
+              <li>One credit: <strong>1 tonne CO2e</strong> reduced or removed</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Evaluating Offset Quality
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> An MEP contractor is offered forest protection offsets at
-                GBP 8/tCO2e. Assess quality.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Quality assessment checklist:</p>
-                <p className="mt-2">1. Certification: Check for VCS/Gold Standard certification</p>
-                <p>2. Additionality: Review project documentation</p>
-                <p className="ml-4">- Was forest genuinely at risk of deforestation?</p>
-                <p className="ml-4">- What is the baseline methodology?</p>
-                <p className="ml-4 text-orange-400">
-                  Warning: Very low price may indicate quality issues
-                </p>
-                <p className="mt-2">3. Permanence: Assess reversal risk</p>
-                <p className="ml-4">- What is the buffer pool percentage?</p>
-                <p className="ml-4">- Fire/disease history in region?</p>
-                <p className="mt-2">4. Registry: Verify on Verra/Gold Standard registry</p>
-                <p className="ml-4">- Unique serial numbers assigned?</p>
-                <p className="ml-4">- Will credits be retired in your name?</p>
-                <p className="mt-2 text-green-400">
-                  Recommendation: Request third-party verification report
-                </p>
-                <p className="text-green-400">Consider paying premium for higher-quality credits</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Building an Offset Strategy
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Develop an offset strategy for a building services
-                company targeting net-zero by 2040.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Phase 1 (2024-2027): Foundation</p>
-                <p className="ml-4">- Complete Scope 1, 2, 3 inventory</p>
-                <p className="ml-4">- Set science-based reduction targets</p>
-                <p className="ml-4">- Begin offset procurement for engagement</p>
-                <p className="ml-4">- Mix: 70% avoidance, 30% removal</p>
-                <p className="mt-2">Phase 2 (2028-2033): Transition</p>
-                <p className="ml-4">- Achieve 50% absolute reduction</p>
-                <p className="ml-4">- Increase removal proportion</p>
-                <p className="ml-4">- Mix: 40% avoidance, 60% removal</p>
-                <p className="mt-2">Phase 3 (2034-2040): Net-Zero</p>
-                <p className="ml-4">- Achieve 90%+ reduction</p>
-                <p className="ml-4">- Removals only for residual emissions</p>
-                <p className="ml-4">- Mix: 100% high-permanence removal</p>
-                <p className="mt-2 text-green-400">
-                  Budget planning: Assume 3-5x price increase for removals by 2040
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Calculating Residual Emissions
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate offset requirements for a net-zero building
-                project.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Project: Commercial office building MEP installation</p>
-                <p className="mt-2">Embodied carbon assessment:</p>
-                <p className="ml-4">Total embodied carbon: 450 tCO2e</p>
-                <p className="ml-4">Reduction through design: -120 tCO2e (27%)</p>
-                <p className="ml-4">Low-carbon materials: -85 tCO2e (19%)</p>
-                <p className="ml-4">Supplier engagement: -45 tCO2e (10%)</p>
-                <p className="ml-4">-----</p>
-                <p className="ml-4">Residual to offset: 200 tCO2e (44%)</p>
-                <p className="mt-2">Offset procurement:</p>
-                <p className="ml-4">Removal credits required: 200 tCO2e</p>
-                <p className="ml-4">Assumed price (2024): GBP 120/tCO2e</p>
-                <p className="ml-4">Total offset budget: GBP 24,000</p>
-                <p className="mt-2 text-green-400">Demonstrate 56% reduction before offsetting</p>
-                <p className="text-green-400">
-                  Document in sustainability report with reduction evidence
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Offset Quality Assessment Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Verify certification by recognised standard (VCS, Gold Standard, etc.)
-                </li>
-                <li className="pl-1">
-                  Review additionality documentation and baseline methodology
-                </li>
-                <li className="pl-1">Assess permanence risk and buffer pool adequacy</li>
-                <li className="pl-1">
-                  Check registry for unique serial numbers and retirement process
-                </li>
-                <li className="pl-1">Evaluate co-benefits (biodiversity, community development)</li>
-                <li className="pl-1">
-                  Consider price as quality indicator (very cheap = higher risk)
-                </li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Using offsets first</strong> - Always exhaust reduction options before offsetting</li>
+                <li><strong>Choosing on price alone</strong> - Cheap credits often have quality issues</li>
+                <li><strong>Claiming carbon neutral without transparency</strong> - Separate offset claims from reductions</li>
+                <li><strong>Ignoring portfolio evolution</strong> - Plan transition toward removals over time</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  SBTi net-zero: <strong>90%+ reduction</strong> required before offsetting
-                </li>
-                <li className="pl-1">
-                  Permanence target: <strong>100+ years</strong> (ideally 1,000+)
-                </li>
-                <li className="pl-1">
-                  Buffer pools: <strong>10-20%</strong> of credits held for reversal
-                </li>
-                <li className="pl-1">
-                  One credit: <strong>1 tonne CO2e</strong> reduced or removed
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Using offsets first</strong> - Always exhaust reduction options before
-                  offsetting
-                </li>
-                <li className="pl-1">
-                  <strong>Choosing on price alone</strong> - Cheap credits often have quality issues
-                </li>
-                <li className="pl-1">
-                  <strong>Claiming carbon neutral without transparency</strong> - Separate offset
-                  claims from reductions
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring portfolio evolution</strong> - Plan transition toward removals
-                  over time
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="Voluntary carbon market reform devalues retired credits"
+            situation={
+              <>
+                A property company purchased 50,000 tonnes of REDD+ (avoided deforestation) credits in 2021 to offset annual operational emissions. Investigative journalism in 2023 questioned the additionality of many REDD+ projects; in 2024 the Voluntary Carbon Market Integrity Initiative (VCMI) tightened quality criteria. The company's historic offsets no longer meet the new standard for net-zero claims.
+              </>
+            }
+            whatToDo={
+              <>
+                Three-stage response: (1) accelerate operational emission reductions to reduce future offset reliance; (2) shift offset purchasing from avoidance (REDD+) to removals (DAC, biochar, BECCS) — much more expensive but credible; (3) update marketing claims to remove "carbon neutral" wording where the supporting offsets no longer meet ISO 14068. Long-term: re-baseline to SBTi methodology where offsets are explicitly minimised, not maximised.
+              </>
+            }
+            whyItMatters={
+              <>
+                The voluntary carbon market is in active reform. Avoidance-based credits (which were the bulk of the market) are losing credibility; removal credits are scarce and expensive. Any organisation building a sustainability strategy on offsetting needs a transition plan to direct emission reduction — and to higher-quality offsets at much higher prices (£100/tCO₂e+ for DAC vs £5–15 for avoidance).
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Offset Quality Criteria</p>
-                <ul className="space-y-0.5">
-                  <li>Additionality - would not happen without offset revenue</li>
-                  <li>Permanence - carbon stored long-term (100+ years)</li>
-                  <li>Verification - third-party assessed and certified</li>
-                  <li>No double counting - unique, retired credits only</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Major Standards</p>
-                <ul className="space-y-0.5">
-                  <li>VCS/Verra - largest voluntary market registry</li>
-                  <li>Gold Standard - development co-benefits required</li>
-                  <li>Puro.earth - removal-only focus</li>
-                  <li>ICVCM Core Carbon Principles - emerging quality framework</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              "Offsets = credits from emission reduction (avoidance) or removal projects.",
+              "Quality criteria: additionality, permanence, verification, no double-counting.",
+              "Standards: Verra VCS, Gold Standard, Woodland Carbon Code (UK), Plan Vivo.",
+              "SBTi treats offsets as last resort — only for residual ≤10% emissions by 2050.",
+              "Removals (DAC, biochar, BECCS) are higher quality than avoidance (REDD+).",
+              "ISO 14068-1 (2023) replaces PAS 2060 for substantiated neutrality claims.",
+              "ASA enforcement — misleading offsetting claims are now actively challenged.",
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section4-6">
-              Next: Section 4.6
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section4-4")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Science-based targets
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section4-6")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Net-zero pathways
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

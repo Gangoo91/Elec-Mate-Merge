@@ -327,7 +327,12 @@ export function StatStrip({ stats, columns = 4, className }: StatStripProps) {
                 )}
               />
             )}
-            <Eyebrow className={stat.tone ? toneText[stat.tone] : undefined}>
+            <Eyebrow
+              className={cn(
+                'truncate w-full',
+                stat.tone ? toneText[stat.tone] : undefined
+              )}
+            >
               {String(i + 1).padStart(2, '0')} · {stat.label}
             </Eyebrow>
             <span
@@ -379,9 +384,12 @@ export function HubGrid({
   className?: string;
   children: ReactNode;
 }) {
+  // Mobile defaults to 2-col for 4-col grids (small cards) so 8 items don't
+  // become an 8-row scroll. 3-col and 2-col grids stay 1-col on mobile —
+  // those carry richer content cards that need full width on small screens.
   const colClass =
     columns === 4
-      ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'
+      ? 'grid-cols-2 sm:grid-cols-2 lg:grid-cols-4'
       : columns === 3
         ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
         : columns === 2
@@ -452,7 +460,7 @@ export function HubCard({
         )}
       />
       <div className="flex items-start justify-between gap-3">
-        <Eyebrow>
+        <Eyebrow className="truncate min-w-0 flex-1">
           {number ? `${number} · ` : ''}
           {eyebrow}
         </Eyebrow>
@@ -655,7 +663,7 @@ export function PageFrame({
       initial="hidden"
       animate="visible"
       className={cn(
-        'mx-auto max-w-7xl space-y-10 sm:space-y-14 lg:space-y-16 pb-8',
+        'mx-auto max-w-7xl space-y-8 sm:space-y-12 lg:space-y-16 pb-24 sm:pb-12 lg:pb-8',
         className
       )}
     >

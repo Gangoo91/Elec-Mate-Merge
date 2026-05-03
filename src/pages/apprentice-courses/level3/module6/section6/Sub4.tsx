@@ -376,8 +376,8 @@ export default function Sub4() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 514.9.1 (Diagrams, charts, tables and similar information)"
-            clause="A diagram, chart, table or equivalent form of information shall be provided indicating in particular: the type and composition of the circuits (points of utilisation served, number and size of conductors, type of wiring), and the means necessary for the identification of devices performing the functions of protection, isolation and switching. NOTE: For domestic (household) premises, an exception is provided in BS 7671:2018+A4:2026 — see the amended text."
+            source="BS 7671:2018+A4:2026 — Regulation 514.9.1 (Diagrams, charts, tables and similar information) — amended in A4:2026"
+            clause="Regulation 514.9.1 requires that a diagram, chart, table or equivalent form of information be provided at every distribution board sufficient to identify the circuits — typically covering the type and composition of each circuit (points of utilisation served, number and size of conductors, type of wiring) and the devices performing protection, isolation and switching. A4:2026 amended 514.9.1 to include an exception for domestic (household) premises; consult the published A4:2026 wording for the precise scope of that exception."
             meaning={
               <>
                 Reg 514.9.1 sets the per-DB chart requirement which BIM-based design discharges
@@ -465,7 +465,7 @@ export default function Sub4() {
                 proportionate to the project complexity.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 132.1 framework — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 132.1 framework."
           />
 
           <InlineCheck

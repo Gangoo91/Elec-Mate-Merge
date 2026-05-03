@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 6 · Section 4 · Subsection 2 — Operational Carbon
+ * HNC Electrical Engineering for Building Services (Sustainability and Environmental Engineering)
+ *   Energy-related emissions, regulated vs unregulated loads, benchmarking methodologies, and carbon reduction strategies
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Operational Carbon - HNC Module 6 Section 4.2';
@@ -229,987 +246,397 @@ const faqs = [
 ];
 
 const HNCModule6Section4_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section4")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module6-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.4.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Operational Carbon
-          </h1>
-          <p className="text-white">
-            Energy-related emissions, regulated vs unregulated loads, benchmarking methodologies,
-            and carbon reduction strategies
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 6 · Section 4 · Subsection 2"
+            title="Operational Carbon"
+            description="Energy-related emissions, regulated vs unregulated loads, benchmarking methodologies, and carbon reduction strategies"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Operational carbon:</strong> Emissions from building energy use
-              </li>
-              <li className="pl-1">
-                <strong>Regulated loads:</strong> HVAC, lighting, hot water (Part L)
-              </li>
-              <li className="pl-1">
-                <strong>Unregulated loads:</strong> Plug loads, equipment, lifts
-              </li>
-              <li className="pl-1">
-                <strong>EUI:</strong> kWh/m²/year - the key benchmark metric
-              </li>
+          <TLDR
+            points={[
+              "Operational carbon is in-use energy emissions — regulated loads (heating, cooling, ventilation, lighting, hot water — covered by Part L) plus unregulated loads (small power, IT, lifts, kitchen, vertical transport — outside Part L but typically 30–60% of actual use).",
+              "The carbon intensity of UK electricity has fallen from 460 gCO₂/kWh (2014) to ~140 gCO₂/kWh (2024) — making electrification the fastest carbon win for heating.",
+              "Energy Use Intensity (EUI, kWh/m²/year) is the headline benchmark — LETI 2030 targets are 35 (residential), 55 (offices), 65 (schools) kWh/m²/year for net-zero-aligned new build.",
+            ]}
+          />
+
+          <RegsCallout
+            source="GLA (London Plan) Energy Hierarchy + LETI Climate Emergency Design Guide + RIBA 2030 Climate Challenge"
+            clause="New major developments in London shall demonstrate compliance with the energy hierarchy: (1) Be Lean — use less energy through fabric and passive design; (2) Be Clean — supply energy efficiently using low-carbon heat; (3) Be Green — exploit local renewable resources. The proposal shall achieve at least a 35% reduction in regulated CO₂ emissions beyond Part L requirements, with the residual emissions offset through a payment to the carbon offset fund."
+            meaning={
+              <>
+                The London Plan energy hierarchy + 35% improvement is the toughest UK regional standard — most other authorities are catching up. RIBA 2030 Climate Challenge sets voluntary EUI targets for all UK practice; LETI design guides translate these into specific m²/W limits, lighting density limits, and DHW design rules.
+              </>
+            }
+            cite="Source: London Plan 2021 Policy SI2 — london.gov.uk; RIBA 2030 Climate Challenge — riba.org"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Define operational carbon and its relationship to building energy use",
+              "Distinguish between regulated and unregulated energy loads",
+              "Apply benchmarking methodologies including CIBSE TM46 and EUI metrics",
+              "Explain the carbon reduction hierarchy and prioritisation",
+              "Identify effective reduction strategies for building services",
+              "Calculate operational carbon using appropriate emission factors",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Understanding Operational Carbon">
+            <p>Operational carbon encompasses all greenhouse gas emissions resulting from energy consumption during a building's use phase. Over a typical 60-year building lifespan, operational carbon represents 60-80% of whole-life carbon emissions, making it the primary focus for decarbonisation efforts.</p>
+            <p><strong>Key components of operational carbon:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Direct emissions (Scope 1):</strong> On-site fuel combustion (gas boilers, generators)</li>
+              <li><strong>Indirect emissions (Scope 2):</strong> Purchased electricity and district heating</li>
+              <li><strong>Energy sources:</strong> Grid electricity, natural gas, oil, biomass, district systems</li>
+              <li><strong>End uses:</strong> Heating, cooling, ventilation, lighting, equipment, hot water</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>HVAC:</strong> 40-50% of operational energy
-              </li>
-              <li className="pl-1">
-                <strong>Lighting:</strong> 15-25% with LED savings 60-80%
-              </li>
-              <li className="pl-1">
-                <strong>Grid factor:</strong> ~0.193 kgCO₂e/kWh (2025)
-              </li>
-              <li className="pl-1">
-                <strong>LETI office target:</strong> 55 kWh/m²/year
-              </li>
+            <p><strong>Operational Carbon Calculation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Grid electricity:</strong> 0.193 kgCO₂e/kWh — SAP 10.2 methodology; decreasing annually</li>
+              <li><strong>Natural gas:</strong> 0.183 kgCO₂e/kWh — Including upstream emissions; relatively stable</li>
+              <li><strong>Heating oil:</strong> 0.247 kgCO₂e/kWh — Higher than gas; declining use</li>
+              <li><strong>LPG:</strong> 0.214 kgCO₂e/kWh — Common in off-grid locations</li>
+              <li><strong>Biomass (wood pellets):</strong> 0.015 kgCO₂e/kWh — Low operational carbon; consider supply chain</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Grid Decarbonisation Trajectory</strong></p>
+            <p><strong>2013:</strong> 0.519 kgCO₂e/kWh (coal-heavy mix)</p>
+            <p><strong>2020:</strong> 0.233 kgCO₂e/kWh (renewable growth)</p>
+            <p><strong>2025:</strong> 0.193 kgCO₂e/kWh (current)</p>
+            <p><strong>2035 target:</strong> Near zero (100% clean power commitment)</p>
+            <p>This trajectory makes electrification (heat pumps) increasingly advantageous over gas heating.</p>
+            <p><strong>Design implication:</strong> As grid electricity decarbonises, operational carbon reduction increasingly depends on energy efficiency rather than fuel switching.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Define operational carbon and its relationship to building energy use',
-              'Distinguish between regulated and unregulated energy loads',
-              'Apply benchmarking methodologies including CIBSE TM46 and EUI metrics',
-              'Explain the carbon reduction hierarchy and prioritisation',
-              'Identify effective reduction strategies for building services',
-              'Calculate operational carbon using appropriate emission factors',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Understanding Operational Carbon */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Understanding Operational Carbon
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Regulated vs Unregulated Energy">
+            <p>Building Regulations Part L distinguishes between regulated energy (controlled by compliance calculations) and unregulated energy (not addressed by Part L). Understanding this distinction is crucial for predicting actual building performance and closing the 'performance gap'.</p>
+            <p><strong>Regulated Loads (Part L)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Space heating systems (boilers, heat pumps)</li>
+              <li>Space cooling (chillers, DX systems)</li>
+              <li>Mechanical ventilation (AHUs, extract fans)</li>
+              <li>Domestic hot water heating</li>
+              <li>Fixed internal lighting</li>
+              <li>Pumps and fans for HVAC</li>
+            </ul>
+            <p><strong>Unregulated Loads (Not Part L)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Plug loads (computers, monitors, equipment)</li>
+              <li>Server rooms and data centres</li>
+              <li>Lifts and escalators</li>
+              <li>Catering equipment</li>
+              <li>External and decorative lighting</li>
+              <li>Process loads and specialist equipment</li>
+            </ul>
+            <p><strong>Typical Energy Split by Building Type</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>General office:</strong> 60-75% — 25-40% — IT equipment, small power, lifts</li>
+              <li><strong>Retail (large):</strong> 50-65% — 35-50% — Refrigeration, escalators, display</li>
+              <li><strong>Hospital:</strong> 45-60% — 40-55% — Medical equipment, catering, lifts</li>
+              <li><strong>School:</strong> 70-85% — 15-30% — IT suites, catering, sports facilities</li>
+              <li><strong>Hotel:</strong> 55-70% — 30-45% — Catering, laundry, lifts, leisure</li>
+            </ul>
+            <p><strong>The Performance Gap</strong></p>
+            <p>Buildings typically consume 2-5 times more energy than Part L predictions because:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Unregulated loads are excluded from compliance calculations</li>
+              <li>• Actual occupancy patterns differ from design assumptions</li>
+              <li>• Systems may not be properly commissioned or maintained</li>
+              <li>• Occupant behaviour varies from modelled assumptions</li>
+              <li>• Building fabric may underperform due to construction quality</li>
+            </ul>
+            <p><strong>Practical implication:</strong> Design teams should model total energy (regulated + unregulated) to predict realistic performance and set meaningful operational targets.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Benchmarking Methodologies">
+            <p>Benchmarking enables comparison of building performance against industry standards and best practice. The primary metric is Energy Use Intensity (EUI), expressed as kWh/m²/year, which normalises consumption by floor area for meaningful comparison.</p>
+            <p><strong>Energy Use Intensity (EUI) Calculation</strong></p>
+            <p><span>EUI =</span> Total Annual Energy Consumption (kWh) ÷ Gross Internal Area (m²)</p>
+            <p><span>Example office building:</span></p>
+            <p>Annual electricity: 475,000 kWh</p>
+            <p>Annual gas: 300,000 kWh</p>
+            <p>GIA: 5,000 m²</p>
+            <p>EUI = (475,000 + 300,000) ÷ 5,000 = 155 kWh/m²/year</p>
+            <p><strong>CIBSE TM46 Benchmarks (Selected Building Types)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>General office (nat vent):</strong> 95 — 120 — ~130</li>
+              <li><strong>General office (air-con):</strong> 128 — 107 — ~160</li>
+              <li><strong>Primary school:</strong> 32 — 113 — ~100</li>
+              <li><strong>Hospital (clinical):</strong> 90 — 300 — ~280</li>
+              <li><strong>Hotel:</strong> 105 — 200 — ~220</li>
+              <li><strong>Retail (supermarket):</strong> 365 — 105 — ~350</li>
+            </ul>
+            <p><strong>LETI Net Zero Targets</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Office:</strong> 55 kWh/m²/year</li>
+              <li><strong>School:</strong> 65 kWh/m²/year</li>
+              <li><strong>Residential:</strong> 35 kWh/m²/year</li>
+              <li><strong>Hotel:</strong> 85 kWh/m²/year</li>
+              <li><strong>Retail:</strong> 70 kWh/m²/year</li>
+            </ul>
+            <p>Total operational energy including unregulated</p>
+            <p><strong>NABERS UK Rating Scale</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>6 stars:</strong> Exceptional (market-leading)</li>
+              <li><strong>5 stars:</strong> Excellent (top 10-15%)</li>
+              <li><strong>4 stars:</strong> Good (above average)</li>
+              <li><strong>3 stars:</strong> Average (typical)</li>
+              <li><strong>2 stars:</strong> Below average</li>
+              <li><strong>1 star:</strong> Poor performance</li>
+            </ul>
+            <p>Based on actual metered performance</p>
+            <p><strong>Display Energy Certificate (DEC) Ratings</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>A (0-25):</strong> Exceptional performance, significantly below benchmark</li>
+              <li><strong>B (26-50):</strong> Good performance, below benchmark</li>
+              <li><strong>C (51-75):</strong> Typical performance, around benchmark</li>
+              <li><strong>D (76-100):</strong> At benchmark (D100 = TM46 typical value)</li>
+              <li><strong>E-G (101+):</strong> Above benchmark, poor performance</li>
+            </ul>
+            <p><strong>Benchmarking tip:</strong> Always compare like with like - normalise for occupancy hours, climate zone, and building function before drawing conclusions.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Carbon Reduction Strategies">
+            <p>The carbon reduction hierarchy prioritises strategies by effectiveness and permanence. Following this hierarchy ensures resources are directed to interventions with the greatest impact and longest-lasting benefits.</p>
+            <p><strong>Carbon Reduction Hierarchy</strong></p>
+            <p><strong>Reduce Demand</strong></p>
+            <p>Fabric efficiency, controls optimisation, occupancy scheduling, behaviour change</p>
+            <p><strong>Improve Efficiency</strong></p>
+            <p>LED lighting, variable speed drives, heat recovery, high-efficiency plant</p>
+            <p><strong>Decarbonise Supply</strong></p>
+            <p>Heat pumps, solar PV, green tariffs, district heating, biomass</p>
+            <p><strong>Offset Residual</strong></p>
+            <p>Carbon credits, verified offsets (last resort for unavoidable emissions)</p>
+            <p><strong>Building Services Reduction Strategies</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Lighting:</strong> LED retrofit with DALI controls — 60-80% — 2-4 years</li>
+              <li><strong>HVAC:</strong> Variable speed drives on fans/pumps — 30-50% — 2-3 years</li>
+              <li><strong>Heating:</strong> Air source heat pump (replacing gas) — 60-70% carbon — 7-12 years</li>
+              <li><strong>Controls:</strong> BMS optimisation and scheduling — 10-20% — 1-2 years</li>
+              <li><strong>Ventilation:</strong> Demand-controlled ventilation (CO₂) — 20-40% — 3-5 years</li>
+              <li><strong>Generation:</strong> Rooftop solar PV — 10-30% electricity — 6-10 years</li>
+            </ul>
+            <p><strong>Quick Wins (Low Cost, High Impact)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>HVAC scheduling optimisation</li>
+              <li>Setpoint adjustments (±1°C = ~8% energy)</li>
+              <li>Lighting time scheduling</li>
+              <li>Equipment switch-off campaigns</li>
+              <li>Boiler/chiller sequencing</li>
+            </ul>
+            <p><strong>Strategic Investments (Higher Cost, Transformational)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Heat pump installation</li>
+              <li>Building fabric upgrades</li>
+              <li>Solar PV with battery storage</li>
+              <li>Full LED lighting replacement</li>
+              <li>Advanced BMS with AI optimisation</li>
+            </ul>
+            <p><strong>Monitoring and Verification (M&V)</strong></p>
+            <p>Essential for demonstrating actual savings and maintaining performance:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• <strong>Sub-metering:</strong> Disaggregate consumption by end-use (lighting, HVAC, small power)</li>
+              <li>• <strong>Baselining:</strong> Establish pre-intervention performance for comparison</li>
+              <li>• <strong>Normalisation:</strong> Adjust for weather (degree days) and occupancy</li>
+              <li>• <strong>IPMVP:</strong> International Performance Measurement and Verification Protocol</li>
+              <li>• <strong>Continuous monitoring:</strong> Automated alerts for performance drift</li>
+            </ul>
+            <p><strong>Key principle:</strong> The cheapest and cleanest kilowatt-hour is the one you never use. Prioritise demand reduction before considering renewable generation.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Operational carbon encompasses all greenhouse gas emissions resulting from energy
-              consumption during a building's use phase. Over a typical 60-year building lifespan,
-              operational carbon represents 60-80% of whole-life carbon emissions, making it the
-              primary focus for decarbonisation efforts.
+              <strong>Example 1: Calculating Operational Carbon</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Key components of operational carbon:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Direct emissions (Scope 1):</strong> On-site fuel combustion (gas boilers,
-                  generators)
-                </li>
-                <li className="pl-1">
-                  <strong>Indirect emissions (Scope 2):</strong> Purchased electricity and district
-                  heating
-                </li>
-                <li className="pl-1">
-                  <strong>Energy sources:</strong> Grid electricity, natural gas, oil, biomass,
-                  district systems
-                </li>
-                <li className="pl-1">
-                  <strong>End uses:</strong> Heating, cooling, ventilation, lighting, equipment, hot
-                  water
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Operational Carbon Calculation
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Energy Source</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Carbon Factor (2025)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Grid electricity</td>
-                      <td className="border border-white/10 px-3 py-2">0.193 kgCO₂e/kWh</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        SAP 10.2 methodology; decreasing annually
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Natural gas</td>
-                      <td className="border border-white/10 px-3 py-2">0.183 kgCO₂e/kWh</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Including upstream emissions; relatively stable
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Heating oil</td>
-                      <td className="border border-white/10 px-3 py-2">0.247 kgCO₂e/kWh</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher than gas; declining use
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LPG</td>
-                      <td className="border border-white/10 px-3 py-2">0.214 kgCO₂e/kWh</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Common in off-grid locations
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Biomass (wood pellets)</td>
-                      <td className="border border-white/10 px-3 py-2">0.015 kgCO₂e/kWh</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Low operational carbon; consider supply chain
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Grid Decarbonisation Trajectory
-              </p>
-              <div className="text-sm text-white space-y-1">
-                <p>
-                  <strong>2013:</strong> 0.519 kgCO₂e/kWh (coal-heavy mix)
-                </p>
-                <p>
-                  <strong>2020:</strong> 0.233 kgCO₂e/kWh (renewable growth)
-                </p>
-                <p>
-                  <strong>2025:</strong> 0.193 kgCO₂e/kWh (current)
-                </p>
-                <p>
-                  <strong>2035 target:</strong> Near zero (100% clean power commitment)
-                </p>
-              </div>
-              <p className="text-xs text-blue-300/70 mt-2">
-                This trajectory makes electrification (heat pumps) increasingly advantageous over
-                gas heating.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design implication:</strong> As grid electricity decarbonises, operational
-              carbon reduction increasingly depends on energy efficiency rather than fuel switching.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Regulated vs Unregulated Energy */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Regulated vs Unregulated Energy
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Calculate annual operational carbon for an office building.</p>
+            <p>Given data:</p>
+            <p>Annual electricity: 450,000 kWh</p>
+            <p>Annual gas: 280,000 kWh</p>
+            <p>GIA: 4,000 m²</p>
+            <p>Carbon factors (2025):</p>
+            <p>Electricity: 0.193 kgCO₂e/kWh</p>
+            <p>Gas: 0.183 kgCO₂e/kWh</p>
+            <p>Calculation:</p>
+            <p>Electricity carbon = 450,000 × 0.193 = 86,850 kgCO₂e</p>
+            <p>Gas carbon = 280,000 × 0.183 = 51,240 kgCO₂e</p>
+            <p>Total carbon = 86,850 + 51,240 = 138,090 kgCO₂e</p>
+            <p>Carbon intensity = 138,090 ÷ 4,000 = 34.5 kgCO₂e/m²/year</p>
+            <p>EUI = (450,000 + 280,000) ÷ 4,000 = 182.5 kWh/m²/year</p>
             <p>
-              Building Regulations Part L distinguishes between regulated energy (controlled by
-              compliance calculations) and unregulated energy (not addressed by Part L).
-              Understanding this distinction is crucial for predicting actual building performance
-              and closing the 'performance gap'.
+              <strong>Example 2: DEC Rating Calculation</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-                <p className="text-sm font-medium text-green-400 mb-2">Regulated Loads (Part L)</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Space heating systems (boilers, heat pumps)</li>
-                  <li className="pl-1">Space cooling (chillers, DX systems)</li>
-                  <li className="pl-1">Mechanical ventilation (AHUs, extract fans)</li>
-                  <li className="pl-1">Domestic hot water heating</li>
-                  <li className="pl-1">Fixed internal lighting</li>
-                  <li className="pl-1">Pumps and fans for HVAC</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-                <p className="text-sm font-medium text-orange-400 mb-2">
-                  Unregulated Loads (Not Part L)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Plug loads (computers, monitors, equipment)</li>
-                  <li className="pl-1">Server rooms and data centres</li>
-                  <li className="pl-1">Lifts and escalators</li>
-                  <li className="pl-1">Catering equipment</li>
-                  <li className="pl-1">External and decorative lighting</li>
-                  <li className="pl-1">Process loads and specialist equipment</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Energy Split by Building Type
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Building Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Regulated (%)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Unregulated (%)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Key Unregulated Loads
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">General office</td>
-                      <td className="border border-white/10 px-3 py-2">60-75%</td>
-                      <td className="border border-white/10 px-3 py-2">25-40%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        IT equipment, small power, lifts
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Retail (large)</td>
-                      <td className="border border-white/10 px-3 py-2">50-65%</td>
-                      <td className="border border-white/10 px-3 py-2">35-50%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Refrigeration, escalators, display
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hospital</td>
-                      <td className="border border-white/10 px-3 py-2">45-60%</td>
-                      <td className="border border-white/10 px-3 py-2">40-55%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Medical equipment, catering, lifts
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">School</td>
-                      <td className="border border-white/10 px-3 py-2">70-85%</td>
-                      <td className="border border-white/10 px-3 py-2">15-30%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        IT suites, catering, sports facilities
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hotel</td>
-                      <td className="border border-white/10 px-3 py-2">55-70%</td>
-                      <td className="border border-white/10 px-3 py-2">30-45%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Catering, laundry, lifts, leisure
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">The Performance Gap</p>
-              <p className="text-sm text-white mb-2">
-                Buildings typically consume 2-5 times more energy than Part L predictions because:
-              </p>
-              <ul className="text-sm text-white space-y-1">
-                <li>• Unregulated loads are excluded from compliance calculations</li>
-                <li>• Actual occupancy patterns differ from design assumptions</li>
-                <li>• Systems may not be properly commissioned or maintained</li>
-                <li>• Occupant behaviour varies from modelled assumptions</li>
-                <li>• Building fabric may underperform due to construction quality</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Practical implication:</strong> Design teams should model total energy
-              (regulated + unregulated) to predict realistic performance and set meaningful
-              operational targets.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Benchmarking Methodologies */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Benchmarking Methodologies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Determine the DEC rating for a naturally ventilated office.</p>
+            <p>Building data:</p>
+            <p>Actual electricity: 75 kWh/m²/year</p>
+            <p>Actual gas (heating): 95 kWh/m²/year</p>
+            <p>TM46 benchmarks (nat vent office):</p>
+            <p>Electricity benchmark: 95 kWh/m²</p>
+            <p>Fossil-thermal benchmark: 120 kWh/m²</p>
+            <p>Calculate Operational Rating (OR):</p>
+            <p>Electricity ratio = 75 ÷ 95 = 0.79</p>
+            <p>Gas ratio = 95 ÷ 120 = 0.79</p>
+            <p>Weighted OR ≈ 79</p>
+            <p>DEC Rating = C (OR 79 falls in 51-75 band)</p>
+            <p>This building performs 21% better than the TM46 typical benchmark</p>
             <p>
-              Benchmarking enables comparison of building performance against industry standards and
-              best practice. The primary metric is Energy Use Intensity (EUI), expressed as
-              kWh/m²/year, which normalises consumption by floor area for meaningful comparison.
+              <strong>Example 3: LED Retrofit Carbon Savings</strong>
             </p>
+            <p><strong>Scenario:</strong> Calculate carbon and cost savings from LED lighting upgrade.</p>
+            <p>Current system:</p>
+            <p>Fluorescent lighting: 45,000 kWh/year</p>
+            <p>Operating hours: 2,500 hrs/year</p>
+            <p>LED system:</p>
+            <p>Expected consumption: 18,000 kWh/year (60% reduction)</p>
+            <p>Carbon calculation:</p>
+            <p>Current carbon = 45,000 × 0.193 = 8,685 kgCO₂e</p>
+            <p>LED carbon = 18,000 × 0.193 = 3,474 kgCO₂e</p>
+            <p>Carbon saving = 5,211 kgCO₂e/year (60% reduction)</p>
+            <p>Cost calculation (at £0.28/kWh):</p>
+            <p>Energy saving = 27,000 kWh/year</p>
+            <p>Cost saving = £7,560/year</p>
+            <p>Project cost: £22,000</p>
+            <p>Simple payback = 2.9 years</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Energy Use Intensity (EUI) Calculation
-              </p>
-              <div className="font-mono text-sm space-y-2">
-                <p>
-                  <span className="text-white">EUI =</span> Total Annual Energy Consumption (kWh)
-                  ÷ Gross Internal Area (m²)
-                </p>
-                <p className="mt-3">
-                  <span className="text-white">Example office building:</span>
-                </p>
-                <p>Annual electricity: 475,000 kWh</p>
-                <p>Annual gas: 300,000 kWh</p>
-                <p>GIA: 5,000 m²</p>
-                <p className="text-elec-yellow mt-2">
-                  EUI = (475,000 + 300,000) ÷ 5,000 = 155 kWh/m²/year
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CIBSE TM46 Benchmarks (Selected Building Types)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Building Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Electricity (kWh/m²)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Fossil-Thermal (kWh/m²)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Good Practice EUI
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        General office (nat vent)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">95</td>
-                      <td className="border border-white/10 px-3 py-2">120</td>
-                      <td className="border border-white/10 px-3 py-2">~130</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">General office (air-con)</td>
-                      <td className="border border-white/10 px-3 py-2">128</td>
-                      <td className="border border-white/10 px-3 py-2">107</td>
-                      <td className="border border-white/10 px-3 py-2">~160</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Primary school</td>
-                      <td className="border border-white/10 px-3 py-2">32</td>
-                      <td className="border border-white/10 px-3 py-2">113</td>
-                      <td className="border border-white/10 px-3 py-2">~100</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hospital (clinical)</td>
-                      <td className="border border-white/10 px-3 py-2">90</td>
-                      <td className="border border-white/10 px-3 py-2">300</td>
-                      <td className="border border-white/10 px-3 py-2">~280</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hotel</td>
-                      <td className="border border-white/10 px-3 py-2">105</td>
-                      <td className="border border-white/10 px-3 py-2">200</td>
-                      <td className="border border-white/10 px-3 py-2">~220</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Retail (supermarket)</td>
-                      <td className="border border-white/10 px-3 py-2">365</td>
-                      <td className="border border-white/10 px-3 py-2">105</td>
-                      <td className="border border-white/10 px-3 py-2">~350</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  LETI Net Zero Targets
-                </p>
-                <ul className="text-sm text-white space-y-1.5">
-                  <li>
-                    <strong>Office:</strong> 55 kWh/m²/year
-                  </li>
-                  <li>
-                    <strong>School:</strong> 65 kWh/m²/year
-                  </li>
-                  <li>
-                    <strong>Residential:</strong> 35 kWh/m²/year
-                  </li>
-                  <li>
-                    <strong>Hotel:</strong> 85 kWh/m²/year
-                  </li>
-                  <li>
-                    <strong>Retail:</strong> 70 kWh/m²/year
-                  </li>
-                </ul>
-                <p className="text-xs text-white mt-2">
-                  Total operational energy including unregulated
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  NABERS UK Rating Scale
-                </p>
-                <ul className="text-sm text-white space-y-1.5">
-                  <li>
-                    <strong>6 stars:</strong> Exceptional (market-leading)
-                  </li>
-                  <li>
-                    <strong>5 stars:</strong> Excellent (top 10-15%)
-                  </li>
-                  <li>
-                    <strong>4 stars:</strong> Good (above average)
-                  </li>
-                  <li>
-                    <strong>3 stars:</strong> Average (typical)
-                  </li>
-                  <li>
-                    <strong>2 stars:</strong> Below average
-                  </li>
-                  <li>
-                    <strong>1 star:</strong> Poor performance
-                  </li>
-                </ul>
-                <p className="text-xs text-white mt-2">Based on actual metered performance</p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Display Energy Certificate (DEC) Ratings
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>A (0-25):</strong> Exceptional performance, significantly below benchmark
-                </li>
-                <li className="pl-1">
-                  <strong>B (26-50):</strong> Good performance, below benchmark
-                </li>
-                <li className="pl-1">
-                  <strong>C (51-75):</strong> Typical performance, around benchmark
-                </li>
-                <li className="pl-1">
-                  <strong>D (76-100):</strong> At benchmark (D100 = TM46 typical value)
-                </li>
-                <li className="pl-1">
-                  <strong>E-G (101+):</strong> Above benchmark, poor performance
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Benchmarking tip:</strong> Always compare like with like - normalise for
-              occupancy hours, climate zone, and building function before drawing conclusions.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Carbon Reduction Strategies */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Carbon Reduction Strategies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              The carbon reduction hierarchy prioritises strategies by effectiveness and permanence.
-              Following this hierarchy ensures resources are directed to interventions with the
-              greatest impact and longest-lasting benefits.
+              <strong>Operational Carbon Assessment Checklist:</strong>
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Carbon Reduction Hierarchy
-              </p>
-              <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <span className="bg-green-500/30 text-green-400 px-2 py-0.5 rounded text-xs font-medium">
-                    1
-                  </span>
-                  <div>
-                    <p className="text-sm font-medium text-white">Reduce Demand</p>
-                    <p className="text-xs text-white">
-                      Fabric efficiency, controls optimisation, occupancy scheduling, behaviour
-                      change
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="bg-blue-500/30 text-blue-400 px-2 py-0.5 rounded text-xs font-medium">
-                    2
-                  </span>
-                  <div>
-                    <p className="text-sm font-medium text-white">Improve Efficiency</p>
-                    <p className="text-xs text-white">
-                      LED lighting, variable speed drives, heat recovery, high-efficiency plant
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="bg-purple-500/30 text-purple-400 px-2 py-0.5 rounded text-xs font-medium">
-                    3
-                  </span>
-                  <div>
-                    <p className="text-sm font-medium text-white">Decarbonise Supply</p>
-                    <p className="text-xs text-white">
-                      Heat pumps, solar PV, green tariffs, district heating, biomass
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="bg-orange-500/30 text-orange-400 px-2 py-0.5 rounded text-xs font-medium">
-                    4
-                  </span>
-                  <div>
-                    <p className="text-sm font-medium text-white">Offset Residual</p>
-                    <p className="text-xs text-white">
-                      Carbon credits, verified offsets (last resort for unavoidable emissions)
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Reduction Strategies
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Strategy</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Savings
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Payback</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lighting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        LED retrofit with DALI controls
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">60-80%</td>
-                      <td className="border border-white/10 px-3 py-2">2-4 years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">HVAC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Variable speed drives on fans/pumps
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">30-50%</td>
-                      <td className="border border-white/10 px-3 py-2">2-3 years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Heating</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Air source heat pump (replacing gas)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">60-70% carbon</td>
-                      <td className="border border-white/10 px-3 py-2">7-12 years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Controls</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        BMS optimisation and scheduling
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">10-20%</td>
-                      <td className="border border-white/10 px-3 py-2">1-2 years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ventilation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Demand-controlled ventilation (CO₂)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">20-40%</td>
-                      <td className="border border-white/10 px-3 py-2">3-5 years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Generation</td>
-                      <td className="border border-white/10 px-3 py-2">Rooftop solar PV</td>
-                      <td className="border border-white/10 px-3 py-2">10-30% electricity</td>
-                      <td className="border border-white/10 px-3 py-2">6-10 years</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-                <p className="text-sm font-medium text-green-400 mb-2">
-                  Quick Wins (Low Cost, High Impact)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">HVAC scheduling optimisation</li>
-                  <li className="pl-1">Setpoint adjustments (±1°C = ~8% energy)</li>
-                  <li className="pl-1">Lighting time scheduling</li>
-                  <li className="pl-1">Equipment switch-off campaigns</li>
-                  <li className="pl-1">Boiler/chiller sequencing</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-                <p className="text-sm font-medium text-blue-400 mb-2">
-                  Strategic Investments (Higher Cost, Transformational)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Heat pump installation</li>
-                  <li className="pl-1">Building fabric upgrades</li>
-                  <li className="pl-1">Solar PV with battery storage</li>
-                  <li className="pl-1">Full LED lighting replacement</li>
-                  <li className="pl-1">Advanced BMS with AI optimisation</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-purple-500/10 border border-purple-500/30">
-              <p className="text-sm font-medium text-purple-400 mb-2">
-                Monitoring and Verification (M&V)
-              </p>
-              <p className="text-sm text-white mb-2">
-                Essential for demonstrating actual savings and maintaining performance:
-              </p>
-              <ul className="text-sm text-white space-y-1">
-                <li>
-                  • <strong>Sub-metering:</strong> Disaggregate consumption by end-use (lighting,
-                  HVAC, small power)
-                </li>
-                <li>
-                  • <strong>Baselining:</strong> Establish pre-intervention performance for
-                  comparison
-                </li>
-                <li>
-                  • <strong>Normalisation:</strong> Adjust for weather (degree days) and occupancy
-                </li>
-                <li>
-                  • <strong>IPMVP:</strong> International Performance Measurement and Verification
-                  Protocol
-                </li>
-                <li>
-                  • <strong>Continuous monitoring:</strong> Automated alerts for performance drift
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Key principle:</strong> The cheapest and cleanest kilowatt-hour is the one you
-              never use. Prioritise demand reduction before considering renewable generation.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Collect at least 12 months of energy bills (electricity, gas, other fuels)</li>
+              <li>Verify floor area (GIA) and determine building classification</li>
+              <li>Calculate EUI and compare against CIBSE TM46 benchmarks</li>
+              <li>Apply current carbon factors to calculate emissions</li>
+              <li>Identify regulated vs unregulated load split where possible</li>
+              <li>Document occupancy patterns and operating hours</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Electricity carbon factor: <strong>0.193 kgCO₂e/kWh</strong> (2025)</li>
+              <li>Gas carbon factor: <strong>0.183 kgCO₂e/kWh</strong></li>
+              <li>Typical office EUI: <strong>150-250 kWh/m²/year</strong></li>
+              <li>LETI office target: <strong>55 kWh/m²/year</strong></li>
+              <li>Performance gap: <strong>2-5× design predictions</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Calculating Operational Carbon
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate annual operational carbon for an office
-                building.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Given data:</p>
-                <p className="ml-4">Annual electricity: 450,000 kWh</p>
-                <p className="ml-4">Annual gas: 280,000 kWh</p>
-                <p className="ml-4">GIA: 4,000 m²</p>
-                <p className="mt-2 text-white">Carbon factors (2025):</p>
-                <p className="ml-4">Electricity: 0.193 kgCO₂e/kWh</p>
-                <p className="ml-4">Gas: 0.183 kgCO₂e/kWh</p>
-                <p className="mt-2 text-white">Calculation:</p>
-                <p className="ml-4">Electricity carbon = 450,000 × 0.193 = 86,850 kgCO₂e</p>
-                <p className="ml-4">Gas carbon = 280,000 × 0.183 = 51,240 kgCO₂e</p>
-                <p className="ml-4">Total carbon = 86,850 + 51,240 = 138,090 kgCO₂e</p>
-                <p className="mt-2 text-elec-yellow">
-                  Carbon intensity = 138,090 ÷ 4,000 = 34.5 kgCO₂e/m²/year
-                </p>
-                <p className="text-green-400 mt-2">
-                  EUI = (450,000 + 280,000) ÷ 4,000 = 182.5 kWh/m²/year
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: DEC Rating Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Determine the DEC rating for a naturally ventilated
-                office.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Building data:</p>
-                <p className="ml-4">Actual electricity: 75 kWh/m²/year</p>
-                <p className="ml-4">Actual gas (heating): 95 kWh/m²/year</p>
-                <p className="mt-2 text-white">TM46 benchmarks (nat vent office):</p>
-                <p className="ml-4">Electricity benchmark: 95 kWh/m²</p>
-                <p className="ml-4">Fossil-thermal benchmark: 120 kWh/m²</p>
-                <p className="mt-2 text-white">Calculate Operational Rating (OR):</p>
-                <p className="ml-4">Electricity ratio = 75 ÷ 95 = 0.79</p>
-                <p className="ml-4">Gas ratio = 95 ÷ 120 = 0.79</p>
-                <p className="ml-4">Weighted OR ≈ 79</p>
-                <p className="mt-2 text-elec-yellow">DEC Rating = C (OR 79 falls in 51-75 band)</p>
-                <p className="text-green-400 mt-2">
-                  This building performs 21% better than the TM46 typical benchmark
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: LED Retrofit Carbon Savings
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate carbon and cost savings from LED lighting
-                upgrade.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Current system:</p>
-                <p className="ml-4">Fluorescent lighting: 45,000 kWh/year</p>
-                <p className="ml-4">Operating hours: 2,500 hrs/year</p>
-                <p className="mt-2 text-white">LED system:</p>
-                <p className="ml-4">Expected consumption: 18,000 kWh/year (60% reduction)</p>
-                <p className="mt-2 text-white">Carbon calculation:</p>
-                <p className="ml-4">Current carbon = 45,000 × 0.193 = 8,685 kgCO₂e</p>
-                <p className="ml-4">LED carbon = 18,000 × 0.193 = 3,474 kgCO₂e</p>
-                <p className="ml-4 text-green-400">
-                  Carbon saving = 5,211 kgCO₂e/year (60% reduction)
-                </p>
-                <p className="mt-2 text-white">Cost calculation (at £0.28/kWh):</p>
-                <p className="ml-4">Energy saving = 27,000 kWh/year</p>
-                <p className="ml-4 text-elec-yellow">Cost saving = £7,560/year</p>
-                <p className="ml-4">Project cost: £22,000</p>
-                <p className="ml-4 text-green-400">Simple payback = 2.9 years</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Operational Carbon Assessment Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Collect at least 12 months of energy bills (electricity, gas, other fuels)
-                </li>
-                <li className="pl-1">
-                  Verify floor area (GIA) and determine building classification
-                </li>
-                <li className="pl-1">Calculate EUI and compare against CIBSE TM46 benchmarks</li>
-                <li className="pl-1">Apply current carbon factors to calculate emissions</li>
-                <li className="pl-1">
-                  Identify regulated vs unregulated load split where possible
-                </li>
-                <li className="pl-1">Document occupancy patterns and operating hours</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Ignoring unregulated loads</strong> - they can be 25-40% of total consumption</li>
+                <li><strong>Using outdated carbon factors</strong> - grid electricity factors change annually</li>
+                <li><strong>Comparing dissimilar buildings</strong> - always normalise for type and occupancy</li>
+                <li><strong>Offsetting before reducing</strong> - follow the carbon hierarchy correctly</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Electricity carbon factor: <strong>0.193 kgCO₂e/kWh</strong> (2025)
-                </li>
-                <li className="pl-1">
-                  Gas carbon factor: <strong>0.183 kgCO₂e/kWh</strong>
-                </li>
-                <li className="pl-1">
-                  Typical office EUI: <strong>150-250 kWh/m²/year</strong>
-                </li>
-                <li className="pl-1">
-                  LETI office target: <strong>55 kWh/m²/year</strong>
-                </li>
-                <li className="pl-1">
-                  Performance gap: <strong>2-5× design predictions</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Ignoring unregulated loads</strong> - they can be 25-40% of total
-                  consumption
-                </li>
-                <li className="pl-1">
-                  <strong>Using outdated carbon factors</strong> - grid electricity factors change
-                  annually
-                </li>
-                <li className="pl-1">
-                  <strong>Comparing dissimilar buildings</strong> - always normalise for type and
-                  occupancy
-                </li>
-                <li className="pl-1">
-                  <strong>Offsetting before reducing</strong> - follow the carbon hierarchy
-                  correctly
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="Performance gap of 70% on a Part L compliant office"
+            situation={
+              <>
+                An office achieved Part L compliance with predicted EUI of 75 kWh/m²/year (regulated only). Twelve months of half-hourly metering shows actual total EUI at 195 kWh/m²/year — 2.6× design. Of the gap, ~30 kWh/m² is unregulated load (IT, kitchens, lifts) not modelled in SBEM, and ~90 kWh/m² is operational drift (BMS schedules, HVAC overrides, weekend running).
+              </>
+            }
+            whatToDo={
+              <>
+                Convene a performance review — typically the BMS commissioning engineer, FM team, tenant occupier and original M&E designer. Verify (1) BMS scheduling matches commissioned strategy; (2) HVAC setpoints have not drifted; (3) lighting controls are functioning. Re-commission to design intent. Engage tenant on small power baseline (PCs, multi-screens, kitchen plug load). Set up annual TM22 energy audit to track. Report findings via a CIBSE TM63 In-Use Performance review.
+              </>
+            }
+            whyItMatters={
+              <>
+                Part L design compliance is the floor, not the target. Net-zero-aligned buildings need post-occupancy verification — the gap between predicted and actual energy use is typically 30–80% for non-domestic, and the difference is mostly operational, not design. Soft Landings + TM63 + ISO 50001 are the institutional response.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Carbon Factors (2025)</p>
-                <ul className="space-y-0.5">
-                  <li>Electricity: 0.193 kgCO₂e/kWh</li>
-                  <li>Natural gas: 0.183 kgCO₂e/kWh</li>
-                  <li>Heating oil: 0.247 kgCO₂e/kWh</li>
-                  <li>LPG: 0.214 kgCO₂e/kWh</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">EUI Targets (kWh/m²/year)</p>
-                <ul className="space-y-0.5">
-                  <li>LETI Office: 55</li>
-                  <li>LETI School: 65</li>
-                  <li>LETI Residential: 35</li>
-                  <li>TM46 Office (nat vent): 215</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              "Regulated loads = HVAC, lighting, hot water (covered by Part L).",
+              "Unregulated loads = IT, small power, lifts, catering — outside Part L but 30–60% of real-world use.",
+              "Grid carbon intensity falling — 460 gCO₂/kWh (2014) to ~140 (2024).",
+              "EUI (Energy Use Intensity) headline benchmark in kWh/m²/year.",
+              "LETI 2030 targets: 35 (resi), 55 (office), 65 (school) kWh/m²/year.",
+              "Performance gap typically 30–80% non-dom — mostly operational schedule drift.",
+              "CIBSE TM22 (energy audit) + TM61–63 (in-use performance) = the operational toolkit.",
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section4-3">
-              Next: Carbon Assessment Methods
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section4-1")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Carbon fundamentals
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section4-3")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Embodied carbon
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

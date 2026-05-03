@@ -357,7 +357,7 @@ export default function Sub2() {
                 A4:2026 deleted Table 3A and the 5&times;I&Delta;n test. There is now a single AC test at rated residual operating current &mdash; one button press on a Megger MFT1741+ or Kewtech KT64+. If your firm&apos;s test pro forma still asks for a 5&times;I&Delta;n result, it&apos;s out of date and needs revising before the next audit.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Reg 643.3 (RCD testing redraft), verbatim from facet."
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 643.3 (RCD testing, redrafted in A4:2026)."
           />
 
           <SectionRule />

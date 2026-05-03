@@ -142,7 +142,9 @@ const renderPanel = (cardId: string) => {
 
 const SpecialistInstallations = () => (
   <InstallationGuidePageShell
-    title="Specialist Installations"
+    title="Specialist installations"
+    eyebrow="Apprentice · Specialist"
+    description="EV charging, solar PV, heat pumps, swimming pools and saunas. Part P notifiable work in special locations under BS 7671 Part 7."
     icon={Sparkles}
     cards={cards}
     renderPanel={renderPanel}

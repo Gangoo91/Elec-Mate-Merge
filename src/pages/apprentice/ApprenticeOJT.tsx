@@ -1,71 +1,83 @@
 import React from 'react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { DropdownTabs } from '@/components/ui/dropdown-tabs';
-import { Clock, FileText, Target, Award, BarChart3 } from 'lucide-react';
+import {
+  PageFrame,
+  PageHero,
+  SectionHeader,
+  itemVariants,
+} from '@/components/college/primitives';
 import TimeTrackingTab from '@/components/apprentice/ojt/TimeTrackingTab';
 import PortfolioBuildingTab from '@/components/apprentice/ojt/PortfolioBuildingTab';
 import EvidenceAssessmentTab from '@/components/apprentice/ojt/EvidenceAssessmentTab';
 import AssessmentTrackingTab from '@/components/apprentice/ojt/AssessmentTrackingTab';
 import ComplianceDashboardTab from '@/components/apprentice/ojt/ComplianceDashboardTab';
 
-const ApprenticeOJT = () => {
-  console.log('ApprenticeOJT component rendering');
+export default function ApprenticeOJT() {
+  const navigate = useNavigate();
 
   const tabs = [
     {
       value: 'portfolio',
       label: 'Portfolio',
-      icon: FileText,
       content: React.createElement(PortfolioBuildingTab),
     },
     {
       value: 'time-tracking',
-      label: 'Time Tracking',
-      icon: Clock,
+      label: 'Time tracking',
       content: React.createElement(TimeTrackingTab),
     },
     {
       value: 'evidence',
-      label: 'Evidence Assessment',
-      icon: Target,
+      label: 'Evidence assessment',
       content: React.createElement(EvidenceAssessmentTab),
     },
     {
       value: 'assessments',
       label: 'Assessments',
-      icon: Award,
       content: React.createElement(AssessmentTrackingTab),
     },
     {
       value: 'compliance',
-      label: 'Goals & Progress',
-      icon: BarChart3,
+      label: 'Goals & progress',
       content: React.createElement(ComplianceDashboardTab),
     },
   ];
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
-      <div className="flex flex-col items-center justify-center mb-6">
-        <h1 className="text-3xl font-bold tracking-tight mb-4">Portfolio & OJT Management</h1>
-        <p className="text-white text-center max-w-2xl mb-4">
-          Comprehensive portfolio building and management of your 20% off-the-job training
-          requirements, evidence tracking, and apprenticeship progression
-        </p>
-        <SmartBackButton />
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
 
-      <div className="w-full space-y-6">
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Portfolio & OJT"
+          title="Build your apprenticeship portfolio"
+          description="Manage your 20% off-the-job training, track evidence, and progress through the full apprenticeship — all in one place."
+          tone="yellow"
+        />
+      </motion.div>
+
+      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
+        <SectionHeader eyebrow="Five workstreams" title="Pick a section" />
         <DropdownTabs
           tabs={tabs}
           defaultValue="portfolio"
-          placeholder="Select a training section"
-          className="mx-auto"
-          triggerClassName="w-full sm:w-[280px] md:w-[320px]"
+          placeholder="Select a section"
+          triggerClassName="w-full sm:w-[320px]"
         />
-      </div>
-    </div>
+      </motion.section>
+    </PageFrame>
   );
-};
-
-export default ApprenticeOJT;
+}

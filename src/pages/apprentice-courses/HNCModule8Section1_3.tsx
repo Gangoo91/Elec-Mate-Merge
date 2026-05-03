@@ -1,20 +1,22 @@
-import {
-  ArrowLeft,
-  Waves,
-  CheckCircle,
-  ThermometerSun,
-  Gauge,
-  Settings,
-  ChevronDown,
-  ChevronUp,
-  HelpCircle,
-} from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 8 · Section 1 · Subsection 3 — Underfloor Heating
+ * HNC Electrical Engineering for Building Services (HVAC Systems)
+ *   Wet UFH system design, manifold configuration, pipe layouts and commissioning for building services
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
-import { useState } from 'react';
 
 const TITLE = 'Underfloor Heating - HNC Module 8 Section 1.3';
 const DESCRIPTION =
@@ -221,856 +223,265 @@ const faqs = [
 ];
 
 const HNCModule8Section1_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
-  const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section1")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module8-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Waves className="h-4 w-4" />
-            <span>Module 8.1.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Underfloor Heating
-          </h1>
-          <p className="text-white">
-            Wet UFH system design, manifold configuration, pipe layouts and commissioning for
-            building services
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 8 · Section 1 · Subsection 3"
+            title="Underfloor Heating"
+            description="Wet UFH system design, manifold configuration, pipe layouts and commissioning for building services"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>UFH operates at:</strong> 35-55°C flow temperature
-              </li>
-              <li className="pl-1">
-                <strong>Heat output:</strong> 80-100 W/m² typical
-              </li>
-              <li className="pl-1">
-                <strong>Pipe spacing:</strong> 150-200mm centres
-              </li>
-              <li className="pl-1">
-                <strong>Screed depth:</strong> 65-75mm minimum over pipes
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Understand wet UFH system design principles and heat output calculations",
+              "Specify manifold components and understand flow distribution",
+              "Design pipe layouts using spiral and serpentine patterns",
+              "Configure zone control systems with actuators and thermostats",
+              "Specify screed requirements for thermal mass and floor finishes",
+              "Commission UFH systems following correct curing and heat-up procedures",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="UFH Design Principles">
+            <p>Wet underfloor heating uses warm water circulating through pipes embedded in the floor structure to provide radiant heat. The large surface area allows operation at low temperatures, making UFH highly efficient and compatible with heat pumps and condensing boilers.</p>
+            <p><strong>Key design parameters:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Flow temperature:</strong> 35-55°C (lower with heat pumps)</li>
+              <li><strong>Return temperature:</strong> Typically 10°C below flow (delta T = 10K)</li>
+              <li><strong>Floor surface temperature:</strong> Maximum 29°C occupied areas, 35°C perimeter zones</li>
+              <li><strong>Heat output:</strong> 80-100 W/m² at 55°C flow, reducing at lower temperatures</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Zone control:</strong> Actuators and room thermostats
-              </li>
-              <li className="pl-1">
-                <strong>Manifold:</strong> Central distribution and balancing
-              </li>
-              <li className="pl-1">
-                <strong>Heat pump compatible:</strong> Ideal low-temp emitter
-              </li>
-              <li className="pl-1">
-                <strong>Commissioning:</strong> 21-day screed cure + gradual heat-up
-              </li>
+            <p><strong>Heat Output Calculation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>35°C:</strong> 40-50 W/m² — Heat pump, Passivhaus</li>
+              <li><strong>45°C:</strong> 60-75 W/m² — Heat pump, well-insulated</li>
+              <li><strong>55°C:</strong> 80-100 W/m² — Boiler, standard insulation</li>
+              <li><strong>60°C:</strong> 100-120 W/m² — High heat loss areas</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Pipe Spacing and Heat Output</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>100mm:</strong> +20% — High heat loss, bathrooms</li>
+              <li><strong>150mm:</strong> +10% — Perimeter zones, conservatories</li>
+              <li><strong>200mm:</strong> Standard — Living areas, bedrooms</li>
+              <li><strong>250-300mm:</strong> -10 to -15% — Low heat loss areas, corridors</li>
+            </ul>
+            <p><strong>Design principle:</strong> Heat output must exceed room heat loss. Calculate using Q = U × A × ΔT where Q is heat loss (W), U is U-value, A is area, and ΔT is inside-outside temperature difference.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Understand wet UFH system design principles and heat output calculations',
-              'Specify manifold components and understand flow distribution',
-              'Design pipe layouts using spiral and serpentine patterns',
-              'Configure zone control systems with actuators and thermostats',
-              'Specify screed requirements for thermal mass and floor finishes',
-              'Commission UFH systems following correct curing and heat-up procedures',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: UFH Design Principles */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            UFH Design Principles
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Manifold Systems">
+            <p>The manifold is the heart of a wet UFH system, distributing heated water to individual circuits and enabling zone control. Proper manifold specification and installation is critical for balanced, efficient operation.</p>
+            <p><strong>Manifold Components</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Flow bar:</strong> Distributes heated water with flow meters for balancing</li>
+              <li><strong>Return bar:</strong> Collects return water with isolation valves</li>
+              <li><strong>Actuator connections:</strong> Accepts thermal or electric actuators for zone control</li>
+              <li><strong>Isolation valves:</strong> Allow individual circuit shutdown</li>
+              <li><strong>Fill/drain valves:</strong> For system commissioning and maintenance</li>
+              <li><strong>Air vents:</strong> Automatic air release for de-aeration</li>
+              <li><strong>Temperature gauges:</strong> Flow and return temperature indication</li>
+            </ul>
+            <p><strong>Manifold Sizing</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Residential:</strong> 2-12 port manifolds typical</li>
+              <li><strong>Commercial:</strong> Multiple manifolds may be required</li>
+              <li><strong>Flow capacity:</strong> Check maximum flow rate per port</li>
+              <li><strong>Mounting:</strong> Wall-mounted cabinet or surface mounted</li>
+            </ul>
+            <p><strong>Mixing Valve Options</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Thermostatic mixing:</strong> Fixed temperature, simple</li>
+              <li><strong>3-port motorised:</strong> Weather compensation capable</li>
+              <li><strong>Pump and mixing unit:</strong> Integrated solution</li>
+              <li><strong>Direct connection:</strong> Heat pump at UFH temperature</li>
+            </ul>
+            <p><strong>Flow Meter Reading and Balancing</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Small (10-15m²):</strong> 1.0-1.5 l/min — 0.5-2.0 l/min</li>
+              <li><strong>Medium (15-20m²):</strong> 1.5-2.5 l/min — 1.0-3.0 l/min</li>
+              <li><strong>Large (20-25m²):</strong> 2.5-3.5 l/min — 2.0-4.0 l/min</li>
+            </ul>
+            <p><strong>Flow rate formula:</strong> Q (l/min) = Heat output (W) ÷ (ΔT × 70). For a 1500W circuit with 10K ΔT: Q = 1500 ÷ (10 × 70) = 2.1 l/min</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Pipe Layouts and Zone Control">
+            <p>Pipe layout pattern affects heat distribution uniformity and installation complexity. Zone control enables individual room temperature regulation through actuators controlled by room thermostats.</p>
+            <p><strong>Pipe Layout Patterns</strong></p>
+            <p><strong>Spiral (Snail) Pattern</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Flow and return pipes alternate</li>
+              <li>Most uniform floor temperature</li>
+              <li>Preferred for occupied spaces</li>
+              <li>More complex to install</li>
+            </ul>
+            <p><strong>Serpentine Pattern</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Simpler installation</li>
+              <li>Temperature gradient across floor</li>
+              <li>Suitable for smaller areas</li>
+              <li>Bi-directional reduces gradient</li>
+            </ul>
+            <p><strong>Zone Control Components</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Thermal actuators:</strong> 230V or 24V, normally closed, 3-5 minute operation time</li>
+              <li><strong>Room thermostats:</strong> Digital, programmable, or smart thermostats with setback</li>
+              <li><strong>Wiring centre:</strong> Coordinates actuators, pump, and boiler demand</li>
+              <li><strong>Pump logic:</strong> Pump runs when any zone calls for heat</li>
+              <li><strong>Boiler interlock:</strong> Boiler fires only when pump running and zone demanding</li>
+            </ul>
+            <p><strong>Actuator Wiring Configurations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Thermal wax:</strong> 230V AC — NC, slow open — Most common, simple wiring</li>
+              <li><strong>Thermal wax:</strong> 24V AC — NC, slow open — Safer, requires transformer</li>
+              <li><strong>Electric motor:</strong> 230V AC — Fast, end switches — Position feedback available</li>
+            </ul>
+            <p><strong>Wiring Centre Functions</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Receives demand signals from room thermostats</li>
+              <li>Powers corresponding zone actuators</li>
+              <li>Provides pump switched live when any zone is calling</li>
+              <li>Provides boiler enable signal for interlock</li>
+              <li>May include time clock for overall system scheduling</li>
+            </ul>
+            <p><strong>Important:</strong> Zone valve actuators require adequate open time before the pump starts. Use a 2-minute pump delay or end-switch actuators to prevent pumping against closed valves.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Screed Requirements and Commissioning">
+            <p>The floor screed provides thermal mass for even heat distribution and structural support for floor finishes. Proper screed specification and curing is essential before UFH commissioning can begin.</p>
+            <p><strong>Screed Types and Characteristics</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Sand/cement:</strong> 65-75mm — 21 days minimum — Traditional, high thermal mass</li>
+              <li><strong>Anhydrite (calcium sulphate):</strong> 30-35mm — 7-14 days — Self-levelling, faster response</li>
+              <li><strong>Thin screed/tile adhesive:</strong> 15-20mm — 24-48 hours — Fast response, low thermal mass</li>
+            </ul>
+            <p><strong>Floor Covering Thermal Resistance</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Ceramic/porcelain tiles:</strong> 0.05-0.1 tog — Excellent</li>
+              <li><strong>Natural stone:</strong> 0.1-0.2 tog — Excellent</li>
+              <li><strong>Engineered wood:</strong> 0.5-0.7 tog — Good (check max temp)</li>
+              <li><strong>Laminate:</strong> 0.5-1.0 tog — Good (UFH rated)</li>
+              <li><strong>Carpet + underlay:</strong> 1.0-2.5 tog — Limited (&lt;1.5 tog total)</li>
+            </ul>
+            <p><strong>Commissioning Procedure</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Pre-screed pressure test:</strong> 6 bar for 2 hours minimum, record any pressure drop</li>
+              <li><strong>Maintain pressure during screeding:</strong> 2-3 bar whilst screed is laid</li>
+              <li><strong>Screed curing period:</strong> 21 days for sand/cement, 7-14 days for anhydrite</li>
+              <li><strong>System flush:</strong> Flush with mains water until clear, check for debris</li>
+              <li><strong>Fill and pressurise:</strong> Fill with inhibited water, pressurise to 2.5 bar</li>
+              <li><strong>Initial heat-up:</strong> Start at 20°C, increase 5°C per day until design temperature</li>
+              <li><strong>Flow balancing:</strong> Adjust flow meters to achieve design rates</li>
+              <li><strong>Zone commissioning:</strong> Test each thermostat and actuator operation</li>
+              <li><strong>Documentation:</strong> Record flow rates, temperatures, and test results</li>
+            </ul>
+            <p><strong>Critical Installation Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Insulation:</strong> Minimum 50mm PIR/EPS below pipes with edge insulation strips</li>
+              <li><strong>Pipe clips:</strong> Secure at maximum 500mm centres, closer on bends</li>
+              <li><strong>Movement joints:</strong> Pipes must pass through movement joints in protective sleeves</li>
+              <li><strong>No joints:</strong> Continuous pipe runs with no underground joints</li>
+              <li><strong>Oxygen barrier:</strong> PE-X pipe must have integral oxygen barrier layer</li>
+            </ul>
+            <p><strong>Important:</strong> Never exceed 5°C temperature increase per day during commissioning. Rapid heating can cause screed cracking and permanent damage to the floor structure.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Wet underfloor heating uses warm water circulating through pipes embedded in the floor
-              structure to provide radiant heat. The large surface area allows operation at low
-              temperatures, making UFH highly efficient and compatible with heat pumps and
-              condensing boilers.
+              <strong>Example 1: UFH Circuit Sizing</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key design parameters:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Flow temperature:</strong> 35-55°C (lower with heat pumps)
-                </li>
-                <li className="pl-1">
-                  <strong>Return temperature:</strong> Typically 10°C below flow (delta T = 10K)
-                </li>
-                <li className="pl-1">
-                  <strong>Floor surface temperature:</strong> Maximum 29°C occupied areas, 35°C
-                  perimeter zones
-                </li>
-                <li className="pl-1">
-                  <strong>Heat output:</strong> 80-100 W/m² at 55°C flow, reducing at lower
-                  temperatures
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Heat Output Calculation
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Flow Temperature
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Output (W/m²)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">35°C</td>
-                      <td className="border border-white/10 px-3 py-2">40-50 W/m²</td>
-                      <td className="border border-white/10 px-3 py-2">Heat pump, Passivhaus</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">45°C</td>
-                      <td className="border border-white/10 px-3 py-2">60-75 W/m²</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heat pump, well-insulated
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">55°C</td>
-                      <td className="border border-white/10 px-3 py-2">80-100 W/m²</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Boiler, standard insulation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">60°C</td>
-                      <td className="border border-white/10 px-3 py-2">100-120 W/m²</td>
-                      <td className="border border-white/10 px-3 py-2">High heat loss areas</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Pipe Spacing and Heat Output
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Pipe Spacing</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Output Factor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Use</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">100mm</td>
-                      <td className="border border-white/10 px-3 py-2">+20%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High heat loss, bathrooms
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">150mm</td>
-                      <td className="border border-white/10 px-3 py-2">+10%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Perimeter zones, conservatories
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">200mm</td>
-                      <td className="border border-white/10 px-3 py-2">Standard</td>
-                      <td className="border border-white/10 px-3 py-2">Living areas, bedrooms</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">250-300mm</td>
-                      <td className="border border-white/10 px-3 py-2">-10 to -15%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Low heat loss areas, corridors
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design principle:</strong> Heat output must exceed room heat loss. Calculate
-              using Q = U × A × ΔT where Q is heat loss (W), U is U-value, A is area, and ΔT is
-              inside-outside temperature difference.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Manifold Systems */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Manifold Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Question:</strong> A living room measures 5m × 4m with a heat loss of 50 W/m². Calculate the required UFH circuits.</p>
+            <p>Floor area = 5m × 4m = 20m²</p>
+            <p>Heat requirement = 20m² × 50 W/m² = <strong>1000W</strong></p>
+            <p>Pipe length at 200mm spacing:</p>
+            <p>Length = (Area / Spacing) + Manifold run</p>
+            <p>Length = (20 / 0.2) + 10m = 110m</p>
+            <p>&gt; 100m maximum for 16mm pipe</p>
+            <p>Solution: Split into 2 circuits of ~55m each</p>
             <p>
-              The manifold is the heart of a wet UFH system, distributing heated water to individual
-              circuits and enabling zone control. Proper manifold specification and installation is
-              critical for balanced, efficient operation.
+              <strong>Example 2: Flow Rate Calculation</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Manifold Components</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Flow bar:</strong> Distributes heated water with flow meters for balancing
-                </li>
-                <li className="pl-1">
-                  <strong>Return bar:</strong> Collects return water with isolation valves
-                </li>
-                <li className="pl-1">
-                  <strong>Actuator connections:</strong> Accepts thermal or electric actuators for
-                  zone control
-                </li>
-                <li className="pl-1">
-                  <strong>Isolation valves:</strong> Allow individual circuit shutdown
-                </li>
-                <li className="pl-1">
-                  <strong>Fill/drain valves:</strong> For system commissioning and maintenance
-                </li>
-                <li className="pl-1">
-                  <strong>Air vents:</strong> Automatic air release for de-aeration
-                </li>
-                <li className="pl-1">
-                  <strong>Temperature gauges:</strong> Flow and return temperature indication
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Manifold Sizing</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Residential:</strong> 2-12 port manifolds typical
-                  </li>
-                  <li className="pl-1">
-                    <strong>Commercial:</strong> Multiple manifolds may be required
-                  </li>
-                  <li className="pl-1">
-                    <strong>Flow capacity:</strong> Check maximum flow rate per port
-                  </li>
-                  <li className="pl-1">
-                    <strong>Mounting:</strong> Wall-mounted cabinet or surface mounted
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Mixing Valve Options</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Thermostatic mixing:</strong> Fixed temperature, simple
-                  </li>
-                  <li className="pl-1">
-                    <strong>3-port motorised:</strong> Weather compensation capable
-                  </li>
-                  <li className="pl-1">
-                    <strong>Pump and mixing unit:</strong> Integrated solution
-                  </li>
-                  <li className="pl-1">
-                    <strong>Direct connection:</strong> Heat pump at UFH temperature
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Flow Meter Reading and Balancing
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Circuit Size</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Flow Rate
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Flow Meter Range
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Small (10-15m²)</td>
-                      <td className="border border-white/10 px-3 py-2">1.0-1.5 l/min</td>
-                      <td className="border border-white/10 px-3 py-2">0.5-2.0 l/min</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Medium (15-20m²)</td>
-                      <td className="border border-white/10 px-3 py-2">1.5-2.5 l/min</td>
-                      <td className="border border-white/10 px-3 py-2">1.0-3.0 l/min</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Large (20-25m²)</td>
-                      <td className="border border-white/10 px-3 py-2">2.5-3.5 l/min</td>
-                      <td className="border border-white/10 px-3 py-2">2.0-4.0 l/min</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Flow rate formula:</strong> Q (l/min) = Heat output (W) ÷ (ΔT × 70). For a
-              1500W circuit with 10K ΔT: Q = 1500 ÷ (10 × 70) = 2.1 l/min
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Pipe Layouts and Zone Control */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Pipe Layouts and Zone Control
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Question:</strong> Calculate the required flow rate for a UFH circuit delivering 1500W with 10K temperature differential.</p>
+            <p>Using Q = P ÷ (ΔT × c × ρ)</p>
+            <p>Where c × ρ ≈ 70 for water</p>
+            <p>Q = 1500 ÷ (10 × 70)</p>
+            <p>Q = 1500 ÷ 700 = <strong>2.14 l/min</strong></p>
+            <p>Set flow meter to 2.1-2.2 l/min during commissioning</p>
             <p>
-              Pipe layout pattern affects heat distribution uniformity and installation complexity.
-              Zone control enables individual room temperature regulation through actuators
-              controlled by room thermostats.
+              <strong>Example 3: Heat Pump Temperature Selection</strong>
             </p>
+            <p><strong>Question:</strong> A room requires 60 W/m² output. What flow temperature is needed and is it suitable for a heat pump?</p>
+            <p>From heat output tables at 200mm spacing:</p>
+            <p>45°C flow gives ~60-70 W/m²</p>
+            <p>Heat pump COP at 45°C: typically 2.8-3.2</p>
+            <p>✓ Suitable for heat pump operation</p>
+            <p>At 55°C: COP drops to 2.2-2.6</p>
+            <p>At 35°C: COP improves to 3.5-4.0 but output only 40-50 W/m²</p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Pipe Layout Patterns</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-lg bg-white/5">
-                  <p className="font-medium text-elec-yellow mb-2">Spiral (Snail) Pattern</p>
-                  <ul className="text-sm space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Flow and return pipes alternate</li>
-                    <li className="pl-1">Most uniform floor temperature</li>
-                    <li className="pl-1">Preferred for occupied spaces</li>
-                    <li className="pl-1">More complex to install</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded-lg bg-white/5">
-                  <p className="font-medium text-elec-yellow mb-2">Serpentine Pattern</p>
-                  <ul className="text-sm space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Simpler installation</li>
-                    <li className="pl-1">Temperature gradient across floor</li>
-                    <li className="pl-1">Suitable for smaller areas</li>
-                    <li className="pl-1">Bi-directional reduces gradient</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Zone Control Components
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Thermal actuators:</strong> 230V or 24V, normally closed, 3-5 minute
-                  operation time
-                </li>
-                <li className="pl-1">
-                  <strong>Room thermostats:</strong> Digital, programmable, or smart thermostats
-                  with setback
-                </li>
-                <li className="pl-1">
-                  <strong>Wiring centre:</strong> Coordinates actuators, pump, and boiler demand
-                </li>
-                <li className="pl-1">
-                  <strong>Pump logic:</strong> Pump runs when any zone calls for heat
-                </li>
-                <li className="pl-1">
-                  <strong>Boiler interlock:</strong> Boiler fires only when pump running and zone
-                  demanding
-                </li>
-              </ul>
-            </div>
+          <FAQ items={faqs} />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Actuator Wiring Configurations
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Actuator Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Voltage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Operation</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Thermal wax</td>
-                      <td className="border border-white/10 px-3 py-2">230V AC</td>
-                      <td className="border border-white/10 px-3 py-2">NC, slow open</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Most common, simple wiring
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Thermal wax</td>
-                      <td className="border border-white/10 px-3 py-2">24V AC</td>
-                      <td className="border border-white/10 px-3 py-2">NC, slow open</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Safer, requires transformer
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Electric motor</td>
-                      <td className="border border-white/10 px-3 py-2">230V AC</td>
-                      <td className="border border-white/10 px-3 py-2">Fast, end switches</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Position feedback available
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Wiring Centre Functions
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Receives demand signals from room thermostats</li>
-                <li className="pl-1">Powers corresponding zone actuators</li>
-                <li className="pl-1">Provides pump switched live when any zone is calling</li>
-                <li className="pl-1">Provides boiler enable signal for interlock</li>
-                <li className="pl-1">May include time clock for overall system scheduling</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Important:</strong> Zone valve actuators require adequate open time before the
-              pump starts. Use a 2-minute pump delay or end-switch actuators to prevent pumping
-              against closed valves.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Screed Requirements and Commissioning */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Screed Requirements and Commissioning
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              The floor screed provides thermal mass for even heat distribution and structural
-              support for floor finishes. Proper screed specification and curing is essential before
-              UFH commissioning can begin.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Screed Types and Characteristics
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Screed Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Depth Over Pipes
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Curing Time</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Characteristics
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Sand/cement</td>
-                      <td className="border border-white/10 px-3 py-2">65-75mm</td>
-                      <td className="border border-white/10 px-3 py-2">21 days minimum</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Traditional, high thermal mass
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Anhydrite (calcium sulphate)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">30-35mm</td>
-                      <td className="border border-white/10 px-3 py-2">7-14 days</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Self-levelling, faster response
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Thin screed/tile adhesive
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">15-20mm</td>
-                      <td className="border border-white/10 px-3 py-2">24-48 hours</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fast response, low thermal mass
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Floor Covering Thermal Resistance
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Floor Covering</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Tog Value
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Suitability</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ceramic/porcelain tiles</td>
-                      <td className="border border-white/10 px-3 py-2">0.05-0.1 tog</td>
-                      <td className="border border-white/10 px-3 py-2">Excellent</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Natural stone</td>
-                      <td className="border border-white/10 px-3 py-2">0.1-0.2 tog</td>
-                      <td className="border border-white/10 px-3 py-2">Excellent</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Engineered wood</td>
-                      <td className="border border-white/10 px-3 py-2">0.5-0.7 tog</td>
-                      <td className="border border-white/10 px-3 py-2">Good (check max temp)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Laminate</td>
-                      <td className="border border-white/10 px-3 py-2">0.5-1.0 tog</td>
-                      <td className="border border-white/10 px-3 py-2">Good (UFH rated)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Carpet + underlay</td>
-                      <td className="border border-white/10 px-3 py-2">1.0-2.5 tog</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Limited (&lt;1.5 tog total)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Commissioning Procedure
-              </p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Pre-screed pressure test:</strong> 6 bar for 2 hours minimum, record any
-                  pressure drop
-                </li>
-                <li className="pl-1">
-                  <strong>Maintain pressure during screeding:</strong> 2-3 bar whilst screed is laid
-                </li>
-                <li className="pl-1">
-                  <strong>Screed curing period:</strong> 21 days for sand/cement, 7-14 days for
-                  anhydrite
-                </li>
-                <li className="pl-1">
-                  <strong>System flush:</strong> Flush with mains water until clear, check for
-                  debris
-                </li>
-                <li className="pl-1">
-                  <strong>Fill and pressurise:</strong> Fill with inhibited water, pressurise to 2.5
-                  bar
-                </li>
-                <li className="pl-1">
-                  <strong>Initial heat-up:</strong> Start at 20°C, increase 5°C per day until design
-                  temperature
-                </li>
-                <li className="pl-1">
-                  <strong>Flow balancing:</strong> Adjust flow meters to achieve design rates
-                </li>
-                <li className="pl-1">
-                  <strong>Zone commissioning:</strong> Test each thermostat and actuator operation
-                </li>
-                <li className="pl-1">
-                  <strong>Documentation:</strong> Record flow rates, temperatures, and test results
-                </li>
-              </ol>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-red-400/80 mb-2">
-                Critical Installation Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Insulation:</strong> Minimum 50mm PIR/EPS below pipes with edge insulation
-                  strips
-                </li>
-                <li className="pl-1">
-                  <strong>Pipe clips:</strong> Secure at maximum 500mm centres, closer on bends
-                </li>
-                <li className="pl-1">
-                  <strong>Movement joints:</strong> Pipes must pass through movement joints in
-                  protective sleeves
-                </li>
-                <li className="pl-1">
-                  <strong>No joints:</strong> Continuous pipe runs with no underground joints
-                </li>
-                <li className="pl-1">
-                  <strong>Oxygen barrier:</strong> PE-X pipe must have integral oxygen barrier layer
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Important:</strong> Never exceed 5°C temperature increase per day during
-              commissioning. Rapid heating can cause screed cracking and permanent damage to the
-              floor structure.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: UFH Circuit Sizing
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A living room measures 5m × 4m with a heat loss of 50
-                W/m². Calculate the required UFH circuits.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Floor area = 5m × 4m = 20m²</p>
-                <p>
-                  Heat requirement = 20m² × 50 W/m² = <strong>1000W</strong>
-                </p>
-                <p className="mt-2">Pipe length at 200mm spacing:</p>
-                <p>Length = (Area / Spacing) + Manifold run</p>
-                <p>Length = (20 / 0.2) + 10m = 110m</p>
-                <p className="mt-2 text-white">&gt; 100m maximum for 16mm pipe</p>
-                <p className="mt-2 text-green-400">Solution: Split into 2 circuits of ~55m each</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Flow Rate Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Calculate the required flow rate for a UFH circuit
-                delivering 1500W with 10K temperature differential.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Using Q = P ÷ (ΔT × c × ρ)</p>
-                <p>Where c × ρ ≈ 70 for water</p>
-                <p className="mt-2">Q = 1500 ÷ (10 × 70)</p>
-                <p>
-                  Q = 1500 ÷ 700 = <strong>2.14 l/min</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Set flow meter to 2.1-2.2 l/min during commissioning
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Heat Pump Temperature Selection
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A room requires 60 W/m² output. What flow temperature is
-                needed and is it suitable for a heat pump?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>From heat output tables at 200mm spacing:</p>
-                <p>45°C flow gives ~60-70 W/m²</p>
-                <p className="mt-2">Heat pump COP at 45°C: typically 2.8-3.2</p>
-                <p className="mt-2 text-green-400">✓ Suitable for heat pump operation</p>
-                <p className="text-white mt-2">At 55°C: COP drops to 2.2-2.6</p>
-                <p className="text-white">
-                  At 35°C: COP improves to 3.5-4.0 but output only 40-50 W/m²
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
-            <HelpCircle className="h-5 w-5 text-elec-yellow" />
-            Frequently Asked Questions
-          </h2>
-          <div className="space-y-3">
-            {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="bg-white/5 hover:bg-white/10 rounded-lg border border-white/10 transition-colors"
-              >
-                <button
-                  className="w-full p-4 text-left flex items-center justify-between touch-manipulation"
-                  onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
-                >
-                  <span className="font-medium text-white pr-4">{faq.question}</span>
-                  {openFAQ === index ? (
-                    <ChevronUp className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                  )}
-                </button>
-
-                {openFAQ === index && (
-                  <div className="px-4 pb-4">
-                    <div className="bg-black/30 p-4 rounded border border-white/10">
-                      <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">UFH Design Parameters</p>
-                <ul className="space-y-0.5">
-                  <li>Flow temperature: 35-55°C</li>
-                  <li>Delta T: 10K typical</li>
-                  <li>Max floor surface: 29°C occupied</li>
-                  <li>Heat output: 80-100 W/m² at 55°C</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Installation Requirements</p>
-                <ul className="space-y-0.5">
-                  <li>Pipe spacing: 150-200mm centres</li>
-                  <li>Max circuit: 100m (16mm PE-X)</li>
-                  <li>Screed depth: 65mm+ over pipes</li>
-                  <li>Floor covering: &lt;1.5 tog total</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section1-4">
-              Next: Radiator Systems
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section1-2")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Heat pump integration
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section1-4")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Radiator systems
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

@@ -281,10 +281,10 @@ export default function Sub1() {
           </ConceptBlock>
 
           <RegsCallout
-            source="HSE HSG85 — Electricity at work — safe working practices"
-            clause={<>"Diagnosis of faults requires a systematic approach starting from the reported symptoms, working through inspection of the system, instrument verification, and only then formulating an action plan. Premature action without diagnosis risks harm to operative, customer and equipment."</>}
-            meaning={<>HSG85 endorses the systematic approach. The 'symptom → inspection → test → action' chain is the structural backbone of the seven-stage model. Premature action (skipping stages 2–5) is explicitly identified as a risk source.</>}
-            cite="Source: HSE HSG85 — Electricity at work — safe working practices."
+            source="IET Guidance Note 3 (Inspection and Testing) — fault diagnosis framework (paraphrased)"
+            clause={<>Paraphrased framework summary: diagnosis of faults takes a systematic approach — start from the reported symptoms, work through inspection of the system, instrument verification, and only then formulate an action plan. Premature action without diagnosis risks harm to operative, customer and equipment.</>}
+            meaning={<>The framework endorses the systematic approach. The 'symptom → inspection → test → action' chain is the structural backbone of the seven-stage model. Premature action (skipping stages 2–5) is explicitly identified as a risk source.</>}
+            cite="Source: IET Guidance Note 3 (Inspection and Testing) — fault diagnosis framework, paraphrased."
           />
 
           <InlineCheck {...checks[0]} />
@@ -350,7 +350,7 @@ export default function Sub1() {
                 Stage 1 (symptom collection) and stage 2 (hypothesis) are inspection work. Reg 642.1 fixes the order: inspection comes first, normally with the part under inspection dead. Most failed diagnoses skip the inspection stage and dive into testing &mdash; the Regulation explicitly tells you not to.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Reg 642.1, verbatim."
+            cite="Source: BS 7671:2018+A4:2026 — Reg 642.1."
           />
 
           <RegsCallout
@@ -365,7 +365,7 @@ export default function Sub1() {
                 The inspection in stage 1 is a structured three-part check &mdash; product standard compliance, correct selection / erection, and visible damage. That&apos;s the framework you carry into the customer&apos;s house. Skipping any of the three is how a fault gets missed at the inspection stage and only shows up when somebody comes back to a bigger fault later.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Reg 642.2, verbatim."
+            cite="Source: BS 7671:2018+A4:2026 — Reg 642.2."
           />
 
           <SectionRule />

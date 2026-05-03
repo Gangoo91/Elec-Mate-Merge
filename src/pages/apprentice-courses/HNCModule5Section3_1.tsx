@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 5 · Section 3 · Subsection 1 — Estimating Methods
+ * HNC Electrical Engineering for Building Services (Project Management — Pearson U4004 + BSE PM context)
+ *   First-principles, benchmarking and parametric estimating for building services — getting the price right at tender, not regretting it at month nine.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Estimating Methods - HNC Module 5 Section 3.1';
@@ -256,941 +273,612 @@ const faqs = [
 ];
 
 const HNCModule5Section3_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section3')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module5-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 5.3.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Estimating Methods
-          </h1>
-          <p className="text-white">
-            First principles, benchmarking, and parametric techniques for building services cost
-            estimation
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 5 · Section 3 · Subsection 1"
+            title="Estimating Methods"
+            description="First principles, benchmarking, and parametric techniques for building services cost estimation."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>First principles:</strong> Build up from labour + materials + plant
-              </li>
-              <li className="pl-1">
-                <strong>Benchmarking:</strong> BCIS/Spon's data for comparison
-              </li>
-              <li className="pl-1">
-                <strong>Parametric:</strong> Cost per m2, per kW, per point
-              </li>
-              <li className="pl-1">
-                <strong>MEP typically:</strong> 30-60% of total construction cost
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Office electrical:</strong> 100-180 per m2 typical
-              </li>
-              <li className="pl-1">
-                <strong>Office HVAC:</strong> 150-300 per m2 typical
-              </li>
-              <li className="pl-1">
-                <strong>Healthcare M&E:</strong> 40-60% of build cost
-              </li>
-              <li className="pl-1">
-                <strong>Location factor:</strong> Apply BCIS regional indices
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              "Three primary methods: first-principles (build-up from labour + material + plant + overhead + profit), benchmarking (£/m² from completed projects), parametric (cost models from drivers).",
+              "First-principles is most accurate for unique work; benchmarking is fastest for budgets; parametric is best for early-stage estimates.",
+              "Always cross-check with at least two methods — divergence flags scope misunderstanding.",
+              "Build labour rates from: basic + holiday + pension + travel + supervision + overhead — typically 1.6–2.0× the basic hourly rate.",
+              "Add risk allowances explicitly (design development, programme risk, market risk) — not hidden in inflated unit rates.",
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="NRM2: Detailed Measurement for Building Works (RICS)"
+            clause="NRM2 provides a standard set of measurement rules for use throughout the construction industry. The rules cover the production of detailed bills of quantities to obtain priced bills of quantities and the basis of the rules used in valuing variations. NRM2 incorporates the rules of measurement for the work of all building services subcontractors."
+            meaning={
+              <>
+                NRM2 is the RICS standard for measurement and pricing of building works including services. Estimates and bills of quantities aligned to NRM2 are directly comparable across tenderers, support fair valuation of variations, and form the basis of cost analytics. Diverging from NRM2 makes benchmarking and dispute resolution harder.
+              </>
+            }
+            cite="Source: NRM2 New Rules of Measurement (RICS) (refer to RICS published text for verbatim use)."
+          />
+
+
+          <LearningOutcomes
+            outcomes={[
               'Build up costs from first principles using labour, materials, and plant',
               'Apply all-in labour rates including oncosts and overheads',
               "Use BCIS and Spon's data for benchmarking and rate checking",
               'Develop parametric estimates using cost per m2 and other metrics',
               'Understand MEP-specific pricing considerations and risk factors',
               'Adjust estimates for location, complexity, and market conditions',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: First Principles Estimating */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            First Principles Estimating
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="First Principles Estimating">
             <p>
               First principles estimating is the most detailed and accurate method, building costs
               from fundamental resource inputs. It requires comprehensive design information but
               provides transparent, auditable estimates essential for competitive tendering.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">The Three Resource Elements:</p>
-              <div className="grid sm:grid-cols-3 gap-4">
-                <div className="p-4 rounded-lg bg-white/5">
-                  <p className="text-sm font-medium text-elec-yellow/80 mb-2">Labour</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Hours required per unit of work</li>
-                    <li className="pl-1">All-in hourly rate applied</li>
-                    <li className="pl-1">Gang composition considered</li>
-                    <li className="pl-1">Productivity factors applied</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded-lg bg-white/5">
-                  <p className="text-sm font-medium text-elec-yellow/80 mb-2">Materials</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Quantity from measurement</li>
-                    <li className="pl-1">Current supplier prices</li>
-                    <li className="pl-1">Waste allowance (typically 2.5-10%)</li>
-                    <li className="pl-1">Delivery and handling costs</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded-lg bg-white/5">
-                  <p className="text-sm font-medium text-elec-yellow/80 mb-2">Plant & Equipment</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Access equipment (towers, MEWP)</li>
-                    <li className="pl-1">Power tools and testing equipment</li>
-                    <li className="pl-1">Hire or ownership costs</li>
-                    <li className="pl-1">Transport and operator costs</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                All-In Labour Rate Build-Up (2024 Example)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Element</th>
-                      <th className="border border-white/10 px-3 py-2 text-right">Annual Cost</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Basic wage (JIB rate)</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">38,000</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Approved electrician rate
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Employer's NI (13.8%)</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">5,244</td>
-                      <td className="border border-white/10 px-3 py-2">Above threshold</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Holiday pay (21 days)</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">3,080</td>
-                      <td className="border border-white/10 px-3 py-2">JIB entitlement</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pension (employer 3%)</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">1,140</td>
-                      <td className="border border-white/10 px-3 py-2">Minimum auto-enrolment</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Sick pay allowance</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">800</td>
-                      <td className="border border-white/10 px-3 py-2">Estimated 5 days</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CITB levy (0.35%)</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">133</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Construction Industry Training Board
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Tool allowance</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">520</td>
-                      <td className="border border-white/10 px-3 py-2">10/week</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Travel allowance</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">2,600</td>
-                      <td className="border border-white/10 px-3 py-2">50/week average</td>
-                    </tr>
-                    <tr className="bg-white/5 font-medium">
-                      <td className="border border-white/10 px-3 py-2">Total Annual Cost</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">51,517</td>
-                      <td className="border border-white/10 px-3 py-2"></td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Productive hours (1,720)</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">29.95/hr</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        After holidays, training, sickness
-                      </td>
-                    </tr>
-                    <tr className="bg-elec-yellow/10 font-medium">
-                      <td className="border border-white/10 px-3 py-2">+ Company overhead (15%)</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">34.44/hr</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        All-in rate for estimating
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>The Three Resource Elements — Labour:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Hours required per unit of work</li>
+              <li>All-in hourly rate applied</li>
+              <li>Gang composition considered</li>
+              <li>Productivity factors applied</li>
+            </ul>
+            <p>
+              <strong>Materials:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Quantity from measurement</li>
+              <li>Current supplier prices</li>
+              <li>Waste allowance (typically 2.5-10%)</li>
+              <li>Delivery and handling costs</li>
+            </ul>
+            <p>
+              <strong>Plant & Equipment:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Access equipment (towers, MEWP)</li>
+              <li>Power tools and testing equipment</li>
+              <li>Hire or ownership costs</li>
+              <li>Transport and operator costs</li>
+            </ul>
+            <p>
+              <strong>All-In Labour Rate Build-Up (2024 Example) — (Element — Annual Cost — Notes):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Basic wage (JIB rate):</strong> 38,000 — Approved electrician rate
+              </li>
+              <li>
+                <strong>Employer's NI (13.8%):</strong> 5,244 — Above threshold
+              </li>
+              <li>
+                <strong>Holiday pay (21 days):</strong> 3,080 — JIB entitlement
+              </li>
+              <li>
+                <strong>Pension (employer 3%):</strong> 1,140 — Minimum auto-enrolment
+              </li>
+              <li>
+                <strong>Sick pay allowance:</strong> 800 — Estimated 5 days
+              </li>
+              <li>
+                <strong>CITB levy (0.35%):</strong> 133 — Construction Industry Training Board
+              </li>
+              <li>
+                <strong>Tool allowance:</strong> 520 — 10/week
+              </li>
+              <li>
+                <strong>Travel allowance:</strong> 2,600 — 50/week average
+              </li>
+              <li>
+                <strong>Total Annual Cost:</strong> 51,517
+              </li>
+              <li>
+                <strong>Productive hours (1,720):</strong> 29.95/hr — After holidays, training,
+                sickness
+              </li>
+              <li>
+                <strong>+ Company overhead (15%):</strong> 34.44/hr — All-in rate for estimating
+              </li>
+            </ul>
+            <p>
               <strong>Key principle:</strong> The all-in rate represents the true cost of labour to
               the business, not just the wage paid to the operative.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Benchmarking Data Sources */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Benchmarking Data Sources
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Benchmarking Data Sources">
             <p>
               Benchmark data from industry sources enables rapid cost estimates, validates first
               principles calculations, and provides defensible figures for cost planning. The two
               primary UK sources for building services are BCIS and Spon's price books.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  BCIS (Building Cost Information Service)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">RICS subscription service</li>
-                  <li className="pl-1">Elemental costs from actual projects</li>
-                  <li className="pl-1">Analysed by building type and size</li>
-                  <li className="pl-1">Location factors for regional adjustment</li>
-                  <li className="pl-1">Tender price indices for inflation</li>
-                  <li className="pl-1">Best for early-stage cost planning</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Spon's M&E Price Book
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Annual publication (print/digital)</li>
-                  <li className="pl-1">Itemised rates for M&E components</li>
-                  <li className="pl-1">Labour constants (hours per unit)</li>
-                  <li className="pl-1">Material prices updated annually</li>
-                  <li className="pl-1">Composite rates for common assemblies</li>
-                  <li className="pl-1">Best for rate checking and build-ups</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BCIS Elemental Costs - Electrical Installations (2024 Data)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Building Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-right">
-                        Lower Quartile
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-right">Median</th>
-                      <th className="border border-white/10 px-3 py-2 text-right">
-                        Upper Quartile
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Offices (air-conditioned)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-right">95/m2</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">135/m2</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">185/m2</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Retail (shell and core)</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">45/m2</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">75/m2</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">110/m2</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Secondary schools</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">80/m2</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">115/m2</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">150/m2</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hospitals (acute)</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">180/m2</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">260/m2</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">380/m2</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Data centres</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">450/m2</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">750/m2</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">1,200/m2</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Residential (apartments)</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">55/m2</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">85/m2</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">120/m2</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-2">
-                Note: National average figures. Apply BCIS location factors for regional projects.
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BCIS Location Factors (Selected Regions)
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div className="p-3 rounded bg-white/5 text-centre">
-                  <p className="font-medium text-white">London</p>
-                  <p className="text-elec-yellow text-lg">1.15</p>
-                </div>
-                <div className="p-3 rounded bg-white/5 text-centre">
-                  <p className="font-medium text-white">South East</p>
-                  <p className="text-elec-yellow text-lg">1.05</p>
-                </div>
-                <div className="p-3 rounded bg-white/5 text-centre">
-                  <p className="font-medium text-white">Midlands</p>
-                  <p className="text-elec-yellow text-lg">0.95</p>
-                </div>
-                <div className="p-3 rounded bg-white/5 text-centre">
-                  <p className="font-medium text-white">North</p>
-                  <p className="text-elec-yellow text-lg">0.90</p>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>BCIS (Building Cost Information Service):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>RICS subscription service</li>
+              <li>Elemental costs from actual projects</li>
+              <li>Analysed by building type and size</li>
+              <li>Location factors for regional adjustment</li>
+              <li>Tender price indices for inflation</li>
+              <li>Best for early-stage cost planning</li>
+            </ul>
+            <p>
+              <strong>Spon's M&E Price Book:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Annual publication (print/digital)</li>
+              <li>Itemised rates for M&E components</li>
+              <li>Labour constants (hours per unit)</li>
+              <li>Material prices updated annually</li>
+              <li>Composite rates for common assemblies</li>
+              <li>Best for rate checking and build-ups</li>
+            </ul>
+            <p>
+              <strong>BCIS Elemental Costs — Electrical Installations (2024 Data) (Building Type — Lower Quartile — Median — Upper Quartile):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Offices (air-conditioned):</strong> 95/m2 — 135/m2 — 185/m2
+              </li>
+              <li>
+                <strong>Retail (shell and core):</strong> 45/m2 — 75/m2 — 110/m2
+              </li>
+              <li>
+                <strong>Secondary schools:</strong> 80/m2 — 115/m2 — 150/m2
+              </li>
+              <li>
+                <strong>Hospitals (acute):</strong> 180/m2 — 260/m2 — 380/m2
+              </li>
+              <li>
+                <strong>Data centres:</strong> 450/m2 — 750/m2 — 1,200/m2
+              </li>
+              <li>
+                <strong>Residential (apartments):</strong> 55/m2 — 85/m2 — 120/m2
+              </li>
+            </ul>
+            <p>
+              Note: National average figures. Apply BCIS location factors for regional projects.
+            </p>
+            <p>
+              <strong>BCIS Location Factors (Selected Regions):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>London:</strong> 1.15
+              </li>
+              <li>
+                <strong>South East:</strong> 1.05
+              </li>
+              <li>
+                <strong>Midlands:</strong> 0.95
+              </li>
+              <li>
+                <strong>North:</strong> 0.90
+              </li>
+            </ul>
+            <p>
               <strong>Best practice:</strong> Use BCIS for budget setting and cost planning; use
               Spon's for detailed rate checking and build-ups.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Parametric Estimating Methods */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Parametric Estimating Methods
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Parametric Estimating Methods">
             <p>
               Parametric estimating uses cost relationships based on measurable project
               characteristics. It bridges the gap between early-stage benchmarking and detailed
               first principles estimates, providing reasonable accuracy when design information is
               developing.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Parametric Units for Building Services
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Parametric Unit
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Range (2024)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">General lighting</td>
-                      <td className="border border-white/10 px-3 py-2">Per m2 floor area</td>
-                      <td className="border border-white/10 px-3 py-2">25-50/m2</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Small power</td>
-                      <td className="border border-white/10 px-3 py-2">Per socket outlet</td>
-                      <td className="border border-white/10 px-3 py-2">80-150/outlet</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Data cabling</td>
-                      <td className="border border-white/10 px-3 py-2">Per data point (Cat6A)</td>
-                      <td className="border border-white/10 px-3 py-2">120-200/point</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Air conditioning</td>
-                      <td className="border border-white/10 px-3 py-2">Per kW cooling capacity</td>
-                      <td className="border border-white/10 px-3 py-2">800-1,500/kW</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mechanical ventilation</td>
-                      <td className="border border-white/10 px-3 py-2">Per m3/s air handling</td>
-                      <td className="border border-white/10 px-3 py-2">15,000-30,000/m3/s</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fire alarm</td>
-                      <td className="border border-white/10 px-3 py-2">Per detector/device</td>
-                      <td className="border border-white/10 px-3 py-2">180-300/device</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Emergency lighting</td>
-                      <td className="border border-white/10 px-3 py-2">Per fitting</td>
-                      <td className="border border-white/10 px-3 py-2">150-280/fitting</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Distribution boards</td>
-                      <td className="border border-white/10 px-3 py-2">Per way</td>
-                      <td className="border border-white/10 px-3 py-2">80-150/way</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Worked Example: Parametric Estimate for Office Electrical
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="mb-2">Office building: 3,500m2 NIA, air-conditioned, Cat A fit-out</p>
-                <p className="mb-1">Lighting: 3,500m2 x 35/m2 = 122,500</p>
-                <p className="mb-1">Small power (1 per 10m2): 350 outlets x 120 = 42,000</p>
-                <p className="mb-1">Data (1 per 8m2): 438 points x 160 = 70,080</p>
-                <p className="mb-1">Fire alarm (1 per 60m2): 58 devices x 220 = 12,760</p>
-                <p className="mb-1">Emergency lighting: 3,500m2 x 8/m2 = 28,000</p>
-                <p className="mb-1">Distribution boards: 45 ways x 100 = 4,500</p>
-                <p className="mb-1">Main switchgear allowance: 35,000</p>
-                <p className="mt-2 border-t border-white/20 pt-2">
-                  <strong>Subtotal: 314,840</strong>
-                </p>
-                <p className="mb-1">Preliminaries (12%): 37,781</p>
-                <p className="mb-1">Overheads & profit (8%): 28,210</p>
-                <p className="mt-2 text-elec-yellow font-medium">
-                  Parametric estimate: 380,831 (109/m2)
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                When to Use Each Method
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">RIBA Stage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Recommended Method
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Expected Accuracy
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">0-1 Strategic Definition</td>
-                      <td className="border border-white/10 px-3 py-2">BCIS benchmarks (per m2)</td>
-                      <td className="border border-white/10 px-3 py-2">+/- 25-40%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2 Concept Design</td>
-                      <td className="border border-white/10 px-3 py-2">Elemental estimate</td>
-                      <td className="border border-white/10 px-3 py-2">+/- 15-25%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3 Spatial Coordination</td>
-                      <td className="border border-white/10 px-3 py-2">Parametric + key quotes</td>
-                      <td className="border border-white/10 px-3 py-2">+/- 10-15%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4 Technical Design</td>
-                      <td className="border border-white/10 px-3 py-2">First principles</td>
-                      <td className="border border-white/10 px-3 py-2">+/- 5-10%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5 Tender</td>
-                      <td className="border border-white/10 px-3 py-2">Full bill of quantities</td>
-                      <td className="border border-white/10 px-3 py-2">+/- 2-5%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Common Parametric Units for Building Services (System — Unit — Typical Range 2024):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>General lighting:</strong> Per m2 floor area — 25-50/m2
+              </li>
+              <li>
+                <strong>Small power:</strong> Per socket outlet — 80-150/outlet
+              </li>
+              <li>
+                <strong>Data cabling:</strong> Per data point (Cat6A) — 120-200/point
+              </li>
+              <li>
+                <strong>Air conditioning:</strong> Per kW cooling capacity — 800-1,500/kW
+              </li>
+              <li>
+                <strong>Mechanical ventilation:</strong> Per m3/s air handling — 15,000-30,000/m3/s
+              </li>
+              <li>
+                <strong>Fire alarm:</strong> Per detector/device — 180-300/device
+              </li>
+              <li>
+                <strong>Emergency lighting:</strong> Per fitting — 150-280/fitting
+              </li>
+              <li>
+                <strong>Distribution boards:</strong> Per way — 80-150/way
+              </li>
+            </ul>
+            <p>
+              <strong>Worked Example — Parametric Estimate for Office Electrical:</strong> Office
+              building 3,500m2 NIA, air-conditioned, Cat A fit-out.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Lighting: 3,500m2 x 35/m2 = 122,500</li>
+              <li>Small power (1 per 10m2): 350 outlets x 120 = 42,000</li>
+              <li>Data (1 per 8m2): 438 points x 160 = 70,080</li>
+              <li>Fire alarm (1 per 60m2): 58 devices x 220 = 12,760</li>
+              <li>Emergency lighting: 3,500m2 x 8/m2 = 28,000</li>
+              <li>Distribution boards: 45 ways x 100 = 4,500</li>
+              <li>Main switchgear allowance: 35,000</li>
+              <li>
+                <strong>Subtotal: 314,840</strong>
+              </li>
+              <li>Preliminaries (12%): 37,781</li>
+              <li>Overheads & profit (8%): 28,210</li>
+              <li>
+                <strong>Parametric estimate: 380,831 (109/m2)</strong>
+              </li>
+            </ul>
+            <p>
+              <strong>When to Use Each Method (RIBA Stage — Method — Expected Accuracy):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>0-1 Strategic Definition:</strong> BCIS benchmarks (per m2) — +/- 25-40%
+              </li>
+              <li>
+                <strong>2 Concept Design:</strong> Elemental estimate — +/- 15-25%
+              </li>
+              <li>
+                <strong>3 Spatial Coordination:</strong> Parametric + key quotes — +/- 10-15%
+              </li>
+              <li>
+                <strong>4 Technical Design:</strong> First principles — +/- 5-10%
+              </li>
+              <li>
+                <strong>5 Tender:</strong> Full bill of quantities — +/- 2-5%
+              </li>
+            </ul>
+            <p>
               <strong>Accuracy tip:</strong> Always state the basis and expected accuracy range of
               your estimate. This manages client expectations and supports proper risk management.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: MEP-Specific Pricing Considerations */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            MEP-Specific Pricing Considerations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="MEP-Specific Pricing Considerations">
             <p>
               Mechanical, electrical, and plumbing (MEP) installations present unique estimating
               challenges compared to building fabric works. Understanding these factors is essential
               for producing reliable building services estimates.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Key MEP Cost Drivers</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Design development:</strong> MEP often designed in parallel with
-                  construction
-                </li>
-                <li className="pl-1">
-                  <strong>Coordination density:</strong> Multiple services competing for limited
-                  ceiling/riser space
-                </li>
-                <li className="pl-1">
-                  <strong>Long lead items:</strong> Switchgear, chillers, AHUs may have 16-24 week
-                  delivery
-                </li>
-                <li className="pl-1">
-                  <strong>Technology evolution:</strong> Specifications can change during project
-                </li>
-                <li className="pl-1">
-                  <strong>Commissioning complexity:</strong> Integrated systems require extensive
-                  commissioning
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                MEP as Percentage of Total Construction Cost
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Building Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-right">M&E %</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Dominant Systems
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Warehouse (shell)</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">8-12%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Basic electrical, fire detection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Residential</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">18-25%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heating, ventilation, electrical
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Office (Cat A)</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">28-35%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        HVAC, lighting, data, fire
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Retail (fitted)</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">25-32%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cooling, lighting, security
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Laboratory</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">40-50%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fume extraction, specialist gases
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hospital (acute)</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">45-60%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Medical gases, power resilience, BMS
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Data centre</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">55-70%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Power distribution, cooling, UPS
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Productivity Factors for Electrical Installation
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Working height:</strong> Reduce productivity 15-25% for ceiling work above
-                  3m
-                </li>
-                <li className="pl-1">
-                  <strong>Congested areas:</strong> Allow 20-40% additional time in plant rooms,
-                  risers
-                </li>
-                <li className="pl-1">
-                  <strong>Existing buildings:</strong> Add 25-50% for working around existing
-                  services
-                </li>
-                <li className="pl-1">
-                  <strong>Occupied premises:</strong> Out-of-hours working typically costs 1.5-2x
-                  normal rates
-                </li>
-                <li className="pl-1">
-                  <strong>Clean environments:</strong> Data centres, labs require suited working
-                  (add 15-20%)
-                </li>
-                <li className="pl-1">
-                  <strong>Coordination delays:</strong> Allow 5-10% for waiting on other trades
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Composite Rate Build-Up: Recessed LED Panel Luminaire
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="mb-1">Luminaire (600x600 LED panel, 40W): 85.00</p>
-                <p className="mb-1">Suspension kit and fixings: 8.50</p>
-                <p className="mb-1">Containment allocation (5m trunking): 18.00</p>
-                <p className="mb-1">Cable (10m 3-core flex): 12.00</p>
-                <p className="mb-1">Terminal connector: 3.50</p>
-                <p className="mb-1">Labour - installation (0.75 hr x 34): 25.50</p>
-                <p className="mb-1">Labour - termination (0.25 hr x 34): 8.50</p>
-                <p className="mb-1">Testing allowance: 2.50</p>
-                <p className="mt-2 border-t border-white/20 pt-2">
-                  <strong>Net cost per luminaire: 163.50</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Add preliminaries, OH&P as per project requirements
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Key MEP Cost Drivers:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Design development:</strong> MEP often designed in parallel with
+                construction
+              </li>
+              <li>
+                <strong>Coordination density:</strong> Multiple services competing for limited
+                ceiling/riser space
+              </li>
+              <li>
+                <strong>Long lead items:</strong> Switchgear, chillers, AHUs may have 16-24 week
+                delivery
+              </li>
+              <li>
+                <strong>Technology evolution:</strong> Specifications can change during project
+              </li>
+              <li>
+                <strong>Commissioning complexity:</strong> Integrated systems require extensive
+                commissioning
+              </li>
+            </ul>
+            <p>
+              <strong>MEP as Percentage of Total Construction Cost (Building — M&E % — Dominant Systems):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Warehouse (shell):</strong> 8-12% — Basic electrical, fire detection
+              </li>
+              <li>
+                <strong>Residential:</strong> 18-25% — Heating, ventilation, electrical
+              </li>
+              <li>
+                <strong>Office (Cat A):</strong> 28-35% — HVAC, lighting, data, fire
+              </li>
+              <li>
+                <strong>Retail (fitted):</strong> 25-32% — Cooling, lighting, security
+              </li>
+              <li>
+                <strong>Laboratory:</strong> 40-50% — Fume extraction, specialist gases
+              </li>
+              <li>
+                <strong>Hospital (acute):</strong> 45-60% — Medical gases, power resilience, BMS
+              </li>
+              <li>
+                <strong>Data centre:</strong> 55-70% — Power distribution, cooling, UPS
+              </li>
+            </ul>
+            <p>
+              <strong>Productivity Factors for Electrical Installation:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Working height:</strong> Reduce productivity 15-25% for ceiling work above
+                3m
+              </li>
+              <li>
+                <strong>Congested areas:</strong> Allow 20-40% additional time in plant rooms,
+                risers
+              </li>
+              <li>
+                <strong>Existing buildings:</strong> Add 25-50% for working around existing
+                services
+              </li>
+              <li>
+                <strong>Occupied premises:</strong> Out-of-hours working typically costs 1.5-2x
+                normal rates
+              </li>
+              <li>
+                <strong>Clean environments:</strong> Data centres, labs require suited working (add
+                15-20%)
+              </li>
+              <li>
+                <strong>Coordination delays:</strong> Allow 5-10% for waiting on other trades
+              </li>
+            </ul>
+            <p>
+              <strong>Composite Rate Build-Up — Recessed LED Panel Luminaire:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Luminaire (600x600 LED panel, 40W): 85.00</li>
+              <li>Suspension kit and fixings: 8.50</li>
+              <li>Containment allocation (5m trunking): 18.00</li>
+              <li>Cable (10m 3-core flex): 12.00</li>
+              <li>Terminal connector: 3.50</li>
+              <li>Labour - installation (0.75 hr x 34): 25.50</li>
+              <li>Labour - termination (0.25 hr x 34): 8.50</li>
+              <li>Testing allowance: 2.50</li>
+              <li>
+                <strong>Net cost per luminaire: 163.50</strong>
+              </li>
+              <li>Add preliminaries, OH&P as per project requirements.</li>
+            </ul>
+            <p>
               <strong>Risk management:</strong> MEP estimates should include explicit risk
               allowances for design development (5-10%) and market volatility (3-5%) in addition to
               normal contingencies.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — First Principles Cable Installation:</strong> Build up the rate
+              for installing 100m of 3-core 6mm2 SWA cable in surface-mounted tray.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>3C 6mm2 SWA cable (105m inc. waste): 105 x 4.20 = 441.00</li>
+              <li>Cable tray 100mm (105m): 105 x 8.50 = 892.50</li>
+              <li>Brackets and fixings: 45.00</li>
+              <li>Glands (2 no.): 2 x 12.00 = 24.00</li>
+              <li>Install tray (100m x 0.15 hr/m): 15 hrs x 34.44 = 516.60</li>
+              <li>Draw and fix cable (100m x 0.08 hr/m): 8 hrs x 34.44 = 275.52</li>
+              <li>Terminate both ends: 1.5 hrs x 34.44 = 51.66</li>
+              <li>
+                <strong>Net total: 2,246.28</strong>
+              </li>
+              <li>
+                <strong>Rate per metre: 22.46/m</strong> (excluding prelims, OH&P)
+              </li>
+            </ul>
+            <p>
+              <strong>Example 2 — Benchmark Validation:</strong> Validate a detailed electrical
+              estimate of 520,000 for a 4,200m2 office against BCIS data.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Detailed estimate: 520,000 / 4,200m2 = <strong>123.81/m2</strong>
+              </li>
+              <li>BCIS median (air-conditioned office): 135/m2</li>
+              <li>BCIS range: 95-185/m2</li>
+              <li>
+                <strong>Result:</strong> Estimate falls within BCIS range, slightly below median.
+              </li>
+              <li>Review: Check if specification is simpler than typical, or if rates are competitive.</li>
+            </ul>
+            <p>
+              <strong>Example 3 — Location Adjustment:</strong> Adjust a national average estimate
+              of 850,000 for a project in Central London.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Base estimate (national average): 850,000</li>
+              <li>BCIS London location factor: 1.15</li>
+              <li>Adjusted estimate = 850,000 x 1.15</li>
+              <li>
+                <strong>London estimate: 977,500</strong>
+              </li>
+              <li>
+                Note: Also consider London-specific factors like parking restrictions, congestion
+                charges, and security requirements.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: First Principles - Cable Installation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Build up the rate for installing 100m of 3-core 6mm2 SWA
-                cable in surface-mounted tray.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="font-medium mb-2">Materials:</p>
-                <p>3C 6mm2 SWA cable (105m inc. waste): 105 x 4.20 = 441.00</p>
-                <p>Cable tray 100mm (105m): 105 x 8.50 = 892.50</p>
-                <p>Brackets and fixings: 45.00</p>
-                <p>Glands (2 no.): 2 x 12.00 = 24.00</p>
-                <p className="mt-2 font-medium">Labour:</p>
-                <p>Install tray (100m x 0.15 hr/m): 15 hrs x 34.44 = 516.60</p>
-                <p>Draw and fix cable (100m x 0.08 hr/m): 8 hrs x 34.44 = 275.52</p>
-                <p>Terminate both ends: 1.5 hrs x 34.44 = 51.66</p>
-                <p className="mt-2 border-t border-white/20 pt-2">
-                  <strong>Net total: 2,246.28</strong>
-                </p>
-                <p className="mt-2 text-elec-yellow font-medium">
-                  Rate per metre: 22.46/m (excluding prelims, OH&P)
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Benchmark Validation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Validate a detailed electrical estimate of 520,000 for a
-                4,200m2 office against BCIS data.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="mb-2">
-                  Detailed estimate: 520,000 / 4,200m2 = <strong>123.81/m2</strong>
-                </p>
-                <p className="mb-2">BCIS median (air-conditioned office): 135/m2</p>
-                <p className="mb-2">BCIS range: 95-185/m2</p>
-                <p className="mt-2 text-green-400">
-                  Result: Estimate falls within BCIS range, slightly below median
-                </p>
-                <p className="mt-2 text-white">
-                  Review: Check if specification is simpler than typical, or if rates are
-                  competitive
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Estimating checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Confirm scope boundaries (shell and core vs. Cat A vs. Cat B)</li>
+              <li>Identify long-lead items and get early quotations</li>
+              <li>Apply correct location factor for regional projects</li>
+              <li>Include all oncosts in labour rates</li>
+              <li>Allow appropriate waste percentages on materials</li>
+              <li>Include testing, commissioning, and handover costs</li>
+              <li>Add design risk allowance for incomplete information</li>
+              <li>Cross-check against benchmarks for reasonableness</li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Electrical labour all-in rate: <strong>32-38/hr</strong> (2024)
+              </li>
+              <li>
+                Office electrical benchmark: <strong>100-180/m2</strong>
+              </li>
+              <li>
+                MEP as % of office cost: <strong>28-35%</strong>
+              </li>
+              <li>
+                Prelims typical range: <strong>10-15%</strong>
+              </li>
+              <li>
+                Overheads and profit: <strong>6-12%</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Location Adjustment
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Adjust a national average estimate of 850,000 for a
-                project in Central London.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Base estimate (national average): 850,000</p>
-                <p>BCIS London location factor: 1.15</p>
-                <p className="mt-2">Adjusted estimate = 850,000 x 1.15</p>
-                <p className="mt-2 text-elec-yellow font-medium">London estimate: 977,500</p>
-                <p className="mt-2 text-white">
-                  Note: Also consider London-specific factors like parking restrictions, congestion
-                  charges, and security requirements
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Estimating Checklist</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Confirm scope boundaries (shell and core vs. Cat A vs. Cat B)
-                </li>
-                <li className="pl-1">Identify long-lead items and get early quotations</li>
-                <li className="pl-1">Apply correct location factor for regional projects</li>
-                <li className="pl-1">Include all oncosts in labour rates</li>
-                <li className="pl-1">Allow appropriate waste percentages on materials</li>
-                <li className="pl-1">Include testing, commissioning, and handover costs</li>
-                <li className="pl-1">Add design risk allowance for incomplete information</li>
-                <li className="pl-1">Cross-check against benchmarks for reasonableness</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Electrical labour all-in rate: <strong>32-38/hr</strong> (2024)
-                </li>
-                <li className="pl-1">
-                  Office electrical benchmark: <strong>100-180/m2</strong>
-                </li>
-                <li className="pl-1">
-                  MEP as % of office cost: <strong>28-35%</strong>
-                </li>
-                <li className="pl-1">
-                  Prelims typical range: <strong>10-15%</strong>
-                </li>
-                <li className="pl-1">
-                  Overheads and profit: <strong>6-12%</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Estimating Errors</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Using base wages instead of all-in rates</strong> - understates labour by
+          <CommonMistake
+            title="Common estimating errors"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Using base wages instead of all-in rates</strong> — understates labour by
                   30-40%
                 </li>
-                <li className="pl-1">
-                  <strong>Ignoring waste factors</strong> - underestimates materials by 2.5-10%
+                <li>
+                  <strong>Ignoring waste factors</strong> — underestimates materials by 2.5-10%
                 </li>
-                <li className="pl-1">
-                  <strong>Omitting testing and commissioning</strong> - typically 3-5% of M&E value
+                <li>
+                  <strong>Omitting testing and commissioning</strong> — typically 3-5% of M&E value
                 </li>
-                <li className="pl-1">
-                  <strong>Forgetting design development risk</strong> - MEP specs often change
+                <li>
+                  <strong>Forgetting design development risk</strong> — MEP specs often change
                 </li>
-                <li className="pl-1">
-                  <strong>Using outdated price data</strong> - material prices volatile
+                <li>
+                  <strong>Using outdated price data</strong> — material prices volatile
                 </li>
-                <li className="pl-1">
-                  <strong>No location adjustment</strong> - can be +/- 15% variation
+                <li>
+                  <strong>No location adjustment</strong> — can be +/- 15% variation
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Always price labour at the all-in rate, apply waste percentages by material type, include explicit testing and commissioning lines, carry a design-development risk allowance, refresh prices at tender, and apply BCIS regional factors."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Benchmark estimate hides poor scope understanding"
+            situation={
+              <>
+                A client asks for a budget cost on a 6,000 m² office MEP fit-out. You quickly produce £95/m² × 6,000 = £570k based on benchmarks from your last three offices. The client awards on this basis. At first-principles tender, the cost comes out at £680k — £110k over budget. The benchmark was for cellular offices; this is open-plan with a high IT density and active chilled beams.
+              </>
+            }
+            whatToDo={
+              <>
+                For any pre-construction estimate, always test with a second method. Even a brief first-principles check on lighting density (W/m²), small power outlets, IT room load and HVAC duty would have flagged the divergence. Make the assumptions explicit when issuing the budget — "based on cellular office benchmarks; open-plan or high-tech assumes ±15%". Push back on clients who treat benchmarks as fixed prices.
+              </>
+            }
+            whyItMatters={
+              <>
+                Estimates set client expectations. A confidently-stated benchmark figure becomes the budget the client commits to — and you eat the difference at tender. The discipline of cross-checking is cheap insurance against project loss.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Estimating Methods</p>
-                <ul className="space-y-0.5">
-                  <li>First principles - labour + materials + plant build-up</li>
-                  <li>Benchmarking - BCIS, Spon's industry data</li>
-                  <li>Parametric - cost per m2, per point, per kW</li>
-                  <li>Match method to design stage and accuracy needed</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">MEP Considerations</p>
-                <ul className="space-y-0.5">
-                  <li>Allow for design development risk</li>
-                  <li>Include coordination and commissioning</li>
-                  <li>Apply location and productivity factors</li>
-                  <li>Cross-check against benchmarks</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+                    <KeyTakeaways
+            points={[
+              "Three methods: first-principles (most accurate), benchmarking (fastest), parametric (early-stage).",
+              "Cross-check with at least two methods — divergence flags scope misunderstanding.",
+              "Labour rates: basic + holiday + pension + travel + supervision + overhead = 1.6–2.0× basic hourly.",
+              "Risk allowances explicit (design development, programme, market) — not hidden in unit rates.",
+              "Material rates: list price → trade discount → mark-up — keep audit trail of supplier quotes.",
+              "Plant: hire vs own analysis with utilisation × duration × rate.",
+              "Overheads and profit: site overhead 10–15%, head office 5–8%, profit 4–8% typical.",
+              "NRM2 is the RICS standard for measurement and pricing — supports comparability and variation valuation.",
+            ]}
+          />
+
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section3-2">
-              Next: Measurement and Quantification
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Cost management
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section3-2')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Budget development
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

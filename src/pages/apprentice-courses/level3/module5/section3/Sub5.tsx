@@ -290,19 +290,19 @@ export default function Sub5() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 132.14.1 (Single-pole devices in line conductor) and Regulation 643.6 (polarity verification)"
+            source="BS 7671:2018+A4:2026 — Regulations 132.14.1 (Single-pole devices in line conductor) and 132.14.2 (linked switches in an earthed neutral); Regulation 643.6 (polarity verification)"
             clause="Reg 132.14.1: A single-pole fuse, switch or circuit-breaker shall be inserted in the line conductor only. Reg 132.14.2: No switch or circuit-breaker, except where linked, or fuse, shall be inserted in an earthed neutral conductor. Any linked switch or linked circuit-breaker inserted in an earthed neutral conductor shall be arranged to break all the related line conductors."
             meaning={
               <>
                 Reg 132.14.1 mandates single-pole devices in the line. Reg 132.14.2 prohibits
                 single-pole interruption of an earthed neutral and requires linked switches in
-                the neutral to break all related line conductors. Reg 643.6 mandates the
-                polarity test that verifies both. The polarity test is not optional or 'best
-                practice' — it is a regulatory requirement for every initial verification and
-                every periodic inspection.
+                the neutral to break all related line conductors. Polarity verification (Reg
+                643.6) is the dead test that confirms compliance with both — it is not optional
+                or 'best practice', it is a regulatory requirement for every initial verification
+                and every periodic inspection.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026, Regulations 132.14.1, 132.14.2 and 643.6 — verbatim from published regulation text."
+            cite="Source: BS 7671:2018+A4:2026, Regulations 132.14.1, 132.14.2 and 643.6."
           />
 
           <SectionRule />

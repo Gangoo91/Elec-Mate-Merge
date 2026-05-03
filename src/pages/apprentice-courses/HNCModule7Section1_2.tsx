@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 7 · Section 1 · Subsection 2 — Busbar Systems
+ * HNC Electrical Engineering for Building Services (Power and Lighting Systems)
+ *   Busbar trunking, rising mains, tap-off units, ratings, and installation requirements for building services
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Busbar Systems - HNC Module 7 Section 1.2';
@@ -243,832 +256,297 @@ const faqs = [
 ];
 
 const HNCModule7Section1_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section1")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module7-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.1.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Busbar Systems
-          </h1>
-          <p className="text-white">
-            Busbar trunking, rising mains, tap-off units, ratings, and installation requirements for
-            building services
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 7 · Section 1 · Subsection 2"
+            title="Busbar Systems"
+            description="Busbar trunking, rising mains, tap-off units, ratings, and installation requirements for building services"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Busbar trunking:</strong> Prefabricated power distribution system
-              </li>
-              <li className="pl-1">
-                <strong>Rising mains:</strong> Vertical distribution in multi-storey buildings
-              </li>
-              <li className="pl-1">
-                <strong>Tap-off units:</strong> Connection points along busbar runs
-              </li>
-              <li className="pl-1">
-                <strong>Fire barriers:</strong> Required at compartment penetrations
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Understand busbar trunking construction and types",
+              "Design rising main systems for multi-storey buildings",
+              "Select appropriate tap-off units and connection methods",
+              "Apply current and IP ratings for different environments",
+              "Implement fire barriers at compartment penetrations",
+              "Install busbar systems compliant with BS 7671",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Busbar Trunking Fundamentals">
+            <p>Busbar trunking systems (also known as busways) are prefabricated electrical distribution systems consisting of copper or aluminium conductors enclosed in a protective housing. They provide an efficient alternative to traditional cable systems for distributing electrical power in commercial and industrial buildings.</p>
+            <p><strong>Key components of busbar trunking:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Conductors:</strong> Copper or aluminium bars carrying current (L1, L2, L3, N, PE)</li>
+              <li><strong>Insulation:</strong> Epoxy, polyester film, or air gap insulation between phases</li>
+              <li><strong>Enclosure:</strong> Steel or aluminium housing providing mechanical protection</li>
+              <li><strong>Joints:</strong> Bolted connections between sections with specified torque values</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Ratings:</strong> 25A to 6300A typical range
-              </li>
-              <li className="pl-1">
-                <strong>IP ratings:</strong> IP40 to IP68 available
-              </li>
-              <li className="pl-1">
-                <strong>Standards:</strong> BS EN 61439-6 for busbar trunking
-              </li>
-              <li className="pl-1">
-                <strong>Applications:</strong> Commercial, industrial, data centres
-              </li>
+            <p><strong>Busbar Construction Types</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Air-insulated:</strong> Conductors separated by air gaps — Lighting trunking, low-current distribution</li>
+              <li><strong>Sandwich (compact):</strong> Conductors in close proximity with film insulation — High-current feeder runs, low impedance required</li>
+              <li><strong>Cast resin:</strong> Conductors encapsulated in epoxy resin — Harsh environments, high IP rating required</li>
+              <li><strong>Segregated phase:</strong> Each phase in separate metal enclosure — Very high currents (&gt;3000A), enhanced safety</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Design principle:</strong> Busbar trunking offers significant advantages over cables including faster installation, flexibility for modifications, better heat dissipation, and reduced fire load in the building.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Understand busbar trunking construction and types',
-              'Design rising main systems for multi-storey buildings',
-              'Select appropriate tap-off units and connection methods',
-              'Apply current and IP ratings for different environments',
-              'Implement fire barriers at compartment penetrations',
-              'Install busbar systems compliant with BS 7671',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Busbar Trunking Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Busbar Trunking Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Rising Mains for Multi-Storey Buildings">
+            <p>Rising mains are vertical busbar trunking systems that distribute electrical power from the main switchboard (typically at basement or ground level) up through multiple floors of a building. They are essential for efficient power distribution in high-rise commercial and residential buildings.</p>
+            <p><strong>Design Considerations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Total connected load per floor</li>
+              <li>Diversity factors applied</li>
+              <li>Future load growth allowance</li>
+              <li>Short-circuit ratings</li>
+            </ul>
+            <p><strong>Structural Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Dedicated riser shaft/cupboard</li>
+              <li>Support brackets at intervals</li>
+              <li>Floor penetration openings</li>
+              <li>Maintenance access space</li>
+            </ul>
+            <p><strong>Fire Safety Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Fire barriers at each floor</li>
+              <li>Intumescent sealing systems</li>
+              <li>Smoke stopping measures</li>
+              <li>Fire-rated riser enclosure</li>
+            </ul>
+            <p><strong>Rising Main Sizing Considerations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Ambient temperature:</strong> Derating if above 35C — 0.95 at 40C, 0.90 at 45C</li>
+              <li><strong>Installation orientation:</strong> Vertical ratings may differ from horizontal — Typically same or slightly higher vertically</li>
+              <li><strong>Altitude:</strong> Derating above 2000m — 0.98 per 500m above 2000m</li>
+              <li><strong>Harmonic content:</strong> Additional neutral loading — Size neutral for 1.5x or double neutral</li>
+              <li><strong>Future growth:</strong> Allowance for load increases — Typically 20-30% spare capacity</li>
+            </ul>
+            <p><strong>Best practice:</strong> Rising mains should be sized for the maximum anticipated load over the building's life, as replacement is extremely disruptive and costly.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Tap-Off Units, Ratings and IP Protection">
+            <p>Tap-off units (also called plug-in units or tap boxes) provide connection points along the busbar trunking for drawing power to distribution boards or equipment. They are a key advantage of busbar systems, allowing flexible connection and modification throughout the building's life.</p>
+            <p><strong>Tap-Off Unit Types</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Plug-in (live):</strong> Can be connected/disconnected with busbar energised - shuttered contacts for safety</li>
+              <li><strong>Bolt-on:</strong> Bolted connection requiring busbar isolation - higher fault ratings available</li>
+              <li><strong>Cable tap:</strong> Provides cable termination for connection to remote equipment</li>
+              <li><strong>Motor starter:</strong> Integrated DOL or star-delta starter for motor connection</li>
+            </ul>
+            <p><strong>Current Rating Ranges</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Lighting trunking:</strong> 25A to 63A - for lighting and small power distribution</li>
+              <li><strong>Feeder trunking:</strong> 100A to 1000A - for sub-distribution and equipment feeds</li>
+              <li><strong>High-power trunking:</strong> 1000A to 6300A - main distribution from transformers</li>
+              <li><strong>Tap-off units:</strong> Typically 16A to 630A dependent on busbar system</li>
+            </ul>
+            <p><strong>IP Ratings for Different Environments</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Office/commercial (dry):</strong> IP40 — Protection against objects &gt;1mm</li>
+              <li><strong>Plant rooms:</strong> IP54 — Dust protected, splash resistant</li>
+              <li><strong>Industrial/warehouse:</strong> IP55 — Dust protected, water jet resistant</li>
+              <li><strong>Outdoor/wet areas:</strong> IP65 to IP68 — Dust tight, water immersion protection</li>
+              <li><strong>Data centres:</strong> IP54 — Clean environment but water detection systems</li>
+            </ul>
+            <p><strong>Selection tip:</strong> When specifying tap-off units, consider the short-circuit rating as well as the continuous current rating - the tap-off must withstand prospective fault currents until cleared by protective devices.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Installation Requirements per BS 7671">
+            <p>BS 7671 and BS EN 61439-6 set out requirements for busbar trunking installation. Compliance with manufacturer's instructions is essential as busbar systems are type-tested assemblies where installation parameters affect the certified ratings.</p>
+            <p><strong>Key Installation Requirements</strong></p>
+            <p><strong>Physical Installation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Support brackets at specified intervals (typically 2-3m)</li>
+              <li>Expansion joints for thermal movement</li>
+              <li>Minimum clearances for tap-off access (typically 600mm)</li>
+              <li>Correct orientation as per manufacturer</li>
+              <li>Protection from mechanical damage</li>
+              <li>Corrosion protection where required</li>
+            </ul>
+            <p><strong>Electrical Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Joint torques to specification</li>
+              <li>Earth continuity through all sections</li>
+              <li>Correct phase sequence maintained</li>
+              <li>Coordination with protective devices</li>
+              <li>Short-circuit withstand verification</li>
+              <li>Voltage drop calculations</li>
+            </ul>
+            <p><strong>Fire Barrier Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Fire rating:</strong> Match the penetrated element — 30, 60, 90, or 120 minutes</li>
+              <li><strong>Barrier type:</strong> Proprietary tested system — Third-party certification required</li>
+              <li><strong>Installation:</strong> By trained operatives — Fire stopping certificate issued</li>
+              <li><strong>Gap filling:</strong> Intumescent sealant — Compatible with busbar housing</li>
+              <li><strong>Maintenance access:</strong> Removable barriers may be required — Must maintain fire integrity when closed</li>
+            </ul>
+            <p><strong>Advantages Over Cable Systems</strong></p>
+            <p><strong>Installation speed:</strong> Pre-fabricated sections install faster than pulling and terminating multiple cables</p>
+            <p><strong>Flexibility:</strong> Tap-offs can be added, removed, or relocated without major rewiring</p>
+            <p><strong>Space efficiency:</strong> Compact compared to equivalent cable tray installations</p>
+            <p><strong>Heat dissipation:</strong> Better thermal performance than bundled cables</p>
+            <p><strong>Lower fire load:</strong> Less combustible material than PVC-insulated cables</p>
+            <p><strong>Reduced voltage drop:</strong> Lower impedance, especially sandwich construction</p>
+            <p><strong>Compliance note:</strong> Busbar trunking installations must be carried out to manufacturer's instructions and documented with appropriate certificates including type test reports and fire barrier certificates.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Busbar trunking systems (also known as busways) are prefabricated electrical
-              distribution systems consisting of copper or aluminium conductors enclosed in a
-              protective housing. They provide an efficient alternative to traditional cable systems
-              for distributing electrical power in commercial and industrial buildings.
+              <strong>Example 1: Rising Main Sizing</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Key components of busbar trunking:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Conductors:</strong> Copper or aluminium bars carrying current (L1, L2,
-                  L3, N, PE)
-                </li>
-                <li className="pl-1">
-                  <strong>Insulation:</strong> Epoxy, polyester film, or air gap insulation between
-                  phases
-                </li>
-                <li className="pl-1">
-                  <strong>Enclosure:</strong> Steel or aluminium housing providing mechanical
-                  protection
-                </li>
-                <li className="pl-1">
-                  <strong>Joints:</strong> Bolted connections between sections with specified torque
-                  values
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Busbar Construction Types
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Construction</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Air-insulated</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Conductors separated by air gaps
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lighting trunking, low-current distribution
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Sandwich (compact)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Conductors in close proximity with film insulation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High-current feeder runs, low impedance required
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cast resin</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Conductors encapsulated in epoxy resin
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Harsh environments, high IP rating required
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Segregated phase</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Each phase in separate metal enclosure
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Very high currents (&gt;3000A), enhanced safety
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design principle:</strong> Busbar trunking offers significant advantages over
-              cables including faster installation, flexibility for modifications, better heat
-              dissipation, and reduced fire load in the building.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Rising Mains */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Rising Mains for Multi-Storey Buildings
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Size a rising main for a 10-storey office building with 50kVA per floor demand.</p>
+            <p>Given data:</p>
+            <p>Floors: 10</p>
+            <p>Demand per floor: 50kVA</p>
+            <p>Supply voltage: 400V three-phase</p>
+            <p>Ambient temperature: 35C (standard)</p>
+            <p>Calculation:</p>
+            <p>Total connected load = 10 x 50 = 500kVA</p>
+            <p>Apply diversity (0.8 typical for offices) = 500 x 0.8 = 400kVA</p>
+            <p>Maximum demand current = 400,000 / (400 x 1.732) = 577A</p>
+            <p>Add 25% future growth = 577 x 1.25 = 722A</p>
+            <p>Select 800A busbar trunking system</p>
+            <p>Verify short-circuit rating &gt; prospective fault level at intake</p>
             <p>
-              Rising mains are vertical busbar trunking systems that distribute electrical power
-              from the main switchboard (typically at basement or ground level) up through multiple
-              floors of a building. They are essential for efficient power distribution in high-rise
-              commercial and residential buildings.
+              <strong>Example 2: Tap-Off Unit Selection</strong>
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Design Considerations
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Total connected load per floor</li>
-                  <li className="pl-1">Diversity factors applied</li>
-                  <li className="pl-1">Future load growth allowance</li>
-                  <li className="pl-1">Short-circuit ratings</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Structural Requirements
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Dedicated riser shaft/cupboard</li>
-                  <li className="pl-1">Support brackets at intervals</li>
-                  <li className="pl-1">Floor penetration openings</li>
-                  <li className="pl-1">Maintenance access space</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Fire Safety Requirements
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Fire barriers at each floor</li>
-                  <li className="pl-1">Intumescent sealing systems</li>
-                  <li className="pl-1">Smoke stopping measures</li>
-                  <li className="pl-1">Fire-rated riser enclosure</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Rising Main Sizing Considerations
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Factor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Consideration</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Value</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ambient temperature</td>
-                      <td className="border border-white/10 px-3 py-2">Derating if above 35C</td>
-                      <td className="border border-white/10 px-3 py-2">0.95 at 40C, 0.90 at 45C</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Installation orientation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Vertical ratings may differ from horizontal
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Typically same or slightly higher vertically
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Altitude</td>
-                      <td className="border border-white/10 px-3 py-2">Derating above 2000m</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        0.98 per 500m above 2000m
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Harmonic content</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Additional neutral loading
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Size neutral for 1.5x or double neutral
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Future growth</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Allowance for load increases
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Typically 20-30% spare capacity
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> Rising mains should be sized for the maximum
-              anticipated load over the building's life, as replacement is extremely disruptive and
-              costly.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Tap-Off Units and Ratings */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Tap-Off Units, Ratings and IP Protection
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Select tap-off units for floor distribution boards from a 1000A rising main.</p>
+            <p>Floor requirements:</p>
+            <p>Typical floor load: 50kVA diversified</p>
+            <p>Floor current = 50,000 / (400 x 1.732) = 72A</p>
+            <p>With growth allowance = 72 x 1.2 = 87A</p>
+            <p>Selection criteria:</p>
+            <p>Continuous rating: &gt;87A → Select 100A tap-off</p>
+            <p>Short-circuit rating: Match busbar system (e.g., 50kA)</p>
+            <p>Protection: Fuse or MCCB integral or separate</p>
+            <p>Type: Plug-in for flexibility</p>
+            <p>Selected: 100A plug-in tap-off with 100A MCCB</p>
             <p>
-              Tap-off units (also called plug-in units or tap boxes) provide connection points along
-              the busbar trunking for drawing power to distribution boards or equipment. They are a
-              key advantage of busbar systems, allowing flexible connection and modification
-              throughout the building's life.
+              <strong>Example 3: Fire Barrier Specification</strong>
             </p>
+            <p><strong>Scenario:</strong> Specify fire barriers for a 400A busbar penetrating 90-minute fire compartment floors.</p>
+            <p>Requirements:</p>
+            <p>Fire rating required: 90 minutes (EI90)</p>
+            <p>Busbar size: 400A (enclosure approx 200 x 200mm)</p>
+            <p>Floor construction: 150mm reinforced concrete</p>
+            <p>Specification:</p>
+            <p>Fire barrier system: Proprietary intumescent collar or wrap</p>
+            <p>Tested to: BS EN 1366-3</p>
+            <p>Certification: Third-party tested for specific busbar type</p>
+            <p>Sealant: Intumescent mastic for gaps up to 20mm</p>
+            <p>Installation requirements:</p>
+            <p>Installer: Trained and certificated</p>
+            <p>Documentation: Fire stopping certificate per floor</p>
+            <p>Inspection: Visual and recorded on as-built drawings</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Tap-Off Unit Types</p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <span className="text-white">Plug-in (live):</span>{' '}
-                  <span className="text-white">
-                    Can be connected/disconnected with busbar energised - shuttered contacts for
-                    safety
-                  </span>
-                </p>
-                <p>
-                  <span className="text-white">Bolt-on:</span>{' '}
-                  <span className="text-white">
-                    Bolted connection requiring busbar isolation - higher fault ratings available
-                  </span>
-                </p>
-                <p>
-                  <span className="text-white">Cable tap:</span>{' '}
-                  <span className="text-white">
-                    Provides cable termination for connection to remote equipment
-                  </span>
-                </p>
-                <p>
-                  <span className="text-white">Motor starter:</span>{' '}
-                  <span className="text-white">
-                    Integrated DOL or star-delta starter for motor connection
-                  </span>
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Current Rating Ranges</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Lighting trunking:</strong> 25A to 63A - for lighting and small power
-                  distribution
-                </li>
-                <li className="pl-1">
-                  <strong>Feeder trunking:</strong> 100A to 1000A - for sub-distribution and
-                  equipment feeds
-                </li>
-                <li className="pl-1">
-                  <strong>High-power trunking:</strong> 1000A to 6300A - main distribution from
-                  transformers
-                </li>
-                <li className="pl-1">
-                  <strong>Tap-off units:</strong> Typically 16A to 630A dependent on busbar system
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                IP Ratings for Different Environments
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Environment</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Minimum IP Rating
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Office/commercial (dry)</td>
-                      <td className="border border-white/10 px-3 py-2">IP40</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Protection against objects &gt;1mm
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Plant rooms</td>
-                      <td className="border border-white/10 px-3 py-2">IP54</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dust protected, splash resistant
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Industrial/warehouse</td>
-                      <td className="border border-white/10 px-3 py-2">IP55</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dust protected, water jet resistant
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Outdoor/wet areas</td>
-                      <td className="border border-white/10 px-3 py-2">IP65 to IP68</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dust tight, water immersion protection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Data centres</td>
-                      <td className="border border-white/10 px-3 py-2">IP54</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Clean environment but water detection systems
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Selection tip:</strong> When specifying tap-off units, consider the
-              short-circuit rating as well as the continuous current rating - the tap-off must
-              withstand prospective fault currents until cleared by protective devices.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Installation Requirements */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Installation Requirements per BS 7671
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              BS 7671 and BS EN 61439-6 set out requirements for busbar trunking installation.
-              Compliance with manufacturer's instructions is essential as busbar systems are
-              type-tested assemblies where installation parameters affect the certified ratings.
+              <strong>Busbar Installation Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Installation Requirements
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Physical Installation</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Support brackets at specified intervals (typically 2-3m)</li>
-                    <li>Expansion joints for thermal movement</li>
-                    <li>Minimum clearances for tap-off access (typically 600mm)</li>
-                    <li>Correct orientation as per manufacturer</li>
-                    <li>Protection from mechanical damage</li>
-                    <li>Corrosion protection where required</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Electrical Requirements</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Joint torques to specification</li>
-                    <li>Earth continuity through all sections</li>
-                    <li>Correct phase sequence maintained</li>
-                    <li>Coordination with protective devices</li>
-                    <li>Short-circuit withstand verification</li>
-                    <li>Voltage drop calculations</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Fire Barrier Requirements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Requirement</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Specification</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Compliance</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fire rating</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Match the penetrated element
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        30, 60, 90, or 120 minutes
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Barrier type</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Proprietary tested system
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Third-party certification required
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Installation</td>
-                      <td className="border border-white/10 px-3 py-2">By trained operatives</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fire stopping certificate issued
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Gap filling</td>
-                      <td className="border border-white/10 px-3 py-2">Intumescent sealant</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Compatible with busbar housing
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Maintenance access</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Removable barriers may be required
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Must maintain fire integrity when closed
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Advantages Over Cable Systems
-              </p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <strong>Installation speed:</strong> Pre-fabricated sections install faster than
-                  pulling and terminating multiple cables
-                </p>
-                <p>
-                  <strong>Flexibility:</strong> Tap-offs can be added, removed, or relocated without
-                  major rewiring
-                </p>
-                <p>
-                  <strong>Space efficiency:</strong> Compact compared to equivalent cable tray
-                  installations
-                </p>
-                <p>
-                  <strong>Heat dissipation:</strong> Better thermal performance than bundled cables
-                </p>
-                <p>
-                  <strong>Lower fire load:</strong> Less combustible material than PVC-insulated
-                  cables
-                </p>
-                <p>
-                  <strong>Reduced voltage drop:</strong> Lower impedance, especially sandwich
-                  construction
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Compliance note:</strong> Busbar trunking installations must be carried out to
-              manufacturer's instructions and documented with appropriate certificates including
-              type test reports and fire barrier certificates.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Verify structural supports are installed at correct intervals</li>
+              <li>Check floor/wall penetrations are correctly sized with expansion allowance</li>
+              <li>Install sections with correct phase orientation throughout</li>
+              <li>Torque all joints to manufacturer specification and record</li>
+              <li>Install fire barriers at all compartment penetrations</li>
+              <li>Complete earth continuity testing section by section</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Standard ambient rating: <strong>35C</strong> (derate above this)</li>
+              <li>Typical support intervals: <strong>2-3 metres</strong> vertical</li>
+              <li>Maintenance clearance: <strong>600mm minimum</strong> for tap-offs</li>
+              <li>Expansion allowance: <strong>Approximately 1mm per metre per 10C rise</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Rising Main Sizing
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Size a rising main for a 10-storey office building with
-                50kVA per floor demand.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Given data:</p>
-                <p className="ml-4">Floors: 10</p>
-                <p className="ml-4">Demand per floor: 50kVA</p>
-                <p className="ml-4">Supply voltage: 400V three-phase</p>
-                <p className="ml-4">Ambient temperature: 35C (standard)</p>
-                <p className="mt-2">Calculation:</p>
-                <p className="ml-4">Total connected load = 10 x 50 = 500kVA</p>
-                <p className="ml-4">
-                  Apply diversity (0.8 typical for offices) = 500 x 0.8 = 400kVA
-                </p>
-                <p className="ml-4">Maximum demand current = 400,000 / (400 x 1.732) = 577A</p>
-                <p className="ml-4">Add 25% future growth = 577 x 1.25 = 722A</p>
-                <p className="mt-2 text-green-400">Select 800A busbar trunking system</p>
-                <p className="text-white">
-                  Verify short-circuit rating &gt; prospective fault level at intake
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Tap-Off Unit Selection
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Select tap-off units for floor distribution boards from a
-                1000A rising main.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Floor requirements:</p>
-                <p className="ml-4">Typical floor load: 50kVA diversified</p>
-                <p className="ml-4">Floor current = 50,000 / (400 x 1.732) = 72A</p>
-                <p className="ml-4">With growth allowance = 72 x 1.2 = 87A</p>
-                <p className="mt-2">Selection criteria:</p>
-                <p className="ml-4">Continuous rating: &gt;87A → Select 100A tap-off</p>
-                <p className="ml-4">Short-circuit rating: Match busbar system (e.g., 50kA)</p>
-                <p className="ml-4">Protection: Fuse or MCCB integral or separate</p>
-                <p className="ml-4">Type: Plug-in for flexibility</p>
-                <p className="mt-2 text-green-400">Selected: 100A plug-in tap-off with 100A MCCB</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Fire Barrier Specification
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Specify fire barriers for a 400A busbar penetrating
-                90-minute fire compartment floors.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Requirements:</p>
-                <p className="ml-4">Fire rating required: 90 minutes (EI90)</p>
-                <p className="ml-4">Busbar size: 400A (enclosure approx 200 x 200mm)</p>
-                <p className="ml-4">Floor construction: 150mm reinforced concrete</p>
-                <p className="mt-2">Specification:</p>
-                <p className="ml-4">Fire barrier system: Proprietary intumescent collar or wrap</p>
-                <p className="ml-4">Tested to: BS EN 1366-3</p>
-                <p className="ml-4">Certification: Third-party tested for specific busbar type</p>
-                <p className="ml-4">Sealant: Intumescent mastic for gaps up to 20mm</p>
-                <p className="mt-2">Installation requirements:</p>
-                <p className="ml-4">Installer: Trained and certificated</p>
-                <p className="ml-4">Documentation: Fire stopping certificate per floor</p>
-                <p className="ml-4 text-green-400">
-                  Inspection: Visual and recorded on as-built drawings
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Busbar Installation Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Verify structural supports are installed at correct intervals
-                </li>
-                <li className="pl-1">
-                  Check floor/wall penetrations are correctly sized with expansion allowance
-                </li>
-                <li className="pl-1">Install sections with correct phase orientation throughout</li>
-                <li className="pl-1">Torque all joints to manufacturer specification and record</li>
-                <li className="pl-1">Install fire barriers at all compartment penetrations</li>
-                <li className="pl-1">Complete earth continuity testing section by section</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Incorrect joint torque</strong> - causes hot joints and eventual failure</li>
+                <li><strong>Missing fire barriers</strong> - serious fire safety breach</li>
+                <li><strong>Inadequate support</strong> - leads to mechanical stress on joints</li>
+                <li><strong>Ignoring thermal expansion</strong> - causes distortion and joint damage</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Standard ambient rating: <strong>35C</strong> (derate above this)
-                </li>
-                <li className="pl-1">
-                  Typical support intervals: <strong>2-3 metres</strong> vertical
-                </li>
-                <li className="pl-1">
-                  Maintenance clearance: <strong>600mm minimum</strong> for tap-offs
-                </li>
-                <li className="pl-1">
-                  Expansion allowance: <strong>Approximately 1mm per metre per 10C rise</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Incorrect joint torque</strong> - causes hot joints and eventual failure
-                </li>
-                <li className="pl-1">
-                  <strong>Missing fire barriers</strong> - serious fire safety breach
-                </li>
-                <li className="pl-1">
-                  <strong>Inadequate support</strong> - leads to mechanical stress on joints
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring thermal expansion</strong> - causes distortion and joint damage
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Busbar Types</p>
-                <ul className="space-y-0.5">
-                  <li>Air-insulated - lighting/low current</li>
-                  <li>Sandwich - low impedance feeder</li>
-                  <li>Cast resin - harsh environments</li>
-                  <li>Segregated phase - very high current</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Installation Essentials</p>
-                <ul className="space-y-0.5">
-                  <li>Support at 2-3m intervals</li>
-                  <li>Fire barriers at penetrations</li>
-                  <li>Joint torques to specification</li>
-                  <li>Earth continuity throughout</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section1-3">
-              Next: Cable Tray and Ladder Systems
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section1-1")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Switchgear selection
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section1-3")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Cable sizing calculations
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

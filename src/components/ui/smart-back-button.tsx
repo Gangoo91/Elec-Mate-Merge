@@ -370,18 +370,17 @@ export const SmartBackButton = React.forwardRef<HTMLButtonElement, SmartBackButt
     return (
       <Button
         ref={ref}
-        variant="outline"
+        variant="ghost"
         size={size}
         onClick={handleClick}
         className={cn(
-          'border-elec-yellow/30 hover:bg-elec-yellow/10 hover:border-elec-yellow/50',
-          'text-foreground active:scale-[0.98]',
-          'gap-2',
+          'text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08]',
+          '-ml-2 h-11 touch-manipulation',
           className
         )}
       >
-        <ArrowLeft className="h-4 w-4" />
-        <span className="hidden sm:inline">{displayLabel}</span>
+        <ArrowLeft className="mr-2 h-5 w-5" />
+        {displayLabel}
       </Button>
     );
   }

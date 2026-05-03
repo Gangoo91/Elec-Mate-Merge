@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 6 · Section 1 · Subsection 3 — Fabric Performance
+ * HNC Electrical Engineering for Building Services (Sustainability and Environmental Engineering)
+ *   U-value calculations, thermal bridging, limiting fabric parameters, and construction specifications for energy-efficient buildings
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Fabric Performance - HNC Module 6 Section 1.3';
@@ -229,888 +246,368 @@ const faqs = [
 ];
 
 const HNCModule6Section1_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section1")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module6-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.1.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Fabric Performance
-          </h1>
-          <p className="text-white">
-            U-value calculations, thermal bridging, limiting fabric parameters, and construction
-            specifications for energy-efficient buildings
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 6 · Section 1 · Subsection 3"
+            title="Fabric Performance"
+            description="U-value calculations, thermal bridging, limiting fabric parameters, and construction specifications for energy-efficient buildings"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>U-value:</strong> Heat transfer rate through building elements (W/m²K)
-              </li>
-              <li className="pl-1">
-                <strong>Thermal bridging:</strong> Junctions where heat loss is increased
-              </li>
-              <li className="pl-1">
-                <strong>Psi values:</strong> Linear thermal transmittance (W/mK)
-              </li>
-              <li className="pl-1">
-                <strong>Part L:</strong> Limiting and notional U-values for compliance
-              </li>
+          <TLDR
+            points={[
+              "Fabric performance is set by U-values (W/m²K), Ψ-values (linear thermal bridges in W/mK) and air permeability (m³/h·m² at 50 Pa) — together they govern winter heat loss and Part L compliance.",
+              "Limiting U-values in ADL 2021 are 0.26 (walls), 0.16 (roof), 0.18 (floor), 1.6 (windows) for dwellings; the notional values are tighter and define the target you must beat.",
+              "Thermal bridging (junctions, lintels, openings) is calculated using Accredited Construction Details (ACDs) or numerically per BR 497 / ISO 10211 — defaults are penalised in SAP.",
+            ]}
+          />
+
+          <RegsCallout
+            source="Approved Document L Volume 1 (Dwellings) — Limiting fabric parameters"
+            clause="Reasonable provision is to limit the area-weighted average U-value of each thermal element to no greater than the limiting value, to limit thermal bridging at junctions to a calculated transmission heat loss coefficient, and to limit air permeability to no greater than 8 m³/(h·m²) at 50 Pa for new dwellings tested in accordance with the approved methodology."
+            meaning={
+              <>
+                Limiting values are absolute backstops — they cannot be traded off against better services performance. Air permeability of 8 m³/h·m² is the legal maximum; the notional dwelling assumes 5 to drive design ambition. Thermal bridging defaults add a penalty to TER; using ACDs or calculated Ψ-values almost always pays back in SAP score.
+              </>
+            }
+            cite="Source: Approved Document L Volume 1: 2021 edition — gov.uk"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Calculate U-values for walls, roofs, floors, and windows",
+              "Apply Part L limiting fabric parameters correctly",
+              "Quantify thermal bridging using psi values and y-values",
+              "Specify insulation materials for target U-values",
+              "Understand how fabric performance affects services design",
+              "Evaluate construction details for thermal bridge mitigation",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="U-Value Fundamentals">
+            <p>The U-value (thermal transmittance) quantifies how effectively a building element prevents heat transfer. It represents the rate of heat flow through one square metre of the element for each degree of temperature difference between inside and outside air.</p>
+            <p><strong>U-Value Formula</strong></p>
+            <p><span> U = 1 / R<sub>total</sub> </span></p>
+            <p><span>Where:</span></p>
+            <p><span> R<sub>total</sub> = R<sub>si</sub> + R<sub>1</sub> + R<sub>2</sub> + ... + R <sub>n</sub> + R<sub>se</sub> </span></p>
+            <p><span>R = d / λ</span> (for each layer)</p>
+            <p>d = thickness (m), λ = thermal conductivity (W/mK)</p>
+            <p><strong>Surface Resistances (BS EN ISO 6946):</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Walls:</strong> Horizontal — 0.13 — 0.04</li>
+              <li><strong>Roof (ceiling):</strong> Upward — 0.10 — 0.04</li>
+              <li><strong>Floor:</strong> Downward — 0.17 — 0.04</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Heat loss:</strong> Determines heating system sizing
-              </li>
-              <li className="pl-1">
-                <strong>Peak gains:</strong> Affects cooling load calculations
-              </li>
-              <li className="pl-1">
-                <strong>Design data:</strong> Essential for SAP/SBEM modelling
-              </li>
-              <li className="pl-1">
-                <strong>Compliance:</strong> Part L sets minimum standards
-              </li>
+            <p><strong>Common Insulation Materials</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Phenolic foam:</strong> 0.018-0.022 — Where space is limited</li>
+              <li><strong>PIR/PUR rigid foam:</strong> 0.022-0.028 — Flat roofs, wall cavities</li>
+              <li><strong>Expanded polystyrene (EPS):</strong> 0.032-0.038 — Floor insulation, EIFS</li>
+              <li><strong>Mineral wool:</strong> 0.035-0.040 — Cavity walls, loft spaces</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Key principle:</strong> Lower thermal conductivity (λ) means better insulation - less thickness required to achieve target U-value.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Calculate U-values for walls, roofs, floors, and windows',
-              'Apply Part L limiting fabric parameters correctly',
-              'Quantify thermal bridging using psi values and y-values',
-              'Specify insulation materials for target U-values',
-              'Understand how fabric performance affects services design',
-              'Evaluate construction details for thermal bridge mitigation',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: U-Value Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            U-Value Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Part L Limiting Parameters">
+            <p>Building Regulations Part L sets both limiting U-values (absolute backstop values) and notional building values (reference for comparison calculations). Understanding both is essential for compliant building services design.</p>
+            <p><strong>Part L 2021 - Limiting U-Values (New Buildings)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>External walls:</strong> 0.26 — 0.26</li>
+              <li><strong>Roof:</strong> 0.16 — 0.16</li>
+              <li><strong>Ground floor:</strong> 0.18 — 0.18</li>
+              <li><strong>Windows/roof windows:</strong> 1.6 — 1.6</li>
+              <li><strong>Doors:</strong> 1.6 — 1.6</li>
+              <li><strong>Curtain walling:</strong> - — 1.6</li>
+            </ul>
+            <p><strong>Limiting Values</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Absolute maximum - cannot be exceeded</li>
+              <li>Apply to every individual element</li>
+              <li>No trade-off permitted</li>
+              <li>Backstop for worst-case performance</li>
+            </ul>
+            <p><strong>Notional Values</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Reference for comparison calculation</li>
+              <li>Typically more onerous than limiting</li>
+              <li>Trade-off between elements allowed</li>
+              <li>Must meet TFEE/TER targets overall</li>
+            </ul>
+            <p><strong>Target Fabric Energy Efficiency (TFEE)</strong></p>
+            <p>Part L 2021 introduces TFEE for dwellings - a metric measuring fabric performance independent of services. The building's Fabric Energy Efficiency (FEE) must not exceed the TFEE calculated for the notional building, ensuring fabric performance is not traded off against efficient services.</p>
+            <p><strong>Services impact:</strong> Better fabric performance reduces heating/cooling loads, allowing smaller plant sizes but must be correctly input to SAP/SBEM for accurate compliance demonstration.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Thermal Bridging and Psi Values">
+            <p>Thermal bridges occur where the insulation layer is interrupted or where materials with higher thermal conductivity penetrate the building envelope. Quantifying and minimising thermal bridging is critical for achieving designed energy performance.</p>
+            <p><strong>Types of thermal bridges:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Linear (2D):</strong> Junctions between elements - wall/floor, wall/roof, around openings</li>
+              <li><strong>Point (3D):</strong> Penetrations through the envelope - fixings, brackets, services</li>
+              <li><strong>Geometric:</strong> Corners where heat flow concentrates</li>
+              <li><strong>Structural:</strong> Steel or concrete elements bridging insulation</li>
+            </ul>
+            <p><strong>Psi Value (ψ) - Linear Thermal Transmittance</strong></p>
+            <p><span>Heat loss at junction = ψ × L × ΔT</span></p>
+            <p>Where:</p>
+            <p>ψ = psi value (W/mK)</p>
+            <p>L = length of junction (m)</p>
+            <p>ΔT = temperature difference (K)</p>
+            <p><strong>Typical Psi Values</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Wall/floor (ground):</strong> 0.05 - 0.10 — 0.30 - 0.50</li>
+              <li><strong>Wall/roof (eaves):</strong> 0.04 - 0.08 — 0.20 - 0.35</li>
+              <li><strong>Window jamb:</strong> 0.02 - 0.05 — 0.10 - 0.15</li>
+              <li><strong>Corner (external):</strong> 0.02 - 0.05 — 0.08 - 0.15</li>
+              <li><strong>Lintel:</strong> 0.05 - 0.12 — 0.25 - 0.50</li>
+            </ul>
+            <p><strong>Total Heat Loss from Thermal Bridges</strong></p>
+            <p>H<sub>TB</sub> = Σ(ψ × L) + Σ(χ × n)</p>
+            <p>Or using y-value method:</p>
+            <p>H<sub>TB</sub> = y × A<sub>exp</sub></p>
+            <p>Where:</p>
+            <p>χ = chi value for point thermal bridges (W/K)</p>
+            <p>n = number of point thermal bridges</p>
+            <p>y = aggregate y-value (W/m²K)</p>
+            <p>A<sub>exp</sub> = total exposed envelope area (m²)</p>
+            <p><strong>Default y-value:</strong> If detailed psi calculations are not available, SAP/SBEM uses y = 0.15 W/m²K - a significant penalty that can add 15-20% to fabric heat loss.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Construction Specifications and Services Impact">
+            <p>Specifying fabric performance requires understanding construction build-ups, material properties, and their interaction with building services. Services engineers must interpret fabric specifications to correctly size systems and detail penetrations.</p>
+            <p><strong>External Wall Build-Up</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>13mm plasterboard (0.21 W/mK)</li>
+              <li>100mm insulated timber frame (0.035 W/mK)</li>
+              <li>12mm sheathing board (0.13 W/mK)</li>
+              <li>50mm cavity (vented)</li>
+              <li>102.5mm facing brick (0.77 W/mK)</li>
+              <li>Target U-value: 0.18 W/m²K</li>
+            </ul>
+            <p><strong>Flat Roof Build-Up</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Single-ply membrane</li>
+              <li>150mm PIR insulation (0.022 W/mK)</li>
+              <li>Vapour control layer</li>
+              <li>18mm plywood deck</li>
+              <li>Timber joists/steel structure</li>
+              <li>Target U-value: 0.14 W/m²K</li>
+            </ul>
+            <p><strong>Impact on Building Services Design</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Wall U-value:</strong> Heating/cooling load — Lower U = smaller radiators/FCUs</li>
+              <li><strong>Roof U-value:</strong> Peak summer gains — Solar gain through roof affects cooling</li>
+              <li><strong>Window U-value:</strong> Perimeter heating, cold spots — Higher glazing = more perimeter capacity</li>
+              <li><strong>Thermal mass:</strong> Control strategy, peak shifting — Heavy buildings suit night cooling</li>
+              <li><strong>Air permeability:</strong> Ventilation strategy — Tight buildings need MVHR</li>
+            </ul>
+            <p><strong>Services Penetrations - Thermal Bridge Mitigation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Ductwork:</strong> Insulate ducts through envelope, seal around penetrations</li>
+              <li><strong>Pipework:</strong> Use proprietary thermal break sleeves where passing through insulation</li>
+              <li><strong>Cables:</strong> Seal with intumescent mastic, maintain insulation continuity</li>
+              <li><strong>Flue penetrations:</strong> Purpose-made insulated flashings, maintain clearances</li>
+            </ul>
+            <p><strong>Coordination critical:</strong> Services routes should be planned to minimise envelope penetrations - each penetration creates a potential thermal bridge and air leakage path.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              The U-value (thermal transmittance) quantifies how effectively a building element
-              prevents heat transfer. It represents the rate of heat flow through one square metre
-              of the element for each degree of temperature difference between inside and outside
-              air.
+              <strong>Example 1: Wall U-Value Calculation</strong>
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">U-Value Formula</p>
-              <div className="font-mono text-sm space-y-2">
-                <p>
-                  <span className="text-white">
-                    U = 1 / R<sub>total</sub>
-                  </span>
-                </p>
-                <p>
-                  <span className="text-white">Where:</span>
-                </p>
-                <p className="ml-4">
-                  <span className="text-white">
-                    R<sub>total</sub> = R<sub>si</sub> + R<sub>1</sub> + R<sub>2</sub> + ... + R
-                    <sub>n</sub> + R<sub>se</sub>
-                  </span>
-                </p>
-                <p className="mt-2">
-                  <span className="text-white">R = d / λ</span> (for each layer)
-                </p>
-                <p className="ml-4 text-white">
-                  d = thickness (m), λ = thermal conductivity (W/mK)
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Surface Resistances (BS EN ISO 6946):
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Surface</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Heat Flow Direction
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        R<sub>si</sub> (m²K/W)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        R<sub>se</sub> (m²K/W)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Walls</td>
-                      <td className="border border-white/10 px-3 py-2">Horizontal</td>
-                      <td className="border border-white/10 px-3 py-2">0.13</td>
-                      <td className="border border-white/10 px-3 py-2">0.04</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Roof (ceiling)</td>
-                      <td className="border border-white/10 px-3 py-2">Upward</td>
-                      <td className="border border-white/10 px-3 py-2">0.10</td>
-                      <td className="border border-white/10 px-3 py-2">0.04</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Floor</td>
-                      <td className="border border-white/10 px-3 py-2">Downward</td>
-                      <td className="border border-white/10 px-3 py-2">0.17</td>
-                      <td className="border border-white/10 px-3 py-2">0.04</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Insulation Materials
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Material</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">λ (W/mK)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Phenolic foam</td>
-                      <td className="border border-white/10 px-3 py-2">0.018-0.022</td>
-                      <td className="border border-white/10 px-3 py-2">Where space is limited</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PIR/PUR rigid foam</td>
-                      <td className="border border-white/10 px-3 py-2">0.022-0.028</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Flat roofs, wall cavities
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Expanded polystyrene (EPS)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.032-0.038</td>
-                      <td className="border border-white/10 px-3 py-2">Floor insulation, EIFS</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mineral wool</td>
-                      <td className="border border-white/10 px-3 py-2">0.035-0.040</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cavity walls, loft spaces
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key principle:</strong> Lower thermal conductivity (λ) means better insulation
-              - less thickness required to achieve target U-value.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Part L Limiting Parameters */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Part L Limiting Parameters
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Calculate the U-value for a cavity wall construction.</p>
+            <p>Construction (inside to outside):</p>
+            <p>- 13mm plasterboard (λ = 0.21 W/mK)</p>
+            <p>- 100mm blockwork (λ = 0.15 W/mK)</p>
+            <p>- 100mm mineral wool insulation (λ = 0.035 W/mK)</p>
+            <p>- 102.5mm facing brick (λ = 0.77 W/mK)</p>
+            <p>Calculate thermal resistances:</p>
+            <p>R<sub>si</sub> = 0.13 m²K/W</p>
+            <p>R<sub>plaster</sub> = 0.013 / 0.21 = 0.062 m²K/W</p>
+            <p>R<sub>block</sub> = 0.100 / 0.15 = 0.667 m²K/W</p>
+            <p>R<sub>insulation</sub> = 0.100 / 0.035 = 2.857 m²K/W</p>
+            <p>R<sub>brick</sub> = 0.1025 / 0.77 = 0.133 m²K/W</p>
+            <p>R<sub>se</sub> = 0.04 m²K/W</p>
+            <p>R<sub>total</sub> = 0.13 + 0.062 + 0.667 + 2.857 + 0.133 + 0.04</p>
+            <p>R<sub>total</sub> = 3.889 m²K/W</p>
+            <p>U = 1 / 3.889 = 0.257 W/m²K</p>
+            <p>Result: Just exceeds 0.26 limiting value - needs improvement</p>
             <p>
-              Building Regulations Part L sets both limiting U-values (absolute backstop values) and
-              notional building values (reference for comparison calculations). Understanding both
-              is essential for compliant building services design.
+              <strong>Example 2: Thermal Bridging Impact</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Part L 2021 - Limiting U-Values (New Buildings)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Element</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Dwellings (W/m²K)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Non-Domestic (W/m²K)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">External walls</td>
-                      <td className="border border-white/10 px-3 py-2">0.26</td>
-                      <td className="border border-white/10 px-3 py-2">0.26</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Roof</td>
-                      <td className="border border-white/10 px-3 py-2">0.16</td>
-                      <td className="border border-white/10 px-3 py-2">0.16</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ground floor</td>
-                      <td className="border border-white/10 px-3 py-2">0.18</td>
-                      <td className="border border-white/10 px-3 py-2">0.18</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Windows/roof windows</td>
-                      <td className="border border-white/10 px-3 py-2">1.6</td>
-                      <td className="border border-white/10 px-3 py-2">1.6</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Doors</td>
-                      <td className="border border-white/10 px-3 py-2">1.6</td>
-                      <td className="border border-white/10 px-3 py-2">1.6</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Curtain walling</td>
-                      <td className="border border-white/10 px-3 py-2">-</td>
-                      <td className="border border-white/10 px-3 py-2">1.6</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Limiting Values</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Absolute maximum - cannot be exceeded</li>
-                  <li className="pl-1">Apply to every individual element</li>
-                  <li className="pl-1">No trade-off permitted</li>
-                  <li className="pl-1">Backstop for worst-case performance</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Notional Values</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Reference for comparison calculation</li>
-                  <li className="pl-1">Typically more onerous than limiting</li>
-                  <li className="pl-1">Trade-off between elements allowed</li>
-                  <li className="pl-1">Must meet TFEE/TER targets overall</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Target Fabric Energy Efficiency (TFEE)
-              </p>
-              <p className="text-sm text-white">
-                Part L 2021 introduces TFEE for dwellings - a metric measuring fabric performance
-                independent of services. The building's Fabric Energy Efficiency (FEE) must not
-                exceed the TFEE calculated for the notional building, ensuring fabric performance is
-                not traded off against efficient services.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Services impact:</strong> Better fabric performance reduces heating/cooling
-              loads, allowing smaller plant sizes but must be correctly input to SAP/SBEM for
-              accurate compliance demonstration.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Thermal Bridging */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Thermal Bridging and Psi Values
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Calculate total heat loss including thermal bridges for a small dwelling.</p>
+            <p>Building data:</p>
+            <p>- Total exposed envelope area: 250 m²</p>
+            <p>- Wall area: 120 m² (U = 0.20 W/m²K)</p>
+            <p>- Roof area: 80 m² (U = 0.14 W/m²K)</p>
+            <p>- Floor area: 50 m² (U = 0.15 W/m²K)</p>
+            <p>Junction lengths and psi values:</p>
+            <p>- Wall/floor: 40m × 0.08 W/mK = 3.2 W/K</p>
+            <p>- Wall/roof: 40m × 0.06 W/mK = 2.4 W/K</p>
+            <p>- Corners: 24m × 0.04 W/mK = 0.96 W/K</p>
+            <p>- Window reveals: 48m × 0.05 W/mK = 2.4 W/K</p>
+            <p>Fabric heat loss:</p>
+            <p>H<sub>fabric</sub> = (120×0.20) + (80×0.14) + (50×0.15)</p>
+            <p>H<sub>fabric</sub> = 24 + 11.2 + 7.5 = 42.7 W/K</p>
+            <p>Thermal bridge heat loss:</p>
+            <p>H<sub>TB</sub> = 3.2 + 2.4 + 0.96 + 2.4 = 8.96 W/K</p>
+            <p>Total H = 42.7 + 8.96 = 51.66 W/K</p>
+            <p>Thermal bridges add 21% to fabric heat loss!</p>
             <p>
-              Thermal bridges occur where the insulation layer is interrupted or where materials
-              with higher thermal conductivity penetrate the building envelope. Quantifying and
-              minimising thermal bridging is critical for achieving designed energy performance.
+              <strong>Example 3: Insulation Thickness Selection</strong>
             </p>
+            <p><strong>Scenario:</strong> Determine insulation thickness required to achieve U = 0.14 W/m²K for a flat roof.</p>
+            <p>Target U-value: 0.14 W/m²K</p>
+            <p>Required R<sub>total</sub> = 1 / 0.14 = 7.14 m²K/W</p>
+            <p>Known resistances:</p>
+            <p>R<sub>si</sub> = 0.10 m²K/W</p>
+            <p>R<sub>deck</sub> (18mm plywood) = 0.018/0.13 = 0.138 m²K/W</p>
+            <p>R<sub>membrane</sub> = negligible</p>
+            <p>R<sub>se</sub> = 0.04 m²K/W</p>
+            <p>Resistance required from insulation:</p>
+            <p>R<sub>ins</sub> = 7.14 - 0.10 - 0.138 - 0.04 = 6.86 m²K/W</p>
+            <p>Using PIR insulation (λ = 0.022 W/mK):</p>
+            <p>Thickness = R × λ = 6.86 × 0.022 = 0.151m</p>
+            <p>Required: 160mm PIR insulation (rounded up)</p>
+            <p>Alternatively, 200mm mineral wool (λ=0.035) would give similar R-value</p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Types of thermal bridges:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Linear (2D):</strong> Junctions between elements - wall/floor, wall/roof,
-                  around openings
-                </li>
-                <li className="pl-1">
-                  <strong>Point (3D):</strong> Penetrations through the envelope - fixings,
-                  brackets, services
-                </li>
-                <li className="pl-1">
-                  <strong>Geometric:</strong> Corners where heat flow concentrates
-                </li>
-                <li className="pl-1">
-                  <strong>Structural:</strong> Steel or concrete elements bridging insulation
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Psi Value (ψ) - Linear Thermal Transmittance
-              </p>
-              <div className="font-mono text-sm space-y-2">
-                <p>
-                  <span className="text-white">Heat loss at junction = ψ × L × ΔT</span>
-                </p>
-                <p className="text-white">Where:</p>
-                <p className="ml-4 text-white">ψ = psi value (W/mK)</p>
-                <p className="ml-4 text-white">L = length of junction (m)</p>
-                <p className="ml-4 text-white">ΔT = temperature difference (K)</p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Typical Psi Values</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Junction Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Good Detail (W/mK)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Poor Detail (W/mK)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Wall/floor (ground)</td>
-                      <td className="border border-white/10 px-3 py-2">0.05 - 0.10</td>
-                      <td className="border border-white/10 px-3 py-2">0.30 - 0.50</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Wall/roof (eaves)</td>
-                      <td className="border border-white/10 px-3 py-2">0.04 - 0.08</td>
-                      <td className="border border-white/10 px-3 py-2">0.20 - 0.35</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Window jamb</td>
-                      <td className="border border-white/10 px-3 py-2">0.02 - 0.05</td>
-                      <td className="border border-white/10 px-3 py-2">0.10 - 0.15</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Corner (external)</td>
-                      <td className="border border-white/10 px-3 py-2">0.02 - 0.05</td>
-                      <td className="border border-white/10 px-3 py-2">0.08 - 0.15</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lintel</td>
-                      <td className="border border-white/10 px-3 py-2">0.05 - 0.12</td>
-                      <td className="border border-white/10 px-3 py-2">0.25 - 0.50</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Total Heat Loss from Thermal Bridges
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  H<sub>TB</sub> = Σ(ψ × L) + Σ(χ × n)
-                </p>
-                <p className="mt-2 text-white">Or using y-value method:</p>
-                <p>
-                  H<sub>TB</sub> = y × A<sub>exp</sub>
-                </p>
-                <p className="mt-2">Where:</p>
-                <p className="ml-4">χ = chi value for point thermal bridges (W/K)</p>
-                <p className="ml-4">n = number of point thermal bridges</p>
-                <p className="ml-4">y = aggregate y-value (W/m²K)</p>
-                <p className="ml-4">
-                  A<sub>exp</sub> = total exposed envelope area (m²)
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Default y-value:</strong> If detailed psi calculations are not available,
-              SAP/SBEM uses y = 0.15 W/m²K - a significant penalty that can add 15-20% to fabric
-              heat loss.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Construction Specifications */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Construction Specifications and Services Impact
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Specifying fabric performance requires understanding construction build-ups, material
-              properties, and their interaction with building services. Services engineers must
-              interpret fabric specifications to correctly size systems and detail penetrations.
+              <strong>U-Value Calculation Checklist:</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  External Wall Build-Up
-                </p>
-                <ul className="text-sm text-white space-y-1.5">
-                  <li>13mm plasterboard (0.21 W/mK)</li>
-                  <li>100mm insulated timber frame (0.035 W/mK)</li>
-                  <li>12mm sheathing board (0.13 W/mK)</li>
-                  <li>50mm cavity (vented)</li>
-                  <li>102.5mm facing brick (0.77 W/mK)</li>
-                  <li className="mt-2 text-elec-yellow/70">Target U-value: 0.18 W/m²K</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Flat Roof Build-Up</p>
-                <ul className="text-sm text-white space-y-1.5">
-                  <li>Single-ply membrane</li>
-                  <li>150mm PIR insulation (0.022 W/mK)</li>
-                  <li>Vapour control layer</li>
-                  <li>18mm plywood deck</li>
-                  <li>Timber joists/steel structure</li>
-                  <li className="mt-2 text-elec-yellow/70">Target U-value: 0.14 W/m²K</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Impact on Building Services Design
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Fabric Parameter
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Services Impact
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Design Consideration
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Wall U-value</td>
-                      <td className="border border-white/10 px-3 py-2">Heating/cooling load</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lower U = smaller radiators/FCUs
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Roof U-value</td>
-                      <td className="border border-white/10 px-3 py-2">Peak summer gains</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Solar gain through roof affects cooling
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Window U-value</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Perimeter heating, cold spots
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher glazing = more perimeter capacity
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Thermal mass</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Control strategy, peak shifting
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heavy buildings suit night cooling
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Air permeability</td>
-                      <td className="border border-white/10 px-3 py-2">Ventilation strategy</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Tight buildings need MVHR
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Services Penetrations - Thermal Bridge Mitigation
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Ductwork:</strong> Insulate ducts through envelope, seal around
-                  penetrations
-                </li>
-                <li className="pl-1">
-                  <strong>Pipework:</strong> Use proprietary thermal break sleeves where passing
-                  through insulation
-                </li>
-                <li className="pl-1">
-                  <strong>Cables:</strong> Seal with intumescent mastic, maintain insulation
-                  continuity
-                </li>
-                <li className="pl-1">
-                  <strong>Flue penetrations:</strong> Purpose-made insulated flashings, maintain
-                  clearances
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Coordination critical:</strong> Services routes should be planned to minimise
-              envelope penetrations - each penetration creates a potential thermal bridge and air
-              leakage path.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Identify all layers from inside to outside</li>
+              <li>Obtain thermal conductivity (λ) for each material</li>
+              <li>Calculate resistance of each layer (R = d/λ)</li>
+              <li>Add appropriate surface resistances (Rsi, Rse)</li>
+              <li>Sum all resistances for Rtotal</li>
+              <li>Calculate U = 1/Rtotal and compare to limiting values</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Wall Rsi: <strong>0.13 m²K/W</strong>, Rse: <strong>0.04 m²K/W</strong></li>
+              <li>Limiting U-value walls: <strong>0.26 W/m²K</strong></li>
+              <li>Limiting U-value roofs: <strong>0.16 W/m²K</strong></li>
+              <li>Default y-value: <strong>0.15 W/m²K</strong></li>
+              <li>PIR conductivity: <strong>0.022-0.028 W/mK</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Wall U-Value Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate the U-value for a cavity wall construction.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Construction (inside to outside):</p>
-                <p className="ml-4">- 13mm plasterboard (λ = 0.21 W/mK)</p>
-                <p className="ml-4">- 100mm blockwork (λ = 0.15 W/mK)</p>
-                <p className="ml-4">- 100mm mineral wool insulation (λ = 0.035 W/mK)</p>
-                <p className="ml-4">- 102.5mm facing brick (λ = 0.77 W/mK)</p>
-                <p className="mt-2">Calculate thermal resistances:</p>
-                <p className="ml-4">
-                  R<sub>si</sub> = 0.13 m²K/W
-                </p>
-                <p className="ml-4">
-                  R<sub>plaster</sub> = 0.013 / 0.21 = 0.062 m²K/W
-                </p>
-                <p className="ml-4">
-                  R<sub>block</sub> = 0.100 / 0.15 = 0.667 m²K/W
-                </p>
-                <p className="ml-4">
-                  R<sub>insulation</sub> = 0.100 / 0.035 = 2.857 m²K/W
-                </p>
-                <p className="ml-4">
-                  R<sub>brick</sub> = 0.1025 / 0.77 = 0.133 m²K/W
-                </p>
-                <p className="ml-4">
-                  R<sub>se</sub> = 0.04 m²K/W
-                </p>
-                <p className="mt-2">
-                  R<sub>total</sub> = 0.13 + 0.062 + 0.667 + 2.857 + 0.133 + 0.04
-                </p>
-                <p className="ml-4">
-                  R<sub>total</sub> = 3.889 m²K/W
-                </p>
-                <p className="mt-2 text-green-400">U = 1 / 3.889 = 0.257 W/m²K</p>
-                <p className="text-orange-400">
-                  Result: Just exceeds 0.26 limiting value - needs improvement
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Thermal Bridging Impact
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate total heat loss including thermal bridges for a
-                small dwelling.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Building data:</p>
-                <p className="ml-4">- Total exposed envelope area: 250 m²</p>
-                <p className="ml-4">- Wall area: 120 m² (U = 0.20 W/m²K)</p>
-                <p className="ml-4">- Roof area: 80 m² (U = 0.14 W/m²K)</p>
-                <p className="ml-4">- Floor area: 50 m² (U = 0.15 W/m²K)</p>
-                <p className="mt-2">Junction lengths and psi values:</p>
-                <p className="ml-4">- Wall/floor: 40m × 0.08 W/mK = 3.2 W/K</p>
-                <p className="ml-4">- Wall/roof: 40m × 0.06 W/mK = 2.4 W/K</p>
-                <p className="ml-4">- Corners: 24m × 0.04 W/mK = 0.96 W/K</p>
-                <p className="ml-4">- Window reveals: 48m × 0.05 W/mK = 2.4 W/K</p>
-                <p className="mt-2">Fabric heat loss:</p>
-                <p className="ml-4">
-                  H<sub>fabric</sub> = (120×0.20) + (80×0.14) + (50×0.15)
-                </p>
-                <p className="ml-4">
-                  H<sub>fabric</sub> = 24 + 11.2 + 7.5 = 42.7 W/K
-                </p>
-                <p className="mt-2">Thermal bridge heat loss:</p>
-                <p className="ml-4">
-                  H<sub>TB</sub> = 3.2 + 2.4 + 0.96 + 2.4 = 8.96 W/K
-                </p>
-                <p className="mt-2 text-green-400">Total H = 42.7 + 8.96 = 51.66 W/K</p>
-                <p className="text-orange-400">Thermal bridges add 21% to fabric heat loss!</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Insulation Thickness Selection
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Determine insulation thickness required to achieve U =
-                0.14 W/m²K for a flat roof.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Target U-value: 0.14 W/m²K</p>
-                <p>
-                  Required R<sub>total</sub> = 1 / 0.14 = 7.14 m²K/W
-                </p>
-                <p className="mt-2">Known resistances:</p>
-                <p className="ml-4">
-                  R<sub>si</sub> = 0.10 m²K/W
-                </p>
-                <p className="ml-4">
-                  R<sub>deck</sub> (18mm plywood) = 0.018/0.13 = 0.138 m²K/W
-                </p>
-                <p className="ml-4">
-                  R<sub>membrane</sub> = negligible
-                </p>
-                <p className="ml-4">
-                  R<sub>se</sub> = 0.04 m²K/W
-                </p>
-                <p className="mt-2">Resistance required from insulation:</p>
-                <p className="ml-4">
-                  R<sub>ins</sub> = 7.14 - 0.10 - 0.138 - 0.04 = 6.86 m²K/W
-                </p>
-                <p className="mt-2">Using PIR insulation (λ = 0.022 W/mK):</p>
-                <p className="ml-4">Thickness = R × λ = 6.86 × 0.022 = 0.151m</p>
-                <p className="mt-2 text-green-400">Required: 160mm PIR insulation (rounded up)</p>
-                <p className="text-white">
-                  Alternatively, 200mm mineral wool (λ=0.035) would give similar R-value
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                U-Value Calculation Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Identify all layers from inside to outside</li>
-                <li className="pl-1">Obtain thermal conductivity (λ) for each material</li>
-                <li className="pl-1">Calculate resistance of each layer (R = d/λ)</li>
-                <li className="pl-1">Add appropriate surface resistances (Rsi, Rse)</li>
-                <li className="pl-1">Sum all resistances for Rtotal</li>
-                <li className="pl-1">Calculate U = 1/Rtotal and compare to limiting values</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Forgetting surface resistances</strong> - Always include Rsi and Rse</li>
+                <li><strong>Using wrong λ values</strong> - Check actual product data, not generic values</li>
+                <li><strong>Ignoring thermal bridges</strong> - Can add 20%+ to heat loss</li>
+                <li><strong>Confusing limiting and notional values</strong> - Know the difference</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Wall Rsi: <strong>0.13 m²K/W</strong>, Rse: <strong>0.04 m²K/W</strong>
-                </li>
-                <li className="pl-1">
-                  Limiting U-value walls: <strong>0.26 W/m²K</strong>
-                </li>
-                <li className="pl-1">
-                  Limiting U-value roofs: <strong>0.16 W/m²K</strong>
-                </li>
-                <li className="pl-1">
-                  Default y-value: <strong>0.15 W/m²K</strong>
-                </li>
-                <li className="pl-1">
-                  PIR conductivity: <strong>0.022-0.028 W/mK</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Forgetting surface resistances</strong> - Always include Rsi and Rse
-                </li>
-                <li className="pl-1">
-                  <strong>Using wrong λ values</strong> - Check actual product data, not generic
-                  values
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring thermal bridges</strong> - Can add 20%+ to heat loss
-                </li>
-                <li className="pl-1">
-                  <strong>Confusing limiting and notional values</strong> - Know the difference
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="Air permeability test fails at 9.2 — what now"
+            situation={
+              <>
+                The designer specified an air permeability of 5 m³/h·m² (notional value) and the SAP design-stage calculation is built on it. The site test on plot 14 returns 9.2 — above the 8 limit. Without remediation, the dwelling fails Part L and cannot complete.
+              </>
+            }
+            whatToDo={
+              <>
+                Re-test after smoke-pencil identification of the leakage paths (typically penetrations at services, eaves and lintel junctions). If the second test still fails, two routes are open: (1) physical remediation (intumescent sealing, taping, membrane repair) and re-test, or (2) re-run SAP with the as-tested 9.2 value and demonstrate compliance via offsetting measures (better SCOP for the heat pump, additional PV, enhanced lighting). Both must be evidenced before Building Control sign-off.
+              </>
+            }
+            whyItMatters={
+              <>
+                Air permeability is the headline number Building Control look at — and it cannot be wished away. Designing to 5 with no contingency means every plot becomes a gamble. Best practice is to design to 4 on paper, allow 1 for site execution drift, and target ≤5 measured.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Part L 2021 Limiting U-Values</p>
-                <ul className="space-y-0.5">
-                  <li>Walls: 0.26 W/m²K</li>
-                  <li>Roofs: 0.16 W/m²K</li>
-                  <li>Floors: 0.18 W/m²K</li>
-                  <li>Windows/doors: 1.6 W/m²K</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Surface Resistances (Walls)</p>
-                <ul className="space-y-0.5">
-                  <li>Internal (Rsi): 0.13 m²K/W</li>
-                  <li>External (Rse): 0.04 m²K/W</li>
-                  <li>Formula: R = d / λ</li>
-                  <li>U-value: U = 1 / Rtotal</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              "U-values measured in W/m²K — lower is better. Limiting values are absolute, not negotiable.",
+              "Ψ-values (linear thermal bridges) calculated to BR 497 / ISO 10211 or taken from Accredited Construction Details.",
+              "Air permeability tested per ATTMA TSL1 (dwellings) or TSL2 (non-dom) — 50 Pa pressure differential.",
+              "Notional dwelling = 5 m³/h·m² air permeability; legal limit = 8.",
+              "Service penetrations are the largest single leakage source — coordinate sealing details with M&E containment.",
+              "Always design with a margin: target U-values 10-15% better than limiting, air permeability 1-2 m³/h·m² better.",
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section1-4">
-              Next: Airtightness and Ventilation
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section1-2")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                SBEM calculations
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section1-4")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Air permeability
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

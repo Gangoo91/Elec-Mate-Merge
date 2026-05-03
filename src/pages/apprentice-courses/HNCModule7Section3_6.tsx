@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 7 · Section 3 · Subsection 6 — CIBSE Standards
+ * HNC Electrical Engineering for Building Services (Power and Lighting Systems)
+ *   Lighting Guide requirements, workplace standards, task lighting and SLL recommendations
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'CIBSE Standards - HNC Module 7 Section 3.6';
@@ -219,812 +232,296 @@ const faqs = [
 ];
 
 const HNCModule7Section3_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section3")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module7-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.3.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            CIBSE Standards
-          </h1>
-          <p className="text-white">
-            Lighting Guide requirements, workplace standards, task lighting and SLL recommendations
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 7 · Section 3 · Subsection 6"
+            title="CIBSE Standards"
+            description="Lighting Guide requirements, workplace standards, task lighting and SLL recommendations"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>CIBSE LG:</strong> Detailed guidance for lighting applications
-              </li>
-              <li className="pl-1">
-                <strong>BS EN 12464-1:</strong> Workplace illuminance requirements
-              </li>
-              <li className="pl-1">
-                <strong>Maintained illuminance:</strong> Minimum average over service life
-              </li>
-              <li className="pl-1">
-                <strong>UGR limits:</strong> Glare control for visual comfort
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Apply CIBSE Lighting Guides LG3, LG7, and LG10 to design projects",
+              "Determine maintained illuminance levels for different workplace tasks",
+              "Calculate and apply maintenance factors to lighting designs",
+              "Specify appropriate UGR limits for visual comfort",
+              "Use BS EN 12464-1 for workplace lighting compliance",
+              "Integrate SLL Code recommendations into lighting schemes",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="CIBSE Lighting Guides Overview">
+            <p>The Chartered Institution of Building Services Engineers (CIBSE) publishes a comprehensive series of Lighting Guides that provide detailed technical guidance for lighting designers and engineers. These guides complement the statutory requirements of BS EN 12464-1 with practical design methodologies and best practice recommendations.</p>
+            <p><strong>Key CIBSE Lighting Guides:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>LG3 - The Visual Environment:</strong> Fundamental principles of vision, visual performance, and lighting quality</li>
+              <li><strong>LG7 - Office Lighting:</strong> Comprehensive guidance for office environments including VDT areas</li>
+              <li><strong>LG10 - Daylighting:</strong> Window design, daylight factors, and integration with electric lighting</li>
+              <li><strong>LG14 - Control of Electric Lighting:</strong> Lighting control systems and energy management</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Standards</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>LG3:</strong> The Visual Environment
-              </li>
-              <li className="pl-1">
-                <strong>LG7:</strong> Office lighting (500 lux typical)
-              </li>
-              <li className="pl-1">
-                <strong>LG10:</strong> Daylighting and window design
-              </li>
-              <li className="pl-1">
-                <strong>SLL Code:</strong> Comprehensive lighting guidance
-              </li>
+            <p><strong>CIBSE Lighting Guide Summary</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>LG1:</strong> Industrial Lighting — Manufacturing, warehouses, heavy industry</li>
+              <li><strong>LG3:</strong> The Visual Environment — Vision science, visual comfort, health effects</li>
+              <li><strong>LG5:</strong> Lighting for Education — Schools, colleges, universities</li>
+              <li><strong>LG7:</strong> Office Lighting — General offices, VDT areas, meeting rooms</li>
+              <li><strong>LG10:</strong> Daylighting — Windows, rooflights, daylight factors</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Professional practice:</strong> CIBSE guides represent current best practice and are regularly updated to reflect advances in lighting technology and research.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Apply CIBSE Lighting Guides LG3, LG7, and LG10 to design projects',
-              'Determine maintained illuminance levels for different workplace tasks',
-              'Calculate and apply maintenance factors to lighting designs',
-              'Specify appropriate UGR limits for visual comfort',
-              'Use BS EN 12464-1 for workplace lighting compliance',
-              'Integrate SLL Code recommendations into lighting schemes',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: CIBSE Lighting Guides Overview */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            CIBSE Lighting Guides Overview
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="BS EN 12464-1 and Maintained Illuminance">
+            <p>BS EN 12464-1 'Light and lighting - Lighting of work places - Part 1: Indoor work places' is the European standard adopted in the UK that specifies lighting requirements for indoor workplaces. It defines minimum maintained illuminance levels, uniformity ratios, and glare limits for different tasks and activities.</p>
+            <p><strong>Maintained Illuminance (Em)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Average illuminance on task plane</li>
+              <li>Value at maintenance point</li>
+              <li>Accounts for depreciation</li>
+              <li>Must not fall below stated value</li>
+            </ul>
+            <p><strong>Illuminance Uniformity (Uo)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Ratio: Emin / Eaverage</li>
+              <li>Task area: Uo &gt; 0.6</li>
+              <li>Immediate surround: Uo &gt; 0.4</li>
+              <li>Prevents excessive contrast</li>
+            </ul>
+            <p><strong>Unified Glare Rating (UGR)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Measures discomfort glare</li>
+              <li>Offices typically UGR &lt; 19</li>
+              <li>Industrial may be UGR &lt; 25</li>
+              <li>Lower = better glare control</li>
+            </ul>
+            <p><strong>Workplace Illuminance Requirements (BS EN 12464-1)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Corridors and circulation:</strong> 100 — 28 — 40</li>
+              <li><strong>Stairs and escalators:</strong> 150 — 25 — 40</li>
+              <li><strong>Reception areas:</strong> 300 — 22 — 80</li>
+              <li><strong>General office work:</strong> 500 — 19 — 80</li>
+              <li><strong>Technical drawing:</strong> 750 — 16 — 80</li>
+              <li><strong>CAD workstations:</strong> 500 — 19 — 80</li>
+              <li><strong>Conference rooms:</strong> 500 — 19 — 80</li>
+            </ul>
+            <p><strong>Compliance note:</strong> These are minimum maintained values. Designers may specify higher levels where task demands or occupant preferences require improved visual conditions.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Maintenance Factors and Calculations">
+            <p>Lighting installations depreciate over time due to lamp ageing, dirt accumulation on luminaires, and deterioration of room surfaces. The maintenance factor (MF) accounts for these effects, ensuring that the required maintained illuminance is achieved throughout the maintenance cycle.</p>
+            <p><strong>Maintenance Factor Formula</strong></p>
+            <p><span>MF = LLMF x LSF x LMF x RSMF</span></p>
+            <p><span>Where:</span></p>
+            <p><span>LLMF</span> = Lamp Lumen Maintenance Factor (LED typical: 0.90)</p>
+            <p><span>LSF</span> = Lamp Survival Factor (planned replacement: 1.0)</p>
+            <p><span>LMF</span> = Luminaire Maintenance Factor (clean office: 0.90)</p>
+            <p><span>RSMF</span> = Room Surface Maintenance Factor (typical: 0.95)</p>
+            <p><strong>Typical Maintenance Factor Values</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Clean office:</strong> 3 years — 0.77 — 0.67</li>
+              <li><strong>Normal office:</strong> 2 years — 0.74 — 0.64</li>
+              <li><strong>Light industrial:</strong> 2 years — 0.68 — 0.58</li>
+              <li><strong>Heavy industrial:</strong> 1 year — 0.60 — 0.52</li>
+            </ul>
+            <p><strong>Component Factors Breakdown</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>LLMF:</strong> LED sources 0.85-0.95 at L70 life; fluorescent 0.80-0.90 at rated life</li>
+              <li><strong>LSF:</strong> Group replacement = 1.0; spot replacement typically 0.95</li>
+              <li><strong>LMF:</strong> IP20 open = 0.80-0.90; IP65 sealed = 0.90-0.95</li>
+              <li><strong>RSMF:</strong> Clean rooms 0.95; dirty environments 0.85-0.90</li>
+            </ul>
+            <p><strong>Design tip:</strong> Use conservative MF values for critical applications. Over-specifying by 10% provides margin for unexpected conditions.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="SLL Code for Lighting and Task Lighting">
+            <p>The Society of Light and Lighting (SLL), part of CIBSE, publishes the SLL Code for Lighting, which provides comprehensive guidance on interior and exterior lighting. Task lighting recommendations ensure appropriate illuminance for specific visual activities while considering energy efficiency and occupant comfort.</p>
+            <p><strong>Task Illuminance Scale (SLL Code)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>50:</strong> Orientation/safety — Storage areas, cable routes</li>
+              <li><strong>100:</strong> Movement and basic tasks — Corridors, loading bays</li>
+              <li><strong>200:</strong> Routine work, low detail — Foyers, rest rooms, archives</li>
+              <li><strong>300:</strong> Moderate visual tasks — Classrooms, retail areas</li>
+              <li><strong>500:</strong> Standard office tasks — Offices, control rooms</li>
+              <li><strong>750:</strong> Demanding visual tasks — Drawing, inspection work</li>
+              <li><strong>1000:</strong> Very fine detail tasks — Colour matching, fine assembly</li>
+            </ul>
+            <p><strong>Task Lighting Benefits</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Higher illuminance where needed</li>
+              <li>Individual control for occupants</li>
+              <li>Energy savings vs. high ambient</li>
+              <li>Reduced eye strain for detail work</li>
+              <li>Flexibility for changing layouts</li>
+            </ul>
+            <p><strong>Design Considerations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Task:surround ratio max 3:1</li>
+              <li>Avoid veiling reflections on screens</li>
+              <li>Position to avoid shadows</li>
+              <li>Consider colour temperature consistency</li>
+              <li>Provide switching/dimming control</li>
+            </ul>
+            <p><strong>Illuminance Ratios (SLL Recommendations)</strong></p>
+            <p><strong>Task area to immediate surround:</strong> Max 3:1</p>
+            <p><strong>Task area to background:</strong> Max 10:1</p>
+            <p><strong>Luminaire luminance to ceiling:</strong> Max 20:1</p>
+            <p><strong>Window to adjacent wall:</strong> Max 20:1</p>
+            <p>These ratios ensure comfortable adaptation and prevent excessive contrast that causes visual fatigue.</p>
+            <p><strong>Energy efficiency:</strong> Combining 300 lux ambient lighting with task lighting for desk work can reduce installed load by 20-30% compared to 500 lux uniform ambient.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              The Chartered Institution of Building Services Engineers (CIBSE) publishes a
-              comprehensive series of Lighting Guides that provide detailed technical guidance for
-              lighting designers and engineers. These guides complement the statutory requirements
-              of BS EN 12464-1 with practical design methodologies and best practice
-              recommendations.
+              <strong>Example 1: Office Lighting Specification</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key CIBSE Lighting Guides:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>LG3 - The Visual Environment:</strong> Fundamental principles of vision,
-                  visual performance, and lighting quality
-                </li>
-                <li className="pl-1">
-                  <strong>LG7 - Office Lighting:</strong> Comprehensive guidance for office
-                  environments including VDT areas
-                </li>
-                <li className="pl-1">
-                  <strong>LG10 - Daylighting:</strong> Window design, daylight factors, and
-                  integration with electric lighting
-                </li>
-                <li className="pl-1">
-                  <strong>LG14 - Control of Electric Lighting:</strong> Lighting control systems and
-                  energy management
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CIBSE Lighting Guide Summary
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Guide</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Title</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Content</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LG1</td>
-                      <td className="border border-white/10 px-3 py-2">Industrial Lighting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Manufacturing, warehouses, heavy industry
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LG3</td>
-                      <td className="border border-white/10 px-3 py-2">The Visual Environment</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Vision science, visual comfort, health effects
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LG5</td>
-                      <td className="border border-white/10 px-3 py-2">Lighting for Education</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Schools, colleges, universities
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LG7</td>
-                      <td className="border border-white/10 px-3 py-2">Office Lighting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        General offices, VDT areas, meeting rooms
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LG10</td>
-                      <td className="border border-white/10 px-3 py-2">Daylighting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Windows, rooflights, daylight factors
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Professional practice:</strong> CIBSE guides represent current best practice
-              and are regularly updated to reflect advances in lighting technology and research.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: BS EN 12464-1 and Maintained Illuminance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            BS EN 12464-1 and Maintained Illuminance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Specify lighting requirements for a 200m² open-plan office with VDT workstations.</p>
+            <p>Requirements from BS EN 12464-1 / CIBSE LG7:</p>
+            <p>Maintained illuminance (Em): 500 lux</p>
+            <p>Uniformity on task area (Uo): &gt; 0.6</p>
+            <p>Unified Glare Rating (UGR): &lt; 19</p>
+            <p>Colour rendering index (Ra): &gt; 80</p>
+            <p>Colour temperature: 4000K (neutral white)</p>
+            <p>Additional considerations:</p>
+            <p>- Luminaire mounting: Recessed or suspended</p>
+            <p>- Screen glare: Position to avoid reflections</p>
+            <p>- Controls: Daylight dimming, occupancy sensing</p>
+            <p>Compliant specification meets LG7 best practice</p>
             <p>
-              BS EN 12464-1 'Light and lighting - Lighting of work places - Part 1: Indoor work
-              places' is the European standard adopted in the UK that specifies lighting
-              requirements for indoor workplaces. It defines minimum maintained illuminance levels,
-              uniformity ratios, and glare limits for different tasks and activities.
+              <strong>Example 2: Maintenance Factor Calculation</strong>
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Maintained Illuminance (Em)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Average illuminance on task plane</li>
-                  <li className="pl-1">Value at maintenance point</li>
-                  <li className="pl-1">Accounts for depreciation</li>
-                  <li className="pl-1">Must not fall below stated value</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Illuminance Uniformity (Uo)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Ratio: Emin / Eaverage</li>
-                  <li className="pl-1">Task area: Uo &gt; 0.6</li>
-                  <li className="pl-1">Immediate surround: Uo &gt; 0.4</li>
-                  <li className="pl-1">Prevents excessive contrast</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Unified Glare Rating (UGR)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Measures discomfort glare</li>
-                  <li className="pl-1">Offices typically UGR &lt; 19</li>
-                  <li className="pl-1">Industrial may be UGR &lt; 25</li>
-                  <li className="pl-1">Lower = better glare control</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Workplace Illuminance Requirements (BS EN 12464-1)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Area/Task</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Em (lux)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">UGR</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Ra (min)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Corridors and circulation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">100</td>
-                      <td className="border border-white/10 px-3 py-2">28</td>
-                      <td className="border border-white/10 px-3 py-2">40</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Stairs and escalators</td>
-                      <td className="border border-white/10 px-3 py-2">150</td>
-                      <td className="border border-white/10 px-3 py-2">25</td>
-                      <td className="border border-white/10 px-3 py-2">40</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Reception areas</td>
-                      <td className="border border-white/10 px-3 py-2">300</td>
-                      <td className="border border-white/10 px-3 py-2">22</td>
-                      <td className="border border-white/10 px-3 py-2">80</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">General office work</td>
-                      <td className="border border-white/10 px-3 py-2">500</td>
-                      <td className="border border-white/10 px-3 py-2">19</td>
-                      <td className="border border-white/10 px-3 py-2">80</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Technical drawing</td>
-                      <td className="border border-white/10 px-3 py-2">750</td>
-                      <td className="border border-white/10 px-3 py-2">16</td>
-                      <td className="border border-white/10 px-3 py-2">80</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CAD workstations</td>
-                      <td className="border border-white/10 px-3 py-2">500</td>
-                      <td className="border border-white/10 px-3 py-2">19</td>
-                      <td className="border border-white/10 px-3 py-2">80</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Conference rooms</td>
-                      <td className="border border-white/10 px-3 py-2">500</td>
-                      <td className="border border-white/10 px-3 py-2">19</td>
-                      <td className="border border-white/10 px-3 py-2">80</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Compliance note:</strong> These are minimum maintained values. Designers may
-              specify higher levels where task demands or occupant preferences require improved
-              visual conditions.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Maintenance Factors and Calculations */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Maintenance Factors and Calculations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Calculate MF for LED luminaires in a normal office with 3-year maintenance cycle.</p>
+            <p>Component factors (from CIBSE tables):</p>
+            <p>LLMF (LED at 30,000 hrs): 0.90</p>
+            <p>LSF (group replacement): 1.0</p>
+            <p>LMF (IP20, normal environment): 0.87</p>
+            <p>RSMF (3-year cycle): 0.95</p>
+            <p>Calculation:</p>
+            <p>MF = 0.90 x 1.0 x 0.87 x 0.95</p>
+            <p>MF = 0.74</p>
+            <p>Design illuminance required:</p>
+            <p>Initial = 500 / 0.74 = 676 lux</p>
             <p>
-              Lighting installations depreciate over time due to lamp ageing, dirt accumulation on
-              luminaires, and deterioration of room surfaces. The maintenance factor (MF) accounts
-              for these effects, ensuring that the required maintained illuminance is achieved
-              throughout the maintenance cycle.
+              <strong>Example 3: Task and Ambient Lighting Design</strong>
             </p>
+            <p><strong>Scenario:</strong> Design combined ambient and task lighting for a drawing office.</p>
+            <p>Requirements (technical drawing):</p>
+            <p>Total illuminance required: 750 lux</p>
+            <p>UGR limit: 16</p>
+            <p>Combined approach:</p>
+            <p>Ambient lighting: 300 lux (uniform ceiling grid)</p>
+            <p>Task lighting: 450 lux (adjustable desk lamps)</p>
+            <p>Total at task: 750 lux</p>
+            <p>Compliance check:</p>
+            <p>Task:surround ratio = 750:300 = 2.5:1 &lt; 3:1</p>
+            <p>Compliant with SLL recommendations</p>
+            <p>Energy benefit:</p>
+            <p>300 lux ambient vs 750 lux uniform = 40% lower installed load</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Maintenance Factor Formula</p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">MF = LLMF x LSF x LMF x RSMF</span>
-                </p>
-                <p className="mt-2">
-                  <span className="text-white">Where:</span>
-                </p>
-                <p>
-                  <span className="text-white">LLMF</span> = Lamp Lumen Maintenance Factor (LED
-                  typical: 0.90)
-                </p>
-                <p>
-                  <span className="text-white">LSF</span> = Lamp Survival Factor (planned
-                  replacement: 1.0)
-                </p>
-                <p>
-                  <span className="text-white">LMF</span> = Luminaire Maintenance Factor (clean
-                  office: 0.90)
-                </p>
-                <p>
-                  <span className="text-white">RSMF</span> = Room Surface Maintenance Factor
-                  (typical: 0.95)
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Maintenance Factor Values
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Environment</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Cleaning Interval
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical MF (LED)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical MF (FL)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Clean office</td>
-                      <td className="border border-white/10 px-3 py-2">3 years</td>
-                      <td className="border border-white/10 px-3 py-2">0.77</td>
-                      <td className="border border-white/10 px-3 py-2">0.67</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Normal office</td>
-                      <td className="border border-white/10 px-3 py-2">2 years</td>
-                      <td className="border border-white/10 px-3 py-2">0.74</td>
-                      <td className="border border-white/10 px-3 py-2">0.64</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Light industrial</td>
-                      <td className="border border-white/10 px-3 py-2">2 years</td>
-                      <td className="border border-white/10 px-3 py-2">0.68</td>
-                      <td className="border border-white/10 px-3 py-2">0.58</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Heavy industrial</td>
-                      <td className="border border-white/10 px-3 py-2">1 year</td>
-                      <td className="border border-white/10 px-3 py-2">0.60</td>
-                      <td className="border border-white/10 px-3 py-2">0.52</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Component Factors Breakdown
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>LLMF:</strong> LED sources 0.85-0.95 at L70 life; fluorescent 0.80-0.90 at
-                  rated life
-                </li>
-                <li className="pl-1">
-                  <strong>LSF:</strong> Group replacement = 1.0; spot replacement typically 0.95
-                </li>
-                <li className="pl-1">
-                  <strong>LMF:</strong> IP20 open = 0.80-0.90; IP65 sealed = 0.90-0.95
-                </li>
-                <li className="pl-1">
-                  <strong>RSMF:</strong> Clean rooms 0.95; dirty environments 0.85-0.90
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design tip:</strong> Use conservative MF values for critical applications.
-              Over-specifying by 10% provides margin for unexpected conditions.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: SLL Code and Task Lighting */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            SLL Code for Lighting and Task Lighting
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              The Society of Light and Lighting (SLL), part of CIBSE, publishes the SLL Code for
-              Lighting, which provides comprehensive guidance on interior and exterior lighting.
-              Task lighting recommendations ensure appropriate illuminance for specific visual
-              activities while considering energy efficiency and occupant comfort.
+              <strong>CIBSE Standards Compliance Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Task Illuminance Scale (SLL Code)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Illuminance (lux)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Task Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Examples</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">50</td>
-                      <td className="border border-white/10 px-3 py-2">Orientation/safety</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Storage areas, cable routes
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">100</td>
-                      <td className="border border-white/10 px-3 py-2">Movement and basic tasks</td>
-                      <td className="border border-white/10 px-3 py-2">Corridors, loading bays</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">200</td>
-                      <td className="border border-white/10 px-3 py-2">Routine work, low detail</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Foyers, rest rooms, archives
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">300</td>
-                      <td className="border border-white/10 px-3 py-2">Moderate visual tasks</td>
-                      <td className="border border-white/10 px-3 py-2">Classrooms, retail areas</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">500</td>
-                      <td className="border border-white/10 px-3 py-2">Standard office tasks</td>
-                      <td className="border border-white/10 px-3 py-2">Offices, control rooms</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">750</td>
-                      <td className="border border-white/10 px-3 py-2">Demanding visual tasks</td>
-                      <td className="border border-white/10 px-3 py-2">Drawing, inspection work</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1000</td>
-                      <td className="border border-white/10 px-3 py-2">Very fine detail tasks</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Colour matching, fine assembly
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-3 rounded bg-white/5">
-                <p className="font-medium text-white mb-2">Task Lighting Benefits</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>Higher illuminance where needed</li>
-                  <li>Individual control for occupants</li>
-                  <li>Energy savings vs. high ambient</li>
-                  <li>Reduced eye strain for detail work</li>
-                  <li>Flexibility for changing layouts</li>
-                </ul>
-              </div>
-              <div className="p-3 rounded bg-white/5">
-                <p className="font-medium text-white mb-2">Design Considerations</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>Task:surround ratio max 3:1</li>
-                  <li>Avoid veiling reflections on screens</li>
-                  <li>Position to avoid shadows</li>
-                  <li>Consider colour temperature consistency</li>
-                  <li>Provide switching/dimming control</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Illuminance Ratios (SLL Recommendations)
-              </p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <strong>Task area to immediate surround:</strong> Max 3:1
-                </p>
-                <p>
-                  <strong>Task area to background:</strong> Max 10:1
-                </p>
-                <p>
-                  <strong>Luminaire luminance to ceiling:</strong> Max 20:1
-                </p>
-                <p>
-                  <strong>Window to adjacent wall:</strong> Max 20:1
-                </p>
-                <p className="text-white mt-2">
-                  These ratios ensure comfortable adaptation and prevent excessive contrast that
-                  causes visual fatigue.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Energy efficiency:</strong> Combining 300 lux ambient lighting with task
-              lighting for desk work can reduce installed load by 20-30% compared to 500 lux uniform
-              ambient.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Identify task types and corresponding BS EN 12464-1 requirements</li>
+              <li>Calculate appropriate maintenance factor for the environment</li>
+              <li>Verify UGR compliance using luminaire data and room dimensions</li>
+              <li>Check uniformity ratios meet minimum requirements</li>
+              <li>Confirm colour rendering (Ra) meets task needs</li>
+              <li>Document assumptions in lighting design report</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>General office: <strong>500 lux, UGR &lt; 19, Ra &gt; 80</strong></li>
+              <li>Technical drawing: <strong>750 lux, UGR &lt; 16, Ra &gt; 80</strong></li>
+              <li>Corridors: <strong>100 lux, UGR &lt; 28, Ra &gt; 40</strong></li>
+              <li>Task uniformity: <strong>Uo &gt; 0.6</strong></li>
+              <li>Typical office MF: <strong>0.70-0.80 (LED)</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Office Lighting Specification
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Specify lighting requirements for a 200m² open-plan
-                office with VDT workstations.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Requirements from BS EN 12464-1 / CIBSE LG7:</p>
-                <p className="mt-2 ml-4">Maintained illuminance (Em): 500 lux</p>
-                <p className="ml-4">Uniformity on task area (Uo): &gt; 0.6</p>
-                <p className="ml-4">Unified Glare Rating (UGR): &lt; 19</p>
-                <p className="ml-4">Colour rendering index (Ra): &gt; 80</p>
-                <p className="ml-4">Colour temperature: 4000K (neutral white)</p>
-                <p className="mt-2">Additional considerations:</p>
-                <p className="ml-4">- Luminaire mounting: Recessed or suspended</p>
-                <p className="ml-4">- Screen glare: Position to avoid reflections</p>
-                <p className="ml-4">- Controls: Daylight dimming, occupancy sensing</p>
-                <p className="mt-2 text-green-400">
-                  Compliant specification meets LG7 best practice
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Maintenance Factor Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate MF for LED luminaires in a normal office with
-                3-year maintenance cycle.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Component factors (from CIBSE tables):</p>
-                <p className="mt-2 ml-4">LLMF (LED at 30,000 hrs): 0.90</p>
-                <p className="ml-4">LSF (group replacement): 1.0</p>
-                <p className="ml-4">LMF (IP20, normal environment): 0.87</p>
-                <p className="ml-4">RSMF (3-year cycle): 0.95</p>
-                <p className="mt-2">Calculation:</p>
-                <p className="ml-4">MF = 0.90 x 1.0 x 0.87 x 0.95</p>
-                <p className="ml-4 text-green-400">MF = 0.74</p>
-                <p className="mt-2">Design illuminance required:</p>
-                <p className="ml-4">Initial = 500 / 0.74 = 676 lux</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Task and Ambient Lighting Design
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Design combined ambient and task lighting for a drawing
-                office.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Requirements (technical drawing):</p>
-                <p className="ml-4">Total illuminance required: 750 lux</p>
-                <p className="ml-4">UGR limit: 16</p>
-                <p className="mt-2">Combined approach:</p>
-                <p className="ml-4">Ambient lighting: 300 lux (uniform ceiling grid)</p>
-                <p className="ml-4">Task lighting: 450 lux (adjustable desk lamps)</p>
-                <p className="ml-4">Total at task: 750 lux</p>
-                <p className="mt-2">Compliance check:</p>
-                <p className="ml-4">Task:surround ratio = 750:300 = 2.5:1 &lt; 3:1</p>
-                <p className="ml-4 text-green-400">Compliant with SLL recommendations</p>
-                <p className="mt-2">Energy benefit:</p>
-                <p className="ml-4">
-                  300 lux ambient vs 750 lux uniform = 40% lower installed load
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CIBSE Standards Compliance Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Identify task types and corresponding BS EN 12464-1 requirements
-                </li>
-                <li className="pl-1">
-                  Calculate appropriate maintenance factor for the environment
-                </li>
-                <li className="pl-1">
-                  Verify UGR compliance using luminaire data and room dimensions
-                </li>
-                <li className="pl-1">Check uniformity ratios meet minimum requirements</li>
-                <li className="pl-1">Confirm colour rendering (Ra) meets task needs</li>
-                <li className="pl-1">Document assumptions in lighting design report</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Using initial illuminance as maintained:</strong> Always apply maintenance factor</li>
+                <li><strong>Ignoring UGR in calculations:</strong> Glare significantly affects comfort</li>
+                <li><strong>Uniform lighting everywhere:</strong> Task/ambient approach often more efficient</li>
+                <li><strong>Wrong Ra for colour-critical tasks:</strong> Check minimum requirements</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  General office: <strong>500 lux, UGR &lt; 19, Ra &gt; 80</strong>
-                </li>
-                <li className="pl-1">
-                  Technical drawing: <strong>750 lux, UGR &lt; 16, Ra &gt; 80</strong>
-                </li>
-                <li className="pl-1">
-                  Corridors: <strong>100 lux, UGR &lt; 28, Ra &gt; 40</strong>
-                </li>
-                <li className="pl-1">
-                  Task uniformity: <strong>Uo &gt; 0.6</strong>
-                </li>
-                <li className="pl-1">
-                  Typical office MF: <strong>0.70-0.80 (LED)</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Using initial illuminance as maintained:</strong> Always apply maintenance
-                  factor
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring UGR in calculations:</strong> Glare significantly affects comfort
-                </li>
-                <li className="pl-1">
-                  <strong>Uniform lighting everywhere:</strong> Task/ambient approach often more
-                  efficient
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong Ra for colour-critical tasks:</strong> Check minimum requirements
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">CIBSE Lighting Guides</p>
-                <ul className="space-y-0.5">
-                  <li>LG3 - Visual Environment fundamentals</li>
-                  <li>LG7 - Office lighting (500 lux standard)</li>
-                  <li>LG10 - Daylighting design</li>
-                  <li>SLL Code - Comprehensive reference</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">BS EN 12464-1 Key Values</p>
-                <ul className="space-y-0.5">
-                  <li>Office: 500 lux, UGR &lt; 19</li>
-                  <li>Drawing: 750 lux, UGR &lt; 16</li>
-                  <li>Uniformity Uo &gt; 0.6 (task area)</li>
-                  <li>Colour rendering Ra &gt; 80 (most tasks)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section4-1">
-              Next: Section 4.1
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section3-5")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Uniformity and quality
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section4")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Lighting controls
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

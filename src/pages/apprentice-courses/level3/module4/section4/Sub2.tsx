@@ -356,7 +356,7 @@ export default function Sub2() {
                 A4:2026 added Protective Neutral Bonding (PNB) explicitly into Reg 312.2.1.1. PNB is a TN-C-S variant where the bond between PE and N happens at the consumer&apos;s installation, not at the cut-out. When you&apos;re identifying the supply on a diagnosis visit, PNB is the new arrangement to recognise alongside TN-S, TN-C-S and TT.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Reg 312.2.1.1 update, verbatim from facet."
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 312.2.1.1 (system earthing arrangements, updated in A4:2026 to include PNB)."
           />
 
           <RegsCallout

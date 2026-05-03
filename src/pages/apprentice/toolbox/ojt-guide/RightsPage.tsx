@@ -1,6 +1,5 @@
 import { Card, CardContent } from '@/components/ui/card';
-import { CheckCircle, Target, Scale, FileText } from 'lucide-react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { ArrowLeft, CheckCircle, Target, Scale, FileText } from 'lucide-react';
 
 const apprenticeRights = [
   {
@@ -106,15 +105,37 @@ Kind regards,
 [Your Name]
 [Apprenticeship Standard: ST0152 v1.2]`,
 };
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import {
+  PageFrame,
+  PageHero,
+  itemVariants,
+} from '@/components/college/primitives';
 
 const RightsPage = () => {
+  const navigate = useNavigate();
   return (
-    <div className="animate-fade-in max-w-2xl mx-auto px-4 pb-20 space-y-6 text-left">
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <SmartBackButton />
-        <h1 className="text-2xl font-bold tracking-tight text-white">Your Rights</h1>
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice/toolbox/off-job-training-guide')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
+
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · OJT"
+          title="Your Rights"
+          tone="yellow"
+        />
+      </motion.div>
 
       {/* Your Rights */}
       <div className="space-y-3">
@@ -325,7 +346,7 @@ const RightsPage = () => {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </PageFrame>
   );
 };
 

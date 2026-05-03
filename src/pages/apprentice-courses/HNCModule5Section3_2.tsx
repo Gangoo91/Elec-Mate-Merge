@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 5 · Section 3 · Subsection 2 — Budget Development
+ * HNC Electrical Engineering for Building Services (Project Management — Pearson U4004 + BSE PM context)
+ *   Cost plans, contingency, risk provisions, preliminaries and overhead — building the budget that frames every commercial decision.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Budget Development - HNC Module 5 Section 3.2';
@@ -230,848 +247,564 @@ const faqs = [
 ];
 
 const HNCModule5Section3_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section3')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module5-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 5.3.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Budget Development
-          </h1>
-          <p className="text-white">
-            Cost plans, contingency allowances, risk provisions, preliminaries and overhead
-            calculations for MEP works
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 5 · Section 3 · Subsection 2"
+            title="Budget Development"
+            description="Cost plans, contingency allowances, risk provisions, preliminaries and overhead calculations for MEP works."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Cost plan:</strong> Formal budget aligned to RIBA stages
-              </li>
-              <li className="pl-1">
-                <strong>Contingency:</strong> 10-15% early stage, reducing as design develops
-              </li>
-              <li className="pl-1">
-                <strong>Preliminaries:</strong> 8-15% of measured works for MEP
-              </li>
-              <li className="pl-1">
-                <strong>OH&P:</strong> 6-10% combined overhead and profit
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>MEP proportion:</strong> 25-40% of total building cost
-              </li>
-              <li className="pl-1">
-                <strong>Mechanical/electrical split:</strong> Varies by building type
-              </li>
-              <li className="pl-1">
-                <strong>Specialist risk:</strong> Higher for complex systems
-              </li>
-              <li className="pl-1">
-                <strong>Inflation:</strong> Applied to mid-point of construction
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              "Budget = sum of work-package costs + preliminaries + overhead + profit + contingency + risk + inflation + VAT (where applicable).",
+              "Cost plan structured against the WBS — every work package has a budget line, every budget line traces to scope.",
+              "Preliminaries (site set-up, supervision, plant, welfare, consumables, scaffolding, temporary services) typically 8–15% of works value.",
+              "Contingency for known unknowns (design development, scope clarification) typically 3–8%; risk allowance for specific identified risks is in addition.",
+              "Inflation: index forward to mid-point of construction using BCIS or similar — particularly important for >12 month programmes.",
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="JCT Standard Building Contract 2024 — Section 4 (Payment)"
+            clause="Interim payments shall be made by the Employer to the Contractor in accordance with the provisions of this Section 4. The Architect/Contract Administrator shall issue an Interim Certificate stating the amount of the interim payment due in respect of each Interim Valuation."
+            meaning={
+              <>
+                Your budget structures both the tender price and the basis of interim payment. Cost plans aligned to the bills of quantities and the WBS support straightforward valuation; mismatched structures lead to disputed interim certificates and cash-flow problems. Build the budget in the same shape as you will measure work.
+              </>
+            }
+            cite="Source: JCT Standard Building Contract 2024 (refer to JCT published text for verbatim clauses)."
+          />
+
+
+          <LearningOutcomes
+            outcomes={[
               'Structure cost plans aligned to RIBA work stages',
               'Calculate appropriate contingency allowances for each design stage',
               'Distinguish between design development and construction risk contingency',
               'Build up preliminaries from first principles',
               'Apply overhead and profit percentages appropriately',
               'Account for inflation in multi-year project budgets',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Cost Plan Structure */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Cost Plan Structure and Development
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Cost Plan Structure and Development">
             <p>
               A cost plan is a formal budget document that establishes and controls project costs
               throughout design and construction. For MEP works, the cost plan must capture the
               complexity of building services systems whilst aligning with overall project budgeting
               methodology.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Cost Plan Evolution Through RIBA Stages:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Stage 1:</strong> Order of cost estimate - broad budget based on
-                  functional requirements
-                </li>
-                <li className="pl-1">
-                  <strong>Stage 2:</strong> Cost Plan 1 - elemental budget based on concept design
-                </li>
-                <li className="pl-1">
-                  <strong>Stage 3:</strong> Cost Plan 2 - developed elemental budget with
-                  specification
-                </li>
-                <li className="pl-1">
-                  <strong>Stage 4:</strong> Cost Plan 3 - detailed cost plan for tender preparation
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Cost Plan Structure for MEP Works
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Element</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical %</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Measured Works</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Quantified MEP installations
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Base cost</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Preliminaries</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Site-specific indirect costs
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">8-15%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Design Contingency</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Scope development allowance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">3-15%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Construction Risk</td>
-                      <td className="border border-white/10 px-3 py-2">Unforeseen conditions</td>
-                      <td className="border border-white/10 px-3 py-2">2-5%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Overheads</td>
-                      <td className="border border-white/10 px-3 py-2">Company indirect costs</td>
-                      <td className="border border-white/10 px-3 py-2">3-6%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Profit</td>
-                      <td className="border border-white/10 px-3 py-2">Contractor margin</td>
-                      <td className="border border-white/10 px-3 py-2">3-6%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Inflation</td>
-                      <td className="border border-white/10 px-3 py-2">Price movement allowance</td>
-                      <td className="border border-white/10 px-3 py-2">Variable</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Cost Plan Evolution Through RIBA Stages:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Stage 1:</strong> Order of cost estimate - broad budget based on functional
+                requirements
+              </li>
+              <li>
+                <strong>Stage 2:</strong> Cost Plan 1 - elemental budget based on concept design
+              </li>
+              <li>
+                <strong>Stage 3:</strong> Cost Plan 2 - developed elemental budget with
+                specification
+              </li>
+              <li>
+                <strong>Stage 4:</strong> Cost Plan 3 - detailed cost plan for tender preparation
+              </li>
+            </ul>
+            <p>
+              <strong>Typical Cost Plan Structure for MEP Works (Element — Description — Typical %):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Measured Works:</strong> Quantified MEP installations — Base cost
+              </li>
+              <li>
+                <strong>Preliminaries:</strong> Site-specific indirect costs — 8-15%
+              </li>
+              <li>
+                <strong>Design Contingency:</strong> Scope development allowance — 3-15%
+              </li>
+              <li>
+                <strong>Construction Risk:</strong> Unforeseen conditions — 2-5%
+              </li>
+              <li>
+                <strong>Overheads:</strong> Company indirect costs — 3-6%
+              </li>
+              <li>
+                <strong>Profit:</strong> Contractor margin — 3-6%
+              </li>
+              <li>
+                <strong>Inflation:</strong> Price movement allowance — Variable
+              </li>
+            </ul>
+            <p>
               <strong>Design principle:</strong> The cost plan must be a living document, updated at
               each stage to reflect design development and market changes.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Contingency and Risk Allowances */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Contingency and Risk Allowances
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Contingency and Risk Allowances">
             <p>
               Contingency management is critical for MEP budgets. Building services designs evolve
               significantly through design stages, and appropriate allowances must reflect design
               maturity and project risk profile.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Design Development Contingency
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Covers incomplete design information</li>
-                  <li className="pl-1">Allows for specification development</li>
-                  <li className="pl-1">Reduces as design progresses</li>
-                  <li className="pl-1">Released through formal change control</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Construction Risk Contingency
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Covers unforeseen site conditions</li>
-                  <li className="pl-1">Interface and coordination issues</li>
-                  <li className="pl-1">Maintained until practical completion</li>
-                  <li className="pl-1">Higher for refurbishment works</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Contingency Reduction by Stage
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">RIBA Stage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Design Contingency
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Construction Risk
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Total</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Stage 2 - Concept</td>
-                      <td className="border border-white/10 px-3 py-2">10-15%</td>
-                      <td className="border border-white/10 px-3 py-2">3-5%</td>
-                      <td className="border border-white/10 px-3 py-2">13-20%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Stage 3 - Developed</td>
-                      <td className="border border-white/10 px-3 py-2">5-7%</td>
-                      <td className="border border-white/10 px-3 py-2">3-5%</td>
-                      <td className="border border-white/10 px-3 py-2">8-12%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Stage 4 - Technical</td>
-                      <td className="border border-white/10 px-3 py-2">2-3%</td>
-                      <td className="border border-white/10 px-3 py-2">3-5%</td>
-                      <td className="border border-white/10 px-3 py-2">5-8%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Post-Tender</td>
-                      <td className="border border-white/10 px-3 py-2">0%</td>
-                      <td className="border border-white/10 px-3 py-2">2-3%</td>
-                      <td className="border border-white/10 px-3 py-2">2-3%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Risk Factors Increasing Contingency
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Complex systems:</strong> Data centres, hospitals, laboratories (+3-5%)
-                </li>
-                <li className="pl-1">
-                  <strong>Refurbishment:</strong> Unknown existing conditions (+5-10%)
-                </li>
-                <li className="pl-1">
-                  <strong>Constrained sites:</strong> City centre, live environments (+2-5%)
-                </li>
-                <li className="pl-1">
-                  <strong>Compressed programmes:</strong> Acceleration costs risk (+3-5%)
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> Maintain separate contingency pots with clear release
-              criteria - never merge into a single uncontrolled sum.
+            <p>
+              <strong>Design Development Contingency:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Covers incomplete design information</li>
+              <li>Allows for specification development</li>
+              <li>Reduces as design progresses</li>
+              <li>Released through formal change control</li>
+            </ul>
+            <p>
+              <strong>Construction Risk Contingency:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Covers unforeseen site conditions</li>
+              <li>Interface and coordination issues</li>
+              <li>Maintained until practical completion</li>
+              <li>Higher for refurbishment works</li>
+            </ul>
+            <p>
+              <strong>Contingency Reduction by Stage (Stage — Design — Construction Risk — Total):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Stage 2 - Concept:</strong> 10-15% — 3-5% — 13-20%
+              </li>
+              <li>
+                <strong>Stage 3 - Developed:</strong> 5-7% — 3-5% — 8-12%
+              </li>
+              <li>
+                <strong>Stage 4 - Technical:</strong> 2-3% — 3-5% — 5-8%
+              </li>
+              <li>
+                <strong>Post-Tender:</strong> 0% — 2-3% — 2-3%
+              </li>
+            </ul>
+            <p>
+              <strong>Risk Factors Increasing Contingency:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Complex systems:</strong> Data centres, hospitals, laboratories (+3-5%)
+              </li>
+              <li>
+                <strong>Refurbishment:</strong> Unknown existing conditions (+5-10%)
+              </li>
+              <li>
+                <strong>Constrained sites:</strong> City centre, live environments (+2-5%)
+              </li>
+              <li>
+                <strong>Compressed programmes:</strong> Acceleration costs risk (+3-5%)
+              </li>
+            </ul>
+            <p>
+              <strong>Best practice:</strong> Maintain separate contingency pots with clear release
+              criteria — never merge into a single uncontrolled sum.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Preliminaries Breakdown */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Preliminaries and Site Costs
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Preliminaries and Site Costs">
             <p>
               Preliminaries are the indirect costs required to deliver the MEP installation,
               distinct from the measured works costs of materials and labour. Understanding
               preliminaries structure is essential for accurate budget development and tender
               assessment.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Preliminaries Categories
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Category</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Items</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Cost Type</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Site Establishment</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Offices, welfare, storage, security
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Fixed</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Site Management</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Project manager, site supervisor, QS
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Time-related</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Temporary Services</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Power, water, lighting, communications
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Time-related</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Plant and Equipment</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Access equipment, lifting, small plant
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Mixed</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Health and Safety</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        PPE, signage, first aid, training
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Mixed</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Quality Assurance</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Testing equipment, documentation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Time-related</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Fixed Costs</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Site setup and clearance</li>
-                  <li className="pl-1">Temporary works design</li>
-                  <li className="pl-1">Initial security installation</li>
-                  <li className="pl-1">Constant regardless of duration</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Time-Related Costs</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Staff salaries and costs</li>
-                  <li className="pl-1">Accommodation hire</li>
-                  <li className="pl-1">Running costs and utilities</li>
-                  <li className="pl-1">Scale with project duration</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Value-Related Costs</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Insurance premiums</li>
-                  <li className="pl-1">Performance bonds</li>
-                  <li className="pl-1">Some professional fees</li>
-                  <li className="pl-1">Scale with contract value</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical MEP Preliminaries Build-Up (GBP 3M project, 12 months)
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Site establishment (fixed): GBP 35,000</p>
-                <p>Management staff (12 months): GBP 180,000</p>
-                <p>Temporary services: GBP 25,000</p>
-                <p>Plant and equipment: GBP 45,000</p>
-                <p>H&S and quality: GBP 30,000</p>
-                <p>Insurance and bonds: GBP 45,000</p>
-                <p className="mt-2 border-t border-white/20 pt-2">
-                  Total preliminaries: <strong>GBP 360,000 (12%)</strong>
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Preliminaries Categories (Category — Items — Cost Type):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Site Establishment:</strong> Offices, welfare, storage, security — Fixed
+              </li>
+              <li>
+                <strong>Site Management:</strong> Project manager, site supervisor, QS —
+                Time-related
+              </li>
+              <li>
+                <strong>Temporary Services:</strong> Power, water, lighting, communications —
+                Time-related
+              </li>
+              <li>
+                <strong>Plant and Equipment:</strong> Access equipment, lifting, small plant — Mixed
+              </li>
+              <li>
+                <strong>Health and Safety:</strong> PPE, signage, first aid, training — Mixed
+              </li>
+              <li>
+                <strong>Quality Assurance:</strong> Testing equipment, documentation — Time-related
+              </li>
+            </ul>
+            <p>
+              <strong>Fixed Costs:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Site setup and clearance</li>
+              <li>Temporary works design</li>
+              <li>Initial security installation</li>
+              <li>Constant regardless of duration</li>
+            </ul>
+            <p>
+              <strong>Time-Related Costs:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Staff salaries and costs</li>
+              <li>Accommodation hire</li>
+              <li>Running costs and utilities</li>
+              <li>Scale with project duration</li>
+            </ul>
+            <p>
+              <strong>Value-Related Costs:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Insurance premiums</li>
+              <li>Performance bonds</li>
+              <li>Some professional fees</li>
+              <li>Scale with contract value</li>
+            </ul>
+            <p>
+              <strong>Typical MEP Preliminaries Build-Up (GBP 3M project, 12 months):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Site establishment (fixed): GBP 35,000</li>
+              <li>Management staff (12 months): GBP 180,000</li>
+              <li>Temporary services: GBP 25,000</li>
+              <li>Plant and equipment: GBP 45,000</li>
+              <li>H&S and quality: GBP 30,000</li>
+              <li>Insurance and bonds: GBP 45,000</li>
+              <li>
+                <strong>Total preliminaries: GBP 360,000 (12%)</strong>
+              </li>
+            </ul>
+            <p>
               <strong>Budgeting tip:</strong> Longer projects have proportionally higher
               preliminaries due to time-related costs. A 24-month project will not have double the
               preliminaries of a 12-month project, but the time-related element will double.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Overhead, Profit and Inflation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Overhead, Profit and Inflation Allowances
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Overhead, Profit and Inflation Allowances">
             <p>
               The final cost plan elements convert the construction cost estimate to a tender-ready
               budget, accounting for contractor margins and anticipated price movements.
               Understanding these allowances is essential for realistic budget setting and tender
               evaluation.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Overhead Components</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Head office costs:</strong> Rent, utilities, central administration
-                </li>
-                <li className="pl-1">
-                  <strong>Corporate services:</strong> HR, finance, IT, marketing
-                </li>
-                <li className="pl-1">
-                  <strong>Company insurances:</strong> Professional indemnity, employer's liability
-                </li>
-                <li className="pl-1">
-                  <strong>Bidding and estimating:</strong> Tender costs for unsuccessful bids
-                </li>
-                <li className="pl-1">
-                  <strong>Training and development:</strong> Staff development programmes
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                OH&P Application Methods
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Use</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Combined percentage</td>
-                      <td className="border border-white/10 px-3 py-2">Single % to sub-total</td>
-                      <td className="border border-white/10 px-3 py-2">Budget estimates</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Separate percentages</td>
-                      <td className="border border-white/10 px-3 py-2">OH% then P% compounded</td>
-                      <td className="border border-white/10 px-3 py-2">Detailed cost plans</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Distributed rates</td>
-                      <td className="border border-white/10 px-3 py-2">Built into unit rates</td>
-                      <td className="border border-white/10 px-3 py-2">Contractor pricing</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Inflation Calculation Example
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Estimate base date: January 2024</p>
-                <p>Tender date: July 2024 (6 months)</p>
-                <p>Construction period: 18 months</p>
-                <p>Mid-point of construction: 9 months from start</p>
-                <p className="mt-2">
-                  Total inflation period: 6 + 9 = <strong>15 months</strong>
-                </p>
-                <p className="mt-2">Forecast annual inflation: 4%</p>
-                <p>
-                  15-month inflation: 4% x (15/12) = <strong>5.0%</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Applied to measured works + preliminaries before OH&P
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Inflation Indices for MEP
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>BCIS TPI:</strong> General tender price index
-                </li>
-                <li className="pl-1">
-                  <strong>BCIS M&E:</strong> Mechanical and electrical specific index
-                </li>
-                <li className="pl-1">
-                  <strong>BEAMA:</strong> Electrical equipment manufacturers index
-                </li>
-                <li className="pl-1">
-                  <strong>Specialist indices:</strong> HVAC, controls, fire systems
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-2">
-                Complete Budget Build-Up Example
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Measured MEP works: GBP 2,500,000</p>
-                <p>Preliminaries (12%): GBP 300,000</p>
-                <p className="border-t border-white/20 mt-2 pt-2">Sub-total: GBP 2,800,000</p>
-                <p className="mt-2">Design contingency (5%): GBP 140,000</p>
-                <p>Construction risk (3%): GBP 84,000</p>
-                <p className="border-t border-white/20 mt-2 pt-2">
-                  Construction cost: GBP 3,024,000
-                </p>
-                <p className="mt-2">Overheads (4%): GBP 120,960</p>
-                <p>Profit (4%): GBP 125,798</p>
-                <p className="border-t border-white/20 mt-2 pt-2">Tender total: GBP 3,270,758</p>
-                <p className="mt-2">Inflation (5%): GBP 163,538</p>
-                <p className="border-t border-white/20 mt-2 pt-2 text-green-400">
-                  <strong>Budget total: GBP 3,434,296</strong>
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Overhead Components:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Head office costs:</strong> Rent, utilities, central administration
+              </li>
+              <li>
+                <strong>Corporate services:</strong> HR, finance, IT, marketing
+              </li>
+              <li>
+                <strong>Company insurances:</strong> Professional indemnity, employer's liability
+              </li>
+              <li>
+                <strong>Bidding and estimating:</strong> Tender costs for unsuccessful bids
+              </li>
+              <li>
+                <strong>Training and development:</strong> Staff development programmes
+              </li>
+            </ul>
+            <p>
+              <strong>OH&P Application Methods (Method — Application — Typical Use):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Combined percentage:</strong> Single % to sub-total — Budget estimates
+              </li>
+              <li>
+                <strong>Separate percentages:</strong> OH% then P% compounded — Detailed cost plans
+              </li>
+              <li>
+                <strong>Distributed rates:</strong> Built into unit rates — Contractor pricing
+              </li>
+            </ul>
+            <p>
+              <strong>Inflation Calculation Example:</strong> Estimate base date January 2024;
+              tender July 2024 (6 months); construction period 18 months; mid-point 9 months from
+              start. Total inflation period: 6 + 9 = 15 months. Forecast annual inflation 4%.
+              15-month inflation: 4% × (15/12) = 5.0%. Applied to measured works + preliminaries
+              before OH&P.
+            </p>
+            <p>
+              <strong>Inflation Indices for MEP:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>BCIS TPI:</strong> General tender price index
+              </li>
+              <li>
+                <strong>BCIS M&E:</strong> Mechanical and electrical specific index
+              </li>
+              <li>
+                <strong>BEAMA:</strong> Electrical equipment manufacturers index
+              </li>
+              <li>
+                <strong>Specialist indices:</strong> HVAC, controls, fire systems
+              </li>
+            </ul>
+            <p>
+              <strong>Complete Budget Build-Up Example:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Measured MEP works: GBP 2,500,000</li>
+              <li>Preliminaries (12%): GBP 300,000</li>
+              <li>
+                <strong>Sub-total: GBP 2,800,000</strong>
+              </li>
+              <li>Design contingency (5%): GBP 140,000</li>
+              <li>Construction risk (3%): GBP 84,000</li>
+              <li>
+                <strong>Construction cost: GBP 3,024,000</strong>
+              </li>
+              <li>Overheads (4%): GBP 120,960</li>
+              <li>Profit (4%): GBP 125,798</li>
+              <li>
+                <strong>Tender total: GBP 3,270,758</strong>
+              </li>
+              <li>Inflation (5%): GBP 163,538</li>
+              <li>
+                <strong>Budget total: GBP 3,434,296</strong>
+              </li>
+            </ul>
+            <p>
               <strong>Market awareness:</strong> OH&P levels vary with market conditions. In
               competitive markets, margins compress; in busy markets, contractors can command higher
               returns.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — Hospital MEP Budget Development:</strong> New hospital wing,
+              8,000m2, RIBA Stage 2, tender in 9 months, 24-month construction.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Benchmark: 180 VA/m2 (highly serviced)</li>
+              <li>Estimated MEP value: GBP 6,000,000</li>
+              <li>Preliminaries (14% - complex): GBP 840,000</li>
+              <li>Design contingency (12%): GBP 720,000</li>
+              <li>Construction risk (5% - hospital): GBP 300,000</li>
+              <li>
+                <strong>Sub-total: GBP 7,860,000</strong>
+              </li>
+              <li>OH&P (9%): GBP 707,400</li>
+              <li>Inflation (9 + 12 = 21 months @ 4%): 7% = GBP 599,718</li>
+              <li>
+                <strong>Stage 2 Budget: GBP 9,167,118</strong>
+              </li>
+            </ul>
+            <p>
+              <strong>Example 2 — Office Refurbishment Contingency:</strong> A GBP 1.2M office
+              electrical upgrade at Stage 3. Calculate appropriate contingencies.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Base measured works: GBP 1,200,000</li>
+              <li>Design contingency (Stage 3): 6%</li>
+              <li>Additional for refurb unknowns: 4%</li>
+              <li>
+                Design contingency total: 10% = <strong>GBP 120,000</strong>
+              </li>
+              <li>Construction risk (standard): 3%</li>
+              <li>Additional for existing building: 5%</li>
+              <li>
+                Construction risk total: 8% = <strong>GBP 96,000</strong>
+              </li>
+              <li>
+                <strong>Total contingency: GBP 216,000 (18%)</strong> — Higher than new-build due
+                to existing conditions uncertainty.
+              </li>
+            </ul>
+            <p>
+              <strong>Example 3 — Preliminaries Build-Up:</strong> Build up preliminaries for GBP
+              4M MEP package, 15-month programme, city centre site.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Site establishment (fixed): GBP 45,000</li>
+              <li>Initial temporary works: GBP 20,000</li>
+              <li>Project manager: GBP 90,000 x 1.25 = GBP 112,500</li>
+              <li>Site supervisor: GBP 65,000 x 1.25 = GBP 81,250</li>
+              <li>QS support: GBP 55,000 x 1.25 = GBP 68,750</li>
+              <li>Temp services: GBP 2,500/month x 15 = GBP 37,500</li>
+              <li>Insurance (0.8%): GBP 32,000</li>
+              <li>Bond (0.5%): GBP 20,000</li>
+              <li>Out-of-hours working: GBP 40,000</li>
+              <li>Restricted access logistics: GBP 25,000</li>
+              <li>
+                <strong>Total: GBP 482,000 (12.05%)</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Hospital MEP Budget Development
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> New hospital wing, 8,000m2, RIBA Stage 2, tender in 9
-                months, 24-month construction.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Benchmark: 180 VA/m2 (highly serviced)</p>
-                <p>Estimated MEP value: GBP 6,000,000</p>
-                <p className="mt-2">Preliminaries (14% - complex): GBP 840,000</p>
-                <p>Design contingency (12%): GBP 720,000</p>
-                <p>Construction risk (5% - hospital): GBP 300,000</p>
-                <p className="border-t border-white/20 mt-2 pt-2">Sub-total: GBP 7,860,000</p>
-                <p className="mt-2">OH&P (9%): GBP 707,400</p>
-                <p>Inflation (9 + 12 = 21 months @ 4%): 7% = GBP 599,718</p>
-                <p className="border-t border-white/20 mt-2 pt-2 text-green-400">
-                  <strong>Stage 2 Budget: GBP 9,167,118</strong>
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Office Refurbishment Contingency
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A GBP 1.2M office electrical upgrade at Stage 3.
-                Calculate appropriate contingencies.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Base measured works: GBP 1,200,000</p>
-                <p className="mt-2">Design contingency (Stage 3): 6%</p>
-                <p>Additional for refurb unknowns: 4%</p>
-                <p>
-                  Design contingency total: 10% = <strong>GBP 120,000</strong>
-                </p>
-                <p className="mt-2">Construction risk (standard): 3%</p>
-                <p>Additional for existing building: 5%</p>
-                <p>
-                  Construction risk total: 8% = <strong>GBP 96,000</strong>
-                </p>
-                <p className="mt-2 border-t border-white/20 pt-2">
-                  Total contingency: GBP 216,000 (18%)
-                </p>
-                <p className="text-white">
-                  Higher than new-build due to existing conditions uncertainty
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Budget development checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Establish base date and state design stage clearly</li>
+              <li>Use appropriate benchmark data or measured quantities</li>
+              <li>Build up preliminaries from first principles where possible</li>
+              <li>Apply stage-appropriate contingencies with clear assumptions</li>
+              <li>Document OH&P assumptions and market basis</li>
+              <li>Calculate inflation to mid-point of construction</li>
+              <li>Include exclusions list (furniture, IT, specialist equipment)</li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                MEP proportion: <strong>25-40%</strong> of total building cost
+              </li>
+              <li>
+                MEP preliminaries: <strong>8-15%</strong> of measured works
+              </li>
+              <li>
+                Stage 2 design contingency: <strong>10-15%</strong>
+              </li>
+              <li>
+                Standard OH&P: <strong>6-10%</strong> combined
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Preliminaries Build-Up
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Build up preliminaries for GBP 4M MEP package, 15-month
-                programme, city centre site.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Fixed costs:</strong>
-                </p>
-                <p>Site establishment: GBP 45,000</p>
-                <p>Initial temporary works: GBP 20,000</p>
-                <p className="mt-2">
-                  <strong>Time-related (15 months):</strong>
-                </p>
-                <p>Project manager: GBP 90,000 x 1.25 = GBP 112,500</p>
-                <p>Site supervisor: GBP 65,000 x 1.25 = GBP 81,250</p>
-                <p>QS support: GBP 55,000 x 1.25 = GBP 68,750</p>
-                <p>Temp services: GBP 2,500/month x 15 = GBP 37,500</p>
-                <p className="mt-2">
-                  <strong>Value-related:</strong>
-                </p>
-                <p>Insurance (0.8%): GBP 32,000</p>
-                <p>Bond (0.5%): GBP 20,000</p>
-                <p className="mt-2">
-                  <strong>Project-specific:</strong>
-                </p>
-                <p>Out-of-hours working: GBP 40,000</p>
-                <p>Restricted access logistics: GBP 25,000</p>
-                <p className="mt-2 border-t border-white/20 pt-2 text-green-400">
-                  <strong>Total: GBP 482,000 (12.05%)</strong>
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Budget Development Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Establish base date and state design stage clearly</li>
-                <li className="pl-1">Use appropriate benchmark data or measured quantities</li>
-                <li className="pl-1">
-                  Build up preliminaries from first principles where possible
-                </li>
-                <li className="pl-1">
-                  Apply stage-appropriate contingencies with clear assumptions
-                </li>
-                <li className="pl-1">Document OH&P assumptions and market basis</li>
-                <li className="pl-1">Calculate inflation to mid-point of construction</li>
-                <li className="pl-1">
-                  Include exclusions list (furniture, IT, specialist equipment)
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  MEP proportion: <strong>25-40%</strong> of total building cost
-                </li>
-                <li className="pl-1">
-                  MEP preliminaries: <strong>8-15%</strong> of measured works
-                </li>
-                <li className="pl-1">
-                  Stage 2 design contingency: <strong>10-15%</strong>
-                </li>
-                <li className="pl-1">
-                  Standard OH&P: <strong>6-10%</strong> combined
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Inadequate contingency:</strong> Leads to budget overspend or scope
                   reduction
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring inflation:</strong> Budgets become unrealistic for future tender
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Benchmarking wrong building type:</strong> Hospitals vs offices vastly
                   different
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Double-counting OH&P:</strong> Already in specialist subcontractor rates
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Set contingency by stage and risk profile, apply inflation to the construction mid-point, benchmark against the correct building type and complexity, and check whether subcontract rates already include OH&P before applying it again."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Inflation eats the margin on a 24-month programme"
+            situation={
+              <>
+                You won a £4m MEP package on a fixed-price basis in 2024 for handover in late 2026. Your tender used 2024 supplier prices with 3% inflation built in. By mid-2025, copper has risen 18%, electrical components 12%, and labour rates 9% under the JIB wage settlement. Your forecast cost-to-complete now exceeds the budget by £180k.
+              </>
+            }
+            whatToDo={
+              <>
+                Treat inflation as a quantified risk on long programmes — index forward to programme mid-point using BCIS or commodity-specific indices, not a flat 3%. For the current project, pursue value engineering options aggressively, accelerate procurement of unfixed materials at current prices where storage allows, and review supplier contracts for inflation-linked clauses. Update the cost report transparently with client and finance — surprises at month 18 are unacceptable.
+              </>
+            }
+            whyItMatters={
+              <>
+                Budget integrity protects the project margin. Hidden assumptions (3% inflation, no extension, no scope creep) become hidden losses. Build budgets that survive contact with reality, not budgets that flatter the bid.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Cost Plan Elements</p>
-                <ul className="space-y-0.5">
-                  <li>Measured works - quantified installations</li>
-                  <li>Preliminaries - project indirect costs</li>
-                  <li>Contingency - design and construction risk</li>
-                  <li>OH&P - contractor margins</li>
-                  <li>Inflation - price movement allowance</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Typical Allowances</p>
-                <ul className="space-y-0.5">
-                  <li>Preliminaries: 8-15% of measured works</li>
-                  <li>Design contingency: 3-15% by stage</li>
-                  <li>Construction risk: 2-5%</li>
-                  <li>Overheads: 3-6%</li>
-                  <li>Profit: 3-6%</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+                    <KeyTakeaways
+            points={[
+              "Budget = work packages + prelims + OH + profit + contingency + risk + inflation + VAT.",
+              "Cost plan structured against WBS — every line traces to scope.",
+              "Preliminaries 8–15% of works value (site set-up, supervision, plant, welfare, scaffold, temp services).",
+              "Contingency for known unknowns 3–8%; risk allowance for specific identified risks separate.",
+              "Inflation: index forward to programme mid-point using BCIS or commodity-specific data.",
+              "Cash-flow forecast (S-curve) derived from budget against programme — informs working capital requirement.",
+              "Budget structure should mirror payment structure — straightforward interim valuation.",
+              "Review and re-baseline after major scope changes — keep budget alive, not a tender artefact.",
+            ]}
+          />
+
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section3-3">
-              Next: Tender Evaluation
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section3-1')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Estimating methods
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section3-3')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Cost control
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

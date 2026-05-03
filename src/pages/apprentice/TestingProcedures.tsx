@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import {
   Select,
   SelectContent,
@@ -9,16 +10,17 @@ import {
 } from '@/components/ui/select';
 import { toast } from 'sonner';
 import { storageGetSync, storageSetSync } from '@/utils/storage';
-import TestingHeader from '@/components/apprentice/testing-procedures/TestingHeader';
 import TestingResources from '@/components/apprentice/testing-procedures/TestingResources';
 import R1R2TestingTab from '@/components/apprentice/testing-procedures/testing-tabs/R1R2Testing/R1R2TestingTab';
 import IRTestingTab from '@/components/apprentice/testing-procedures/testing-tabs/InsulationResistance/IRTestingTab';
 import ZsTestingTab from '@/components/apprentice/testing-procedures/testing-tabs/EarthFaultLoop/ZsTestingTab';
 import PolarityTestingTab from '@/components/apprentice/testing-procedures/testing-tabs/Polarity/PolarityTestingTab';
 import { Button } from '@/components/ui/button';
-import { BookmarkCheck, HelpCircle, Zap, Activity, GitBranch, Check } from 'lucide-react';
+import { ArrowLeft, BookmarkCheck, HelpCircle, Zap, Activity, GitBranch, Check } from 'lucide-react';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
 
 const TestingProcedures = () => {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const activeTab = searchParams.get('tab') || 'r1r2';
   const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
@@ -81,8 +83,26 @@ const TestingProcedures = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
-      <TestingHeader />
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice/on-job-tools')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
+
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Testing"
+          title="Testing procedures"
+          description="Step-by-step guides for the four core BS 7671 dead tests — R1+R2, insulation resistance, earth fault loop and polarity. Reflects BS 7671:2018+A4:2026."
+          tone="yellow"
+        />
+      </motion.div>
 
       {lastVisited && activeTab !== lastVisited && (
         <div className="bg-blue-950/20 border border-blue-500/30 rounded-md p-3 mb-6 flex items-center justify-between">
@@ -154,7 +174,7 @@ const TestingProcedures = () => {
       </div>
 
       <TestingResources />
-    </div>
+    </PageFrame>
   );
 };
 

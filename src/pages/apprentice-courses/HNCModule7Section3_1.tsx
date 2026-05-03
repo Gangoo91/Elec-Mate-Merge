@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 7 · Section 3 · Subsection 1 — Lighting Fundamentals
+ * HNC Electrical Engineering for Building Services (Power and Lighting Systems)
+ *   Photometric quantities, luminous efficacy, colour temperature, and colour rendering for building services lighting design
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Lighting Fundamentals - HNC Module 7 Section 3.1';
@@ -228,865 +241,295 @@ const faqs = [
 ];
 
 const HNCModule7Section3_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section3")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module7-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.3.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Lighting Fundamentals
-          </h1>
-          <p className="text-white">
-            Photometric quantities, luminous efficacy, colour temperature, and colour rendering for
-            building services lighting design
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 7 · Section 3 · Subsection 1"
+            title="Lighting Fundamentals"
+            description="Photometric quantities, luminous efficacy, colour temperature, and colour rendering for building services lighting design"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Luminous flux (lm):</strong> Total light output from a source
-              </li>
-              <li className="pl-1">
-                <strong>Illuminance (lx):</strong> Light falling on a surface (lm/m²)
-              </li>
-              <li className="pl-1">
-                <strong>Luminous efficacy (lm/W):</strong> Efficiency of light production
-              </li>
-              <li className="pl-1">
-                <strong>CCT (K):</strong> Colour appearance - warm to cool
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Define and calculate luminous flux, intensity, illuminance, and luminance",
+              "Apply the inverse square law to point source calculations",
+              "Explain luminous efficacy and compare light source efficiencies",
+              "Describe correlated colour temperature and its applications",
+              "Interpret CRI values and extended colour rendering metrics",
+              "Select appropriate CCT and CRI for different building applications",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Photometric Quantities">
+            <p>Photometry is the science of measuring visible light as perceived by the human eye. Unlike radiometry which measures total electromagnetic radiation, photometry weights measurements according to the spectral sensitivity of human vision, defined by the CIE photopic luminosity function V(λ).</p>
+            <p><strong>The Four Core Photometric Quantities:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Luminous flux:</strong> Φ (phi) — Lumen (lm) — Total visible light emitted by a source</li>
+              <li><strong>Luminous intensity:</strong> I — Candela (cd) — Flux per unit solid angle (cd = lm/sr)</li>
+              <li><strong>Illuminance:</strong> E — Lux (lx) — Flux incident per unit area (lx = lm/m²)</li>
+              <li><strong>Luminance:</strong> L — cd/m² — Intensity per unit projected area</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Values to Remember</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Max efficacy:</strong> 683 lm/W at 555nm
-              </li>
-              <li className="pl-1">
-                <strong>LED efficacy:</strong> 100-200 lm/W typical
-              </li>
-              <li className="pl-1">
-                <strong>Warm white:</strong> 2700-3000K
-              </li>
-              <li className="pl-1">
-                <strong>Good CRI:</strong> Ra &gt; 80, excellent Ra &gt; 90
-              </li>
+            <p><strong>Understanding the Lumen</strong></p>
+            <p>The lumen is derived from the candela: a source of 1 cd intensity emitting uniformly in all directions produces 4π lumens (approximately 12.57 lm). The lumen is weighted by the eye's spectral sensitivity - 1 watt of radiant power at 555nm (green-yellow, peak sensitivity) equals 683 lumens, while 1 watt at other wavelengths produces fewer perceived lumens.</p>
+            <p><strong>Typical Illuminance Levels</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Full sunlight:</strong> 100,000 lux</li>
+              <li><strong>Overcast day:</strong> 10,000-20,000 lux</li>
+              <li><strong>Office workspace:</strong> 300-500 lux</li>
+              <li><strong>Corridor/circulation:</strong> 100 lux</li>
+              <li><strong>Emergency lighting:</strong> 1 lux minimum on escape routes</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Key distinction:</strong> Illuminance measures light arriving at a surface; luminance measures light leaving a surface (either emitted or reflected) and represents what we actually perceive as brightness.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Define and calculate luminous flux, intensity, illuminance, and luminance',
-              'Apply the inverse square law to point source calculations',
-              'Explain luminous efficacy and compare light source efficiencies',
-              'Describe correlated colour temperature and its applications',
-              'Interpret CRI values and extended colour rendering metrics',
-              'Select appropriate CCT and CRI for different building applications',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Photometric Quantities */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Photometric Quantities
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Inverse Square Law and Illuminance Calculations">
+            <p>The inverse square law is fundamental to understanding how light diminishes with distance. For a point source, illuminance decreases proportionally to the square of the distance from the source, as light spreads over an increasingly larger area.</p>
+            <p><strong>Inverse Square Law</strong></p>
+            <p>E = I / d²</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>E = illuminance (lux)</li>
+              <li>I = luminous intensity (candela)</li>
+              <li>d = distance from source (metres)</li>
+            </ul>
+            <p><strong>Cosine Law (Oblique Incidence)</strong></p>
+            <p>E = (I × cos θ) / d²</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>θ = angle of incidence</li>
+              <li>Accounts for non-perpendicular light</li>
+              <li>Maximum E when θ = 0°</li>
+            </ul>
+            <p><strong>Distance Effects on Illuminance</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>1 m:</strong> 100% — 1000 lux</li>
+              <li><strong>2 m:</strong> 25% — 250 lux</li>
+              <li><strong>3 m:</strong> 11% — 111 lux</li>
+              <li><strong>4 m:</strong> 6.25% — 62.5 lux</li>
+            </ul>
+            <p><strong>Practical Application</strong></p>
+            <p>The inverse square law applies strictly to point sources. For linear sources (fluorescent tubes), illuminance decreases linearly with distance when close, transitioning to inverse square behaviour at distances greater than approximately five times the source length. For large area sources, illuminance remains relatively constant until distance exceeds the source dimensions.</p>
+            <p><strong>Design implication:</strong> Mounting height significantly impacts illuminance and uniformity. Higher mounting spreads light more evenly but reduces peak illuminance, requiring more luminaires.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Luminous Efficacy">
+            <p>Luminous efficacy (η) measures how efficiently a light source converts electrical power into visible light. Expressed in lumens per watt (lm/W), it is the key metric for comparing the energy efficiency of different lamp technologies and is fundamental to sustainable lighting design.</p>
+            <p><strong>Luminous Efficacy Formula</strong></p>
+            <p>η = Φ / P</p>
+            <p>Where Φ = luminous flux (lumens) and P = input power (watts). The theoretical maximum for monochromatic light at 555nm is 683 lm/W. White light sources achieve lower values because they emit across the visible spectrum, including wavelengths where the eye is less sensitive.</p>
+            <p><strong>Efficacy Comparison by Lamp Type</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Incandescent (phased out):</strong> 10-17 — 1,000</li>
+              <li><strong>Halogen:</strong> 15-25 — 2,000-4,000</li>
+              <li><strong>Compact fluorescent (CFL):</strong> 50-70 — 8,000-15,000</li>
+              <li><strong>T5 fluorescent:</strong> 90-105 — 20,000-30,000</li>
+              <li><strong>LED (current):</strong> 100-200 — 50,000-100,000</li>
+              <li><strong>High-pressure sodium:</strong> 80-140 — 16,000-24,000</li>
+            </ul>
+            <p><strong>Luminaire Efficacy vs Lamp Efficacy</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Lamp efficacy:</strong> Light output from bare lamp</li>
+              <li><strong>Luminaire efficacy:</strong> Light from complete fitting</li>
+              <li>Includes optical losses (reflector, diffuser)</li>
+              <li>Includes driver/ballast losses</li>
+              <li>LOR (Light Output Ratio) = Φluminaire / Φlamp</li>
+            </ul>
+            <p><strong>Factors Affecting Efficacy</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Operating temperature:</strong> LEDs lose efficacy when hot</li>
+              <li><strong>Dimming:</strong> Can improve or reduce efficacy</li>
+              <li><strong>Driver efficiency:</strong> Typically 85-95%</li>
+              <li><strong>Lumen depreciation:</strong> Reduces over lifetime</li>
+            </ul>
+            <p><strong>Energy perspective:</strong> Replacing 60W incandescent lamps (900 lm) with 8W LEDs (900 lm) achieves 87% energy reduction while maintaining the same light output.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Colour Temperature and Colour Rendering">
+            <p>The colour appearance of light and its ability to accurately reveal object colours are critical considerations in lighting design. Correlated Colour Temperature (CCT) describes the apparent warmth or coolness of light, while the Colour Rendering Index (CRI) measures how faithfully colours are reproduced compared to a reference illuminant.</p>
+            <p><strong>Correlated Colour Temperature (CCT)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>2700-3000K:</strong> Warm white (yellowish) — Residential, hospitality, restaurants</li>
+              <li><strong>3500-4000K:</strong> Neutral white — Offices, retail, commercial</li>
+              <li><strong>5000-5700K:</strong> Daylight — Industrial, healthcare, task lighting</li>
+              <li><strong>6500K+:</strong> Cool daylight (bluish) — Photography, inspection, display</li>
+            </ul>
+            <p><strong>Understanding CCT</strong></p>
+            <p>CCT is expressed in Kelvin (K) and relates to the temperature of an ideal black body radiator that would produce light of similar colour. Counter-intuitively, lower temperatures appear warmer (more yellow/orange) while higher temperatures appear cooler (more blue). This matches heated metal: red-hot is cooler than white-hot. The term "correlated" acknowledges that most light sources don't exactly match black body radiation but approximate its colour appearance.</p>
+            <p><strong>Colour Rendering Index (CRI/Ra)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Definition:</strong> Measure of colour fidelity compared to reference illuminant</li>
+              <li><strong>Scale:</strong> 0-100, where 100 is perfect rendering</li>
+              <li><strong>Ra (average):</strong> Mean of R1-R8 test colour samples</li>
+              <li><strong>Reference:</strong> Incandescent below 5000K; daylight above 5000K</li>
+            </ul>
+            <p><strong>CRI Requirements by Application</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Ra &gt; 90:</strong> Excellent — Retail, galleries, healthcare, food display</li>
+              <li><strong>Ra 80-90:</strong> Good — Offices, education, general commercial</li>
+              <li><strong>Ra 60-80:</strong> Moderate — Industrial, warehouses, car parks</li>
+              <li><strong>Ra &lt; 60:</strong> Poor — Security lighting only (HPS)</li>
+            </ul>
+            <p><strong>Extended CRI Values (R9-R15)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>R9:</strong> Saturated red - critical for retail/healthcare</li>
+              <li><strong>R13:</strong> Skin tone (Caucasian reference)</li>
+              <li><strong>R15:</strong> Skin tone (Asian reference)</li>
+              <li>Standard Ra ignores saturated colours</li>
+            </ul>
+            <p><strong>TM-30-18 (Modern Alternative)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Rf:</strong> Fidelity index (like CRI, 0-100)</li>
+              <li><strong>Rg:</strong> Gamut index (saturation, 60-140)</li>
+              <li>Uses 99 colour samples</li>
+              <li>Colour vector graphics show shifts</li>
+            </ul>
+            <p><strong>Design consideration:</strong> CCT and CRI are independent. A 3000K lamp can have poor or excellent CRI. Always specify both parameters when colour quality matters.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Photometry is the science of measuring visible light as perceived by the human eye.
-              Unlike radiometry which measures total electromagnetic radiation, photometry weights
-              measurements according to the spectral sensitivity of human vision, defined by the CIE
-              photopic luminosity function V(λ).
+              <strong>Example 1: Illuminance Calculation</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                The Four Core Photometric Quantities:
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Quantity</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Symbol</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Unit</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Definition</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Luminous flux</td>
-                      <td className="border border-white/10 px-3 py-2">Φ (phi)</td>
-                      <td className="border border-white/10 px-3 py-2">Lumen (lm)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Total visible light emitted by a source
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Luminous intensity</td>
-                      <td className="border border-white/10 px-3 py-2">I</td>
-                      <td className="border border-white/10 px-3 py-2">Candela (cd)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Flux per unit solid angle (cd = lm/sr)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Illuminance</td>
-                      <td className="border border-white/10 px-3 py-2">E</td>
-                      <td className="border border-white/10 px-3 py-2">Lux (lx)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Flux incident per unit area (lx = lm/m²)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Luminance</td>
-                      <td className="border border-white/10 px-3 py-2">L</td>
-                      <td className="border border-white/10 px-3 py-2">cd/m²</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Intensity per unit projected area
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Understanding the Lumen</p>
-              <p className="text-sm text-white">
-                The lumen is derived from the candela: a source of 1 cd intensity emitting uniformly
-                in all directions produces 4π lumens (approximately 12.57 lm). The lumen is weighted
-                by the eye's spectral sensitivity - 1 watt of radiant power at 555nm (green-yellow,
-                peak sensitivity) equals 683 lumens, while 1 watt at other wavelengths produces
-                fewer perceived lumens.
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Illuminance Levels
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Full sunlight:</strong> 100,000 lux
-                </li>
-                <li className="pl-1">
-                  <strong>Overcast day:</strong> 10,000-20,000 lux
-                </li>
-                <li className="pl-1">
-                  <strong>Office workspace:</strong> 300-500 lux
-                </li>
-                <li className="pl-1">
-                  <strong>Corridor/circulation:</strong> 100 lux
-                </li>
-                <li className="pl-1">
-                  <strong>Emergency lighting:</strong> 1 lux minimum on escape routes
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key distinction:</strong> Illuminance measures light arriving at a surface;
-              luminance measures light leaving a surface (either emitted or reflected) and
-              represents what we actually perceive as brightness.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Inverse Square Law and Calculations */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Inverse Square Law and Illuminance Calculations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Problem:</strong> A spotlight has a luminous intensity of 2500 cd in the downward direction. Calculate the illuminance on a horizontal surface directly below at distances of 2m and 4m.</p>
+            <p>Using E = I / d²</p>
+            <p>At 2m distance:</p>
+            <p>E = 2500 / 2² = 2500 / 4 = 625 lux</p>
+            <p>At 4m distance:</p>
+            <p>E = 2500 / 4² = 2500 / 16 = 156.25 lux</p>
+            <p>Note: Doubling distance reduces illuminance to 1/4</p>
             <p>
-              The inverse square law is fundamental to understanding how light diminishes with
-              distance. For a point source, illuminance decreases proportionally to the square of
-              the distance from the source, as light spreads over an increasingly larger area.
+              <strong>Example 2: Luminous Efficacy Comparison</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Inverse Square Law</p>
-                <p className="text-lg font-mono text-white mb-2">E = I / d²</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">E = illuminance (lux)</li>
-                  <li className="pl-1">I = luminous intensity (candela)</li>
-                  <li className="pl-1">d = distance from source (metres)</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Cosine Law (Oblique Incidence)
-                </p>
-                <p className="text-lg font-mono text-white mb-2">E = (I × cos θ) / d²</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">θ = angle of incidence</li>
-                  <li className="pl-1">Accounts for non-perpendicular light</li>
-                  <li className="pl-1">Maximum E when θ = 0°</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Distance Effects on Illuminance
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Distance</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Relative Illuminance
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Example (1000 cd source)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1 m</td>
-                      <td className="border border-white/10 px-3 py-2">100%</td>
-                      <td className="border border-white/10 px-3 py-2">1000 lux</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2 m</td>
-                      <td className="border border-white/10 px-3 py-2">25%</td>
-                      <td className="border border-white/10 px-3 py-2">250 lux</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3 m</td>
-                      <td className="border border-white/10 px-3 py-2">11%</td>
-                      <td className="border border-white/10 px-3 py-2">111 lux</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4 m</td>
-                      <td className="border border-white/10 px-3 py-2">6.25%</td>
-                      <td className="border border-white/10 px-3 py-2">62.5 lux</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Practical Application</p>
-              <p className="text-sm text-white">
-                The inverse square law applies strictly to point sources. For linear sources
-                (fluorescent tubes), illuminance decreases linearly with distance when close,
-                transitioning to inverse square behaviour at distances greater than approximately
-                five times the source length. For large area sources, illuminance remains relatively
-                constant until distance exceeds the source dimensions.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design implication:</strong> Mounting height significantly impacts illuminance
-              and uniformity. Higher mounting spreads light more evenly but reduces peak
-              illuminance, requiring more luminaires.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Luminous Efficacy */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Luminous Efficacy
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Problem:</strong> Compare the energy consumption of lighting a space with 60W incandescent lamps versus LED equivalents, both producing 800 lumens.</p>
+            <p>Incandescent: η = 800 lm / 60 W = 13.3 lm/W</p>
+            <p>LED (modern): η = 800 lm / 8 W = 100 lm/W</p>
+            <p>Power saving per lamp: 60 - 8 = 52 W</p>
+            <p>Percentage saving: (52/60) × 100 = 86.7%</p>
+            <p>For 100 lamps operating 3000 hours/year:</p>
+            <p>Incandescent: 100 × 60W × 3000h = 18,000 kWh</p>
+            <p>LED: 100 × 8W × 3000h = 2,400 kWh</p>
+            <p>Annual saving: 15,600 kWh</p>
             <p>
-              Luminous efficacy (η) measures how efficiently a light source converts electrical
-              power into visible light. Expressed in lumens per watt (lm/W), it is the key metric
-              for comparing the energy efficiency of different lamp technologies and is fundamental
-              to sustainable lighting design.
+              <strong>Example 3: CCT and CRI Selection</strong>
             </p>
+            <p><strong>Scenario:</strong> Specify CCT and CRI for a supermarket with different zones.</p>
+            <p>Zone requirements:</p>
+            <p>Fresh meat/fish counter:</p>
+            <p>CCT: 3000K (enhances warm colours)</p>
+            <p>CRI: Ra &gt; 90, R9 &gt; 50 (accurate red rendering)</p>
+            <p>Bakery section:</p>
+            <p>CCT: 2700-3000K (warm, inviting)</p>
+            <p>CRI: Ra &gt; 90 (enhance golden tones)</p>
+            <p>General aisles:</p>
+            <p>CCT: 4000K (neutral, good visibility)</p>
+            <p>CRI: Ra &gt; 80 (acceptable general rendering)</p>
+            <p>Fresh produce:</p>
+            <p>CCT: 4000-5000K (enhance greens)</p>
+            <p>CRI: Ra &gt; 90 (vibrant vegetable colours)</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Luminous Efficacy Formula</p>
-              <p className="text-lg font-mono text-white mb-2">η = Φ / P</p>
-              <p className="text-sm text-white">
-                Where Φ = luminous flux (lumens) and P = input power (watts). The theoretical
-                maximum for monochromatic light at 555nm is 683 lm/W. White light sources achieve
-                lower values because they emit across the visible spectrum, including wavelengths
-                where the eye is less sensitive.
-              </p>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Efficacy Comparison by Lamp Type
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Lamp Technology
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Efficacy (lm/W)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Life (hours)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Incandescent (phased out)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">10-17</td>
-                      <td className="border border-white/10 px-3 py-2">1,000</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Halogen</td>
-                      <td className="border border-white/10 px-3 py-2">15-25</td>
-                      <td className="border border-white/10 px-3 py-2">2,000-4,000</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Compact fluorescent (CFL)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">50-70</td>
-                      <td className="border border-white/10 px-3 py-2">8,000-15,000</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">T5 fluorescent</td>
-                      <td className="border border-white/10 px-3 py-2">90-105</td>
-                      <td className="border border-white/10 px-3 py-2">20,000-30,000</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LED (current)</td>
-                      <td className="border border-white/10 px-3 py-2">100-200</td>
-                      <td className="border border-white/10 px-3 py-2">50,000-100,000</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">High-pressure sodium</td>
-                      <td className="border border-white/10 px-3 py-2">80-140</td>
-                      <td className="border border-white/10 px-3 py-2">16,000-24,000</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Luminaire Efficacy vs Lamp Efficacy
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Lamp efficacy:</strong> Light output from bare lamp
-                  </li>
-                  <li className="pl-1">
-                    <strong>Luminaire efficacy:</strong> Light from complete fitting
-                  </li>
-                  <li className="pl-1">Includes optical losses (reflector, diffuser)</li>
-                  <li className="pl-1">Includes driver/ballast losses</li>
-                  <li className="pl-1">LOR (Light Output Ratio) = Φluminaire / Φlamp</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Factors Affecting Efficacy
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Operating temperature:</strong> LEDs lose efficacy when hot
-                  </li>
-                  <li className="pl-1">
-                    <strong>Dimming:</strong> Can improve or reduce efficacy
-                  </li>
-                  <li className="pl-1">
-                    <strong>Driver efficiency:</strong> Typically 85-95%
-                  </li>
-                  <li className="pl-1">
-                    <strong>Lumen depreciation:</strong> Reduces over lifetime
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Energy perspective:</strong> Replacing 60W incandescent lamps (900 lm) with 8W
-              LEDs (900 lm) achieves 87% energy reduction while maintaining the same light output.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Colour Temperature and Colour Rendering */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Colour Temperature and Colour Rendering
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              The colour appearance of light and its ability to accurately reveal object colours are
-              critical considerations in lighting design. Correlated Colour Temperature (CCT)
-              describes the apparent warmth or coolness of light, while the Colour Rendering Index
-              (CRI) measures how faithfully colours are reproduced compared to a reference
-              illuminant.
+              <strong>Key Formulae Summary:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Correlated Colour Temperature (CCT)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">CCT Range</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Applications
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2700-3000K</td>
-                      <td className="border border-white/10 px-3 py-2">Warm white (yellowish)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Residential, hospitality, restaurants
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3500-4000K</td>
-                      <td className="border border-white/10 px-3 py-2">Neutral white</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Offices, retail, commercial
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5000-5700K</td>
-                      <td className="border border-white/10 px-3 py-2">Daylight</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Industrial, healthcare, task lighting
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6500K+</td>
-                      <td className="border border-white/10 px-3 py-2">Cool daylight (bluish)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Photography, inspection, display
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Understanding CCT</p>
-              <p className="text-sm text-white">
-                CCT is expressed in Kelvin (K) and relates to the temperature of an ideal black body
-                radiator that would produce light of similar colour. Counter-intuitively, lower
-                temperatures appear warmer (more yellow/orange) while higher temperatures appear
-                cooler (more blue). This matches heated metal: red-hot is cooler than white-hot. The
-                term "correlated" acknowledges that most light sources don't exactly match black
-                body radiation but approximate its colour appearance.
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Colour Rendering Index (CRI/Ra)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Definition:</strong> Measure of colour fidelity compared to reference
-                  illuminant
-                </li>
-                <li className="pl-1">
-                  <strong>Scale:</strong> 0-100, where 100 is perfect rendering
-                </li>
-                <li className="pl-1">
-                  <strong>Ra (average):</strong> Mean of R1-R8 test colour samples
-                </li>
-                <li className="pl-1">
-                  <strong>Reference:</strong> Incandescent below 5000K; daylight above 5000K
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CRI Requirements by Application
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">CRI Range</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Quality</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Suitable Applications
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ra &gt; 90</td>
-                      <td className="border border-white/10 px-3 py-2">Excellent</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Retail, galleries, healthcare, food display
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ra 80-90</td>
-                      <td className="border border-white/10 px-3 py-2">Good</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Offices, education, general commercial
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ra 60-80</td>
-                      <td className="border border-white/10 px-3 py-2">Moderate</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Industrial, warehouses, car parks
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ra &lt; 60</td>
-                      <td className="border border-white/10 px-3 py-2">Poor</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Security lighting only (HPS)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Extended CRI Values (R9-R15)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>R9:</strong> Saturated red - critical for retail/healthcare
-                  </li>
-                  <li className="pl-1">
-                    <strong>R13:</strong> Skin tone (Caucasian reference)
-                  </li>
-                  <li className="pl-1">
-                    <strong>R15:</strong> Skin tone (Asian reference)
-                  </li>
-                  <li className="pl-1">Standard Ra ignores saturated colours</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  TM-30-18 (Modern Alternative)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Rf:</strong> Fidelity index (like CRI, 0-100)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Rg:</strong> Gamut index (saturation, 60-140)
-                  </li>
-                  <li className="pl-1">Uses 99 colour samples</li>
-                  <li className="pl-1">Colour vector graphics show shifts</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Design consideration:</strong> CCT and CRI are independent. A 3000K lamp can
-              have poor or excellent CRI. Always specify both parameters when colour quality
-              matters.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Illuminance:</strong> E = Φ / A (lux = lm/m²)</li>
+              <li><strong>Inverse square law:</strong> E = I / d² (point sources)</li>
+              <li><strong>Luminous efficacy:</strong> η = Φ / P (lm/W)</li>
+              <li><strong>Exitance:</strong> M = E × ρ (reflected flux density)</li>
+              <li><strong>Solid angle:</strong> Total sphere = 4π steradians</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Maximum theoretical efficacy: <strong>683 lm/W</strong> at 555nm</li>
+              <li>Modern LED efficacy: <strong>100-200 lm/W</strong></li>
+              <li>Warm white CCT: <strong>2700-3000K</strong></li>
+              <li>Neutral white CCT: <strong>4000K</strong></li>
+              <li>Good colour rendering: <strong>Ra &gt; 80</strong></li>
+              <li>Excellent colour rendering: <strong>Ra &gt; 90</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Illuminance Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Problem:</strong> A spotlight has a luminous intensity of 2500 cd in the
-                downward direction. Calculate the illuminance on a horizontal surface directly below
-                at distances of 2m and 4m.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Using E = I / d²</p>
-                <p className="mt-2">At 2m distance:</p>
-                <p className="ml-4">E = 2500 / 2² = 2500 / 4 = 625 lux</p>
-                <p className="mt-2">At 4m distance:</p>
-                <p className="ml-4">E = 2500 / 4² = 2500 / 16 = 156.25 lux</p>
-                <p className="mt-2 text-green-400">
-                  Note: Doubling distance reduces illuminance to 1/4
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Luminous Efficacy Comparison
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Problem:</strong> Compare the energy consumption of lighting a space with
-                60W incandescent lamps versus LED equivalents, both producing 800 lumens.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Incandescent: η = 800 lm / 60 W = 13.3 lm/W</p>
-                <p>LED (modern): η = 800 lm / 8 W = 100 lm/W</p>
-                <p className="mt-2">Power saving per lamp: 60 - 8 = 52 W</p>
-                <p>Percentage saving: (52/60) × 100 = 86.7%</p>
-                <p className="mt-2">For 100 lamps operating 3000 hours/year:</p>
-                <p className="ml-4">Incandescent: 100 × 60W × 3000h = 18,000 kWh</p>
-                <p className="ml-4">LED: 100 × 8W × 3000h = 2,400 kWh</p>
-                <p className="ml-4 text-green-400">Annual saving: 15,600 kWh</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: CCT and CRI Selection
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Specify CCT and CRI for a supermarket with different
-                zones.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Zone requirements:</p>
-                <p className="mt-2">Fresh meat/fish counter:</p>
-                <p className="ml-4">CCT: 3000K (enhances warm colours)</p>
-                <p className="ml-4">CRI: Ra &gt; 90, R9 &gt; 50 (accurate red rendering)</p>
-                <p className="mt-2">Bakery section:</p>
-                <p className="ml-4">CCT: 2700-3000K (warm, inviting)</p>
-                <p className="ml-4">CRI: Ra &gt; 90 (enhance golden tones)</p>
-                <p className="mt-2">General aisles:</p>
-                <p className="ml-4">CCT: 4000K (neutral, good visibility)</p>
-                <p className="ml-4">CRI: Ra &gt; 80 (acceptable general rendering)</p>
-                <p className="mt-2">Fresh produce:</p>
-                <p className="ml-4">CCT: 4000-5000K (enhance greens)</p>
-                <p className="ml-4 text-green-400">CRI: Ra &gt; 90 (vibrant vegetable colours)</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Key Formulae Summary</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Illuminance:</strong> E = Φ / A (lux = lm/m²)
-                </li>
-                <li className="pl-1">
-                  <strong>Inverse square law:</strong> E = I / d² (point sources)
-                </li>
-                <li className="pl-1">
-                  <strong>Luminous efficacy:</strong> η = Φ / P (lm/W)
-                </li>
-                <li className="pl-1">
-                  <strong>Exitance:</strong> M = E × ρ (reflected flux density)
-                </li>
-                <li className="pl-1">
-                  <strong>Solid angle:</strong> Total sphere = 4π steradians
-                </li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Confusing illuminance and luminance:</strong> Illuminance is incident light; luminance is perceived brightness</li>
+                <li><strong>Ignoring CCT psychology:</strong> Warm light feels comfortable but cool light promotes alertness</li>
+                <li><strong>Specifying CRI without R9:</strong> Standard Ra misses saturated red performance</li>
+                <li><strong>Comparing lamp vs luminaire efficacy:</strong> Always compare like with like</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Maximum theoretical efficacy: <strong>683 lm/W</strong> at 555nm
-                </li>
-                <li className="pl-1">
-                  Modern LED efficacy: <strong>100-200 lm/W</strong>
-                </li>
-                <li className="pl-1">
-                  Warm white CCT: <strong>2700-3000K</strong>
-                </li>
-                <li className="pl-1">
-                  Neutral white CCT: <strong>4000K</strong>
-                </li>
-                <li className="pl-1">
-                  Good colour rendering: <strong>Ra &gt; 80</strong>
-                </li>
-                <li className="pl-1">
-                  Excellent colour rendering: <strong>Ra &gt; 90</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Confusing illuminance and luminance:</strong> Illuminance is incident
-                  light; luminance is perceived brightness
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring CCT psychology:</strong> Warm light feels comfortable but cool
-                  light promotes alertness
-                </li>
-                <li className="pl-1">
-                  <strong>Specifying CRI without R9:</strong> Standard Ra misses saturated red
-                  performance
-                </li>
-                <li className="pl-1">
-                  <strong>Comparing lamp vs luminaire efficacy:</strong> Always compare like with
-                  like
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Photometric Quantities</p>
-                <ul className="space-y-0.5">
-                  <li>Luminous flux (Φ) - lumen (lm)</li>
-                  <li>Luminous intensity (I) - candela (cd)</li>
-                  <li>Illuminance (E) - lux (lx = lm/m²)</li>
-                  <li>Luminance (L) - cd/m²</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">CCT Guidelines</p>
-                <ul className="space-y-0.5">
-                  <li>Warm white: 2700-3000K</li>
-                  <li>Neutral white: 3500-4000K</li>
-                  <li>Cool white/daylight: 5000K+</li>
-                  <li>CRI: Ra &gt; 80 good, &gt; 90 excellent</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section3-2">
-              Next: Lamp Types and Characteristics
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section3")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Lighting design calculations
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section3-2")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Lumen method calculations
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

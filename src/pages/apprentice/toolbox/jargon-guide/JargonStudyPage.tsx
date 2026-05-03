@@ -1,4 +1,6 @@
 import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -10,11 +12,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Shuffle, GraduationCap, BookOpen, RotateCcw } from 'lucide-react';
+import { ArrowLeft, Shuffle, GraduationCap, BookOpen, RotateCcw } from 'lucide-react';
 import { siteJargonTerms, siteJargonCategories, JargonTerm } from '@/data/apprentice/siteJargonData';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
 
 const JargonStudyPage = () => {
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedDifficulty, setSelectedDifficulty] = useState('all');
 
@@ -196,15 +199,26 @@ const JargonStudyPage = () => {
 
   // Session complete / not started
   return (
-    <div className="max-w-2xl mx-auto space-y-6 animate-fade-in px-4 pb-20">
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <SmartBackButton />
-        <div>
-          <h1 className="text-xl font-bold text-white">Flashcard Study</h1>
-          <p className="text-sm text-white">Test your jargon knowledge</p>
-        </div>
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice/toolbox/site-jargon')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
+
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Flashcards"
+          title="Flashcard study"
+          description="Test your jargon knowledge across categories and difficulty levels. Pick a topic, hit start, work through the deck."
+          tone="yellow"
+        />
+      </motion.div>
 
       {/* How It Works */}
       <Card className="border-elec-yellow/20 bg-white/5">
@@ -339,7 +353,7 @@ const JargonStudyPage = () => {
           are new. Once you can get them all right, move to Intermediate and then Advanced.
         </p>
       </div>
-    </div>
+    </PageFrame>
   );
 };
 

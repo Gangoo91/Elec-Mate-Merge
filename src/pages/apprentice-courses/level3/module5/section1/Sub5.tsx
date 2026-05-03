@@ -689,7 +689,7 @@ export default function Sub5() {
                 arrangement. Pre-A4 reference material should be cross-checked.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Section 712 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Section 712."
           />
 
           <InlineCheck

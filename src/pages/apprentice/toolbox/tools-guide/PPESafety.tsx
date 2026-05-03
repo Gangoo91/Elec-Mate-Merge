@@ -1,9 +1,13 @@
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Shield, HardHat, Eye, Star } from 'lucide-react';
+import { ArrowLeft, Shield, HardHat, Eye, Star } from 'lucide-react';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
 import PPETab from '@/components/apprentice/tools-guide/PPETab';
 
 const PPESafety = () => {
+  const navigate = useNavigate();
   const quickStats = [
     {
       label: 'Basic PPE Items',
@@ -40,21 +44,26 @@ const PPESafety = () => {
   ];
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8 animate-fade-in px-4 sm:px-6 lg:px-8 pb-20">
-      {/* Hero Header */}
-      <div className="flex flex-col items-center justify-center mb-6 text-center">
-        <div className="p-3 bg-elec-yellow/20 rounded-2xl mb-4">
-          <Shield className="h-8 w-8 sm:h-10 sm:w-10 text-elec-yellow" />
-        </div>
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
-          PPE & Safety Equipment
-        </h1>
-        <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
-          Personal Protective Equipment is essential for every UK electrical apprentice. Your safety
-          is paramount - never compromise on PPE quality.
-        </p>
-        <SmartBackButton />
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice/toolbox/tools-guide')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
+
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · PPE"
+          title="PPE & safety equipment"
+          description="Hard hats, eye protection, gloves, arc-flash kit and the bits most apprentices forget. Standards, fit, and what actually saves you on a real job."
+          tone="yellow"
+        />
+      </motion.div>
 
       {/* Quick Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
@@ -73,7 +82,7 @@ const PPESafety = () => {
       <Card className="border-white/10 bg-white/5 backdrop-blur-sm">
         <PPETab />
       </Card>
-    </div>
+    </PageFrame>
   );
 };
 

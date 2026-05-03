@@ -1,8 +1,21 @@
-import { ArrowLeft, Cpu, CheckCircle, Network, Server, Layers, Monitor } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 8 · Section 5 · Subsection 1 — BMS Fundamentals
+ * HNC Electrical Engineering for Building Services (HVAC Systems)
+ *   Understanding building management system architecture, components and integration
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'BMS Fundamentals - HNC Module 8 Section 5.1';
@@ -234,1282 +247,435 @@ const faqs = [
 ];
 
 const HNCModule8Section5_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section5")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module8-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Cpu className="h-4 w-4" />
-            <span>Module 8.5.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            BMS Fundamentals
-          </h1>
-          <p className="text-white">
-            Understanding building management system architecture, components and integration
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 8 · Section 5 · Subsection 1"
+            title="BMS Fundamentals"
+            description="Understanding building management system architecture, components and integration"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Three levels:</strong> Field, Automation, Management
-              </li>
-              <li className="pl-1">
-                <strong>Outstations:</strong> Local control and data acquisition
-              </li>
-              <li className="pl-1">
-                <strong>Head-end:</strong> Centralised monitoring and supervision
-              </li>
-              <li className="pl-1">
-                <strong>Integration:</strong> HVAC, lighting, fire, access, metering
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Describe the three-tier architecture of modern BMS",
+              "Explain the role and function of BMS outstations",
+              "Describe head-end software functions and capabilities",
+              "Identify common network topologies for BMS",
+              "Understand points schedules and point types",
+              "Explain integration with other building systems",
+              "Describe the benefits of integrated building management",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="BMS Architecture Overview">
+            <p>A Building Management System (BMS) is a computer-based control system that monitors and manages a building's mechanical, electrical, and electromechanical services. Modern BMS architecture follows a hierarchical three-tier model that provides flexibility, resilience, and scalability.</p>
+            <p><strong>Three-Tier BMS Architecture</strong></p>
+            <p>Management Level (Top Tier)</p>
+            <p>Head-end servers, operator workstations, enterprise integration</p>
+            <p>Automation Level (Middle Tier)</p>
+            <p>Outstations, controllers, local area networks</p>
+            <p>Field Level (Bottom Tier)</p>
+            <p>Sensors, actuators, meters, field devices</p>
+            <p><strong>Key architecture principles:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Distributed intelligence:</strong> Control logic resides at the automation level, not centrally</li>
+              <li><strong>Autonomous operation:</strong> Outstations continue working if network fails</li>
+              <li><strong>Scalability:</strong> Easy to add new devices, zones, or buildings</li>
+              <li><strong>Standardisation:</strong> Open protocols enable multi-vendor systems</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Energy savings:</strong> 10-30% through optimised control
-              </li>
-              <li className="pl-1">
-                <strong>Comfort:</strong> Consistent environment for occupants
-              </li>
-              <li className="pl-1">
-                <strong>Maintenance:</strong> Predictive rather than reactive
-              </li>
-              <li className="pl-1">
-                <strong>Compliance:</strong> Building regulations and standards
-              </li>
+            <p><strong>BMS vs Traditional Controls</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Control location:</strong> Local at each plant — Distributed with central monitoring</li>
+              <li><strong>Visibility:</strong> Manual inspection required — Real-time graphics and alarms</li>
+              <li><strong>Data logging:</strong> Manual or none — Automatic trending</li>
+              <li><strong>Scheduling:</strong> Time clocks at each location — Centralised, flexible schedules</li>
+              <li><strong>Integration:</strong> Standalone systems — Coordinated multi-system operation</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Industry trend:</strong> Modern BMS increasingly uses IP-based networks and cloud connectivity, enabling remote monitoring and integration with smart building platforms.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Describe the three-tier architecture of modern BMS',
-              'Explain the role and function of BMS outstations',
-              'Describe head-end software functions and capabilities',
-              'Identify common network topologies for BMS',
-              'Understand points schedules and point types',
-              'Explain integration with other building systems',
-              'Describe the benefits of integrated building management',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: BMS Architecture Overview */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            BMS Architecture Overview
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Field Level: Sensors, Actuators and Points">
+            <p>The field level comprises all the physical devices that interface with the building environment. These devices are connected to outstations and provide the inputs and outputs necessary for monitoring and control.</p>
+            <p><strong>Point Types in BMS</strong></p>
+            <p><strong>Hardware Points (Physical)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>AI</strong> - Analogue Input (temperature, pressure)</li>
+              <li><strong>AO</strong> - Analogue Output (valve position)</li>
+              <li><strong>DI</strong> - Digital Input (switch status)</li>
+              <li><strong>DO</strong> - Digital Output (pump on/off)</li>
+            </ul>
+            <p><strong>Software Points (Virtual)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>AV</strong> - Analogue Value (setpoints, timers)</li>
+              <li><strong>BV</strong> - Binary Value (enable flags)</li>
+              <li><strong>MV</strong> - Multistate Value (mode selection)</li>
+              <li><strong>Calculated</strong> - Derived from other points</li>
+            </ul>
+            <p><strong>Common field devices:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Temperature sensors:</strong> Room, duct, pipe, outside air (PT100, NTC, thermocouples)</li>
+              <li><strong>Humidity sensors:</strong> Capacitive or resistive elements for %RH measurement</li>
+              <li><strong>Pressure sensors:</strong> Duct static, differential, water pressure</li>
+              <li><strong>CO2 sensors:</strong> For demand-controlled ventilation</li>
+              <li><strong>Valve actuators:</strong> Modulating or on/off control of water flow</li>
+              <li><strong>Damper actuators:</strong> Air flow control in ductwork</li>
+              <li><strong>Variable speed drives:</strong> Fan and pump speed control</li>
+              <li><strong>Meters:</strong> Electricity, gas, water, heat consumption</li>
+            </ul>
+            <p><strong>Signal Types and Ranges</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>4-20mA:</strong> 4mA = 0%, 20mA = 100% — Transmitters, actuators</li>
+              <li><strong>0-10V DC:</strong> 0V = 0%, 10V = 100% — Actuators, VSDs, dimmers</li>
+              <li><strong>Resistance:</strong> PT100, PT1000, NTC — Temperature sensors</li>
+              <li><strong>Volt-free contact:</strong> Open/Closed — Status, alarms, interlocks</li>
+              <li><strong>Pulse:</strong> Count per unit — Meters (kWh, m³)</li>
+            </ul>
+            <p><strong>Points Schedule Example</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>AHU1_SAT:</strong> AI — Supply air temp — °C — HI: 35, LO: 5</li>
+              <li><strong>AHU1_SF_CMD:</strong> DO — Supply fan command — On/Off — -</li>
+              <li><strong>AHU1_HCV:</strong> AO — Heating valve — % — -</li>
+              <li><strong>AHU1_SAT_SP:</strong> AV — Supply air setpoint — °C — -</li>
+            </ul>
+            <p><strong>Best practice:</strong> Use consistent naming conventions for points. A typical format is: System_Equipment_Point (e.g., HVAC_AHU01_SupplyTemp).</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Outstations and Controllers">
+            <p>Outstations (also called controllers, field controllers, or DDC controllers) form the automation level of the BMS. They provide local intelligence, execute control programs, and communicate with both field devices and the management level.</p>
+            <p><strong>Outstation Functions</strong></p>
+            <p><strong>Primary Functions</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Execute control programs (PID, sequences)</li>
+              <li>Process sensor inputs and generate outputs</li>
+              <li>Implement time schedules locally</li>
+              <li>Generate and store alarms</li>
+              <li>Log trend data</li>
+            </ul>
+            <p><strong>Communication Functions</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Report to head-end system</li>
+              <li>Peer-to-peer with other outstations</li>
+              <li>Interface with field bus devices</li>
+              <li>Accept operator commands</li>
+              <li>Upload/download programs</li>
+            </ul>
+            <p><strong>Outstation types:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Unitary controllers:</strong> Fixed I/O for specific applications (FCU, VAV)</li>
+              <li><strong>Programmable controllers:</strong> Flexible I/O, custom programming</li>
+              <li><strong>Expansion modules:</strong> Add I/O capacity to existing controllers</li>
+              <li><strong>Network controllers:</strong> Manage communication between networks</li>
+              <li><strong>Plant controllers:</strong> High I/O count for central plant</li>
+            </ul>
+            <p><strong>Controller Specifications to Consider</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>I/O capacity:</strong> 8-64 points base, expandable — Allow 20% spare capacity</li>
+              <li><strong>Input types:</strong> Universal or dedicated — Universal offers flexibility</li>
+              <li><strong>Program memory:</strong> 256KB - 4MB — Complex sequences need more</li>
+              <li><strong>Trend storage:</strong> 10,000 - 500,000 samples — Battery-backed or flash</li>
+              <li><strong>Network ports:</strong> RS-485, Ethernet, wireless — Match system architecture</li>
+            </ul>
+            <p><strong>Autonomous Operation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Control continues if head-end fails</li>
+              <li>Local schedules maintained</li>
+              <li>Alarms stored for later upload</li>
+              <li>Battery backup preserves program</li>
+            </ul>
+            <p><strong>Installation Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Suitable enclosure (IP rating)</li>
+              <li>Clean 24V AC/DC power supply</li>
+              <li>Cable termination space</li>
+              <li>Environmental conditions met</li>
+            </ul>
+            <p><strong>Design tip:</strong> Locate outstations close to the plant they control to minimise cable runs and improve response times.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Head-End Systems and Network Topology">
+            <p>The head-end system provides the management level interface between operators and the BMS. It offers centralised monitoring, supervision, and data management capabilities. The network topology determines how all system components communicate.</p>
+            <p><strong>Head-End Software Functions</strong></p>
+            <p><strong>Visualisation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Dynamic graphics</li>
+              <li>Floor plans</li>
+              <li>Schematic diagrams</li>
+              <li>Dashboard displays</li>
+            </ul>
+            <p><strong>Data Management</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Historical trending</li>
+              <li>Alarm logging</li>
+              <li>Report generation</li>
+              <li>Data archiving</li>
+            </ul>
+            <p><strong>Supervision</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Global scheduling</li>
+              <li>Alarm management</li>
+              <li>User access control</li>
+              <li>System configuration</li>
+            </ul>
+            <p><strong>Head-end system components:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Server:</strong> Database, communications, application services</li>
+              <li><strong>Workstations:</strong> Operator interface, graphics, alarm display</li>
+              <li><strong>Web server:</strong> Browser-based remote access</li>
+              <li><strong>Historian:</strong> Long-term data storage and retrieval</li>
+              <li><strong>Report server:</strong> Scheduled and ad-hoc report generation</li>
+              <li><strong>Integration server:</strong> Links to other enterprise systems</li>
+            </ul>
+            <p><strong>Network Topologies</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Bus:</strong> Single cable, devices tap in — Simple, low cable cost — Single point failure affects all</li>
+              <li><strong>Star:</strong> Central hub/switch — Easy troubleshooting — Hub failure stops network</li>
+              <li><strong>Ring:</strong> Circular connection — Redundant path — More complex installation</li>
+              <li><strong>Mesh:</strong> Multiple interconnections — Highest resilience — Most expensive</li>
+              <li><strong>Tree/Hierarchical:</strong> Multiple levels of stars — Scalable, organised — Backbone critical</li>
+            </ul>
+            <p><strong>Typical BMS Network Architecture</strong></p>
+            <p><strong>Level 3 (Enterprise):</strong> Corporate LAN, IT integration, cloud services</p>
+            <p>↓ Firewall / Gateway</p>
+            <p><strong>Level 2 (Supervision):</strong> Head-end server, workstations - Ethernet TCP/IP</p>
+            <p>↓ Router / Gateway</p>
+            <p><strong>Level 1 (Automation):</strong> Outstations - BACnet/IP, BACnet MS/TP, LonWorks</p>
+            <p>↓ Controller I/O</p>
+            <p><strong>Level 0 (Field):</strong> Sensors, actuators - Hardwired, Modbus, M-Bus</p>
+            <p><strong>Wired Media Options</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Twisted pair:</strong> RS-485, field level, low cost</li>
+              <li><strong>Ethernet:</strong> Cat5e/Cat6, automation level up</li>
+              <li><strong>Fibre optic:</strong> Long distances, EMI immunity</li>
+              <li><strong>Powerline:</strong> Uses existing electrical wiring</li>
+            </ul>
+            <p><strong>Wireless Options</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Wi-Fi:</strong> Standard IT infrastructure</li>
+              <li><strong>ZigBee:</strong> Low power mesh networks</li>
+              <li><strong>EnOcean:</strong> Energy harvesting sensors</li>
+              <li><strong>LoRaWAN:</strong> Long range, low power</li>
+            </ul>
+            <p><strong>Security note:</strong> BMS networks should be segregated from general IT networks using firewalls and VLANs to prevent cyber security risks.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Integration with Other Building Systems">
+            <p>A key benefit of modern BMS is the ability to integrate with other building systems. This enables coordinated operation, improved efficiency, and a single point of monitoring for building operators.</p>
+            <p><strong>Systems Commonly Integrated with BMS</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Fire alarm:</strong> HVAC shutdown, smoke control, status display — Volt-free contacts, protocol gateway</li>
+              <li><strong>Access control:</strong> Occupancy-based HVAC, lighting control — BACnet, OPC, API</li>
+              <li><strong>Lighting control:</strong> Coordinated scenes, daylight harvesting — DALI gateway, KNX, BACnet</li>
+              <li><strong>Electrical metering:</strong> Energy monitoring, demand response — Modbus, BACnet, M-Bus</li>
+              <li><strong>Lifts:</strong> Status monitoring, fault alarms — Volt-free contacts, serial</li>
+              <li><strong>Security/CCTV:</strong> Event correlation, lighting response — IP integration, contacts</li>
+              <li><strong>Solar PV:</strong> Generation monitoring, load shifting — Modbus, SunSpec</li>
+            </ul>
+            <p><strong>Integration Example: Fire Alarm Interface</strong></p>
+            <p><strong>Fire alarm panel</strong> &gt; <strong>Volt-free contacts</strong> &gt;  <strong>BMS controller DI</strong></p>
+            <p>When fire alarm activates:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>BMS receives fire alarm signal on digital input</li>
+              <li>AHU fans commanded to smoke control mode or shutdown</li>
+              <li>Fire dampers confirmed closed via end-switch feedback</li>
+              <li>Stairwell pressurisation activated</li>
+              <li>Lifts recalled to ground floor (separate system)</li>
+            </ul>
+            <p><strong>Integration Methods</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Hardwired:</strong> Volt-free contacts, simple and reliable</li>
+              <li><strong>Serial:</strong> RS-232/485, Modbus RTU</li>
+              <li><strong>Network:</strong> BACnet/IP, Modbus TCP, LonWorks</li>
+              <li><strong>Gateway:</strong> Protocol conversion between systems</li>
+              <li><strong>API:</strong> Web services, REST, JSON</li>
+            </ul>
+            <p><strong>Integration Considerations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Define clear scope and responsibilities</li>
+              <li>Agree data exchange requirements</li>
+              <li>Consider cyber security implications</li>
+              <li>Document interface specifications</li>
+              <li>Plan integration testing</li>
+            </ul>
+            <p><strong>Benefits of integrated building management:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Energy efficiency:</strong> Systems respond to actual occupancy and conditions</li>
+              <li><strong>Improved comfort:</strong> Coordinated control of temperature, lighting, blinds</li>
+              <li><strong>Enhanced safety:</strong> Automatic response to fire and security events</li>
+              <li><strong>Reduced maintenance:</strong> Single system to monitor and maintain</li>
+              <li><strong>Better reporting:</strong> Consolidated data for analysis and compliance</li>
+            </ul>
+            <p><strong>Important:</strong> Life safety systems (fire, smoke control) must maintain their independent certification and should not rely solely on BMS for critical functions.</p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              A Building Management System (BMS) is a computer-based control system that monitors
-              and manages a building's mechanical, electrical, and electromechanical services.
-              Modern BMS architecture follows a hierarchical three-tier model that provides
-              flexibility, resilience, and scalability.
+              <strong>Example 1: Outstation Sizing</strong>
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Three-Tier BMS Architecture
-              </p>
-              <div className="grid gap-4">
-                <div className="p-3 rounded bg-white/5 border-l-2 border-blue-400/50">
-                  <p className="font-medium text-blue-300 mb-1">Management Level (Top Tier)</p>
-                  <p className="text-sm text-white">
-                    Head-end servers, operator workstations, enterprise integration
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5 border-l-2 border-green-400/50">
-                  <p className="font-medium text-green-300 mb-1">Automation Level (Middle Tier)</p>
-                  <p className="text-sm text-white">
-                    Outstations, controllers, local area networks
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5 border-l-2 border-orange-400/50">
-                  <p className="font-medium text-orange-300 mb-1">Field Level (Bottom Tier)</p>
-                  <p className="text-sm text-white">Sensors, actuators, meters, field devices</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key architecture principles:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Distributed intelligence:</strong> Control logic resides at the automation
-                  level, not centrally
-                </li>
-                <li className="pl-1">
-                  <strong>Autonomous operation:</strong> Outstations continue working if network
-                  fails
-                </li>
-                <li className="pl-1">
-                  <strong>Scalability:</strong> Easy to add new devices, zones, or buildings
-                </li>
-                <li className="pl-1">
-                  <strong>Standardisation:</strong> Open protocols enable multi-vendor systems
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BMS vs Traditional Controls
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Traditional Controls
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">BMS</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Control location</td>
-                      <td className="border border-white/10 px-3 py-2">Local at each plant</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Distributed with central monitoring
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Visibility</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Manual inspection required
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Real-time graphics and alarms
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Data logging</td>
-                      <td className="border border-white/10 px-3 py-2">Manual or none</td>
-                      <td className="border border-white/10 px-3 py-2">Automatic trending</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Scheduling</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Time clocks at each location
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Centralised, flexible schedules
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Integration</td>
-                      <td className="border border-white/10 px-3 py-2">Standalone systems</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Coordinated multi-system operation
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Industry trend:</strong> Modern BMS increasingly uses IP-based networks and
-              cloud connectivity, enabling remote monitoring and integration with smart building
-              platforms.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Field Level Components */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Field Level: Sensors, Actuators and Points
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Question:</strong> An AHU requires control of: 1 supply fan, 1 extract fan, heating valve, cooling valve, mixing dampers (3 actuators), plus monitoring of supply/extract temperatures, filter differential pressure, and supply air humidity. How many I/O points are needed?</p>
+            <p>Counting I/O points:</p>
+            <p><strong>Digital Outputs (DO):</strong></p>
+            <p>- Supply fan start/stop: 1</p>
+            <p>- Extract fan start/stop: 1</p>
+            <p>Total DO: <strong>2</strong></p>
+            <p><strong>Analogue Outputs (AO):</strong></p>
+            <p>- Heating valve 0-10V: 1</p>
+            <p>- Cooling valve 0-10V: 1</p>
+            <p>- Damper actuators 0-10V: 3</p>
+            <p>Total AO: <strong>5</strong></p>
+            <p><strong>Analogue Inputs (AI):</strong></p>
+            <p>- Supply air temp: 1</p>
+            <p>- Extract air temp: 1</p>
+            <p>- Filter DP: 1</p>
+            <p>- Supply humidity: 1</p>
+            <p>Total AI: <strong>4</strong></p>
+            <p>Minimum: 2 DO + 5 AO + 4 AI = 11 points</p>
+            <p>With 20% spare: Select controller with at least 14 points</p>
             <p>
-              The field level comprises all the physical devices that interface with the building
-              environment. These devices are connected to outstations and provide the inputs and
-              outputs necessary for monitoring and control.
+              <strong>Example 2: Network Design</strong>
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Point Types in BMS</p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Hardware Points (Physical)</p>
-                  <ul className="text-white space-y-1">
-                    <li>
-                      <strong>AI</strong> - Analogue Input (temperature, pressure)
-                    </li>
-                    <li>
-                      <strong>AO</strong> - Analogue Output (valve position)
-                    </li>
-                    <li>
-                      <strong>DI</strong> - Digital Input (switch status)
-                    </li>
-                    <li>
-                      <strong>DO</strong> - Digital Output (pump on/off)
-                    </li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Software Points (Virtual)</p>
-                  <ul className="text-white space-y-1">
-                    <li>
-                      <strong>AV</strong> - Analogue Value (setpoints, timers)
-                    </li>
-                    <li>
-                      <strong>BV</strong> - Binary Value (enable flags)
-                    </li>
-                    <li>
-                      <strong>MV</strong> - Multistate Value (mode selection)
-                    </li>
-                    <li>
-                      <strong>Calculated</strong> - Derived from other points
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Common field devices:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Temperature sensors:</strong> Room, duct, pipe, outside air (PT100, NTC,
-                  thermocouples)
-                </li>
-                <li className="pl-1">
-                  <strong>Humidity sensors:</strong> Capacitive or resistive elements for %RH
-                  measurement
-                </li>
-                <li className="pl-1">
-                  <strong>Pressure sensors:</strong> Duct static, differential, water pressure
-                </li>
-                <li className="pl-1">
-                  <strong>CO2 sensors:</strong> For demand-controlled ventilation
-                </li>
-                <li className="pl-1">
-                  <strong>Valve actuators:</strong> Modulating or on/off control of water flow
-                </li>
-                <li className="pl-1">
-                  <strong>Damper actuators:</strong> Air flow control in ductwork
-                </li>
-                <li className="pl-1">
-                  <strong>Variable speed drives:</strong> Fan and pump speed control
-                </li>
-                <li className="pl-1">
-                  <strong>Meters:</strong> Electricity, gas, water, heat consumption
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Signal Types and Ranges
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Signal Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Range</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Common Use</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4-20mA</td>
-                      <td className="border border-white/10 px-3 py-2">4mA = 0%, 20mA = 100%</td>
-                      <td className="border border-white/10 px-3 py-2">Transmitters, actuators</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">0-10V DC</td>
-                      <td className="border border-white/10 px-3 py-2">0V = 0%, 10V = 100%</td>
-                      <td className="border border-white/10 px-3 py-2">Actuators, VSDs, dimmers</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Resistance</td>
-                      <td className="border border-white/10 px-3 py-2">PT100, PT1000, NTC</td>
-                      <td className="border border-white/10 px-3 py-2">Temperature sensors</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Volt-free contact</td>
-                      <td className="border border-white/10 px-3 py-2">Open/Closed</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Status, alarms, interlocks
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pulse</td>
-                      <td className="border border-white/10 px-3 py-2">Count per unit</td>
-                      <td className="border border-white/10 px-3 py-2">Meters (kWh, m³)</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Points Schedule Example
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-xs text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-2 py-1 text-left">Point Name</th>
-                      <th className="border border-white/10 px-2 py-1 text-left">Type</th>
-                      <th className="border border-white/10 px-2 py-1 text-left">Description</th>
-                      <th className="border border-white/10 px-2 py-1 text-left">Units</th>
-                      <th className="border border-white/10 px-2 py-1 text-left">Alarm</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-1">AHU1_SAT</td>
-                      <td className="border border-white/10 px-2 py-1">AI</td>
-                      <td className="border border-white/10 px-2 py-1">Supply air temp</td>
-                      <td className="border border-white/10 px-2 py-1">°C</td>
-                      <td className="border border-white/10 px-2 py-1">HI: 35, LO: 5</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-1">AHU1_SF_CMD</td>
-                      <td className="border border-white/10 px-2 py-1">DO</td>
-                      <td className="border border-white/10 px-2 py-1">Supply fan command</td>
-                      <td className="border border-white/10 px-2 py-1">On/Off</td>
-                      <td className="border border-white/10 px-2 py-1">-</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-1">AHU1_HCV</td>
-                      <td className="border border-white/10 px-2 py-1">AO</td>
-                      <td className="border border-white/10 px-2 py-1">Heating valve</td>
-                      <td className="border border-white/10 px-2 py-1">%</td>
-                      <td className="border border-white/10 px-2 py-1">-</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-1">AHU1_SAT_SP</td>
-                      <td className="border border-white/10 px-2 py-1">AV</td>
-                      <td className="border border-white/10 px-2 py-1">Supply air setpoint</td>
-                      <td className="border border-white/10 px-2 py-1">°C</td>
-                      <td className="border border-white/10 px-2 py-1">-</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> Use consistent naming conventions for points. A
-              typical format is: System_Equipment_Point (e.g., HVAC_AHU01_SupplyTemp).
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Outstations and Controllers */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Outstations and Controllers
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Question:</strong> A three-storey office building has 4 AHUs, 40 FCUs, and central boiler/chiller plant. Design an appropriate BMS network topology.</p>
+            <p>Recommended architecture:</p>
+            <p><strong>Management Level:</strong></p>
+            <p>- Head-end server with redundancy</p>
+            <p>- 2x operator workstations</p>
+            <p>- Ethernet backbone (gigabit)</p>
+            <p><strong>Automation Level:</strong></p>
+            <p>- Plant controller for boiler/chiller (high I/O)</p>
+            <p>- 4x AHU controllers (medium I/O)</p>
+            <p>- 4-5x FCU controllers per floor (40 FCUs = ~10 per controller)</p>
+            <p>- BACnet/IP on Ethernet to head-end</p>
+            <p>- BACnet MS/TP trunk per floor for FCU controllers</p>
+            <p><strong>Field Level:</strong></p>
+            <p>- Direct wiring to controller I/O</p>
+            <p>- Energy meters on M-Bus or Modbus</p>
+            <p>Topology: Tree/hierarchical with star switches per floor</p>
             <p>
-              Outstations (also called controllers, field controllers, or DDC controllers) form the
-              automation level of the BMS. They provide local intelligence, execute control
-              programs, and communicate with both field devices and the management level.
+              <strong>Example 3: Points Schedule Entry</strong>
             </p>
+            <p><strong>Question:</strong> Create a points schedule entry for monitoring boiler flow temperature with high and low alarms.</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Point Name::</strong> BLR1_FLOW_TEMP</li>
+              <li><strong>Point Type::</strong> AI (Analogue Input)</li>
+              <li><strong>Description::</strong> Boiler 1 Flow Temperature</li>
+              <li><strong>Controller::</strong> CTRL-PLANTROOM-01</li>
+              <li><strong>Address::</strong> AI-04</li>
+              <li><strong>Sensor Type::</strong> PT1000</li>
+              <li><strong>Range::</strong> 0-100°C</li>
+              <li><strong>Engineering Units::</strong> °C</li>
+              <li><strong>High Alarm::</strong> 85°C (Priority 2)</li>
+              <li><strong>High-High Alarm::</strong> 90°C (Priority 1)</li>
+              <li><strong>Low Alarm::</strong> 40°C (Priority 3)</li>
+              <li><strong>Trend Interval::</strong> 5 minutes</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Outstation Functions</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">Primary Functions</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Execute control programs (PID, sequences)</li>
-                    <li className="pl-1">Process sensor inputs and generate outputs</li>
-                    <li className="pl-1">Implement time schedules locally</li>
-                    <li className="pl-1">Generate and store alarms</li>
-                    <li className="pl-1">Log trend data</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">Communication Functions</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Report to head-end system</li>
-                    <li className="pl-1">Peer-to-peer with other outstations</li>
-                    <li className="pl-1">Interface with field bus devices</li>
-                    <li className="pl-1">Accept operator commands</li>
-                    <li className="pl-1">Upload/download programs</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Outstation types:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Unitary controllers:</strong> Fixed I/O for specific applications (FCU,
-                  VAV)
-                </li>
-                <li className="pl-1">
-                  <strong>Programmable controllers:</strong> Flexible I/O, custom programming
-                </li>
-                <li className="pl-1">
-                  <strong>Expansion modules:</strong> Add I/O capacity to existing controllers
-                </li>
-                <li className="pl-1">
-                  <strong>Network controllers:</strong> Manage communication between networks
-                </li>
-                <li className="pl-1">
-                  <strong>Plant controllers:</strong> High I/O count for central plant
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Controller Specifications to Consider
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Specification</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Values</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Considerations</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">I/O capacity</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        8-64 points base, expandable
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Allow 20% spare capacity</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Input types</td>
-                      <td className="border border-white/10 px-3 py-2">Universal or dedicated</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Universal offers flexibility
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Program memory</td>
-                      <td className="border border-white/10 px-3 py-2">256KB - 4MB</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Complex sequences need more
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Trend storage</td>
-                      <td className="border border-white/10 px-3 py-2">10,000 - 500,000 samples</td>
-                      <td className="border border-white/10 px-3 py-2">Battery-backed or flash</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Network ports</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        RS-485, Ethernet, wireless
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Match system architecture
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Autonomous Operation</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Control continues if head-end fails</li>
-                  <li className="pl-1">Local schedules maintained</li>
-                  <li className="pl-1">Alarms stored for later upload</li>
-                  <li className="pl-1">Battery backup preserves program</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Installation Requirements
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Suitable enclosure (IP rating)</li>
-                  <li className="pl-1">Clean 24V AC/DC power supply</li>
-                  <li className="pl-1">Cable termination space</li>
-                  <li className="pl-1">Environmental conditions met</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design tip:</strong> Locate outstations close to the plant they control to
-              minimise cable runs and improve response times.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Head-End and Network Topology */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Head-End Systems and Network Topology
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              The head-end system provides the management level interface between operators and the
-              BMS. It offers centralised monitoring, supervision, and data management capabilities.
-              The network topology determines how all system components communicate.
+              <strong>Key BMS Terminology:</strong>
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Head-End Software Functions
-              </p>
-              <div className="grid sm:grid-cols-3 gap-4 text-sm">
-                <div className="p-3 rounded bg-white/5">
-                  <Monitor className="h-5 w-5 text-blue-400 mb-2" />
-                  <p className="font-medium text-white mb-1">Visualisation</p>
-                  <ul className="text-white space-y-0.5 text-xs">
-                    <li>Dynamic graphics</li>
-                    <li>Floor plans</li>
-                    <li>Schematic diagrams</li>
-                    <li>Dashboard displays</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <Server className="h-5 w-5 text-green-400 mb-2" />
-                  <p className="font-medium text-white mb-1">Data Management</p>
-                  <ul className="text-white space-y-0.5 text-xs">
-                    <li>Historical trending</li>
-                    <li>Alarm logging</li>
-                    <li>Report generation</li>
-                    <li>Data archiving</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <Layers className="h-5 w-5 text-purple-400 mb-2" />
-                  <p className="font-medium text-white mb-1">Supervision</p>
-                  <ul className="text-white space-y-0.5 text-xs">
-                    <li>Global scheduling</li>
-                    <li>Alarm management</li>
-                    <li>User access control</li>
-                    <li>System configuration</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Head-end system components:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Server:</strong> Database, communications, application services
-                </li>
-                <li className="pl-1">
-                  <strong>Workstations:</strong> Operator interface, graphics, alarm display
-                </li>
-                <li className="pl-1">
-                  <strong>Web server:</strong> Browser-based remote access
-                </li>
-                <li className="pl-1">
-                  <strong>Historian:</strong> Long-term data storage and retrieval
-                </li>
-                <li className="pl-1">
-                  <strong>Report server:</strong> Scheduled and ad-hoc report generation
-                </li>
-                <li className="pl-1">
-                  <strong>Integration server:</strong> Links to other enterprise systems
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Network Topologies</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Topology</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Advantages</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Disadvantages</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Bus</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Single cable, devices tap in
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Simple, low cable cost</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Single point failure affects all
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Star</td>
-                      <td className="border border-white/10 px-3 py-2">Central hub/switch</td>
-                      <td className="border border-white/10 px-3 py-2">Easy troubleshooting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Hub failure stops network
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ring</td>
-                      <td className="border border-white/10 px-3 py-2">Circular connection</td>
-                      <td className="border border-white/10 px-3 py-2">Redundant path</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        More complex installation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mesh</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multiple interconnections
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Highest resilience</td>
-                      <td className="border border-white/10 px-3 py-2">Most expensive</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Tree/Hierarchical</td>
-                      <td className="border border-white/10 px-3 py-2">Multiple levels of stars</td>
-                      <td className="border border-white/10 px-3 py-2">Scalable, organised</td>
-                      <td className="border border-white/10 px-3 py-2">Backbone critical</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical BMS Network Architecture
-              </p>
-              <div className="space-y-3 text-sm text-white">
-                <p>
-                  <strong>Level 3 (Enterprise):</strong> Corporate LAN, IT integration, cloud
-                  services
-                </p>
-                <p className="pl-4">↓ Firewall / Gateway</p>
-                <p>
-                  <strong>Level 2 (Supervision):</strong> Head-end server, workstations - Ethernet
-                  TCP/IP
-                </p>
-                <p className="pl-4">↓ Router / Gateway</p>
-                <p>
-                  <strong>Level 1 (Automation):</strong> Outstations - BACnet/IP, BACnet MS/TP,
-                  LonWorks
-                </p>
-                <p className="pl-4">↓ Controller I/O</p>
-                <p>
-                  <strong>Level 0 (Field):</strong> Sensors, actuators - Hardwired, Modbus, M-Bus
-                </p>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Wired Media Options</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Twisted pair:</strong> RS-485, field level, low cost
-                  </li>
-                  <li className="pl-1">
-                    <strong>Ethernet:</strong> Cat5e/Cat6, automation level up
-                  </li>
-                  <li className="pl-1">
-                    <strong>Fibre optic:</strong> Long distances, EMI immunity
-                  </li>
-                  <li className="pl-1">
-                    <strong>Powerline:</strong> Uses existing electrical wiring
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Wireless Options</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Wi-Fi:</strong> Standard IT infrastructure
-                  </li>
-                  <li className="pl-1">
-                    <strong>ZigBee:</strong> Low power mesh networks
-                  </li>
-                  <li className="pl-1">
-                    <strong>EnOcean:</strong> Energy harvesting sensors
-                  </li>
-                  <li className="pl-1">
-                    <strong>LoRaWAN:</strong> Long range, low power
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Security note:</strong> BMS networks should be segregated from general IT
-              networks using firewalls and VLANs to prevent cyber security risks.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Additional Section: Integration with Other Systems */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Integration with Other Building Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>DDC:</strong> Direct Digital Control - computer-based control replacing pneumatic/electric</li>
+              <li><strong>Outstation:</strong> Local controller with autonomous operation capability</li>
+              <li><strong>Head-end:</strong> Central server and operator workstations</li>
+              <li><strong>Point:</strong> Single monitored or controlled value (hardware or software)</li>
+              <li><strong>Trending:</strong> Recording historical data for analysis</li>
+              <li><strong>Graphics:</strong> Visual representation of building systems</li>
+            </ul>
             <p>
-              A key benefit of modern BMS is the ability to integrate with other building systems.
-              This enables coordinated operation, improved efficiency, and a single point of
-              monitoring for building operators.
+              <strong>BMS Selection Criteria:</strong>
             </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Open protocols:</strong> BACnet, Modbus for multi-vendor flexibility</li>
+              <li><strong>Scalability:</strong> Easy to expand for future requirements</li>
+              <li><strong>Local support:</strong> Manufacturer/integrator presence in region</li>
+              <li><strong>Cybersecurity:</strong> Built-in security features, regular updates</li>
+              <li><strong>User interface:</strong> Intuitive graphics, mobile access</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Systems Commonly Integrated with BMS
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Integration Benefits
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Interface
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fire alarm</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        HVAC shutdown, smoke control, status display
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Volt-free contacts, protocol gateway
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Access control</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Occupancy-based HVAC, lighting control
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">BACnet, OPC, API</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lighting control</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Coordinated scenes, daylight harvesting
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        DALI gateway, KNX, BACnet
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Electrical metering</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Energy monitoring, demand response
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Modbus, BACnet, M-Bus</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lifts</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Status monitoring, fault alarms
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Volt-free contacts, serial
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Security/CCTV</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Event correlation, lighting response
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">IP integration, contacts</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Solar PV</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Generation monitoring, load shifting
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Modbus, SunSpec</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Integration Example: Fire Alarm Interface
-              </p>
-              <div className="space-y-2 text-sm text-white">
-                <p>
-                  <strong>Fire alarm panel</strong> &gt; <strong>Volt-free contacts</strong> &gt;{' '}
-                  <strong>BMS controller DI</strong>
-                </p>
-                <p className="mt-2">When fire alarm activates:</p>
-                <ul className="text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">BMS receives fire alarm signal on digital input</li>
-                  <li className="pl-1">AHU fans commanded to smoke control mode or shutdown</li>
-                  <li className="pl-1">Fire dampers confirmed closed via end-switch feedback</li>
-                  <li className="pl-1">Stairwell pressurisation activated</li>
-                  <li className="pl-1">Lifts recalled to ground floor (separate system)</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Integration Methods</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Hardwired:</strong> Volt-free contacts, simple and reliable
-                  </li>
-                  <li className="pl-1">
-                    <strong>Serial:</strong> RS-232/485, Modbus RTU
-                  </li>
-                  <li className="pl-1">
-                    <strong>Network:</strong> BACnet/IP, Modbus TCP, LonWorks
-                  </li>
-                  <li className="pl-1">
-                    <strong>Gateway:</strong> Protocol conversion between systems
-                  </li>
-                  <li className="pl-1">
-                    <strong>API:</strong> Web services, REST, JSON
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Integration Considerations
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Define clear scope and responsibilities</li>
-                  <li className="pl-1">Agree data exchange requirements</li>
-                  <li className="pl-1">Consider cyber security implications</li>
-                  <li className="pl-1">Document interface specifications</li>
-                  <li className="pl-1">Plan integration testing</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Benefits of integrated building management:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Energy efficiency:</strong> Systems respond to actual occupancy and
-                  conditions
-                </li>
-                <li className="pl-1">
-                  <strong>Improved comfort:</strong> Coordinated control of temperature, lighting,
-                  blinds
-                </li>
-                <li className="pl-1">
-                  <strong>Enhanced safety:</strong> Automatic response to fire and security events
-                </li>
-                <li className="pl-1">
-                  <strong>Reduced maintenance:</strong> Single system to monitor and maintain
-                </li>
-                <li className="pl-1">
-                  <strong>Better reporting:</strong> Consolidated data for analysis and compliance
-                </li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Inadequate I/O:</strong> Not allowing spare capacity for changes</li>
+                <li><strong>Poor documentation:</strong> Incomplete points schedules cause commissioning delays</li>
+                <li><strong>Network security:</strong> Connecting BMS directly to corporate networks</li>
+                <li><strong>Single vendor lock-in:</strong> Proprietary protocols limiting future options</li>
+                <li><strong>Insufficient testing:</strong> Not testing all alarm and integration scenarios</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Important:</strong> Life safety systems (fire, smoke control) must maintain
-              their independent certification and should not rely solely on BMS for critical
-              functions.
-            </p>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <FAQ items={faqs} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Outstation Sizing
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> An AHU requires control of: 1 supply fan, 1 extract fan,
-                heating valve, cooling valve, mixing dampers (3 actuators), plus monitoring of
-                supply/extract temperatures, filter differential pressure, and supply air humidity.
-                How many I/O points are needed?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="mb-2">Counting I/O points:</p>
-                <p>
-                  <strong>Digital Outputs (DO):</strong>
-                </p>
-                <p>- Supply fan start/stop: 1</p>
-                <p>- Extract fan start/stop: 1</p>
-                <p>
-                  Total DO: <strong>2</strong>
-                </p>
-                <p className="mt-2">
-                  <strong>Analogue Outputs (AO):</strong>
-                </p>
-                <p>- Heating valve 0-10V: 1</p>
-                <p>- Cooling valve 0-10V: 1</p>
-                <p>- Damper actuators 0-10V: 3</p>
-                <p>
-                  Total AO: <strong>5</strong>
-                </p>
-                <p className="mt-2">
-                  <strong>Analogue Inputs (AI):</strong>
-                </p>
-                <p>- Supply air temp: 1</p>
-                <p>- Extract air temp: 1</p>
-                <p>- Filter DP: 1</p>
-                <p>- Supply humidity: 1</p>
-                <p>
-                  Total AI: <strong>4</strong>
-                </p>
-                <p className="mt-3 text-white">Minimum: 2 DO + 5 AO + 4 AI = 11 points</p>
-                <p className="text-white">
-                  With 20% spare: Select controller with at least 14 points
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Network Design
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A three-storey office building has 4 AHUs, 40 FCUs, and
-                central boiler/chiller plant. Design an appropriate BMS network topology.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="mb-2">Recommended architecture:</p>
-                <p>
-                  <strong>Management Level:</strong>
-                </p>
-                <p>- Head-end server with redundancy</p>
-                <p>- 2x operator workstations</p>
-                <p>- Ethernet backbone (gigabit)</p>
-                <p className="mt-2">
-                  <strong>Automation Level:</strong>
-                </p>
-                <p>- Plant controller for boiler/chiller (high I/O)</p>
-                <p>- 4x AHU controllers (medium I/O)</p>
-                <p>- 4-5x FCU controllers per floor (40 FCUs = ~10 per controller)</p>
-                <p>- BACnet/IP on Ethernet to head-end</p>
-                <p>- BACnet MS/TP trunk per floor for FCU controllers</p>
-                <p className="mt-2">
-                  <strong>Field Level:</strong>
-                </p>
-                <p>- Direct wiring to controller I/O</p>
-                <p>- Energy meters on M-Bus or Modbus</p>
-                <p className="mt-3 text-white">
-                  Topology: Tree/hierarchical with star switches per floor
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Points Schedule Entry
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Create a points schedule entry for monitoring boiler flow
-                temperature with high and low alarms.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white overflow-x-auto">
-                <table className="text-xs w-full">
-                  <tbody>
-                    <tr>
-                      <td className="pr-4">Point Name:</td>
-                      <td>BLR1_FLOW_TEMP</td>
-                    </tr>
-                    <tr>
-                      <td className="pr-4">Point Type:</td>
-                      <td>AI (Analogue Input)</td>
-                    </tr>
-                    <tr>
-                      <td className="pr-4">Description:</td>
-                      <td>Boiler 1 Flow Temperature</td>
-                    </tr>
-                    <tr>
-                      <td className="pr-4">Controller:</td>
-                      <td>CTRL-PLANTROOM-01</td>
-                    </tr>
-                    <tr>
-                      <td className="pr-4">Address:</td>
-                      <td>AI-04</td>
-                    </tr>
-                    <tr>
-                      <td className="pr-4">Sensor Type:</td>
-                      <td>PT1000</td>
-                    </tr>
-                    <tr>
-                      <td className="pr-4">Range:</td>
-                      <td>0-100°C</td>
-                    </tr>
-                    <tr>
-                      <td className="pr-4">Engineering Units:</td>
-                      <td>°C</td>
-                    </tr>
-                    <tr>
-                      <td className="pr-4">High Alarm:</td>
-                      <td>85°C (Priority 2)</td>
-                    </tr>
-                    <tr>
-                      <td className="pr-4">High-High Alarm:</td>
-                      <td>90°C (Priority 1)</td>
-                    </tr>
-                    <tr>
-                      <td className="pr-4">Low Alarm:</td>
-                      <td>40°C (Priority 3)</td>
-                    </tr>
-                    <tr>
-                      <td className="pr-4">Trend Interval:</td>
-                      <td>5 minutes</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Key BMS Terminology</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>DDC:</strong> Direct Digital Control - computer-based control replacing
-                  pneumatic/electric
-                </li>
-                <li className="pl-1">
-                  <strong>Outstation:</strong> Local controller with autonomous operation capability
-                </li>
-                <li className="pl-1">
-                  <strong>Head-end:</strong> Central server and operator workstations
-                </li>
-                <li className="pl-1">
-                  <strong>Point:</strong> Single monitored or controlled value (hardware or
-                  software)
-                </li>
-                <li className="pl-1">
-                  <strong>Trending:</strong> Recording historical data for analysis
-                </li>
-                <li className="pl-1">
-                  <strong>Graphics:</strong> Visual representation of building systems
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BMS Selection Criteria
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Open protocols:</strong> BACnet, Modbus for multi-vendor flexibility
-                </li>
-                <li className="pl-1">
-                  <strong>Scalability:</strong> Easy to expand for future requirements
-                </li>
-                <li className="pl-1">
-                  <strong>Local support:</strong> Manufacturer/integrator presence in region
-                </li>
-                <li className="pl-1">
-                  <strong>Cybersecurity:</strong> Built-in security features, regular updates
-                </li>
-                <li className="pl-1">
-                  <strong>User interface:</strong> Intuitive graphics, mobile access
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Inadequate I/O:</strong> Not allowing spare capacity for changes
-                </li>
-                <li className="pl-1">
-                  <strong>Poor documentation:</strong> Incomplete points schedules cause
-                  commissioning delays
-                </li>
-                <li className="pl-1">
-                  <strong>Network security:</strong> Connecting BMS directly to corporate networks
-                </li>
-                <li className="pl-1">
-                  <strong>Single vendor lock-in:</strong> Proprietary protocols limiting future
-                  options
-                </li>
-                <li className="pl-1">
-                  <strong>Insufficient testing:</strong> Not testing all alarm and integration
-                  scenarios
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">BMS Architecture Levels</p>
-                <ul className="space-y-0.5">
-                  <li>Management: Head-end, workstations, servers</li>
-                  <li>Automation: Outstations, controllers, networks</li>
-                  <li>Field: Sensors, actuators, meters</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Common Point Types</p>
-                <ul className="space-y-0.5">
-                  <li>AI: Analogue Input (sensors)</li>
-                  <li>AO: Analogue Output (actuators)</li>
-                  <li>DI: Digital Input (status)</li>
-                  <li>DO: Digital Output (commands)</li>
-                  <li>AV/BV: Software values</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Network Topologies</p>
-                <ul className="space-y-0.5">
-                  <li>Bus: Simple, single cable</li>
-                  <li>Star: Central hub/switch</li>
-                  <li>Ring: Redundant path</li>
-                  <li>Tree: Scalable hierarchy</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Integration Interfaces</p>
-                <ul className="space-y-0.5">
-                  <li>Volt-free contacts: Simple status</li>
-                  <li>Modbus: Serial/TCP protocol</li>
-                  <li>BACnet: Building automation standard</li>
-                  <li>Gateway: Protocol conversion</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 5
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section5-2">
-              Next: Sensors and Measurement
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section5")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                BMS integration
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section5-2")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Sensors and measurement
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

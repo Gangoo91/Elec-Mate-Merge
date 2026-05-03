@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 6 · Section 5 · Subsection 6 — Energy Efficiency Measures
+ * HNC Electrical Engineering for Building Services (Sustainability and Environmental Engineering)
+ *   ECM identification, payback analysis, implementation priorities, and verification of savings
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Energy Efficiency Measures - HNC Module 6 Section 5.6';
@@ -244,859 +261,358 @@ const faqs = [
 ];
 
 const HNCModule6Section5_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section5")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module6-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.5.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Energy Efficiency Measures
-          </h1>
-          <p className="text-white">
-            ECM identification, payback analysis, implementation priorities, and verification of
-            savings
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 6 · Section 5 · Subsection 6"
+            title="Energy Efficiency Measures"
+            description="ECM identification, payback analysis, implementation priorities, and verification of savings"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>ECMs:</strong> Specific actions that reduce energy consumption
-              </li>
-              <li className="pl-1">
-                <strong>Payback:</strong> Time to recover investment from savings
-              </li>
-              <li className="pl-1">
-                <strong>NPV/LCC:</strong> Account for time value of money
-              </li>
-              <li className="pl-1">
-                <strong>M&V:</strong> IPMVP protocol for verifying savings
-              </li>
+          <TLDR
+            points={[
+              "Energy Conservation Measures (ECMs) are identified through audit, then prioritised by payback (simple), NPV / IRR (full economic), or carbon-cost effectiveness (£/tCO₂e abated) — the right metric depends on the client driver.",
+              "Typical building ECMs by sequence: lighting + controls (1–4 year payback), BMS optimisation (often <1 year), HVAC controls (2–5 years), heating/cooling plant replacement (5–15 years), fabric upgrades (10–25 years).",
+              "Measurement & verification (M&V) per IPMVP (International Performance Measurement and Verification Protocol) is the institutional methodology for proving claimed savings — without M&V, claimed savings are aspirations.",
+            ]}
+          />
+
+          <RegsCallout
+            source="IPMVP (International Performance Measurement and Verification Protocol) + ISO 50015"
+            clause="Savings shall be determined by comparing the measured energy use before and after implementation of an Energy Conservation Measure, with appropriate adjustments for changes in conditions. Adjustments shall account for changes in independent variables (e.g. weather, production, occupancy) using a method appropriate to the option (A, B, C or D) chosen. The M&V plan shall be prepared in advance of implementation and shall specify the method, baseline, measurement points, adjustment routines and reporting frequency."
+            meaning={
+              <>
+                IPMVP options: Option A = retrofit isolation with key parameter measurement; Option B = retrofit isolation with all-parameter measurement; Option C = whole-facility metering; Option D = calibrated simulation. Option C is most common for whole-building ECMs (BMS, lighting, HVAC); Option A for isolated equipment swaps. M&V plan must be agreed before implementation, not constructed afterwards.
+              </>
+            }
+            cite="Source: IPMVP Core Concepts (EVO, 2022) — evo-world.org; ISO 50015:2014 — iso.org"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Identify and categorise energy conservation measures",
+              "Calculate simple payback, NPV, and life cycle costs",
+              "Prioritise ECMs using technical and financial criteria",
+              "Apply IPMVP measurement and verification options",
+              "Understand and mitigate rebound effects",
+              "Develop implementation strategies for ECM programmes",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="ECM Identification and Categories">
+            <p>Energy Conservation Measures (ECMs) are specific, implementable actions that reduce energy consumption while maintaining or improving service delivery. Effective ECM identification requires systematic assessment of building systems, operational patterns, and occupant needs.</p>
+            <p><strong>ECM Categories by Investment Level:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>No-cost measures:</strong> Operational changes - schedule adjustments, setpoint optimisation, switch-off campaigns</li>
+              <li><strong>Low-cost measures:</strong> Minor modifications - LED lamp replacements, draught sealing, valve insulation</li>
+              <li><strong>Capital measures:</strong> Significant investment - plant replacement, VSD installation, building fabric upgrades</li>
+              <li><strong>Strategic measures:</strong> Major projects - renewable installations, combined heat and power, deep retrofits</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>HVAC:</strong> Typically 40-60% of building energy
-              </li>
-              <li className="pl-1">
-                <strong>Lighting:</strong> 15-25% with significant ECM potential
-              </li>
-              <li className="pl-1">
-                <strong>Controls:</strong> Low-cost, high-impact opportunities
-              </li>
-              <li className="pl-1">
-                <strong>Motors:</strong> VSDs often provide 2-4 year payback
-              </li>
+            <p><strong>Common ECMs in Building Services</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Lighting:</strong> LED retrofit, daylight linking, occupancy control — 40-70%</li>
+              <li><strong>HVAC:</strong> VSD on fans/pumps, economiser cycles, heat recovery — 20-40%</li>
+              <li><strong>Controls:</strong> BMS optimisation, weather compensation, scheduling — 10-25%</li>
+              <li><strong>Motors:</strong> IE4/IE5 motors, VSD retrofit, right-sizing — 15-35%</li>
+              <li><strong>Building fabric:</strong> Insulation upgrade, glazing replacement, air tightness — 10-30%</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Key principle:</strong> ECMs should be identified through systematic energy audits benchmarking actual consumption against CIBSE TM46 or DEC benchmarks for the building type.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Identify and categorise energy conservation measures',
-              'Calculate simple payback, NPV, and life cycle costs',
-              'Prioritise ECMs using technical and financial criteria',
-              'Apply IPMVP measurement and verification options',
-              'Understand and mitigate rebound effects',
-              'Develop implementation strategies for ECM programmes',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: ECM Identification */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            ECM Identification and Categories
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Payback Analysis and Financial Metrics">
+            <p>Financial analysis determines whether ECMs represent sound investments. Different metrics suit different purposes - from quick screening to detailed investment appraisal.</p>
+            <p><strong>Simple Payback</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Initial cost ÷ Annual savings</li>
+              <li>Easy to calculate and understand</li>
+              <li>Ignores time value of money</li>
+              <li>Best for quick screening</li>
+            </ul>
+            <p><strong>Net Present Value (NPV)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Discounts future cash flows</li>
+              <li>Accounts for time value of money</li>
+              <li>Positive NPV = worthwhile</li>
+              <li>Requires discount rate selection</li>
+            </ul>
+            <p><strong>Life Cycle Costing (LCC)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Total cost over asset life</li>
+              <li>Includes maintenance, disposal</li>
+              <li>Enables like-for-like comparison</li>
+              <li>Required for public procurement</li>
+            </ul>
+            <p><strong>Payback Calculation Examples</strong></p>
+            <p>Simple Payback:</p>
+            <p>LED lighting upgrade: £24,000 cost, £8,000/year savings</p>
+            <p>Payback = £24,000 ÷ £8,000 = 3 years</p>
+            <p>NPV Calculation (10-year life, 6% discount rate):</p>
+            <p>NPV factor for 6%, 10 years = 7.360</p>
+            <p>PV of savings = £8,000 × 7.360 = £58,880</p>
+            <p>NPV = £58,880 - £24,000 = £34,880 (positive = viable)</p>
+            <p><strong>Typical Payback Expectations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Controls/operational:</strong> 0-1 years — Immediate implementation</li>
+              <li><strong>LED lighting:</strong> 2-4 years — Up to 5 years</li>
+              <li><strong>VSD retrofits:</strong> 2-4 years — Up to 5 years</li>
+              <li><strong>HVAC plant replacement:</strong> 5-10 years — Up to equipment life</li>
+              <li><strong>Building fabric:</strong> 10-20 years — Building lifecycle</li>
+            </ul>
+            <p><strong>Best practice:</strong> Use simple payback for initial screening, then apply NPV or LCC for measures that pass preliminary criteria.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Implementation Priorities and Planning">
+            <p>Prioritising ECMs requires balancing multiple factors beyond simple financial return. A structured approach ensures resources target the most effective measures while managing risk and building organisational capability.</p>
+            <p><strong>ECM Prioritisation Matrix</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Payback period:</strong> &lt; 3 years — &gt; 7 years</li>
+              <li><strong>Implementation risk:</strong> Proven technology, minimal disruption — Novel technology, major works</li>
+              <li><strong>Energy savings %:</strong> &gt; 20% of system consumption — &lt; 5% of system consumption</li>
+              <li><strong>Co-benefits:</strong> Improved comfort, reduced maintenance — Energy only</li>
+              <li><strong>Strategic alignment:</strong> Supports carbon targets, regulations — No strategic drivers</li>
+            </ul>
+            <p><strong>Implementation Sequencing Strategy</strong></p>
+            <p><strong>Key implementation considerations:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Interactions:</strong> Some ECMs affect others - install controls before plant upgrades to right-size equipment</li>
+              <li><strong>Funding:</strong> Match ECM timing to budget cycles and available financing mechanisms</li>
+              <li><strong>Disruption:</strong> Schedule disruptive measures during building closures or low-occupancy periods</li>
+              <li><strong>Dependencies:</strong> Ensure enabling works (sub-metering, BMS points) are completed first</li>
+              <li><strong>Skills:</strong> Consider in-house capability versus specialist contractor requirements</li>
+            </ul>
+            <p><strong>Implementation tip:</strong> Use savings from Phase 1 and 2 measures to fund Phase 3 investments - create a 'revolving fund' for energy efficiency.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Measurement, Verification and Avoiding Rebound">
+            <p>Measurement and Verification (M&V) provides credible evidence that ECMs deliver expected savings. The International Performance Measurement and Verification Protocol (IPMVP) provides standardised methods used worldwide for verifying energy savings.</p>
+            <p><strong>IPMVP Options</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>A: Key Parameter:</strong> Measure key parameter (e.g., kW), estimate others — Lighting, constant loads</li>
+              <li><strong>B: All Parameters:</strong> Measure all parameters at retrofit level — Motors, VSDs, specific systems</li>
+              <li><strong>C: Whole Facility:</strong> Use utility meters, adjust for independent variables — Multiple ECMs, whole building</li>
+              <li><strong>D: Simulation:</strong> Calibrated simulation modelling — Complex buildings, new construction</li>
+            </ul>
+            <p><strong>M&V Calculation Formula</strong></p>
+            <p>Energy Savings = Baseline Energy - Post-Installation Energy ± Adjustments</p>
+            <p>Adjustments account for:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Weather differences (heating/cooling degree days)</li>
+              <li>Occupancy changes</li>
+              <li>Operating hours variations</li>
+              <li>Production or service level changes</li>
+            </ul>
+            <p><strong>Understanding the Rebound Effect</strong></p>
+            <p>The rebound effect occurs when efficiency improvements lead to increased consumption that partially offsets expected savings. Research suggests 10-30% of theoretical savings may be lost to rebound in commercial buildings.</p>
+            <p><strong>Common causes:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Occupants adjusting setpoints ('it's more efficient now, so I can be warmer')</li>
+              <li>Extended operating hours due to lower running costs</li>
+              <li>Removal of energy-saving behaviours ('the new system handles it')</li>
+              <li>Increased equipment utilisation</li>
+            </ul>
+            <p><strong>Rebound Mitigation Strategies</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Maintain visibility:</strong> Install energy dashboards and regular reporting</li>
+              <li><strong>Lock-in savings:</strong> Use BMS to enforce setpoints and schedules</li>
+              <li><strong>Continuous engagement:</strong> Ongoing awareness campaigns and energy champions</li>
+              <li><strong>Targets:</strong> Set consumption targets, not just efficiency metrics</li>
+              <li><strong>M&V baseline:</strong> Include realistic behavioural assumptions in baseline calculations</li>
+            </ul>
+            <p><strong>M&V best practice:</strong> Plan M&V approach before ECM implementation - baseline data must be collected under representative operating conditions.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Energy Conservation Measures (ECMs) are specific, implementable actions that reduce
-              energy consumption while maintaining or improving service delivery. Effective ECM
-              identification requires systematic assessment of building systems, operational
-              patterns, and occupant needs.
+              <strong>Example 1: Simple Payback Analysis</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                ECM Categories by Investment Level:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>No-cost measures:</strong> Operational changes - schedule adjustments,
-                  setpoint optimisation, switch-off campaigns
-                </li>
-                <li className="pl-1">
-                  <strong>Low-cost measures:</strong> Minor modifications - LED lamp replacements,
-                  draught sealing, valve insulation
-                </li>
-                <li className="pl-1">
-                  <strong>Capital measures:</strong> Significant investment - plant replacement, VSD
-                  installation, building fabric upgrades
-                </li>
-                <li className="pl-1">
-                  <strong>Strategic measures:</strong> Major projects - renewable installations,
-                  combined heat and power, deep retrofits
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common ECMs in Building Services
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">ECM Examples</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Savings
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lighting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        LED retrofit, daylight linking, occupancy control
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">40-70%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">HVAC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        VSD on fans/pumps, economiser cycles, heat recovery
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">20-40%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Controls</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        BMS optimisation, weather compensation, scheduling
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">10-25%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Motors</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        IE4/IE5 motors, VSD retrofit, right-sizing
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">15-35%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Building fabric</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Insulation upgrade, glazing replacement, air tightness
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">10-30%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key principle:</strong> ECMs should be identified through systematic energy
-              audits benchmarking actual consumption against CIBSE TM46 or DEC benchmarks for the
-              building type.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Financial Analysis */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Payback Analysis and Financial Metrics
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> A VSD retrofit on a 37 kW chiller pump operating 4,000 hours annually.</p>
+            <p>Given data:</p>
+            <p>Motor power: 37 kW</p>
+            <p>Operating hours: 4,000 h/year</p>
+            <p>Expected savings: 35% (typical for VSD on pump)</p>
+            <p>Electricity cost: £0.28/kWh</p>
+            <p>VSD installation cost: £6,500</p>
+            <p>Calculation:</p>
+            <p>Annual consumption = 37 kW × 4,000 h = 148,000 kWh</p>
+            <p>Energy savings = 148,000 × 35% = 51,800 kWh/year</p>
+            <p>Cost savings = 51,800 × £0.28 = £14,504/year</p>
+            <p>Simple payback = £6,500 ÷ £14,504 = 0.45 years (5.4 months)</p>
             <p>
-              Financial analysis determines whether ECMs represent sound investments. Different
-              metrics suit different purposes - from quick screening to detailed investment
-              appraisal.
+              <strong>Example 2: NPV Comparison</strong>
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Simple Payback</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Initial cost ÷ Annual savings</li>
-                  <li className="pl-1">Easy to calculate and understand</li>
-                  <li className="pl-1">Ignores time value of money</li>
-                  <li className="pl-1">Best for quick screening</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Net Present Value (NPV)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Discounts future cash flows</li>
-                  <li className="pl-1">Accounts for time value of money</li>
-                  <li className="pl-1">Positive NPV = worthwhile</li>
-                  <li className="pl-1">Requires discount rate selection</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Life Cycle Costing (LCC)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Total cost over asset life</li>
-                  <li className="pl-1">Includes maintenance, disposal</li>
-                  <li className="pl-1">Enables like-for-like comparison</li>
-                  <li className="pl-1">Required for public procurement</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Payback Calculation Examples</p>
-              <div className="font-mono text-sm space-y-3">
-                <div>
-                  <p className="text-white">Simple Payback:</p>
-                  <p className="text-white">
-                    LED lighting upgrade: £24,000 cost, £8,000/year savings
-                  </p>
-                  <p className="text-green-400">Payback = £24,000 ÷ £8,000 = 3 years</p>
-                </div>
-                <div className="border-t border-white/10 pt-3">
-                  <p className="text-white">NPV Calculation (10-year life, 6% discount rate):</p>
-                  <p className="text-white">NPV factor for 6%, 10 years = 7.360</p>
-                  <p className="text-white">PV of savings = £8,000 × 7.360 = £58,880</p>
-                  <p className="text-green-400">
-                    NPV = £58,880 - £24,000 = £34,880 (positive = viable)
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Payback Expectations
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">ECM Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Payback
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Acceptance Threshold
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Controls/operational</td>
-                      <td className="border border-white/10 px-3 py-2">0-1 years</td>
-                      <td className="border border-white/10 px-3 py-2">Immediate implementation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LED lighting</td>
-                      <td className="border border-white/10 px-3 py-2">2-4 years</td>
-                      <td className="border border-white/10 px-3 py-2">Up to 5 years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">VSD retrofits</td>
-                      <td className="border border-white/10 px-3 py-2">2-4 years</td>
-                      <td className="border border-white/10 px-3 py-2">Up to 5 years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">HVAC plant replacement</td>
-                      <td className="border border-white/10 px-3 py-2">5-10 years</td>
-                      <td className="border border-white/10 px-3 py-2">Up to equipment life</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Building fabric</td>
-                      <td className="border border-white/10 px-3 py-2">10-20 years</td>
-                      <td className="border border-white/10 px-3 py-2">Building lifecycle</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> Use simple payback for initial screening, then apply
-              NPV or LCC for measures that pass preliminary criteria.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Implementation Priorities */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Implementation Priorities and Planning
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Compare two lighting options for a warehouse over 15 years at 5% discount rate.</p>
+            <p>Option A: Standard LED (8-year life)</p>
+            <p>Capital: £40,000 | Annual energy: £6,000 | Annual maint: £500</p>
+            <p>Option B: Premium LED (15-year life)</p>
+            <p>Capital: £55,000 | Annual energy: £4,800 | Annual maint: £300</p>
+            <p>NPV factors (5%):</p>
+            <p>15 years = 10.380 | 8 years = 6.463</p>
+            <p>Option A NPV (including replacement at year 8):</p>
+            <p>Initial: -£40,000</p>
+            <p>Running (years 1-8): -(£6,500 × 6.463) = -£42,010</p>
+            <p>Replacement at Y8: -£40,000 × 0.677 = -£27,080</p>
+            <p>Running (years 9-15): -(£6,500 × 3.917) = -£25,460</p>
+            <p>Option A total NPV = -£134,550</p>
+            <p>Option B NPV:</p>
+            <p>Initial: -£55,000</p>
+            <p>Running (15 years): -(£5,100 × 10.380) = -£52,938</p>
+            <p>Option B total NPV = -£107,938</p>
+            <p>Premium LED saves £26,612 NPV over 15 years</p>
             <p>
-              Prioritising ECMs requires balancing multiple factors beyond simple financial return.
-              A structured approach ensures resources target the most effective measures while
-              managing risk and building organisational capability.
+              <strong>Example 3: M&V Weather Adjustment</strong>
             </p>
+            <p><strong>Scenario:</strong> Verify heating savings after boiler upgrade using degree day adjustment.</p>
+            <p>Baseline period (pre-upgrade):</p>
+            <p>Gas consumption: 180,000 kWh</p>
+            <p>Heating degree days (HDD): 2,100</p>
+            <p>Baseline ratio: 180,000 ÷ 2,100 = 85.7 kWh/HDD</p>
+            <p>Post-installation period:</p>
+            <p>Actual gas consumption: 145,000 kWh</p>
+            <p>Heating degree days: 2,350 (colder year)</p>
+            <p>Adjusted calculation:</p>
+            <p>Expected baseline at 2,350 HDD: 85.7 × 2,350 = 201,395 kWh</p>
+            <p>Actual consumption: 145,000 kWh</p>
+            <p>Weather-adjusted savings: 201,395 - 145,000 = 56,395 kWh (28%)</p>
+            <p>Without adjustment (misleading):</p>
+            <p>Apparent savings: 180,000 - 145,000 = 35,000 kWh (19%)</p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                ECM Prioritisation Matrix
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Factor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">High Priority</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Lower Priority</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Payback period</td>
-                      <td className="border border-white/10 px-3 py-2">&lt; 3 years</td>
-                      <td className="border border-white/10 px-3 py-2">&gt; 7 years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Implementation risk</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Proven technology, minimal disruption
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Novel technology, major works
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Energy savings %</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        &gt; 20% of system consumption
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        &lt; 5% of system consumption
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Co-benefits</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Improved comfort, reduced maintenance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Energy only</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Strategic alignment</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Supports carbon targets, regulations
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">No strategic drivers</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Implementation Sequencing Strategy
-              </p>
-              <div className="space-y-3 text-sm">
-                <div className="flex gap-3">
-                  <span className="text-elec-yellow font-medium">Phase 1:</span>
-                  <span>
-                    <strong>Quick wins</strong> - No/low-cost measures implemented immediately.
-                    Builds momentum and demonstrates commitment.
-                  </span>
-                </div>
-                <div className="flex gap-3">
-                  <span className="text-elec-yellow font-medium">Phase 2:</span>
-                  <span>
-                    <strong>Core measures</strong> - Short payback capital measures (2-4 years). LED
-                    lighting, VSD retrofits, controls upgrades.
-                  </span>
-                </div>
-                <div className="flex gap-3">
-                  <span className="text-elec-yellow font-medium">Phase 3:</span>
-                  <span>
-                    <strong>Strategic investments</strong> - Longer payback measures aligned with
-                    asset replacement cycles and major refurbishments.
-                  </span>
-                </div>
-                <div className="flex gap-3">
-                  <span className="text-elec-yellow font-medium">Phase 4:</span>
-                  <span>
-                    <strong>Deep retrofit</strong> - Comprehensive building upgrades when
-                    significant intervention is justified.
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Key implementation considerations:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Interactions:</strong> Some ECMs affect others - install controls before
-                  plant upgrades to right-size equipment
-                </li>
-                <li className="pl-1">
-                  <strong>Funding:</strong> Match ECM timing to budget cycles and available
-                  financing mechanisms
-                </li>
-                <li className="pl-1">
-                  <strong>Disruption:</strong> Schedule disruptive measures during building closures
-                  or low-occupancy periods
-                </li>
-                <li className="pl-1">
-                  <strong>Dependencies:</strong> Ensure enabling works (sub-metering, BMS points)
-                  are completed first
-                </li>
-                <li className="pl-1">
-                  <strong>Skills:</strong> Consider in-house capability versus specialist contractor
-                  requirements
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Implementation tip:</strong> Use savings from Phase 1 and 2 measures to fund
-              Phase 3 investments - create a 'revolving fund' for energy efficiency.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Measurement and Verification */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Measurement, Verification and Avoiding Rebound
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Measurement and Verification (M&V) provides credible evidence that ECMs deliver
-              expected savings. The International Performance Measurement and Verification Protocol
-              (IPMVP) provides standardised methods used worldwide for verifying energy savings.
+              <strong>ECM Identification Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">IPMVP Options</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Option</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Approach</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">A: Key Parameter</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Measure key parameter (e.g., kW), estimate others
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Lighting, constant loads</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">B: All Parameters</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Measure all parameters at retrofit level
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Motors, VSDs, specific systems
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">C: Whole Facility</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Use utility meters, adjust for independent variables
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multiple ECMs, whole building
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">D: Simulation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Calibrated simulation modelling
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Complex buildings, new construction
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">M&V Calculation Formula</p>
-              <div className="font-mono text-sm space-y-2">
-                <p className="text-white">
-                  Energy Savings = Baseline Energy - Post-Installation Energy ± Adjustments
-                </p>
-                <p className="text-white mt-3">Adjustments account for:</p>
-                <ul className="text-white space-y-1 ml-4 list-disc">
-                  <li>Weather differences (heating/cooling degree days)</li>
-                  <li>Occupancy changes</li>
-                  <li>Operating hours variations</li>
-                  <li>Production or service level changes</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Understanding the Rebound Effect
-              </p>
-              <div className="text-sm text-white space-y-2">
-                <p>
-                  The rebound effect occurs when efficiency improvements lead to increased
-                  consumption that partially offsets expected savings. Research suggests 10-30% of
-                  theoretical savings may be lost to rebound in commercial buildings.
-                </p>
-                <p className="text-white mt-3">
-                  <strong>Common causes:</strong>
-                </p>
-                <ul className="space-y-1 ml-4 list-disc text-white">
-                  <li>
-                    Occupants adjusting setpoints ('it's more efficient now, so I can be warmer')
-                  </li>
-                  <li>Extended operating hours due to lower running costs</li>
-                  <li>Removal of energy-saving behaviours ('the new system handles it')</li>
-                  <li>Increased equipment utilisation</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Rebound Mitigation Strategies
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Maintain visibility:</strong> Install energy dashboards and regular
-                  reporting
-                </li>
-                <li className="pl-1">
-                  <strong>Lock-in savings:</strong> Use BMS to enforce setpoints and schedules
-                </li>
-                <li className="pl-1">
-                  <strong>Continuous engagement:</strong> Ongoing awareness campaigns and energy
-                  champions
-                </li>
-                <li className="pl-1">
-                  <strong>Targets:</strong> Set consumption targets, not just efficiency metrics
-                </li>
-                <li className="pl-1">
-                  <strong>M&V baseline:</strong> Include realistic behavioural assumptions in
-                  baseline calculations
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>M&V best practice:</strong> Plan M&V approach before ECM implementation -
-              baseline data must be collected under representative operating conditions.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Benchmark consumption against CIBSE TM46 or DEC database</li>
+              <li>Analyse utility bills for patterns and anomalies</li>
+              <li>Conduct site survey of equipment age, condition, and controls</li>
+              <li>Review BMS data for setpoints, schedules, and operational issues</li>
+              <li>Interview facilities staff about comfort complaints and operational challenges</li>
+              <li>Identify quick wins (controls, scheduling) before capital measures</li>
+            </ul>
+            <p>
+              <strong>Key Financial Formulas:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Simple payback: <strong>Capital cost ÷ Annual savings</strong></li>
+              <li>NPV: <strong>∑(Cash flow ÷ (1+r)ⁿ) - Initial investment</strong></li>
+              <li>NPV factor (annuity): <strong>(1 - (1+r)⁻ⁿ) ÷ r</strong></li>
+              <li>Equivalent Annual Cost: <strong>NPV × (r ÷ (1 - (1+r)⁻ⁿ))</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Simple Payback Analysis
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A VSD retrofit on a 37 kW chiller pump operating 4,000
-                hours annually.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Given data:</p>
-                <p>Motor power: 37 kW</p>
-                <p>Operating hours: 4,000 h/year</p>
-                <p>Expected savings: 35% (typical for VSD on pump)</p>
-                <p>Electricity cost: £0.28/kWh</p>
-                <p>VSD installation cost: £6,500</p>
-                <p className="mt-2 text-white">Calculation:</p>
-                <p>Annual consumption = 37 kW × 4,000 h = 148,000 kWh</p>
-                <p>Energy savings = 148,000 × 35% = 51,800 kWh/year</p>
-                <p>Cost savings = 51,800 × £0.28 = £14,504/year</p>
-                <p className="mt-2 text-green-400">
-                  Simple payback = £6,500 ÷ £14,504 = 0.45 years (5.4 months)
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: NPV Comparison
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Compare two lighting options for a warehouse over 15
-                years at 5% discount rate.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Option A: Standard LED (8-year life)</p>
-                <p>Capital: £40,000 | Annual energy: £6,000 | Annual maint: £500</p>
-                <p className="mt-2 text-white">Option B: Premium LED (15-year life)</p>
-                <p>Capital: £55,000 | Annual energy: £4,800 | Annual maint: £300</p>
-                <p className="mt-2 text-white">NPV factors (5%):</p>
-                <p>15 years = 10.380 | 8 years = 6.463</p>
-                <p className="mt-2 text-white">
-                  Option A NPV (including replacement at year 8):
-                </p>
-                <p>Initial: -£40,000</p>
-                <p>Running (years 1-8): -(£6,500 × 6.463) = -£42,010</p>
-                <p>Replacement at Y8: -£40,000 × 0.677 = -£27,080</p>
-                <p>Running (years 9-15): -(£6,500 × 3.917) = -£25,460</p>
-                <p className="text-red-400">Option A total NPV = -£134,550</p>
-                <p className="mt-2 text-white">Option B NPV:</p>
-                <p>Initial: -£55,000</p>
-                <p>Running (15 years): -(£5,100 × 10.380) = -£52,938</p>
-                <p className="text-green-400">Option B total NPV = -£107,938</p>
-                <p className="mt-2 text-green-400">Premium LED saves £26,612 NPV over 15 years</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: M&V Weather Adjustment
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Verify heating savings after boiler upgrade using degree
-                day adjustment.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Baseline period (pre-upgrade):</p>
-                <p>Gas consumption: 180,000 kWh</p>
-                <p>Heating degree days (HDD): 2,100</p>
-                <p>Baseline ratio: 180,000 ÷ 2,100 = 85.7 kWh/HDD</p>
-                <p className="mt-2 text-white">Post-installation period:</p>
-                <p>Actual gas consumption: 145,000 kWh</p>
-                <p>Heating degree days: 2,350 (colder year)</p>
-                <p className="mt-2 text-white">Adjusted calculation:</p>
-                <p>Expected baseline at 2,350 HDD: 85.7 × 2,350 = 201,395 kWh</p>
-                <p>Actual consumption: 145,000 kWh</p>
-                <p className="text-green-400">
-                  Weather-adjusted savings: 201,395 - 145,000 = 56,395 kWh (28%)
-                </p>
-                <p className="mt-2 text-white">Without adjustment (misleading):</p>
-                <p className="text-red-400">
-                  Apparent savings: 180,000 - 145,000 = 35,000 kWh (19%)
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                ECM Identification Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Benchmark consumption against CIBSE TM46 or DEC database</li>
-                <li className="pl-1">Analyse utility bills for patterns and anomalies</li>
-                <li className="pl-1">
-                  Conduct site survey of equipment age, condition, and controls
-                </li>
-                <li className="pl-1">
-                  Review BMS data for setpoints, schedules, and operational issues
-                </li>
-                <li className="pl-1">
-                  Interview facilities staff about comfort complaints and operational challenges
-                </li>
-                <li className="pl-1">
-                  Identify quick wins (controls, scheduling) before capital measures
-                </li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Ignoring interactions:</strong> Installing efficient equipment before optimising controls wastes sizing opportunity</li>
+                <li><strong>Neglecting M&V costs:</strong> Budget 3-5% of ECM cost for proper measurement and verification</li>
+                <li><strong>Optimistic savings estimates:</strong> Use conservative figures and validate with comparable projects</li>
+                <li><strong>Forgetting maintenance:</strong> Some efficient equipment requires specialist maintenance skills</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Financial Formulas
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Simple payback: <strong>Capital cost ÷ Annual savings</strong>
-                </li>
-                <li className="pl-1">
-                  NPV: <strong>∑(Cash flow ÷ (1+r)ⁿ) - Initial investment</strong>
-                </li>
-                <li className="pl-1">
-                  NPV factor (annuity): <strong>(1 - (1+r)⁻ⁿ) ÷ r</strong>
-                </li>
-                <li className="pl-1">
-                  Equivalent Annual Cost: <strong>NPV × (r ÷ (1 - (1+r)⁻ⁿ))</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Ignoring interactions:</strong> Installing efficient equipment before
-                  optimising controls wastes sizing opportunity
-                </li>
-                <li className="pl-1">
-                  <strong>Neglecting M&V costs:</strong> Budget 3-5% of ECM cost for proper
-                  measurement and verification
-                </li>
-                <li className="pl-1">
-                  <strong>Optimistic savings estimates:</strong> Use conservative figures and
-                  validate with comparable projects
-                </li>
-                <li className="pl-1">
-                  <strong>Forgetting maintenance:</strong> Some efficient equipment requires
-                  specialist maintenance skills
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="EPC contract savings dispute lacks M&V baseline"
+            situation={
+              <>
+                An Energy Performance Contract (EPC) was signed for a hospital lighting upgrade — the contractor guaranteed 35% savings vs baseline. After 12 months, the contractor claims £180k savings achieved; the client's metered data shows only 22% reduction. There is no agreed M&V plan and no isolated lighting metering.
+              </>
+            }
+            whatToDo={
+              <>
+                Adversarial situation — neither party can prove their position. Three options: (1) install retrospective lighting circuit metering, run a 6-month verification period, then reconcile; (2) appoint an independent IPMVP CMVP (Certified Measurement and Verification Professional) to adjudicate using available data and engineering analysis; (3) settle on a negotiated figure to avoid litigation. Lesson: every EPC contract must have an IPMVP-compliant M&V plan signed before implementation, with measurement points, baseline, adjustment routines and reporting frequency.
+              </>
+            }
+            whyItMatters={
+              <>
+                Most claimed energy savings are aspirational — measurement is the difference between claimed and verified. EPCs (Energy Performance Contracts) are commercially structured around verified savings; without IPMVP M&V, both parties are exposed. Plan M&V before procurement, not after.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Financial Analysis</p>
-                <ul className="space-y-0.5">
-                  <li>Simple payback = Cost ÷ Annual savings</li>
-                  <li>NPV = PV of benefits - Initial cost</li>
-                  <li>Positive NPV = Worthwhile investment</li>
-                  <li>Typical discount rate: 5-8%</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">IPMVP Options</p>
-                <ul className="space-y-0.5">
-                  <li>Option A: Key parameter measurement</li>
-                  <li>Option B: All parameter measurement</li>
-                  <li>Option C: Whole facility metering</li>
-                  <li>Option D: Calibrated simulation</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              "ECMs prioritised by payback, NPV, IRR, or £/tCO₂e abated.",
+              "Typical payback ladder: lighting + controls < BMS optimisation < HVAC controls < plant replacement < fabric.",
+              "IPMVP is the institutional M&V methodology — Options A, B, C, D.",
+              "M&V plan must be agreed BEFORE implementation, not constructed afterwards.",
+              "Energy Performance Contracts (EPCs) commercially structured around verified savings.",
+              "CMVP (Certified Measurement and Verification Professional) qualification for EPCs.",
+              "Without measurement, claimed savings are aspirations — and lawsuits.",
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section6-1">
-              Next: Section 6.1
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section5-5")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Building performance
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section6-1")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Passive design principles
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

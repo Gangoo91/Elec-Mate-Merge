@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 5 · Section 3 · Subsection 5 — Final Account
+ * HNC Electrical Engineering for Building Services (Project Management — Pearson U4004 + BSE PM context)
+ *   The closing commercial settlement — final measurement, agreement of variations, retention release and DLP — the discipline that books the project’s actual margin.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Final Account - HNC Module 5 Section 3.5';
@@ -244,853 +261,569 @@ const faqs = [
 ];
 
 const HNCModule5Section3_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section3')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module5-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 5.3.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Final Account
-          </h1>
-          <p className="text-white">
-            Final measurement, account agreement, retention release, defects liability period and
-            financial close-out
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 5 · Section 3 · Subsection 5"
+            title="Final Account"
+            description="Final measurement, account agreement, retention release, defects liability period and financial close-out."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Final measurement:</strong> Establishes actual work quantities executed
-              </li>
-              <li className="pl-1">
-                <strong>Retention:</strong> Typically 5%, half released at PC, half at DLP end
-              </li>
-              <li className="pl-1">
-                <strong>Defects period:</strong> Usually 12 months from practical completion
-              </li>
-              <li className="pl-1">
-                <strong>Final Certificate:</strong> Conclusive financial settlement
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>M&E variations:</strong> Often significant due to coordination changes
-              </li>
-              <li className="pl-1">
-                <strong>Testing records:</strong> Essential for final account evidence
-              </li>
-              <li className="pl-1">
-                <strong>Commissioning data:</strong> Supports variation claims
-              </li>
-              <li className="pl-1">
-                <strong>As-built drawings:</strong> Required before final payment
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              "Final account = agreed total of all measured work + agreed variations + agreed loss and expense / CEs + release of retention.",
+              "Aim to close within 3–6 months of practical completion — drift past 12 months and recovery becomes harder.",
+              "Compile a final account file: contract sum, all variations (instructed, valued, disputed), loss and expense, day-works, retention, contra-charges.",
+              "Retention release: half at PC, half at end of DLP (typically 12 months) — track defects rectification to avoid retention erosion.",
+              "Defects Liability Period: rectify all defects notified within DLP; client may withhold retention to cover unresolved defects.",
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="JCT Standard Building Contract 2024 — Clause 4.26 (Final Statement)"
+            clause="The Architect/Contract Administrator shall, not later than 3 months after the date of issue of the Notice of Completion of Making Good, issue the Final Certificate. The Final Certificate is conclusive evidence (subject to any proceedings commenced) that the Contractor has properly completed the Works."
+            meaning={
+              <>
+                The Final Certificate under JCT closes the financial settlement and is conclusive evidence (subject to contestation periods). Get the final account agreed in good time before the FC is issued, otherwise disputed amounts can become un-recoverable. The 3-month window after Making Good is the active settlement period.
+              </>
+            }
+            cite="Source: JCT Standard Building Contract 2024 (refer to JCT published text for verbatim clauses)."
+          />
+
+
+          <LearningOutcomes
+            outcomes={[
               'Understand final measurement processes for re-measurement and lump sum contracts',
               'Prepare and negotiate final account submissions',
               'Manage retention release procedures and requirements',
               'Administer the defects liability period effectively',
               'Process financial close-out and Final Certificate',
               'Maintain records to support final account claims',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Final Measurement Process */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Final Measurement Process
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Final Measurement Process">
             <p>
               Final measurement is the process of establishing the true extent of work executed on
               site, forming the basis for calculating the final contract sum. The approach differs
               significantly between re-measurement and lump sum contracts.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Re-measurement vs Lump Sum Contracts:
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Re-measurement</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Lump Sum</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Contract sum</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Provisional, based on estimated quantities
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Fixed, unless varied</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Final account basis</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full measurement of all work executed
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Contract sum plus/minus adjustments
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Quantity risk</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Employer bears quantity risk
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Contractor bears quantity risk
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Common use</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Refurbishment, incomplete design
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        New build, complete design
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Valuation method</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Measured quantities x bill rates
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Contract rates for similar work
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Final Measurement Considerations
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Cable runs:</strong> Actual installed lengths often differ from tender
-                  allowances due to routing changes
-                </li>
-                <li className="pl-1">
-                  <strong>Containment:</strong> Re-measure cable tray, trunking and conduit against
-                  as-built drawings
-                </li>
-                <li className="pl-1">
-                  <strong>Distribution boards:</strong> Verify final circuit configurations against
-                  specification
-                </li>
-                <li className="pl-1">
-                  <strong>Luminaires:</strong> Count against lighting layouts, noting any
-                  substitutions
-                </li>
-                <li className="pl-1">
-                  <strong>Control wiring:</strong> Often requires detailed measurement due to late
-                  coordination
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Re-measurement vs Lump Sum Contracts (Aspect — Re-measurement — Lump Sum):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Contract sum:</strong> Provisional, based on estimated quantities — Fixed,
+                unless varied
+              </li>
+              <li>
+                <strong>Final account basis:</strong> Full measurement of all work executed —
+                Contract sum plus/minus adjustments
+              </li>
+              <li>
+                <strong>Quantity risk:</strong> Employer bears quantity risk — Contractor bears
+                quantity risk
+              </li>
+              <li>
+                <strong>Common use:</strong> Refurbishment, incomplete design — New build, complete
+                design
+              </li>
+              <li>
+                <strong>Valuation method:</strong> Measured quantities x bill rates — Contract rates
+                for similar work
+              </li>
+            </ul>
+            <p>
+              <strong>Building Services Final Measurement Considerations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cable runs:</strong> Actual installed lengths often differ from tender
+                allowances due to routing changes
+              </li>
+              <li>
+                <strong>Containment:</strong> Re-measure cable tray, trunking and conduit against
+                as-built drawings
+              </li>
+              <li>
+                <strong>Distribution boards:</strong> Verify final circuit configurations against
+                specification
+              </li>
+              <li>
+                <strong>Luminaires:</strong> Count against lighting layouts, noting any
+                substitutions
+              </li>
+              <li>
+                <strong>Control wiring:</strong> Often requires detailed measurement due to late
+                coordination
+              </li>
+            </ul>
+            <p>
               <strong>Practical tip:</strong> Take photographs during installation to support
               measurements, particularly for concealed services that cannot be verified once
               covered.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Variations Settlement and Account Agreement */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Variations Settlement and Account Agreement
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Variations Settlement and Account Agreement">
             <p>
               The final account must reconcile all variations issued during the contract. Proper
               valuation and agreement of variations is often the most contentious aspect of final
               account negotiation.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Variation Valuation Hierarchy
-                </p>
-                <ol className="text-sm text-white space-y-1.5 list-decimal list-outside ml-5">
-                  <li className="pl-1">Contract rates where work is of similar character</li>
-                  <li className="pl-1">
-                    Pro-rata contract rates where similar but different conditions
-                  </li>
-                  <li className="pl-1">
-                    Fair rates and prices where contract rates not applicable
-                  </li>
-                  <li className="pl-1">Daywork as last resort (with proper records)</li>
-                </ol>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Final Account Adjustments
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Measured variations (additions/omissions)</li>
-                  <li className="pl-1">Provisional sum expenditure reconciliation</li>
-                  <li className="pl-1">Prime cost sum adjustments</li>
-                  <li className="pl-1">Fluctuations (if contract allows)</li>
-                  <li className="pl-1">Loss and expense claims</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Final Account Statement Structure
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Item</th>
-                      <th className="border border-white/10 px-3 py-2 text-right">Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Original contract sum</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">£2,500,000</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Add: Measured variations (net)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-right">£185,000</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Omit: Provisional sums allowed
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-right">(£150,000)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Add: Provisional sum expenditure
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-right">£142,000</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Add: Loss and expense (agreed)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-right">£45,000</td>
-                    </tr>
-                    <tr className="bg-white/5 font-medium">
-                      <td className="border border-white/10 px-3 py-2">Final Contract Sum</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">£2,722,000</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Common Dispute Areas in M&E Final Accounts
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Coordination changes:</strong> Who instructed the change and was it a
-                  variation?
-                </li>
-                <li className="pl-1">
-                  <strong>Specification interpretation:</strong> Was the specified product or
-                  equivalent installed?
-                </li>
-                <li className="pl-1">
-                  <strong>Daywork rates:</strong> Application of percentage additions for overheads
-                </li>
-                <li className="pl-1">
-                  <strong>Prolongation costs:</strong> Linking delays to specific variations
-                </li>
-                <li className="pl-1">
-                  <strong>Design development:</strong> Distinguishing design changes from detail
-                  development
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Variation Valuation Hierarchy:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Contract rates where work is of similar character</li>
+              <li>Pro-rata contract rates where similar but different conditions</li>
+              <li>Fair rates and prices where contract rates not applicable</li>
+              <li>Daywork as last resort (with proper records)</li>
+            </ul>
+            <p>
+              <strong>Final Account Adjustments:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Measured variations (additions/omissions)</li>
+              <li>Provisional sum expenditure reconciliation</li>
+              <li>Prime cost sum adjustments</li>
+              <li>Fluctuations (if contract allows)</li>
+              <li>Loss and expense claims</li>
+            </ul>
+            <p>
+              <strong>Final Account Statement Structure (Item — Amount):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Original contract sum:</strong> £2,500,000
+              </li>
+              <li>
+                <strong>Add: Measured variations (net):</strong> £185,000
+              </li>
+              <li>
+                <strong>Omit: Provisional sums allowed:</strong> (£150,000)
+              </li>
+              <li>
+                <strong>Add: Provisional sum expenditure:</strong> £142,000
+              </li>
+              <li>
+                <strong>Add: Loss and expense (agreed):</strong> £45,000
+              </li>
+              <li>
+                <strong>Final Contract Sum:</strong> £2,722,000
+              </li>
+            </ul>
+            <p>
+              <strong>Common Dispute Areas in M&E Final Accounts:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Coordination changes:</strong> Who instructed the change and was it a
+                variation?
+              </li>
+              <li>
+                <strong>Specification interpretation:</strong> Was the specified product or
+                equivalent installed?
+              </li>
+              <li>
+                <strong>Daywork rates:</strong> Application of percentage additions for overheads
+              </li>
+              <li>
+                <strong>Prolongation costs:</strong> Linking delays to specific variations
+              </li>
+              <li>
+                <strong>Design development:</strong> Distinguishing design changes from detail
+                development
+              </li>
+            </ul>
+            <p>
               <strong>Negotiation approach:</strong> Agree undisputed items first to establish
               momentum, then focus on disputed items with supporting evidence.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Retention Release and Defects Liability Period */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Retention Release and Defects Liability Period
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Retention Release and Defects Liability Period">
             <p>
               Retention is money held back from interim payments as security for proper completion
               of the works and rectification of defects. Understanding the release mechanism and
               defects liability obligations is essential for financial planning.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Retention Release Schedule
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Stage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Retention Held</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Released</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">During construction</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full retention (typically 5%)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">None</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Practical completion</td>
-                      <td className="border border-white/10 px-3 py-2">2.5%</td>
-                      <td className="border border-white/10 px-3 py-2">2.5% (first moiety)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">During DLP</td>
-                      <td className="border border-white/10 px-3 py-2">2.5%</td>
-                      <td className="border border-white/10 px-3 py-2">None</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">End of DLP / Making Good</td>
-                      <td className="border border-white/10 px-3 py-2">None</td>
-                      <td className="border border-white/10 px-3 py-2">2.5% (second moiety)</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Defects Liability Obligations
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Rectify defects notified by contract administrator</li>
-                  <li className="pl-1">Attend site within reasonable time</li>
-                  <li className="pl-1">Complete remedial work at own cost</li>
-                  <li className="pl-1">Maintain adequate insurance cover</li>
-                  <li className="pl-1">Provide access for employer's operations</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Retention Bond Alternative
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Bank or surety guarantee replaces cash retention</li>
-                  <li className="pl-1">Contractor receives full payment</li>
-                  <li className="pl-1">Improves contractor cash flow significantly</li>
-                  <li className="pl-1">Employer has same security level</li>
-                  <li className="pl-1">Bond cost typically 1-2% of retention value</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Retention Calculation Example
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Contract sum: £1,800,000</p>
-                <p>Retention percentage: 5%</p>
-                <p>
-                  Total retention: £1,800,000 x 5% = <strong>£90,000</strong>
-                </p>
-                <p className="mt-2">Released at Practical Completion: £45,000</p>
-                <p>Released at end of DLP: £45,000</p>
-                <p className="mt-2 text-white">
-                  Cash flow impact: £90,000 held for 12+ months post-PC
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Building Services Defects
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Electrical:</strong> Earth fault loop impedance failures, RCD nuisance
-                  tripping, labelling errors
-                </li>
-                <li className="pl-1">
-                  <strong>Lighting:</strong> Incorrect colour temperature, control system
-                  programming issues
-                </li>
-                <li className="pl-1">
-                  <strong>Fire alarm:</strong> False alarm patterns, detector positioning issues
-                </li>
-                <li className="pl-1">
-                  <strong>Data:</strong> Network testing failures, fibre attenuation issues
-                </li>
-                <li className="pl-1">
-                  <strong>BMS:</strong> Control strategy deficiencies, sensor calibration drift
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Retention Release Schedule (Stage — Held — Released):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>During construction:</strong> Full retention (typically 5%) — None
+              </li>
+              <li>
+                <strong>Practical completion:</strong> 2.5% — 2.5% (first moiety)
+              </li>
+              <li>
+                <strong>During DLP:</strong> 2.5% — None
+              </li>
+              <li>
+                <strong>End of DLP / Making Good:</strong> None — 2.5% (second moiety)
+              </li>
+            </ul>
+            <p>
+              <strong>Defects Liability Obligations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Rectify defects notified by contract administrator</li>
+              <li>Attend site within reasonable time</li>
+              <li>Complete remedial work at own cost</li>
+              <li>Maintain adequate insurance cover</li>
+              <li>Provide access for employer's operations</li>
+            </ul>
+            <p>
+              <strong>Retention Bond Alternative:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Bank or surety guarantee replaces cash retention</li>
+              <li>Contractor receives full payment</li>
+              <li>Improves contractor cash flow significantly</li>
+              <li>Employer has same security level</li>
+              <li>Bond cost typically 1-2% of retention value</li>
+            </ul>
+            <p>
+              <strong>Retention Calculation Example:</strong> Contract sum £1,800,000; Retention 5%;
+              Total retention £90,000. Released at PC: £45,000. Released at end of DLP: £45,000.
+              Cash flow impact: £90,000 held for 12+ months post-PC.
+            </p>
+            <p>
+              <strong>Common Building Services Defects:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Electrical:</strong> Earth fault loop impedance failures, RCD nuisance
+                tripping, labelling errors
+              </li>
+              <li>
+                <strong>Lighting:</strong> Incorrect colour temperature, control system programming
+                issues
+              </li>
+              <li>
+                <strong>Fire alarm:</strong> False alarm patterns, detector positioning issues
+              </li>
+              <li>
+                <strong>Data:</strong> Network testing failures, fibre attenuation issues
+              </li>
+              <li>
+                <strong>BMS:</strong> Control strategy deficiencies, sensor calibration drift
+              </li>
+            </ul>
+            <p>
               <strong>Best practice:</strong> Conduct a pre-DLP walkthrough before the defects
               period expires to identify any outstanding issues before Making Good certificate is
               due.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Final Certificate and Financial Close-out */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Final Certificate and Financial Close-out
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Final Certificate and Financial Close-out">
             <p>
               The Final Certificate represents the conclusive financial settlement of the contract,
               releasing remaining retention and confirming the adjusted contract sum. Understanding
               the certification process and its legal implications is crucial.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Pre-conditions for Final Certificate
-              </p>
-              <ol className="text-sm text-white space-y-1.5 list-decimal list-outside ml-5">
-                <li className="pl-1">Practical Completion certificate issued</li>
-                <li className="pl-1">Defects liability period completed</li>
-                <li className="pl-1">Making Good certificate issued (all defects rectified)</li>
-                <li className="pl-1">Final account documentation submitted by contractor</li>
-                <li className="pl-1">
-                  Final account agreed or determined by contract administrator
-                </li>
-                <li className="pl-1">As-built drawings and O&M manuals provided</li>
-              </ol>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                JCT Final Certificate Timeline
-              </p>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between border-b border-white/10 pb-2">
-                  <span>Practical Completion</span>
-                  <span className="text-white">Day 0</span>
-                </div>
-                <div className="flex justify-between border-b border-white/10 pb-2">
-                  <span>Contractor submits final account docs</span>
-                  <span className="text-white">Within 6 months of PC</span>
-                </div>
-                <div className="flex justify-between border-b border-white/10 pb-2">
-                  <span>End of Defects Liability Period</span>
-                  <span className="text-white">12 months from PC</span>
-                </div>
-                <div className="flex justify-between border-b border-white/10 pb-2">
-                  <span>Making Good Certificate issued</span>
-                  <span className="text-white">When all defects rectified</span>
-                </div>
-                <div className="flex justify-between border-b border-white/10 pb-2">
-                  <span>Final Certificate issued</span>
-                  <span className="text-white">Within 2 months of final account agreement</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Final payment due</span>
-                  <span className="text-white">14 days from Final Certificate</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Final Certificate Content
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Element</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Final contract sum</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Agreed adjusted contract sum
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Total previously certified
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sum of all interim certificates
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Balance due</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Final sum minus previously certified
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Retention release</td>
-                      <td className="border border-white/10 px-3 py-2">Remaining retention held</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Net payment due</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Final payment to contractor
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Legal Effect of Final Certificate
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Becomes conclusive evidence after 28 days (unless disputed)
-                </li>
-                <li className="pl-1">
-                  Confirms contractor fulfilled material/workmanship obligations
-                </li>
-                <li className="pl-1">Settles all financial claims under the contract</li>
-                <li className="pl-1">Does not affect common law rights for latent defects</li>
-                <li className="pl-1">Limitation periods for claims continue to run separately</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Financial Close-out Checklist
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">All variations agreed and valued</li>
-                <li className="pl-1">Provisional and prime cost sums reconciled</li>
-                <li className="pl-1">Daywork accounts agreed</li>
-                <li className="pl-1">Loss and expense claims settled</li>
-                <li className="pl-1">Contra charges reconciled</li>
-                <li className="pl-1">Subcontractor final accounts closed</li>
-                <li className="pl-1">Retention bonds returned (if applicable)</li>
-                <li className="pl-1">Performance bond released</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Pre-conditions for Final Certificate:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Practical Completion certificate issued</li>
+              <li>Defects liability period completed</li>
+              <li>Making Good certificate issued (all defects rectified)</li>
+              <li>Final account documentation submitted by contractor</li>
+              <li>Final account agreed or determined by contract administrator</li>
+              <li>As-built drawings and O&M manuals provided</li>
+            </ul>
+            <p>
+              <strong>JCT Final Certificate Timeline:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Practical Completion:</strong> Day 0
+              </li>
+              <li>
+                <strong>Contractor submits final account docs:</strong> Within 6 months of PC
+              </li>
+              <li>
+                <strong>End of Defects Liability Period:</strong> 12 months from PC
+              </li>
+              <li>
+                <strong>Making Good Certificate issued:</strong> When all defects rectified
+              </li>
+              <li>
+                <strong>Final Certificate issued:</strong> Within 2 months of final account
+                agreement
+              </li>
+              <li>
+                <strong>Final payment due:</strong> 14 days from Final Certificate
+              </li>
+            </ul>
+            <p>
+              <strong>Final Certificate Content (Element — Description):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Final contract sum:</strong> Agreed adjusted contract sum
+              </li>
+              <li>
+                <strong>Total previously certified:</strong> Sum of all interim certificates
+              </li>
+              <li>
+                <strong>Balance due:</strong> Final sum minus previously certified
+              </li>
+              <li>
+                <strong>Retention release:</strong> Remaining retention held
+              </li>
+              <li>
+                <strong>Net payment due:</strong> Final payment to contractor
+              </li>
+            </ul>
+            <p>
+              <strong>Legal Effect of Final Certificate:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Becomes conclusive evidence after 28 days (unless disputed)</li>
+              <li>Confirms contractor fulfilled material/workmanship obligations</li>
+              <li>Settles all financial claims under the contract</li>
+              <li>Does not affect common law rights for latent defects</li>
+              <li>Limitation periods for claims continue to run separately</li>
+            </ul>
+            <p>
+              <strong>Financial Close-out Checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>All variations agreed and valued</li>
+              <li>Provisional and prime cost sums reconciled</li>
+              <li>Daywork accounts agreed</li>
+              <li>Loss and expense claims settled</li>
+              <li>Contra charges reconciled</li>
+              <li>Subcontractor final accounts closed</li>
+              <li>Retention bonds returned (if applicable)</li>
+              <li>Performance bond released</li>
+            </ul>
+            <p>
               <strong>Commercial reality:</strong> Final accounts often take 12-24 months to agree
               on complex projects. Maintaining good records and professional relationships speeds
               this process considerably.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — Retention Calculation and Release:</strong> An electrical
+              subcontract has a final account value of £850,000 with 5% retention. Calculate the
+              retention release amounts.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Final account value: £850,000</li>
+              <li>
+                Total retention: £850,000 x 5% = <strong>£42,500</strong>
+              </li>
+              <li>
+                First moiety released: £42,500 ÷ 2 = <strong>£21,250</strong>
+              </li>
+              <li>
+                Second moiety released: <strong>£21,250</strong>
+              </li>
+              <li>
+                <strong>Cash flow impact:</strong> £42,500 held during construction.
+              </li>
+            </ul>
+            <p>
+              <strong>Example 2 — Provisional Sum Adjustment:</strong> A contract allowed £75,000
+              provisional sum for BMS. Actual expenditure was £82,500. Calculate the adjustment.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Provisional sum allowed: £75,000</li>
+              <li>Actual BMS expenditure: £82,500</li>
+              <li>Omit provisional sum: (£75,000)</li>
+              <li>Add actual expenditure: £82,500</li>
+              <li>
+                Net adjustment: £82,500 - £75,000 = <strong>+£7,500</strong>
+              </li>
+              <li>This £7,500 addition is included in the final account.</li>
+            </ul>
+            <p>
+              <strong>Example 3 — Final Account Summary:</strong> Prepare a final account summary
+              for an electrical installation contract.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Original contract sum: £1,250,000</li>
+              <li>Variation instructions (16 no.) +£127,450</li>
+              <li>Provisional sum expenditure (net of allowance) +£8,200</li>
+              <li>Agreed loss and expense +£34,000</li>
+              <li>Omitted works (VI-003, VI-008) -£18,750</li>
+              <li>Liquidated damages (2 weeks) -£14,000</li>
+              <li>
+                <strong>Final contract sum: £1,386,900</strong>
+              </li>
+              <li>Previously certified: £1,315,555</li>
+              <li>
+                <strong>Balance due (including retention): £71,345</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Retention Calculation and Release
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> An electrical subcontract has a final account value of
-                £850,000 with 5% retention. Calculate the retention release amounts.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Final account value: £850,000</p>
-                <p>
-                  Total retention: £850,000 x 5% = <strong>£42,500</strong>
-                </p>
-                <p className="mt-2">At Practical Completion:</p>
-                <p>
-                  First moiety released: £42,500 ÷ 2 = <strong>£21,250</strong>
-                </p>
-                <p className="mt-2">At end of Defects Liability Period:</p>
-                <p>
-                  Second moiety released: <strong>£21,250</strong>
-                </p>
-                <p className="mt-2 text-green-400">
-                  Total cash flow impact: £42,500 held during construction
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Provisional Sum Adjustment
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A contract allowed £75,000 provisional sum for BMS.
-                Actual expenditure was £82,500. Calculate the adjustment.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Provisional sum allowed: £75,000</p>
-                <p>Actual BMS expenditure: £82,500</p>
-                <p className="mt-2">Adjustment calculation:</p>
-                <p>Omit provisional sum: (£75,000)</p>
-                <p>Add actual expenditure: £82,500</p>
-                <p className="mt-2">
-                  Net adjustment: £82,500 - £75,000 = <strong>+£7,500</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  This £7,500 addition is included in the final account
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Final account preparation checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Collate all variation instructions chronologically</li>
+              <li>Prepare detailed measurement of each variation</li>
+              <li>Assemble supporting records (daywork sheets, delivery notes)</li>
+              <li>Calculate provisional sum expenditure against allowances</li>
+              <li>Document any claims with evidence and calculations</li>
+              <li>Cross-reference interim valuations for consistency</li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Standard retention: <strong>5%</strong> (3% on some contracts)
+              </li>
+              <li>
+                Defects liability period: <strong>12 months</strong> (typically)
+              </li>
+              <li>
+                Final account submission: <strong>6 months from PC</strong> (JCT)
+              </li>
+              <li>
+                Final Certificate becomes conclusive: <strong>28 days</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Final Account Summary
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Prepare a final account summary for an electrical
-                installation contract.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Original contract sum: £1,250,000</p>
-                <p className="mt-2">Additions:</p>
-                <p> Variation instructions (16 no.) +£127,450</p>
-                <p> Provisional sum expenditure (net of allowance) +£8,200</p>
-                <p> Agreed loss and expense +£34,000</p>
-                <p className="mt-2">Deductions:</p>
-                <p> Omitted works (VI-003, VI-008) -£18,750</p>
-                <p> Liquidated damages (2 weeks) -£14,000</p>
-                <p className="mt-2 border-t border-white/20 pt-2">
-                  Final contract sum: <strong>£1,386,900</strong>
-                </p>
-                <p className="mt-2">Previously certified: £1,315,555</p>
-                <p>
-                  Balance due (including retention): <strong>£71,345</strong>
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Final Account Preparation Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Collate all variation instructions chronologically</li>
-                <li className="pl-1">Prepare detailed measurement of each variation</li>
-                <li className="pl-1">
-                  Assemble supporting records (daywork sheets, delivery notes)
-                </li>
-                <li className="pl-1">Calculate provisional sum expenditure against allowances</li>
-                <li className="pl-1">Document any claims with evidence and calculations</li>
-                <li className="pl-1">Cross-reference interim valuations for consistency</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Standard retention: <strong>5%</strong> (3% on some contracts)
-                </li>
-                <li className="pl-1">
-                  Defects liability period: <strong>12 months</strong> (typically)
-                </li>
-                <li className="pl-1">
-                  Final account submission: <strong>6 months from PC</strong> (JCT)
-                </li>
-                <li className="pl-1">
-                  Final Certificate becomes conclusive: <strong>28 days</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Poor records</strong> - Cannot substantiate claims without contemporaneous
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Poor records</strong> — Cannot substantiate claims without contemporaneous
                   evidence
                 </li>
-                <li className="pl-1">
-                  <strong>Late submission</strong> - Missing contractual deadlines weakens position
+                <li>
+                  <strong>Late submission</strong> — Missing contractual deadlines weakens position
                 </li>
-                <li className="pl-1">
-                  <strong>Underclaiming</strong> - Failing to identify all entitled variations
+                <li>
+                  <strong>Underclaiming</strong> — Failing to identify all entitled variations
                 </li>
-                <li className="pl-1">
-                  <strong>Ignoring preliminaries</strong> - Prolongation affects time-related costs
+                <li>
+                  <strong>Ignoring preliminaries</strong> — Prolongation affects time-related costs
                 </li>
-                <li className="pl-1">
-                  <strong>Subcontractor oversights</strong> - Ensure sub-final accounts are captured
+                <li>
+                  <strong>Subcontractor oversights</strong> — Ensure sub-final accounts are captured
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Maintain contemporaneous records throughout, submit the final account within the contractual window, audit every variation entitlement, value prolongation against time-related preliminaries, and close out subcontractor final accounts in parallel."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Final account drifts past 18 months — retention at risk"
+            situation={
+              <>
+                Your project achieved PC 18 months ago. The end of DLP was six months ago. The final account remains unagreed: £140k of disputed variations, £50k retention outstanding. The client claims defects worth £80k against retention. Your QS resigned after PC; nobody picked up the closure.
+              </>
+            }
+            whatToDo={
+              <>
+                Audit the open account immediately. Compile contemporaneous records for the £140k variations — adjudicate any that are well-supported, settle the rest at best commercial outcome. Inspect alleged defects with the client; rectify legitimate ones, dispute illegitimate ones with photographs and as-built records. Aim to close within three months. Lessons learned: appoint a final account QS at PC, track to closure as a project deliverable, never rely on individual continuity for commercial close.
+              </>
+            }
+            whyItMatters={
+              <>
+                Final accounts left to drift become losses — retention is eroded by alleged defects, memories fade, records are misplaced, key people leave. The project margin you booked at PC is not real until the FA is settled and retention is paid. Treat closure as a programme deliverable, not an afterthought.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Final Account Components</p>
-                <ul className="space-y-0.5">
-                  <li>Original contract sum</li>
-                  <li>Measured variations (+ and -)</li>
-                  <li>Provisional sum adjustments</li>
-                  <li>Loss and expense claims</li>
-                  <li>Contra charges and deductions</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Milestones</p>
-                <ul className="space-y-0.5">
-                  <li>PC - 50% retention released</li>
-                  <li>End DLP - 50% retention released</li>
-                  <li>Making Good - Required for FC</li>
-                  <li>Final Certificate - Conclusive after 28 days</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+                    <KeyTakeaways
+            points={[
+              "Final account = measured work + variations + L&E/CEs + retention release.",
+              "Close within 3–6 months of PC — drift past 12 months means lost recovery.",
+              "Compile FA file: contract sum, variations, L&E, day-works, retention, contra-charges.",
+              "Half retention at PC, half at end of DLP — typically 12 months.",
+              "DLP: rectify all notified defects; unresolved defects justify retention withholding.",
+              "JCT Final Certificate is conclusive evidence — settle disputes before issue.",
+              "Treat closure as a programme deliverable — appoint a closure QS, track to completion.",
+              "Lessons learned and project closeout report inform future tenders and benchmarks.",
+            ]}
+          />
+
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Cost Management
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section3-4')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Variations and claims
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section3-6')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Value engineering
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

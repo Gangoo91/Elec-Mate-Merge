@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 7 · Section 5 · Subsection 5 — Demand Management
+ * HNC Electrical Engineering for Building Services (Power and Lighting Systems)
+ *   Load shedding, peak shaving, demand response, tariff optimisation, and smart grid integration
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Demand Management - HNC Module 7 Section 5.5';
@@ -253,871 +266,312 @@ const faqs = [
 ];
 
 const HNCModule7Section5_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section5")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module7-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.5.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Demand Management
-          </h1>
-          <p className="text-white">
-            Load shedding, peak shaving, demand response, tariff optimisation, and smart grid
-            integration
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 7 · Section 5 · Subsection 5"
+            title="Demand Management"
+            description="Load shedding, peak shaving, demand response, tariff optimisation, and smart grid integration"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Maximum demand:</strong> Peak kVA determines capacity charges
-              </li>
-              <li className="pl-1">
-                <strong>Load shedding:</strong> Disconnect non-essential loads at peak
-              </li>
-              <li className="pl-1">
-                <strong>Peak shaving:</strong> BESS/generation reduces grid demand
-              </li>
-              <li className="pl-1">
-                <strong>Triads:</strong> Three highest UK demand periods - major cost driver
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Understand maximum demand and its impact on electricity costs",
+              "Apply load shedding strategies to reduce peak demand",
+              "Evaluate peak shaving technologies including BESS",
+              "Navigate DUoS and TNUoS charging structures",
+              "Implement Triad avoidance strategies",
+              "Integrate demand response and smart grid technologies",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Maximum Demand and Load Shedding">
+            <p>Maximum demand (MD) is the highest power drawn from the supply during a defined period, typically measured in 30-minute intervals in the UK. It directly impacts capacity charges and network costs, often representing 20-40% of a commercial customer's electricity bill.</p>
+            <p><strong>Maximum Demand Concepts:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Contracted capacity:</strong> Agreed maximum import (kVA) with DNO - exceeding incurs penalties</li>
+              <li><strong>Measured maximum demand:</strong> Highest recorded value in billing period</li>
+              <li><strong>Diversity factor:</strong> Ratio of actual MD to sum of individual load MDs</li>
+              <li><strong>Load factor:</strong> Average demand ÷ maximum demand - indicates demand profile efficiency</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Cost Impact</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>DUoS red band:</strong> Up to 10x higher than green band
-              </li>
-              <li className="pl-1">
-                <strong>TNUoS Triad:</strong> £50-70/kW/year in many zones
-              </li>
-              <li className="pl-1">
-                <strong>Capacity charges:</strong> £5-15/kVA/month typical
-              </li>
-              <li className="pl-1">
-                <strong>Reactive power:</strong> Charges above 0.95 power factor threshold
-              </li>
+            <p><strong>Load Shedding Strategies</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Priority-based shedding:</strong> Shed lowest priority first — Non-essential HVAC, decorative lighting</li>
+              <li><strong>Rotational shedding:</strong> Cycle loads on/off — Refrigeration, water heating, chillers</li>
+              <li><strong>Demand limiting:</strong> Prevent threshold breach — EV charging, industrial processes</li>
+              <li><strong>Predictive control:</strong> Pre-emptive reduction — BMS-controlled systems</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Load Priority Classification</strong></p>
+            <p><span>Priority 1 (Never shed):</span> Life safety, emergency lighting, fire systems, critical IT</p>
+            <p><span>Priority 2 (Last resort):</span> Essential production, server rooms, security</p>
+            <p><span>Priority 3 (Shed if needed):</span> General HVAC, non-critical processes</p>
+            <p><span>Priority 4 (First to shed):</span> EV charging, water heating, unoccupied area HVAC</p>
+            <p><strong>Key principle:</strong> Effective load shedding reduces maximum demand without impacting critical operations or occupant comfort.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Understand maximum demand and its impact on electricity costs',
-              'Apply load shedding strategies to reduce peak demand',
-              'Evaluate peak shaving technologies including BESS',
-              'Navigate DUoS and TNUoS charging structures',
-              'Implement Triad avoidance strategies',
-              'Integrate demand response and smart grid technologies',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Maximum Demand and Load Shedding */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Maximum Demand and Load Shedding
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Peak Shaving and Energy Storage">
+            <p>Peak shaving uses on-site generation or energy storage to reduce grid demand during peak periods. Unlike load shedding (which reduces consumption), peak shaving maintains full supply to loads while reducing the power drawn from the distribution network.</p>
+            <p><strong>Battery Energy Storage (BESS)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Charge during off-peak periods</li>
+              <li>Discharge to reduce grid demand at peak</li>
+              <li>Sub-second response capability</li>
+              <li>Silent operation, zero emissions</li>
+              <li>Multiple revenue streams possible</li>
+            </ul>
+            <p><strong>On-site Generation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Diesel/gas generators for peak periods</li>
+              <li>CHP for combined heat and power</li>
+              <li>Solar PV with battery storage</li>
+              <li>May require planning permission</li>
+              <li>Emission and noise considerations</li>
+            </ul>
+            <p><strong>BESS Operating Modes</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Peak shaving:</strong> Reduce maximum demand — Capacity charge reduction</li>
+              <li><strong>Triad avoidance:</strong> Discharge during Triad warnings — TNUoS charge reduction</li>
+              <li><strong>Arbitrage:</strong> Buy cheap, sell/use expensive — Energy cost savings</li>
+              <li><strong>Frequency response:</strong> Grid balancing services — Ancillary services revenue</li>
+              <li><strong>Backup power:</strong> UPS function during outages — Business continuity value</li>
+            </ul>
+            <p><strong>BESS Sizing Example</strong></p>
+            <p>Site maximum demand: 800 kW</p>
+            <p>Target maximum demand: 500 kW</p>
+            <p>Required reduction: 300 kW</p>
+            <p>Peak duration: 3 hours</p>
+            <p>Minimum capacity = 300 kW × 3 h = 900 kWh</p>
+            <p>With 80% depth of discharge: 900 ÷ 0.8 = 1,125 kWh installed</p>
+            <p>System specification: 300 kW / 1,125 kWh lithium-ion BESS</p>
+            <p><strong>Investment tip:</strong> Stack multiple revenue streams (peak shaving + Triad + frequency response) to improve BESS payback period.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Tariff Structures and Network Charges">
+            <p>Understanding electricity tariff components enables effective demand management. Network charges (DUoS and TNUoS) often represent 25-35% of total electricity costs for commercial consumers and are directly influenced by consumption patterns and maximum demand.</p>
+            <p><strong>Electricity Bill Components</strong></p>
+            <p><span>Wholesale energy:</span> Commodity cost of electricity (40-50%)</p>
+            <p><span>DUoS charges:</span> Distribution network costs (15-20%)</p>
+            <p><span>TNUoS charges:</span> Transmission network costs (5-10%)</p>
+            <p><span>BSUoS charges:</span> Balancing Services Use of System (2-5%)</p>
+            <p><span>Supplier margin:</span> Supplier costs and profit (5-10%)</p>
+            <p><span>Levies:</span> RO, FiT, CFD, CM, CCL (15-25%)</p>
+            <p><strong>DUoS Time Bands (Typical Winter)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Red:</strong> 16:00-19:00 weekdays — Highest (10x green) — Minimise consumption</li>
+              <li><strong>Amber:</strong> 07:00-16:00, 19:00-20:00 — Medium (3x green) — Manage where possible</li>
+              <li><strong>Green:</strong> 20:00-07:00, weekends — Lowest (baseline) — Shift loads here</li>
+            </ul>
+            <p><strong>TNUoS and Triad Charges</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Triads:</strong> Three half-hours of highest national demand (Nov-Feb)</li>
+              <li><strong>Separation:</strong> Each Triad at least 10 clear days apart</li>
+              <li><strong>Zonal charges:</strong> Vary by location (£40-75/kW/year typically)</li>
+              <li><strong>Calculation:</strong> Average of your demand during the three Triads × zonal rate</li>
+              <li><strong>Avoidance value:</strong> Reducing demand by 100 kW could save £4,000-7,500/year</li>
+            </ul>
+            <p><strong>Capacity and Reactive Power Charges</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Agreed capacity:</strong> Contracted kVA — Right-size to actual need</li>
+              <li><strong>Excess capacity:</strong> kVA exceeding agreement — Load shedding, peak shaving</li>
+              <li><strong>Reactive power:</strong> kVArh when PF &lt; 0.95 — Power factor correction</li>
+            </ul>
+            <p><strong>Tariff optimisation:</strong> Review your load profile against tariff structure - often 10-15% savings are achievable through demand management alone.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Demand Response and Smart Grid Integration">
+            <p>Demand response (DR) programmes enable consumers to actively participate in grid balancing by adjusting consumption in response to price signals or operator requests. Smart grid technologies enable automated, real-time demand management across the electricity system.</p>
+            <p><strong>Demand Response Programme Types:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Price-based DR:</strong> Respond to time-of-use or dynamic pricing signals</li>
+              <li><strong>Incentive-based DR:</strong> Receive payments for reducing demand when requested</li>
+              <li><strong>Emergency DR:</strong> Mandatory reduction during grid emergencies</li>
+              <li><strong>Ancillary services:</strong> Provide frequency response or reserve capacity</li>
+            </ul>
+            <p><strong>UK Flexibility Markets</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Capacity Market (CM)</li>
+              <li>Firm Frequency Response (FFR)</li>
+              <li>Dynamic Containment (DC)</li>
+              <li>Short-Term Operating Reserve (STOR)</li>
+              <li>DNO flexibility services</li>
+            </ul>
+            <p><strong>Participation Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Half-hourly metering (mandatory)</li>
+              <li>Minimum capacity threshold</li>
+              <li>Response time capability</li>
+              <li>Telemetry and communication</li>
+              <li>Aggregator contract (for smaller sites)</li>
+            </ul>
+            <p><strong>Smart Grid Technologies</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Smart meters:</strong> HH consumption recording — Enables settlement and monitoring</li>
+              <li><strong>AMI/AMR:</strong> Automatic meter reading — Real-time data for control</li>
+              <li><strong>EMS/BMS:</strong> Building/energy management — Automated demand response</li>
+              <li><strong>IoT devices:</strong> Connected equipment — Granular load control</li>
+              <li><strong>AI/ML platforms:</strong> Predictive optimisation — Forecast-driven scheduling</li>
+            </ul>
+            <p><strong>Half-Hourly Settlement (MHHS)</strong></p>
+            <p>Market-wide Half-Hourly Settlement (MHHS) now applies to all non-domestic customers:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Consumption recorded every 30 minutes via smart/AMR meters</li>
+              <li>Bills reflect actual consumption patterns, not profiles</li>
+              <li>Direct incentive to shift consumption to cheaper periods</li>
+              <li>Enables participation in flexibility markets</li>
+              <li>Foundation for time-of-use and dynamic tariffs</li>
+            </ul>
+            <p><strong>Future trend:</strong> The transition to a smart, flexible grid means demand management will become increasingly automated, with AI-driven systems optimising consumption in real-time against multiple signals.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Maximum demand (MD) is the highest power drawn from the supply during a defined
-              period, typically measured in 30-minute intervals in the UK. It directly impacts
-              capacity charges and network costs, often representing 20-40% of a commercial
-              customer's electricity bill.
+              <strong>Example 1: Triad Avoidance Savings Calculation</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Maximum Demand Concepts:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Contracted capacity:</strong> Agreed maximum import (kVA) with DNO -
-                  exceeding incurs penalties
-                </li>
-                <li className="pl-1">
-                  <strong>Measured maximum demand:</strong> Highest recorded value in billing period
-                </li>
-                <li className="pl-1">
-                  <strong>Diversity factor:</strong> Ratio of actual MD to sum of individual load
-                  MDs
-                </li>
-                <li className="pl-1">
-                  <strong>Load factor:</strong> Average demand ÷ maximum demand - indicates demand
-                  profile efficiency
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Load Shedding Strategies
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Strategy</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Loads</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Priority-based shedding</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Shed lowest priority first
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Non-essential HVAC, decorative lighting
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Rotational shedding</td>
-                      <td className="border border-white/10 px-3 py-2">Cycle loads on/off</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Refrigeration, water heating, chillers
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Demand limiting</td>
-                      <td className="border border-white/10 px-3 py-2">Prevent threshold breach</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        EV charging, industrial processes
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Predictive control</td>
-                      <td className="border border-white/10 px-3 py-2">Pre-emptive reduction</td>
-                      <td className="border border-white/10 px-3 py-2">BMS-controlled systems</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Load Priority Classification</p>
-              <div className="text-sm space-y-1">
-                <p>
-                  <span className="text-green-400">Priority 1 (Never shed):</span> Life safety,
-                  emergency lighting, fire systems, critical IT
-                </p>
-                <p>
-                  <span className="text-yellow-400">Priority 2 (Last resort):</span> Essential
-                  production, server rooms, security
-                </p>
-                <p>
-                  <span className="text-orange-400">Priority 3 (Shed if needed):</span> General
-                  HVAC, non-critical processes
-                </p>
-                <p>
-                  <span className="text-red-400">Priority 4 (First to shed):</span> EV charging,
-                  water heating, unoccupied area HVAC
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key principle:</strong> Effective load shedding reduces maximum demand without
-              impacting critical operations or occupant comfort.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Peak Shaving and Energy Storage */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Peak Shaving and Energy Storage
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Calculate potential savings from Triad avoidance at a manufacturing site.</p>
+            <p>Given data:</p>
+            <p>Current average Triad demand: 450 kW</p>
+            <p>Target Triad demand: 150 kW (using BESS)</p>
+            <p>TNUoS zonal rate: £62/kW/year</p>
+            <p>Calculation:</p>
+            <p>Demand reduction = 450 - 150 = 300 kW</p>
+            <p>Annual saving = 300 kW × £62/kW = £18,600/year</p>
+            <p>Triad avoidance value: £18,600 per year</p>
+            <p>Note: This alone could justify significant BESS investment</p>
             <p>
-              Peak shaving uses on-site generation or energy storage to reduce grid demand during
-              peak periods. Unlike load shedding (which reduces consumption), peak shaving maintains
-              full supply to loads while reducing the power drawn from the distribution network.
+              <strong>Example 2: DUoS Band Optimisation</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Battery Energy Storage (BESS)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Charge during off-peak periods</li>
-                  <li className="pl-1">Discharge to reduce grid demand at peak</li>
-                  <li className="pl-1">Sub-second response capability</li>
-                  <li className="pl-1">Silent operation, zero emissions</li>
-                  <li className="pl-1">Multiple revenue streams possible</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">On-site Generation</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Diesel/gas generators for peak periods</li>
-                  <li className="pl-1">CHP for combined heat and power</li>
-                  <li className="pl-1">Solar PV with battery storage</li>
-                  <li className="pl-1">May require planning permission</li>
-                  <li className="pl-1">Emission and noise considerations</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">BESS Operating Modes</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Mode</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Function</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Revenue/Benefit
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Peak shaving</td>
-                      <td className="border border-white/10 px-3 py-2">Reduce maximum demand</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Capacity charge reduction
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Triad avoidance</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Discharge during Triad warnings
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">TNUoS charge reduction</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Arbitrage</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Buy cheap, sell/use expensive
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Energy cost savings</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Frequency response</td>
-                      <td className="border border-white/10 px-3 py-2">Grid balancing services</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ancillary services revenue
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Backup power</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        UPS function during outages
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Business continuity value
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">BESS Sizing Example</p>
-              <div className="text-sm space-y-1 font-mono">
-                <p>Site maximum demand: 800 kW</p>
-                <p>Target maximum demand: 500 kW</p>
-                <p>Required reduction: 300 kW</p>
-                <p>Peak duration: 3 hours</p>
-                <p className="mt-2">Minimum capacity = 300 kW × 3 h = 900 kWh</p>
-                <p>With 80% depth of discharge: 900 ÷ 0.8 = 1,125 kWh installed</p>
-                <p className="text-green-400 mt-2">
-                  System specification: 300 kW / 1,125 kWh lithium-ion BESS
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Investment tip:</strong> Stack multiple revenue streams (peak shaving + Triad
-              + frequency response) to improve BESS payback period.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Tariff Structures and Network Charges */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Tariff Structures and Network Charges
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Evaluate cost savings from shifting EV charging from red to green band.</p>
+            <p>Current pattern (red band charging 16:00-19:00):</p>
+            <p>EV charging load: 100 kW for 3 hours = 300 kWh daily</p>
+            <p>Red band DUoS: 15p/kWh</p>
+            <p>Daily DUoS cost: 300 × £0.15 = £45</p>
+            <p>Optimised pattern (green band charging 22:00-01:00):</p>
+            <p>Green band DUoS: 1.5p/kWh</p>
+            <p>Daily DUoS cost: 300 × £0.015 = £4.50</p>
+            <p>Daily saving: £40.50</p>
+            <p>Annual saving: £40.50 × 250 days = £10,125</p>
             <p>
-              Understanding electricity tariff components enables effective demand management.
-              Network charges (DUoS and TNUoS) often represent 25-35% of total electricity costs for
-              commercial consumers and are directly influenced by consumption patterns and maximum
-              demand.
+              <strong>Example 3: Load Factor Improvement</strong>
             </p>
+            <p><strong>Scenario:</strong> Assess the impact of demand management on load factor.</p>
+            <p>Before demand management:</p>
+            <p>Average demand: 400 kW</p>
+            <p>Maximum demand: 800 kW</p>
+            <p>Load factor = 400 ÷ 800 = 0.50 (50%)</p>
+            <p>After implementing load shedding and peak shaving:</p>
+            <p>Average demand: 400 kW (unchanged)</p>
+            <p>Maximum demand: 550 kW (reduced)</p>
+            <p>New load factor = 400 ÷ 550 = 0.73 (73%)</p>
+            <p>Improvement: 23 percentage points</p>
+            <p>Higher load factor = better utilisation of contracted capacity</p>
+            <p>Capacity charge reduction: (800-550) × £8/kVA/month = £2,000/month</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Electricity Bill Components</p>
-              <div className="text-sm space-y-1">
-                <p>
-                  <span className="text-white">Wholesale energy:</span> Commodity cost of
-                  electricity (40-50%)
-                </p>
-                <p>
-                  <span className="text-white">DUoS charges:</span> Distribution network costs
-                  (15-20%)
-                </p>
-                <p>
-                  <span className="text-white">TNUoS charges:</span> Transmission network costs
-                  (5-10%)
-                </p>
-                <p>
-                  <span className="text-white">BSUoS charges:</span> Balancing Services Use of
-                  System (2-5%)
-                </p>
-                <p>
-                  <span className="text-white">Supplier margin:</span> Supplier costs and profit
-                  (5-10%)
-                </p>
-                <p>
-                  <span className="text-white">Levies:</span> RO, FiT, CFD, CM, CCL (15-25%)
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                DUoS Time Bands (Typical Winter)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Band</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Hours</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Relative Cost</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Strategy</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">Red</td>
-                      <td className="border border-white/10 px-3 py-2">16:00-19:00 weekdays</td>
-                      <td className="border border-white/10 px-3 py-2">Highest (10x green)</td>
-                      <td className="border border-white/10 px-3 py-2">Minimise consumption</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-400">Amber</td>
-                      <td className="border border-white/10 px-3 py-2">07:00-16:00, 19:00-20:00</td>
-                      <td className="border border-white/10 px-3 py-2">Medium (3x green)</td>
-                      <td className="border border-white/10 px-3 py-2">Manage where possible</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">Green</td>
-                      <td className="border border-white/10 px-3 py-2">20:00-07:00, weekends</td>
-                      <td className="border border-white/10 px-3 py-2">Lowest (baseline)</td>
-                      <td className="border border-white/10 px-3 py-2">Shift loads here</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                TNUoS and Triad Charges
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Triads:</strong> Three half-hours of highest national demand (Nov-Feb)
-                </li>
-                <li className="pl-1">
-                  <strong>Separation:</strong> Each Triad at least 10 clear days apart
-                </li>
-                <li className="pl-1">
-                  <strong>Zonal charges:</strong> Vary by location (£40-75/kW/year typically)
-                </li>
-                <li className="pl-1">
-                  <strong>Calculation:</strong> Average of your demand during the three Triads ×
-                  zonal rate
-                </li>
-                <li className="pl-1">
-                  <strong>Avoidance value:</strong> Reducing demand by 100 kW could save
-                  £4,000-7,500/year
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Capacity and Reactive Power Charges
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Charge Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Basis</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Management Strategy
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Agreed capacity</td>
-                      <td className="border border-white/10 px-3 py-2">Contracted kVA</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Right-size to actual need
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Excess capacity</td>
-                      <td className="border border-white/10 px-3 py-2">kVA exceeding agreement</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Load shedding, peak shaving
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Reactive power</td>
-                      <td className="border border-white/10 px-3 py-2">kVArh when PF &lt; 0.95</td>
-                      <td className="border border-white/10 px-3 py-2">Power factor correction</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Tariff optimisation:</strong> Review your load profile against tariff
-              structure - often 10-15% savings are achievable through demand management alone.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Demand Response and Smart Grid Integration */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Demand Response and Smart Grid Integration
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Demand response (DR) programmes enable consumers to actively participate in grid
-              balancing by adjusting consumption in response to price signals or operator requests.
-              Smart grid technologies enable automated, real-time demand management across the
-              electricity system.
+              <strong>Demand Management Implementation Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Demand Response Programme Types:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Price-based DR:</strong> Respond to time-of-use or dynamic pricing signals
-                </li>
-                <li className="pl-1">
-                  <strong>Incentive-based DR:</strong> Receive payments for reducing demand when
-                  requested
-                </li>
-                <li className="pl-1">
-                  <strong>Emergency DR:</strong> Mandatory reduction during grid emergencies
-                </li>
-                <li className="pl-1">
-                  <strong>Ancillary services:</strong> Provide frequency response or reserve
-                  capacity
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  UK Flexibility Markets
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Capacity Market (CM)</li>
-                  <li className="pl-1">Firm Frequency Response (FFR)</li>
-                  <li className="pl-1">Dynamic Containment (DC)</li>
-                  <li className="pl-1">Short-Term Operating Reserve (STOR)</li>
-                  <li className="pl-1">DNO flexibility services</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Participation Requirements
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Half-hourly metering (mandatory)</li>
-                  <li className="pl-1">Minimum capacity threshold</li>
-                  <li className="pl-1">Response time capability</li>
-                  <li className="pl-1">Telemetry and communication</li>
-                  <li className="pl-1">Aggregator contract (for smaller sites)</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Smart Grid Technologies
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Technology</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Function</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Demand Management Role
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Smart meters</td>
-                      <td className="border border-white/10 px-3 py-2">HH consumption recording</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Enables settlement and monitoring
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">AMI/AMR</td>
-                      <td className="border border-white/10 px-3 py-2">Automatic meter reading</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Real-time data for control
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">EMS/BMS</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Building/energy management
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Automated demand response
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">IoT devices</td>
-                      <td className="border border-white/10 px-3 py-2">Connected equipment</td>
-                      <td className="border border-white/10 px-3 py-2">Granular load control</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">AI/ML platforms</td>
-                      <td className="border border-white/10 px-3 py-2">Predictive optimisation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Forecast-driven scheduling
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Half-Hourly Settlement (MHHS)
-              </p>
-              <div className="text-sm space-y-2">
-                <p>
-                  Market-wide Half-Hourly Settlement (MHHS) now applies to all non-domestic
-                  customers:
-                </p>
-                <ul className="space-y-1 list-disc list-outside ml-5 mt-2">
-                  <li className="pl-1">
-                    Consumption recorded every 30 minutes via smart/AMR meters
-                  </li>
-                  <li className="pl-1">Bills reflect actual consumption patterns, not profiles</li>
-                  <li className="pl-1">Direct incentive to shift consumption to cheaper periods</li>
-                  <li className="pl-1">Enables participation in flexibility markets</li>
-                  <li className="pl-1">Foundation for time-of-use and dynamic tariffs</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Future trend:</strong> The transition to a smart, flexible grid means demand
-              management will become increasingly automated, with AI-driven systems optimising
-              consumption in real-time against multiple signals.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Analyse historical consumption data (HH meter data essential)</li>
+              <li>Identify peak demand periods and contributing loads</li>
+              <li>Classify loads by priority and flexibility</li>
+              <li>Model financial impact of demand reduction strategies</li>
+              <li>Implement monitoring and control systems</li>
+              <li>Establish operational procedures for demand events</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>DUoS red band: <strong>16:00-19:00 weekdays</strong> (winter)</li>
+              <li>Triads: <strong>November to February</strong>, typically 17:00-18:00</li>
+              <li>TNUoS rates: <strong>£40-75/kW/year</strong> depending on zone</li>
+              <li>Power factor threshold: <strong>0.95</strong> (charges apply below)</li>
+              <li>HH settlement period: <strong>30 minutes</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Triad Avoidance Savings Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate potential savings from Triad avoidance at a
-                manufacturing site.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Given data:</p>
-                <p>Current average Triad demand: 450 kW</p>
-                <p>Target Triad demand: 150 kW (using BESS)</p>
-                <p>TNUoS zonal rate: £62/kW/year</p>
-                <p className="mt-2 text-white">Calculation:</p>
-                <p>Demand reduction = 450 - 150 = 300 kW</p>
-                <p>Annual saving = 300 kW × £62/kW = £18,600/year</p>
-                <p className="mt-2 text-green-400">Triad avoidance value: £18,600 per year</p>
-                <p className="text-white mt-2">
-                  Note: This alone could justify significant BESS investment
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: DUoS Band Optimisation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Evaluate cost savings from shifting EV charging from red
-                to green band.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Current pattern (red band charging 16:00-19:00):</p>
-                <p>EV charging load: 100 kW for 3 hours = 300 kWh daily</p>
-                <p>Red band DUoS: 15p/kWh</p>
-                <p>Daily DUoS cost: 300 × £0.15 = £45</p>
-                <p className="mt-2 text-white">
-                  Optimised pattern (green band charging 22:00-01:00):
-                </p>
-                <p>Green band DUoS: 1.5p/kWh</p>
-                <p>Daily DUoS cost: 300 × £0.015 = £4.50</p>
-                <p className="mt-2 text-green-400">Daily saving: £40.50</p>
-                <p className="text-green-400">Annual saving: £40.50 × 250 days = £10,125</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Load Factor Improvement
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Assess the impact of demand management on load factor.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Before demand management:</p>
-                <p>Average demand: 400 kW</p>
-                <p>Maximum demand: 800 kW</p>
-                <p>Load factor = 400 ÷ 800 = 0.50 (50%)</p>
-                <p className="mt-2 text-white">
-                  After implementing load shedding and peak shaving:
-                </p>
-                <p>Average demand: 400 kW (unchanged)</p>
-                <p>Maximum demand: 550 kW (reduced)</p>
-                <p>New load factor = 400 ÷ 550 = 0.73 (73%)</p>
-                <p className="mt-2 text-green-400">Improvement: 23 percentage points</p>
-                <p className="text-white mt-2">
-                  Higher load factor = better utilisation of contracted capacity
-                </p>
-                <p className="text-white">
-                  Capacity charge reduction: (800-550) × £8/kVA/month = £2,000/month
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Demand Management Implementation Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Analyse historical consumption data (HH meter data essential)
-                </li>
-                <li className="pl-1">Identify peak demand periods and contributing loads</li>
-                <li className="pl-1">Classify loads by priority and flexibility</li>
-                <li className="pl-1">Model financial impact of demand reduction strategies</li>
-                <li className="pl-1">Implement monitoring and control systems</li>
-                <li className="pl-1">Establish operational procedures for demand events</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Ignoring network charges</strong> - Often 25-35% of bill, directly controllable</li>
+                <li><strong>Oversizing contracted capacity</strong> - Review annually against actual MD</li>
+                <li><strong>Missing Triad warnings</strong> - Subscribe to forecasting services</li>
+                <li><strong>Poor load priority classification</strong> - May shed critical loads inappropriately</li>
+                <li><strong>Neglecting power factor</strong> - Reactive charges add up significantly</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  DUoS red band: <strong>16:00-19:00 weekdays</strong> (winter)
-                </li>
-                <li className="pl-1">
-                  Triads: <strong>November to February</strong>, typically 17:00-18:00
-                </li>
-                <li className="pl-1">
-                  TNUoS rates: <strong>£40-75/kW/year</strong> depending on zone
-                </li>
-                <li className="pl-1">
-                  Power factor threshold: <strong>0.95</strong> (charges apply below)
-                </li>
-                <li className="pl-1">
-                  HH settlement period: <strong>30 minutes</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Ignoring network charges</strong> - Often 25-35% of bill, directly
-                  controllable
-                </li>
-                <li className="pl-1">
-                  <strong>Oversizing contracted capacity</strong> - Review annually against actual
-                  MD
-                </li>
-                <li className="pl-1">
-                  <strong>Missing Triad warnings</strong> - Subscribe to forecasting services
-                </li>
-                <li className="pl-1">
-                  <strong>Poor load priority classification</strong> - May shed critical loads
-                  inappropriately
-                </li>
-                <li className="pl-1">
-                  <strong>Neglecting power factor</strong> - Reactive charges add up significantly
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Demand Management Strategies</p>
-                <ul className="space-y-0.5">
-                  <li>Load shedding - disconnect non-essential loads</li>
-                  <li>Peak shaving - BESS/generation at peaks</li>
-                  <li>Load shifting - move to off-peak periods</li>
-                  <li>Demand response - respond to grid signals</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Charge Components</p>
-                <ul className="space-y-0.5">
-                  <li>DUoS - red/amber/green time bands</li>
-                  <li>TNUoS - based on Triad demand</li>
-                  <li>Capacity - contracted kVA</li>
-                  <li>Reactive power - kVArh when PF &lt; 0.95</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section5-6">
-              Next: Section 5.6
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section5-4")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Energy metering
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section5-6")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Efficiency retrofits
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

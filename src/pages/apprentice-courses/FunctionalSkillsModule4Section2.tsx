@@ -24,34 +24,34 @@ const FunctionalSkillsModule4Section2 = () => {
     {
       id: 1,
       question:
-        'A circuit has a design current (Ib) of 28A. The protective device is a 32A MCB. The cable is grouped with 3 other circuits (Cg = 0.65) in an ambient of 40\u00B0C (Ca = 0.87). No thermal insulation (Ci = 1.0). What minimum tabulated rating (It) is needed?',
+        'A circuit has a design current (Ib) of 28A. The protective device is a 32A MCB. The cable is grouped with 3 other circuits (Cg = 0.65) in an ambient of 40°C (Ca = 0.87). No thermal insulation (Ci = 1.0). What minimum tabulated rating (It) is needed?',
       options: ['28A', '36.8A', '49.5A', '56.6A'],
       correctAnswer: 3,
       explanation:
-        'It = In / (Ca \u00D7 Cg \u00D7 Ci) = 32 / (0.87 \u00D7 0.65 \u00D7 1.0) = 32 / 0.5655 = 56.6A. You must use In (not Ib) in the formula because the cable must be able to carry the full rated current of the protective device under the installed conditions.',
+        'It = In / (Ca × Cg × Ci) = 32 / (0.87 × 0.65 × 1.0) = 32 / 0.5655 = 56.6A. You must use In (not Ib) in the formula because the cable must be able to carry the full rated current of the protective device under the installed conditions.',
     },
     {
       id: 2,
       question:
         'BS 7671 Table 4D current ratings assume reference conditions. What are those reference conditions?',
       options: [
-        '20\u00B0C ambient, single circuit, no insulation',
-        '25\u00B0C ambient, two circuits, standard insulation',
-        '30\u00B0C ambient, single circuit, no thermal insulation',
-        '30\u00B0C ambient, four circuits, 100mm insulation',
+        '20°C ambient, single circuit, no insulation',
+        '25°C ambient, two circuits, standard insulation',
+        '30°C ambient, single circuit, no thermal insulation',
+        '30°C ambient, four circuits, 100mm insulation',
       ],
       correctAnswer: 2,
       explanation:
-        'BS 7671 Table 4D current ratings assume reference conditions: 30\u00B0C ambient temperature, a single circuit (no grouping), and no thermal insulation. Any deviation from these conditions requires correction factors to be applied.',
+        'BS 7671 Table 4D current ratings assume reference conditions: 30°C ambient temperature, a single circuit (no grouping), and no thermal insulation. Any deviation from these conditions requires correction factors to be applied.',
     },
     {
       id: 3,
       question:
-        'A shower circuit uses 10.0mm\u00B2 T&E cable with a run of 15m. The design current is 41.3A. The mV/A/m value is 4.4. What is the voltage drop?',
+        'A shower circuit uses 10.0mm² T&E cable with a run of 15m. The design current is 41.3A. The mV/A/m value is 4.4. What is the voltage drop?',
       options: ['2.73V', '6.86V', '9.13V', '27.3V'],
       correctAnswer: 0,
       explanation:
-        'VD = mV/A/m \u00D7 Ib \u00D7 L / 1000 = 4.4 \u00D7 41.3 \u00D7 15 / 1000 = 2726 / 1000 = 2.73V. This is well within the 11.5V limit for a power circuit.',
+        'VD = mV/A/m × Ib × L / 1000 = 4.4 × 41.3 × 15 / 1000 = 2726 / 1000 = 2.73V. This is well within the 11.5V limit for a power circuit.',
     },
     {
       id: 4,
@@ -69,7 +69,7 @@ const FunctionalSkillsModule4Section2 = () => {
       options: ['1.0', '0.89', '0.81', '0.55'],
       correctAnswer: 2,
       explanation:
-        'For cable enclosed in thermal insulation between 100mm and 200mm, Ci = 0.81 from BS 7671 Table 52.2. This significantly reduces the cable\u2019s current-carrying capacity.',
+        'For cable enclosed in thermal insulation between 100mm and 200mm, Ci = 0.81 from BS 7671 Table 52.2. This significantly reduces the cable’s current-carrying capacity.',
     },
     {
       id: 6,
@@ -83,30 +83,30 @@ const FunctionalSkillsModule4Section2 = () => {
       ],
       correctAnswer: 2,
       explanation:
-        'When a cable is enclosed in conduit, the conduit acts as a thermal barrier, restricting the cable\u2019s ability to dissipate heat to the surrounding air. This means the cable heats up more for the same current, so its rated capacity must be reduced.',
+        'When a cable is enclosed in conduit, the conduit acts as a thermal barrier, restricting the cable’s ability to dissipate heat to the surrounding air. This means the cable heats up more for the same current, so its rated capacity must be reduced.',
     },
     {
       id: 7,
       question:
-        'A 6.0mm\u00B2 T&E cable (Method C) has a tabulated rating of 47A. Ca = 0.94, Cg = 0.80, Ci = 1.0. What is the effective current-carrying capacity?',
+        'A 6.0mm² T&E cable (Method C) has a tabulated rating of 47A. Ca = 0.94, Cg = 0.80, Ci = 1.0. What is the effective current-carrying capacity?',
       options: ['35.3A', '39.5A', '44.2A', '47.0A'],
       correctAnswer: 0,
       explanation:
-        'Effective capacity = It \u00D7 Ca \u00D7 Cg \u00D7 Ci = 47 \u00D7 0.94 \u00D7 0.80 \u00D7 1.0 = 47 \u00D7 0.752 = 35.3A. The cable can safely carry up to 35.3A under these installed conditions.',
+        'Effective capacity = It × Ca × Cg × Ci = 47 × 0.94 × 0.80 × 1.0 = 47 × 0.752 = 35.3A. The cable can safely carry up to 35.3A under these installed conditions.',
     },
     {
       id: 8,
       question:
-        'You are sizing cable for a 45A shower on a 15m run. After applying correction factors, you need It \u2265 56A. Which cable size from Table 4D2A (Method C) would you select?',
+        'You are sizing cable for a 45A shower on a 15m run. After applying correction factors, you need It ≥ 56A. Which cable size from Table 4D2A (Method C) would you select?',
       options: [
-        '6.0mm\u00B2 (47A)',
-        '10.0mm\u00B2 (64A)',
-        '16.0mm\u00B2 (85A)',
-        '4.0mm\u00B2 (36A)',
+        '6.0mm² (47A)',
+        '10.0mm² (64A)',
+        '16.0mm² (85A)',
+        '4.0mm² (36A)',
       ],
       correctAnswer: 1,
       explanation:
-        'The cable must have a tabulated rating \u2265 56A. 6.0mm\u00B2 (47A) is too low. 10.0mm\u00B2 (64A) exceeds 56A, so this is the minimum acceptable size. You would then check voltage drop to confirm suitability.',
+        'The cable must have a tabulated rating ≥ 56A. 6.0mm² (47A) is too low. 10.0mm² (64A) exceeds 56A, so this is the minimum acceptable size. You would then check voltage drop to confirm suitability.',
     },
   ];
 
@@ -342,15 +342,15 @@ const FunctionalSkillsModule4Section2 = () => {
         {/* InlineCheck after section 02 */}
         <InlineCheck
           id="cable-check-1"
-          question="A 4.0mm\u00B2 T&E cable is installed in conduit on a wall (Method B, rated 32A). The circuit has In = 32A MCB. Can you use Method B without correction factors?"
+          question="A 4.0mm² T&E cable is installed in conduit on a wall (Method B, rated 32A). The circuit has In = 32A MCB. Can you use Method B without correction factors?"
           options={[
-            'Yes \u2014 32A rating equals the 32A MCB exactly, and Ib \u2264 In \u2264 Iz is satisfied',
-            'No \u2014 It must be strictly greater than In',
+            'Yes — 32A rating equals the 32A MCB exactly, and Ib ≤ In ≤ Iz is satisfied',
+            'No — It must be strictly greater than In',
             'Only if the cable run is less than 10m',
             'Only if additional ventilation is provided',
           ]}
           correctIndex={0}
-          explanation="The rule is Ib \u2264 In \u2264 Iz. If the cable rating Iz = 32A and In = 32A, then In \u2264 Iz is satisfied (they can be equal). However, if any correction factors apply (temperature, grouping, insulation), Iz will drop below 32A and the cable would no longer be suitable."
+          explanation="The rule is Ib ≤ In ≤ Iz. If the cable rating Iz = 32A and In = 32A, then In ≤ Iz is satisfied (they can be equal). However, if any correction factors apply (temperature, grouping, insulation), Iz will drop below 32A and the cable would no longer be suitable."
         />
 
         {/* ── 03 Correction Factor Ca (Ambient Temperature) ── */}
@@ -559,10 +559,10 @@ const FunctionalSkillsModule4Section2 = () => {
         {/* InlineCheck after section 04 */}
         <InlineCheck
           id="cable-check-2"
-          question="Six 2.5mm\u00B2 T&E cables are bunched together (Method C, It = 27A). Cg for 6 circuits = 0.57. What is the effective current rating of each cable?"
+          question="Six 2.5mm² T&E cables are bunched together (Method C, It = 27A). Cg for 6 circuits = 0.57. What is the effective current rating of each cable?"
           options={['15.39A', '27.0A', '47.4A', '6.0A']}
           correctIndex={0}
-          explanation="Effective rating = 27 \u00D7 0.57 = 15.39A. Since a standard 16A MCB exceeds 15.39A, you would need to upgrade to 4.0mm\u00B2 (36 \u00D7 0.57 = 20.5A) for 16A circuits or reduce the number of grouped circuits."
+          explanation="Effective rating = 27 × 0.57 = 15.39A. Since a standard 16A MCB exceeds 15.39A, you would need to upgrade to 4.0mm² (36 × 0.57 = 20.5A) for 16A circuits or reduce the number of grouped circuits."
         />
 
         {/* ── 05 Correction Factor Ci (Thermal Insulation) ── */}
@@ -765,15 +765,15 @@ const FunctionalSkillsModule4Section2 = () => {
         {/* InlineCheck after section 06 */}
         <InlineCheck
           id="cable-check-3"
-          question="A 4.0mm\u00B2 cable (mV/A/m = 11) supplies a 32A load over 25m. What is the voltage drop and does it pass for a power circuit?"
+          question="A 4.0mm² cable (mV/A/m = 11) supplies a 32A load over 25m. What is the voltage drop and does it pass for a power circuit?"
           options={[
-            '8.8V \u2014 passes (limit 11.5V for power circuits)',
-            '8.8V \u2014 fails (limit 6.9V for lighting)',
-            '11.0V \u2014 passes just within limit',
-            '11.0V \u2014 fails the 11.5V limit',
+            '8.8V — passes (limit 11.5V for power circuits)',
+            '8.8V — fails (limit 6.9V for lighting)',
+            '11.0V — passes just within limit',
+            '11.0V — fails the 11.5V limit',
           ]}
           correctIndex={0}
-          explanation="VD = 11 \u00D7 32 \u00D7 25 / 1000 = 8.8V. For a power circuit, the limit is 5% of 230V = 11.5V. Since 8.8V < 11.5V, it passes. If this were a lighting circuit (limit 6.9V), it would fail."
+          explanation="VD = 11 × 32 × 25 / 1000 = 8.8V. For a power circuit, the limit is 5% of 230V = 11.5V. Since 8.8V < 11.5V, it passes. If this were a lighting circuit (limit 6.9V), it would fail."
         />
 
         {/* ── 07 Worked Cable Sizing Examples ── */}

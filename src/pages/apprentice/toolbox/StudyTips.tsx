@@ -1,165 +1,132 @@
 import { useNavigate } from 'react-router-dom';
-import { Card, CardContent } from '@/components/ui/card';
-import { CheckCircle, ChevronRight } from 'lucide-react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { motion } from 'framer-motion';
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  PageFrame,
+  PageHero,
+  SectionHeader,
+  HubGrid,
+  HubCard,
+  itemVariants,
+  type Tone,
+} from '@/components/college/primitives';
 
 interface Section {
+  number: string;
+  eyebrow: string;
   title: string;
   slug: string;
-  icon: string;
-  colour: string;
-  border: string;
-  readTime: string;
+  description: string;
+  meta: string;
+  tone: Tone;
 }
 
-const sections: Section[] = [
+const SECTIONS: Section[] = [
   {
-    title: 'Study Fundamentals',
+    number: '01',
+    eyebrow: 'Foundations',
+    title: 'Study fundamentals',
     slug: 'fundamentals',
-    icon: '💡',
-    colour: 'text-blue-400',
-    border: 'border-blue-500/30',
-    readTime: '8 min read',
+    description:
+      'How learning actually works — active recall, spaced repetition, why re-reading notes is the worst study habit going.',
+    meta: '8 min read',
+    tone: 'blue',
   },
   {
-    title: 'Exam Strategies',
+    number: '02',
+    eyebrow: 'Exam day',
+    title: 'Exam strategies',
     slug: 'exam-strategies',
-    icon: '🎯',
-    colour: 'text-green-400',
-    border: 'border-green-500/30',
-    readTime: '7 min read',
+    description:
+      'Time allocation, multiple-choice tactics, written-answer structure, and how to recover from a question you can\'t answer.',
+    meta: '7 min read',
+    tone: 'emerald',
   },
   {
-    title: 'Learning & Revision',
+    number: '03',
+    eyebrow: 'Practice',
+    title: 'Learning & revision',
     slug: 'revision',
-    icon: '🧠',
-    colour: 'text-orange-400',
-    border: 'border-orange-500/30',
-    readTime: '8 min read',
+    description:
+      'Past papers, flashcards, group study, mock exams — what to use when, and the techniques that move marks the most.',
+    meta: '8 min read',
+    tone: 'amber',
   },
   {
-    title: 'Study Time Management',
+    number: '04',
+    eyebrow: 'Time',
+    title: 'Study time management',
     slug: 'study-time',
-    icon: '⏰',
-    colour: 'text-purple-400',
-    border: 'border-purple-500/30',
-    readTime: '6 min read',
+    description:
+      'Fitting study around 40-hour work weeks. Realistic schedules, micro-sessions, the tools that work and the ones that don\'t.',
+    meta: '6 min read',
+    tone: 'purple',
   },
   {
+    number: '05',
+    eyebrow: 'Where to look',
     title: 'Resources',
     slug: 'resources',
-    icon: '📚',
-    colour: 'text-amber-400',
-    border: 'border-amber-500/30',
-    readTime: '6 min read',
+    description:
+      'Best textbooks, free online resources, podcasts, YouTube channels, and the apps that genuinely help (and the ones that just gamify procrastination).',
+    meta: '6 min read',
+    tone: 'orange',
   },
   {
-    title: 'Study Psychology',
+    number: '06',
+    eyebrow: 'Mindset',
+    title: 'Study psychology',
     slug: 'psychology',
-    icon: '❤️',
-    colour: 'text-red-400',
-    border: 'border-red-500/30',
-    readTime: '7 min read',
+    description:
+      'Motivation when you\'re tired, dealing with imposter syndrome, building habits that survive a long apprenticeship.',
+    meta: '7 min read',
+    tone: 'cyan',
   },
 ];
 
 const StudyTips = () => {
   const navigate = useNavigate();
-
   return (
-    <div className="animate-fade-in max-w-2xl mx-auto px-4 pb-20 space-y-6 text-left">
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <SmartBackButton />
-        <h1 className="text-2xl font-bold tracking-tight text-white">
-          Study Hub
-        </h1>
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice/toolbox')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
 
-      {/* Intro Card */}
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
-          <h2 className="text-lg font-semibold text-white">
-            Study Smarter, Not Harder
-          </h2>
-          <p className="text-white text-sm leading-relaxed">
-            Your complete study companion for electrical training success.
-            Master the 18th Edition, Level 3, and all electrical qualifications
-            with proven study strategies, revision techniques, and exam tips.
-            Consistent daily study —{' '}
-            <span className="font-bold text-elec-yellow">
-              even just 30 minutes
-            </span>{' '}
-            — is more effective than weekend cramming.
-          </p>
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Study"
+          title="How to actually study"
+          description="School might have taught you to revise — apprenticeship needs you to learn. Different game. The techniques that work for adults studying after a 9-hour shift on site."
+          tone="yellow"
+        />
+      </motion.div>
 
-          <div className="bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg p-4">
-            <h3 className="text-elec-yellow font-semibold text-sm mb-3">
-              Quick Facts
-            </h3>
-            <ul className="space-y-2">
-              {[
-                '8+ proven study methods tailored to electrical training',
-                '30 minutes daily beats a 3-hour cram session',
-                'Active recall is 3x more effective than re-reading',
-                'Practice questions are the closest thing to the real exam',
-                'Your mindset matters as much as your technique',
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="flex items-center gap-2 text-sm text-white"
-                >
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Section Header */}
-      <div className="flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full bg-elec-yellow" />
-        <h2 className="text-base font-semibold text-white">Explore Sections</h2>
-      </div>
-
-      {/* Section Cards */}
-      <div className="space-y-2">
-        {sections.map((section) => (
-          <button
-            key={section.slug}
-            onClick={() =>
-              navigate(`/apprentice/toolbox/study-tips/${section.slug}`)
-            }
-            className={`w-full flex items-center gap-3 p-4 rounded-lg bg-white/5 ${section.border} border
-              touch-manipulation active:scale-[0.98] transition-transform min-h-[44px] text-left`}
-          >
-            <span className="text-xl flex-shrink-0">{section.icon}</span>
-            <div className="flex-1 min-w-0">
-              <span className={`font-medium text-sm ${section.colour}`}>
-                {section.title}
-              </span>
-              <p className="text-white text-xs mt-0.5">{section.readTime}</p>
-            </div>
-            <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
-          </button>
-        ))}
-      </div>
-
-      {/* Footer */}
-      <Card className="border-white/10 bg-white/5">
-        <CardContent className="p-4">
-          <p className="text-white text-xs leading-relaxed">
-            These study techniques are based on cognitive science research and
-            adapted for electrical apprenticeship training. They work for the
-            18th Edition, City & Guilds, EAL, AM2, and End Point Assessment
-            preparation. Consistency is the single biggest factor in exam
-            success.
-          </p>
-        </CardContent>
-      </Card>
-    </div>
+      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
+        <SectionHeader eyebrow="Sections" title="Six chapters" />
+        <HubGrid columns={3}>
+          {SECTIONS.map((s) => (
+            <HubCard
+              key={s.slug}
+              number={s.number}
+              eyebrow={s.eyebrow}
+              title={s.title}
+              description={s.description}
+              meta={s.meta}
+              tone={s.tone}
+              onClick={() => navigate(`/apprentice/toolbox/study-tips/${s.slug}`)}
+            />
+          ))}
+        </HubGrid>
+      </motion.section>
+    </PageFrame>
   );
 };
 

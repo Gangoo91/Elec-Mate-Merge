@@ -1,7 +1,7 @@
 /**
  * Module 5 · Section 1 · Subsection 2 — Programme Development
- * HNC Electrical Engineering for Building Services (Project Management)
- *   Gantt charts, milestones, programme logic and scheduling techniques for MEP installations.
+ * HNC Electrical Engineering for Building Services (Project Management — Pearson U4004 + BSE PM context)
+ *   Building the time baseline — Gantt logic, milestones and milestone management for MEP installation programmes.
  */
 
 import { useNavigate } from 'react-router-dom';
@@ -10,11 +10,15 @@ import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
-  ConceptBlock,
   CommonMistake,
-  LearningOutcomes,
+  ConceptBlock,
   FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
   SectionRule,
+  TLDR,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -287,6 +291,28 @@ const HNCModule5Section1_2 = () => {
             description="Gantt charts, milestones, programme logic and scheduling techniques for MEP installations."
             tone="purple"
           />
+
+          <TLDR
+            points={[
+              "A programme is the WBS sequenced over time — every activity must trace back to a work package, never invent scope on the bar chart.",
+              "Logic links (FS, SS, FF, SF) and float drive sequence — without proper logic, your Gantt is a wish list, not a plan.",
+              "Milestones are contractual flags (sectional completion, witness test) and information flags (drawing issue, sample approval) — both go on the programme.",
+              "For MEP, build in builder’s work, structural access, BWIC, fire-stopping holds and commissioning windows — these are the clashes that kill programmes.",
+              "Update weekly against actuals. The programme is a control document, not a tender artefact you file after award.",
+            ]}
+          />
+
+          <RegsCallout
+            source="NEC4 ECC — Clause 31.2 (The first programme)"
+            clause="The Contractor shows on each programme which it submits for acceptance — the starting date, access dates, key dates and completion date, planned completion, the order and timing of the operations which the Contractor plans to do in order to Provide the Works, the order and timing of the work of the Client and others as last agreed with them by the Contractor or, if not so agreed, as stated in the Scope, the dates when the Contractor plans to meet each Condition stated for the Key Dates and to complete other work needed to allow the Client and Others to do their work, provisions for float, time risk allowances, health and safety requirements and other procedures set out in the Scope."
+            meaning={
+              <>
+                Under NEC4 the programme is a contractual document — not a marketing chart. If your accepted programme does not show information dates, BWIC, witness windows and float, you have no defence when the Project Manager assesses a compensation event. Build it properly first time, get it accepted, and update it monthly under Clause 32.
+              </>
+            }
+            cite="Source: NEC4 Engineering and Construction Contract — Clause 31.2 (refer to NEC4 published text for verbatim use)."
+          />
+
 
           <LearningOutcomes
             outcomes={[
@@ -683,9 +709,44 @@ const HNCModule5Section1_2 = () => {
 
           <SectionRule />
 
+          <Scenario
+            title="Programme accepted with no information dates — and the consequences"
+            situation={
+              <>
+                You submit your first programme under an NEC4 ECC Option C target cost contract. To save time, you omit information request dates and rely on a generic note "design info required two weeks before activity start". The programme is accepted. Three months later you raise a compensation event because mechanical schematics arrived late and held up your switch-room wiring. The PM rejects it: you cannot show on the accepted programme when the information was due.
+              </>
+            }
+            whatToDo={
+              <>
+                From day one, every activity needing client/designer information must have an explicit information-required date, and every interface with another contractor must have an explicit access date. Build them into Clause 31.2. Use the monthly Clause 32 revisions to adjust against reality. When information is late, the time risk is owned by the Client — but only if the date is on your accepted programme.
+              </>
+            }
+            whyItMatters={
+              <>
+                Programmes are how time risk gets allocated under NEC. Sloppy first programme = silent transfer of risk from Client to Contractor. A well-built programme with information dates, key dates and BWIC sequence is the foundation of every successful CE claim and the death of every spurious one.
+              </>
+            }
+          />
+
+          <SectionRule />
+
           <FAQ items={faqs} />
 
           <SectionRule />
+
+                    <KeyTakeaways
+            points={[
+              "Programme = WBS sequenced. Every activity traces back to a work package — no scope invention on the bar chart.",
+              "Use proper logic (FS/SS/FF/SF) with realistic lags — over-constrained logic gives false float.",
+              "Milestones split into contractual (sectional completion, key dates) and information (drawing issue, sample approval).",
+              "For MEP: build in BWIC, structural openings, fire-stopping holds, witness windows, commissioning windows.",
+              "Critical path = longest chain of activities with zero float. Protect it ruthlessly.",
+              "Float belongs to the project, not the contractor — but allocate time risk allowances explicitly under NEC.",
+              "Update weekly against actuals; recover or re-baseline rather than letting drift accumulate.",
+              "Under NEC4 Clause 31.2, the accepted programme is contractual evidence — information dates and access dates are non-negotiable.",
+            ]}
+          />
+
 
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
 

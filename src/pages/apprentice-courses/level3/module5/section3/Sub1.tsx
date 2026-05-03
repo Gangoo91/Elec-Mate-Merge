@@ -26,7 +26,9 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'The dead-test sequence (Reg 643) | Level 3 Module 5.3.1 | Elec-Mate';
@@ -307,17 +309,18 @@ export default function Sub1() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 643.1 (Sequence of tests)"
-            clause="The tests of Regulations 643.2 to 643.10 shall, where relevant, be carried out in that order, before the supply is connected or with the installation isolated from the supply, except for the tests in Regulations 643.7 to 643.10 which require the supply to be connected."
+            source="BS 7671:2018+A4:2026 — Regulation 643.1 (Sequence of tests) and Regulation 643.7.2 (closing paragraph)"
+            clause={`Regulation 643.1: The tests of Regulations 643.2 to 643.6, where relevant, shall be carried out in that order before the installation is energised. Regulation 643.7 onwards covers tests that by their nature require the supply to be connected. Per Regulation 643.7.2 (closing paragraph): if any test indicates a failure to comply, that test and any preceding test, the results of which may have been influenced by the fault indicated, shall be repeated after the fault has been rectified.`}
             meaning={
               <>
-                The mandatory dead-then-live sequence. Reg 643.2 to 643.6 are dead tests
-                (continuity, ring, IR, polarity, electrode). Reg 643.7 to 643.10 are live tests
-                (Ze, PFC, Zs, RCD, AFDD, functional). Visual inspection (Reg 642) precedes
+                The mandatory dead-then-live sequence. Reg 643.2 to 643.6 are the dead tests
+                (continuity, ring final live conductor continuity, IR, polarity, electrode
+                resistance for TT). Reg 643.7 onwards covers the live tests (Ze, PFC, Zs, RCD,
+                AFDD operational confirmation, functional). Visual inspection (Reg 642) precedes
                 everything. Do not deviate from the sequence — the dependency is built in.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Part 6, Chapter 64, Regulation 643.1."
+            cite="Source: BS 7671:2018+A4:2026 Part 6, Chapter 64, Regulations 643.1 and 643.7.2."
           />
 
           <SectionRule />
@@ -377,6 +380,14 @@ export default function Sub1() {
               </>
             }
             cite="Source: HSE Guidance Note GS38 (Test Equipment for use by Electricians, latest revision)."
+          />
+
+          <VideoCard
+            url={videos.safeIsolation.url}
+            title={videos.safeIsolation.title}
+            channel={videos.safeIsolation.channel}
+            duration={videos.safeIsolation.duration}
+            topic={videos.safeIsolation.topic}
           />
 
           <InlineCheck
@@ -675,7 +686,7 @@ export default function Sub1() {
                 schedules, EIC pro-formas and toolbox-talk crib sheets need updating to match.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 643.3 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 643.3."
           />
 
           <SectionRule />

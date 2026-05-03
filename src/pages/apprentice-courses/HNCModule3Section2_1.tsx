@@ -267,22 +267,22 @@ const HNCModule3Section2_1 = () => {
 
           <TLDR
             points={[
-              'You can define inductance (L, henries) and capacitance (C, farads) and compute their reactance at 50 Hz: X_L = 2\u03c0fL and X_C = 1/(2\u03c0fC).',
-              'You can apply Faraday\u2019s and Lenz\u2019s laws to explain back-EMF in motor windings, voltage spikes on switching, and snubber design.',
-              'You can spot the CIVIL mnemonic: Capacitor \u2192 I leads V; Inductor \u2192 V leads I \u2014 the basis of every phase-shift in an AC circuit.',
+              'You can define inductance (L, henries) and capacitance (C, farads) and compute their reactance at 50 Hz: X_L = 2πfL and X_C = 1/(2πfC).',
+              'You can apply Faraday’s and Lenz’s laws to explain back-EMF in motor windings, voltage spikes on switching, and snubber design.',
+              'You can spot the CIVIL mnemonic: Capacitor → I leads V; Inductor → V leads I — the basis of every phase-shift in an AC circuit.',
               'You can size a PFC capacitor bank from the inductive kVAr it has to compensate, picking the C value that gives the right reactance at 50 Hz.',
-              'You can recognise stored energy in inductors (\u00bdLI\u00b2) and capacitors (\u00bdCV\u00b2) \u2014 the basis of MOV surge clamping, motor inrush and capacitor-discharge hazards.',
+              'You can recognise stored energy in inductors (½LI²) and capacitors (½CV²) — the basis of MOV surge clamping, motor inrush and capacitor-discharge hazards.',
             ]}
           />
 
           <RegsCallout
             source="BS EN 60831-1 — Shunt power capacitors of the self-healing type for a.c. systems"
-            clause="Capacitors used for power factor correction shall comply with this standard for thermal stability, voltage withstand, capacitance tolerance, and discharge resistor performance (residual voltage \u2264 75 V within 3 minutes of disconnection)."
+            clause="Capacitors used for power factor correction shall comply with this standard for thermal stability, voltage withstand, capacitance tolerance, and discharge resistor performance (residual voltage ≤ 75 V within 3 minutes of disconnection)."
             meaning={
               <>
                 Every PFC capacitor in a building services switchroom is built to BS EN
                 60831-1. The discharge-resistor clause is the reason you wait 3 minutes before
-                touching the terminals after isolation \u2014 the stored \u00bdCV\u00b2 energy in a
+                touching the terminals after isolation — the stored ½CV² energy in a
                 large bank can be lethal otherwise.
               </>
             }
@@ -764,19 +764,19 @@ const HNCModule3Section2_1 = () => {
             }
             whatToDo={
               <>
-                Compute the required reactive correction: kVAr = P \u00d7 (tan \u03c6\u2081 \u2212
-                tan \u03c6\u2082) = 7.5 \u00d7 (tan(cos\u207b\u00b9 0.72) \u2212 tan(cos\u207b\u00b9 0.95)) \u2248 7.5
-                \u00d7 (0.964 \u2212 0.329) \u2248 4.76 kVAr. Convert to capacitance at 50 Hz:
-                C = Q / (2\u03c0fV\u00b2) = 4760 / (2\u03c0 \u00d7 50 \u00d7 230\u00b2) \u2248 286 \u00b5F. Pick
-                the next standard value above (typically 300 \u00b5F at 250 V AC), to BS EN
+                Compute the required reactive correction: kVAr = P × (tan φ₁ −
+                tan φ₂) = 7.5 × (tan(cos⁻¹ 0.72) − tan(cos⁻¹ 0.95)) ≈ 7.5
+                × (0.964 − 0.329) ≈ 4.76 kVAr. Convert to capacitance at 50 Hz:
+                C = Q / (2πfV²) = 4760 / (2π × 50 × 230²) ≈ 286 µF. Pick
+                the next standard value above (typically 300 µF at 250 V AC), to BS EN
                 60831-1, fitted with discharge resistors.
               </>
             }
             whyItMatters={
               <>
                 Local PFC at the motor cuts the line current the cable has to carry, reduces
-                I\u00b2R losses, and removes the supplier\u2019s reactive penalty. The capacitance
-                calculation is a direct application of inductive vs capacitive reactance \u2014
+                I²R losses, and removes the supplier’s reactive penalty. The capacitance
+                calculation is a direct application of inductive vs capacitive reactance —
                 get the value wrong and you either under-correct or over-correct into a
                 leading PF (which the supplier may also penalise).
               </>
@@ -791,14 +791,14 @@ const HNCModule3Section2_1 = () => {
 
           <KeyTakeaways
             points={[
-              'Inductance (L, henries) opposes change in current \u2014 produces a voltage by Faraday\u2019s law: v = L \u00d7 di/dt.',
-              'Capacitance (C, farads) opposes change in voltage \u2014 stores charge: i = C \u00d7 dv/dt.',
-              'At 50 Hz: X_L = 2\u03c0fL = 314 \u00d7 L. X_C = 1/(2\u03c0fC) = 1/(314 \u00d7 C).',
-              'CIVIL: Capacitor \u2192 I leads V by 90\u00b0. Inductor \u2192 V leads I by 90\u00b0. The mnemonic that fixes phase angles in your head.',
-              'Stored energy: inductor = \u00bdLI\u00b2, capacitor = \u00bdCV\u00b2 \u2014 basis of motor inrush, capacitor-discharge hazard and surge-protection device action.',
-              'Lenz\u2019s law: induced current always opposes the change that produced it \u2014 the source of back-EMF in motors and inrush in transformers.',
-              'BS EN 60831-1 governs PFC capacitor design \u2014 self-healing dielectric, discharge resistor (\u2264 75 V in 3 min), thermal stability.',
-              'PFC sizing: Q_C (kVAr) = P (kW) \u00d7 (tan \u03c6\u2081 \u2212 tan \u03c6\u2082). Convert kVAr to \u00b5F via C = Q / (2\u03c0fV\u00b2).',
+              'Inductance (L, henries) opposes change in current — produces a voltage by Faraday’s law: v = L × di/dt.',
+              'Capacitance (C, farads) opposes change in voltage — stores charge: i = C × dv/dt.',
+              'At 50 Hz: X_L = 2πfL = 314 × L. X_C = 1/(2πfC) = 1/(314 × C).',
+              'CIVIL: Capacitor → I leads V by 90°. Inductor → V leads I by 90°. The mnemonic that fixes phase angles in your head.',
+              'Stored energy: inductor = ½LI², capacitor = ½CV² — basis of motor inrush, capacitor-discharge hazard and surge-protection device action.',
+              'Lenz’s law: induced current always opposes the change that produced it — the source of back-EMF in motors and inrush in transformers.',
+              'BS EN 60831-1 governs PFC capacitor design — self-healing dielectric, discharge resistor (≤ 75 V in 3 min), thermal stability.',
+              'PFC sizing: Q_C (kVAr) = P (kW) × (tan φ₁ − tan φ₂). Convert kVAr to µF via C = Q / (2πfV²).',
             ]}
           />
 

@@ -290,10 +290,10 @@ export default function Sub2() {
           />
 
           <RegsCallout
-            source="HSE HSG85 — Electricity at work — safe working practices"
-            clause={<>"Diagnosis of faults requires a systematic approach starting from the reported symptoms, working through inspection of the system, instrument verification, and only then formulating an action plan. Premature action without diagnosis risks harm to operative, customer and equipment."</>}
-            meaning={<>The HSG85 systematic approach starts with the symptom — the customer interview. Without the symptom information, the investigation has no anchor and is likely to chase the wrong hypothesis. The interview is the first step in the procedure, not an optional preamble.</>}
-            cite="Source: HSE HSG85 — Electricity at work — safe working practices, available from the HSE website."
+            source="IET Guidance Note 3 (Inspection and Testing) — fault diagnosis principles (paraphrased framework)"
+            clause={<>Paraphrased framework summary: diagnosis of faults takes a systematic approach — start from the reported symptoms, work through inspection of the system, instrument verification, and only then formulate an action plan. Premature action without diagnosis risks harm to operative, customer and equipment.</>}
+            meaning={<>The systematic approach starts with the symptom — the customer interview. Without the symptom information, the investigation has no anchor and is likely to chase the wrong hypothesis. The interview is the first step in the procedure, not an optional preamble.</>}
+            cite="Source: IET Guidance Note 3 (Inspection and Testing) — fault diagnosis framework, paraphrased."
           />
 
           <InlineCheck {...checks[2]} />
@@ -355,7 +355,7 @@ export default function Sub2() {
                 Symptoms aren&apos;t just data for your diagnosis &mdash; they&apos;re reportable. Anything that points to damage, deterioration, defect or dangerous condition has to land on a report. The customer interview produces evidence, the report records it; both are part of the audit trail when something goes wrong later.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Reg 651.4, verbatim."
+            cite="Source: BS 7671:2018+A4:2026 — Reg 651.4."
           />
 
           <RegsCallout
@@ -370,7 +370,7 @@ export default function Sub2() {
                 The structured symptom hunt sits inside the inspection step &mdash; visual evidence (scorch marks, discoloured terminals, soft cable insulation, water staining) before any meter goes on. The Regulation makes the order explicit: look first, test second. Most missed faults are the visible ones an apprentice rushed past.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Reg 642.1, verbatim."
+            cite="Source: BS 7671:2018+A4:2026 — Reg 642.1."
           />
 
           <SectionRule />

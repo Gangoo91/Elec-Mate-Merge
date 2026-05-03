@@ -256,9 +256,9 @@ const HNCModule3Section1_6 = () => {
 
           <TLDR
             points={[
-              'You can apply superposition to any linear network with multiple sources \u2014 analyse one source at a time, sum the responses, get the answer.',
+              'You can apply superposition to any linear network with multiple sources — analyse one source at a time, sum the responses, get the answer.',
               'You can reduce any complex linear network to a Thevenin equivalent (V_TH in series with R_TH) seen from any pair of terminals.',
-              'You can convert between Thevenin and Norton equivalents using I_N = V_TH / R_TH \u2014 useful when the rest of the system is naturally a current source (e.g. PV array, current-limited supply).',
+              'You can convert between Thevenin and Norton equivalents using I_N = V_TH / R_TH — useful when the rest of the system is naturally a current source (e.g. PV array, current-limited supply).',
               'You can use Thevenin equivalents to estimate prospective fault current at any point in a multi-source distribution system (mains plus generator plus UPS).',
               'You can apply maximum-power-transfer (R_load = R_TH) to PV / battery / signal-conditioning interface design.',
             ]}
@@ -270,7 +270,7 @@ const HNCModule3Section1_6 = () => {
             meaning={
               <>
                 IEC 60909 is the international standard for fault-level studies. It is
-                Thevenin\u2019s theorem applied at scale \u2014 every transformer, cable and
+                Thevenin’s theorem applied at scale — every transformer, cable and
                 source upstream of the fault point is collapsed into one equivalent voltage
                 and one equivalent impedance. The HNC engineer uses the same idea on a
                 building-services scale to size switchgear and protective devices.
@@ -699,7 +699,7 @@ const HNCModule3Section1_6 = () => {
             whyItMatters={
               <>
                 Switchgear under-rated for the actual prospective short-circuit current is
-                lethal \u2014 it can rupture, arc-flash and fail to interrupt the fault.
+                lethal — it can rupture, arc-flash and fail to interrupt the fault.
                 Thevenin and superposition are the working tools that let you defend the
                 I_cu choice in the design report.
               </>
@@ -715,12 +715,12 @@ const HNCModule3Section1_6 = () => {
           <KeyTakeaways
             points={[
               'Superposition: in any linear network with multiple sources, analyse one source at a time (others replaced by their internal impedance) and sum the responses.',
-              'Thevenin: any linear two-terminal network reduces to one voltage source V_TH in series with one resistance R_TH \u2014 the working model behind every fault-level study.',
-              'Norton: dual of Thevenin \u2014 one current source I_N in parallel with R_N. Convert with I_N = V_TH / R_TH.',
+              'Thevenin: any linear two-terminal network reduces to one voltage source V_TH in series with one resistance R_TH — the working model behind every fault-level study.',
+              'Norton: dual of Thevenin — one current source I_N in parallel with R_N. Convert with I_N = V_TH / R_TH.',
               'V_TH = open-circuit voltage at the terminals. R_TH = resistance seen from the terminals with all sources de-energised (voltage sources shorted, current sources opened).',
-              'Maximum power transfer: load receives most power when R_load = R_TH \u2014 used in PV, battery and signal-interface design (less common in mains distribution where efficiency matters more).',
-              'Network theorems only apply to linear networks \u2014 do not use them on circuits dominated by diodes, switching power supplies or saturated transformers without piecewise analysis.',
-              'IEC 60909 short-circuit calculation is Thevenin applied at scale \u2014 the standard reference for fault-level studies on three-phase systems.',
+              'Maximum power transfer: load receives most power when R_load = R_TH — used in PV, battery and signal-interface design (less common in mains distribution where efficiency matters more).',
+              'Network theorems only apply to linear networks — do not use them on circuits dominated by diodes, switching power supplies or saturated transformers without piecewise analysis.',
+              'IEC 60909 short-circuit calculation is Thevenin applied at scale — the standard reference for fault-level studies on three-phase systems.',
               'Network theorems compress complex multi-source systems (mains + UPS + generator) into a single equivalent for protective device coordination and switchgear selection.',
             ]}
           />

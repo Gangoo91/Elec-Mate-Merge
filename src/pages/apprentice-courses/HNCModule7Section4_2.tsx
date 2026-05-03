@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 7 · Section 4 · Subsection 2 — Occupancy Sensing
+ * HNC Electrical Engineering for Building Services (Power and Lighting Systems)
+ *   PIR, microwave and ultrasonic sensors, placement guidelines, sensitivity adjustment, and hold-off times
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Occupancy Sensing - HNC Module 7 Section 4.2';
@@ -247,947 +260,331 @@ const faqs = [
 ];
 
 const HNCModule7Section4_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section4")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module7-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.4.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Occupancy Sensing
-          </h1>
-          <p className="text-white">
-            PIR, microwave and ultrasonic sensors, placement guidelines, sensitivity adjustment, and
-            hold-off times
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 7 · Section 4 · Subsection 2"
+            title="Occupancy Sensing"
+            description="PIR, microwave and ultrasonic sensors, placement guidelines, sensitivity adjustment, and hold-off times"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>PIR:</strong> Passive infrared - detects body heat movement
-              </li>
-              <li className="pl-1">
-                <strong>Microwave:</strong> Active radar - penetrates partitions
-              </li>
-              <li className="pl-1">
-                <strong>Ultrasonic:</strong> Sound waves - detects minor movement
-              </li>
-              <li className="pl-1">
-                <strong>Hold-off:</strong> Time delay before switching off
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Explain PIR, microwave and ultrasonic sensor operating principles",
+              "Select appropriate sensor technology for different space types",
+              "Apply correct sensor placement for complete coverage",
+              "Configure sensitivity settings to minimise false triggering",
+              "Specify hold-off times for different applications",
+              "Distinguish between absence and presence detection strategies",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Sensor Technologies">
+            <p>Occupancy sensors detect human presence to control lighting and HVAC systems automatically, reducing energy consumption by ensuring services operate only when spaces are occupied. Three primary technologies are used, each with distinct operating principles and applications.</p>
+            <p><strong>PIR (Passive Infrared) Sensors</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Principle:</strong> Detects changes in infrared radiation from warm bodies moving across segmented detection zones</li>
+              <li><strong>Passive operation:</strong> Does not emit any signal - only receives infrared energy</li>
+              <li><strong>Best detection:</strong> Movement perpendicular to the sensor (across the field of view)</li>
+              <li><strong>Limitations:</strong> Cannot detect stationary occupants; affected by heat sources and sunlight</li>
+              <li><strong>Typical coverage:</strong> 4-6m diameter at 2.8m ceiling height</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Part L:</strong> Absence detection preferred for energy saving
-              </li>
-              <li className="pl-1">
-                <strong>Coverage:</strong> 4-6m diameter typical for PIR
-              </li>
-              <li className="pl-1">
-                <strong>Integration:</strong> DALI, KNX, BMS compatible
-              </li>
-              <li className="pl-1">
-                <strong>Commissioning:</strong> Walk test essential for coverage
-              </li>
+            <p><strong>Microwave (Radar) Sensors</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Principle:</strong> Emits high-frequency radio waves (typically 5.8 GHz or 10.525 GHz) and detects Doppler shift from moving objects</li>
+              <li><strong>Active operation:</strong> Transmits and receives signals continuously</li>
+              <li><strong>Penetration:</strong> Can detect through glass, thin partitions, and some building materials</li>
+              <li><strong>Best detection:</strong> Movement towards or away from the sensor</li>
+              <li><strong>Limitations:</strong> May detect through walls causing unwanted triggering; higher power consumption</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Ultrasonic Sensors</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Principle:</strong> Emits high-frequency sound waves (25-40 kHz) and detects Doppler shift from movement</li>
+              <li><strong>High sensitivity:</strong> Can detect very minor movements including breathing</li>
+              <li><strong>Contained coverage:</strong> Sound waves do not penetrate solid walls</li>
+              <li><strong>Ideal applications:</strong> Toilet cubicles, spaces with stationary occupants</li>
+              <li><strong>Limitations:</strong> Air turbulence and certain materials can cause false triggers</li>
+            </ul>
+            <p><strong>Technology Comparison</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Detection method:</strong> Heat differential — Radio wave reflection — Sound wave reflection</li>
+              <li><strong>Stationary detection:</strong> Poor — Moderate — Excellent</li>
+              <li><strong>Through-wall detection:</strong> No — Yes (thin walls) — No</li>
+              <li><strong>Cost:</strong> Low — Medium — Medium-High</li>
+              <li><strong>Power consumption:</strong> Very low — Higher — Moderate</li>
+            </ul>
+            <p><strong>Design note:</strong> Dual-technology sensors combine PIR and microwave, requiring both to detect movement before triggering - significantly reducing false activations in challenging environments.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Explain PIR, microwave and ultrasonic sensor operating principles',
-              'Select appropriate sensor technology for different space types',
-              'Apply correct sensor placement for complete coverage',
-              'Configure sensitivity settings to minimise false triggering',
-              'Specify hold-off times for different applications',
-              'Distinguish between absence and presence detection strategies',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Sensor Technologies */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Sensor Technologies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Detection Patterns and Placement">
+            <p>Effective occupancy sensing requires understanding detection patterns and strategic sensor placement to achieve complete coverage without blind spots or unwanted detection in adjacent areas.</p>
+            <p><strong>PIR Detection Pattern</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Conical pattern from sensor</li>
+              <li>Segmented zones (fingers)</li>
+              <li>Best across field of view</li>
+              <li>Weaker towards/away motion</li>
+            </ul>
+            <p><strong>Microwave Pattern</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Elliptical/spherical coverage</li>
+              <li>Penetrates lightweight walls</li>
+              <li>Best towards/away motion</li>
+              <li>Adjustable range/sensitivity</li>
+            </ul>
+            <p><strong>Ultrasonic Pattern</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Hemispherical coverage</li>
+              <li>Fills entire room volume</li>
+              <li>Reflects off hard surfaces</li>
+              <li>Absorbed by soft materials</li>
+            </ul>
+            <p><strong>Placement Guidelines</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Corridor:</strong> PIR (ceiling mount) — Central, 6-8m spacing, covering entry points</li>
+              <li><strong>Open-plan office:</strong> PIR or dual-tech — Grid pattern, 5-6m centres, overlapping zones</li>
+              <li><strong>Private office:</strong> PIR or ultrasonic — Central ceiling, or wall-mount facing desk</li>
+              <li><strong>Toilet cubicle:</strong> Ultrasonic — Ceiling mount, one per cubicle</li>
+              <li><strong>Meeting room:</strong> Ultrasonic or dual-tech — Central ceiling, covering all seating positions</li>
+              <li><strong>Warehouse:</strong> High-bay PIR or microwave — At aisles, entry points, high-traffic routes</li>
+            </ul>
+            <p><strong>Placement Pitfalls to Avoid</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>PIR sensors facing windows with direct sunlight (false triggers)</li>
+              <li>PIR sensors near HVAC vents or radiators (temperature interference)</li>
+              <li>Microwave sensors near thin partitions (detection through walls)</li>
+              <li>Sensors behind obstacles blocking line of sight</li>
+              <li>Single sensors in L-shaped rooms (blind spots in corners)</li>
+            </ul>
+            <p><strong>Coverage rule:</strong> For large spaces, ensure 10-20% overlap between adjacent sensor detection zones to eliminate blind spots and provide redundancy.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Sensitivity and Hold-Off Times">
+            <p>Correct configuration of sensitivity and hold-off (delay) times is critical for reliable operation. Settings must balance responsive detection against false triggering while optimising energy savings.</p>
+            <p><strong>Sensitivity Adjustment</strong></p>
+            <p><strong>High sensitivity:</strong> Detects minor movements, greater range, but increased false trigger risk</p>
+            <p><strong>Low sensitivity:</strong> Requires significant movement, reduced range, fewer false triggers</p>
+            <p><strong>Adjustment method:</strong> Start at medium, walk test the space, adjust based on coverage gaps or false triggers</p>
+            <p><strong>Sensitivity Setting Guidance</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Increase sensitivity:</strong> When detection gaps exist, when occupants report lights turning off while present</li>
+              <li><strong>Decrease sensitivity:</strong> When false triggers occur, near HVAC vents, in high-ceiling applications</li>
+              <li><strong>Microwave range:</strong> Reduce range setting if detecting through partitions into adjacent spaces</li>
+              <li><strong>Walk test:</strong> Essential after any adjustment - verify coverage at all boundaries</li>
+            </ul>
+            <p><strong>Hold-Off Time Recommendations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Corridors:</strong> 30-60 seconds — Transit spaces with brief occupancy</li>
+              <li><strong>Toilets/washrooms:</strong> 5-10 minutes — Stationary occupants, privacy concerns</li>
+              <li><strong>Private offices:</strong> 15-20 minutes — Extended stationary work at desks</li>
+              <li><strong>Meeting rooms:</strong> 15-20 minutes — Seated meetings with limited movement</li>
+              <li><strong>Open-plan offices:</strong> 10-15 minutes — Multiple occupants provide movement</li>
+              <li><strong>Storage/plant rooms:</strong> 5-10 minutes — Brief access, high energy saving potential</li>
+            </ul>
+            <p><strong>Advanced Hold-Off Features</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Adaptive hold-off:</strong> Automatically adjusts based on occupancy patterns - shorter during day, longer initially</li>
+              <li><strong>Grace period:</strong> Brief re-detection window that resets timer without full restart</li>
+              <li><strong>Dimming before off:</strong> Reduces to minimum level for 30s before switching off as warning</li>
+              <li><strong>Daylight linking:</strong> Reduces hold-off when daylight is adequate (lights not needed anyway)</li>
+            </ul>
+            <p><strong>Energy vs comfort:</strong> Shorter hold-off times save more energy but risk lights turning off while spaces are occupied. Balance based on space type and user expectations.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Absence vs Presence Detection">
+            <p>The choice between presence detection (automatic on/off) and absence detection (manual on, automatic off) significantly impacts energy savings and user experience. Building Regulations and sustainability assessments increasingly favour absence detection.</p>
+            <p><strong>Presence Detection</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Operation:</strong> Auto-on when movement detected, auto-off after hold-off</li>
+              <li><strong>User experience:</strong> Convenient - no manual switching required</li>
+              <li><strong>Energy impact:</strong> May switch lights on unnecessarily (adequate daylight)</li>
+              <li><strong>Best for:</strong> Circulation areas, stairwells, toilets, storage</li>
+            </ul>
+            <p><strong>Absence Detection</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Operation:</strong> Manual switch-on required, auto-off after hold-off</li>
+              <li><strong>User experience:</strong> Requires user action but avoids unwanted light</li>
+              <li><strong>Energy impact:</strong> 30-40% more savings than presence detection</li>
+              <li><strong>Best for:</strong> Offices, meeting rooms, areas with good daylight</li>
+            </ul>
+            <p><strong>Building Regulations Part L Guidance</strong></p>
+            <p>Part L2A (new non-domestic buildings) requires lighting controls that prevent energy waste. Absence detection is recognised as achieving higher compliance scores and is preferred in BREEAM assessments. Where presence detection is used, hold-off times should not exceed manufacturer recommendations for the space type.</p>
+            <p><strong>Control Strategy Selection</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Office (good daylight):</strong> Absence detection — User decides if light needed</li>
+              <li><strong>Office (no daylight):</strong> Presence detection — Light always needed when occupied</li>
+              <li><strong>Corridors:</strong> Presence detection — Safety - instant light for transit</li>
+              <li><strong>Stairwells:</strong> Presence detection — Safety - prevent trips/falls</li>
+              <li><strong>Meeting rooms:</strong> Absence detection — Often adequate daylight available</li>
+              <li><strong>Toilets/washrooms:</strong> Presence detection — Convenience and hygiene (no touch)</li>
+            </ul>
+            <p><strong>Integration with Lighting Control Systems</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>DALI integration:</strong> Sensors communicate occupancy to controller for coordinated response</li>
+              <li><strong>Daylight harvesting:</strong> Combine with photocells to dim when daylight adequate</li>
+              <li><strong>Scene control:</strong> Occupancy can trigger pre-set lighting scenes</li>
+              <li><strong>BMS interface:</strong> Report occupancy data for HVAC control and space utilisation analytics</li>
+            </ul>
+            <p><strong>Specification tip:</strong> For Part L compliance documentation, specify both the detection type (absence/presence) and hold-off times for each space type to demonstrate appropriate control strategy.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Occupancy sensors detect human presence to control lighting and HVAC systems
-              automatically, reducing energy consumption by ensuring services operate only when
-              spaces are occupied. Three primary technologies are used, each with distinct operating
-              principles and applications.
+              <strong>Example 1: Open-Plan Office Sensor Layout</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                PIR (Passive Infrared) Sensors
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Principle:</strong> Detects changes in infrared radiation from warm bodies
-                  moving across segmented detection zones
-                </li>
-                <li className="pl-1">
-                  <strong>Passive operation:</strong> Does not emit any signal - only receives
-                  infrared energy
-                </li>
-                <li className="pl-1">
-                  <strong>Best detection:</strong> Movement perpendicular to the sensor (across the
-                  field of view)
-                </li>
-                <li className="pl-1">
-                  <strong>Limitations:</strong> Cannot detect stationary occupants; affected by heat
-                  sources and sunlight
-                </li>
-                <li className="pl-1">
-                  <strong>Typical coverage:</strong> 4-6m diameter at 2.8m ceiling height
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Microwave (Radar) Sensors
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Principle:</strong> Emits high-frequency radio waves (typically 5.8 GHz or
-                  10.525 GHz) and detects Doppler shift from moving objects
-                </li>
-                <li className="pl-1">
-                  <strong>Active operation:</strong> Transmits and receives signals continuously
-                </li>
-                <li className="pl-1">
-                  <strong>Penetration:</strong> Can detect through glass, thin partitions, and some
-                  building materials
-                </li>
-                <li className="pl-1">
-                  <strong>Best detection:</strong> Movement towards or away from the sensor
-                </li>
-                <li className="pl-1">
-                  <strong>Limitations:</strong> May detect through walls causing unwanted
-                  triggering; higher power consumption
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Ultrasonic Sensors</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Principle:</strong> Emits high-frequency sound waves (25-40 kHz) and
-                  detects Doppler shift from movement
-                </li>
-                <li className="pl-1">
-                  <strong>High sensitivity:</strong> Can detect very minor movements including
-                  breathing
-                </li>
-                <li className="pl-1">
-                  <strong>Contained coverage:</strong> Sound waves do not penetrate solid walls
-                </li>
-                <li className="pl-1">
-                  <strong>Ideal applications:</strong> Toilet cubicles, spaces with stationary
-                  occupants
-                </li>
-                <li className="pl-1">
-                  <strong>Limitations:</strong> Air turbulence and certain materials can cause false
-                  triggers
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Technology Comparison</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Characteristic</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">PIR</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Microwave</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Ultrasonic</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Detection method</td>
-                      <td className="border border-white/10 px-3 py-2">Heat differential</td>
-                      <td className="border border-white/10 px-3 py-2">Radio wave reflection</td>
-                      <td className="border border-white/10 px-3 py-2">Sound wave reflection</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Stationary detection</td>
-                      <td className="border border-white/10 px-3 py-2">Poor</td>
-                      <td className="border border-white/10 px-3 py-2">Moderate</td>
-                      <td className="border border-white/10 px-3 py-2">Excellent</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Through-wall detection</td>
-                      <td className="border border-white/10 px-3 py-2">No</td>
-                      <td className="border border-white/10 px-3 py-2">Yes (thin walls)</td>
-                      <td className="border border-white/10 px-3 py-2">No</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cost</td>
-                      <td className="border border-white/10 px-3 py-2">Low</td>
-                      <td className="border border-white/10 px-3 py-2">Medium</td>
-                      <td className="border border-white/10 px-3 py-2">Medium-High</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Power consumption</td>
-                      <td className="border border-white/10 px-3 py-2">Very low</td>
-                      <td className="border border-white/10 px-3 py-2">Higher</td>
-                      <td className="border border-white/10 px-3 py-2">Moderate</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design note:</strong> Dual-technology sensors combine PIR and microwave,
-              requiring both to detect movement before triggering - significantly reducing false
-              activations in challenging environments.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Detection Patterns and Placement */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Detection Patterns and Placement
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Design occupancy sensing for a 150m² open-plan office, 2.7m ceiling height, good daylight from south-facing windows.</p>
+            <p>Step 1: Calculate sensor quantity</p>
+            <p>Ceiling PIR coverage at 2.7m = approx. 36m² per sensor</p>
+            <p>150m² ÷ 36m² = 4.2 sensors minimum</p>
+            <p>Add 20% overlap = 5 sensors required</p>
+            <p>Step 2: Select detection strategy</p>
+            <p>Good daylight available → Absence detection (manual on, auto off)</p>
+            <p>Part L compliant, BREEAM credits available</p>
+            <p>Step 3: Configure settings</p>
+            <p>Hold-off time: 15 minutes (seated desk work)</p>
+            <p>Sensitivity: Medium (adjust after walk test)</p>
+            <p>Integration: DALI sensors linked to daylight dimming</p>
+            <p>Result: 5× DALI PIR sensors, absence mode, 15-min hold-off</p>
             <p>
-              Effective occupancy sensing requires understanding detection patterns and strategic
-              sensor placement to achieve complete coverage without blind spots or unwanted
-              detection in adjacent areas.
+              <strong>Example 2: Toilet and Washroom Installation</strong>
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  PIR Detection Pattern
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Conical pattern from sensor</li>
-                  <li className="pl-1">Segmented zones (fingers)</li>
-                  <li className="pl-1">Best across field of view</li>
-                  <li className="pl-1">Weaker towards/away motion</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Microwave Pattern</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Elliptical/spherical coverage</li>
-                  <li className="pl-1">Penetrates lightweight walls</li>
-                  <li className="pl-1">Best towards/away motion</li>
-                  <li className="pl-1">Adjustable range/sensitivity</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Ultrasonic Pattern</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Hemispherical coverage</li>
-                  <li className="pl-1">Fills entire room volume</li>
-                  <li className="pl-1">Reflects off hard surfaces</li>
-                  <li className="pl-1">Absorbed by soft materials</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Placement Guidelines</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Space Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Recommended Sensor
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Placement</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Corridor</td>
-                      <td className="border border-white/10 px-3 py-2">PIR (ceiling mount)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Central, 6-8m spacing, covering entry points
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Open-plan office</td>
-                      <td className="border border-white/10 px-3 py-2">PIR or dual-tech</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Grid pattern, 5-6m centres, overlapping zones
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Private office</td>
-                      <td className="border border-white/10 px-3 py-2">PIR or ultrasonic</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Central ceiling, or wall-mount facing desk
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Toilet cubicle</td>
-                      <td className="border border-white/10 px-3 py-2">Ultrasonic</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ceiling mount, one per cubicle
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Meeting room</td>
-                      <td className="border border-white/10 px-3 py-2">Ultrasonic or dual-tech</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Central ceiling, covering all seating positions
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Warehouse</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High-bay PIR or microwave
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        At aisles, entry points, high-traffic routes
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Placement Pitfalls to Avoid</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  PIR sensors facing windows with direct sunlight (false triggers)
-                </li>
-                <li className="pl-1">
-                  PIR sensors near HVAC vents or radiators (temperature interference)
-                </li>
-                <li className="pl-1">
-                  Microwave sensors near thin partitions (detection through walls)
-                </li>
-                <li className="pl-1">Sensors behind obstacles blocking line of sight</li>
-                <li className="pl-1">Single sensors in L-shaped rooms (blind spots in corners)</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Coverage rule:</strong> For large spaces, ensure 10-20% overlap between
-              adjacent sensor detection zones to eliminate blind spots and provide redundancy.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Sensitivity and Hold-Off Times */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Sensitivity and Hold-Off Times
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Specify sensors for a 6-cubicle male toilet with common washbasin area.</p>
+            <p>Cubicles:</p>
+            <p>Technology: Ultrasonic (detects stationary occupants)</p>
+            <p>Quantity: 1 sensor per cubicle = 6 sensors</p>
+            <p>Hold-off: 10 minutes (extended stationary occupancy)</p>
+            <p>Mode: Presence detection (auto on/off)</p>
+            <p>Washbasin area:</p>
+            <p>Technology: PIR (adequate for hand-washing activity)</p>
+            <p>Quantity: 1 ceiling-mounted sensor</p>
+            <p>Hold-off: 5 minutes</p>
+            <p>Mode: Presence detection</p>
+            <p>Control integration:</p>
+            <p>Link washbasin sensor to extract fan start</p>
+            <p>30-minute overrun on extract after last detection</p>
+            <p>Total: 6× ultrasonic (cubicles) + 1× PIR (washbasins)</p>
             <p>
-              Correct configuration of sensitivity and hold-off (delay) times is critical for
-              reliable operation. Settings must balance responsive detection against false
-              triggering while optimising energy savings.
+              <strong>Example 3: False Trigger Troubleshooting</strong>
             </p>
+            <p><strong>Scenario:</strong> PIR sensor in meeting room triggers lights when room is empty, especially in afternoon.</p>
+            <p>Investigation:</p>
+            <p>Afternoon timing → suspect sunlight involvement</p>
+            <p>Check: Sensor faces west window (direct afternoon sun)</p>
+            <p>Cause: Rapid temperature change from sun movement</p>
+            <p>Solutions (in order of preference):</p>
+            <p>1. Relocate sensor away from window view</p>
+            <p>2. Install sensor hood/mask to block window direction</p>
+            <p>3. Reduce sensitivity (may reduce detection range)</p>
+            <p>4. Replace with dual-tech sensor (PIR + microwave)</p>
+            <p>Implementation:</p>
+            <p>Relocated sensor to ceiling centre, facing door entry</p>
+            <p>Walk test confirmed full coverage maintained</p>
+            <p>Result: False triggering eliminated</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Sensitivity Adjustment</p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <strong>High sensitivity:</strong> Detects minor movements, greater range, but
-                  increased false trigger risk
-                </p>
-                <p>
-                  <strong>Low sensitivity:</strong> Requires significant movement, reduced range,
-                  fewer false triggers
-                </p>
-                <p>
-                  <strong>Adjustment method:</strong> Start at medium, walk test the space, adjust
-                  based on coverage gaps or false triggers
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Sensitivity Setting Guidance
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Increase sensitivity:</strong> When detection gaps exist, when occupants
-                  report lights turning off while present
-                </li>
-                <li className="pl-1">
-                  <strong>Decrease sensitivity:</strong> When false triggers occur, near HVAC vents,
-                  in high-ceiling applications
-                </li>
-                <li className="pl-1">
-                  <strong>Microwave range:</strong> Reduce range setting if detecting through
-                  partitions into adjacent spaces
-                </li>
-                <li className="pl-1">
-                  <strong>Walk test:</strong> Essential after any adjustment - verify coverage at
-                  all boundaries
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Hold-Off Time Recommendations
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Space Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Hold-Off
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Rationale</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Corridors</td>
-                      <td className="border border-white/10 px-3 py-2">30-60 seconds</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Transit spaces with brief occupancy
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Toilets/washrooms</td>
-                      <td className="border border-white/10 px-3 py-2">5-10 minutes</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Stationary occupants, privacy concerns
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Private offices</td>
-                      <td className="border border-white/10 px-3 py-2">15-20 minutes</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Extended stationary work at desks
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Meeting rooms</td>
-                      <td className="border border-white/10 px-3 py-2">15-20 minutes</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Seated meetings with limited movement
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Open-plan offices</td>
-                      <td className="border border-white/10 px-3 py-2">10-15 minutes</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multiple occupants provide movement
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Storage/plant rooms</td>
-                      <td className="border border-white/10 px-3 py-2">5-10 minutes</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Brief access, high energy saving potential
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Advanced Hold-Off Features
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Adaptive hold-off:</strong> Automatically adjusts based on occupancy
-                  patterns - shorter during day, longer initially
-                </li>
-                <li className="pl-1">
-                  <strong>Grace period:</strong> Brief re-detection window that resets timer without
-                  full restart
-                </li>
-                <li className="pl-1">
-                  <strong>Dimming before off:</strong> Reduces to minimum level for 30s before
-                  switching off as warning
-                </li>
-                <li className="pl-1">
-                  <strong>Daylight linking:</strong> Reduces hold-off when daylight is adequate
-                  (lights not needed anyway)
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Energy vs comfort:</strong> Shorter hold-off times save more energy but risk
-              lights turning off while spaces are occupied. Balance based on space type and user
-              expectations.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Absence vs Presence Detection */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Absence vs Presence Detection
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              The choice between presence detection (automatic on/off) and absence detection (manual
-              on, automatic off) significantly impacts energy savings and user experience. Building
-              Regulations and sustainability assessments increasingly favour absence detection.
+              <strong>Sensor Selection Checklist:</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Presence Detection</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Operation:</strong> Auto-on when movement detected, auto-off after
-                    hold-off
-                  </li>
-                  <li className="pl-1">
-                    <strong>User experience:</strong> Convenient - no manual switching required
-                  </li>
-                  <li className="pl-1">
-                    <strong>Energy impact:</strong> May switch lights on unnecessarily (adequate
-                    daylight)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Best for:</strong> Circulation areas, stairwells, toilets, storage
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Absence Detection</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Operation:</strong> Manual switch-on required, auto-off after hold-off
-                  </li>
-                  <li className="pl-1">
-                    <strong>User experience:</strong> Requires user action but avoids unwanted light
-                  </li>
-                  <li className="pl-1">
-                    <strong>Energy impact:</strong> 30-40% more savings than presence detection
-                  </li>
-                  <li className="pl-1">
-                    <strong>Best for:</strong> Offices, meeting rooms, areas with good daylight
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-2">
-                Building Regulations Part L Guidance
-              </p>
-              <p className="text-sm text-white">
-                Part L2A (new non-domestic buildings) requires lighting controls that prevent energy
-                waste. Absence detection is recognised as achieving higher compliance scores and is
-                preferred in BREEAM assessments. Where presence detection is used, hold-off times
-                should not exceed manufacturer recommendations for the space type.
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Control Strategy Selection
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Space Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Recommended Strategy
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Reason</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Office (good daylight)</td>
-                      <td className="border border-white/10 px-3 py-2">Absence detection</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        User decides if light needed
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Office (no daylight)</td>
-                      <td className="border border-white/10 px-3 py-2">Presence detection</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Light always needed when occupied
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Corridors</td>
-                      <td className="border border-white/10 px-3 py-2">Presence detection</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Safety - instant light for transit
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Stairwells</td>
-                      <td className="border border-white/10 px-3 py-2">Presence detection</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Safety - prevent trips/falls
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Meeting rooms</td>
-                      <td className="border border-white/10 px-3 py-2">Absence detection</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Often adequate daylight available
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Toilets/washrooms</td>
-                      <td className="border border-white/10 px-3 py-2">Presence detection</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Convenience and hygiene (no touch)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Integration with Lighting Control Systems
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>DALI integration:</strong> Sensors communicate occupancy to controller for
-                  coordinated response
-                </li>
-                <li className="pl-1">
-                  <strong>Daylight harvesting:</strong> Combine with photocells to dim when daylight
-                  adequate
-                </li>
-                <li className="pl-1">
-                  <strong>Scene control:</strong> Occupancy can trigger pre-set lighting scenes
-                </li>
-                <li className="pl-1">
-                  <strong>BMS interface:</strong> Report occupancy data for HVAC control and space
-                  utilisation analytics
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Specification tip:</strong> For Part L compliance documentation, specify both
-              the detection type (absence/presence) and hold-off times for each space type to
-              demonstrate appropriate control strategy.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Identify expected occupant movement patterns (walking, seated, stationary)</li>
+              <li>Consider presence of partitions or obstacles that block line of sight</li>
+              <li>Check for potential interference sources (HVAC, sunlight, heat sources)</li>
+              <li>Determine if detection through walls is problematic (microwave consideration)</li>
+              <li>Match technology to space: PIR for general, ultrasonic for stationary, dual-tech for difficult environments</li>
+            </ul>
+            <p>
+              <strong>Key Parameters to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>PIR coverage: <strong>4-6m diameter</strong> at 2.8m ceiling height</li>
+              <li>Ultrasonic frequency: <strong>25-40 kHz</strong> (above human hearing)</li>
+              <li>Microwave frequency: <strong>5.8 GHz or 10.525 GHz</strong> typical</li>
+              <li>Sensor overlap: <strong>10-20%</strong> for complete coverage</li>
+              <li>Absence vs presence savings: <strong>30-40% additional</strong> with absence detection</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Open-Plan Office Sensor Layout
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Design occupancy sensing for a 150m² open-plan office,
-                2.7m ceiling height, good daylight from south-facing windows.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Step 1: Calculate sensor quantity</p>
-                <p>Ceiling PIR coverage at 2.7m = approx. 36m² per sensor</p>
-                <p>150m² ÷ 36m² = 4.2 sensors minimum</p>
-                <p>Add 20% overlap = 5 sensors required</p>
-                <p className="mt-2 text-white">Step 2: Select detection strategy</p>
-                <p>Good daylight available → Absence detection (manual on, auto off)</p>
-                <p>Part L compliant, BREEAM credits available</p>
-                <p className="mt-2 text-white">Step 3: Configure settings</p>
-                <p>Hold-off time: 15 minutes (seated desk work)</p>
-                <p>Sensitivity: Medium (adjust after walk test)</p>
-                <p>Integration: DALI sensors linked to daylight dimming</p>
-                <p className="mt-2 text-green-400">
-                  Result: 5× DALI PIR sensors, absence mode, 15-min hold-off
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Toilet and Washroom Installation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Specify sensors for a 6-cubicle male toilet with common
-                washbasin area.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Cubicles:</p>
-                <p>Technology: Ultrasonic (detects stationary occupants)</p>
-                <p>Quantity: 1 sensor per cubicle = 6 sensors</p>
-                <p>Hold-off: 10 minutes (extended stationary occupancy)</p>
-                <p>Mode: Presence detection (auto on/off)</p>
-                <p className="mt-2 text-white">Washbasin area:</p>
-                <p>Technology: PIR (adequate for hand-washing activity)</p>
-                <p>Quantity: 1 ceiling-mounted sensor</p>
-                <p>Hold-off: 5 minutes</p>
-                <p>Mode: Presence detection</p>
-                <p className="mt-2 text-white">Control integration:</p>
-                <p>Link washbasin sensor to extract fan start</p>
-                <p>30-minute overrun on extract after last detection</p>
-                <p className="mt-2 text-green-400">
-                  Total: 6× ultrasonic (cubicles) + 1× PIR (washbasins)
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: False Trigger Troubleshooting
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> PIR sensor in meeting room triggers lights when room is
-                empty, especially in afternoon.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Investigation:</p>
-                <p>Afternoon timing → suspect sunlight involvement</p>
-                <p>Check: Sensor faces west window (direct afternoon sun)</p>
-                <p>Cause: Rapid temperature change from sun movement</p>
-                <p className="mt-2 text-white">Solutions (in order of preference):</p>
-                <p>1. Relocate sensor away from window view</p>
-                <p>2. Install sensor hood/mask to block window direction</p>
-                <p>3. Reduce sensitivity (may reduce detection range)</p>
-                <p>4. Replace with dual-tech sensor (PIR + microwave)</p>
-                <p className="mt-2 text-white">Implementation:</p>
-                <p>Relocated sensor to ceiling centre, facing door entry</p>
-                <p>Walk test confirmed full coverage maintained</p>
-                <p className="mt-2 text-green-400">Result: False triggering eliminated</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Sensor Selection Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Identify expected occupant movement patterns (walking, seated, stationary)
-                </li>
-                <li className="pl-1">
-                  Consider presence of partitions or obstacles that block line of sight
-                </li>
-                <li className="pl-1">
-                  Check for potential interference sources (HVAC, sunlight, heat sources)
-                </li>
-                <li className="pl-1">
-                  Determine if detection through walls is problematic (microwave consideration)
-                </li>
-                <li className="pl-1">
-                  Match technology to space: PIR for general, ultrasonic for stationary, dual-tech
-                  for difficult environments
-                </li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>No walk test:</strong> Detection gaps only discovered after handover complaints</li>
+                <li><strong>Default settings:</strong> Factory hold-off times rarely suit actual space requirements</li>
+                <li><strong>Maximum sensitivity:</strong> Causes false triggers - start medium and adjust</li>
+                <li><strong>Ignoring furniture:</strong> Desks and partitions create shadows not on drawings</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Parameters to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  PIR coverage: <strong>4-6m diameter</strong> at 2.8m ceiling height
-                </li>
-                <li className="pl-1">
-                  Ultrasonic frequency: <strong>25-40 kHz</strong> (above human hearing)
-                </li>
-                <li className="pl-1">
-                  Microwave frequency: <strong>5.8 GHz or 10.525 GHz</strong> typical
-                </li>
-                <li className="pl-1">
-                  Sensor overlap: <strong>10-20%</strong> for complete coverage
-                </li>
-                <li className="pl-1">
-                  Absence vs presence savings: <strong>30-40% additional</strong> with absence
-                  detection
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">
-                Common Commissioning Errors
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>No walk test:</strong> Detection gaps only discovered after handover
-                  complaints
-                </li>
-                <li className="pl-1">
-                  <strong>Default settings:</strong> Factory hold-off times rarely suit actual space
-                  requirements
-                </li>
-                <li className="pl-1">
-                  <strong>Maximum sensitivity:</strong> Causes false triggers - start medium and
-                  adjust
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring furniture:</strong> Desks and partitions create shadows not on
-                  drawings
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Sensor Technologies</p>
-                <ul className="space-y-0.5">
-                  <li>PIR: Passive, heat differential, 4-6m range</li>
-                  <li>Microwave: Active, penetrates walls, 5.8 GHz</li>
-                  <li>Ultrasonic: Active, 25-40 kHz, detects breathing</li>
-                  <li>Dual-tech: PIR + microwave, reduces false triggers</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Hold-Off Times</p>
-                <ul className="space-y-0.5">
-                  <li>Corridors: 30-60 seconds</li>
-                  <li>Toilets: 5-10 minutes</li>
-                  <li>Offices: 15-20 minutes</li>
-                  <li>Storage: 5-10 minutes</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section4-3">
-              Next: Daylight Harvesting
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section4-1")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                DALI systems
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section4-3")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Daylight harvesting
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

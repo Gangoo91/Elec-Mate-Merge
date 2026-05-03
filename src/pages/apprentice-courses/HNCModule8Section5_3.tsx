@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 8 · Section 5 · Subsection 3 — Actuators and Output Devices
+ * HNC Electrical Engineering for Building Services (HVAC Systems)
+ *   Valve actuators, damper actuators, control signal types, spring return mechanisms, and actuator sizing
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Actuators and Output Devices - HNC Module 8 Section 5.3';
@@ -281,1016 +294,379 @@ const faqs = [
 ];
 
 const HNCModule8Section5_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section5")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module8-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 8.5.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Actuators and Output Devices
-          </h1>
-          <p className="text-white">
-            Valve actuators, damper actuators, control signal types, spring return mechanisms, and
-            actuator sizing
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 8 · Section 5 · Subsection 3"
+            title="Actuators and Output Devices"
+            description="Valve actuators, damper actuators, control signal types, spring return mechanisms, and actuator sizing"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Valve actuators:</strong> Linear (globe) or rotary (ball/butterfly)
-              </li>
-              <li className="pl-1">
-                <strong>Control types:</strong> On/off (2-position) or modulating (proportional)
-              </li>
-              <li className="pl-1">
-                <strong>Signals:</strong> 0-10V, 2-10V, 4-20mA, or three-point floating
-              </li>
-              <li className="pl-1">
-                <strong>Safety:</strong> Spring return for fail-safe positioning
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Differentiate between linear and rotary valve actuator types",
+              "Select appropriate actuators for modulating vs on/off control",
+              "Understand 0-10V, 2-10V, and 4-20mA control signal applications",
+              "Specify spring return actuators for fail-safe operation",
+              "Calculate torque requirements for damper actuators",
+              "Size actuators based on valve stroke and system requirements",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Valve Actuator Types">
+            <p>Valve actuators convert electrical control signals into mechanical motion to position valves within HVAC systems. The actuator type must match both the valve mechanism and the required control precision. Understanding the differences between linear and rotary actuators is essential for correct specification.</p>
+            <p><strong>Linear Valve Actuators</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Produce straight-line (up/down) motion</li>
+              <li>Used for: Globe valves, gate valves</li>
+              <li>Stroke: Typically 2.5mm to 40mm</li>
+              <li>Force output rated in Newtons (N)</li>
+              <li>Direct stem connection or yoke mounting</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Selection Criteria</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Torque:</strong> Must exceed load with 25% safety factor
-              </li>
-              <li className="pl-1">
-                <strong>Stroke:</strong> Must match valve travel distance
-              </li>
-              <li className="pl-1">
-                <strong>Running time:</strong> Typically 90-120 seconds for HVAC
-              </li>
-              <li className="pl-1">
-                <strong>Supply:</strong> 24V AC (SELV) or 230V AC
-              </li>
+            <p><strong>Rotary Valve Actuators</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Produce rotational motion</li>
+              <li>Used for: Ball valves, butterfly valves</li>
+              <li>Rotation: Typically 90° (quarter-turn)</li>
+              <li>Torque output rated in Newton-metres (Nm)</li>
+              <li>Direct coupling to valve shaft</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Valve and Actuator Matching</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>2-port globe valve:</strong> Linear — Stroke (mm), Force (N) — LTHW/CHW flow control</li>
+              <li><strong>3-port mixing valve:</strong> Linear — Stroke (mm), Force (N) — Temperature blending</li>
+              <li><strong>Ball valve:</strong> Rotary 90° — Torque (Nm) — On/off isolation, 2-way control</li>
+              <li><strong>Butterfly valve:</strong> Rotary 90° — Torque (Nm) — Large bore isolation, AHU coils</li>
+              <li><strong>Characterised ball valve:</strong> Rotary 90° — Torque (Nm) — Modulating control with equal percentage</li>
+            </ul>
+            <p><strong>Actuator Force and Stroke Requirements</strong></p>
+            <p>Linear actuator selection requires matching both parameters:</p>
+            <p><strong>Stroke:</strong> Must equal or exceed valve stem travel</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Small valves (DN15-25): Typically 5-10mm stroke</li>
+              <li>Medium valves (DN32-50): Typically 15-20mm stroke</li>
+              <li>Large valves (DN65+): Typically 20-40mm stroke</li>
+            </ul>
+            <p><strong>Force:</strong> Must overcome valve close-off pressure</p>
+            <p>Force (N) = Pressure (kPa) × Valve seat area (cm²) × 10</p>
+            <p><strong>Selection principle:</strong> Always verify actuator stroke matches valve requirement. An actuator with insufficient stroke will not fully open or close the valve, causing poor control and potential system issues.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Differentiate between linear and rotary valve actuator types',
-              'Select appropriate actuators for modulating vs on/off control',
-              'Understand 0-10V, 2-10V, and 4-20mA control signal applications',
-              'Specify spring return actuators for fail-safe operation',
-              'Calculate torque requirements for damper actuators',
-              'Size actuators based on valve stroke and system requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Valve Actuator Types */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Valve Actuator Types
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Damper Actuators">
+            <p>Damper actuators control airflow in HVAC ductwork by positioning damper blades. Unlike valve actuators which deal with liquid pressure, damper actuators must overcome the resistance of damper blades against air static pressure and the friction of blade bearings and seals.</p>
+            <p><strong>Damper actuator types by mounting:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Direct-coupled:</strong> Actuator mounts directly on damper shaft, no linkage required</li>
+              <li><strong>Crank arm/linkage:</strong> External actuator connected via mechanical linkage</li>
+              <li><strong>Jackshaft:</strong> Multiple dampers driven from single actuator via shaft and linkages</li>
+              <li><strong>Integral:</strong> Actuator built into damper assembly as complete unit</li>
+            </ul>
+            <p><strong>Damper Actuator Torque Calculation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Opposed blade (low pressure):</strong> &lt;500 Pa — 4-8 — Standard ventilation</li>
+              <li><strong>Opposed blade (medium pressure):</strong> 500-1000 Pa — 8-12 — VAV systems</li>
+              <li><strong>Parallel blade:</strong> &lt;500 Pa — 4-6 — 2-position isolation</li>
+              <li><strong>Fire/smoke damper:</strong> Variable — 15-25 — High friction seals</li>
+              <li><strong>High-pressure industrial:</strong> &gt;1000 Pa — 12-20 — Process applications</li>
+            </ul>
+            <p><strong>Torque Calculation Example</strong></p>
+            <p><span>Given:</span></p>
+            <p>Damper size: 600mm × 400mm opposed blade</p>
+            <p>System static pressure: 400 Pa</p>
+            <p>Damper condition: Standard HVAC, clean</p>
+            <p><span>Calculation:</span></p>
+            <p>Damper area = 0.6m × 0.4m = 0.24 m²</p>
+            <p>Torque factor (low pressure opposed blade) = 6 Nm/m²</p>
+            <p>Base torque = 0.24 × 6 = 1.44 Nm</p>
+            <p>Safety factor (25%) = 1.44 × 1.25 = 1.8 Nm</p>
+            <p>Specify: Minimum 2 Nm actuator (next standard size up)</p>
+            <p><strong>Direct-Coupled Advantages</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>No mechanical linkage = no backlash</li>
+              <li>Simpler installation and adjustment</li>
+              <li>More accurate positioning</li>
+              <li>Lower maintenance requirements</li>
+              <li>Standard for BMS-controlled dampers</li>
+            </ul>
+            <p><strong>Linkage Applications</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Large dampers requiring high torque</li>
+              <li>Multiple dampers from one actuator</li>
+              <li>Retrofit installations with space constraints</li>
+              <li>Fire dampers with external actuation</li>
+              <li>Jackshaft systems for face/bypass</li>
+            </ul>
+            <p><strong>Installation note:</strong> Direct-coupled actuators must be correctly oriented on the damper shaft. Most have a rotation direction marking - verify this matches the required open/close action before final fixing.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Control Signals: Modulating vs On/Off">
+            <p>Actuators receive control signals from the BMS to determine their position. The control type - on/off (two-position) or modulating (proportional) - fundamentally affects system performance, energy efficiency, and comfort. Understanding the available signal types enables correct specification for each application.</p>
+            <p><strong>On/Off (Two-Position) Control</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Valve/damper is either fully open or fully closed</li>
+              <li>Controlled by simple relay contact (24V AC)</li>
+              <li>Lower cost actuator and controller</li>
+              <li>Causes temperature cycling (swing)</li>
+              <li>Used for: Zone isolation, on/off loads</li>
+            </ul>
+            <p><strong>Modulating (Proportional) Control</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Valve/damper positions anywhere 0-100%</li>
+              <li>Analogue signal (0-10V, 2-10V, 4-20mA)</li>
+              <li>Precise temperature/flow control</li>
+              <li>Eliminates cycling, improves comfort</li>
+              <li>Used for: AHU coils, VAV boxes, FCUs</li>
+            </ul>
+            <p><strong>Analogue Control Signal Comparison</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>0-10V DC:</strong> 0V = 0%, 10V = 100% — Limited (0V valid) — 2-core screened — Standard HVAC</li>
+              <li><strong>2-10V DC:</strong> 2V = 0%, 10V = 100% — Good (0V = fault) — 2-core screened — Critical systems</li>
+              <li><strong>4-20mA:</strong> 4mA = 0%, 20mA = 100% — Good (0mA = fault) — 2-core screened, loop — Long distances, noisy</li>
+              <li><strong>Three-point floating:</strong> Open/Close/Stop — Limited — 3-core + common — Simple systems, retrofit</li>
+            </ul>
+            <p><strong>0-10V vs 2-10V: The Critical Difference</strong></p>
+            <p><strong>0-10V signal:</strong></p>
+            <p>0V = Actuator at 0% position (fully closed)</p>
+            <p>Problem: If cable breaks, signal = 0V, same as valid minimum position</p>
+            <p>BMS cannot distinguish between "drive to 0%" and "cable fault"</p>
+            <p><strong>2-10V signal:</strong></p>
+            <p>2V = Actuator at 0% position (fully closed)</p>
+            <p>If cable breaks, signal = 0V, which is below valid range</p>
+            <p>BMS detects 0V as fault condition and can raise alarm</p>
+            <p><strong>Three-Point Floating Control</strong></p>
+            <p>Three-point floating control uses three wires: Open, Close, and Common. The controller energises the Open or Close wire to drive the actuator in the required direction. When neither is energised, the actuator stops at its current position.</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Open wire energised: Actuator drives towards open</li>
+              <li>Close wire energised: Actuator drives towards closed</li>
+              <li>Neither energised: Actuator holds position</li>
+              <li>Controller estimates position by timing (no feedback)</li>
+            </ul>
+            <p>Advantage: Uses simple relay outputs, no analogue channels required. Disadvantage: Less precise, requires periodic recalibration to end stops.</p>
+            <p><strong>Specification tip:</strong> For critical applications (hospital wards, data centres, clean rooms), always specify 2-10V control signals to enable cable fault detection and improve system reliability.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Spring Return, Fail-Safe, and Sizing Criteria">
+            <p>Fail-safe operation is critical in HVAC systems. Spring return actuators ensure valves and dampers move to a predetermined safe position on power failure or control signal loss. Correct sizing ensures the actuator can reliably operate the valve or damper throughout its service life.</p>
+            <p><strong>Spring return configurations:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Normally Open (NO):</strong> Spring drives valve open on power loss - used for heating</li>
+              <li><strong>Normally Closed (NC):</strong> Spring drives valve closed on power loss - used for cooling, steam</li>
+              <li><strong>Non-spring return:</strong> Actuator holds last position on power loss - used where safe</li>
+            </ul>
+            <p><strong>Fail-Safe Selection Guide</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>LTHW heating valve:</strong> Open — Spring return NO — Prevent freeze damage, maintain warmth</li>
+              <li><strong>CHW cooling valve:</strong> Closed — Spring return NC — Prevent overcooling, condensation</li>
+              <li><strong>Data centre cooling:</strong> Open — Spring return NO — Maintain cooling for equipment protection</li>
+              <li><strong>Steam valve:</strong> Closed — Spring return NC — Safety - prevent uncontrolled steam flow</li>
+              <li><strong>Fresh air damper:</strong> Closed — Spring return NC — Prevent uncontrolled outside air ingress</li>
+              <li><strong>Fire/smoke damper:</strong> Closed — Spring return NC — Fire compartmentation</li>
+              <li><strong>General ventilation damper:</strong> Last position — Non-spring return — No safety-critical fail position</li>
+            </ul>
+            <p><strong>Actuator Sizing Checklist</strong></p>
+            <p><strong>For Valve Actuators:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Stroke ≥ valve stem travel</li>
+              <li>Force ≥ close-off pressure requirement × 1.25</li>
+              <li>Running time appropriate for control loop</li>
+              <li>Supply voltage matches available power</li>
+              <li>Control signal compatible with BMS output</li>
+              <li>Fail position (spring return if required)</li>
+            </ul>
+            <p><strong>For Damper Actuators:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Torque ≥ calculated requirement × 1.25</li>
+              <li>Rotation angle matches damper (usually 90°)</li>
+              <li>Mounting type compatible (direct/linkage)</li>
+              <li>Running time suits application</li>
+              <li>Control signal matches BMS</li>
+              <li>Position feedback if required</li>
+            </ul>
+            <p><strong>Running Time Considerations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>15-30 seconds:</strong> On/off actuators, quick-acting — Fast response, may cause hunting if used for modulating</li>
+              <li><strong>60-90 seconds:</strong> Fast modulating, small systems — Good response, suits tight control loops</li>
+              <li><strong>90-120 seconds:</strong> Standard HVAC modulating — Smooth control, prevents hunting</li>
+              <li><strong>150-240 seconds:</strong> Large dampers, high inertia systems — Stable control, slower response</li>
+            </ul>
+            <p><strong>Common Sizing Errors</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Undersized torque:</strong> Actuator struggles or fails to move damper against pressure</li>
+              <li><strong>Oversized actuator:</strong> Can damage valve/damper, wastes energy, causes hunting</li>
+              <li><strong>Wrong stroke:</strong> Valve does not fully open or close, poor control</li>
+              <li><strong>Too fast running time:</strong> Causes control instability and hunting</li>
+              <li><strong>Wrong fail position:</strong> System fails to unsafe condition</li>
+            </ul>
+            <p><strong>Design principle:</strong> Always apply a 25% safety factor to calculated torque or force requirements. This accounts for bearing friction increase over time, dirt accumulation, and operating conditions beyond design parameters.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Valve actuators convert electrical control signals into mechanical motion to position
-              valves within HVAC systems. The actuator type must match both the valve mechanism and
-              the required control precision. Understanding the differences between linear and
-              rotary actuators is essential for correct specification.
+              <strong>Example 1: Valve Actuator Selection for AHU Heating Coil</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Linear Valve Actuators
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Produce straight-line (up/down) motion</li>
-                  <li className="pl-1">Used for: Globe valves, gate valves</li>
-                  <li className="pl-1">Stroke: Typically 2.5mm to 40mm</li>
-                  <li className="pl-1">Force output rated in Newtons (N)</li>
-                  <li className="pl-1">Direct stem connection or yoke mounting</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Rotary Valve Actuators
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Produce rotational motion</li>
-                  <li className="pl-1">Used for: Ball valves, butterfly valves</li>
-                  <li className="pl-1">Rotation: Typically 90° (quarter-turn)</li>
-                  <li className="pl-1">Torque output rated in Newton-metres (Nm)</li>
-                  <li className="pl-1">Direct coupling to valve shaft</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Valve and Actuator Matching
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Valve Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Actuator Motion
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Key Specification
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2-port globe valve</td>
-                      <td className="border border-white/10 px-3 py-2">Linear</td>
-                      <td className="border border-white/10 px-3 py-2">Stroke (mm), Force (N)</td>
-                      <td className="border border-white/10 px-3 py-2">LTHW/CHW flow control</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3-port mixing valve</td>
-                      <td className="border border-white/10 px-3 py-2">Linear</td>
-                      <td className="border border-white/10 px-3 py-2">Stroke (mm), Force (N)</td>
-                      <td className="border border-white/10 px-3 py-2">Temperature blending</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ball valve</td>
-                      <td className="border border-white/10 px-3 py-2">Rotary 90°</td>
-                      <td className="border border-white/10 px-3 py-2">Torque (Nm)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        On/off isolation, 2-way control
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Butterfly valve</td>
-                      <td className="border border-white/10 px-3 py-2">Rotary 90°</td>
-                      <td className="border border-white/10 px-3 py-2">Torque (Nm)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large bore isolation, AHU coils
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Characterised ball valve</td>
-                      <td className="border border-white/10 px-3 py-2">Rotary 90°</td>
-                      <td className="border border-white/10 px-3 py-2">Torque (Nm)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Modulating control with equal percentage
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Actuator Force and Stroke Requirements
-              </p>
-              <div className="text-sm space-y-1">
-                <p>Linear actuator selection requires matching both parameters:</p>
-                <p className="mt-2">
-                  <strong>Stroke:</strong> Must equal or exceed valve stem travel
-                </p>
-                <ul className="list-disc list-outside ml-5 mt-1 space-y-1">
-                  <li className="pl-1">Small valves (DN15-25): Typically 5-10mm stroke</li>
-                  <li className="pl-1">Medium valves (DN32-50): Typically 15-20mm stroke</li>
-                  <li className="pl-1">Large valves (DN65+): Typically 20-40mm stroke</li>
-                </ul>
-                <p className="mt-2">
-                  <strong>Force:</strong> Must overcome valve close-off pressure
-                </p>
-                <p className="ml-4 text-white">
-                  Force (N) = Pressure (kPa) × Valve seat area (cm²) × 10
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Selection principle:</strong> Always verify actuator stroke matches valve
-              requirement. An actuator with insufficient stroke will not fully open or close the
-              valve, causing poor control and potential system issues.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Damper Actuators */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Damper Actuators
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Select an actuator for a DN32 2-port LTHW valve on an AHU heating coil with 400kPa differential pressure.</p>
+            <p>Given data:</p>
+            <p>Valve: DN32, 2-port globe valve, 10mm stroke</p>
+            <p>Differential pressure: 400 kPa</p>
+            <p>Control: Modulating 0-10V from BMS</p>
+            <p>Fail-safe: Required (heating application)</p>
+            <p>Force calculation:</p>
+            <p>Valve seat area (DN32) ≈ 3.2 cm² (from valve datasheet)</p>
+            <p>Force = 400 kPa × 3.2 cm² × 10 = 1,280 N</p>
+            <p>With 25% safety factor = 1,280 × 1.25 = 1,600 N</p>
+            <p>Actuator specification:</p>
+            <p>- Stroke: ≥10mm (valve requirement)</p>
+            <p>- Force: ≥1,600N</p>
+            <p>- Control: 0-10V DC input</p>
+            <p>- Running time: 90-120 seconds (standard HVAC)</p>
+            <p>- Fail position: Spring return Normally Open (NO)</p>
+            <p>- Supply: 24V AC (SELV for safety)</p>
+            <p>Select: Linear actuator 2,500N, 15mm stroke, spring return NO</p>
             <p>
-              Damper actuators control airflow in HVAC ductwork by positioning damper blades. Unlike
-              valve actuators which deal with liquid pressure, damper actuators must overcome the
-              resistance of damper blades against air static pressure and the friction of blade
-              bearings and seals.
+              <strong>Example 2: Damper Actuator Sizing for Fresh Air Intake</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Damper actuator types by mounting:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Direct-coupled:</strong> Actuator mounts directly on damper shaft, no
-                  linkage required
-                </li>
-                <li className="pl-1">
-                  <strong>Crank arm/linkage:</strong> External actuator connected via mechanical
-                  linkage
-                </li>
-                <li className="pl-1">
-                  <strong>Jackshaft:</strong> Multiple dampers driven from single actuator via shaft
-                  and linkages
-                </li>
-                <li className="pl-1">
-                  <strong>Integral:</strong> Actuator built into damper assembly as complete unit
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Damper Actuator Torque Calculation
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Damper Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Static Pressure
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Torque Factor (Nm/m²)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Opposed blade (low pressure)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">&lt;500 Pa</td>
-                      <td className="border border-white/10 px-3 py-2">4-8</td>
-                      <td className="border border-white/10 px-3 py-2">Standard ventilation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Opposed blade (medium pressure)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">500-1000 Pa</td>
-                      <td className="border border-white/10 px-3 py-2">8-12</td>
-                      <td className="border border-white/10 px-3 py-2">VAV systems</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Parallel blade</td>
-                      <td className="border border-white/10 px-3 py-2">&lt;500 Pa</td>
-                      <td className="border border-white/10 px-3 py-2">4-6</td>
-                      <td className="border border-white/10 px-3 py-2">2-position isolation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fire/smoke damper</td>
-                      <td className="border border-white/10 px-3 py-2">Variable</td>
-                      <td className="border border-white/10 px-3 py-2">15-25</td>
-                      <td className="border border-white/10 px-3 py-2">High friction seals</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">High-pressure industrial</td>
-                      <td className="border border-white/10 px-3 py-2">&gt;1000 Pa</td>
-                      <td className="border border-white/10 px-3 py-2">12-20</td>
-                      <td className="border border-white/10 px-3 py-2">Process applications</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Torque Calculation Example
-              </p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">Given:</span>
-                </p>
-                <p className="ml-4">Damper size: 600mm × 400mm opposed blade</p>
-                <p className="ml-4">System static pressure: 400 Pa</p>
-                <p className="ml-4">Damper condition: Standard HVAC, clean</p>
-                <p className="mt-2">
-                  <span className="text-white">Calculation:</span>
-                </p>
-                <p className="ml-4">Damper area = 0.6m × 0.4m = 0.24 m²</p>
-                <p className="ml-4">Torque factor (low pressure opposed blade) = 6 Nm/m²</p>
-                <p className="ml-4">Base torque = 0.24 × 6 = 1.44 Nm</p>
-                <p className="ml-4">Safety factor (25%) = 1.44 × 1.25 = 1.8 Nm</p>
-                <p className="mt-2 text-green-400">
-                  Specify: Minimum 2 Nm actuator (next standard size up)
-                </p>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Direct-Coupled Advantages
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">No mechanical linkage = no backlash</li>
-                  <li className="pl-1">Simpler installation and adjustment</li>
-                  <li className="pl-1">More accurate positioning</li>
-                  <li className="pl-1">Lower maintenance requirements</li>
-                  <li className="pl-1">Standard for BMS-controlled dampers</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Linkage Applications</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Large dampers requiring high torque</li>
-                  <li className="pl-1">Multiple dampers from one actuator</li>
-                  <li className="pl-1">Retrofit installations with space constraints</li>
-                  <li className="pl-1">Fire dampers with external actuation</li>
-                  <li className="pl-1">Jackshaft systems for face/bypass</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Installation note:</strong> Direct-coupled actuators must be correctly
-              oriented on the damper shaft. Most have a rotation direction marking - verify this
-              matches the required open/close action before final fixing.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Control Signal Types and Modulating vs On/Off */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Control Signals: Modulating vs On/Off
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Size a direct-coupled actuator for an 800mm × 600mm fresh air intake damper operating against 600Pa static pressure.</p>
+            <p>Given data:</p>
+            <p>Damper: 800mm × 600mm opposed blade</p>
+            <p>Static pressure: 600 Pa (medium pressure)</p>
+            <p>Control: Modulating 2-10V</p>
+            <p>Position feedback: Required</p>
+            <p>Torque calculation:</p>
+            <p>Damper area = 0.8m × 0.6m = 0.48 m²</p>
+            <p>Torque factor (medium pressure) = 10 Nm/m²</p>
+            <p>Base torque = 0.48 × 10 = 4.8 Nm</p>
+            <p>With 25% safety factor = 4.8 × 1.25 = 6.0 Nm</p>
+            <p>Actuator specification:</p>
+            <p>- Torque: ≥6 Nm</p>
+            <p>- Rotation: 90°</p>
+            <p>- Control: 2-10V DC (fault detection)</p>
+            <p>- Feedback: 2-10V position signal</p>
+            <p>- Running time: 90 seconds</p>
+            <p>- Fail position: Spring return NC (prevent uncontrolled outside air)</p>
+            <p>Select: 8 Nm direct-coupled, spring return closed, 2-10V with feedback</p>
             <p>
-              Actuators receive control signals from the BMS to determine their position. The
-              control type - on/off (two-position) or modulating (proportional) - fundamentally
-              affects system performance, energy efficiency, and comfort. Understanding the
-              available signal types enables correct specification for each application.
+              <strong>Example 3: Position Feedback Signal Interpretation</strong>
             </p>
+            <p><strong>Scenario:</strong> A modulating actuator with 2-10V feedback shows various readings. Interpret the damper positions.</p>
+            <p>Signal interpretation (2-10V range):</p>
+            <p>Feedback reading: 2.0V</p>
+            <p>Position = (2.0 - 2) / (10 - 2) × 100% = 0%</p>
+            <p>Damper is fully closed</p>
+            <p>Feedback reading: 6.0V</p>
+            <p>Position = (6.0 - 2) / (10 - 2) × 100% = 50%</p>
+            <p>Damper is half open</p>
+            <p>Feedback reading: 10.0V</p>
+            <p>Position = (10.0 - 2) / (10 - 2) × 100% = 100%</p>
+            <p>Damper is fully open</p>
+            <p>Feedback reading: 0.0V</p>
+            <p>Invalid - below 2V minimum indicates cable fault!</p>
+            <p>BMS should generate fault alarm</p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  On/Off (Two-Position) Control
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Valve/damper is either fully open or fully closed</li>
-                  <li className="pl-1">Controlled by simple relay contact (24V AC)</li>
-                  <li className="pl-1">Lower cost actuator and controller</li>
-                  <li className="pl-1">Causes temperature cycling (swing)</li>
-                  <li className="pl-1">Used for: Zone isolation, on/off loads</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Modulating (Proportional) Control
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Valve/damper positions anywhere 0-100%</li>
-                  <li className="pl-1">Analogue signal (0-10V, 2-10V, 4-20mA)</li>
-                  <li className="pl-1">Precise temperature/flow control</li>
-                  <li className="pl-1">Eliminates cycling, improves comfort</li>
-                  <li className="pl-1">Used for: AHU coils, VAV boxes, FCUs</li>
-                </ul>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Analogue Control Signal Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Signal Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Range</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Fault Detection
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Wiring</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Best For</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">0-10V DC</td>
-                      <td className="border border-white/10 px-3 py-2">0V = 0%, 10V = 100%</td>
-                      <td className="border border-white/10 px-3 py-2">Limited (0V valid)</td>
-                      <td className="border border-white/10 px-3 py-2">2-core screened</td>
-                      <td className="border border-white/10 px-3 py-2">Standard HVAC</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2-10V DC</td>
-                      <td className="border border-white/10 px-3 py-2">2V = 0%, 10V = 100%</td>
-                      <td className="border border-white/10 px-3 py-2">Good (0V = fault)</td>
-                      <td className="border border-white/10 px-3 py-2">2-core screened</td>
-                      <td className="border border-white/10 px-3 py-2">Critical systems</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4-20mA</td>
-                      <td className="border border-white/10 px-3 py-2">4mA = 0%, 20mA = 100%</td>
-                      <td className="border border-white/10 px-3 py-2">Good (0mA = fault)</td>
-                      <td className="border border-white/10 px-3 py-2">2-core screened, loop</td>
-                      <td className="border border-white/10 px-3 py-2">Long distances, noisy</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Three-point floating</td>
-                      <td className="border border-white/10 px-3 py-2">Open/Close/Stop</td>
-                      <td className="border border-white/10 px-3 py-2">Limited</td>
-                      <td className="border border-white/10 px-3 py-2">3-core + common</td>
-                      <td className="border border-white/10 px-3 py-2">Simple systems, retrofit</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                0-10V vs 2-10V: The Critical Difference
-              </p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <strong>0-10V signal:</strong>
-                </p>
-                <p className="ml-4">0V = Actuator at 0% position (fully closed)</p>
-                <p className="ml-4">
-                  Problem: If cable breaks, signal = 0V, same as valid minimum position
-                </p>
-                <p className="ml-4">
-                  BMS cannot distinguish between "drive to 0%" and "cable fault"
-                </p>
-                <p className="mt-2">
-                  <strong>2-10V signal:</strong>
-                </p>
-                <p className="ml-4">2V = Actuator at 0% position (fully closed)</p>
-                <p className="ml-4">If cable breaks, signal = 0V, which is below valid range</p>
-                <p className="ml-4 text-green-400">
-                  BMS detects 0V as fault condition and can raise alarm
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Three-Point Floating Control
-              </p>
-              <div className="text-sm text-white space-y-2">
-                <p>
-                  Three-point floating control uses three wires: Open, Close, and Common. The
-                  controller energises the Open or Close wire to drive the actuator in the required
-                  direction. When neither is energised, the actuator stops at its current position.
-                </p>
-                <ul className="list-disc list-outside ml-5 mt-2 space-y-1">
-                  <li className="pl-1">Open wire energised: Actuator drives towards open</li>
-                  <li className="pl-1">Close wire energised: Actuator drives towards closed</li>
-                  <li className="pl-1">Neither energised: Actuator holds position</li>
-                  <li className="pl-1">Controller estimates position by timing (no feedback)</li>
-                </ul>
-                <p className="mt-2 text-white">
-                  Advantage: Uses simple relay outputs, no analogue channels required. Disadvantage:
-                  Less precise, requires periodic recalibration to end stops.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Specification tip:</strong> For critical applications (hospital wards, data
-              centres, clean rooms), always specify 2-10V control signals to enable cable fault
-              detection and improve system reliability.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Spring Return and Actuator Sizing */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Spring Return, Fail-Safe, and Sizing Criteria
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Fail-safe operation is critical in HVAC systems. Spring return actuators ensure valves
-              and dampers move to a predetermined safe position on power failure or control signal
-              loss. Correct sizing ensures the actuator can reliably operate the valve or damper
-              throughout its service life.
+              <strong>Actuator Selection Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Spring return configurations:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Normally Open (NO):</strong> Spring drives valve open on power loss - used
-                  for heating
-                </li>
-                <li className="pl-1">
-                  <strong>Normally Closed (NC):</strong> Spring drives valve closed on power loss -
-                  used for cooling, steam
-                </li>
-                <li className="pl-1">
-                  <strong>Non-spring return:</strong> Actuator holds last position on power loss -
-                  used where safe
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Fail-Safe Selection Guide
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Fail Position</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Actuator Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Reasoning</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LTHW heating valve</td>
-                      <td className="border border-white/10 px-3 py-2">Open</td>
-                      <td className="border border-white/10 px-3 py-2">Spring return NO</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Prevent freeze damage, maintain warmth
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CHW cooling valve</td>
-                      <td className="border border-white/10 px-3 py-2">Closed</td>
-                      <td className="border border-white/10 px-3 py-2">Spring return NC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Prevent overcooling, condensation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Data centre cooling</td>
-                      <td className="border border-white/10 px-3 py-2">Open</td>
-                      <td className="border border-white/10 px-3 py-2">Spring return NO</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Maintain cooling for equipment protection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Steam valve</td>
-                      <td className="border border-white/10 px-3 py-2">Closed</td>
-                      <td className="border border-white/10 px-3 py-2">Spring return NC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Safety - prevent uncontrolled steam flow
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fresh air damper</td>
-                      <td className="border border-white/10 px-3 py-2">Closed</td>
-                      <td className="border border-white/10 px-3 py-2">Spring return NC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Prevent uncontrolled outside air ingress
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fire/smoke damper</td>
-                      <td className="border border-white/10 px-3 py-2">Closed</td>
-                      <td className="border border-white/10 px-3 py-2">Spring return NC</td>
-                      <td className="border border-white/10 px-3 py-2">Fire compartmentation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        General ventilation damper
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Last position</td>
-                      <td className="border border-white/10 px-3 py-2">Non-spring return</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        No safety-critical fail position
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Actuator Sizing Checklist
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="font-medium text-white mb-2">For Valve Actuators:</p>
-                  <ul className="text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Stroke ≥ valve stem travel</li>
-                    <li className="pl-1">Force ≥ close-off pressure requirement × 1.25</li>
-                    <li className="pl-1">Running time appropriate for control loop</li>
-                    <li className="pl-1">Supply voltage matches available power</li>
-                    <li className="pl-1">Control signal compatible with BMS output</li>
-                    <li className="pl-1">Fail position (spring return if required)</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium text-white mb-2">For Damper Actuators:</p>
-                  <ul className="text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Torque ≥ calculated requirement × 1.25</li>
-                    <li className="pl-1">Rotation angle matches damper (usually 90°)</li>
-                    <li className="pl-1">Mounting type compatible (direct/linkage)</li>
-                    <li className="pl-1">Running time suits application</li>
-                    <li className="pl-1">Control signal matches BMS</li>
-                    <li className="pl-1">Position feedback if required</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Running Time Considerations
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Running Time</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Control Characteristic
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">15-30 seconds</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        On/off actuators, quick-acting
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fast response, may cause hunting if used for modulating
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">60-90 seconds</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fast modulating, small systems
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Good response, suits tight control loops
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">90-120 seconds</td>
-                      <td className="border border-white/10 px-3 py-2">Standard HVAC modulating</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Smooth control, prevents hunting
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">150-240 seconds</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large dampers, high inertia systems
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Stable control, slower response
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Common Sizing Errors</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Undersized torque:</strong> Actuator struggles or fails to move damper
-                  against pressure
-                </li>
-                <li className="pl-1">
-                  <strong>Oversized actuator:</strong> Can damage valve/damper, wastes energy,
-                  causes hunting
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong stroke:</strong> Valve does not fully open or close, poor control
-                </li>
-                <li className="pl-1">
-                  <strong>Too fast running time:</strong> Causes control instability and hunting
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong fail position:</strong> System fails to unsafe condition
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design principle:</strong> Always apply a 25% safety factor to calculated
-              torque or force requirements. This accounts for bearing friction increase over time,
-              dirt accumulation, and operating conditions beyond design parameters.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Match actuator type to valve mechanism (linear vs rotary)</li>
+              <li>Verify stroke or rotation angle meets valve/damper requirement</li>
+              <li>Calculate force/torque requirement with 25% safety factor</li>
+              <li>Specify appropriate running time for control application</li>
+              <li>Determine fail-safe position requirement (spring return NO/NC)</li>
+              <li>Confirm control signal compatibility with BMS outputs</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Standard HVAC running time: <strong>90-120 seconds</strong></li>
+              <li>Low-pressure damper torque factor: <strong>4-8 Nm/m²</strong></li>
+              <li>Safety factor for sizing: <strong>25% minimum</strong></li>
+              <li>2-10V fault threshold: <strong>&lt;2V indicates cable break</strong></li>
+              <li>SELV supply voltage: <strong>24V AC</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Valve Actuator Selection for AHU Heating Coil
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Select an actuator for a DN32 2-port LTHW valve on an AHU
-                heating coil with 400kPa differential pressure.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Given data:</p>
-                <p className="ml-4">Valve: DN32, 2-port globe valve, 10mm stroke</p>
-                <p className="ml-4">Differential pressure: 400 kPa</p>
-                <p className="ml-4">Control: Modulating 0-10V from BMS</p>
-                <p className="ml-4">Fail-safe: Required (heating application)</p>
-                <p className="mt-2">Force calculation:</p>
-                <p className="ml-4">Valve seat area (DN32) ≈ 3.2 cm² (from valve datasheet)</p>
-                <p className="ml-4">Force = 400 kPa × 3.2 cm² × 10 = 1,280 N</p>
-                <p className="ml-4">With 25% safety factor = 1,280 × 1.25 = 1,600 N</p>
-                <p className="mt-2">Actuator specification:</p>
-                <p className="ml-4">- Stroke: ≥10mm (valve requirement)</p>
-                <p className="ml-4">- Force: ≥1,600N</p>
-                <p className="ml-4">- Control: 0-10V DC input</p>
-                <p className="ml-4">- Running time: 90-120 seconds (standard HVAC)</p>
-                <p className="ml-4">- Fail position: Spring return Normally Open (NO)</p>
-                <p className="ml-4">- Supply: 24V AC (SELV for safety)</p>
-                <p className="mt-2 text-green-400">
-                  Select: Linear actuator 2,500N, 15mm stroke, spring return NO
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Damper Actuator Sizing for Fresh Air Intake
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Size a direct-coupled actuator for an 800mm × 600mm fresh
-                air intake damper operating against 600Pa static pressure.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Given data:</p>
-                <p className="ml-4">Damper: 800mm × 600mm opposed blade</p>
-                <p className="ml-4">Static pressure: 600 Pa (medium pressure)</p>
-                <p className="ml-4">Control: Modulating 2-10V</p>
-                <p className="ml-4">Position feedback: Required</p>
-                <p className="mt-2">Torque calculation:</p>
-                <p className="ml-4">Damper area = 0.8m × 0.6m = 0.48 m²</p>
-                <p className="ml-4">Torque factor (medium pressure) = 10 Nm/m²</p>
-                <p className="ml-4">Base torque = 0.48 × 10 = 4.8 Nm</p>
-                <p className="ml-4">With 25% safety factor = 4.8 × 1.25 = 6.0 Nm</p>
-                <p className="mt-2">Actuator specification:</p>
-                <p className="ml-4">- Torque: ≥6 Nm</p>
-                <p className="ml-4">- Rotation: 90°</p>
-                <p className="ml-4">- Control: 2-10V DC (fault detection)</p>
-                <p className="ml-4">- Feedback: 2-10V position signal</p>
-                <p className="ml-4">- Running time: 90 seconds</p>
-                <p className="ml-4">
-                  - Fail position: Spring return NC (prevent uncontrolled outside air)
-                </p>
-                <p className="mt-2 text-green-400">
-                  Select: 8 Nm direct-coupled, spring return closed, 2-10V with feedback
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Position Feedback Signal Interpretation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A modulating actuator with 2-10V feedback shows various
-                readings. Interpret the damper positions.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Signal interpretation (2-10V range):</p>
-                <p className="mt-2">Feedback reading: 2.0V</p>
-                <p className="ml-4">Position = (2.0 - 2) / (10 - 2) × 100% = 0%</p>
-                <p className="ml-4 text-green-400">Damper is fully closed</p>
-                <p className="mt-2">Feedback reading: 6.0V</p>
-                <p className="ml-4">Position = (6.0 - 2) / (10 - 2) × 100% = 50%</p>
-                <p className="ml-4 text-green-400">Damper is half open</p>
-                <p className="mt-2">Feedback reading: 10.0V</p>
-                <p className="ml-4">Position = (10.0 - 2) / (10 - 2) × 100% = 100%</p>
-                <p className="ml-4 text-green-400">Damper is fully open</p>
-                <p className="mt-2">Feedback reading: 0.0V</p>
-                <p className="ml-4 text-red-400">
-                  Invalid - below 2V minimum indicates cable fault!
-                </p>
-                <p className="ml-4 text-red-400">BMS should generate fault alarm</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Actuator Selection Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Match actuator type to valve mechanism (linear vs rotary)</li>
-                <li className="pl-1">
-                  Verify stroke or rotation angle meets valve/damper requirement
-                </li>
-                <li className="pl-1">Calculate force/torque requirement with 25% safety factor</li>
-                <li className="pl-1">Specify appropriate running time for control application</li>
-                <li className="pl-1">
-                  Determine fail-safe position requirement (spring return NO/NC)
-                </li>
-                <li className="pl-1">Confirm control signal compatibility with BMS outputs</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Using linear actuator on rotary valve</strong> - incompatible motion types</li>
+                <li><strong>Specifying wrong fail position</strong> - system fails to unsafe state</li>
+                <li><strong>Ignoring close-off pressure rating</strong> - valve leaks under pressure</li>
+                <li><strong>Running time too fast for modulating</strong> - causes control hunting</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Standard HVAC running time: <strong>90-120 seconds</strong>
-                </li>
-                <li className="pl-1">
-                  Low-pressure damper torque factor: <strong>4-8 Nm/m²</strong>
-                </li>
-                <li className="pl-1">
-                  Safety factor for sizing: <strong>25% minimum</strong>
-                </li>
-                <li className="pl-1">
-                  2-10V fault threshold: <strong>&lt;2V indicates cable break</strong>
-                </li>
-                <li className="pl-1">
-                  SELV supply voltage: <strong>24V AC</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Using linear actuator on rotary valve</strong> - incompatible motion types
-                </li>
-                <li className="pl-1">
-                  <strong>Specifying wrong fail position</strong> - system fails to unsafe state
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring close-off pressure rating</strong> - valve leaks under pressure
-                </li>
-                <li className="pl-1">
-                  <strong>Running time too fast for modulating</strong> - causes control hunting
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Actuator Types</p>
-                <ul className="space-y-0.5">
-                  <li>Linear: Globe/gate valves (stroke in mm)</li>
-                  <li>Rotary: Ball/butterfly valves (90° rotation)</li>
-                  <li>Spring return: Fail-safe positioning (NO/NC)</li>
-                  <li>Non-spring return: Hold last position</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Control Signals</p>
-                <ul className="space-y-0.5">
-                  <li>0-10V: Standard modulating (0V = 0%)</li>
-                  <li>2-10V: Fault-detecting (0V = cable break)</li>
-                  <li>4-20mA: Long distance, noisy environments</li>
-                  <li>Three-point: Open/close/stop relay control</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section5-4">
-              Next: Communication Protocols
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section5-2")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Sensors and measurement
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section5-4")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Communication protocols
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

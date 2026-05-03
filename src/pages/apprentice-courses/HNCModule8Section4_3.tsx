@@ -1,8 +1,21 @@
-import { ArrowLeft, Activity, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 8 · Section 4 · Subsection 3 — Variable Speed Drives
+ * HNC Electrical Engineering for Building Services (HVAC Systems)
+ *   VSD principles, PWM technology, V/f control, energy savings and harmonic considerations for HVAC applications
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Variable Speed Drives - HNC Module 8 Section 4.3';
@@ -271,1195 +284,396 @@ const faqs = [
 ];
 
 const HNCModule8Section4_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section4")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module8-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Activity className="h-4 w-4" />
-            <span>Module 8.4.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Variable Speed Drives
-          </h1>
-          <p className="text-white">
-            VSD principles, PWM technology, V/f control, energy savings and harmonic considerations
-            for HVAC applications
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 8 · Section 4 · Subsection 3"
+            title="Variable Speed Drives"
+            description="VSD principles, PWM technology, V/f control, energy savings and harmonic considerations for HVAC applications"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>VSD purpose:</strong> Control motor speed by varying frequency and voltage
-              </li>
-              <li className="pl-1">
-                <strong>Main sections:</strong> Rectifier, DC bus, PWM inverter
-              </li>
-              <li className="pl-1">
-                <strong>V/f control:</strong> Maintains constant flux for constant torque
-              </li>
-              <li className="pl-1">
-                <strong>Energy savings:</strong> Cube law - 50% speed = 12.5% power for fans/pumps
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Explain the operating principle and main components of a VSD",
+              "Describe PWM inverter technology and switching operation",
+              "Understand V/f control and constant flux principle",
+              "Apply vector control concepts for dynamic applications",
+              "Calculate energy savings using fan and pump affinity laws",
+              "Identify harmonic effects and specify appropriate mitigation",
+              "Select appropriate EMC measures for VSD installations",
+              "Specify VSDs for HVAC motor control applications",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="VSD Principles and Construction">
+            <p>A Variable Speed Drive (VSD), also known as a Variable Frequency Drive (VFD) or inverter, controls AC motor speed by varying the frequency and voltage of the power supplied to the motor. Since induction motor speed is directly proportional to supply frequency, changing frequency provides precise, efficient speed control.</p>
+            <p><strong>Three main sections of a VSD:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Rectifier:</strong> Converts incoming AC to DC using diode or thyristor bridge</li>
+              <li><strong>DC bus (DC link):</strong> Smooths DC with capacitors, may include braking resistor</li>
+              <li><strong>Inverter:</strong> Converts DC to variable frequency AC using IGBT switches with PWM</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>HVAC applications:</strong> AHU fans, pumps, chillers, cooling towers
-              </li>
-              <li className="pl-1">
-                <strong>Typical savings:</strong> 30-50% on variable-flow systems
-              </li>
-              <li className="pl-1">
-                <strong>Harmonics:</strong> 30-40% THDi requires mitigation planning
-              </li>
-              <li className="pl-1">
-                <strong>EMC:</strong> Screened cables essential for compliance
-              </li>
+            <p><strong>Motor Speed Formula</strong></p>
+            <p>N<sub>s</sub> = 120 &times; f / p</p>
+            <p>Where Ns = synchronous speed (rpm), f = frequency (Hz), p = number of poles</p>
+            <p><strong>VSD Voltage Levels</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>230V single-phase:</strong> ~325V DC — 230 &times; 1.414 = 325V</li>
+              <li><strong>400V three-phase:</strong> ~565V DC — 400 &times; 1.414 = 565V</li>
+              <li><strong>690V three-phase:</strong> ~975V DC — 690 &times; 1.414 = 975V</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>IGBT Inverter Section</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>IGBT (Insulated Gate Bipolar Transistor):</strong> Fast-switching power semiconductor</li>
+              <li><strong>Six IGBTs:</strong> Two per phase in three-phase inverter (upper and lower)</li>
+              <li><strong>Freewheeling diodes:</strong> Parallel to each IGBT for current return paths</li>
+              <li><strong>Switching frequency:</strong> Typically 2-16 kHz (carrier frequency)</li>
+            </ul>
+            <p><strong>Speed Calculation Example</strong></p>
+            <p><strong>4-pole motor:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>At 50Hz: Ns = 120 &times; 50 / 4 = <strong>1500 rpm</strong></li>
+              <li>At 40Hz: Ns = 120 &times; 40 / 4 = <strong>1200 rpm</strong></li>
+              <li>At 25Hz: Ns = 120 &times; 25 / 4 = <strong>750 rpm</strong></li>
+              <li>At 60Hz: Ns = 120 &times; 60 / 4 = <strong>1800 rpm</strong></li>
+            </ul>
+            <p>Actual speed slightly less due to slip (typically 2-5%)</p>
+            <p><strong>Terminology note:</strong> VSD, VFD, and inverter are often used interchangeably in HVAC. Technically, the inverter is just the DC-to-AC section, but commonly refers to the complete drive.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Explain the operating principle and main components of a VSD',
-              'Describe PWM inverter technology and switching operation',
-              'Understand V/f control and constant flux principle',
-              'Apply vector control concepts for dynamic applications',
-              'Calculate energy savings using fan and pump affinity laws',
-              'Identify harmonic effects and specify appropriate mitigation',
-              'Select appropriate EMC measures for VSD installations',
-              'Specify VSDs for HVAC motor control applications',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: VSD Principles and Construction */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            VSD Principles and Construction
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="PWM Technology and V/f Control">
+            <p>Pulse Width Modulation (PWM) is the technique used by modern VSDs to create variable frequency, variable voltage AC output from the fixed DC bus. The inverter IGBTs switch rapidly, creating voltage pulses whose average value follows a sinusoidal pattern.</p>
+            <p><strong>PWM Operating Principle:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>DC bus:</strong> Provides constant DC voltage (e.g., 565V for 400V supply)</li>
+              <li><strong>Pulse width:</strong> Varied to control effective output voltage</li>
+              <li><strong>Switching pattern:</strong> Creates sinusoidal average current in motor</li>
+              <li><strong>Carrier frequency:</strong> The switching rate (2-16 kHz typical)</li>
+            </ul>
+            <p><strong>V/f Ratio Control Principle</strong></p>
+            <p>Flux (Phi) proportional to V / f</p>
+            <p>Constant V/f ratio maintains constant motor flux and torque capability</p>
+            <p><strong>Why Constant V/f is Important</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Motor torque depends on magnetic flux</li>
+              <li>Flux is proportional to V/f ratio</li>
+              <li>If frequency reduces without voltage reduction, flux increases (saturation)</li>
+              <li>If voltage reduces without frequency reduction, flux collapses (no torque)</li>
+              <li>Maintaining constant V/f keeps flux constant across speed range</li>
+            </ul>
+            <p><strong>V/f Characteristic Curve</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>10Hz:</strong> 80V — 8 V/Hz — Constant torque</li>
+              <li><strong>25Hz:</strong> 200V — 8 V/Hz — Constant torque</li>
+              <li><strong>50Hz (base):</strong> 400V — 8 V/Hz — Rated point</li>
+              <li><strong>60Hz:</strong> 400V (max) — 6.67 V/Hz — Field weakening</li>
+            </ul>
+            <p><strong>Below Base Frequency</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Constant V/f maintained</li>
+              <li>Constant torque available</li>
+              <li>Power reduces with speed</li>
+              <li>Normal HVAC operating range</li>
+            </ul>
+            <p><strong>Above Base Frequency</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Voltage limited (cannot exceed rated)</li>
+              <li>V/f ratio decreases, flux weakens</li>
+              <li>Torque capability reduces</li>
+              <li>Constant power region</li>
+            </ul>
+            <p><strong>Carrier Frequency Effects</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Smoother motor current:</strong> More motor current ripple</li>
+              <li><strong>Quieter motor operation:</strong> Audible motor noise</li>
+              <li><strong>Higher inverter losses:</strong> Lower inverter losses</li>
+              <li><strong>More motor insulation stress:</strong> Less motor insulation stress</li>
+              <li><strong>More EMI emissions:</strong> Less EMI emissions</li>
+            </ul>
+            <p>Typical HVAC setting: 4-8 kHz balances efficiency and motor heating</p>
+            <p><strong>Low frequency boost:</strong> At very low frequencies (&lt;5Hz), additional voltage boost compensates for stator resistance voltage drop, maintaining flux and torque for starting.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Vector Control and Energy Savings">
+            <p>While V/f control is adequate for most HVAC applications, vector control provides superior performance for demanding situations. Understanding both control methods and the dramatic energy savings achievable is essential for modern building services.</p>
+            <p><strong>Control Method Comparison:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Speed accuracy:</strong> plus/minus 2-5% — plus/minus 0.1-1%</li>
+              <li><strong>Low speed torque:</strong> Limited — Excellent (100% at 0 Hz)</li>
+              <li><strong>Dynamic response:</strong> Moderate — Fast</li>
+              <li><strong>Setup complexity:</strong> Simple — Motor data required</li>
+              <li><strong>Typical use:</strong> Fans, pumps — Hoists, precise positioning</li>
+            </ul>
+            <p><strong>Fan and Pump Affinity Laws (Cube Law)</strong></p>
+            <p>Flow proportional to N</p>
+            <p>Q1/Q2 = N1/N2</p>
+            <p>Head proportional to N squared</p>
+            <p>H1/H2 = (N1/N2) squared</p>
+            <p>Power proportional to N cubed</p>
+            <p>P1/P2 = (N1/N2) cubed</p>
+            <p><strong>Energy Savings - Power vs Speed</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>100%:</strong> 100% — 100% — Baseline</li>
+              <li><strong>90%:</strong> 90% — 73% — 27%</li>
+              <li><strong>80%:</strong> 80% — 51% — 49%</li>
+              <li><strong>70%:</strong> 70% — 34% — 66%</li>
+              <li><strong>60%:</strong> 60% — 22% — 78%</li>
+              <li><strong>50%:</strong> 50% — 12.5% — 87.5%</li>
+            </ul>
+            <p><strong>VSD Energy Savings Calculation Example</strong></p>
+            <p><strong>Scenario:</strong> 15kW AHU fan operates 5000 hours/year at average 70% speed vs damper control</p>
+            <p>Damper control: Power = 15kW constant (throttled)</p>
+            <p>VSD at 70%: Power = 15 &times; 0.7 cubed = 15 &times; 0.343 = 5.15kW</p>
+            <p>Annual saving = (15 - 5.15) &times; 5000 hours</p>
+            <p>Annual saving = <strong>49,250 kWh</strong></p>
+            <p>At 15p/kWh = <strong>GBP 7,387/year</strong></p>
+            <p>Typical payback: 1-2 years for 15kW drive</p>
+            <p><strong>Vector Control Types</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Sensorless vector:</strong> Speed estimated from current/voltage - good for most applications</li>
+              <li><strong>Closed-loop vector:</strong> Uses encoder feedback - best accuracy and torque control</li>
+              <li><strong>Direct Torque Control (DTC):</strong> Alternative method with very fast torque response</li>
+            </ul>
+            <p><strong>HVAC recommendation:</strong> V/f control is adequate for 95% of HVAC fan and pump applications. Vector control is beneficial for cooling tower fans, variable refrigerant flow compressors, and any application requiring precise speed control or high starting torque.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Harmonics, EMC and VSD Selection">
+            <p>VSDs create harmonic currents that can affect power quality and cause interference. Understanding these effects and implementing appropriate mitigation is essential for compliant, reliable installations.</p>
+            <p><strong>Harmonic Generation by 6-Pulse VSDs:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Characteristic harmonics:</strong> h = 6k plus/minus 1 (5th, 7th, 11th, 13th...)</li>
+              <li><strong>Typical THDi:</strong> 30-40% at full load, higher at part load</li>
+              <li><strong>5th harmonic:</strong> Typically 30-40% of fundamental</li>
+              <li><strong>7th harmonic:</strong> Typically 15-25% of fundamental</li>
+            </ul>
+            <p><strong>Harmonic Effects on Electrical Systems</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Transformer heating:</strong> Eddy currents at harmonic frequencies — Derating or overheating</li>
+              <li><strong>Neutral overload:</strong> Triplen harmonics (3rd, 9th) add in neutral — Overheated neutral conductor</li>
+              <li><strong>Capacitor damage:</strong> Resonance amplification — PFC capacitor failure</li>
+              <li><strong>Voltage distortion:</strong> Harmonic currents in source impedance — Equipment malfunction</li>
+            </ul>
+            <p><strong>Harmonic Mitigation Methods</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>No mitigation (6-pulse):</strong> 30-40% — Small drives on stiff supply</li>
+              <li><strong>Input line reactor (3-5%):</strong> 25-35% — Standard for medium drives</li>
+              <li><strong>DC bus choke:</strong> 30-35% — Built-in on some drives</li>
+              <li><strong>Passive filter:</strong> 8-15% — Large single drives</li>
+              <li><strong>12-pulse rectifier:</strong> 8-12% — Large drives &gt;100kW</li>
+              <li><strong>Active Front End (AFE):</strong> &lt;5% — Premium quality, regeneration</li>
+              <li><strong>Active filter:</strong> &lt;5% — Multiple drives, retrofit</li>
+            </ul>
+            <p><strong>EMC Requirements and Measures</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>BS EN 61800-3:</strong> EMC standard for power drive systems</li>
+              <li><strong>Category C2:</strong> First environment (residential) - requires filtering</li>
+              <li><strong>Category C3:</strong> Second environment (industrial) - less stringent</li>
+              <li><strong>Motor cables:</strong> Use screened/armoured with 360-degree gland termination</li>
+              <li><strong>Separation:</strong> Keep VSD cables away from signal and data cables</li>
+            </ul>
+            <p><strong>EMC Installation Best Practice</strong></p>
+            <p><strong>Motor Cable Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Screened cable (SY, CY or VSD-specific)</li>
+              <li>Screen terminated 360 degrees at both ends</li>
+              <li>EMC cable glands at drive and motor</li>
+              <li>Keep cable length to minimum practical</li>
+            </ul>
+            <p><strong>Installation Separation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>300mm from signal cables (parallel run)</li>
+              <li>Cross at 90 degrees where unavoidable</li>
+              <li>Separate tray/trunking for VSD outputs</li>
+              <li>Input and output cables on opposite sides</li>
+            </ul>
+            <p><strong>VSD Selection Criteria for HVAC</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Power rating:</strong> Match or slightly exceed motor kW</li>
+              <li><strong>Current rating:</strong> Must exceed motor FLC (consider derating factors)</li>
+              <li><strong>Supply voltage:</strong> 230V single-phase or 400V three-phase</li>
+              <li><strong>Enclosure rating:</strong> IP20 in panels, IP54/55 standalone</li>
+              <li><strong>Control interface:</strong> Modbus, BACnet, analog 0-10V, digital I/O</li>
+              <li><strong>EMC filter:</strong> Built-in C2 filter for first environment</li>
+              <li><strong>Harmonic mitigation:</strong> Line reactor or built-in DC choke minimum</li>
+            </ul>
+            <p><strong>Motor Considerations for VSD Operation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Insulation:</strong> Inverter-duty motors have reinforced insulation for PWM spikes</li>
+              <li><strong>Cooling:</strong> Self-cooled motors derate at low speeds - consider force ventilation</li>
+              <li><strong>Bearings:</strong> Insulated or ceramic bearings prevent EDM shaft damage</li>
+              <li><strong>Speed range:</strong> Specify minimum continuous speed requirement</li>
+            </ul>
+            <p><strong>G5/5 compliance:</strong> Engineering Recommendation G5/5 sets UK limits for harmonic contribution. Large installations (&gt;75kW total drives) may require harmonic assessment to demonstrate compliance and avoid connection agreement issues.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              A Variable Speed Drive (VSD), also known as a Variable Frequency Drive (VFD) or
-              inverter, controls AC motor speed by varying the frequency and voltage of the power
-              supplied to the motor. Since induction motor speed is directly proportional to supply
-              frequency, changing frequency provides precise, efficient speed control.
+              <strong>Example 1: Motor Speed at Reduced Frequency</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Three main sections of a VSD:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Rectifier:</strong> Converts incoming AC to DC using diode or thyristor
-                  bridge
-                </li>
-                <li className="pl-1">
-                  <strong>DC bus (DC link):</strong> Smooths DC with capacitors, may include braking
-                  resistor
-                </li>
-                <li className="pl-1">
-                  <strong>Inverter:</strong> Converts DC to variable frequency AC using IGBT
-                  switches with PWM
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Motor Speed Formula</p>
-              <p className="font-mono text-center text-lg mb-2">
-                N<sub>s</sub> = 120 &times; f / p
-              </p>
-              <p className="text-xs text-white text-center">
-                Where Ns = synchronous speed (rpm), f = frequency (Hz), p = number of poles
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">VSD Voltage Levels</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Supply Voltage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">DC Bus Voltage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Calculation</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">230V single-phase</td>
-                      <td className="border border-white/10 px-3 py-2">~325V DC</td>
-                      <td className="border border-white/10 px-3 py-2">230 &times; 1.414 = 325V</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">400V three-phase</td>
-                      <td className="border border-white/10 px-3 py-2">~565V DC</td>
-                      <td className="border border-white/10 px-3 py-2">400 &times; 1.414 = 565V</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">690V three-phase</td>
-                      <td className="border border-white/10 px-3 py-2">~975V DC</td>
-                      <td className="border border-white/10 px-3 py-2">690 &times; 1.414 = 975V</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">IGBT Inverter Section</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>IGBT (Insulated Gate Bipolar Transistor):</strong> Fast-switching power
-                  semiconductor
-                </li>
-                <li className="pl-1">
-                  <strong>Six IGBTs:</strong> Two per phase in three-phase inverter (upper and
-                  lower)
-                </li>
-                <li className="pl-1">
-                  <strong>Freewheeling diodes:</strong> Parallel to each IGBT for current return
-                  paths
-                </li>
-                <li className="pl-1">
-                  <strong>Switching frequency:</strong> Typically 2-16 kHz (carrier frequency)
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Speed Calculation Example
-              </p>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm text-white mb-2">
-                  <strong>4-pole motor:</strong>
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    At 50Hz: Ns = 120 &times; 50 / 4 = <strong>1500 rpm</strong>
-                  </li>
-                  <li className="pl-1">
-                    At 40Hz: Ns = 120 &times; 40 / 4 = <strong>1200 rpm</strong>
-                  </li>
-                  <li className="pl-1">
-                    At 25Hz: Ns = 120 &times; 25 / 4 = <strong>750 rpm</strong>
-                  </li>
-                  <li className="pl-1">
-                    At 60Hz: Ns = 120 &times; 60 / 4 = <strong>1800 rpm</strong>
-                  </li>
-                </ul>
-                <p className="text-xs text-white mt-2">
-                  Actual speed slightly less due to slip (typically 2-5%)
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Terminology note:</strong> VSD, VFD, and inverter are often used
-              interchangeably in HVAC. Technically, the inverter is just the DC-to-AC section, but
-              commonly refers to the complete drive.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: PWM Technology and V/f Control */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            PWM Technology and V/f Control
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Question:</strong> A 4-pole induction motor with 3% slip runs on a VSD at 35Hz. Calculate the actual speed.</p>
+            <p>Synchronous speed: Ns = 120 &times; f / p</p>
+            <p>Ns = 120 &times; 35 / 4 = 1050 rpm</p>
+            <p>Actual speed with slip:</p>
+            <p>N = Ns &times; (1 - slip) = 1050 &times; (1 - 0.03)</p>
+            <p>N = 1050 &times; 0.97 = <strong>1018.5 rpm</strong></p>
             <p>
-              Pulse Width Modulation (PWM) is the technique used by modern VSDs to create variable
-              frequency, variable voltage AC output from the fixed DC bus. The inverter IGBTs switch
-              rapidly, creating voltage pulses whose average value follows a sinusoidal pattern.
+              <strong>Example 2: V/f Ratio Calculation</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">PWM Operating Principle:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>DC bus:</strong> Provides constant DC voltage (e.g., 565V for 400V supply)
-                </li>
-                <li className="pl-1">
-                  <strong>Pulse width:</strong> Varied to control effective output voltage
-                </li>
-                <li className="pl-1">
-                  <strong>Switching pattern:</strong> Creates sinusoidal average current in motor
-                </li>
-                <li className="pl-1">
-                  <strong>Carrier frequency:</strong> The switching rate (2-16 kHz typical)
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                V/f Ratio Control Principle
-              </p>
-              <p className="font-mono text-center text-lg mb-2">Flux (Phi) proportional to V / f</p>
-              <p className="text-xs text-white text-center">
-                Constant V/f ratio maintains constant motor flux and torque capability
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Why Constant V/f is Important
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Motor torque depends on magnetic flux</li>
-                <li className="pl-1">Flux is proportional to V/f ratio</li>
-                <li className="pl-1">
-                  If frequency reduces without voltage reduction, flux increases (saturation)
-                </li>
-                <li className="pl-1">
-                  If voltage reduces without frequency reduction, flux collapses (no torque)
-                </li>
-                <li className="pl-1">
-                  Maintaining constant V/f keeps flux constant across speed range
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                V/f Characteristic Curve
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Frequency</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Voltage (400V motor)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">V/f Ratio</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Region</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">10Hz</td>
-                      <td className="border border-white/10 px-3 py-2">80V</td>
-                      <td className="border border-white/10 px-3 py-2">8 V/Hz</td>
-                      <td className="border border-white/10 px-3 py-2">Constant torque</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">25Hz</td>
-                      <td className="border border-white/10 px-3 py-2">200V</td>
-                      <td className="border border-white/10 px-3 py-2">8 V/Hz</td>
-                      <td className="border border-white/10 px-3 py-2">Constant torque</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">50Hz (base)</td>
-                      <td className="border border-white/10 px-3 py-2">400V</td>
-                      <td className="border border-white/10 px-3 py-2">8 V/Hz</td>
-                      <td className="border border-white/10 px-3 py-2">Rated point</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">60Hz</td>
-                      <td className="border border-white/10 px-3 py-2">400V (max)</td>
-                      <td className="border border-white/10 px-3 py-2">6.67 V/Hz</td>
-                      <td className="border border-white/10 px-3 py-2">Field weakening</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Below Base Frequency</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Constant V/f maintained</li>
-                  <li className="pl-1">Constant torque available</li>
-                  <li className="pl-1">Power reduces with speed</li>
-                  <li className="pl-1">Normal HVAC operating range</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Above Base Frequency</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Voltage limited (cannot exceed rated)</li>
-                  <li className="pl-1">V/f ratio decreases, flux weakens</li>
-                  <li className="pl-1">Torque capability reduces</li>
-                  <li className="pl-1">Constant power region</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Carrier Frequency Effects
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Higher Carrier Frequency
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Lower Carrier Frequency
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Smoother motor current</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        More motor current ripple
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Quieter motor operation</td>
-                      <td className="border border-white/10 px-3 py-2">Audible motor noise</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Higher inverter losses</td>
-                      <td className="border border-white/10 px-3 py-2">Lower inverter losses</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        More motor insulation stress
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Less motor insulation stress
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">More EMI emissions</td>
-                      <td className="border border-white/10 px-3 py-2">Less EMI emissions</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-2">
-                Typical HVAC setting: 4-8 kHz balances efficiency and motor heating
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Low frequency boost:</strong> At very low frequencies (&lt;5Hz), additional
-              voltage boost compensates for stator resistance voltage drop, maintaining flux and
-              torque for starting.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Vector Control and Advanced Methods */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Vector Control and Energy Savings
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Question:</strong> A 400V, 50Hz motor operates at 30Hz. What voltage should the VSD provide to maintain constant flux?</p>
+            <p>V/f ratio at rated: 400V / 50Hz = 8 V/Hz</p>
+            <p>Required voltage at 30Hz:</p>
+            <p>V = 8 V/Hz &times; 30Hz = <strong>240V</strong></p>
+            <p>The VSD reduces output voltage proportionally to maintain flux</p>
             <p>
-              While V/f control is adequate for most HVAC applications, vector control provides
-              superior performance for demanding situations. Understanding both control methods and
-              the dramatic energy savings achievable is essential for modern building services.
+              <strong>Example 3: Fan Power at Reduced Speed</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Control Method Comparison:</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">V/f Control</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Vector Control</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Speed accuracy</td>
-                      <td className="border border-white/10 px-3 py-2">plus/minus 2-5%</td>
-                      <td className="border border-white/10 px-3 py-2">plus/minus 0.1-1%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Low speed torque</td>
-                      <td className="border border-white/10 px-3 py-2">Limited</td>
-                      <td className="border border-white/10 px-3 py-2">Excellent (100% at 0 Hz)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Dynamic response</td>
-                      <td className="border border-white/10 px-3 py-2">Moderate</td>
-                      <td className="border border-white/10 px-3 py-2">Fast</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Setup complexity</td>
-                      <td className="border border-white/10 px-3 py-2">Simple</td>
-                      <td className="border border-white/10 px-3 py-2">Motor data required</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Typical use</td>
-                      <td className="border border-white/10 px-3 py-2">Fans, pumps</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Hoists, precise positioning
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Fan and Pump Affinity Laws (Cube Law)
-              </p>
-              <div className="grid grid-cols-3 gap-3 text-center text-sm">
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-bold text-elec-yellow mb-1">Flow proportional to N</p>
-                  <p className="text-white text-xs">Q1/Q2 = N1/N2</p>
-                </div>
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-bold text-elec-yellow mb-1">Head proportional to N squared</p>
-                  <p className="text-white text-xs">H1/H2 = (N1/N2) squared</p>
-                </div>
-                <div className="p-3 rounded bg-black/30">
-                  <p className="font-bold text-elec-yellow mb-1">Power proportional to N cubed</p>
-                  <p className="text-white text-xs">P1/P2 = (N1/N2) cubed</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Energy Savings - Power vs Speed
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Speed (%)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Flow (%)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Power (%)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Energy Saving</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">100%</td>
-                      <td className="border border-white/10 px-3 py-2">100%</td>
-                      <td className="border border-white/10 px-3 py-2">100%</td>
-                      <td className="border border-white/10 px-3 py-2">Baseline</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">90%</td>
-                      <td className="border border-white/10 px-3 py-2">90%</td>
-                      <td className="border border-white/10 px-3 py-2">73%</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">27%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">80%</td>
-                      <td className="border border-white/10 px-3 py-2">80%</td>
-                      <td className="border border-white/10 px-3 py-2">51%</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">49%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">70%</td>
-                      <td className="border border-white/10 px-3 py-2">70%</td>
-                      <td className="border border-white/10 px-3 py-2">34%</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">66%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">60%</td>
-                      <td className="border border-white/10 px-3 py-2">60%</td>
-                      <td className="border border-white/10 px-3 py-2">22%</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">78%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">50%</td>
-                      <td className="border border-white/10 px-3 py-2">50%</td>
-                      <td className="border border-white/10 px-3 py-2">12.5%</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">87.5%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                VSD Energy Savings Calculation Example
-              </p>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm text-white mb-2">
-                  <strong>Scenario:</strong> 15kW AHU fan operates 5000 hours/year at average 70%
-                  speed vs damper control
-                </p>
-                <div className="bg-black/30 p-3 rounded text-sm font-mono text-white mt-3">
-                  <p>Damper control: Power = 15kW constant (throttled)</p>
-                  <p>VSD at 70%: Power = 15 &times; 0.7 cubed = 15 &times; 0.343 = 5.15kW</p>
-                  <p className="mt-2">Annual saving = (15 - 5.15) &times; 5000 hours</p>
-                  <p>
-                    Annual saving = <strong>49,250 kWh</strong>
-                  </p>
-                  <p className="mt-2">
-                    At 15p/kWh = <strong>GBP 7,387/year</strong>
-                  </p>
-                  <p className="text-white mt-2">Typical payback: 1-2 years for 15kW drive</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Vector Control Types</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Sensorless vector:</strong> Speed estimated from current/voltage - good
-                  for most applications
-                </li>
-                <li className="pl-1">
-                  <strong>Closed-loop vector:</strong> Uses encoder feedback - best accuracy and
-                  torque control
-                </li>
-                <li className="pl-1">
-                  <strong>Direct Torque Control (DTC):</strong> Alternative method with very fast
-                  torque response
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>HVAC recommendation:</strong> V/f control is adequate for 95% of HVAC fan and
-              pump applications. Vector control is beneficial for cooling tower fans, variable
-              refrigerant flow compressors, and any application requiring precise speed control or
-              high starting torque.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Harmonics, EMC and Selection */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Harmonics, EMC and VSD Selection
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Question:</strong> A 22kW supply fan operates at 65% speed via VSD. Calculate the power consumption.</p>
+            <p>Using cube law: P2 = P1 &times; (N2/N1) cubed</p>
+            <p>P2 = 22kW &times; (0.65) cubed</p>
+            <p>P2 = 22 &times; 0.274625</p>
+            <p>P2 = <strong>6.04kW</strong></p>
+            <p>Energy saving = 22 - 6.04 = 15.96kW (72.5% reduction)</p>
             <p>
-              VSDs create harmonic currents that can affect power quality and cause interference.
-              Understanding these effects and implementing appropriate mitigation is essential for
-              compliant, reliable installations.
+              <strong>Example 4: Annual Energy Savings</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Harmonic Generation by 6-Pulse VSDs:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Characteristic harmonics:</strong> h = 6k plus/minus 1 (5th, 7th, 11th,
-                  13th...)
-                </li>
-                <li className="pl-1">
-                  <strong>Typical THDi:</strong> 30-40% at full load, higher at part load
-                </li>
-                <li className="pl-1">
-                  <strong>5th harmonic:</strong> Typically 30-40% of fundamental
-                </li>
-                <li className="pl-1">
-                  <strong>7th harmonic:</strong> Typically 15-25% of fundamental
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Harmonic Effects on Electrical Systems
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Effect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Cause</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Consequence</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Transformer heating</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Eddy currents at harmonic frequencies
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Derating or overheating</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Neutral overload</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Triplen harmonics (3rd, 9th) add in neutral
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Overheated neutral conductor
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Capacitor damage</td>
-                      <td className="border border-white/10 px-3 py-2">Resonance amplification</td>
-                      <td className="border border-white/10 px-3 py-2">PFC capacitor failure</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Voltage distortion</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Harmonic currents in source impedance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Equipment malfunction</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Harmonic Mitigation Methods
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        THDi Achievable
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">No mitigation (6-pulse)</td>
-                      <td className="border border-white/10 px-3 py-2">30-40%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Small drives on stiff supply
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Input line reactor (3-5%)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">25-35%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Standard for medium drives
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DC bus choke</td>
-                      <td className="border border-white/10 px-3 py-2">30-35%</td>
-                      <td className="border border-white/10 px-3 py-2">Built-in on some drives</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Passive filter</td>
-                      <td className="border border-white/10 px-3 py-2">8-15%</td>
-                      <td className="border border-white/10 px-3 py-2">Large single drives</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">12-pulse rectifier</td>
-                      <td className="border border-white/10 px-3 py-2">8-12%</td>
-                      <td className="border border-white/10 px-3 py-2">Large drives &gt;100kW</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Active Front End (AFE)</td>
-                      <td className="border border-white/10 px-3 py-2">&lt;5%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Premium quality, regeneration
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Active filter</td>
-                      <td className="border border-white/10 px-3 py-2">&lt;5%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multiple drives, retrofit
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                EMC Requirements and Measures
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>BS EN 61800-3:</strong> EMC standard for power drive systems
-                </li>
-                <li className="pl-1">
-                  <strong>Category C2:</strong> First environment (residential) - requires filtering
-                </li>
-                <li className="pl-1">
-                  <strong>Category C3:</strong> Second environment (industrial) - less stringent
-                </li>
-                <li className="pl-1">
-                  <strong>Motor cables:</strong> Use screened/armoured with 360-degree gland
-                  termination
-                </li>
-                <li className="pl-1">
-                  <strong>Separation:</strong> Keep VSD cables away from signal and data cables
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                EMC Installation Best Practice
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-lg bg-white/5">
-                  <p className="text-sm font-medium text-white mb-2">Motor Cable Requirements</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Screened cable (SY, CY or VSD-specific)</li>
-                    <li className="pl-1">Screen terminated 360 degrees at both ends</li>
-                    <li className="pl-1">EMC cable glands at drive and motor</li>
-                    <li className="pl-1">Keep cable length to minimum practical</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded-lg bg-white/5">
-                  <p className="text-sm font-medium text-white mb-2">Installation Separation</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">300mm from signal cables (parallel run)</li>
-                    <li className="pl-1">Cross at 90 degrees where unavoidable</li>
-                    <li className="pl-1">Separate tray/trunking for VSD outputs</li>
-                    <li className="pl-1">Input and output cables on opposite sides</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                VSD Selection Criteria for HVAC
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Parameter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Consideration</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Power rating</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Match or slightly exceed motor kW
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Current rating</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Must exceed motor FLC (consider derating factors)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Supply voltage</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        230V single-phase or 400V three-phase
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Enclosure rating</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        IP20 in panels, IP54/55 standalone
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Control interface</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Modbus, BACnet, analog 0-10V, digital I/O
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">EMC filter</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Built-in C2 filter for first environment
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Harmonic mitigation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Line reactor or built-in DC choke minimum
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Motor Considerations for VSD Operation
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Insulation:</strong> Inverter-duty motors have reinforced insulation for
-                  PWM spikes
-                </li>
-                <li className="pl-1">
-                  <strong>Cooling:</strong> Self-cooled motors derate at low speeds - consider force
-                  ventilation
-                </li>
-                <li className="pl-1">
-                  <strong>Bearings:</strong> Insulated or ceramic bearings prevent EDM shaft damage
-                </li>
-                <li className="pl-1">
-                  <strong>Speed range:</strong> Specify minimum continuous speed requirement
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>G5/5 compliance:</strong> Engineering Recommendation G5/5 sets UK limits for
-              harmonic contribution. Large installations (&gt;75kW total drives) may require
-              harmonic assessment to demonstrate compliance and avoid connection agreement issues.
+            <p><strong>Question:</strong> Calculate annual savings for a 30kW chilled water pump running 6000 hours/year at average 75% speed, compared to throttled valve control.</p>
+            <p><strong>Throttled valve:</strong></p>
+            <p>Annual energy = 30kW &times; 6000h = 180,000 kWh</p>
+            <p><strong>VSD at 75% speed:</strong></p>
+            <p>Power = 30 &times; 0.75 cubed = 30 &times; 0.422 = 12.66kW</p>
+            <p>Annual energy = 12.66 &times; 6000 = 75,960 kWh</p>
+            <p><strong>Annual saving:</strong></p>
+            <p>180,000 - 75,960 = <strong>104,040 kWh/year</strong></p>
+            <p>At 15p/kWh = <strong>GBP 15,606/year</strong></p>
+            <p>Payback on 30kW drive: typically 6-12 months</p>
+            <p>
+              <strong>Example 5: DC Bus Voltage Calculation</strong>
             </p>
-          </div>
-        </section>
+            <p><strong>Question:</strong> A VSD is supplied from 400V three-phase. Calculate the DC bus voltage.</p>
+            <p>DC bus voltage = Peak of line voltage</p>
+            <p>Vdc = Vline &times; root(2)</p>
+            <p>Vdc = 400 &times; 1.414</p>
+            <p>Vdc = <strong>565.6V DC</strong></p>
+            <p>Warning: This voltage remains after power-off until capacitors discharge</p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Essential Formulae:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Ns = 120f/p</strong> - Synchronous speed (rpm)</li>
+              <li><strong>V proportional to f</strong> - Constant V/f maintains flux</li>
+              <li><strong>P proportional to N cubed</strong> - Fan/pump affinity law</li>
+              <li><strong>Vdc = Vline &times; root(2)</strong> - DC bus voltage</li>
+              <li><strong>THDi = root(sum of Ih squared)/I1</strong> - Harmonic distortion</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>400V supply gives <strong>~565V DC bus</strong></li>
+              <li>6-pulse VSD THDi: <strong>30-40%</strong> without filtering</li>
+              <li>Carrier frequency typical: <strong>4-8 kHz</strong> for HVAC</li>
+              <li>50% speed = <strong>12.5% power</strong> (fans/pumps)</li>
+              <li>Line reactor impedance: <strong>3-5%</strong> typical</li>
+            </ul>
+            <p>
+              <strong>Installation Checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Verify motor suitability for VSD operation</li>
+              <li>Size VSD to motor rating (consider ambient temperature)</li>
+              <li>Specify line reactor or built-in DC choke</li>
+              <li>Use screened motor cable with proper glands</li>
+              <li>Separate VSD cables from signal cables</li>
+              <li>Programme minimum speed for motor cooling</li>
+              <li>Configure BMS communications protocol</li>
+              <li>Set appropriate acceleration/deceleration ramps</li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Motor Speed at Reduced Frequency
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 4-pole induction motor with 3% slip runs on a VSD at
-                35Hz. Calculate the actual speed.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Synchronous speed: Ns = 120 &times; f / p</p>
-                <p>Ns = 120 &times; 35 / 4 = 1050 rpm</p>
-                <p className="mt-2">Actual speed with slip:</p>
-                <p>N = Ns &times; (1 - slip) = 1050 &times; (1 - 0.03)</p>
-                <p>
-                  N = 1050 &times; 0.97 = <strong>1018.5 rpm</strong>
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: V/f Ratio Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 400V, 50Hz motor operates at 30Hz. What voltage should
-                the VSD provide to maintain constant flux?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>V/f ratio at rated: 400V / 50Hz = 8 V/Hz</p>
-                <p className="mt-2">Required voltage at 30Hz:</p>
-                <p>
-                  V = 8 V/Hz &times; 30Hz = <strong>240V</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  The VSD reduces output voltage proportionally to maintain flux
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Fan Power at Reduced Speed
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A 22kW supply fan operates at 65% speed via VSD.
-                Calculate the power consumption.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Using cube law: P2 = P1 &times; (N2/N1) cubed</p>
-                <p className="mt-2">P2 = 22kW &times; (0.65) cubed</p>
-                <p>P2 = 22 &times; 0.274625</p>
-                <p>
-                  P2 = <strong>6.04kW</strong>
-                </p>
-                <p className="mt-2 text-green-400">
-                  Energy saving = 22 - 6.04 = 15.96kW (72.5% reduction)
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 4: Annual Energy Savings
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Calculate annual savings for a 30kW chilled water pump
-                running 6000 hours/year at average 75% speed, compared to throttled valve control.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Throttled valve:</strong>
-                </p>
-                <p>Annual energy = 30kW &times; 6000h = 180,000 kWh</p>
-                <p className="mt-2">
-                  <strong>VSD at 75% speed:</strong>
-                </p>
-                <p>Power = 30 &times; 0.75 cubed = 30 &times; 0.422 = 12.66kW</p>
-                <p>Annual energy = 12.66 &times; 6000 = 75,960 kWh</p>
-                <p className="mt-2">
-                  <strong>Annual saving:</strong>
-                </p>
-                <p>
-                  180,000 - 75,960 = <strong>104,040 kWh/year</strong>
-                </p>
-                <p>
-                  At 15p/kWh = <strong>GBP 15,606/year</strong>
-                </p>
-                <p className="mt-2 text-white">Payback on 30kW drive: typically 6-12 months</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 5: DC Bus Voltage Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A VSD is supplied from 400V three-phase. Calculate the DC
-                bus voltage.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>DC bus voltage = Peak of line voltage</p>
-                <p>Vdc = Vline &times; root(2)</p>
-                <p>Vdc = 400 &times; 1.414</p>
-                <p>
-                  Vdc = <strong>565.6V DC</strong>
-                </p>
-                <p className="mt-2 text-red-400">
-                  Warning: This voltage remains after power-off until capacitors discharge
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulae</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Ns = 120f/p</strong> - Synchronous speed (rpm)
-                </li>
-                <li className="pl-1">
-                  <strong>V proportional to f</strong> - Constant V/f maintains flux
-                </li>
-                <li className="pl-1">
-                  <strong>P proportional to N cubed</strong> - Fan/pump affinity law
-                </li>
-                <li className="pl-1">
-                  <strong>Vdc = Vline &times; root(2)</strong> - DC bus voltage
-                </li>
-                <li className="pl-1">
-                  <strong>THDi = root(sum of Ih squared)/I1</strong> - Harmonic distortion
-                </li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Undersized cables:</strong> VSD output cables carry harmonic currents - don't undersize</li>
+                <li><strong>Poor EMC termination:</strong> Screen must be 360 degree terminated, not pigtails</li>
+                <li><strong>Running motors too slow:</strong> Self-cooled motors overheat at low speeds</li>
+                <li><strong>Ignoring harmonics:</strong> Large installations need harmonic assessment</li>
+                <li><strong>Long motor cables:</strong> Can cause voltage doubling at motor - use filters if &gt;50m</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  400V supply gives <strong>~565V DC bus</strong>
-                </li>
-                <li className="pl-1">
-                  6-pulse VSD THDi: <strong>30-40%</strong> without filtering
-                </li>
-                <li className="pl-1">
-                  Carrier frequency typical: <strong>4-8 kHz</strong> for HVAC
-                </li>
-                <li className="pl-1">
-                  50% speed = <strong>12.5% power</strong> (fans/pumps)
-                </li>
-                <li className="pl-1">
-                  Line reactor impedance: <strong>3-5%</strong> typical
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Undersized cables:</strong> VSD output cables carry harmonic currents -
-                  don't undersize
-                </li>
-                <li className="pl-1">
-                  <strong>Poor EMC termination:</strong> Screen must be 360 degree terminated, not
-                  pigtails
-                </li>
-                <li className="pl-1">
-                  <strong>Running motors too slow:</strong> Self-cooled motors overheat at low
-                  speeds
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring harmonics:</strong> Large installations need harmonic assessment
-                </li>
-                <li className="pl-1">
-                  <strong>Long motor cables:</strong> Can cause voltage doubling at motor - use
-                  filters if &gt;50m
-                </li>
-              </ul>
-            </div>
+          <FAQ items={faqs} />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Installation Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Verify motor suitability for VSD operation</li>
-                <li className="pl-1">Size VSD to motor rating (consider ambient temperature)</li>
-                <li className="pl-1">Specify line reactor or built-in DC choke</li>
-                <li className="pl-1">Use screened motor cable with proper glands</li>
-                <li className="pl-1">Separate VSD cables from signal cables</li>
-                <li className="pl-1">Programme minimum speed for motor cooling</li>
-                <li className="pl-1">Configure BMS communications protocol</li>
-                <li className="pl-1">Set appropriate acceleration/deceleration ramps</li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">VSD Components</p>
-                <ul className="space-y-0.5">
-                  <li>Rectifier - AC to DC conversion</li>
-                  <li>DC bus - smoothing capacitors</li>
-                  <li>Inverter - IGBT PWM switching</li>
-                  <li>Controller - V/f or vector control</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Energy Savings</p>
-                <ul className="space-y-0.5">
-                  <li>80% speed = 51% power</li>
-                  <li>70% speed = 34% power</li>
-                  <li>60% speed = 22% power</li>
-                  <li>50% speed = 12.5% power</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section4-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Starting Methods
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section4-4">
-              Next: Motor Protection
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section4-2")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Starting methods
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section4-4")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Motor protection
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

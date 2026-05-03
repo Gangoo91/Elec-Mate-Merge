@@ -1,8 +1,7 @@
 /**
  * Module 5 · Section 1 · Subsection 1 — Work Breakdown Structure
- * HNC Electrical Engineering for Building Services (Project Management)
- *   WBS development, coding systems, hierarchical decomposition, and scope definition
- *   for building services projects.
+ * HNC Electrical Engineering for Building Services (Project Management — Pearson U4004 + BSE PM context)
+ *   WBS as the scope baseline that drives schedule, cost, procurement and earned value reporting on every building services project.
  */
 
 import { useNavigate } from 'react-router-dom';
@@ -11,11 +10,15 @@ import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
-  ConceptBlock,
   CommonMistake,
-  LearningOutcomes,
+  ConceptBlock,
   FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
   SectionRule,
+  TLDR,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -279,6 +282,28 @@ const HNCModule5Section1_1 = () => {
             description="WBS development, coding systems, hierarchical decomposition, and scope definition for building services projects."
             tone="purple"
           />
+
+          <TLDR
+            points={[
+              "A WBS is a hierarchical decomposition of 100% of project scope into deliverables (nouns) — not activities, not a schedule.",
+              "Stop decomposing at the work-package level (8–80 hours / 1–2 reporting cycles) — finer is admin overhead, coarser is loss of control.",
+              "Code every element uniquely so cost, schedule, procurement, drawings and ITPs can all roll up against the same scope spine.",
+              "For MEP, organise by deliverable/system (Electrical, Mechanical, BMS, Fire) so subcontract packages, ITPs and O&M sections align cleanly.",
+              "Always create explicit interface work packages (BMS↔HVAC, Fire↔Mechanical) — that is where money and programme are lost.",
+            ]}
+          />
+
+          <RegsCallout
+            source="CDM 2015 — Regulation 8(1) (General duties)"
+            clause="A designer (including a principal designer) or contractor (including a principal contractor) appointed to work on a project must have the skills, knowledge and experience, and, if they are an organisation, the organisational capability, necessary to fulfil the role that they are appointed to undertake, in a manner that secures the health and safety of any person affected by the project."
+            meaning={
+              <>
+                The WBS is the route by which you demonstrate you have understood the scope and have the capability to deliver it. A weak or incomplete WBS at tender stage exposes both the contractor and the principal designer to a Reg 8 challenge — you cannot show you understood the work, let alone resourced it safely.
+              </>
+            }
+            cite="Source: Construction (Design and Management) Regulations 2015 — legislation.gov.uk"
+          />
+
 
           <LearningOutcomes
             outcomes={[
@@ -699,9 +724,44 @@ const HNCModule5Section1_1 = () => {
 
           <SectionRule />
 
+          <Scenario
+            title="Hospital MEP — discovering missing scope at month four"
+            situation={
+              <>
+                You inherit a £6m hospital MEP package as project manager. The original WBS shows electrical, mechanical and public health at Level 2 but no separate element for BMS-to-HVAC interface wiring. Four months in, the BMS subcontractor refuses to commission until the controls cabling is installed — neither electrical nor mechanical scope owns it.
+              </>
+            }
+            whatToDo={
+              <>
+                Issue an early warning under the contract. Convene a scope review with the design team, the M&E subcontractors and the BMS specialist. Map the missing scope against the original WBS — is it design intent that was always there (your risk) or a genuine omission from the employer's requirements (a compensation event)? Update the WBS with an explicit interface work package (e.g. 1.4.7 BMS Field Wiring &amp; Termination), allocate it to a responsible party with a cost code, and revise the programme.
+              </>
+            }
+            whyItMatters={
+              <>
+                Missing interface scope is the single most common cause of MEP programme slip and disputed final accounts. The 100% rule is not academic — it is the audit trail you fall back on when the QS asks "who owns this?" at month eight. Catch it at WBS sign-off, not at commissioning.
+              </>
+            }
+          />
+
+          <SectionRule />
+
           <FAQ items={faqs} />
 
           <SectionRule />
+
+                    <KeyTakeaways
+            points={[
+              "WBS = scope baseline. 100% rule. Mutually exclusive elements. Deliverables not activities.",
+              "Decompose to work-package level (8–80 hours) — the 8/80 rule keeps things estimable and controllable.",
+              "Code every element uniquely and map to cost codes — earned value is impossible without coded scope.",
+              "For MEP projects, deliverable/system organisation aligns to subcontract packages, ITPs and O&M structure.",
+              "Interface work packages (BMS↔HVAC, Fire↔Mechanical) must be explicit — that is where scope gaps hide.",
+              "WBS dictionary defines boundaries, deliverables and acceptance criteria for each element.",
+              "WBS forms the scope baseline — change only via formal change control to keep cost and schedule baselines intact.",
+              "CDM Reg 8 capability test — the WBS is how you evidence you understand the scope you have been appointed to deliver.",
+            ]}
+          />
+
 
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
 

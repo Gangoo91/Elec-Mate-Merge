@@ -1,4 +1,5 @@
 import {
+  ArrowLeft,
   Clock,
   ChevronRight,
   PoundSterling,
@@ -21,8 +22,14 @@ import {
   Lightbulb,
   BadgeCheck,
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Link, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import {
+  PageFrame,
+  PageHero,
+  itemVariants,
+} from '@/components/college/primitives';
 import SalaryProgressionChart from '@/components/apprentice/apprenticeship-expectations/SalaryProgressionChart';
 
 /* ─── Bullet item (icon + text) used inside InfoCard ─── */
@@ -159,13 +166,28 @@ const CareerCard = ({
    Main Page
    ═══════════════════════════════════════════════════════════════════ */
 const ApprenticeshipExpectations = () => {
+  const navigate = useNavigate();
   return (
-    <div className="max-w-2xl mx-auto px-4 py-6 space-y-3 animate-fade-in pb-20">
-      {/* ── Header ── */}
-      <div className="flex items-center gap-3">
-        <SmartBackButton />
-        <h1 className="text-xl font-bold text-white">Apprenticeship Expectations</h1>
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice/toolbox')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
+
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Expectations"
+          title="The 4-year journey"
+          description="What each year of an Installation/Maintenance Electrician apprenticeship actually looks like — month by month, salary by salary, qualification by qualification."
+          tone="yellow"
+        />
+      </motion.div>
 
       {/* ── Stats strip ── */}
       <div className="grid grid-cols-4 gap-2 p-3 rounded-xl bg-white/5 border border-white/10">
@@ -242,7 +264,7 @@ const ApprenticeshipExpectations = () => {
         <InfoCard borderColour="border-l-elec-yellow" title="NMW & JIB Rates">
           <ul className="space-y-1.5 list-none">
             <Bullet icon={PoundSterling} colour="text-elec-yellow">
-              Apprentice NMW: £7.55/hr (Apr 2025), rising to £8.00/hr (Apr 2026)
+              Apprentice NMW: £8.00/hr (April 2026 onwards)
             </Bullet>
             <Bullet icon={PoundSterling} colour="text-elec-yellow">
               JIB rates are higher — most electrical employers follow JIB
@@ -611,7 +633,7 @@ const ApprenticeshipExpectations = () => {
           yr + Level 4 qualification)
         </p>
       </div>
-    </div>
+    </PageFrame>
   );
 };
 

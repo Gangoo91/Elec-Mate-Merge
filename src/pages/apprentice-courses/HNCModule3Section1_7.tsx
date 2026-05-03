@@ -206,11 +206,11 @@ const HNCModule3Section1_7 = () => {
 
           <TLDR
             points={[
-              'You can size a 24 V DC BMS sensor circuit \u2014 work out load current, pick the right pull-up / current-limit resistor, allow for cable voltage drop on long sensor runs.',
-              'You can size battery capacity (Ah) for emergency lighting and fire-alarm standby duty using load \u00d7 duration \u00d7 derating.',
+              'You can size a 24 V DC BMS sensor circuit — work out load current, pick the right pull-up / current-limit resistor, allow for cable voltage drop on long sensor runs.',
+              'You can size battery capacity (Ah) for emergency lighting and fire-alarm standby duty using load × duration × derating.',
               'You can apply DC voltage-drop limits on long control wiring runs (often 10 % of nominal) and decide when to step up conductor size.',
               'You can read the DC sections of fire-alarm and emergency-lighting manufacturer cut sheets and translate them to a system design.',
-              'You can spot the difference between an analogue 4-20 mA loop, a 0-10 V control signal and a digital 24 V DC volt-free contact \u2014 each needs different sizing.',
+              'You can spot the difference between an analogue 4-20 mA loop, a 0-10 V control signal and a digital 24 V DC volt-free contact — each needs different sizing.',
             ]}
           />
 
@@ -219,10 +219,10 @@ const HNCModule3Section1_7 = () => {
             clause="The standby battery shall have sufficient capacity to maintain the system in the quiescent condition for at least 24 hours, after which it shall be capable of providing the alarm load for at least 30 minutes."
             meaning={
               <>
-                The 24 h + 30 min duty cycle is a DC capacity calculation: I_quiescent \u00d7
-                24 h + I_alarm \u00d7 0.5 h, multiplied by an end-of-life and ambient
-                derating factor (often \u00d71.25). The result is the minimum Ah rating of the
-                sealed lead-acid or LiFePO\u2084 battery in the panel.
+                The 24 h + 30 min duty cycle is a DC capacity calculation: I_quiescent ×
+                24 h + I_alarm × 0.5 h, multiplied by an end-of-life and ambient
+                derating factor (often ×1.25). The result is the minimum Ah rating of the
+                sealed lead-acid or LiFePO₄ battery in the panel.
               </>
             }
             cite="Source: BS 5839-1 (latest edition) Clause 25."
@@ -660,10 +660,10 @@ const HNCModule3Section1_7 = () => {
             }
             whatToDo={
               <>
-                Compute the energy demand: 0.250 A \u00d7 24 h = 6.0 Ah quiescent + 2.4 A
-                \u00d7 0.5 h = 1.2 Ah alarm = 7.2 Ah total. Apply BS 5839-1 derating (typically
-                \u00d71.25 for end-of-life capacity loss) \u2192 9.0 Ah minimum. Pick the next
-                standard capacity above that \u2014 typically a pair of 12 V 12 Ah sealed
+                Compute the energy demand: 0.250 A × 24 h = 6.0 Ah quiescent + 2.4 A
+                × 0.5 h = 1.2 Ah alarm = 7.2 Ah total. Apply BS 5839-1 derating (typically
+                ×1.25 for end-of-life capacity loss) → 9.0 Ah minimum. Pick the next
+                standard capacity above that — typically a pair of 12 V 12 Ah sealed
                 lead-acid batteries in series. Document the calculation in the commissioning
                 certificate and re-check at every annual service.
               </>
@@ -672,8 +672,8 @@ const HNCModule3Section1_7 = () => {
               <>
                 A fire-alarm panel that drops out before the 24 h + 30 min duty is up is a
                 life-safety failure and a Building Regulations non-compliance. The Ah
-                calculation is a direct application of DC circuit theory \u2014 current
-                \u00d7 time \u00d7 derating \u2014 and your name is on the cert.
+                calculation is a direct application of DC circuit theory — current
+                × time × derating — and your name is on the cert.
               </>
             }
           />
@@ -686,14 +686,14 @@ const HNCModule3Section1_7 = () => {
 
           <KeyTakeaways
             points={[
-              'Building services DC systems live at 12 V, 24 V, 48 V (and sometimes 110 V DC for sub-station tripping batteries) \u2014 pick the right voltage class for the application.',
-              'Battery capacity (Ah) = sum of (current \u00d7 duration) for every duty cycle, multiplied by an end-of-life derating factor (typically \u00d71.25).',
-              'BS 5839-1: fire-alarm panel battery \u2014 24 h standby + 30 min alarm duty.',
-              'BS 5266-1: emergency lighting battery \u2014 1 h or 3 h emergency duration at end-of-life voltage.',
-              'BMS sensor circuits typically use 24 V DC two-wire loops \u2014 voltage-drop budget is tight on long runs (often 10 % of nominal).',
-              '4-20 mA analogue loops are noise-immune and self-checking (0 mA = broken cable) \u2014 the working sensor signal in heavy industrial plant rooms.',
-              '0-10 V analogue control signals are common on damper actuators, EC fans and lighting drivers \u2014 voltage-source, low-current, sensitive to drop on long runs.',
-              'DC fault clearance is harder than AC \u2014 there is no zero crossing, so DC fuses and breakers are physically larger than AC equivalents at the same rating.',
+              'Building services DC systems live at 12 V, 24 V, 48 V (and sometimes 110 V DC for sub-station tripping batteries) — pick the right voltage class for the application.',
+              'Battery capacity (Ah) = sum of (current × duration) for every duty cycle, multiplied by an end-of-life derating factor (typically ×1.25).',
+              'BS 5839-1: fire-alarm panel battery — 24 h standby + 30 min alarm duty.',
+              'BS 5266-1: emergency lighting battery — 1 h or 3 h emergency duration at end-of-life voltage.',
+              'BMS sensor circuits typically use 24 V DC two-wire loops — voltage-drop budget is tight on long runs (often 10 % of nominal).',
+              '4-20 mA analogue loops are noise-immune and self-checking (0 mA = broken cable) — the working sensor signal in heavy industrial plant rooms.',
+              '0-10 V analogue control signals are common on damper actuators, EC fans and lighting drivers — voltage-source, low-current, sensitive to drop on long runs.',
+              'DC fault clearance is harder than AC — there is no zero crossing, so DC fuses and breakers are physically larger than AC equivalents at the same rating.',
             ]}
           />
 

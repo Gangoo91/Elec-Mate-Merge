@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 6 · Section 2 · Subsection 2 — Heat Pump Technology
+ * HNC Electrical Engineering for Building Services (Sustainability and Environmental Engineering)
+ *   ASHP and GSHP systems, COP and SCOP performance metrics, system design principles, and MCS certification requirements
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Heat Pump Technology - HNC Module 6 Section 2.2';
@@ -230,929 +247,380 @@ const faqs = [
 ];
 
 const HNCModule6Section2_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section2")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module6-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.2.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Heat Pump Technology
-          </h1>
-          <p className="text-white">
-            ASHP and GSHP systems, COP and SCOP performance metrics, system design principles, and
-            MCS certification requirements
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 6 · Section 2 · Subsection 2"
+            title="Heat Pump Technology"
+            description="ASHP and GSHP systems, COP and SCOP performance metrics, system design principles, and MCS certification requirements"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>COP:</strong> Heat output divided by electrical input (typically 2.5-4.5)
-              </li>
-              <li className="pl-1">
-                <strong>SCOP:</strong> Seasonal average efficiency including all losses
-              </li>
-              <li className="pl-1">
-                <strong>Flow temperature:</strong> Maximum 45°C for optimal efficiency
-              </li>
-              <li className="pl-1">
-                <strong>MCS:</strong> Required for BUS grant eligibility (£7,500)
-              </li>
+          <TLDR
+            points={[
+              "Heat pumps move heat using a refrigerant cycle — coefficient of performance (COP) typically 3.0–4.5 for ASHP and 4.0–5.5 for GSHP, meaning 1 kWh of electricity delivers 3–5 kWh of heat.",
+              "Seasonal Coefficient of Performance (SCOP) is the regulated metric — averaged across the heating season at the dwelling location; minimum 2.5 for Part L 2021 compliance, notional value 3.5+.",
+              "MCS certification (MCS 015 + MIS 3005) is required for BUS grant funding (£7,500 ASHP / GSHP) and for SAP claim of installed efficiency.",
+            ]}
+          />
+
+          <RegsCallout
+            source="MIS 3005 — Microgeneration Installation Standard for Heat Pump Systems"
+            clause="Heat pump systems shall be designed, installed, set to work and commissioned by an MCS-certified contractor. The system designer shall complete a heat loss calculation in accordance with BS EN 12831 (or equivalent), select equipment of appropriate capacity, demonstrate that the seasonal performance under the SAP methodology meets or exceeds the minimum, and provide the customer with the design data, commissioning records and operating instructions."
+            meaning={
+              <>
+                MIS 3005 is the practical standard — it sits above MCS 015 (the product certification scheme). Every BUS-funded installation and every dwelling claiming heat-pump SAP credits must be MIS 3005 compliant. Sizing per BS EN 12831 (room-by-room heat loss) is mandatory; rule-of-thumb sizing forfeits the certification and the grant.
+              </>
+            }
+            cite="Source: MIS 3005 Issue 5.0 — MCS / mcscertified.com"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Explain ASHP and GSHP operating principles and applications",
+              "Calculate and interpret COP and SCOP performance values",
+              "Apply heat pump sizing methodology to building heat loss",
+              "Design heating systems for low-temperature heat pump operation",
+              "Specify buffer vessels, emitters, and controls for heat pump integration",
+              "Understand MCS certification and BUS grant requirements",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Heat Pump Operating Principles">
+            <p>Heat pumps extract low-grade heat from ambient sources (air, ground, or water) and upgrade it to useful temperatures for space heating and hot water. They operate on the vapour compression cycle, using electrical energy to drive a compressor that transfers heat from a cold source to a warmer sink.</p>
+            <p><strong>The Refrigeration Cycle in Heat Pumps:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Evaporator:</strong> Low-pressure refrigerant absorbs heat from the source (air/ground), evaporating from liquid to gas</li>
+              <li><strong>Compressor:</strong> Raises refrigerant pressure and temperature using electrical energy</li>
+              <li><strong>Condenser:</strong> High-pressure refrigerant releases heat to the heating system, condensing back to liquid</li>
+              <li><strong>Expansion valve:</strong> Reduces pressure, cooling refrigerant ready to absorb heat again</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">System Types</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>ASHP:</strong> Air source - most common, lower installation cost
-              </li>
-              <li className="pl-1">
-                <strong>GSHP:</strong> Ground source - higher efficiency, higher capital cost
-              </li>
-              <li className="pl-1">
-                <strong>Hybrid:</strong> Heat pump with gas boiler backup
-              </li>
-              <li className="pl-1">
-                <strong>Monobloc vs Split:</strong> Installation complexity varies
-              </li>
+            <p><strong>Air Source vs Ground Source Comparison</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Heat source temperature:</strong> -15°C to +35°C (variable) — 8-12°C (stable)</li>
+              <li><strong>Typical SCOP:</strong> 2.8 - 3.5 — 3.5 - 4.5</li>
+              <li><strong>Installation cost (typical):</strong> £8,000 - £15,000 — £15,000 - £35,000</li>
+              <li><strong>Land requirement:</strong> Outdoor unit location only — Borehole or extensive trenching</li>
+              <li><strong>Defrost cycles:</strong> Required in cold/humid conditions — Not required</li>
+              <li><strong>Noise considerations:</strong> Fan noise requires assessment — Indoor equipment only</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Key principle:</strong> The smaller the temperature lift (difference between source and output), the higher the efficiency. This is why heat pumps work best with low-temperature heating systems.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Explain ASHP and GSHP operating principles and applications',
-              'Calculate and interpret COP and SCOP performance values',
-              'Apply heat pump sizing methodology to building heat loss',
-              'Design heating systems for low-temperature heat pump operation',
-              'Specify buffer vessels, emitters, and controls for heat pump integration',
-              'Understand MCS certification and BUS grant requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Heat Pump Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Heat Pump Operating Principles
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="COP and SCOP Performance Metrics">
+            <p>Understanding heat pump efficiency metrics is essential for system selection, sizing, and predicting running costs. COP and SCOP provide different but complementary measures of performance.</p>
+            <p><strong>COP Calculation</strong></p>
+            <p><span>COP = Heat Output (kW) ÷ Electrical Input (kW)</span></p>
+            <p>Example:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Heat output:</strong> 12 kW</li>
+              <li><strong>Electrical input:</strong> 3 kW</li>
+              <li><strong>COP:</strong> 12 ÷ 3 = 4.0</li>
+            </ul>
+            <p>Energy delivered: 4 kW heat for every 1 kW electricity</p>
+            <p><strong>COP (Coefficient of Performance)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Instantaneous efficiency at test conditions</li>
+              <li>Measured at specific source/output temperatures</li>
+              <li>Does not include standby or auxiliary losses</li>
+              <li>Useful for comparing at specific operating points</li>
+            </ul>
+            <p><strong>SCOP (Seasonal COP)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Average efficiency over heating season</li>
+              <li>Includes part-load operation and cycling</li>
+              <li>Accounts for standby and auxiliary power</li>
+              <li>Better predictor of actual running costs</li>
+            </ul>
+            <p><strong>Factors Affecting COP</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Source temperature ↑:</strong> COP increases — GSHP preferred in cold climates</li>
+              <li><strong>Flow temperature ↓:</strong> COP increases — Design for 35-45°C where possible</li>
+              <li><strong>Part-load operation:</strong> Inverter units maintain efficiency — Avoid oversizing fixed-speed units</li>
+              <li><strong>Defrost cycles:</strong> Reduces effective output — Allow for defrost in ASHP sizing</li>
+              <li><strong>Cycling frequency:</strong> Frequent cycling reduces SCOP — Buffer vessels or modulating units</li>
+            </ul>
+            <p><strong>Running Cost Calculation Example</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Annual heat demand:</strong> 18,000 kWh</li>
+              <li><strong>SCOP:</strong> 3.2</li>
+              <li><strong>Electricity required:</strong> 18,000 ÷ 3.2 = 5,625 kWh</li>
+              <li><strong>Electricity rate:</strong> 24p/kWh</li>
+              <li><strong>Annual running cost:</strong> 5,625 × £0.24 = £1,350</li>
+            </ul>
+            <p>Compare: Gas boiler (90% efficiency, 7p/kWh) = £1,400/year</p>
+            <p><strong>Efficiency benchmark:</strong> MCS requires a minimum SPF (Seasonal Performance Factor) of 2.5 for installations to qualify for incentive schemes.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="System Design and Sizing">
+            <p>Correct sizing is critical for heat pump performance. Undersizing leads to comfort issues and supplementary heating dependency; oversizing causes cycling, reduced efficiency, and wasted capital expenditure.</p>
+            <p><strong>Heat Loss Calculation Process (MCS MIS 3005)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Room-by-room calculation:</strong> Calculate fabric and ventilation losses for each room</li>
+              <li><strong>U-values:</strong> Use actual or estimated values for walls, roof, floor, windows, doors</li>
+              <li><strong>Design temperatures:</strong> Internal 21°C, external typically -3°C for most UK locations</li>
+              <li><strong>Ventilation:</strong> Air change rates based on room type and building airtightness</li>
+              <li><strong>Thermal bridging:</strong> Add allowance for heat loss at junctions (typically 10-15%)</li>
+            </ul>
+            <p><strong>Heat Loss Calculation Example</strong></p>
+            <p>Living room: 5m × 4m × 2.4m ceiling</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>External wall area:</strong> 12 m² (after windows)</li>
+              <li><strong>U-value:</strong> 0.35 W/m²K</li>
+              <li><strong>Temperature difference:</strong> 21 - (-3) = 24K</li>
+              <li><strong>Wall loss:</strong> 12 × 0.35 × 24 = 100.8 W</li>
+            </ul>
+            <p>+ Window loss + Floor loss + Roof loss + Ventilation loss</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Total room heat loss:</strong> 850 W</li>
+            </ul>
+            <p><strong>Emitter Sizing for Low Temperatures</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>75/65°C (boiler):</strong> 70°C — 1.00 — Baseline</li>
+              <li><strong>55/45°C:</strong> 50°C — 0.52 — 1.9× larger</li>
+              <li><strong>45/40°C:</strong> 42.5°C — 0.37 — 2.7× larger</li>
+              <li><strong>35/30°C (UFH):</strong> 32.5°C — 0.21 — 4.8× larger</li>
+            </ul>
+            <p><strong>Buffer Vessel Sizing</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Minimum run time: 6-10 minutes</li>
+              <li>Typical sizing: 10-20 litres per kW</li>
+              <li>Not needed with inverter units (usually)</li>
+              <li>Consider low-loss header alternative</li>
+            </ul>
+            <p><strong>Hot Water Cylinder Sizing</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Minimum 150-200 litres for heat pump</li>
+              <li>Large coil area essential (3+ m²)</li>
+              <li>Consider pre-heat/preheat cylinders</li>
+              <li>Legionella cycle provision required</li>
+            </ul>
+            <p><strong>Sizing rule:</strong> For ASHP, allow 10-15% additional capacity for defrost impact. Never size to peak load only - consider annual energy requirements and part-load efficiency.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="MCS Certification and BUS Grant Requirements">
+            <p>The Microgeneration Certification Scheme (MCS) provides quality assurance for heat pump installations in the UK. MCS certification is mandatory for accessing government incentive schemes including the Boiler Upgrade Scheme (BUS).</p>
+            <p><strong>MCS Heat Pump Standard (MIS 3005) Key Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Heat loss calculation:</strong> Room-by-room to approved methodology</li>
+              <li><strong>System design:</strong> Documented design including all components</li>
+              <li><strong>Product certification:</strong> Heat pump must be MCS-certified product</li>
+              <li><strong>Installer certification:</strong> Company must hold MCS installer certificate</li>
+              <li><strong>Commissioning:</strong> Full commissioning to manufacturer requirements</li>
+              <li><strong>Documentation:</strong> Comprehensive handover pack for customer</li>
+            </ul>
+            <p><strong>Boiler Upgrade Scheme (BUS) - Key Facts</strong></p>
+            <p><strong>Grant values (2024):</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>- Air source heat pump: <strong>£7,500</strong></li>
+              <li>- Ground source heat pump: <strong>£7,500</strong></li>
+              <li>- Biomass boiler (rural only): <strong>£5,000</strong></li>
+            </ul>
+            <p><strong>Eligibility requirements:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>- Existing building (not new build)</li>
+              <li>- Valid EPC (no loft/cavity wall recommendations outstanding)</li>
+              <li>- MCS-certified installer and product</li>
+              <li>- Replacing fossil fuel or electric heating system</li>
+              <li>- England and Wales (Scotland has separate scheme)</li>
+            </ul>
+            <p><strong>MCS Documentation Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Heat loss calculation:</strong> Justifies system sizing — Pre-installation</li>
+              <li><strong>System design:</strong> Component specification — Pre-installation</li>
+              <li><strong>Commissioning record:</strong> Performance verification — Completion</li>
+              <li><strong>MCS certificate:</strong> Scheme compliance — Post-installation</li>
+              <li><strong>Handover pack:</strong> Customer information — Handover</li>
+              <li><strong>Electrical certificate:</strong> BS 7671 compliance — Completion</li>
+            </ul>
+            <p><strong>Electrical Installation Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Supply capacity:</strong> Verify DNO supply adequate (typically 60-100A single phase, or three phase)</li>
+              <li><strong>Dedicated circuit:</strong> Separate MCB/RCBO for heat pump (typically 20-32A)</li>
+              <li><strong>Isolator:</strong> Local isolation adjacent to outdoor unit</li>
+              <li><strong>Earth bonding:</strong> Supplementary bonding to metal pipework</li>
+              <li><strong>Outdoor wiring:</strong> UV-resistant cable or conduit for external runs</li>
+              <li><strong>RCD protection:</strong> 30mA RCD protection as per BS 7671</li>
+            </ul>
+            <p><strong>Compliance note:</strong> Building Regulations Part L notification is required for heat pump installations. The installation must also comply with Part P for electrical work and Part G for unvented hot water where applicable.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Heat pumps extract low-grade heat from ambient sources (air, ground, or water) and
-              upgrade it to useful temperatures for space heating and hot water. They operate on the
-              vapour compression cycle, using electrical energy to drive a compressor that transfers
-              heat from a cold source to a warmer sink.
+              <strong>Example 1: COP to Running Cost Comparison</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                The Refrigeration Cycle in Heat Pumps:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Evaporator:</strong> Low-pressure refrigerant absorbs heat from the source
-                  (air/ground), evaporating from liquid to gas
-                </li>
-                <li className="pl-1">
-                  <strong>Compressor:</strong> Raises refrigerant pressure and temperature using
-                  electrical energy
-                </li>
-                <li className="pl-1">
-                  <strong>Condenser:</strong> High-pressure refrigerant releases heat to the heating
-                  system, condensing back to liquid
-                </li>
-                <li className="pl-1">
-                  <strong>Expansion valve:</strong> Reduces pressure, cooling refrigerant ready to
-                  absorb heat again
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Air Source vs Ground Source Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Characteristic</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">ASHP</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">GSHP</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Heat source temperature</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        -15°C to +35°C (variable)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">8-12°C (stable)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Typical SCOP</td>
-                      <td className="border border-white/10 px-3 py-2">2.8 - 3.5</td>
-                      <td className="border border-white/10 px-3 py-2">3.5 - 4.5</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Installation cost (typical)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">£8,000 - £15,000</td>
-                      <td className="border border-white/10 px-3 py-2">£15,000 - £35,000</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Land requirement</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Outdoor unit location only
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Borehole or extensive trenching
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Defrost cycles</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Required in cold/humid conditions
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Not required</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Noise considerations</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fan noise requires assessment
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Indoor equipment only</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key principle:</strong> The smaller the temperature lift (difference between
-              source and output), the higher the efficiency. This is why heat pumps work best with
-              low-temperature heating systems.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: COP and SCOP Performance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            COP and SCOP Performance Metrics
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Compare annual running costs: heat pump (SCOP 3.5) vs gas boiler (90% efficiency).</p>
+            <p>Annual heat demand: 15,000 kWh</p>
+            <p>Heat Pump:</p>
+            <p>Electricity required = 15,000 ÷ 3.5 = 4,286 kWh</p>
+            <p>Cost at 24p/kWh = 4,286 × £0.24 = £1,029</p>
+            <p>Gas Boiler:</p>
+            <p>Gas required = 15,000 ÷ 0.90 = 16,667 kWh</p>
+            <p>Cost at 7p/kWh = 16,667 × £0.07 = £1,167</p>
+            <p>Annual saving with heat pump: £138</p>
+            <p>Note: Actual savings depend on electricity/gas prices</p>
             <p>
-              Understanding heat pump efficiency metrics is essential for system selection, sizing,
-              and predicting running costs. COP and SCOP provide different but complementary
-              measures of performance.
+              <strong>Example 2: Radiator Sizing for Heat Pump</strong>
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">COP Calculation</p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">COP = Heat Output (kW) ÷ Electrical Input (kW)</span>
-                </p>
-                <p className="mt-2 text-white">Example:</p>
-                <p>
-                  <span className="text-white">Heat output:</span>{' '}
-                  <span className="text-white">12 kW</span>
-                </p>
-                <p>
-                  <span className="text-white">Electrical input:</span>{' '}
-                  <span className="text-white">3 kW</span>
-                </p>
-                <p>
-                  <span className="text-white">COP:</span>{' '}
-                  <span className="text-green-400">12 ÷ 3 = 4.0</span>
-                </p>
-                <p className="mt-2 text-white">
-                  Energy delivered: 4 kW heat for every 1 kW electricity
-                </p>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  COP (Coefficient of Performance)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Instantaneous efficiency at test conditions</li>
-                  <li className="pl-1">Measured at specific source/output temperatures</li>
-                  <li className="pl-1">Does not include standby or auxiliary losses</li>
-                  <li className="pl-1">Useful for comparing at specific operating points</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">SCOP (Seasonal COP)</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Average efficiency over heating season</li>
-                  <li className="pl-1">Includes part-load operation and cycling</li>
-                  <li className="pl-1">Accounts for standby and auxiliary power</li>
-                  <li className="pl-1">Better predictor of actual running costs</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Factors Affecting COP</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Factor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Effect on COP</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Design Implication
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Source temperature ↑</td>
-                      <td className="border border-white/10 px-3 py-2">COP increases</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        GSHP preferred in cold climates
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Flow temperature ↓</td>
-                      <td className="border border-white/10 px-3 py-2">COP increases</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Design for 35-45°C where possible
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Part-load operation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Inverter units maintain efficiency
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Avoid oversizing fixed-speed units
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Defrost cycles</td>
-                      <td className="border border-white/10 px-3 py-2">Reduces effective output</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Allow for defrost in ASHP sizing
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cycling frequency</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Frequent cycling reduces SCOP
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Buffer vessels or modulating units
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-2">
-                Running Cost Calculation Example
-              </p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">Annual heat demand:</span>{' '}
-                  <span className="text-white">18,000 kWh</span>
-                </p>
-                <p>
-                  <span className="text-white">SCOP:</span>{' '}
-                  <span className="text-white">3.2</span>
-                </p>
-                <p>
-                  <span className="text-white">Electricity required:</span>{' '}
-                  <span className="text-white">18,000 ÷ 3.2 = 5,625 kWh</span>
-                </p>
-                <p>
-                  <span className="text-white">Electricity rate:</span>{' '}
-                  <span className="text-white">24p/kWh</span>
-                </p>
-                <p>
-                  <span className="text-white">Annual running cost:</span>{' '}
-                  <span className="text-green-400">5,625 × £0.24 = £1,350</span>
-                </p>
-                <p className="mt-2 text-white">
-                  Compare: Gas boiler (90% efficiency, 7p/kWh) = £1,400/year
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Efficiency benchmark:</strong> MCS requires a minimum SPF (Seasonal
-              Performance Factor) of 2.5 for installations to qualify for incentive schemes.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: System Design and Sizing */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            System Design and Sizing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Room requires 1.5 kW heat output. Size radiator for 45/40°C heat pump operation.</p>
+            <p>Required output at 45/40°C: 1,500 W</p>
+            <p>At 75/65°C (catalogue rating):</p>
+            <p>Correction factor for 45/40°C = 0.37</p>
+            <p>Catalogue output required = 1,500 ÷ 0.37 = 4,054 W</p>
+            <p>Radiator selection:</p>
+            <p>Select radiator rated 4,100 W at 75/65°C</p>
+            <p>e.g., 600mm × 1800mm double panel plus</p>
+            <p>The radiator is 2.7× larger than for a boiler system</p>
             <p>
-              Correct sizing is critical for heat pump performance. Undersizing leads to comfort
-              issues and supplementary heating dependency; oversizing causes cycling, reduced
-              efficiency, and wasted capital expenditure.
+              <strong>Example 3: GSHP Ground Loop Sizing</strong>
             </p>
+            <p><strong>Scenario:</strong> Size horizontal ground loop for 10 kW GSHP in clay soil.</p>
+            <p>Heat pump capacity: 10 kW</p>
+            <p>Assumed COP: 4.0</p>
+            <p>Heat extraction from ground:</p>
+            <p>= Heat output - Electrical input</p>
+            <p>= 10 - (10 ÷ 4) = 10 - 2.5 = 7.5 kW</p>
+            <p>Ground extraction rate (clay soil): 20-30 W/m²</p>
+            <p>Using 25 W/m² average:</p>
+            <p>Ground area = 7,500 ÷ 25 = 300 m²</p>
+            <p>Loop pipe length (at 1m spacing):</p>
+            <p>Approximately 300m of pipe required</p>
+            <p>Trench area: 300 m² at 1.2m depth</p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Heat Loss Calculation Process (MCS MIS 3005)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Room-by-room calculation:</strong> Calculate fabric and ventilation losses
-                  for each room
-                </li>
-                <li className="pl-1">
-                  <strong>U-values:</strong> Use actual or estimated values for walls, roof, floor,
-                  windows, doors
-                </li>
-                <li className="pl-1">
-                  <strong>Design temperatures:</strong> Internal 21°C, external typically -3°C for
-                  most UK locations
-                </li>
-                <li className="pl-1">
-                  <strong>Ventilation:</strong> Air change rates based on room type and building
-                  airtightness
-                </li>
-                <li className="pl-1">
-                  <strong>Thermal bridging:</strong> Add allowance for heat loss at junctions
-                  (typically 10-15%)
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Heat Loss Calculation Example
-              </p>
-              <div className="font-mono text-sm space-y-1">
-                <p className="text-white">Living room: 5m × 4m × 2.4m ceiling</p>
-                <p className="mt-2">
-                  <span className="text-white">External wall area:</span>{' '}
-                  <span className="text-white">12 m² (after windows)</span>
-                </p>
-                <p>
-                  <span className="text-white">U-value:</span>{' '}
-                  <span className="text-white">0.35 W/m²K</span>
-                </p>
-                <p>
-                  <span className="text-white">Temperature difference:</span>{' '}
-                  <span className="text-white">21 - (-3) = 24K</span>
-                </p>
-                <p>
-                  <span className="text-white">Wall loss:</span>{' '}
-                  <span className="text-white">12 × 0.35 × 24 = 100.8 W</span>
-                </p>
-                <p className="mt-2 text-white">
-                  + Window loss + Floor loss + Roof loss + Ventilation loss
-                </p>
-                <p>
-                  <span className="text-white">Total room heat loss:</span>{' '}
-                  <span className="text-green-400">850 W</span>
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Emitter Sizing for Low Temperatures
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Flow/Return Temp
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Mean Water Temp
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Correction Factor
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Radiator Size vs 75/65°C
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">75/65°C (boiler)</td>
-                      <td className="border border-white/10 px-3 py-2">70°C</td>
-                      <td className="border border-white/10 px-3 py-2">1.00</td>
-                      <td className="border border-white/10 px-3 py-2">Baseline</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">55/45°C</td>
-                      <td className="border border-white/10 px-3 py-2">50°C</td>
-                      <td className="border border-white/10 px-3 py-2">0.52</td>
-                      <td className="border border-white/10 px-3 py-2">1.9× larger</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">45/40°C</td>
-                      <td className="border border-white/10 px-3 py-2">42.5°C</td>
-                      <td className="border border-white/10 px-3 py-2">0.37</td>
-                      <td className="border border-white/10 px-3 py-2">2.7× larger</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">35/30°C (UFH)</td>
-                      <td className="border border-white/10 px-3 py-2">32.5°C</td>
-                      <td className="border border-white/10 px-3 py-2">0.21</td>
-                      <td className="border border-white/10 px-3 py-2">4.8× larger</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Buffer Vessel Sizing</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Minimum run time: 6-10 minutes</li>
-                  <li className="pl-1">Typical sizing: 10-20 litres per kW</li>
-                  <li className="pl-1">Not needed with inverter units (usually)</li>
-                  <li className="pl-1">Consider low-loss header alternative</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Hot Water Cylinder Sizing
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Minimum 150-200 litres for heat pump</li>
-                  <li className="pl-1">Large coil area essential (3+ m²)</li>
-                  <li className="pl-1">Consider pre-heat/preheat cylinders</li>
-                  <li className="pl-1">Legionella cycle provision required</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Sizing rule:</strong> For ASHP, allow 10-15% additional capacity for defrost
-              impact. Never size to peak load only - consider annual energy requirements and
-              part-load efficiency.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: MCS and BUS Requirements */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            MCS Certification and BUS Grant Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              The Microgeneration Certification Scheme (MCS) provides quality assurance for heat
-              pump installations in the UK. MCS certification is mandatory for accessing government
-              incentive schemes including the Boiler Upgrade Scheme (BUS).
+              <strong>Pre-Installation Assessment Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                MCS Heat Pump Standard (MIS 3005) Key Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Heat loss calculation:</strong> Room-by-room to approved methodology
-                </li>
-                <li className="pl-1">
-                  <strong>System design:</strong> Documented design including all components
-                </li>
-                <li className="pl-1">
-                  <strong>Product certification:</strong> Heat pump must be MCS-certified product
-                </li>
-                <li className="pl-1">
-                  <strong>Installer certification:</strong> Company must hold MCS installer
-                  certificate
-                </li>
-                <li className="pl-1">
-                  <strong>Commissioning:</strong> Full commissioning to manufacturer requirements
-                </li>
-                <li className="pl-1">
-                  <strong>Documentation:</strong> Comprehensive handover pack for customer
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-2">
-                Boiler Upgrade Scheme (BUS) - Key Facts
-              </p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <strong>Grant values (2024):</strong>
-                </p>
-                <ul className="ml-4 space-y-1">
-                  <li>
-                    - Air source heat pump: <strong>£7,500</strong>
-                  </li>
-                  <li>
-                    - Ground source heat pump: <strong>£7,500</strong>
-                  </li>
-                  <li>
-                    - Biomass boiler (rural only): <strong>£5,000</strong>
-                  </li>
-                </ul>
-                <p className="mt-2">
-                  <strong>Eligibility requirements:</strong>
-                </p>
-                <ul className="ml-4 space-y-1">
-                  <li>- Existing building (not new build)</li>
-                  <li>- Valid EPC (no loft/cavity wall recommendations outstanding)</li>
-                  <li>- MCS-certified installer and product</li>
-                  <li>- Replacing fossil fuel or electric heating system</li>
-                  <li>- England and Wales (Scotland has separate scheme)</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                MCS Documentation Requirements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Document</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Timing</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Heat loss calculation</td>
-                      <td className="border border-white/10 px-3 py-2">Justifies system sizing</td>
-                      <td className="border border-white/10 px-3 py-2">Pre-installation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">System design</td>
-                      <td className="border border-white/10 px-3 py-2">Component specification</td>
-                      <td className="border border-white/10 px-3 py-2">Pre-installation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Commissioning record</td>
-                      <td className="border border-white/10 px-3 py-2">Performance verification</td>
-                      <td className="border border-white/10 px-3 py-2">Completion</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MCS certificate</td>
-                      <td className="border border-white/10 px-3 py-2">Scheme compliance</td>
-                      <td className="border border-white/10 px-3 py-2">Post-installation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Handover pack</td>
-                      <td className="border border-white/10 px-3 py-2">Customer information</td>
-                      <td className="border border-white/10 px-3 py-2">Handover</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Electrical certificate</td>
-                      <td className="border border-white/10 px-3 py-2">BS 7671 compliance</td>
-                      <td className="border border-white/10 px-3 py-2">Completion</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Electrical Installation Requirements
-              </p>
-              <div className="text-sm space-y-2">
-                <ul className="text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Supply capacity:</strong> Verify DNO supply adequate (typically 60-100A
-                    single phase, or three phase)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Dedicated circuit:</strong> Separate MCB/RCBO for heat pump (typically
-                    20-32A)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Isolator:</strong> Local isolation adjacent to outdoor unit
-                  </li>
-                  <li className="pl-1">
-                    <strong>Earth bonding:</strong> Supplementary bonding to metal pipework
-                  </li>
-                  <li className="pl-1">
-                    <strong>Outdoor wiring:</strong> UV-resistant cable or conduit for external runs
-                  </li>
-                  <li className="pl-1">
-                    <strong>RCD protection:</strong> 30mA RCD protection as per BS 7671
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Compliance note:</strong> Building Regulations Part L notification is required
-              for heat pump installations. The installation must also comply with Part P for
-              electrical work and Part G for unvented hot water where applicable.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Verify electrical supply capacity (single phase usually sufficient up to 12 kW)</li>
+              <li>Assess outdoor unit location (airflow, noise, drainage, access)</li>
+              <li>Survey existing heating system (emitters, pipework, controls)</li>
+              <li>Calculate room-by-room heat loss using MCS-approved method</li>
+              <li>Check EPC and address any recommendations before BUS application</li>
+              <li>Assess hot water requirements and cylinder location</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Optimal flow temperature: <strong>35-45°C</strong></li>
+              <li>Maximum MCS flow temperature: <strong>55°C</strong></li>
+              <li>Typical ASHP SCOP: <strong>2.8-3.5</strong></li>
+              <li>Typical GSHP SCOP: <strong>3.5-4.5</strong></li>
+              <li>Buffer vessel sizing: <strong>10-20 litres/kW</strong></li>
+              <li>BUS grant (ASHP/GSHP): <strong>£7,500</strong></li>
+              <li>Ground temperature (UK): <strong>8-12°C</strong></li>
+            </ul>
+            <p>
+              <strong>Common Installation Mistakes:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Oversizing:</strong> Causes cycling, reduced efficiency, wasted cost</li>
+              <li><strong>Inadequate emitters:</strong> System cannot achieve design temperatures</li>
+              <li><strong>Poor outdoor unit location:</strong> Restricted airflow or recirculation</li>
+              <li><strong>Insufficient electrical supply:</strong> Trips or voltage drop issues</li>
+              <li><strong>Missing flow control:</strong> No weather compensation or incorrect curves</li>
+              <li><strong>Undersized hot water coil:</strong> Long reheat times, legionella risk</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <Scenario
+            title="ASHP undersized after refurbishment increases heat loss"
+            situation={
+              <>
+                A 2018 ASHP retrofit on a 1960s detached house was sized to 8 kW based on then-current fabric. The owner has since added a single-storey extension and removed wall insulation in the kitchen rebuild. The system now struggles below 2 °C — buffer tank charges to 50 °C and the ASHP is in defrost cycle frequently.
+              </>
+            }
+            whatToDo={
+              <>
+                Re-do the heat loss calculation per BS EN 12831 using the as-built fabric. If the new design heat load exceeds the ASHP capacity at design external temperature, three options: (1) upsize the ASHP unit (most expensive); (2) add a second cascaded unit (good for staged expansion); (3) reduce the heat load by addressing the extension envelope and reinstating wall insulation (best long-term but highest disruption). Reset the weather compensation curve and re-verify SCOP under the new fabric. Update MCS documentation.
+              </>
+            }
+            whyItMatters={
+              <>
+                Heat pumps fail their SCOP target when undersized — they cycle, defrost more often, and run electric backup, hammering the COP. Every fabric change to a heat-pump dwelling needs a heat loss recalculation. Oversizing is also bad (cycles too often, poor SCOP) — the design must follow the fabric.
+              </>
+            }
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <FAQ items={faqs} />
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: COP to Running Cost Comparison
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Compare annual running costs: heat pump (SCOP 3.5) vs gas
-                boiler (90% efficiency).
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Annual heat demand: 15,000 kWh</p>
-                <p className="mt-2">Heat Pump:</p>
-                <p className="ml-4">Electricity required = 15,000 ÷ 3.5 = 4,286 kWh</p>
-                <p className="ml-4">Cost at 24p/kWh = 4,286 × £0.24 = £1,029</p>
-                <p className="mt-2">Gas Boiler:</p>
-                <p className="ml-4">Gas required = 15,000 ÷ 0.90 = 16,667 kWh</p>
-                <p className="ml-4">Cost at 7p/kWh = 16,667 × £0.07 = £1,167</p>
-                <p className="mt-2 text-green-400">Annual saving with heat pump: £138</p>
-                <p className="text-white">
-                  Note: Actual savings depend on electricity/gas prices
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Radiator Sizing for Heat Pump
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Room requires 1.5 kW heat output. Size radiator for
-                45/40°C heat pump operation.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Required output at 45/40°C: 1,500 W</p>
-                <p className="mt-2">At 75/65°C (catalogue rating):</p>
-                <p className="ml-4">Correction factor for 45/40°C = 0.37</p>
-                <p className="ml-4">Catalogue output required = 1,500 ÷ 0.37 = 4,054 W</p>
-                <p className="mt-2">Radiator selection:</p>
-                <p className="ml-4 text-green-400">Select radiator rated 4,100 W at 75/65°C</p>
-                <p className="ml-4">e.g., 600mm × 1800mm double panel plus</p>
-                <p className="mt-2 text-white">
-                  The radiator is 2.7× larger than for a boiler system
-                </p>
-              </div>
-            </div>
+          <KeyTakeaways
+            points={[
+              "COP = instantaneous heat output / electrical input; SCOP = seasonal average — SCOP is what Part L cares about.",
+              "ASHP SCOP typical 2.5–3.5; GSHP 3.5–4.5; both improve with low flow temperatures (<45 °C).",
+              "Weather compensation is mandatory — fixed flow temperature destroys SCOP.",
+              "Sizing per BS EN 12831 room-by-room heat loss; rules of thumb invalidate MCS.",
+              "Buffer tanks: usually only needed for low-loss systems or to manage defrost — sized per manufacturer guidance.",
+              "BUS grant £7,500 (ASHP/GSHP) requires MCS 015 + MIS 3005 + EPC ≥D + no outstanding loft/cavity insulation recommendations.",
+            ]}
+          />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: GSHP Ground Loop Sizing
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Size horizontal ground loop for 10 kW GSHP in clay soil.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Heat pump capacity: 10 kW</p>
-                <p>Assumed COP: 4.0</p>
-                <p className="mt-2">Heat extraction from ground:</p>
-                <p className="ml-4">= Heat output - Electrical input</p>
-                <p className="ml-4">= 10 - (10 ÷ 4) = 10 - 2.5 = 7.5 kW</p>
-                <p className="mt-2">Ground extraction rate (clay soil): 20-30 W/m²</p>
-                <p className="ml-4">Using 25 W/m² average:</p>
-                <p className="ml-4">Ground area = 7,500 ÷ 25 = 300 m²</p>
-                <p className="mt-2">Loop pipe length (at 1m spacing):</p>
-                <p className="ml-4 text-green-400">Approximately 300m of pipe required</p>
-                <p className="text-white">Trench area: 300 m² at 1.2m depth</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Pre-Installation Assessment Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Verify electrical supply capacity (single phase usually sufficient up to 12 kW)
-                </li>
-                <li className="pl-1">
-                  Assess outdoor unit location (airflow, noise, drainage, access)
-                </li>
-                <li className="pl-1">
-                  Survey existing heating system (emitters, pipework, controls)
-                </li>
-                <li className="pl-1">Calculate room-by-room heat loss using MCS-approved method</li>
-                <li className="pl-1">
-                  Check EPC and address any recommendations before BUS application
-                </li>
-                <li className="pl-1">Assess hot water requirements and cylinder location</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Optimal flow temperature: <strong>35-45°C</strong>
-                </li>
-                <li className="pl-1">
-                  Maximum MCS flow temperature: <strong>55°C</strong>
-                </li>
-                <li className="pl-1">
-                  Typical ASHP SCOP: <strong>2.8-3.5</strong>
-                </li>
-                <li className="pl-1">
-                  Typical GSHP SCOP: <strong>3.5-4.5</strong>
-                </li>
-                <li className="pl-1">
-                  Buffer vessel sizing: <strong>10-20 litres/kW</strong>
-                </li>
-                <li className="pl-1">
-                  BUS grant (ASHP/GSHP): <strong>£7,500</strong>
-                </li>
-                <li className="pl-1">
-                  Ground temperature (UK): <strong>8-12°C</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">
-                Common Installation Mistakes
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Oversizing:</strong> Causes cycling, reduced efficiency, wasted cost
-                </li>
-                <li className="pl-1">
-                  <strong>Inadequate emitters:</strong> System cannot achieve design temperatures
-                </li>
-                <li className="pl-1">
-                  <strong>Poor outdoor unit location:</strong> Restricted airflow or recirculation
-                </li>
-                <li className="pl-1">
-                  <strong>Insufficient electrical supply:</strong> Trips or voltage drop issues
-                </li>
-                <li className="pl-1">
-                  <strong>Missing flow control:</strong> No weather compensation or incorrect curves
-                </li>
-                <li className="pl-1">
-                  <strong>Undersized hot water coil:</strong> Long reheat times, legionella risk
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Performance Metrics</p>
-                <ul className="space-y-0.5">
-                  <li>COP = Heat Output ÷ Electrical Input</li>
-                  <li>SCOP = Seasonal average including losses</li>
-                  <li>SPF = System efficiency in real use</li>
-                  <li>MCS minimum SPF: 2.5</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Design Temperatures</p>
-                <ul className="space-y-0.5">
-                  <li>Optimal flow: 35-45°C</li>
-                  <li>MCS maximum: 55°C</li>
-                  <li>UFH typical: 35°C</li>
-                  <li>Radiator typical: 45-50°C</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section2-3">
-              Next: Photovoltaic Systems
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section2-1")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Solar photovoltaic systems
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section2-3")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Biomass systems
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

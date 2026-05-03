@@ -1,17 +1,37 @@
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
-import { CheckCircle, AlertTriangle, Shield } from 'lucide-react';
+import { ArrowLeft, CheckCircle, AlertTriangle, Shield } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  PageFrame,
+  PageHero,
+  itemVariants,
+} from '@/components/college/primitives';
 
 const PPEEquipmentPage = () => {
+  const navigate = useNavigate();
   return (
-    <div className="animate-fade-in max-w-2xl mx-auto px-4 pb-20 space-y-6 text-left">
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <SmartBackButton />
-        <h1 className="text-2xl font-bold tracking-tight text-white">
-          PPE & Equipment
-        </h1>
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice/safety-fundamentals')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
+
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Safety"
+          title="PPE & equipment"
+          description="What to wear, what to test before you wear it, and what your employer has to provide. The kit that's between you and a serious incident — treat it accordingly."
+          tone="yellow"
+        />
+      </motion.div>
 
       {/* Intro */}
       <Card className="border-blue-500/20 bg-white/5">
@@ -354,7 +374,7 @@ const PPEEquipmentPage = () => {
           </p>
         </CardContent>
       </Card>
-    </div>
+    </PageFrame>
   );
 };
 

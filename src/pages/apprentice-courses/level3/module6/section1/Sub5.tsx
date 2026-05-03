@@ -85,12 +85,12 @@ const quizQuestions = [
     options: [
       'The previous EICR.',
       'The DNO declaration (DNO Form 1 or equivalent) — written confirmation from the Distribution Network Operator of voltage, Ze, PSCC, earthing arrangement and conductor configuration.',
-      'The customer\u2019s description.',
-      'The meter operator\u2019s opinion.',
+      'The customer’s description.',
+      'The meter operator’s opinion.',
     ],
     correctAnswer: 1,
     explanation:
-      "Reg 313 supply characteristics must come from the DNO in writing. DNO Form 1 (or the equivalent on each DNO\u2019s website) is the recognised document. Verbal estimates from the meter operator or installer assumptions from the previous EICR are not auditable and not contractually binding. Write to the DNO at the design stage; keep the response on file.",
+      "Reg 313 supply characteristics must come from the DNO in writing. DNO Form 1 (or the equivalent on each DNO’s website) is the recognised document. Verbal estimates from the meter operator or installer assumptions from the previous EICR are not auditable and not contractually binding. Write to the DNO at the design stage; keep the response on file.",
   },
   {
     id: 2,
@@ -103,11 +103,11 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      "The IET Guidance Notes are the IET\u2019s detailed elaboration of specific BS 7671 Parts and Chapters. They are not statutory but are widely treated as authoritative interpretation. GN1 (selection and erection), GN3 (inspection and testing), GN5 (electric shock), GN6 (overcurrent), GN7 (special locations), GN8 (earthing and bonding). Plus the On-Site Guide for typical domestic and small-commercial work.",
+      "The IET Guidance Notes are the IET’s detailed elaboration of specific BS 7671 Parts and Chapters. They are not statutory but are widely treated as authoritative interpretation. GN1 (selection and erection), GN3 (inspection and testing), GN5 (electric shock), GN6 (overcurrent), GN7 (special locations), GN8 (earthing and bonding). Plus the On-Site Guide for typical domestic and small-commercial work.",
   },
   {
     id: 3,
-    question: 'On a multi-discipline project, the architect\u2019s drawings conflict with the M&E coordinator\u2019s service routes. The L3 designer should:',
+    question: 'On a multi-discipline project, the architect’s drawings conflict with the M&E coordinator’s service routes. The L3 designer should:',
     options: [
       'Ignore the conflict and design what suits.',
       'Raise a Request for Information (RFI), record the conflict in the design log, propose a resolution that maintains BS 7671 and CDM safety, and only proceed once the resolution is recorded by the Principal Designer.',
@@ -189,7 +189,7 @@ const faqs = [
   {
     question: 'What if I cannot get a DNO Form 1?',
     answer:
-      "Every UK DNO has an online form for supply data requests (UK Power Networks, National Grid Electricity Distribution, Northern Powergrid, Electricity North West, SP Energy Networks, SSEN). The standard turnaround is 5-10 working days; urgent requests can usually be expedited. If the response is delayed and the customer wants you to proceed, you can use the DNO\u2019s default declared values for the supply type as an interim assumption (typically 0.35 ohm Ze for TN-C-S in built-up areas, 0.8 ohm for TT) — but document the assumption and re-check the design against the formal DNO response when it arrives. Never proceed to the EIC sign-off without the formal DNO data on file.",
+      "Every UK DNO has an online form for supply data requests (UK Power Networks, National Grid Electricity Distribution, Northern Powergrid, Electricity North West, SP Energy Networks, SSEN). The standard turnaround is 5-10 working days; urgent requests can usually be expedited. If the response is delayed and the customer wants you to proceed, you can use the DNO’s default declared values for the supply type as an interim assumption (typically 0.35 ohm Ze for TN-C-S in built-up areas, 0.8 ohm for TT) — but document the assumption and re-check the design against the formal DNO response when it arrives. Never proceed to the EIC sign-off without the formal DNO data on file.",
   },
   {
     question: 'How do I read manufacturer time-current curves?',
@@ -209,7 +209,7 @@ const faqs = [
   {
     question: 'What does an RFI (Request for Information) look like?',
     answer:
-      "A short numbered document with: project number, RFI number, date raised, who raised it, who it goes to, the question (specific and bounded — \u201ccable route conflicts with HVAC duct shown on Drawing M-103 Rev C\u201d not \u201cthe drawings are wrong\u201d), the impact if not resolved (cost, time, safety), and the proposed resolution. The recipient (architect, structural engineer, M&E coordinator, Principal Designer) returns the answer in writing, dated and signed off. The RFI and response live in the project document register and protect everyone against \u201cwho decided that\u201d arguments later. Use a project management tool (Procore, Asite, BIM 360, even shared spreadsheets) — never raise an RFI by phone alone.",
+      "A short numbered document with: project number, RFI number, date raised, who raised it, who it goes to, the question (specific and bounded — “cable route conflicts with HVAC duct shown on Drawing M-103 Rev C” not “the drawings are wrong”), the impact if not resolved (cost, time, safety), and the proposed resolution. The recipient (architect, structural engineer, M&E coordinator, Principal Designer) returns the answer in writing, dated and signed off. The RFI and response live in the project document register and protect everyone against “who decided that” arguments later. Use a project management tool (Procore, Asite, BIM 360, even shared spreadsheets) — never raise an RFI by phone alone.",
   },
   {
     question: 'How long should I keep design documentation?',
@@ -288,10 +288,10 @@ export default function Sub5() {
             clause="The documentation shall include prospective fault current. Designers shall determine and record the prospective (available) fault current at relevant points to select protective devices and ensure disconnection requirements are achievable."
             meaning={
               <>
-                Reg 132.2(c)(iv) is the explicit hook for &quot;get the supply data from the DNO before you start&quot;. The DNO declaration (Form 1 or each DNO\u2019s online equivalent) is the source-of-truth document — covering nominal voltage, frequency, max allowable current, prospective fault current and external earth fault loop impedance. It must be on file in the design pack and quoted on the EIC. Without it, every design decision downstream is unsupported.
+                Reg 132.2(c)(iv) is the explicit hook for &quot;get the supply data from the DNO before you start&quot;. The DNO declaration (Form 1 or each DNO’s online equivalent) is the source-of-truth document — covering nominal voltage, frequency, max allowable current, prospective fault current and external earth fault loop impedance. It must be on file in the design pack and quoted on the EIC. Without it, every design decision downstream is unsupported.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 132.2(c)(iv) — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 132.2(c)(iv)."
           />
 
           <SectionRule />
@@ -379,7 +379,7 @@ export default function Sub5() {
             plainEnglish="BS 7671 is the source of truth. The GNs and OSG are trusted simplifications and worked examples. Always cite the BS 7671 reg or table number on the design pack."
           >
             <p>
-              The IET Guidance Notes are the IET\u2019s detailed elaboration of specific BS 7671 Parts and Chapters:
+              The IET Guidance Notes are the IET’s detailed elaboration of specific BS 7671 Parts and Chapters:
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li><strong>GN1</strong> — Selection and Erection. The most-used GN; covers Part 5 in depth.</li>
@@ -553,7 +553,7 @@ export default function Sub5() {
             title="Citing the OSG when conditions exceed its assumptions"
             whatHappens={
               <>
-                A designer specifies 2.5 mm² for a 32 A ring final based on the OSG, but the install runs 18 m of the cable through the loft above 100 mm of insulation in a two-circuit grouping. The OSG\u2019s assumed conditions do not include this grouping or insulation enclosure. The cable fails CCC under the actual derating stack. EICR findings six months later code C2.
+                A designer specifies 2.5 mm² for a 32 A ring final based on the OSG, but the install runs 18 m of the cable through the loft above 100 mm of insulation in a two-circuit grouping. The OSG’s assumed conditions do not include this grouping or insulation enclosure. The cable fails CCC under the actual derating stack. EICR findings six months later code C2.
               </>
             }
             doInstead={
@@ -596,7 +596,7 @@ export default function Sub5() {
                 measurement, enquiry or calculation is required.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 132.2(c)(iii) — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 132.2(c)(iii)."
           />
 
           <RegsCallout
@@ -624,7 +624,7 @@ export default function Sub5() {
                 makes the design defensible at handover and at the next periodic inspection.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Part 1, Chapter 13, Regulation 132.6 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Part 1, Chapter 13, Regulation 132.6."
           />
 
           <SectionRule />

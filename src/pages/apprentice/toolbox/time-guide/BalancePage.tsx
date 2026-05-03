@@ -1,17 +1,37 @@
-import { SmartBackButton } from '@/components/ui/smart-back-button';
 import { Card, CardContent } from '@/components/ui/card';
-import { CheckCircle } from 'lucide-react';
+import { ArrowLeft, CheckCircle } from 'lucide-react';
 import WorkLifeBalanceTab from '@/components/apprentice/time-management/WorkLifeBalanceTab';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import {
+  PageFrame,
+  PageHero,
+  itemVariants,
+} from '@/components/college/primitives';
 
 const BalancePage = () => {
+  const navigate = useNavigate();
   return (
-    <div className="animate-fade-in max-w-2xl mx-auto px-4 pb-20 space-y-6 text-left">
-      <div className="flex items-center gap-3">
-        <SmartBackButton />
-        <h1 className="text-2xl font-bold tracking-tight text-white">
-          Work-Life Balance
-        </h1>
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice/toolbox/time-management')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
+
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Time"
+          title="Work-Life Balance"
+          tone="yellow"
+        />
+      </motion.div>
 
       <Card className="border-purple-500/20 bg-white/5">
         <CardContent className="p-4 space-y-4">
@@ -51,7 +71,7 @@ const BalancePage = () => {
       </Card>
 
       <WorkLifeBalanceTab />
-    </div>
+    </PageFrame>
   );
 };
 

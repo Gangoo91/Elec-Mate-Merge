@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 8 · Section 6 · Subsection 6 — Handover and Training
+ * HNC Electrical Engineering for Building Services (HVAC Systems)
+ *   Client training, operational handover, defects liability period, and post-occupancy support for building services
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Handover and Training - HNC Module 8 Section 6.6';
@@ -256,999 +269,326 @@ const faqs = [
 ];
 
 const HNCModule8Section6_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section6")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module8-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 8.6.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Handover and Training
-          </h1>
-          <p className="text-white">
-            Client training, operational handover, defects liability period, and post-occupancy
-            support for building services
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 8 · Section 6 · Subsection 6"
+            title="Handover and Training"
+            description="Client training, operational handover, defects liability period, and post-occupancy support for building services"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Soft Landings:</strong> Bridging design intent to operation
-              </li>
-              <li className="pl-1">
-                <strong>Defects period:</strong> Typically 12 months for rectification
-              </li>
-              <li className="pl-1">
-                <strong>FM training:</strong> Operation, emergencies, fault diagnosis
-              </li>
-              <li className="pl-1">
-                <strong>POE:</strong> 12-month and 3-year evaluations
-              </li>
+          <ConceptBlock title="Client Training Requirements">
+            <p>Comprehensive client training is essential for safe and efficient building operation. Training must be tailored to the audience, covering operational staff, facilities management, and emergency responders with appropriate levels of detail.</p>
+            <p><strong>Training Programme Components</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>System overview:</strong> Purpose, main components, and distribution architecture</li>
+              <li><strong>Normal operation:</strong> Starting, stopping, adjusting setpoints, and monitoring</li>
+              <li><strong>Emergency procedures:</strong> Isolation, lock-off, and evacuation protocols</li>
+              <li><strong>Fault diagnosis:</strong> Basic troubleshooting and alarm response</li>
+              <li><strong>BMS/controls:</strong> User interface operation and adjustment limits</li>
+              <li><strong>Maintenance access:</strong> Safe access requirements and permit systems</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>BSRIA BG 54:</strong> Soft Landings guidance
-              </li>
-              <li className="pl-1">
-                <strong>GSL:</strong> Government Soft Landings (mandatory)
-              </li>
-              <li className="pl-1">
-                <strong>Seasonal commissioning:</strong> Heating and cooling optimisation
-              </li>
-              <li className="pl-1">
-                <strong>Aftercare:</strong> Extended support arrangements
-              </li>
+            <p><strong>Training Audience and Content</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Building owner/client:</strong> Overview, key contacts, warranty arrangements — 1-2 hours</li>
+              <li><strong>FM manager:</strong> Comprehensive system operation, maintenance planning — 1-2 days</li>
+              <li><strong>Maintenance technicians:</strong> Detailed operation, fault finding, safe isolation — 2-3 days</li>
+              <li><strong>Security/reception:</strong> Emergency procedures, basic BMS monitoring — 2-4 hours</li>
+              <li><strong>General occupants:</strong> User controls, emergency evacuation — 30-60 minutes</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Training Documentation Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Training programme with objectives and duration</li>
+              <li>Attendance register signed by all participants</li>
+              <li>Handout materials and reference guides</li>
+              <li>Competency assessment records where applicable</li>
+              <li>Video recordings for future reference (with permission)</li>
+              <li>Certificate of completion for each attendee</li>
+            </ul>
+            <p><strong>Best practice:</strong> Schedule multiple training sessions, with initial training before occupation and follow-up sessions after one month of operation to address real-world queries.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Explain the Soft Landings framework and its application to building services',
-              'Describe client training requirements and documentation',
-              'Understand the defects liability period and contractor obligations',
-              'Plan FM team handover and operational demonstrations',
-              'Conduct Post-Occupancy Evaluation to verify performance',
-              'Establish aftercare support arrangements for complex installations',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Client Training Requirements */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Client Training Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Operational Handover and FM Team">
+            <p>Operational handover transfers responsibility for building services from the contractor to the client's facilities management team. This process must be structured to ensure the FM team has the knowledge, documentation, and resources to operate the building safely.</p>
+            <p><strong>Handover Process Stages</strong></p>
+            <p><strong>FM Team Handover Checklist</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>O&amp;M manuals:</strong> Complete, indexed, and project-specific — Main contractor</li>
+              <li><strong>As-built drawings:</strong> Full set reflecting actual installation — Main contractor</li>
+              <li><strong>Test certificates:</strong> EIC, commissioning records, witness tests — Sub-contractors</li>
+              <li><strong>Spare parts:</strong> Contractually specified spares with storage — Main contractor</li>
+              <li><strong>Access keys:</strong> All panel keys, lock-off devices, access cards — Main contractor</li>
+              <li><strong>Warranty documents:</strong> Equipment warranties with claim procedures — Sub-contractors</li>
+              <li><strong>Contact list:</strong> Emergency contacts, specialist suppliers — Main contractor</li>
+            </ul>
+            <p><strong>Operational Demonstrations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Main switchgear operation and interlocks</li>
+              <li>Distribution board switching sequences</li>
+              <li>Emergency lighting test procedures</li>
+              <li>Generator start/stop and changeover</li>
+              <li>UPS system operation and bypass</li>
+              <li>BMS graphics and alarm response</li>
+            </ul>
+            <p><strong>Safety Briefings Required</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>High voltage equipment hazards</li>
+              <li>Arc flash risks and PPE requirements</li>
+              <li>Lock-off/tag-out procedures</li>
+              <li>Emergency isolation locations</li>
+              <li>Permit to work requirements</li>
+              <li>Competency requirements for access</li>
+            </ul>
+            <p><strong>Key point:</strong> FM involvement should begin during construction, not at handover. Early engagement allows the FM team to understand the systems and provide input on maintainability.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Defects Liability Period">
+            <p>The defects liability period (DLP), also known as the rectification period, is the time following practical completion during which the contractor must return to rectify defects that become apparent under normal use. For building services, this is typically 12 months.</p>
+            <p><strong>Standard Defects Period</strong></p>
+            <p><strong>12 months from practical completion</strong></p>
+            <p>Extended to 24 months for some specialist systems (BMS, fire alarm) under certain contracts</p>
+            <p><strong>Contractor's Obligations During DLP</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Respond to defect notices:</strong> Acknowledge and arrange inspection — Within 48 hours</li>
+              <li><strong>Rectify defects:</strong> Repair defects in workmanship/materials — Reasonable time</li>
+              <li><strong>Emergency response:</strong> Attend dangerous defects immediately — Within 4 hours</li>
+              <li><strong>Update documentation:</strong> Amend as-builts if repairs require changes — With final account</li>
+              <li><strong>Seasonal commissioning:</strong> Return for heating/cooling season optimisation — As seasons occur</li>
+            </ul>
+            <p>Defects Covered</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Faulty workmanship</li>
+              <li>• Defective materials</li>
+              <li>• Equipment failure (manufacturing)</li>
+              <li>• Non-compliance with specification</li>
+              <li>• Latent defects becoming apparent</li>
+            </ul>
+            <p>Not Covered</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Damage by client/occupants</li>
+              <li>• Fair wear and tear</li>
+              <li>• Client-requested changes</li>
+              <li>• Damage from misuse</li>
+              <li>• Consumable replacements</li>
+            </ul>
+            <p><strong>Retention and Final Certificate</strong></p>
+            <p><strong>At Practical Completion:</strong> Half of retention released (typically 2.5% of contract value retained)</p>
+            <p><strong>During DLP:</strong> Client notifies defects in writing; contractor rectifies</p>
+            <p><strong>At DLP End:</strong> Final inspection; making good of any outstanding defects</p>
+            <p><strong>Final Certificate:</strong> Issued after all defects rectified; remaining retention released</p>
+            <p><strong>Notification requirement:</strong> Defects must be notified in writing during the DLP to be covered. Keep detailed records with photographs of all reported defects.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Post-Occupancy Support and Soft Landings">
+            <p>Post-occupancy support ensures buildings perform as intended under actual operational conditions. The Soft Landings framework provides a structured approach to extended aftercare, performance monitoring, and feedback for continuous improvement.</p>
+            <p><strong>BSRIA Soft Landings Framework</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Stage 1: Inception:</strong> RIBA Stage 1-2 — Set performance targets, define roles</li>
+              <li><strong>Stage 2: Design:</strong> RIBA Stage 3-4 — Review for operational efficiency, involve FM</li>
+              <li><strong>Stage 3: Pre-handover:</strong> Final 12 weeks — Commissioning, training preparation</li>
+              <li><strong>Stage 4: Initial Aftercare:</strong> First 4 weeks — Resident support, system fine-tuning</li>
+              <li><strong>Stage 5: Extended Aftercare:</strong> Years 1-3 — Seasonal commissioning, POE, reviews</li>
+            </ul>
+            <p><strong>Post-Occupancy Evaluation (POE)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Energy performance:</strong> Compare actual consumption against design predictions</li>
+              <li><strong>Occupant satisfaction:</strong> Surveys on comfort, lighting, controls</li>
+              <li><strong>Functional performance:</strong> Does the building work for its intended use?</li>
+              <li><strong>Maintainability:</strong> Feedback on access, serviceability, spare parts</li>
+              <li><strong>Lessons learned:</strong> Capture feedback for future projects</li>
+            </ul>
+            <p><strong>POE Timing and Activities</strong></p>
+            <p><strong>12-Month POE</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Full seasonal energy analysis</li>
+              <li>• Occupant satisfaction survey</li>
+              <li>• System performance review</li>
+              <li>• Defects analysis and feedback</li>
+              <li>• End of DLP review meeting</li>
+            </ul>
+            <p><strong>3-Year POE (Optional)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Long-term energy trend analysis</li>
+              <li>• Equipment reliability assessment</li>
+              <li>• Maintenance cost evaluation</li>
+              <li>• User adaptation observations</li>
+              <li>• Lessons learned documentation</li>
+            </ul>
+            <p><strong>Government Soft Landings (GSL)</strong></p>
+            <p><strong>Mandatory for UK government projects.</strong> Key requirements include:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Champion identified at project inception</li>
+              <li>Reality checking of designs against operational requirements</li>
+              <li>Minimum 3-week resident aftercare period</li>
+              <li>POE at 12 months and 3 years mandatory</li>
+              <li>Performance metrics and lessons learned published</li>
+            </ul>
+            <p><strong>Aftercare Support Arrangements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Helpdesk support:</strong> Telephone/email technical queries — 12 months minimum</li>
+              <li><strong>Site visits:</strong> Monthly review meetings reducing to quarterly — First 12 months</li>
+              <li><strong>Seasonal commissioning:</strong> Heating and cooling season optimisation — First full year</li>
+              <li><strong>BMS support:</strong> Remote monitoring, setpoint adjustment — 12-24 months</li>
+              <li><strong>Extended warranty:</strong> Equipment manufacturer support — 2-5 years</li>
+            </ul>
+            <p><strong>Performance gap:</strong> Studies show that buildings often consume 2-5 times more energy than design predictions. Soft Landings and POE help identify and close this performance gap.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Comprehensive client training is essential for safe and efficient building operation.
-              Training must be tailored to the audience, covering operational staff, facilities
-              management, and emergency responders with appropriate levels of detail.
+              <strong>Example 1: Training Programme Development</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Training Programme Components</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>System overview:</strong> Purpose, main components, and distribution
-                  architecture
-                </li>
-                <li className="pl-1">
-                  <strong>Normal operation:</strong> Starting, stopping, adjusting setpoints, and
-                  monitoring
-                </li>
-                <li className="pl-1">
-                  <strong>Emergency procedures:</strong> Isolation, lock-off, and evacuation
-                  protocols
-                </li>
-                <li className="pl-1">
-                  <strong>Fault diagnosis:</strong> Basic troubleshooting and alarm response
-                </li>
-                <li className="pl-1">
-                  <strong>BMS/controls:</strong> User interface operation and adjustment limits
-                </li>
-                <li className="pl-1">
-                  <strong>Maintenance access:</strong> Safe access requirements and permit systems
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Training Audience and Content
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Audience</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Training Focus</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Duration
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Building owner/client</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Overview, key contacts, warranty arrangements
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">1-2 hours</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">FM manager</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Comprehensive system operation, maintenance planning
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">1-2 days</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Maintenance technicians</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Detailed operation, fault finding, safe isolation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">2-3 days</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Security/reception</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Emergency procedures, basic BMS monitoring
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">2-4 hours</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">General occupants</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        User controls, emergency evacuation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">30-60 minutes</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Training Documentation Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Training programme with objectives and duration</li>
-                <li className="pl-1">Attendance register signed by all participants</li>
-                <li className="pl-1">Handout materials and reference guides</li>
-                <li className="pl-1">Competency assessment records where applicable</li>
-                <li className="pl-1">Video recordings for future reference (with permission)</li>
-                <li className="pl-1">Certificate of completion for each attendee</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> Schedule multiple training sessions, with initial
-              training before occupation and follow-up sessions after one month of operation to
-              address real-world queries.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Operational Handover and FM Team */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Operational Handover and FM Team
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Develop a training programme for a new office building with BMS-controlled lighting and HVAC.</p>
+            <p>Training Programme - ABC Office Building</p>
+            <p>Session 1: FM Manager Training (1 day)</p>
+            <p>---------------------------------------------</p>
+            <p>09:00 - System overview and distribution architecture</p>
+            <p>10:30 - Main switchgear operation and interlocks</p>
+            <p>12:00 - Lunch</p>
+            <p>13:00 - BMS system overview and graphics tour</p>
+            <p>15:00 - Emergency procedures and isolation</p>
+            <p>16:30 - Q&amp;A and documentation review</p>
+            <p>Session 2: Maintenance Team (2 days)</p>
+            <p>---------------------------------------------</p>
+            <p>Day 1: Electrical systems, testing, safe isolation</p>
+            <p>Day 2: HVAC controls, lighting controls, fault finding</p>
+            <p>Attendees: Sign attendance register and competency checklist</p>
             <p>
-              Operational handover transfers responsibility for building services from the
-              contractor to the client's facilities management team. This process must be structured
-              to ensure the FM team has the knowledge, documentation, and resources to operate the
-              building safely.
+              <strong>Example 2: Defects Period Management</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Handover Process Stages
-              </p>
-              <div className="space-y-2">
-                <div className="flex items-center gap-3 p-2 rounded bg-blue-500/10">
-                  <span className="text-blue-400 font-bold w-6">1</span>
-                  <span className="text-sm">
-                    <strong>Pre-handover:</strong> FM team familiarisation visits during
-                    construction
-                  </span>
-                </div>
-                <div className="flex items-center gap-3 p-2 rounded bg-green-500/10">
-                  <span className="text-green-400 font-bold w-6">2</span>
-                  <span className="text-sm">
-                    <strong>Practical completion:</strong> Formal handover of systems with
-                    demonstration
-                  </span>
-                </div>
-                <div className="flex items-center gap-3 p-2 rounded bg-yellow-500/10">
-                  <span className="text-yellow-400 font-bold w-6">3</span>
-                  <span className="text-sm">
-                    <strong>Initial aftercare:</strong> On-site support during first weeks of
-                    occupation
-                  </span>
-                </div>
-                <div className="flex items-center gap-3 p-2 rounded bg-purple-500/10">
-                  <span className="text-purple-400 font-bold w-6">4</span>
-                  <span className="text-sm">
-                    <strong>Extended aftercare:</strong> Seasonal commissioning and 12-month review
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                FM Team Handover Checklist
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Item</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Responsibility</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">O&amp;M manuals</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Complete, indexed, and project-specific
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Main contractor</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">As-built drawings</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full set reflecting actual installation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Main contractor</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Test certificates</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        EIC, commissioning records, witness tests
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Sub-contractors</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Spare parts</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Contractually specified spares with storage
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Main contractor</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Access keys</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        All panel keys, lock-off devices, access cards
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Main contractor</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Warranty documents</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Equipment warranties with claim procedures
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Sub-contractors</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Contact list</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Emergency contacts, specialist suppliers
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Main contractor</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 grid sm:grid-cols-2 gap-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Operational Demonstrations
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Main switchgear operation and interlocks</li>
-                  <li className="pl-1">Distribution board switching sequences</li>
-                  <li className="pl-1">Emergency lighting test procedures</li>
-                  <li className="pl-1">Generator start/stop and changeover</li>
-                  <li className="pl-1">UPS system operation and bypass</li>
-                  <li className="pl-1">BMS graphics and alarm response</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Safety Briefings Required
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">High voltage equipment hazards</li>
-                  <li className="pl-1">Arc flash risks and PPE requirements</li>
-                  <li className="pl-1">Lock-off/tag-out procedures</li>
-                  <li className="pl-1">Emergency isolation locations</li>
-                  <li className="pl-1">Permit to work requirements</li>
-                  <li className="pl-1">Competency requirements for access</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> FM involvement should begin during construction, not at
-              handover. Early engagement allows the FM team to understand the systems and provide
-              input on maintainability.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Defects Liability Period */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Defects Liability Period
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Track and manage defects during the 12-month liability period.</p>
+            <p>Defects Register - Project XYZ</p>
+            <p>Practical Completion: 15 March 2024</p>
+            <p>DLP Ends: 14 March 2025</p>
+            <p>Ref | Date | Location | Description | Status</p>
+            <p>-----|----------|-------------|----------------------|--------</p>
+            <p>D001 | 20/03/24 | Level 2 DB | Loose terminations | Rectified</p>
+            <p>D002 | 05/04/24 | Reception | Lighting flicker | Rectified</p>
+            <p>D003 | 15/05/24 | Plant room | Contactor failure | Rectified</p>
+            <p>D004 | 22/09/24 | Office area | Underfloor heating |  <span>Outstanding</span></p>
+            <p>D005 | 10/01/25 | Server room | UPS alarm fault |  <span>Outstanding</span></p>
+            <p>Next review meeting: 28 February 2025</p>
+            <p>All outstanding items to be closed before final certificate</p>
             <p>
-              The defects liability period (DLP), also known as the rectification period, is the
-              time following practical completion during which the contractor must return to rectify
-              defects that become apparent under normal use. For building services, this is
-              typically 12 months.
+              <strong>Example 3: Post-Occupancy Evaluation Report</strong>
             </p>
+            <p><strong>Scenario:</strong> Summarise findings from a 12-month POE for a commercial building.</p>
+            <p>12-Month Post-Occupancy Evaluation Summary</p>
+            <p>Energy Performance:</p>
+            <p>- Design prediction: 85 kWh/m²/year</p>
+            <p>- Actual consumption: 102 kWh/m²/year (+20%)</p>
+            <p>- Main variance: Extended operating hours, IT load</p>
+            <p>Occupant Satisfaction (scale 1-5):</p>
+            <p>- Thermal comfort: 3.8/5</p>
+            <p>- Lighting quality: 4.2/5</p>
+            <p>- Controls usability: 3.1/5  <span>&lt;-- Action required</span></p>
+            <p>Key Findings:</p>
+            <p>- BMS setpoints required adjustment for occupancy patterns</p>
+            <p>- Lighting controls too complex - simplified interface needed</p>
+            <p>- Emergency lighting test procedure clarified with FM</p>
+            <p>Recommendations implemented; 3-year POE scheduled</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Standard Defects Period</p>
-              <p className="text-lg text-white text-center font-medium">
-                12 months from practical completion
-              </p>
-              <p className="text-sm text-white text-center mt-2">
-                Extended to 24 months for some specialist systems (BMS, fire alarm) under certain
-                contracts
-              </p>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Contractor's Obligations During DLP
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Obligation</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Time Limit</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Respond to defect notices
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Acknowledge and arrange inspection
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Within 48 hours</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Rectify defects</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Repair defects in workmanship/materials
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Reasonable time</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Emergency response</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Attend dangerous defects immediately
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Within 4 hours</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Update documentation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Amend as-builts if repairs require changes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">With final account</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Seasonal commissioning</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Return for heating/cooling season optimisation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">As seasons occur</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 grid sm:grid-cols-2 gap-6">
-              <div className="p-3 rounded bg-green-500/10">
-                <p className="font-medium text-green-400 mb-1">Defects Covered</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>• Faulty workmanship</li>
-                  <li>• Defective materials</li>
-                  <li>• Equipment failure (manufacturing)</li>
-                  <li>• Non-compliance with specification</li>
-                  <li>• Latent defects becoming apparent</li>
-                </ul>
-              </div>
-              <div className="p-3 rounded bg-red-500/10">
-                <p className="font-medium text-red-400 mb-1">Not Covered</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>• Damage by client/occupants</li>
-                  <li>• Fair wear and tear</li>
-                  <li>• Client-requested changes</li>
-                  <li>• Damage from misuse</li>
-                  <li>• Consumable replacements</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Retention and Final Certificate
-              </p>
-              <div className="space-y-2">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm text-white">
-                    <strong>At Practical Completion:</strong> Half of retention released (typically
-                    2.5% of contract value retained)
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm text-white">
-                    <strong>During DLP:</strong> Client notifies defects in writing; contractor
-                    rectifies
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm text-white">
-                    <strong>At DLP End:</strong> Final inspection; making good of any outstanding
-                    defects
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm text-white">
-                    <strong>Final Certificate:</strong> Issued after all defects rectified;
-                    remaining retention released
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Notification requirement:</strong> Defects must be notified in writing during
-              the DLP to be covered. Keep detailed records with photographs of all reported defects.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Post-Occupancy Support and Soft Landings */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Post-Occupancy Support and Soft Landings
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Post-occupancy support ensures buildings perform as intended under actual operational
-              conditions. The Soft Landings framework provides a structured approach to extended
-              aftercare, performance monitoring, and feedback for continuous improvement.
+              <strong>Key Standards and References:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BSRIA Soft Landings Framework
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Stage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Timing</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Activities</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Stage 1: Inception</td>
-                      <td className="border border-white/10 px-3 py-2">RIBA Stage 1-2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Set performance targets, define roles
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Stage 2: Design</td>
-                      <td className="border border-white/10 px-3 py-2">RIBA Stage 3-4</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Review for operational efficiency, involve FM
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Stage 3: Pre-handover</td>
-                      <td className="border border-white/10 px-3 py-2">Final 12 weeks</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Commissioning, training preparation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Stage 4: Initial Aftercare
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">First 4 weeks</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Resident support, system fine-tuning
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Stage 5: Extended Aftercare
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Years 1-3</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Seasonal commissioning, POE, reviews
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Post-Occupancy Evaluation (POE)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Energy performance:</strong> Compare actual consumption against design
-                  predictions
-                </li>
-                <li className="pl-1">
-                  <strong>Occupant satisfaction:</strong> Surveys on comfort, lighting, controls
-                </li>
-                <li className="pl-1">
-                  <strong>Functional performance:</strong> Does the building work for its intended
-                  use?
-                </li>
-                <li className="pl-1">
-                  <strong>Maintainability:</strong> Feedback on access, serviceability, spare parts
-                </li>
-                <li className="pl-1">
-                  <strong>Lessons learned:</strong> Capture feedback for future projects
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                POE Timing and Activities
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-white font-medium mb-1">12-Month POE</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>• Full seasonal energy analysis</li>
-                    <li>• Occupant satisfaction survey</li>
-                    <li>• System performance review</li>
-                    <li>• Defects analysis and feedback</li>
-                    <li>• End of DLP review meeting</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-white font-medium mb-1">3-Year POE (Optional)</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>• Long-term energy trend analysis</li>
-                    <li>• Equipment reliability assessment</li>
-                    <li>• Maintenance cost evaluation</li>
-                    <li>• User adaptation observations</li>
-                    <li>• Lessons learned documentation</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Government Soft Landings (GSL)
-              </p>
-              <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
-                <p className="text-sm text-white mb-2">
-                  <strong>Mandatory for UK government projects.</strong> Key requirements include:
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Champion identified at project inception</li>
-                  <li className="pl-1">
-                    Reality checking of designs against operational requirements
-                  </li>
-                  <li className="pl-1">Minimum 3-week resident aftercare period</li>
-                  <li className="pl-1">POE at 12 months and 3 years mandatory</li>
-                  <li className="pl-1">Performance metrics and lessons learned published</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Aftercare Support Arrangements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Support Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Provision
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Duration</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Helpdesk support</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Telephone/email technical queries
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">12 months minimum</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Site visits</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Monthly review meetings reducing to quarterly
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">First 12 months</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Seasonal commissioning</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heating and cooling season optimisation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">First full year</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BMS support</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Remote monitoring, setpoint adjustment
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">12-24 months</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Extended warranty</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Equipment manufacturer support
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">2-5 years</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Performance gap:</strong> Studies show that buildings often consume 2-5 times
-              more energy than design predictions. Soft Landings and POE help identify and close
-              this performance gap.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>BSRIA BG 54:</strong> Soft Landings Framework - 2018 edition</li>
+              <li><strong>BSRIA BG 64:</strong> Design Framework for Building Services</li>
+              <li><strong>BS 8536-1:</strong> Briefing for design and construction (Code of practice)</li>
+              <li><strong>Government Soft Landings:</strong> Mandatory for public sector projects</li>
+              <li><strong>CIBSE TM22:</strong> Energy Assessment and Reporting Methodology</li>
+              <li><strong>JCT/NEC contracts:</strong> Defects liability provisions</li>
+            </ul>
+            <p>
+              <strong>Handover Checklist - Electrical Systems:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>All EICs issued and test results complete</li>
+              <li>O&amp;M manuals indexed and project-specific</li>
+              <li>As-built drawings issued (marked "As-Built")</li>
+              <li>FM training completed with signed attendance</li>
+              <li>Operational demonstrations witnessed and recorded</li>
+              <li>Spare parts handed over with storage location confirmed</li>
+              <li>Access keys, lock-off devices, and panel keys provided</li>
+              <li>Emergency contact list issued</li>
+            </ul>
+            <p>
+              <strong>Common Handover Problems:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Late documentation:</strong> O&amp;M manuals arriving weeks after occupation</li>
+              <li><strong>Rushed training:</strong> Inadequate time for FM team to absorb information</li>
+              <li><strong>Missing spares:</strong> Contractual spares not delivered or stored incorrectly</li>
+              <li><strong>Incomplete snagging:</strong> Minor defects still being rectified during occupation</li>
+              <li><strong>No aftercare plan:</strong> Contractor disengages immediately after handover</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <FAQ items={faqs} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Training Programme Development
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Develop a training programme for a new office building
-                with BMS-controlled lighting and HVAC.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Training Programme - ABC Office Building</p>
-                <p className="mt-2">Session 1: FM Manager Training (1 day)</p>
-                <p>---------------------------------------------</p>
-                <p>09:00 - System overview and distribution architecture</p>
-                <p>10:30 - Main switchgear operation and interlocks</p>
-                <p>12:00 - Lunch</p>
-                <p>13:00 - BMS system overview and graphics tour</p>
-                <p>15:00 - Emergency procedures and isolation</p>
-                <p>16:30 - Q&amp;A and documentation review</p>
-                <p className="mt-2">Session 2: Maintenance Team (2 days)</p>
-                <p>---------------------------------------------</p>
-                <p>Day 1: Electrical systems, testing, safe isolation</p>
-                <p>Day 2: HVAC controls, lighting controls, fault finding</p>
-                <p className="mt-2 text-green-400">
-                  Attendees: Sign attendance register and competency checklist
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Defects Period Management
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Track and manage defects during the 12-month liability
-                period.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Defects Register - Project XYZ</p>
-                <p className="text-white">Practical Completion: 15 March 2024</p>
-                <p className="text-white">DLP Ends: 14 March 2025</p>
-                <p className="mt-2">Ref | Date | Location | Description | Status</p>
-                <p>-----|----------|-------------|----------------------|--------</p>
-                <p>D001 | 20/03/24 | Level 2 DB | Loose terminations | Rectified</p>
-                <p>D002 | 05/04/24 | Reception | Lighting flicker | Rectified</p>
-                <p>D003 | 15/05/24 | Plant room | Contactor failure | Rectified</p>
-                <p>
-                  D004 | 22/09/24 | Office area | Underfloor heating |{' '}
-                  <span className="text-yellow-400">Outstanding</span>
-                </p>
-                <p>
-                  D005 | 10/01/25 | Server room | UPS alarm fault |{' '}
-                  <span className="text-yellow-400">Outstanding</span>
-                </p>
-                <p className="mt-2 text-white">Next review meeting: 28 February 2025</p>
-                <p className="text-white">
-                  All outstanding items to be closed before final certificate
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Post-Occupancy Evaluation Report
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Summarise findings from a 12-month POE for a commercial
-                building.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">12-Month Post-Occupancy Evaluation Summary</p>
-                <p className="mt-2">Energy Performance:</p>
-                <p>- Design prediction: 85 kWh/m²/year</p>
-                <p>- Actual consumption: 102 kWh/m²/year (+20%)</p>
-                <p>- Main variance: Extended operating hours, IT load</p>
-                <p className="mt-2">Occupant Satisfaction (scale 1-5):</p>
-                <p>- Thermal comfort: 3.8/5</p>
-                <p>- Lighting quality: 4.2/5</p>
-                <p>
-                  - Controls usability: 3.1/5{' '}
-                  <span className="text-orange-400">&lt;-- Action required</span>
-                </p>
-                <p className="mt-2">Key Findings:</p>
-                <p>- BMS setpoints required adjustment for occupancy patterns</p>
-                <p>- Lighting controls too complex - simplified interface needed</p>
-                <p>- Emergency lighting test procedure clarified with FM</p>
-                <p className="mt-2 text-green-400">
-                  Recommendations implemented; 3-year POE scheduled
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Standards and References
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>BSRIA BG 54:</strong> Soft Landings Framework - 2018 edition
-                </li>
-                <li className="pl-1">
-                  <strong>BSRIA BG 64:</strong> Design Framework for Building Services
-                </li>
-                <li className="pl-1">
-                  <strong>BS 8536-1:</strong> Briefing for design and construction (Code of
-                  practice)
-                </li>
-                <li className="pl-1">
-                  <strong>Government Soft Landings:</strong> Mandatory for public sector projects
-                </li>
-                <li className="pl-1">
-                  <strong>CIBSE TM22:</strong> Energy Assessment and Reporting Methodology
-                </li>
-                <li className="pl-1">
-                  <strong>JCT/NEC contracts:</strong> Defects liability provisions
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Handover Checklist - Electrical Systems
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">All EICs issued and test results complete</li>
-                <li className="pl-1">O&amp;M manuals indexed and project-specific</li>
-                <li className="pl-1">As-built drawings issued (marked "As-Built")</li>
-                <li className="pl-1">FM training completed with signed attendance</li>
-                <li className="pl-1">Operational demonstrations witnessed and recorded</li>
-                <li className="pl-1">Spare parts handed over with storage location confirmed</li>
-                <li className="pl-1">Access keys, lock-off devices, and panel keys provided</li>
-                <li className="pl-1">Emergency contact list issued</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Handover Problems</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Late documentation:</strong> O&amp;M manuals arriving weeks after
-                  occupation
-                </li>
-                <li className="pl-1">
-                  <strong>Rushed training:</strong> Inadequate time for FM team to absorb
-                  information
-                </li>
-                <li className="pl-1">
-                  <strong>Missing spares:</strong> Contractual spares not delivered or stored
-                  incorrectly
-                </li>
-                <li className="pl-1">
-                  <strong>Incomplete snagging:</strong> Minor defects still being rectified during
-                  occupation
-                </li>
-                <li className="pl-1">
-                  <strong>No aftercare plan:</strong> Contractor disengages immediately after
-                  handover
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* FAQs */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Key Timescales</p>
-                <ul className="space-y-0.5">
-                  <li>Defects period: 12 months (typical)</li>
-                  <li>Initial aftercare: 4 weeks</li>
-                  <li>POE at 12 months and 3 years</li>
-                  <li>Retention release: 50% at PC, 50% at final cert</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Soft Landings Stages</p>
-                <ul className="space-y-0.5">
-                  <li>Stage 1-2: Inception and design</li>
-                  <li>Stage 3: Pre-handover (final 12 weeks)</li>
-                  <li>Stage 4: Initial aftercare (4 weeks)</li>
-                  <li>Stage 5: Extended aftercare (years 1-3)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Training Requirements</p>
-                <ul className="space-y-0.5">
-                  <li>FM manager: 1-2 days</li>
-                  <li>Maintenance team: 2-3 days</li>
-                  <li>Security/reception: 2-4 hours</li>
-                  <li>All with signed attendance records</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">POE Assessment Areas</p>
-                <ul className="space-y-0.5">
-                  <li>Energy performance vs design</li>
-                  <li>Occupant satisfaction surveys</li>
-                  <li>Functional performance review</li>
-                  <li>Lessons learned capture</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation - Back button only (last subsection) */}
-        <nav className="flex justify-start pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 6
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section6-5")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Documentation
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module9")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next module <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                HNC Module 9
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

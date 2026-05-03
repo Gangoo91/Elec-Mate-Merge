@@ -378,7 +378,7 @@ export default function Sub5() {
                 Specialised systems &mdash; fire panels, smart-meter HAN modules, BMS controllers, DALI lighting drivers, EV chargers, PV inverters &mdash; are exactly the &ldquo;equipment likely to influence the verification test or be damaged&rdquo; that A4:2026 has in mind. Drop the IR test voltage to 250&nbsp;V DC, leave the equipment connected, and you&apos;ll get a verification reading without the cost of a replacement controller.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Reg 643.3 redraft, verbatim from facet."
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 643.3 (insulation resistance, redrafted in A4:2026)."
           />
 
           <SectionRule />

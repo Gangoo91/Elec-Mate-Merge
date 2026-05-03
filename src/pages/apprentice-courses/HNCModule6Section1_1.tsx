@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 6 · Section 1 · Subsection 1 — Introduction to Part L
+ * HNC Electrical Engineering for Building Services (Sustainability and Environmental Engineering)
+ *   Part L structure, 2021 amendments, conservation of fuel and power, compliance routes, and building types
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Introduction to Part L - HNC Module 6 Section 1.1';
@@ -242,884 +259,392 @@ const faqs = [
 ];
 
 const HNCModule6Section1_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section1")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module6-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.1.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Introduction to Part L
-          </h1>
-          <p className="text-white">
-            Part L structure, 2021 amendments, conservation of fuel and power, compliance routes,
-            and building types
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 6 · Section 1 · Subsection 1"
+            title="Introduction to Part L"
+            description="Part L structure, 2021 amendments, conservation of fuel and power, compliance routes, and building types"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Part L:</strong> Conservation of fuel and power in buildings
-              </li>
-              <li className="pl-1">
-                <strong>2021 uplift:</strong> 31% CO₂ reduction for new dwellings
-              </li>
-              <li className="pl-1">
-                <strong>Compliance:</strong> SAP (domestic), SBEM (non-domestic)
-              </li>
-              <li className="pl-1">
-                <strong>Key metrics:</strong> CO₂ emissions + Primary Energy Rate
-              </li>
+          <TLDR
+            points={[
+              "Part L of the Building Regulations governs the conservation of fuel and power; the 2021 amendments cut new-dwelling CO₂ targets by 31% as the stepping-stone to the 2025 Future Homes Standard.",
+              "Compliance is demonstrated against a notional building using SAP (dwellings) or SBEM (non-domestic) — the actual building must beat the target emission and primary energy rates while staying within limiting U-values.",
+              "Part L is fabric-first by design: services efficiency cannot offset poor envelope performance, and Part L works in lock-step with Part F (ventilation), Part O (overheating) and Part S (EV charging).",
+            ]}
+          />
+
+          <RegsCallout
+            source="The Building Regulations 2010 — Part L (Conservation of fuel and power)"
+            clause="Reasonable provision shall be made for the conservation of fuel and power in buildings by limiting heat gains and losses through thermal elements and other parts of the building fabric, and from pipes, ducts and vessels used for space heating, space cooling and hot water; by providing fixed building services which are energy efficient, have effective controls, and are commissioned to meet the requirements of the Approved Document."
+            meaning={
+              <>
+                Part L is a reasonable-provision regulation enforced through the Approved Documents (ADL Volumes 1 and 2). Building Control will not issue completion until SAP/SBEM as-built calculations, commissioning certificates, the air-permeability test result and the EPC are all on file. Get the design SAP wrong at planning and the whole project sequence is at risk.
+              </>
+            }
+            cite="Source: Schedule 1, The Building Regulations 2010 (as amended) — legislation.gov.uk"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Explain the structure and purpose of Part L of the Building Regulations",
+              "Describe the 2021 amendments and their impact on building design",
+              "Compare compliance routes: SAP, SBEM, and notional building method",
+              "Apply Part L requirements to different building types and situations",
+              "Understand fabric standards, U-values, and thermal bridging",
+              "Integrate Part L with other regulations (Part F, Part O)",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Part L Overview and Structure">
+            <p>Part L of the Building Regulations sets the requirements for the conservation of fuel and power in buildings. It establishes minimum standards for thermal performance, building services efficiency, and overall energy consumption to reduce CO₂ emissions and combat climate change.</p>
+            <p><strong>Part L Document Structure:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Approved Document L Volume 1:</strong> Dwellings (new and existing)</li>
+              <li><strong>Approved Document L Volume 2:</strong> Buildings other than dwellings (non-domestic)</li>
+              <li><strong>Conservation of Fuel and Power:</strong> Common guidance applicable to all buildings</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Lighting:</strong> Efficacy and controls requirements
-              </li>
-              <li className="pl-1">
-                <strong>HVAC:</strong> System efficiency and commissioning
-              </li>
-              <li className="pl-1">
-                <strong>Controls:</strong> Building automation, metering
-              </li>
-              <li className="pl-1">
-                <strong>Future Homes:</strong> 2025 zero-carbon ready target
-              </li>
+            <p><strong>Part L Applies To</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>New dwellings:</strong> New construction — Volume 1</li>
+              <li><strong>Existing dwellings:</strong> Extensions, replacements, renovations — Volume 1</li>
+              <li><strong>New non-domestic:</strong> New construction — Volume 2</li>
+              <li><strong>Existing non-domestic:</strong> Extensions, fit-out, system replacement — Volume 2</li>
+              <li><strong>Mixed-use buildings:</strong> Relevant sections apply to each part — Both volumes</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Key principle:</strong> Part L aims to reduce carbon emissions through fabric performance (insulation, airtightness) and efficient building services (heating, cooling, lighting, ventilation).</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Explain the structure and purpose of Part L of the Building Regulations',
-              'Describe the 2021 amendments and their impact on building design',
-              'Compare compliance routes: SAP, SBEM, and notional building method',
-              'Apply Part L requirements to different building types and situations',
-              'Understand fabric standards, U-values, and thermal bridging',
-              'Integrate Part L with other regulations (Part F, Part O)',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Part L Overview */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Part L Overview and Structure
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Part L 2021 Amendments">
+            <p>The Part L 2021 amendments (effective June 2022) represent a significant uplift in energy efficiency requirements, forming a stepping stone towards the Future Homes Standard (2025) and Future Buildings Standard. These changes substantially increase carbon reduction targets.</p>
+            <p><strong>Dwellings (Part L1)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>31%</strong> CO₂ reduction vs 2013</li>
+              <li>Primary Energy metric added</li>
+              <li>Improved fabric standards</li>
+              <li>Low carbon heating emphasis</li>
+            </ul>
+            <p><strong>Non-Domestic (Part L2)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>27%</strong> CO₂ reduction vs 2013</li>
+              <li>Enhanced lighting requirements</li>
+              <li>HVAC efficiency improvements</li>
+              <li>Building automation standards</li>
+            </ul>
+            <p><strong>Key New Metrics</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Primary Energy Rate (PER)</li>
+              <li>Target Primary Energy Rate (TPER)</li>
+              <li>Fabric Energy Efficiency (FEE)</li>
+              <li>Target Fabric Energy Efficiency (TFEE)</li>
+            </ul>
+            <p><strong>Notional Building Fabric Standards (Part L 2021)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>External walls:</strong> 0.18 W/m²K — 0.26 W/m²K — 0.30 W/m²K</li>
+              <li><strong>Roof:</strong> 0.11 W/m²K — 0.16 W/m²K — 0.20 W/m²K</li>
+              <li><strong>Floor:</strong> 0.13 W/m²K — 0.18 W/m²K — 0.25 W/m²K</li>
+              <li><strong>Windows:</strong> 1.2 W/m²K — 1.6 W/m²K — 2.0 W/m²K</li>
+              <li><strong>Air permeability:</strong> 5 m³/(h·m²) — 8 m³/(h·m²) — 10 m³/(h·m²)</li>
+            </ul>
+            <p><strong>Future Homes Standard Pathway</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Part L 2013:</strong> Baseline standard</li>
+              <li><strong>Part L 2021:</strong> 31% improvement (current)</li>
+              <li><strong>Future Homes 2025:</strong> 75-80% improvement target</li>
+              <li><strong>Net Zero 2050:</strong> All homes zero carbon ready</li>
+            </ul>
+            <p><strong>Industry impact:</strong> The 2021 changes drive adoption of heat pumps, improved insulation, and low carbon technologies as gas boilers can no longer meet the notional specification.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Compliance Routes and Calculation Methods">
+            <p>Part L compliance is demonstrated through energy calculations that compare the proposed building against a notional building with compliant specifications. Different calculation methodologies apply to domestic and non-domestic buildings.</p>
+            <p><strong>Compliance Calculation Methods</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>SAP (Standard Assessment Procedure):</strong> Government methodology for dwellings - calculates DER (Dwelling Emission Rate) and DPER (Dwelling Primary Energy Rate)</li>
+              <li><strong>SBEM (Simplified Building Energy Model):</strong> For non-domestic buildings - calculates BER (Building Emission Rate) and BPER (Building Primary Energy Rate)</li>
+              <li><strong>DSM (Dynamic Simulation Modelling):</strong> Advanced modelling tools (IES, TAS) approved as alternatives to SBEM for complex buildings</li>
+            </ul>
+            <p><strong>Notional Building Approach</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>1. Create notional building:</strong> Same geometry, size, orientation as actual — Like-for-like comparison</li>
+              <li><strong>2. Apply notional specifications:</strong> Standard U-values, systems, efficiencies — Establishes target performance</li>
+              <li><strong>3. Calculate target rates:</strong> TER/TPER (dwellings) or TER/TPER (non-dom) — Compliance threshold</li>
+              <li><strong>4. Model actual building:</strong> With specified fabric and services — Predicted performance</li>
+              <li><strong>5. Compare results:</strong> DER ≤ TER and DPER ≤ TPER — Pass/fail determination</li>
+            </ul>
+            <p><strong>Key Compliance Metrics</strong></p>
+            <p><strong>Dwellings (SAP)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>DER ≤ TER (CO₂ emissions)</li>
+              <li>DPER ≤ TPER (Primary energy)</li>
+              <li>DFEE ≤ TFEE (Fabric efficiency)</li>
+              <li>Limiting U-values not exceeded</li>
+            </ul>
+            <p><strong>Non-Domestic (SBEM)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>BER ≤ TER (CO₂ emissions)</li>
+              <li>BPER ≤ TPER (Primary energy)</li>
+              <li>Lighting efficacy ≥ 45 lm/cW</li>
+              <li>HVAC efficiency standards met</li>
+            </ul>
+            <p><strong>Design flexibility:</strong> The notional building approach allows trade-offs between elements, enabling design innovation while ensuring overall performance targets are met.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Building Types and Part L Applications">
+            <p>Part L requirements vary significantly depending on whether the building is new, existing, an extension, or undergoing renovation. Understanding which requirements apply is essential for compliance.</p>
+            <p><strong>Requirements by Building Situation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>New build:</strong> Full compliance: fabric, services, renewables — Full SAP/SBEM</li>
+              <li><strong>Extension ≤50m² (domestic):</strong> Meet limiting U-values, opening areas — Elemental approach</li>
+              <li><strong>Extension &gt;50m² (domestic):</strong> As new build standards — SAP for extension</li>
+              <li><strong>Replacement windows:</strong> Meet window U-value standards — Product certification</li>
+              <li><strong>Boiler replacement:</strong> Meet efficiency requirements, controls — Product certification</li>
+              <li><strong>Renovation (&gt;25% envelope):</strong> Upgrade thermal elements affected — Elemental U-values</li>
+              <li><strong>Change of use:</strong> Upgrade to current standards where practical — Depends on situation</li>
+            </ul>
+            <p><strong>New Build Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Full SAP/SBEM calculation</li>
+              <li>Air permeability testing</li>
+              <li>Commissioning certificates</li>
+              <li>As-built SAP/EPC</li>
+              <li>Photo evidence of insulation</li>
+              <li>Building log book (non-domestic)</li>
+            </ul>
+            <p><strong>Existing Building Triggers</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Controlled fittings replacement</li>
+              <li>Controlled services installation</li>
+              <li>Extensions and conservatories</li>
+              <li>Material change of use</li>
+              <li>Major renovation (&gt;25% envelope)</li>
+              <li>Consequential improvements</li>
+            </ul>
+            <p><strong>Consequential Improvements (Non-Domestic &gt;1000m²)</strong></p>
+            <p><strong>Trigger threshold:</strong> Work to existing buildings exceeding £50,000 or providing new/additional fixed services</p>
+            <p><strong>Improvement requirement:</strong> Energy efficiency measures with simple payback ≤15 years</p>
+            <p><strong>Value cap:</strong> Improvements up to 10% of principal works value</p>
+            <p><strong>Typical measures:</strong> Lighting upgrades, HVAC controls, insulation improvements, BMS optimisation</p>
+            <p><strong>Integration with Other Building Regulations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Part F (Ventilation):</strong> Airtight buildings require adequate ventilation - MVHR often needed</li>
+              <li><strong>Part O (Overheating):</strong> New 2022 regulation limiting overheating risk in residential buildings</li>
+              <li><strong>Part S (EV Charging):</strong> Infrastructure requirements link to electrical design</li>
+              <li><strong>Part P (Electrical):</strong> Electrical work must comply alongside Part L lighting requirements</li>
+            </ul>
+            <p><strong>MEP coordination:</strong> Building services engineers must coordinate Part L compliance with architectural fabric design, ensuring systems are sized for the reduced heating loads of well-insulated buildings.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Part L of the Building Regulations sets the requirements for the conservation of fuel
-              and power in buildings. It establishes minimum standards for thermal performance,
-              building services efficiency, and overall energy consumption to reduce CO₂ emissions
-              and combat climate change.
+              <strong>Example 1: New Dwelling SAP Compliance Check</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Part L Document Structure:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Approved Document L Volume 1:</strong> Dwellings (new and existing)
-                </li>
-                <li className="pl-1">
-                  <strong>Approved Document L Volume 2:</strong> Buildings other than dwellings
-                  (non-domestic)
-                </li>
-                <li className="pl-1">
-                  <strong>Conservation of Fuel and Power:</strong> Common guidance applicable to all
-                  buildings
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Part L Applies To</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Building Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Work Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Part L Volume</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">New dwellings</td>
-                      <td className="border border-white/10 px-3 py-2">New construction</td>
-                      <td className="border border-white/10 px-3 py-2">Volume 1</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Existing dwellings</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Extensions, replacements, renovations
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Volume 1</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">New non-domestic</td>
-                      <td className="border border-white/10 px-3 py-2">New construction</td>
-                      <td className="border border-white/10 px-3 py-2">Volume 2</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Existing non-domestic</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Extensions, fit-out, system replacement
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Volume 2</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mixed-use buildings</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Relevant sections apply to each part
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Both volumes</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key principle:</strong> Part L aims to reduce carbon emissions through fabric
-              performance (insulation, airtightness) and efficient building services (heating,
-              cooling, lighting, ventilation).
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: 2021 Amendments */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Part L 2021 Amendments
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Verify Part L compliance for a new 3-bedroom semi-detached house.</p>
+            <p>Given specifications:</p>
+            <p>Walls: U-value = 0.18 W/m²K</p>
+            <p>Roof: U-value = 0.12 W/m²K</p>
+            <p>Floor: U-value = 0.13 W/m²K</p>
+            <p>Windows: U-value = 1.2 W/m²K (triple glazed)</p>
+            <p>Air permeability: 4 m³/(h·m²) at 50 Pa</p>
+            <p>Heating: Air source heat pump (SCOP 3.5)</p>
+            <p>Ventilation: MVHR (85% efficiency)</p>
+            <p>SAP calculation results:</p>
+            <p>TER (Target Emission Rate) = 12.5 kg CO₂/m²/year</p>
+            <p>DER (Dwelling Emission Rate) = 9.8 kg CO₂/m²/year</p>
+            <p>TPER (Target Primary Energy Rate) = 95 kWh/m²/year</p>
+            <p>DPER (Dwelling Primary Energy Rate) = 78 kWh/m²/year</p>
+            <p>Compliance check:</p>
+            <p>DER (9.8) ≤ TER (12.5) ✓ PASS</p>
+            <p>DPER (78) ≤ TPER (95) ✓ PASS</p>
+            <p>All U-values within limiting values ✓</p>
+            <p>Result: Part L COMPLIANT</p>
             <p>
-              The Part L 2021 amendments (effective June 2022) represent a significant uplift in
-              energy efficiency requirements, forming a stepping stone towards the Future Homes
-              Standard (2025) and Future Buildings Standard. These changes substantially increase
-              carbon reduction targets.
+              <strong>Example 2: Non-Domestic Lighting Compliance</strong>
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Dwellings (Part L1)</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>31%</strong> CO₂ reduction vs 2013
-                  </li>
-                  <li className="pl-1">Primary Energy metric added</li>
-                  <li className="pl-1">Improved fabric standards</li>
-                  <li className="pl-1">Low carbon heating emphasis</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Non-Domestic (Part L2)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>27%</strong> CO₂ reduction vs 2013
-                  </li>
-                  <li className="pl-1">Enhanced lighting requirements</li>
-                  <li className="pl-1">HVAC efficiency improvements</li>
-                  <li className="pl-1">Building automation standards</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key New Metrics</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Primary Energy Rate (PER)</li>
-                  <li className="pl-1">Target Primary Energy Rate (TPER)</li>
-                  <li className="pl-1">Fabric Energy Efficiency (FEE)</li>
-                  <li className="pl-1">Target Fabric Energy Efficiency (TFEE)</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Notional Building Fabric Standards (Part L 2021)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Element</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Notional Dwelling
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Limiting Value</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Part L 2013</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">External walls</td>
-                      <td className="border border-white/10 px-3 py-2">0.18 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">0.26 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">0.30 W/m²K</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Roof</td>
-                      <td className="border border-white/10 px-3 py-2">0.11 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">0.16 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">0.20 W/m²K</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Floor</td>
-                      <td className="border border-white/10 px-3 py-2">0.13 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">0.18 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">0.25 W/m²K</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Windows</td>
-                      <td className="border border-white/10 px-3 py-2">1.2 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">1.6 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">2.0 W/m²K</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Air permeability</td>
-                      <td className="border border-white/10 px-3 py-2">5 m³/(h·m²)</td>
-                      <td className="border border-white/10 px-3 py-2">8 m³/(h·m²)</td>
-                      <td className="border border-white/10 px-3 py-2">10 m³/(h·m²)</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Future Homes Standard Pathway
-              </p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <span className="text-white">Part L 2013:</span>{' '}
-                  <span className="text-white">Baseline standard</span>
-                </p>
-                <p>
-                  <span className="text-white">Part L 2021:</span>{' '}
-                  <span className="text-white">31% improvement (current)</span>
-                </p>
-                <p>
-                  <span className="text-white">Future Homes 2025:</span>{' '}
-                  <span className="text-white">75-80% improvement target</span>
-                </p>
-                <p>
-                  <span className="text-white">Net Zero 2050:</span>{' '}
-                  <span className="text-white">All homes zero carbon ready</span>
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Industry impact:</strong> The 2021 changes drive adoption of heat pumps,
-              improved insulation, and low carbon technologies as gas boilers can no longer meet the
-              notional specification.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Compliance Routes */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Compliance Routes and Calculation Methods
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Calculate lighting efficacy for an office building to meet Part L2.</p>
+            <p>Office lighting design:</p>
+            <p>Total floor area: 500 m²</p>
+            <p>Target illuminance: 500 lux (general office)</p>
+            <p>Luminaire type: LED panels 40W each</p>
+            <p>Luminaire output: 4,000 lumens each</p>
+            <p>Quantity required: 60 luminaires</p>
+            <p>Efficacy calculation:</p>
+            <p>Total luminaire lumens = 60 × 4,000 = 240,000 lm</p>
+            <p>Total circuit watts = 60 × 40W = 2,400 W</p>
+            <p>Lighting efficacy = 240,000 ÷ 2,400</p>
+            <p>= 100 luminaire-lumens per circuit-watt</p>
+            <p>Part L2 requirement:</p>
+            <p>Minimum efficacy = 45 lm/cW</p>
+            <p>100 lm/cW &gt; 45 lm/cW ✓ PASS</p>
+            <p>Additional controls required:</p>
+            <p>- Daylight dimming (perimeter zones)</p>
+            <p>- Presence/absence detection</p>
+            <p>- Time scheduling capability</p>
             <p>
-              Part L compliance is demonstrated through energy calculations that compare the
-              proposed building against a notional building with compliant specifications. Different
-              calculation methodologies apply to domestic and non-domestic buildings.
+              <strong>Example 3: Extension Compliance Assessment</strong>
             </p>
+            <p><strong>Scenario:</strong> Determine Part L requirements for a domestic kitchen extension.</p>
+            <p>Extension details:</p>
+            <p>Type: Single-storey rear extension</p>
+            <p>Floor area: 35 m² (less than 50m² threshold)</p>
+            <p>Use: Kitchen extension to existing dwelling</p>
+            <p>Assessment:</p>
+            <p>Extension &lt; 50m² → Simplified compliance route</p>
+            <p>Requirements (elemental approach):</p>
+            <p>Walls: U ≤ 0.28 W/m²K</p>
+            <p>Roof: U ≤ 0.16 W/m²K</p>
+            <p>Floor: U ≤ 0.22 W/m²K</p>
+            <p>Windows: U ≤ 1.6 W/m²K</p>
+            <p>Rooflights: U ≤ 2.2 W/m²K</p>
+            <p>Glazed area ≤ 25% of floor area</p>
+            <p>Opening area calculation:</p>
+            <p>25% of 35m² = 8.75 m² max glazing</p>
+            <p>Proposed: 2× bi-fold doors = 6m²</p>
+            <p>6m² &lt; 8.75m² ✓ WITHIN LIMIT</p>
+            <p>No SAP calculation required for extension</p>
+            <p>Heating from existing system - check capacity</p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Compliance Calculation Methods
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>SAP (Standard Assessment Procedure):</strong> Government methodology for
-                  dwellings - calculates DER (Dwelling Emission Rate) and DPER (Dwelling Primary
-                  Energy Rate)
-                </li>
-                <li className="pl-1">
-                  <strong>SBEM (Simplified Building Energy Model):</strong> For non-domestic
-                  buildings - calculates BER (Building Emission Rate) and BPER (Building Primary
-                  Energy Rate)
-                </li>
-                <li className="pl-1">
-                  <strong>DSM (Dynamic Simulation Modelling):</strong> Advanced modelling tools
-                  (IES, TAS) approved as alternatives to SBEM for complex buildings
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Notional Building Approach
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Step</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        1. Create notional building
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Same geometry, size, orientation as actual
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Like-for-like comparison</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        2. Apply notional specifications
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Standard U-values, systems, efficiencies
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Establishes target performance
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        3. Calculate target rates
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        TER/TPER (dwellings) or TER/TPER (non-dom)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Compliance threshold</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4. Model actual building</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        With specified fabric and services
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Predicted performance</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5. Compare results</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        DER ≤ TER and DPER ≤ TPER
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Pass/fail determination</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Compliance Metrics</p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="font-medium text-white mb-1">Dwellings (SAP)</p>
-                  <ul className="space-y-0.5">
-                    <li>DER ≤ TER (CO₂ emissions)</li>
-                    <li>DPER ≤ TPER (Primary energy)</li>
-                    <li>DFEE ≤ TFEE (Fabric efficiency)</li>
-                    <li>Limiting U-values not exceeded</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium text-white mb-1">Non-Domestic (SBEM)</p>
-                  <ul className="space-y-0.5">
-                    <li>BER ≤ TER (CO₂ emissions)</li>
-                    <li>BPER ≤ TPER (Primary energy)</li>
-                    <li>Lighting efficacy ≥ 45 lm/cW</li>
-                    <li>HVAC efficiency standards met</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design flexibility:</strong> The notional building approach allows trade-offs
-              between elements, enabling design innovation while ensuring overall performance
-              targets are met.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Building Types and Applications */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Building Types and Part L Applications
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Part L requirements vary significantly depending on whether the building is new,
-              existing, an extension, or undergoing renovation. Understanding which requirements
-              apply is essential for compliance.
+              <strong>Part L Compliance Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Requirements by Building Situation
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Situation</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Requirements</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Calculation Method
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">New build</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full compliance: fabric, services, renewables
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Full SAP/SBEM</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Extension ≤50m² (domestic)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Meet limiting U-values, opening areas
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Elemental approach</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Extension &gt;50m² (domestic)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">As new build standards</td>
-                      <td className="border border-white/10 px-3 py-2">SAP for extension</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Replacement windows</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Meet window U-value standards
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Product certification</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Boiler replacement</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Meet efficiency requirements, controls
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Product certification</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Renovation (&gt;25% envelope)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Upgrade thermal elements affected
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Elemental U-values</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Change of use</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Upgrade to current standards where practical
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Depends on situation</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-3 rounded bg-white/5">
-                <p className="font-medium text-white mb-2">New Build Requirements</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>Full SAP/SBEM calculation</li>
-                  <li>Air permeability testing</li>
-                  <li>Commissioning certificates</li>
-                  <li>As-built SAP/EPC</li>
-                  <li>Photo evidence of insulation</li>
-                  <li>Building log book (non-domestic)</li>
-                </ul>
-              </div>
-              <div className="p-3 rounded bg-white/5">
-                <p className="font-medium text-white mb-2">Existing Building Triggers</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>Controlled fittings replacement</li>
-                  <li>Controlled services installation</li>
-                  <li>Extensions and conservatories</li>
-                  <li>Material change of use</li>
-                  <li>Major renovation (&gt;25% envelope)</li>
-                  <li>Consequential improvements</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Consequential Improvements (Non-Domestic &gt;1000m²)
-              </p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <strong>Trigger threshold:</strong> Work to existing buildings exceeding £50,000
-                  or providing new/additional fixed services
-                </p>
-                <p>
-                  <strong>Improvement requirement:</strong> Energy efficiency measures with simple
-                  payback ≤15 years
-                </p>
-                <p>
-                  <strong>Value cap:</strong> Improvements up to 10% of principal works value
-                </p>
-                <p>
-                  <strong>Typical measures:</strong> Lighting upgrades, HVAC controls, insulation
-                  improvements, BMS optimisation
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Integration with Other Building Regulations
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Part F (Ventilation):</strong> Airtight buildings require adequate
-                  ventilation - MVHR often needed
-                </li>
-                <li className="pl-1">
-                  <strong>Part O (Overheating):</strong> New 2022 regulation limiting overheating
-                  risk in residential buildings
-                </li>
-                <li className="pl-1">
-                  <strong>Part S (EV Charging):</strong> Infrastructure requirements link to
-                  electrical design
-                </li>
-                <li className="pl-1">
-                  <strong>Part P (Electrical):</strong> Electrical work must comply alongside Part L
-                  lighting requirements
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>MEP coordination:</strong> Building services engineers must coordinate Part L
-              compliance with architectural fabric design, ensuring systems are sized for the
-              reduced heating loads of well-insulated buildings.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Identify building type and applicable Part L volume</li>
+              <li>Determine if full calculation or elemental approach applies</li>
+              <li>Commission SAP/SBEM calculations at design stage</li>
+              <li>Verify all fabric U-values within limiting standards</li>
+              <li>Specify compliant heating, ventilation, and lighting systems</li>
+              <li>Arrange air permeability testing (new builds)</li>
+              <li>Complete commissioning and obtain certificates</li>
+              <li>Submit as-built calculations and EPC</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Wall U-value limiting: <strong>0.26 W/m²K</strong> (dwellings)</li>
+              <li>Air permeability target: <strong>5 m³/(h·m²)</strong> at 50 Pa</li>
+              <li>Lighting efficacy: <strong>≥45 lm/cW</strong> (non-domestic)</li>
+              <li>CO₂ reduction 2021 vs 2013: <strong>31%</strong> (dwellings)</li>
+              <li>Extension threshold: <strong>50m²</strong> (simplified compliance)</li>
+              <li>Renovation threshold: <strong>25%</strong> of thermal envelope</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: New Dwelling SAP Compliance Check
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Verify Part L compliance for a new 3-bedroom
-                semi-detached house.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Given specifications:</p>
-                <p className="ml-4">Walls: U-value = 0.18 W/m²K</p>
-                <p className="ml-4">Roof: U-value = 0.12 W/m²K</p>
-                <p className="ml-4">Floor: U-value = 0.13 W/m²K</p>
-                <p className="ml-4">Windows: U-value = 1.2 W/m²K (triple glazed)</p>
-                <p className="ml-4">Air permeability: 4 m³/(h·m²) at 50 Pa</p>
-                <p className="ml-4">Heating: Air source heat pump (SCOP 3.5)</p>
-                <p className="ml-4">Ventilation: MVHR (85% efficiency)</p>
-                <p className="mt-2 text-white">SAP calculation results:</p>
-                <p className="ml-4">TER (Target Emission Rate) = 12.5 kg CO₂/m²/year</p>
-                <p className="ml-4">DER (Dwelling Emission Rate) = 9.8 kg CO₂/m²/year</p>
-                <p className="ml-4">TPER (Target Primary Energy Rate) = 95 kWh/m²/year</p>
-                <p className="ml-4">DPER (Dwelling Primary Energy Rate) = 78 kWh/m²/year</p>
-                <p className="mt-2 text-white">Compliance check:</p>
-                <p className="ml-4 text-green-400">DER (9.8) ≤ TER (12.5) ✓ PASS</p>
-                <p className="ml-4 text-green-400">DPER (78) ≤ TPER (95) ✓ PASS</p>
-                <p className="ml-4 text-green-400">All U-values within limiting values ✓</p>
-                <p className="mt-2 text-green-400">Result: Part L COMPLIANT</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Non-Domestic Lighting Compliance
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate lighting efficacy for an office building to
-                meet Part L2.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Office lighting design:</p>
-                <p className="ml-4">Total floor area: 500 m²</p>
-                <p className="ml-4">Target illuminance: 500 lux (general office)</p>
-                <p className="ml-4">Luminaire type: LED panels 40W each</p>
-                <p className="ml-4">Luminaire output: 4,000 lumens each</p>
-                <p className="ml-4">Quantity required: 60 luminaires</p>
-                <p className="mt-2 text-white">Efficacy calculation:</p>
-                <p className="ml-4">Total luminaire lumens = 60 × 4,000 = 240,000 lm</p>
-                <p className="ml-4">Total circuit watts = 60 × 40W = 2,400 W</p>
-                <p className="ml-4">Lighting efficacy = 240,000 ÷ 2,400</p>
-                <p className="ml-4 text-green-400">= 100 luminaire-lumens per circuit-watt</p>
-                <p className="mt-2 text-white">Part L2 requirement:</p>
-                <p className="ml-4">Minimum efficacy = 45 lm/cW</p>
-                <p className="ml-4 text-green-400">100 lm/cW &gt; 45 lm/cW ✓ PASS</p>
-                <p className="mt-2 text-white">Additional controls required:</p>
-                <p className="ml-4">- Daylight dimming (perimeter zones)</p>
-                <p className="ml-4">- Presence/absence detection</p>
-                <p className="ml-4">- Time scheduling capability</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Extension Compliance Assessment
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Determine Part L requirements for a domestic kitchen
-                extension.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Extension details:</p>
-                <p className="ml-4">Type: Single-storey rear extension</p>
-                <p className="ml-4">Floor area: 35 m² (less than 50m² threshold)</p>
-                <p className="ml-4">Use: Kitchen extension to existing dwelling</p>
-                <p className="mt-2 text-white">Assessment:</p>
-                <p className="ml-4">Extension &lt; 50m² → Simplified compliance route</p>
-                <p className="mt-2 text-white">Requirements (elemental approach):</p>
-                <p className="ml-4">Walls: U ≤ 0.28 W/m²K</p>
-                <p className="ml-4">Roof: U ≤ 0.16 W/m²K</p>
-                <p className="ml-4">Floor: U ≤ 0.22 W/m²K</p>
-                <p className="ml-4">Windows: U ≤ 1.6 W/m²K</p>
-                <p className="ml-4">Rooflights: U ≤ 2.2 W/m²K</p>
-                <p className="ml-4">Glazed area ≤ 25% of floor area</p>
-                <p className="mt-2 text-white">Opening area calculation:</p>
-                <p className="ml-4">25% of 35m² = 8.75 m² max glazing</p>
-                <p className="ml-4">Proposed: 2× bi-fold doors = 6m²</p>
-                <p className="ml-4 text-green-400">6m² &lt; 8.75m² ✓ WITHIN LIMIT</p>
-                <p className="mt-2 text-white">No SAP calculation required for extension</p>
-                <p className="text-white">Heating from existing system - check capacity</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Part L Compliance Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Identify building type and applicable Part L volume</li>
-                <li className="pl-1">
-                  Determine if full calculation or elemental approach applies
-                </li>
-                <li className="pl-1">Commission SAP/SBEM calculations at design stage</li>
-                <li className="pl-1">Verify all fabric U-values within limiting standards</li>
-                <li className="pl-1">
-                  Specify compliant heating, ventilation, and lighting systems
-                </li>
-                <li className="pl-1">Arrange air permeability testing (new builds)</li>
-                <li className="pl-1">Complete commissioning and obtain certificates</li>
-                <li className="pl-1">Submit as-built calculations and EPC</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Ignoring thermal bridging</strong> - Linear thermal bridges can significantly impact performance</li>
+                <li><strong>Undersizing heating</strong> - Improved fabric reduces heat loss but systems must still meet peak demand</li>
+                <li><strong>Missing commissioning</strong> - Systems must be commissioned and certificates provided</li>
+                <li><strong>Design vs as-built gap</strong> - Construction quality must match design specifications</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Wall U-value limiting: <strong>0.26 W/m²K</strong> (dwellings)
-                </li>
-                <li className="pl-1">
-                  Air permeability target: <strong>5 m³/(h·m²)</strong> at 50 Pa
-                </li>
-                <li className="pl-1">
-                  Lighting efficacy: <strong>≥45 lm/cW</strong> (non-domestic)
-                </li>
-                <li className="pl-1">
-                  CO₂ reduction 2021 vs 2013: <strong>31%</strong> (dwellings)
-                </li>
-                <li className="pl-1">
-                  Extension threshold: <strong>50m²</strong> (simplified compliance)
-                </li>
-                <li className="pl-1">
-                  Renovation threshold: <strong>25%</strong> of thermal envelope
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Ignoring thermal bridging</strong> - Linear thermal bridges can
-                  significantly impact performance
-                </li>
-                <li className="pl-1">
-                  <strong>Undersizing heating</strong> - Improved fabric reduces heat loss but
-                  systems must still meet peak demand
-                </li>
-                <li className="pl-1">
-                  <strong>Missing commissioning</strong> - Systems must be commissioned and
-                  certificates provided
-                </li>
-                <li className="pl-1">
-                  <strong>Design vs as-built gap</strong> - Construction quality must match design
-                  specifications
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="Tenant fit-out trips Part L compliance late"
+            situation={
+              <>
+                A Cat A office shell achieved Part L compliance under SBEM with notional lighting at 45 luminaire-lumens per circuit-watt and a heat-pump heating allowance. The incoming tenant takes the Cat B fit-out and installs a smaller, more decorative LED scheme that drops the average to 38 lm/cW, plus electric panel heaters for tea-points. Building Control flag the variation at handover.
+              </>
+            }
+            whatToDo={
+              <>
+                Re-run the SBEM model with the as-installed lighting power density and heating mix. If BER now exceeds TER, propose offsets within the same envelope: enhanced lighting controls (presence + daylight dimming), HVAC scheduling improvements, or an upgrade of one tea-point to instantaneous low-load. Issue an updated EPC and as-built calculation pack before the building is occupied — Part L compliance is judged at handover, not at design.
+              </>
+            }
+            whyItMatters={
+              <>
+                Part L non-compliance at completion is a Building Regulations breach that can delay occupation, void warranties and fall back on the M&E designer under CDM Reg 9. Tenant fit-outs are the single most common trigger — every variation to the lighting or HVAC specification needs an SBEM check, not just a coordination drawing.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Part L Structure</p>
-                <ul className="space-y-0.5">
-                  <li>Volume 1: Dwellings (SAP)</li>
-                  <li>Volume 2: Non-domestic (SBEM)</li>
-                  <li>2021 uplift: 31% CO₂ reduction</li>
-                  <li>Future Homes: 2025 target</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Compliance Metrics</p>
-                <ul className="space-y-0.5">
-                  <li>DER/BER ≤ TER (CO₂ emissions)</li>
-                  <li>DPER/BPER ≤ TPER (Primary energy)</li>
-                  <li>Fabric within limiting U-values</li>
-                  <li>Air permeability tested</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              "Part L = conservation of fuel and power. Volume 1 = dwellings (SAP). Volume 2 = non-domestic (SBEM).",
+              "Part L 2021 = 31% CO₂ uplift on dwellings, 27% on non-dom — Future Homes Standard 2025 will push to 75–80%.",
+              "Notional building approach: model your design against a like-for-like building with notional specifications; DER ≤ TER and DPER ≤ TPER must both pass.",
+              "Limiting U-values are absolute backstops — fabric/services trade-offs cannot exceed them.",
+              "Existing buildings: Part L triggers on controlled fittings, extensions, change of use, >25% envelope renovation, and consequential improvements (>1000m², >£50k).",
+              "Coordinate Part L with Parts F (ventilation), O (overheating), S (EV charging) and P (electrical) — they are designed as one regulatory package.",
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section1-2">
-              Next: Fabric Performance Standards
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section1")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Building Regulations Part L
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section1-2")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                SBEM calculations
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

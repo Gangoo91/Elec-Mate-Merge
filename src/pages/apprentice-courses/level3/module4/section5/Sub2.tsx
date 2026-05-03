@@ -281,10 +281,10 @@ export default function Sub2() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Reg 651.1 (Periodic inspection and testing)"
-            clause={<>"On completion of any addition or alteration to an installation, the work shall be inspected and tested in accordance with the requirements of Chapter 64 to verify that the requirements of the Regulations have been complied with."</>}
-            meaning={<>For fault rectification, the rectified work counts as 'alteration' under Reg 651.1; the post-work inspection and testing verify BS 7671 compliance. The minimum is the BS 7671 643 tests applied to the affected circuit. The certification (MEIWC for the alteration) records the verification result.</>}
-            cite="Source: BS 7671:2018 incorporating Amendment 2:2022, Reg 651.1."
+            source="BS 7671:2018+A4:2026 — Regulation 134.2.1 (Inspection and testing on completion)"
+            clause={<>"During erection and on completion of an installation or an addition or alteration to an installation, and before it is put into service, appropriate inspection and testing shall be carried out by one or more skilled persons competent to verify that the requirements of BS 7671 have been met. Appropriate certification shall be issued in accordance with Chapter 64."</>}
+            meaning={<>For fault rectification, the rectified work counts as an 'addition or alteration' under Reg 134.2.1; the post-work inspection and testing verify BS 7671 compliance. The minimum is the Chapter 64 tests applied to the affected circuit. The certification (MEIWC for the alteration) records the verification result.</>}
+            cite="Source: BS 7671:2018+A4:2026 Part 1, Chapter 13, Regulation 134.2.1."
           />
 
           <InlineCheck {...checks[0]} />
@@ -480,7 +480,7 @@ export default function Sub2() {
                 Post-repair RCD verification is a single AC test at rated I&Delta;n in A4:2026 &mdash; the 5&times;I&Delta;n test is gone and Table 3A is deleted. One button press on the MFT, captured against the device-standard limit, and you have your verification.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Reg 643.3 (RCD testing redraft), verbatim from facet."
+            cite="Source: BS 7671:2018+A4:2026 — Reg 643.3 (RCD testing redraft)."
           />
 
           <RegsCallout
@@ -495,7 +495,7 @@ export default function Sub2() {
                 The retest verifies both halves of Reg 641.5: the repaired bit complies with BS 7671 AND the rest of the installation hasn&apos;t been made worse by the work. That second half is what the &ldquo;adjacent-circuit functional check&rdquo; is for &mdash; you&apos;re evidencing that nothing else has been disturbed.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Reg 641.5, verbatim."
+            cite="Source: BS 7671:2018+A4:2026 — Reg 641.5."
           />
 
           <SectionRule />

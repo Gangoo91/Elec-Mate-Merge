@@ -304,7 +304,7 @@ export default function Sub6() {
                 The A4:2026 redraft formalises a two-stage IR test procedure for fault verification work where electronics are present. STAGE 1: 500 V test on the isolated wiring (electronics disconnected) confirms the wiring itself is healthy &mdash; the historic Table 64 minimum &gt; 1 M&Omega; applies. STAGE 2: 250 V test on the same circuit with the electronics reconnected confirms the as-installed leakage path through the electronics is healthy without damaging them. Both tests appear on the certificate / report. Skipping STAGE 2 is how a &lsquo;fixed&rsquo; circuit comes back to trip again the next day &mdash; the wiring is clean but the driver is leaking.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026, Reg 643.3 — verbatim from the published Regulations."
+            cite="Source: BS 7671:2018+A4:2026, Reg 643.3."
           />
 
           <InlineCheck
@@ -369,7 +369,7 @@ export default function Sub6() {
                 Reg 134.1.1 is the &lsquo;competence + materials&rsquo; anchor. When you replace an immersion element, a motor capacitor, or any other equipment-side component, the replacement must be a proper material (manufacturer-equivalent rated part) installed by a skilled person to the same standard. Fitting an under-spec or wrong-rated cap, an element with the wrong wattage, or a driver from outside the dimmer&apos;s compatibility list is a Reg 134.1.1 failing &mdash; even though the work is &lsquo;equipment side&rsquo;. The L3 apprentice respects the spec.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026, Reg 134.1.1 — verbatim from the published Regulations."
+            cite="Source: BS 7671:2018+A4:2026, Reg 134.1.1."
           />
 
           <InlineCheck
@@ -421,18 +421,18 @@ export default function Sub6() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671 Reg 722.531.3.101 — RCD for EV charging point (A4:2026)"
+            source="BS 7671:2018+A4:2026 — Regulation 722.413.1.2 (Electric vehicle charging — supply via separated source)"
             clause={
               <>
-                "Each connecting point shall be individually protected by an RCD having a rated residual operating current not exceeding 30 mA. The RCD shall disconnect all live conductors. Protection against DC fault current shall be provided in addition by appropriate means."
+                "722.413.1.2 This protective measure shall be limited to the supply of one electric vehicle supplied from one unearthed source. The circuit shall be supplied through a fixed isolating transformer complying with BS EN 61558-2-4."
               </>
             }
             meaning={
               <>
-                Reg 722.531.3 mandates dedicated 30 mA RCD per EV connecting point AND dedicated DC fault current protection (Type A RCD with 6 mA DC sensing, or Type B RCD). The A4:2026 layer reinforces this requirement and clarifies the &lsquo;in addition&rsquo; wording. The diagnostic implication for fault work: an EV charger on a shared 30 mA RCD with other circuits is non-compliant under A4:2026 AND is the most common cause of intermittent &lsquo;EV trips the board&rsquo; complaints. The fix is dedicated RCBO upstream of the charger.
+                Reg 722.413.1.2 sets out the &lsquo;separated source&rsquo; protective measure for EV charging &mdash; one vehicle, one unearthed source, fed through a fixed isolating transformer to BS EN 61558-2-4. Where this protective measure is used in place of standard automatic disconnection, the supply is electrically separated from the upstream system. The diagnostic implication for fault work: confirm which protective measure the EV connecting point uses before assuming a standard 30 mA RCD diagnostic; on a separated-source install the fault behaviour and the test method are different.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026, Reg 722.531.3.101 — verbatim from the published Regulations."
+            cite="Source: BS 7671:2018+A4:2026 Part 7, Section 722, Regulation 722.413.1.2."
           />
 
           <InlineCheck

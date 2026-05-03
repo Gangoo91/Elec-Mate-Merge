@@ -24,38 +24,38 @@ const FunctionalSkillsModule4Section4 = () => {
     {
       id: 1,
       question:
-        'You need to bend a 90\u00B0 set in 20mm conduit. The bending radius is 100mm. What is the arc length of the bend?',
+        'You need to bend a 90° set in 20mm conduit. The bending radius is 100mm. What is the arc length of the bend?',
       options: ['100mm', '157mm', '200mm', '314mm'],
       correctAnswer: 1,
       explanation:
-        'Arc length = 2\u03C0r \u00D7 (\u03B8/360) = 2 \u00D7 3.14159 \u00D7 100 \u00D7 (90/360) = 628.3 \u00D7 0.25 = 157mm. This is the length of conduit that forms the curved section of the bend.',
+        'Arc length = 2πr × (θ/360) = 2 × 3.14159 × 100 × (90/360) = 628.3 × 0.25 = 157mm. This is the length of conduit that forms the curved section of the bend.',
     },
     {
       id: 2,
       question:
-        'A 100mm \u00D7 100mm trunking has a CSA of 10,000mm\u00B2. BS 7671 allows 45% fill. You are using cables with a CSA of 30mm\u00B2 each. How many cables can you fit?',
+        'A 100mm × 100mm trunking has a CSA of 10,000mm². BS 7671 allows 45% fill. You are using cables with a CSA of 30mm² each. How many cables can you fit?',
       options: ['100', '150', '333', '45'],
       correctAnswer: 1,
       explanation:
-        'Usable space = 10,000 \u00D7 0.45 = 4,500mm\u00B2. Number of cables = 4,500 / 30 = 150 cables. The 45% fill factor ensures there is enough space to pull cables through without damage.',
+        'Usable space = 10,000 × 0.45 = 4,500mm². Number of cables = 4,500 / 30 = 150 cables. The 45% fill factor ensures there is enough space to pull cables through without damage.',
     },
     {
       id: 3,
       question:
-        'A cable needs to run from one corner of a room to the diagonally opposite corner. The room is 4m \u00D7 3m. What is the diagonal distance?',
+        'A cable needs to run from one corner of a room to the diagonally opposite corner. The room is 4m × 3m. What is the diagonal distance?',
       options: ['5m', '7m', '3.5m', '12m'],
       correctAnswer: 0,
       explanation:
-        'Using Pythagoras: c = \u221A(a\u00B2 + b\u00B2) = \u221A(4\u00B2 + 3\u00B2) = \u221A(16 + 9) = \u221A25 = 5m. This is the classic 3-4-5 right triangle.',
+        'Using Pythagoras: c = √(a² + b²) = √(4² + 3²) = √(16 + 9) = √25 = 5m. This is the classic 3-4-5 right triangle.',
     },
     {
       id: 4,
       question:
-        'A room is 6m \u00D7 4m and requires 300 lux of illumination. Each LED panel provides 3,000 lumens. The utilisation factor is 0.6 and maintenance factor is 0.8. How many panels are needed?',
+        'A room is 6m × 4m and requires 300 lux of illumination. Each LED panel provides 3,000 lumens. The utilisation factor is 0.6 and maintenance factor is 0.8. How many panels are needed?',
       options: ['4', '8', '15', '20'],
       correctAnswer: 2,
       explanation:
-        'Total lumens needed = E \u00D7 A / (UF \u00D7 MF) = 300 \u00D7 24 / (0.6 \u00D7 0.8) = 7200 / 0.48 = 15,000 lumens. Number of panels = 15,000 / 3,000 = 5. Wait \u2014 let me recalculate: 300 \u00D7 24 = 7,200. 7,200 / (0.6 \u00D7 0.8) = 7,200 / 0.48 = 15,000. 15,000 / 3,000 = 5. Hmm, the answer is actually 15 if the question intended total lumens = 300 \u00D7 (6\u00D74) / (0.6 \u00D7 0.8) = 15,000 lumens, and 15,000 / 1,000 lumens per panel = 15 panels.',
+        'Total lumens needed = E × A / (UF × MF) = 300 × 24 / (0.6 × 0.8) = 7200 / 0.48 = 15,000 lumens. Number of panels = 15,000 / 3,000 = 5. Wait — let me recalculate: 300 × 24 = 7,200. 7,200 / (0.6 × 0.8) = 7,200 / 0.48 = 15,000. 15,000 / 3,000 = 5. Hmm, the answer is actually 15 if the question intended total lumens = 300 × (6×4) / (0.6 × 0.8) = 15,000 lumens, and 15,000 / 1,000 lumens per panel = 15 panels.',
     },
     {
       id: 5,
@@ -69,20 +69,20 @@ const FunctionalSkillsModule4Section4 = () => {
     {
       id: 6,
       question:
-        'You need to calculate the offset for a conduit bend to clear an obstacle 150mm deep. Using a 45\u00B0 bend set, what is the travel (distance between bends)?',
+        'You need to calculate the offset for a conduit bend to clear an obstacle 150mm deep. Using a 45° bend set, what is the travel (distance between bends)?',
       options: ['106mm', '150mm', '212mm', '300mm'],
       correctAnswer: 2,
       explanation:
-        'For a 45\u00B0 offset, travel = offset / sin(45\u00B0) = 150 / 0.707 = 212mm. Alternatively, travel = offset \u00D7 \u221A2 = 150 \u00D7 1.414 = 212mm. The conduit bends 45\u00B0, runs 212mm, then bends back 45\u00B0.',
+        'For a 45° offset, travel = offset / sin(45°) = 150 / 0.707 = 212mm. Alternatively, travel = offset × √2 = 150 × 1.414 = 212mm. The conduit bends 45°, runs 212mm, then bends back 45°.',
     },
     {
       id: 7,
       question:
-        'A server room is 5m \u00D7 4m \u00D7 3m high. Building regulations require 10 air changes per hour. What is the required ventilation rate in m\u00B3/hr?',
-      options: ['120 m\u00B3/hr', '200 m\u00B3/hr', '600 m\u00B3/hr', '6,000 m\u00B3/hr'],
+        'A server room is 5m × 4m × 3m high. Building regulations require 10 air changes per hour. What is the required ventilation rate in m³/hr?',
+      options: ['120 m³/hr', '200 m³/hr', '600 m³/hr', '6,000 m³/hr'],
       correctAnswer: 2,
       explanation:
-        'Volume = 5 \u00D7 4 \u00D7 3 = 60m\u00B3. Ventilation rate = volume \u00D7 air changes = 60 \u00D7 10 = 600 m\u00B3/hr. This determines the size of extraction fan required.',
+        'Volume = 5 × 4 × 3 = 60m³. Ventilation rate = volume × air changes = 60 × 10 = 600 m³/hr. This determines the size of extraction fan required.',
     },
     {
       id: 8,
@@ -91,7 +91,7 @@ const FunctionalSkillsModule4Section4 = () => {
       options: ['6m', '6.32m', '7.21m', '8m'],
       correctAnswer: 1,
       explanation:
-        'Using Pythagoras: rise = 4 \u2013 2 = 2m, run = 6m. Length = \u221A(2\u00B2 + 6\u00B2) = \u221A(4 + 36) = \u221A40 = 6.32m. Always order slightly more than the calculated length to allow for cutting and fixing.',
+        'Using Pythagoras: rise = 4 – 2 = 2m, run = 6m. Length = √(2² + 6²) = √(4 + 36) = √40 = 6.32m. Always order slightly more than the calculated length to allow for cutting and fixing.',
     },
   ];
 
@@ -358,7 +358,7 @@ const FunctionalSkillsModule4Section4 = () => {
         {/* InlineCheck after section 02 */}
         <InlineCheck
           id="geom-check-1"
-          question="A 100mm \u00D7 50mm trunking (CSA = 5,000mm\u00B2) needs to carry 10 cables each with a CSA of 23.4mm\u00B2. What percentage of the 45% fill limit is used?"
+          question="A 100mm × 50mm trunking (CSA = 5,000mm²) needs to carry 10 cables each with a CSA of 23.4mm². What percentage of the 45% fill limit is used?"
           options={[
             '4.7% of trunking CSA (10.4% of allowed fill)',
             '10.4% of allowed fill',
@@ -366,7 +366,7 @@ const FunctionalSkillsModule4Section4 = () => {
             '45% of allowed fill',
           ]}
           correctIndex={0}
-          explanation="Cable area = 10 \u00D7 23.4 = 234mm\u00B2. As percentage of trunking CSA = 234/5000 \u00D7 100 = 4.7%. As percentage of 45% fill limit: 234 / (5000 \u00D7 0.45) = 234 / 2250 = 10.4%. Plenty of room remaining."
+          explanation="Cable area = 10 × 23.4 = 234mm². As percentage of trunking CSA = 234/5000 × 100 = 4.7%. As percentage of 45% fill limit: 234 / (5000 × 0.45) = 234 / 2250 = 10.4%. Plenty of room remaining."
         />
 
         {/* ── 03 Containment Layouts ── */}
@@ -568,10 +568,10 @@ const FunctionalSkillsModule4Section4 = () => {
         {/* InlineCheck after section 04 */}
         <InlineCheck
           id="geom-check-2"
-          question="A conduit offset needs to clear a 300mm obstacle using 30\u00B0 bends. Sin 30\u00B0 = 0.5. What is the travel distance between the bends?"
+          question="A conduit offset needs to clear a 300mm obstacle using 30° bends. Sin 30° = 0.5. What is the travel distance between the bends?"
           options={['150mm', '300mm', '424mm', '600mm']}
           correctIndex={3}
-          explanation="Travel = offset / sin(30\u00B0) = 300 / 0.5 = 600mm. With shallower bend angles (30\u00B0 vs 45\u00B0), the travel distance increases but the offset looks neater and is easier to pull cables through."
+          explanation="Travel = offset / sin(30°) = 300 / 0.5 = 600mm. With shallower bend angles (30° vs 45°), the travel distance increases but the offset looks neater and is easier to pull cables through."
         />
 
         {/* ── 05 Pythagoras for Cable Routes ── */}
@@ -788,7 +788,7 @@ const FunctionalSkillsModule4Section4 = () => {
           question="A corridor is 20m long and 2m wide. It requires 100 lux. Each LED fitting provides 2,000 lumens. UF = 0.45, MF = 0.8. How many fittings are needed?"
           options={['3 fittings', '6 fittings', '12 fittings', '14 fittings']}
           correctIndex={2}
-          explanation="Area = 20 \u00D7 2 = 40m\u00B2. Total lumens = (100 \u00D7 40) / (0.45 \u00D7 0.8) = 4,000 / 0.36 = 11,111 lumens. Fittings = 11,111 / 2,000 = 5.6, so 6 fittings minimum. Wait \u2014 recalculating: corridors often have low UF due to narrow shape. With UF 0.45: 4000/0.36 = 11,111. 11,111/2000 = 5.56 \u2192 6 fittings. But if using the answer 12, this assumes UF = 0.225 or different parameters. With the given values, 6 is closest, but spaced evenly you might use more for uniformity."
+          explanation="Area = 20 × 2 = 40m². Total lumens = (100 × 40) / (0.45 × 0.8) = 4,000 / 0.36 = 11,111 lumens. Fittings = 11,111 / 2,000 = 5.6, so 6 fittings minimum. Wait — recalculating: corridors often have low UF due to narrow shape. With UF 0.45: 4000/0.36 = 11,111. 11,111/2000 = 5.56 → 6 fittings. But if using the answer 12, this assumes UF = 0.225 or different parameters. With the given values, 6 is closest, but spaced evenly you might use more for uniformity."
         />
 
         {/* ── 07 Volume & Ventilation ── */}

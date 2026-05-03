@@ -1,120 +1,130 @@
 import { useNavigate } from 'react-router-dom';
-import { Card, CardContent } from '@/components/ui/card';
-import { ChevronRight } from 'lucide-react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { motion } from 'framer-motion';
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  PageFrame,
+  PageHero,
+  SectionHeader,
+  HubGrid,
+  HubCard,
+  itemVariants,
+  type Tone,
+} from '@/components/college/primitives';
 
 interface Section {
+  number: string;
+  eyebrow: string;
   title: string;
+  description: string;
   slug: string;
-  icon: string;
-  colour: string;
-  border: string;
-  readTime: string;
+  meta: string;
+  tone: Tone;
 }
 
-const sections: Section[] = [
+const SECTIONS: Section[] = [
   {
-    title: 'Career Pathways',
+    number: '01',
+    eyebrow: 'Career',
+    title: 'Career pathways',
+    description:
+      'Map the full progression from improver to design engineer — what roles exist, what they pay, and how to step up.',
     slug: 'career-pathways',
-    icon: '📈',
-    colour: 'text-blue-400',
-    border: 'border-blue-500/30',
-    readTime: '10 min read',
+    meta: '10 min read',
+    tone: 'blue',
   },
   {
-    title: 'Certifications & Qualifications',
+    number: '02',
+    eyebrow: 'Qualifications',
+    title: 'Certifications',
+    description:
+      'JIB grades, ECS card routes, BS 7671 amendments and the qualifications that move your earning ceiling.',
     slug: 'certifications',
-    icon: '🏅',
-    colour: 'text-yellow-400',
-    border: 'border-yellow-500/30',
-    readTime: '12 min read',
+    meta: '12 min read',
+    tone: 'yellow',
   },
   {
-    title: 'Professional Skills',
+    number: '03',
+    eyebrow: 'Soft skills',
+    title: 'Professional skills',
+    description:
+      'The communication, planning and customer-handling that separates a good electrician from a great one.',
     slug: 'professional-skills',
-    icon: '💡',
-    colour: 'text-green-400',
-    border: 'border-green-500/30',
-    readTime: '10 min read',
+    meta: '10 min read',
+    tone: 'emerald',
   },
   {
-    title: 'Continuing Education',
+    number: '04',
+    eyebrow: 'CPD',
+    title: 'Continuing education',
+    description:
+      'Stay current — A4:2026 changes, EV charging, solar PV, smart homes, and the upskilling that pays.',
     slug: 'continuing-education',
-    icon: '📚',
-    colour: 'text-purple-400',
-    border: 'border-purple-500/30',
-    readTime: '12 min read',
+    meta: '12 min read',
+    tone: 'purple',
   },
   {
-    title: 'Industry Networking',
+    number: '05',
+    eyebrow: 'Network',
+    title: 'Industry networking',
+    description:
+      'Trade bodies, conferences, mentor programmes and the rooms where progression actually happens.',
     slug: 'industry-networking',
-    icon: '🤝',
-    colour: 'text-orange-400',
-    border: 'border-orange-500/30',
-    readTime: '8 min read',
+    meta: '8 min read',
+    tone: 'orange',
   },
 ];
 
-const ProfessionalDevelopment = () => {
+export default function ProfessionalDevelopment() {
   const navigate = useNavigate();
 
   return (
-    <div className="animate-fade-in max-w-2xl mx-auto px-4 pb-20 space-y-6 text-left">
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <SmartBackButton />
-        <h1 className="text-2xl font-bold tracking-tight text-white">Professional Development</h1>
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
 
-      {/* Intro Card */}
-      <Card className="border-blue-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-3">
-          <h2 className="text-lg font-semibold text-white">Build Your Future</h2>
-          <p className="text-white text-sm leading-relaxed">
-            Technical skills get you the job — professional skills help you build a career. Explore
-            pathways, understand certifications, develop essential skills, and build the industry
-            connections that will shape your future as an electrical professional.
-          </p>
-        </CardContent>
-      </Card>
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Professional Development"
+          title="Build your future"
+          description="Technical skills get you the job — professional skills build the career. Explore pathways, certifications, soft skills and the industry connections that shape what comes next."
+          tone="yellow"
+        />
+      </motion.div>
 
-      {/* Section Header */}
-      <div className="flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full bg-elec-yellow" />
-        <h2 className="text-base font-semibold text-white">Explore Sections</h2>
-      </div>
+      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
+        <SectionHeader eyebrow="Explore" title="Five sections" />
+        <HubGrid columns={2}>
+          {SECTIONS.map((s) => (
+            <HubCard
+              key={s.slug}
+              number={s.number}
+              eyebrow={s.eyebrow}
+              title={s.title}
+              description={s.description}
+              meta={s.meta}
+              tone={s.tone}
+              onClick={() => navigate(`/apprentice/professional-development/${s.slug}`)}
+            />
+          ))}
+        </HubGrid>
+      </motion.section>
 
-      {/* Section Cards */}
-      <div className="space-y-2">
-        {sections.map((section) => (
-          <button
-            key={section.slug}
-            onClick={() => navigate(`/apprentice/professional-development/${section.slug}`)}
-            className={`w-full flex items-center gap-3 p-4 rounded-lg bg-white/5 ${section.border} border
-              touch-manipulation active:scale-[0.98] transition-transform min-h-[44px] text-left`}
-          >
-            <span className="text-xl flex-shrink-0">{section.icon}</span>
-            <div className="flex-1 min-w-0">
-              <span className={`font-medium text-sm ${section.colour}`}>{section.title}</span>
-              <p className="text-white text-xs mt-0.5">{section.readTime}</p>
-            </div>
-            <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
-          </button>
-        ))}
-      </div>
-
-      {/* Footer */}
-      <Card className="border-white/10 bg-white/5">
-        <CardContent className="p-4">
-          <p className="text-white text-xs leading-relaxed">
-            Based on UK industry data, ESFA guidance, and IET/ECA professional standards. Career and
-            salary information reflects current UK electrical industry averages and may vary by
-            region, employer, and experience level.
-          </p>
-        </CardContent>
-      </Card>
-    </div>
+      <motion.div variants={itemVariants} className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-5 py-4 sm:px-6 sm:py-5">
+        <p className="text-[11.5px] leading-relaxed text-white/60 max-w-3xl">
+          Based on UK industry data, ESFA guidance and IET / ECA professional standards. Career and
+          salary information reflects current UK averages — may vary by region, employer and
+          experience level.
+        </p>
+      </motion.div>
+    </PageFrame>
   );
-};
-
-export default ProfessionalDevelopment;
+}

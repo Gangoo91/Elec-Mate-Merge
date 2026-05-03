@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 6 · Section 1 · Subsection 5 — Building Services Compliance
+ * HNC Electrical Engineering for Building Services (Sustainability and Environmental Engineering)
+ *   Minimum efficiencies, controls requirements, metering, lighting and HVAC system specifications under Part L
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Building Services Compliance - HNC Module 6 Section 1.5';
@@ -206,838 +223,350 @@ const faqs = [
 ];
 
 const HNCModule6Section1_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section1")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module6-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.1.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Building Services Compliance
-          </h1>
-          <p className="text-white">
-            Minimum efficiencies, controls requirements, metering, lighting and HVAC system
-            specifications under Part L
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 6 · Section 1 · Subsection 5"
+            title="Building Services Compliance"
+            description="Minimum efficiencies, controls requirements, metering, lighting and HVAC system specifications under Part L"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Boilers:</strong> Minimum 92% ErP seasonal efficiency
-              </li>
-              <li className="pl-1">
-                <strong>Heat pumps:</strong> ASHP 2.8 SCOP, GSHP 3.0 SCOP minimum
-              </li>
-              <li className="pl-1">
-                <strong>Lighting:</strong> 80 lm/W general, 60 lm/W display
-              </li>
-              <li className="pl-1">
-                <strong>Metering:</strong> Required above 50 kW system output
-              </li>
+          <TLDR
+            points={[
+              "Part L sets minimum efficiencies for HVAC plant (SCOP, SEER, η%), lighting (luminaire-lumens per circuit-watt and LENI), and controls — these feed directly into the SAP/SBEM compliance calculation.",
+              "Lighting in non-domestic buildings must achieve ≥45 lumens per circuit-watt (luminaire), with daylight dimming in perimeter zones, presence/absence detection in cellular spaces, and time scheduling.",
+              "Heating in new dwellings is now effectively heat-pump-led — gas boilers cannot meet the 2021 notional specification, and the 2025 Future Homes Standard will end gas connections to new dwellings.",
+            ]}
+          />
+
+          <RegsCallout
+            source="Approved Document L Volume 2 — Fixed building services efficiencies"
+            clause="Fixed building services should be reasonably efficient and have effective controls. Heating, cooling, ventilation and hot water systems should meet the minimum efficiency values, controls provisions and metering provisions set out in the Domestic Building Services Compliance Guide and the Non-Domestic Building Services Compliance Guide as relevant to the system type and capacity."
+            meaning={
+              <>
+                The two Compliance Guides (DBSCG and NDBSCG) are the practical reference — they translate the headline Part L principle into specific minimum efficiencies for every plant type, controls schedule and metering provision. Building Control will check installed plant against the relevant Guide table; non-compliant plant cannot be installed without offsetting measures.
+              </>
+            }
+            cite="Source: Domestic Building Services Compliance Guide 2021 / Non-Domestic Building Services Compliance Guide 2021 — gov.uk"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Apply minimum boiler and heat pump efficiency requirements",
+              "Specify lighting systems meeting Part L efficacy standards",
+              "Design HVAC systems with compliant controls and SFP values",
+              "Implement metering strategies for energy monitoring",
+              "Plan commissioning to achieve Part L certification",
+              "Produce building log book documentation requirements",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Heating System Efficiencies">
+            <p>Part L 2021 sets stringent minimum efficiency requirements for heating systems to reduce carbon emissions from buildings. These requirements apply to new installations and replacement systems in both domestic and non-domestic buildings.</p>
+            <p><strong>Boiler Efficiency Requirements:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Gas boilers:</strong> Minimum 92% ErP seasonal efficiency</li>
+              <li><strong>Oil boilers:</strong> Minimum 92% ErP seasonal efficiency</li>
+              <li><strong>LPG boilers:</strong> Minimum 92% ErP seasonal efficiency</li>
+              <li><strong>Biomass boilers:</strong> Minimum 88% efficiency (domestic), 89% (non-domestic)</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Key Controls Requirements
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Zones:</strong> Areas over 150 m² need separate control
-              </li>
-              <li className="pl-1">
-                <strong>TRVs:</strong> All heated spaces require individual control
-              </li>
-              <li className="pl-1">
-                <strong>Lighting:</strong> Automatic control mandatory
-              </li>
-              <li className="pl-1">
-                <strong>Commissioning:</strong> Before occupation, certified
-              </li>
+            <p><strong>Heat Pump Performance Standards</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Air Source Heat Pump (ASHP):</strong> 2.8 — 55°C design flow</li>
+              <li><strong>Ground Source Heat Pump (GSHP):</strong> 3.0 — 55°C design flow</li>
+              <li><strong>Water Source Heat Pump (WSHP):</strong> 3.0 — 55°C design flow</li>
+              <li><strong>Exhaust Air Heat Pump:</strong> 2.5 — 55°C design flow</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Understanding SCOP</strong></p>
+            <p>SCOP (Seasonal Coefficient of Performance) measures the ratio of heat output to electrical input over a typical heating season. A SCOP of 2.8 means the heat pump delivers 2.8 kW of heat for every 1 kW of electricity consumed. Higher SCOP values indicate better efficiency.</p>
+            <p><strong>Design consideration:</strong> Heat pump efficiency is highly dependent on flow temperature. Design for the lowest practical flow temperature to maximise SCOP.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Apply minimum boiler and heat pump efficiency requirements',
-              'Specify lighting systems meeting Part L efficacy standards',
-              'Design HVAC systems with compliant controls and SFP values',
-              'Implement metering strategies for energy monitoring',
-              'Plan commissioning to achieve Part L certification',
-              'Produce building log book documentation requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Heating System Efficiencies */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Heating System Efficiencies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Lighting Efficacy and Controls">
+            <p>Part L sets minimum luminaire efficacy requirements and mandates automatic controls for lighting in non-domestic buildings. These requirements significantly reduce energy consumption from lighting, which typically represents 20-40% of building energy use.</p>
+            <p><strong>General Lighting</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Minimum 80 lm/W efficacy</li>
+              <li>Automatic presence detection</li>
+              <li>Daylight dimming required</li>
+              <li>Timed switching zones</li>
+            </ul>
+            <p><strong>Display Lighting</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Minimum 60 lm/W efficacy</li>
+              <li>Manual switching acceptable</li>
+              <li>Time control for retail</li>
+              <li>Separate metering advised</li>
+            </ul>
+            <p><strong>Emergency Lighting</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Exempt from efficacy limits</li>
+              <li>LED preferred for efficiency</li>
+              <li>Self-test systems reduce energy</li>
+              <li>Central battery more efficient</li>
+            </ul>
+            <p><strong>Mandatory Lighting Controls</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Offices:</strong> Presence/absence, daylight dimming — Zone control per 6 m window depth</li>
+              <li><strong>Circulation areas:</strong> Presence detection, time scheduling — Maintained illuminance when unoccupied</li>
+              <li><strong>Toilets/ancillary:</strong> Absence detection — Auto-off after vacancy</li>
+              <li><strong>Retail:</strong> Time scheduling, zone control — Separate display lighting circuits</li>
+              <li><strong>External lighting:</strong> Daylight sensing, time control — Dimming for overnight period</li>
+            </ul>
+            <p><strong>Best practice:</strong> Specify absence detection (manual on, auto off) rather than presence detection for maximum energy savings - occupants switch on only when needed.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="HVAC System Requirements">
+            <p>Part L specifies detailed requirements for HVAC systems covering cooling equipment efficiency, ventilation system fan power, heat recovery effectiveness, and comprehensive controls. These requirements ensure building services systems operate at optimum efficiency.</p>
+            <p><strong>Specific Fan Power (SFP) Limits</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Extract only:</strong> 0.5 W/(l/s)</li>
+              <li><strong>Supply only:</strong> 1.1 W/(l/s)</li>
+              <li><strong>Supply and extract:</strong> 1.8 W/(l/s)</li>
+              <li><strong>With heating/cooling:</strong> 2.0 W/(l/s)</li>
+              <li><strong>All air units:</strong> 2.2 W/(l/s)</li>
+            </ul>
+            <p><strong>Cooling System Efficiency (Minimum EER/SEER)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Split systems &lt;12 kW:</strong> SEER 5.1 minimum</li>
+              <li><strong>Split systems 12-40 kW:</strong> SEER 4.6 minimum</li>
+              <li><strong>Multi-split systems:</strong> SEER 4.4 minimum</li>
+              <li><strong>VRF systems:</strong> SEER 5.0 minimum</li>
+              <li><strong>Air-cooled chillers &lt;400 kW:</strong> EER 2.8 minimum</li>
+              <li><strong>Water-cooled chillers &gt;750 kW:</strong> COP 5.5 minimum</li>
+            </ul>
+            <p><strong>HVAC Controls Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Wet heating systems:</strong> Weather compensation, room stat, TRVs — Optimum start/stop, night setback</li>
+              <li><strong>Warm air heating:</strong> Room thermostat, time control — Zone dampers for areas &gt;150 m²</li>
+              <li><strong>Cooling systems:</strong> Zone control, time scheduling — Interlock with heating, free cooling</li>
+              <li><strong>Ventilation:</strong> Variable speed drives, CO₂ control — Heat recovery bypass for summer</li>
+              <li><strong>Heat recovery:</strong> Minimum 73% efficiency, bypass — Frost protection, summer bypass</li>
+            </ul>
+            <p><strong>Integration tip:</strong> Heating and cooling systems must be interlocked to prevent simultaneous operation - this is a mandatory Part L requirement.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Metering and Commissioning">
+            <p>Part L requires comprehensive metering to enable energy monitoring and management, plus detailed commissioning to ensure systems operate at design efficiency. Both requirements are essential for achieving real-world energy performance.</p>
+            <p><strong>Metering Requirements</strong></p>
+            <p><strong>Systems &gt;50 kW Output</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Individual sub-metering required</li>
+              <li>Heating plant fuel consumption</li>
+              <li>Cooling system electricity</li>
+              <li>Humidification energy</li>
+              <li>Fans and pumps auxiliary</li>
+              <li>Lighting circuits</li>
+            </ul>
+            <p><strong>Systems &gt;100 kW Output</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>All above requirements</li>
+              <li>Automatic meter reading (AMR)</li>
+              <li>Half-hourly data collection</li>
+              <li>BMS integration recommended</li>
+              <li>Tenant sub-metering</li>
+              <li>Data logging capability</li>
+            </ul>
+            <p><strong>Commissioning Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Heating:</strong> Flow rates, temperatures, control response — BSRIA BG 2 commissioning records</li>
+              <li><strong>Cooling:</strong> Capacity verification, EER measurement — Manufacturer commissioning sheets</li>
+              <li><strong>Ventilation:</strong> Air flow rates, SFP measurement — CIBSE TM50 testing records</li>
+              <li><strong>Lighting:</strong> Lux levels, control function testing — SLL commissioning sheets</li>
+              <li><strong>BMS/Controls:</strong> Setpoints, sequences, alarms — Point-to-point testing schedules</li>
+            </ul>
+            <p><strong>Building Log Book Requirements</strong></p>
+            <p><strong>Part L requires a building log book containing:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>As-built drawings and equipment schedules</li>
+              <li>Commissioning records and test certificates</li>
+              <li>Operating and maintenance instructions</li>
+              <li>Equipment manufacturer data</li>
+              <li>Design conditions and control setpoints</li>
+              <li>Energy consumption targets and monitoring guidance</li>
+              <li>Health and safety information (CDM requirements)</li>
+            </ul>
+            <p><strong>Timing requirement:</strong> Commissioning must be complete before the building is occupied or any fixed building services are used. The commissioning certificate must be provided to building control.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Part L 2021 sets stringent minimum efficiency requirements for heating systems to
-              reduce carbon emissions from buildings. These requirements apply to new installations
-              and replacement systems in both domestic and non-domestic buildings.
+              <strong>Example 1: Heat Pump Specification Check</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Boiler Efficiency Requirements:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Gas boilers:</strong> Minimum 92% ErP seasonal efficiency
-                </li>
-                <li className="pl-1">
-                  <strong>Oil boilers:</strong> Minimum 92% ErP seasonal efficiency
-                </li>
-                <li className="pl-1">
-                  <strong>LPG boilers:</strong> Minimum 92% ErP seasonal efficiency
-                </li>
-                <li className="pl-1">
-                  <strong>Biomass boilers:</strong> Minimum 88% efficiency (domestic), 89%
-                  (non-domestic)
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Heat Pump Performance Standards
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Heat Pump Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Minimum SCOP</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Flow Temperature Basis
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Air Source Heat Pump (ASHP)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">2.8</td>
-                      <td className="border border-white/10 px-3 py-2">55°C design flow</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ground Source Heat Pump (GSHP)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">3.0</td>
-                      <td className="border border-white/10 px-3 py-2">55°C design flow</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Water Source Heat Pump (WSHP)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">3.0</td>
-                      <td className="border border-white/10 px-3 py-2">55°C design flow</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Exhaust Air Heat Pump</td>
-                      <td className="border border-white/10 px-3 py-2">2.5</td>
-                      <td className="border border-white/10 px-3 py-2">55°C design flow</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Understanding SCOP</p>
-              <p className="text-sm text-white">
-                SCOP (Seasonal Coefficient of Performance) measures the ratio of heat output to
-                electrical input over a typical heating season. A SCOP of 2.8 means the heat pump
-                delivers 2.8 kW of heat for every 1 kW of electricity consumed. Higher SCOP values
-                indicate better efficiency.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design consideration:</strong> Heat pump efficiency is highly dependent on
-              flow temperature. Design for the lowest practical flow temperature to maximise SCOP.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Lighting Efficacy and Controls */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Lighting Efficacy and Controls
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Verify if a proposed air source heat pump meets Part L requirements.</p>
+            <p>Proposed ASHP specification:</p>
+            <p>Heating capacity: 45 kW at A7/W35</p>
+            <p>SCOP (at 55°C flow): 2.9</p>
+            <p>Design flow temperature: 55°C</p>
+            <p>Part L requirement check:</p>
+            <p>Minimum ASHP SCOP: 2.8</p>
+            <p>Proposed SCOP: 2.9</p>
+            <p>Result: COMPLIANT - SCOP exceeds minimum requirement</p>
+            <p>Note: If design flow temp reduced to 45°C,</p>
+            <p>SCOP would improve to approximately 3.4</p>
             <p>
-              Part L sets minimum luminaire efficacy requirements and mandates automatic controls
-              for lighting in non-domestic buildings. These requirements significantly reduce energy
-              consumption from lighting, which typically represents 20-40% of building energy use.
+              <strong>Example 2: Lighting Efficacy Calculation</strong>
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">General Lighting</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Minimum 80 lm/W efficacy</li>
-                  <li className="pl-1">Automatic presence detection</li>
-                  <li className="pl-1">Daylight dimming required</li>
-                  <li className="pl-1">Timed switching zones</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Display Lighting</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Minimum 60 lm/W efficacy</li>
-                  <li className="pl-1">Manual switching acceptable</li>
-                  <li className="pl-1">Time control for retail</li>
-                  <li className="pl-1">Separate metering advised</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Emergency Lighting</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Exempt from efficacy limits</li>
-                  <li className="pl-1">LED preferred for efficiency</li>
-                  <li className="pl-1">Self-test systems reduce energy</li>
-                  <li className="pl-1">Central battery more efficient</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Mandatory Lighting Controls
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Space Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Required Controls
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Additional Requirements
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Offices</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Presence/absence, daylight dimming
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Zone control per 6 m window depth
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Circulation areas</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Presence detection, time scheduling
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Maintained illuminance when unoccupied
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Toilets/ancillary</td>
-                      <td className="border border-white/10 px-3 py-2">Absence detection</td>
-                      <td className="border border-white/10 px-3 py-2">Auto-off after vacancy</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Retail</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Time scheduling, zone control
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Separate display lighting circuits
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">External lighting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Daylight sensing, time control
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dimming for overnight period
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> Specify absence detection (manual on, auto off) rather
-              than presence detection for maximum energy savings - occupants switch on only when
-              needed.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: HVAC System Requirements */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            HVAC System Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Calculate whether a lighting scheme meets Part L requirements.</p>
+            <p>Office lighting scheme:</p>
+            <p>Luminaire type: LED panel</p>
+            <p>Light output: 4,000 lumens</p>
+            <p>Power consumption: 36 W</p>
+            <p>Efficacy calculation:</p>
+            <p>Efficacy = Lumens ÷ Watts</p>
+            <p>Efficacy = 4,000 ÷ 36</p>
+            <p>Efficacy = 111 lm/W</p>
+            <p>Part L requirement: 80 lm/W minimum</p>
+            <p>Result: COMPLIANT - exceeds requirement by 39%</p>
             <p>
-              Part L specifies detailed requirements for HVAC systems covering cooling equipment
-              efficiency, ventilation system fan power, heat recovery effectiveness, and
-              comprehensive controls. These requirements ensure building services systems operate at
-              optimum efficiency.
+              <strong>Example 3: Ventilation SFP Verification</strong>
             </p>
+            <p><strong>Scenario:</strong> Verify SFP for a supply and extract system with measured data.</p>
+            <p>Commissioning measurements:</p>
+            <p>Supply fan power: 2.2 kW</p>
+            <p>Supply air flow: 2,000 l/s</p>
+            <p>Extract fan power: 1.8 kW</p>
+            <p>Extract air flow: 1,900 l/s</p>
+            <p>SFP calculation:</p>
+            <p>Total fan power = 2.2 + 1.8 = 4.0 kW</p>
+            <p>Design flow (higher of supply/extract) = 2,000 l/s</p>
+            <p>SFP = 4,000 W ÷ 2,000 l/s = 2.0 W/(l/s)</p>
+            <p>Part L limit for S&E: 1.8 W/(l/s)</p>
+            <p>Result: NON-COMPLIANT - exceeds limit by 11%</p>
+            <p>Action: Review ductwork pressure drop,</p>
+            <p>consider larger ductwork or more efficient fans</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Specific Fan Power (SFP) Limits
-              </p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">Extract only:</span>{' '}
-                  <span className="text-white">0.5 W/(l/s)</span>
-                </p>
-                <p>
-                  <span className="text-white">Supply only:</span>{' '}
-                  <span className="text-white">1.1 W/(l/s)</span>
-                </p>
-                <p>
-                  <span className="text-white">Supply and extract:</span>{' '}
-                  <span className="text-white">1.8 W/(l/s)</span>
-                </p>
-                <p>
-                  <span className="text-white">With heating/cooling:</span>{' '}
-                  <span className="text-white">2.0 W/(l/s)</span>
-                </p>
-                <p>
-                  <span className="text-white">All air units:</span>{' '}
-                  <span className="text-white">2.2 W/(l/s)</span>
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cooling System Efficiency (Minimum EER/SEER)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Split systems &lt;12 kW:</strong> SEER 5.1 minimum
-                </li>
-                <li className="pl-1">
-                  <strong>Split systems 12-40 kW:</strong> SEER 4.6 minimum
-                </li>
-                <li className="pl-1">
-                  <strong>Multi-split systems:</strong> SEER 4.4 minimum
-                </li>
-                <li className="pl-1">
-                  <strong>VRF systems:</strong> SEER 5.0 minimum
-                </li>
-                <li className="pl-1">
-                  <strong>Air-cooled chillers &lt;400 kW:</strong> EER 2.8 minimum
-                </li>
-                <li className="pl-1">
-                  <strong>Water-cooled chillers &gt;750 kW:</strong> COP 5.5 minimum
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                HVAC Controls Requirements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Required Controls
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Additional Features
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Wet heating systems</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Weather compensation, room stat, TRVs
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Optimum start/stop, night setback
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Warm air heating</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Room thermostat, time control
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Zone dampers for areas &gt;150 m²
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cooling systems</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Zone control, time scheduling
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Interlock with heating, free cooling
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ventilation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Variable speed drives, CO₂ control
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heat recovery bypass for summer
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Heat recovery</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Minimum 73% efficiency, bypass
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Frost protection, summer bypass
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Integration tip:</strong> Heating and cooling systems must be interlocked to
-              prevent simultaneous operation - this is a mandatory Part L requirement.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Metering and Commissioning */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Metering and Commissioning
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Part L requires comprehensive metering to enable energy monitoring and management,
-              plus detailed commissioning to ensure systems operate at design efficiency. Both
-              requirements are essential for achieving real-world energy performance.
+              <strong>Part L Compliance Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Metering Requirements</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Systems &gt;50 kW Output</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Individual sub-metering required</li>
-                    <li>Heating plant fuel consumption</li>
-                    <li>Cooling system electricity</li>
-                    <li>Humidification energy</li>
-                    <li>Fans and pumps auxiliary</li>
-                    <li>Lighting circuits</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Systems &gt;100 kW Output</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>All above requirements</li>
-                    <li>Automatic meter reading (AMR)</li>
-                    <li>Half-hourly data collection</li>
-                    <li>BMS integration recommended</li>
-                    <li>Tenant sub-metering</li>
-                    <li>Data logging capability</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Commissioning Requirements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Commissioning Activities
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Documentation</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Heating</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Flow rates, temperatures, control response
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        BSRIA BG 2 commissioning records
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cooling</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Capacity verification, EER measurement
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Manufacturer commissioning sheets
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ventilation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Air flow rates, SFP measurement
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        CIBSE TM50 testing records
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lighting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lux levels, control function testing
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">SLL commissioning sheets</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BMS/Controls</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Setpoints, sequences, alarms
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Point-to-point testing schedules
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Log Book Requirements
-              </p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <strong>Part L requires a building log book containing:</strong>
-                </p>
-                <ul className="text-sm text-white space-y-1 ml-5 list-disc list-outside">
-                  <li>As-built drawings and equipment schedules</li>
-                  <li>Commissioning records and test certificates</li>
-                  <li>Operating and maintenance instructions</li>
-                  <li>Equipment manufacturer data</li>
-                  <li>Design conditions and control setpoints</li>
-                  <li>Energy consumption targets and monitoring guidance</li>
-                  <li>Health and safety information (CDM requirements)</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Timing requirement:</strong> Commissioning must be complete before the
-              building is occupied or any fixed building services are used. The commissioning
-              certificate must be provided to building control.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Verify all heating equipment meets minimum efficiency (92% boilers, SCOP 2.8/3.0 heat pumps)</li>
+              <li>Check lighting efficacy (80 lm/W general, 60 lm/W display) and specify automatic controls</li>
+              <li>Calculate SFP for ventilation systems and verify compliance with limits</li>
+              <li>Specify metering for systems over 50 kW, AMR for over 100 kW</li>
+              <li>Plan commissioning activities and documentation from design stage</li>
+              <li>Prepare building log book template for handover documentation</li>
+            </ul>
+            <p>
+              <strong>Key Efficiency Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Boiler efficiency: <strong>92% ErP minimum</strong></li>
+              <li>ASHP SCOP: <strong>2.8 minimum</strong>, GSHP SCOP: <strong>3.0 minimum</strong></li>
+              <li>General lighting: <strong>80 lm/W minimum</strong></li>
+              <li>MVHR efficiency: <strong>73% minimum</strong></li>
+              <li>Metering threshold: <strong>50 kW system output</strong></li>
+            </ul>
+            <p>
+              <strong>Common Compliance Issues:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Heat pump flow temperatures:</strong> Designing for high flow temps reduces SCOP below compliance</li>
+              <li><strong>Ductwork resistance:</strong> Poor ductwork design causes SFP failures at commissioning</li>
+              <li><strong>Lighting controls:</strong> Omitting daylight dimming or presence detection</li>
+              <li><strong>Documentation gaps:</strong> Incomplete commissioning records at handover</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <Scenario
+            title="Lighting LENI fails after VE swap to cheaper luminaires"
+            situation={
+              <>
+                You designed a Cat A office to a LENI of 22 kWh/m²/year using high-efficacy LED panels at 130 lm/cW. Under value engineering, the contractor substituted cheaper panels at 95 lm/cW. SBEM re-run shows LENI now at 32, the BER exceeds TER and the building fails Part L.
+              </>
+            }
+            whatToDo={
+              <>
+                You have three choices: (1) reverse the substitution and reinstate the specified luminaires; (2) compensate with enhanced controls — DALI scenes, daylight harvesting at every perimeter, occupancy-based scene reduction — and re-model in SBEM; (3) compensate elsewhere in the design (e.g. higher heat-pump SCOP, additional rooftop PV). Option 1 is cheapest if caught early; option 3 typically the most expensive. Reject the substitution at submittal stage rather than at SBEM stage.
+              </>
+            }
+            whyItMatters={
+              <>
+                Lighting is the most common Part L failure point in non-domestic buildings because efficacy degrades quickly as you slide down the price list. The M&E designer must hold the line on luminaire specification at value engineering — every 10 lm/cW lost on average drives a measurable LENI penalty.
+              </>
+            }
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <FAQ items={faqs} />
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Heat Pump Specification Check
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Verify if a proposed air source heat pump meets Part L
-                requirements.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Proposed ASHP specification:</p>
-                <p className="ml-4">Heating capacity: 45 kW at A7/W35</p>
-                <p className="ml-4">SCOP (at 55°C flow): 2.9</p>
-                <p className="ml-4">Design flow temperature: 55°C</p>
-                <p className="mt-2 text-white">Part L requirement check:</p>
-                <p className="ml-4">Minimum ASHP SCOP: 2.8</p>
-                <p className="ml-4">Proposed SCOP: 2.9</p>
-                <p className="mt-2 text-green-400">
-                  Result: COMPLIANT - SCOP exceeds minimum requirement
-                </p>
-                <p className="mt-2 text-white">Note: If design flow temp reduced to 45°C,</p>
-                <p className="text-white">SCOP would improve to approximately 3.4</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Lighting Efficacy Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate whether a lighting scheme meets Part L
-                requirements.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Office lighting scheme:</p>
-                <p className="ml-4">Luminaire type: LED panel</p>
-                <p className="ml-4">Light output: 4,000 lumens</p>
-                <p className="ml-4">Power consumption: 36 W</p>
-                <p className="mt-2">Efficacy calculation:</p>
-                <p className="ml-4">Efficacy = Lumens ÷ Watts</p>
-                <p className="ml-4">Efficacy = 4,000 ÷ 36</p>
-                <p className="ml-4">Efficacy = 111 lm/W</p>
-                <p className="mt-2">Part L requirement: 80 lm/W minimum</p>
-                <p className="text-green-400">Result: COMPLIANT - exceeds requirement by 39%</p>
-              </div>
-            </div>
+          <KeyTakeaways
+            points={[
+              "Lighting: ≥45 lm/cW luminaire efficacy in non-dom; LENI = kWh/m²/year, the SBEM input metric.",
+              "Heating dwellings: heat pumps SCOP ≥2.5 (ASHP) or 3.5 (notional); gas boilers cannot meet the notional 2021 spec.",
+              "Hot water: storage losses controlled, controls per the Compliance Guide.",
+              "Controls: presence/absence, daylight dimming, time scheduling, weather compensation, BMS where applicable.",
+              "Metering: separate sub-meters for end uses >250 m² floor area or ≥10% of building consumption.",
+              "The Building Services Compliance Guides (domestic and non-domestic) are the lookup tables you actually work from on every job.",
+            ]}
+          />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Ventilation SFP Verification
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Verify SFP for a supply and extract system with measured
-                data.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Commissioning measurements:</p>
-                <p className="ml-4">Supply fan power: 2.2 kW</p>
-                <p className="ml-4">Supply air flow: 2,000 l/s</p>
-                <p className="ml-4">Extract fan power: 1.8 kW</p>
-                <p className="ml-4">Extract air flow: 1,900 l/s</p>
-                <p className="mt-2">SFP calculation:</p>
-                <p className="ml-4">Total fan power = 2.2 + 1.8 = 4.0 kW</p>
-                <p className="ml-4">Design flow (higher of supply/extract) = 2,000 l/s</p>
-                <p className="ml-4">SFP = 4,000 W ÷ 2,000 l/s = 2.0 W/(l/s)</p>
-                <p className="mt-2">Part L limit for S&E: 1.8 W/(l/s)</p>
-                <p className="text-red-400">Result: NON-COMPLIANT - exceeds limit by 11%</p>
-                <p className="mt-2 text-white">Action: Review ductwork pressure drop,</p>
-                <p className="text-white">consider larger ductwork or more efficient fans</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Part L Compliance Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Verify all heating equipment meets minimum efficiency (92% boilers, SCOP 2.8/3.0
-                  heat pumps)
-                </li>
-                <li className="pl-1">
-                  Check lighting efficacy (80 lm/W general, 60 lm/W display) and specify automatic
-                  controls
-                </li>
-                <li className="pl-1">
-                  Calculate SFP for ventilation systems and verify compliance with limits
-                </li>
-                <li className="pl-1">
-                  Specify metering for systems over 50 kW, AMR for over 100 kW
-                </li>
-                <li className="pl-1">
-                  Plan commissioning activities and documentation from design stage
-                </li>
-                <li className="pl-1">
-                  Prepare building log book template for handover documentation
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Efficiency Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Boiler efficiency: <strong>92% ErP minimum</strong>
-                </li>
-                <li className="pl-1">
-                  ASHP SCOP: <strong>2.8 minimum</strong>, GSHP SCOP: <strong>3.0 minimum</strong>
-                </li>
-                <li className="pl-1">
-                  General lighting: <strong>80 lm/W minimum</strong>
-                </li>
-                <li className="pl-1">
-                  MVHR efficiency: <strong>73% minimum</strong>
-                </li>
-                <li className="pl-1">
-                  Metering threshold: <strong>50 kW system output</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Compliance Issues</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Heat pump flow temperatures:</strong> Designing for high flow temps
-                  reduces SCOP below compliance
-                </li>
-                <li className="pl-1">
-                  <strong>Ductwork resistance:</strong> Poor ductwork design causes SFP failures at
-                  commissioning
-                </li>
-                <li className="pl-1">
-                  <strong>Lighting controls:</strong> Omitting daylight dimming or presence
-                  detection
-                </li>
-                <li className="pl-1">
-                  <strong>Documentation gaps:</strong> Incomplete commissioning records at handover
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Heating Efficiency</p>
-                <ul className="space-y-0.5">
-                  <li>Gas/oil boilers: 92% ErP</li>
-                  <li>ASHP: SCOP 2.8 at 55°C</li>
-                  <li>GSHP: SCOP 3.0 at 55°C</li>
-                  <li>Biomass: 88-89% efficiency</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Lighting & Ventilation</p>
-                <ul className="space-y-0.5">
-                  <li>General lighting: 80 lm/W</li>
-                  <li>Display lighting: 60 lm/W</li>
-                  <li>S&E ventilation: 1.8 W/(l/s)</li>
-                  <li>MVHR: 73% recovery</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section1-6">
-              Next: Renewable Energy Integration
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section1-4")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Air permeability
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section1-6")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Documentation and handover
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

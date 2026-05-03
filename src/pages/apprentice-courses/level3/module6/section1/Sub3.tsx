@@ -168,7 +168,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "Consumer unit replacement is always notifiable in dwellings (England). Notify via competent-person scheme self-certification or Building Control before starting. The customer\u2019s certificate (DESC or equivalent) is an additional output beyond the EIC.",
+      "Consumer unit replacement is always notifiable in dwellings (England). Notify via competent-person scheme self-certification or Building Control before starting. The customer’s certificate (DESC or equivalent) is an additional output beyond the EIC.",
   },
   {
     id: 8,
@@ -194,7 +194,7 @@ const faqs = [
   {
     question: 'Is Part P different in Wales, Scotland and Northern Ireland?',
     answer:
-      "Yes. Part P (England) and Part P (Wales) are both notification regimes, but the Welsh version was retained when the English version was scaled back in 2013, so Welsh notification thresholds are stricter. Scotland operates under the Building (Scotland) Regulations and Section 3 (heating, water, drainage and electrical safety) of the Domestic Technical Handbook — different framework, similar safety floor. Northern Ireland uses the Building Regulations (Northern Ireland) and Technical Booklet C — again different framework. If you design in more than one nation, check each jurisdiction\u2019s current regime before assuming Part P (England) applies.",
+      "Yes. Part P (England) and Part P (Wales) are both notification regimes, but the Welsh version was retained when the English version was scaled back in 2013, so Welsh notification thresholds are stricter. Scotland operates under the Building (Scotland) Regulations and Section 3 (heating, water, drainage and electrical safety) of the Domestic Technical Handbook — different framework, similar safety floor. Northern Ireland uses the Building Regulations (Northern Ireland) and Technical Booklet C — again different framework. If you design in more than one nation, check each jurisdiction’s current regime before assuming Part P (England) applies.",
   },
   {
     question: 'How does Part L touch the electrical design beyond lighting?',
@@ -253,7 +253,7 @@ export default function Sub3() {
               'Identify the three categories of notifiable work in dwellings under Part P (England) and the two routes for compliance (competent-person scheme self-certification or Building Control notification).',
               'Explain the practical effect of Part L on lighting, heating control, EV and low-carbon-ready electrical design in new and refurbished dwellings.',
               'Recognise the scope of the Building Safety Act 2022 — the HRRB definition, the Building Safety Regulator role, and the three Gateway approval points.',
-              'Describe the golden thread of building safety information and how the L3 designer\u2019s design pack contributes to it.',
+              'Describe the golden thread of building safety information and how the L3 designer’s design pack contributes to it.',
               'Apply the CDM 2015 designer duties — eliminate, reduce or control foreseeable risks at design stage rather than push them down the line.',
               'Distinguish Part P (England) from the equivalent regimes in Wales, Scotland and Northern Ireland.',
             ]}
@@ -432,7 +432,7 @@ export default function Sub3() {
               <li><strong>Handed over</strong> — at Gateway 3 to the Accountable Person, who becomes responsible for keeping it current for the building lifetime.</li>
             </ul>
             <p>
-              The L3 electrical designer\u2019s contribution is the design pack (Reg 132.13 documentation in BS 7671 terms) plus structured risk register entries, BIM model exports of cable routes and DB locations, and detailed calculations of EFLI, voltage drop and discrimination. On a typical HRRB this is delivered as a structured digital package that integrates with the architect\u2019s and structural engineer\u2019s submissions.
+              The L3 electrical designer’s contribution is the design pack (Reg 132.13 documentation in BS 7671 terms) plus structured risk register entries, BIM model exports of cable routes and DB locations, and detailed calculations of EFLI, voltage drop and discrimination. On a typical HRRB this is delivered as a structured digital package that integrates with the architect’s and structural engineer’s submissions.
             </p>
           </ConceptBlock>
 
@@ -443,7 +443,7 @@ export default function Sub3() {
           >
             <p>
               CDM 2015 sets out duties for clients, principal designers, principal contractors,
-              designers and contractors. The designer\u2019s duties (Reg 9) include:
+              designers and contractors. The designer’s duties (Reg 9) include:
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
@@ -539,7 +539,7 @@ export default function Sub3() {
             }
             whyItMatters={
               <>
-                A non-notified CU change is technically a Building Regulations breach even if the work is technically perfect. The homeowner finds out at the next sale, when the conveyancing solicitor asks for the DESC and finds none on file. The local authority can demand the work be inspected after-the-fact (at the homeowner\u2019s expense, often £600+), and if the inspector finds anything non-compliant the homeowner has a real complaint against you. Notification is paperwork, not technical work, and skipping it is a sign of a designer who has not taken statutory compliance seriously.
+                A non-notified CU change is technically a Building Regulations breach even if the work is technically perfect. The homeowner finds out at the next sale, when the conveyancing solicitor asks for the DESC and finds none on file. The local authority can demand the work be inspected after-the-fact (at the homeowner’s expense, often £600+), and if the inspector finds anything non-compliant the homeowner has a real complaint against you. Notification is paperwork, not technical work, and skipping it is a sign of a designer who has not taken statutory compliance seriously.
               </>
             }
           />
@@ -552,7 +552,7 @@ export default function Sub3() {
             title="Doing notifiable work without notification"
             whatHappens={
               <>
-                The electrician installs a new ring final or replaces a CU in a dwelling and never notifies. Years later the homeowner sells the property and the conveyancing solicitor asks for the DESC. There is none. The local authority is approached for a regularisation certificate (cost: typically £400-600), the work is inspected, and any non-compliance has to be remediated at the original installer\u2019s expense. The homeowner has a real grievance, and the original electrician\u2019s reputation takes a hit.
+                The electrician installs a new ring final or replaces a CU in a dwelling and never notifies. Years later the homeowner sells the property and the conveyancing solicitor asks for the DESC. There is none. The local authority is approached for a regularisation certificate (cost: typically £400-600), the work is inspected, and any non-compliance has to be remediated at the original installer’s expense. The homeowner has a real grievance, and the original electrician’s reputation takes a hit.
               </>
             }
             doInstead={

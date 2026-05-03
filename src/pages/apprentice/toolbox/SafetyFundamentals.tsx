@@ -1,8 +1,10 @@
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
-  HardHat,
+  ArrowLeft,
   CheckCircle,
   Shield,
   AlertTriangle,
@@ -12,8 +14,14 @@ import {
   Phone,
   Heart,
 } from 'lucide-react';
+import {
+  PageFrame,
+  PageHero,
+  itemVariants,
+} from '@/components/college/primitives';
 
 const SafetyFundamentals = () => {
+  const navigate = useNavigate();
   const safetyPrinciples = [
     'Always assume circuits are live until proven dead',
     'Use appropriate PPE for every electrical task',
@@ -104,22 +112,26 @@ const SafetyFundamentals = () => {
   ];
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8 animate-fade-in px-4 sm:px-6 lg:px-8 pb-20">
-      {/* Hero Header */}
-      <div className="flex flex-col items-center justify-center mb-6 text-center">
-        <div className="p-3 bg-elec-yellow/20 rounded-2xl mb-4">
-          <HardHat className="h-8 w-8 sm:h-10 sm:w-10 text-elec-yellow" />
-        </div>
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
-          Safety Fundamentals
-        </h1>
-        <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
-          Essential electrical safety principles, procedures, and practices for apprentices and
-          qualified electricians. Your safety and the safety of others depends on following these
-          fundamentals.
-        </p>
-        <SmartBackButton />
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice/toolbox')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
+
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Safety"
+          title="Safety fundamentals"
+          description="The non-negotiable principles, PPE standards, isolation procedures and emergency responses that keep electricians alive. Read these once a year, every year — they pay back the time."
+          tone="yellow"
+        />
+      </motion.div>
 
       {/* Quick Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
@@ -364,7 +376,7 @@ const SafetyFundamentals = () => {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </PageFrame>
   );
 };
 

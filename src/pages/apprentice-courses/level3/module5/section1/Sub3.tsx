@@ -740,7 +740,7 @@ export default function Sub3() {
                 alongside the current BS 7671 edition.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Part 6 restructure note — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Part 6 restructure note."
           />
 
           <InlineCheck

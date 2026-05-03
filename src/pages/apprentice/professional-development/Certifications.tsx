@@ -1,5 +1,13 @@
 import { Card, CardContent } from '@/components/ui/card';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  PageFrame,
+  PageHero,
+  itemVariants,
+} from '@/components/college/primitives';
 import { CheckCircle } from 'lucide-react';
 
 const coreCertifications = [
@@ -249,26 +257,28 @@ const competentPersonSchemes = [
 ];
 
 const Certifications = () => {
+  const navigate = useNavigate();
   return (
-    <div className="animate-fade-in max-w-2xl mx-auto px-4 pb-20 space-y-6 text-left">
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <SmartBackButton />
-        <h1 className="text-2xl font-bold tracking-tight text-white">
-          Certifications & Qualifications
-        </h1>
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice/professional-development')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
 
-      {/* Intro */}
-      <Card className="border-yellow-500/20 bg-white/5">
-        <CardContent className="p-4">
-          <p className="text-white text-sm leading-relaxed">
-            The right certifications open doors to higher pay, specialist work, and career
-            progression. This guide covers everything from essential qualifications to specialist
-            certifications and competent person scheme membership.
-          </p>
-        </CardContent>
-      </Card>
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Qualifications"
+          title="Certifications & qualifications"
+          description="The right certifications open doors to higher pay, specialist work and career progression. From essentials to competent-person schemes — what each one is for and when to chase it."
+          tone="yellow"
+        />
+      </motion.div>
 
       {/* Core Certifications */}
       <div className="flex items-center gap-2">
@@ -429,12 +439,11 @@ const Certifications = () => {
         <CardContent className="p-4">
           <p className="text-white text-xs leading-relaxed">
             Certification costs and durations are indicative and vary by provider and location.
-            Check with approved training providers for current pricing. Validity information is
-            correct as of BS 7671:2018+A2:2022.
+            Check with approved training providers for current pricing. Reflects BS 7671:2018+A4:2026.
           </p>
         </CardContent>
       </Card>
-    </div>
+    </PageFrame>
   );
 };
 

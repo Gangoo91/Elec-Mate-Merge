@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 6 · Section 2 · Subsection 1 — Solar Photovoltaic Systems
+ * HNC Electrical Engineering for Building Services (Sustainability and Environmental Engineering)
+ *   PV technology, system sizing, installation requirements, G98/G99 connection, and performance monitoring
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Solar Photovoltaic Systems - HNC Module 6 Section 2.1';
@@ -226,858 +243,369 @@ const faqs = [
 ];
 
 const HNCModule6Section2_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section2")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module6-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.2.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Solar Photovoltaic Systems
-          </h1>
-          <p className="text-white">
-            PV technology, system sizing, installation requirements, G98/G99 connection, and
-            performance monitoring
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 6 · Section 2 · Subsection 1"
+            title="Solar Photovoltaic Systems"
+            description="PV technology, system sizing, installation requirements, G98/G99 connection, and performance monitoring"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>PV cells:</strong> Monocrystalline (18-22%), polycrystalline (15-18%), thin
-                film (10-13%)
-              </li>
-              <li className="pl-1">
-                <strong>UK yield:</strong> 800-1,000 kWh per kWp annually
-              </li>
-              <li className="pl-1">
-                <strong>G98 limit:</strong> 3.68 kW per phase (notification only)
-              </li>
-              <li className="pl-1">
-                <strong>MCS 012:</strong> Installation standard for certification
-              </li>
+          <TLDR
+            points={[
+              "Solar PV converts sunlight to DC electricity via crystalline silicon (mono/poly) or thin-film modules — typical UK mounted-array yield is 850–950 kWh/kWp/year for unshaded south-facing pitched roofs.",
+              "Connection follows ENA EREC G98 (≤16 A per phase, fit-and-inform) or G99 (>16 A per phase, application required) with DNO sign-off — both routes apply BS 7671 Section 712 and BS EN 62446 commissioning.",
+              "MCS certification is required for the Smart Export Guarantee; the installation must use MCS-certified products and be commissioned by an MCS-registered contractor.",
+            ]}
+          />
+
+          <RegsCallout
+            source="BS 7671:2018+A2:2022 — Section 712 (Solar photovoltaic (PV) power supply systems)"
+            clause="PV array junction boxes, switchgear and conductors on the d.c. side shall be selected and erected to minimise the risk of earth faults and short-circuits. PV string and array circuits shall be capable of operating on continuous open-circuit conditions and shall be protected against the effects of overvoltage and overcurrent in accordance with the requirements of BS EN 62548. The d.c. cabling shall be installed using methods that minimise the risk of earth faults and short-circuits."
+            meaning={
+              <>
+                Section 712 governs every PV installation. DC-side faults are the highest fire-risk failure mode — segregated routing, double-insulated cabling, IP65 connectors and DC isolators within reach of the array are non-negotiable. BS EN 62446 sets the commissioning, documentation and routine verification standard.
+              </>
+            }
+            cite="Source: BS 7671:2018+A2:2022 — BSI Group"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Compare PV cell technologies and their performance characteristics",
+              "Size PV arrays including string voltage and inverter matching",
+              "Calculate annual energy yield using UK irradiation data",
+              "Apply G98/G99 DNO connection requirements correctly",
+              "Understand MCS certification requirements and installation standards",
+              "Design performance monitoring systems for ongoing verification",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="PV Cell Technology and Panel Specifications">
+            <p>Photovoltaic cells convert solar radiation directly into electrical energy through the photovoltaic effect. Understanding cell technologies, their characteristics, and specification parameters is essential for system design and component selection.</p>
+            <p><strong>PV Cell Technology Comparison:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Monocrystalline:</strong> 18-22% — Uniform black appearance, highest efficiency, performs well in low light — Premium residential, limited roof space</li>
+              <li><strong>Polycrystalline:</strong> 15-18% — Blue speckled appearance, lower cost, slightly lower efficiency — Budget residential, commercial arrays</li>
+              <li><strong>Thin Film (CdTe/CIGS):</strong> 10-13% — Flexible, lightweight, better shade tolerance, lower efficiency — BIPV, curved surfaces, large commercial</li>
+              <li><strong>Half-cut cells:</strong> 19-22% — Reduced resistive losses, better shade performance, higher power density — Modern premium installations</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Calculations</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Annual yield:</strong> kWp × PSH × PR × orientation factor
-              </li>
-              <li className="pl-1">
-                <strong>String Voc max:</strong> At -10°C (UK winter)
-              </li>
-              <li className="pl-1">
-                <strong>String Vmp min:</strong> At +70°C (roof temperature)
-              </li>
-              <li className="pl-1">
-                <strong>Performance ratio:</strong> Typically 0.75-0.85
-              </li>
+            <p><strong>Key Panel Specifications</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Wp (Peak Watts):</strong> Rated power output at STC (1,000 W/m², 25°C, AM 1.5)</li>
+              <li><strong>Voc (Open Circuit Voltage):</strong> Maximum voltage when no current flows - critical for string design</li>
+              <li><strong>Vmp (Voltage at Maximum Power):</strong> Operating voltage at peak power point</li>
+              <li><strong>Isc (Short Circuit Current):</strong> Maximum current - used for cable and fuse sizing</li>
+              <li><strong>Imp (Current at Maximum Power):</strong> Operating current at peak power point</li>
+              <li><strong>Temperature coefficients:</strong> Power typically -0.35% to -0.45% per °C above 25°C</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Standard Test Conditions (STC)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Irradiance: <strong>1,000 W/m²</strong></li>
+              <li>Cell temperature: <strong>25°C</strong></li>
+              <li>Air mass: <strong>AM 1.5</strong> (spectrum at 48.2° solar elevation)</li>
+            </ul>
+            <p>Real-world performance differs due to varying irradiance, higher cell temperatures, and system losses.</p>
+            <p><strong>Design consideration:</strong> Cell temperature on a roof can reach 60-70°C on hot days, reducing output by 15-20% from STC ratings.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Compare PV cell technologies and their performance characteristics',
-              'Size PV arrays including string voltage and inverter matching',
-              'Calculate annual energy yield using UK irradiation data',
-              'Apply G98/G99 DNO connection requirements correctly',
-              'Understand MCS certification requirements and installation standards',
-              'Design performance monitoring systems for ongoing verification',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: PV Cell Technology */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            PV Cell Technology and Panel Specifications
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="System Sizing and Annual Yield Calculations">
+            <p>Accurate system sizing requires understanding solar irradiation data, system losses, and electrical parameters. String voltage calculations ensure inverter compatibility and safe operation across temperature extremes.</p>
+            <p><strong>UK Solar Irradiation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>South England: 1,000-1,100 kWh/m²</li>
+              <li>Midlands: 900-1,000 kWh/m²</li>
+              <li>North England: 850-950 kWh/m²</li>
+              <li>Scotland: 800-900 kWh/m²</li>
+            </ul>
+            <p><strong>Orientation Factors</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>South 30-40°: 0.95-1.00</li>
+              <li>SE/SW 30-40°: 0.90-0.95</li>
+              <li>East/West 30-40°: 0.80-0.85</li>
+              <li>Flat roof: 0.85-0.90</li>
+            </ul>
+            <p><strong>System Losses (PR)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Inverter efficiency: 95-98%</li>
+              <li>Cable losses: 1-2%</li>
+              <li>Temperature: 5-10%</li>
+              <li>Soiling/mismatch: 2-5%</li>
+            </ul>
+            <p><strong>Annual Yield Calculation</strong></p>
+            <p>Formula:</p>
+            <p>Annual Yield (kWh) = kWp × PSH × PR × Orientation Factor</p>
+            <p>Where:</p>
+            <p>kWp = System peak power rating</p>
+            <p>PSH = Peak Sun Hours (kWh/m²/year ÷ 1 kW/m²)</p>
+            <p>PR = Performance Ratio (typically 0.75-0.85)</p>
+            <p>Simplified UK calculation:</p>
+            <p>Annual Yield ≈ kWp × 800 to 1,000 kWh</p>
+            <p><strong>String Voltage Calculations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Maximum Voc:</strong> -10°C (UK minimum) — Voc × [1 + (Tc × (Tmin - 25))] — Inverter max DC input</li>
+              <li><strong>Minimum Vmp:</strong> +70°C (roof max) — Vmp × [1 + (Tc × (Tmax - 25))] — Inverter MPPT min voltage</li>
+            </ul>
+            <p>Tc = Temperature coefficient of voltage (typically -0.3% per °C for crystalline silicon)</p>
+            <p><strong>Critical check:</strong> String Voc at -10°C must not exceed inverter maximum DC voltage (typically 600-1,000 V), and string Vmp at 70°C must remain above MPPT minimum voltage.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Inverter Technology and DNO Connection Requirements">
+            <p>Grid-tied inverters convert DC from PV arrays to AC synchronised with the mains supply. They incorporate maximum power point tracking (MPPT), grid monitoring, and safety features required by Engineering Recommendation G98/G99.</p>
+            <p><strong>Inverter Types</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>String Inverter:</strong> Central unit for one or more strings — Cost-effective, easy maintenance, high efficiency — Shade affects entire string, requires matching</li>
+              <li><strong>Microinverter:</strong> Individual unit per panel — Panel-level MPPT, no high-voltage DC, shade tolerant — Higher cost, more components to fail</li>
+              <li><strong>DC Optimiser + Inverter:</strong> Panel-level optimiser with string inverter — Panel-level MPPT, string inverter benefits — Additional cost, still has DC cabling</li>
+              <li><strong>Hybrid Inverter:</strong> PV input plus battery interface — Integrated storage solution, backup capability — Higher cost, more complex installation</li>
+            </ul>
+            <p><strong>G98 vs G99 Requirements</strong></p>
+            <p><strong>G98 (Notification Only)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Single-phase: ≤ 3.68 kW (16 A × 230 V)</li>
+              <li>• Three-phase: ≤ 11.04 kW (3 × 3.68 kW)</li>
+              <li>• Notify DNO within 28 days of commissioning</li>
+              <li>• No approval required</li>
+            </ul>
+            <p><strong>G99 (Application Required)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Exceeds G98 limits</li>
+              <li>• Apply before installation</li>
+              <li>• DNO assesses network impact</li>
+              <li>• May require network reinforcement</li>
+            </ul>
+            <p><strong>Inverter Safety Features (G98/G99 Compliance)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Anti-islanding:</strong> Disconnects within 0.5 seconds of grid failure - prevents energising dead network</li>
+              <li><strong>Voltage monitoring:</strong> Disconnects if voltage outside 207-253 V (230 V +10%/-10%)</li>
+              <li><strong>Frequency monitoring:</strong> Disconnects if frequency outside 47.5-52 Hz</li>
+              <li><strong>Rate of Change of Frequency (RoCoF):</strong> 1 Hz/s protection setting</li>
+              <li><strong>Power factor:</strong> Adjustable, typically set at 0.95 lagging to unity</li>
+            </ul>
+            <p><strong>Important:</strong> All grid-connected inverters must comply with G98/G99 and carry appropriate type-test certification (e.g., EN 50549).</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="MCS Standards and Performance Monitoring">
+            <p>The Microgeneration Certification Scheme (MCS) sets quality standards for renewable energy installations in the UK. MCS certification is required for customers to access Smart Export Guarantee (SEG) payments. Ongoing performance monitoring ensures systems deliver expected yields.</p>
+            <p><strong>MCS Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>MCS 012:</strong> Installation standards</li>
+              <li><strong>MCS 005:</strong> Product certification</li>
+              <li>Approved installer training</li>
+              <li>Registered design software</li>
+              <li>Generation meter installation</li>
+              <li>10-year record retention</li>
+            </ul>
+            <p><strong>Installation Documentation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>MCS certificate (unique number)</li>
+              <li>Electrical Installation Certificate</li>
+              <li>G98/G99 notification/approval</li>
+              <li>Commissioning checklist</li>
+              <li>Estimated annual yield calculation</li>
+              <li>O&M documentation and warranties</li>
+            </ul>
+            <p><strong>Performance Monitoring Systems</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Generation meter only:</strong> Total kWh generated — Basic verification, SEG compliance</li>
+              <li><strong>Inverter monitoring:</strong> Real-time power, daily yield, fault codes — Remote fault detection, performance tracking</li>
+              <li><strong>Panel-level monitoring:</strong> Individual panel output — Identify underperforming panels, shade impact</li>
+              <li><strong>Weather-compensated:</strong> Irradiance, temperature, actual vs expected — True performance ratio calculation</li>
+            </ul>
+            <p><strong>Performance Ratio Monitoring</strong></p>
+            <p>Performance Ratio (PR) calculation:</p>
+            <p>PR = Actual Energy Output ÷ (Installed kWp × Plane of Array Irradiation ÷ 1,000)</p>
+            <p>Expected values:</p>
+            <p>New system: <span>0.80-0.85</span></p>
+            <p>After degradation (10+ years): <span>0.75-0.80</span></p>
+            <p>Indicating fault: <span>&lt; 0.70</span></p>
+            <p><strong>Maintenance consideration:</strong> Panels typically degrade 0.5-0.7% per year. Inverters have 10-15 year typical lifespan. Factor replacement costs into lifecycle analysis.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Photovoltaic cells convert solar radiation directly into electrical energy through the
-              photovoltaic effect. Understanding cell technologies, their characteristics, and
-              specification parameters is essential for system design and component selection.
+              <strong>Example 1: Annual Yield Calculation</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">PV Cell Technology Comparison:</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Technology</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Efficiency</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Characteristics
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Monocrystalline</td>
-                      <td className="border border-white/10 px-3 py-2">18-22%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Uniform black appearance, highest efficiency, performs well in low light
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Premium residential, limited roof space
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Polycrystalline</td>
-                      <td className="border border-white/10 px-3 py-2">15-18%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Blue speckled appearance, lower cost, slightly lower efficiency
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Budget residential, commercial arrays
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Thin Film (CdTe/CIGS)</td>
-                      <td className="border border-white/10 px-3 py-2">10-13%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Flexible, lightweight, better shade tolerance, lower efficiency
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        BIPV, curved surfaces, large commercial
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Half-cut cells</td>
-                      <td className="border border-white/10 px-3 py-2">19-22%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reduced resistive losses, better shade performance, higher power density
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Modern premium installations
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Panel Specifications
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Wp (Peak Watts):</strong> Rated power output at STC (1,000 W/m², 25°C, AM
-                  1.5)
-                </li>
-                <li className="pl-1">
-                  <strong>Voc (Open Circuit Voltage):</strong> Maximum voltage when no current flows
-                  - critical for string design
-                </li>
-                <li className="pl-1">
-                  <strong>Vmp (Voltage at Maximum Power):</strong> Operating voltage at peak power
-                  point
-                </li>
-                <li className="pl-1">
-                  <strong>Isc (Short Circuit Current):</strong> Maximum current - used for cable and
-                  fuse sizing
-                </li>
-                <li className="pl-1">
-                  <strong>Imp (Current at Maximum Power):</strong> Operating current at peak power
-                  point
-                </li>
-                <li className="pl-1">
-                  <strong>Temperature coefficients:</strong> Power typically -0.35% to -0.45% per °C
-                  above 25°C
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Standard Test Conditions (STC)
-              </p>
-              <ul className="text-sm text-white space-y-1">
-                <li>
-                  Irradiance: <strong>1,000 W/m²</strong>
-                </li>
-                <li>
-                  Cell temperature: <strong>25°C</strong>
-                </li>
-                <li>
-                  Air mass: <strong>AM 1.5</strong> (spectrum at 48.2° solar elevation)
-                </li>
-              </ul>
-              <p className="text-sm text-white mt-2">
-                Real-world performance differs due to varying irradiance, higher cell temperatures,
-                and system losses.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design consideration:</strong> Cell temperature on a roof can reach 60-70°C on
-              hot days, reducing output by 15-20% from STC ratings.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: System Sizing and Calculations */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            System Sizing and Annual Yield Calculations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Calculate annual yield for a 4 kWp system in Birmingham, south-facing at 35° pitch.</p>
+            <p>Given data:</p>
+            <p>System size: 4 kWp</p>
+            <p>Location: Birmingham (950 kWh/m² annual irradiation)</p>
+            <p>Orientation: South-facing, 35° pitch (factor 0.97)</p>
+            <p>Performance ratio: 0.80</p>
+            <p>Calculation:</p>
+            <p>Peak Sun Hours (PSH) = 950 kWh/m² ÷ 1 kW/m² = 950 hours</p>
+            <p>Annual Yield = 4 kWp × 950 × 0.80 × 0.97</p>
+            <p>Annual Yield = 2,941 kWh</p>
+            <p>Simplified: 4 × 900 = 3,600 kWh (using 900 kWh/kWp rule of thumb)</p>
             <p>
-              Accurate system sizing requires understanding solar irradiation data, system losses,
-              and electrical parameters. String voltage calculations ensure inverter compatibility
-              and safe operation across temperature extremes.
+              <strong>Example 2: String Voltage Calculation</strong>
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">UK Solar Irradiation</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">South England: 1,000-1,100 kWh/m²</li>
-                  <li className="pl-1">Midlands: 900-1,000 kWh/m²</li>
-                  <li className="pl-1">North England: 850-950 kWh/m²</li>
-                  <li className="pl-1">Scotland: 800-900 kWh/m²</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Orientation Factors</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">South 30-40°: 0.95-1.00</li>
-                  <li className="pl-1">SE/SW 30-40°: 0.90-0.95</li>
-                  <li className="pl-1">East/West 30-40°: 0.80-0.85</li>
-                  <li className="pl-1">Flat roof: 0.85-0.90</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">System Losses (PR)</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Inverter efficiency: 95-98%</li>
-                  <li className="pl-1">Cable losses: 1-2%</li>
-                  <li className="pl-1">Temperature: 5-10%</li>
-                  <li className="pl-1">Soiling/mismatch: 2-5%</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Annual Yield Calculation
-              </p>
-              <div className="bg-black/30 p-4 rounded text-sm font-mono text-white">
-                <p className="text-white mb-2">Formula:</p>
-                <p className="text-green-400">
-                  Annual Yield (kWh) = kWp × PSH × PR × Orientation Factor
-                </p>
-                <p className="text-white mt-4 mb-2">Where:</p>
-                <p>kWp = System peak power rating</p>
-                <p>PSH = Peak Sun Hours (kWh/m²/year ÷ 1 kW/m²)</p>
-                <p>PR = Performance Ratio (typically 0.75-0.85)</p>
-                <p className="mt-4 text-white">Simplified UK calculation:</p>
-                <p className="text-green-400">Annual Yield ≈ kWp × 800 to 1,000 kWh</p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                String Voltage Calculations
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Parameter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Temperature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Calculation</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Check Against</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Maximum Voc</td>
-                      <td className="border border-white/10 px-3 py-2">-10°C (UK minimum)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Voc × [1 + (Tc × (Tmin - 25))]
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Inverter max DC input</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Minimum Vmp</td>
-                      <td className="border border-white/10 px-3 py-2">+70°C (roof max)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Vmp × [1 + (Tc × (Tmax - 25))]
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Inverter MPPT min voltage
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-sm text-white mt-2">
-                Tc = Temperature coefficient of voltage (typically -0.3% per °C for crystalline
-                silicon)
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Critical check:</strong> String Voc at -10°C must not exceed inverter maximum
-              DC voltage (typically 600-1,000 V), and string Vmp at 70°C must remain above MPPT
-              minimum voltage.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Inverter Technology and G98/G99 Connection */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Inverter Technology and DNO Connection Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Determine maximum panels per string for 400 W panels (Voc = 49.5 V, Vmp = 41.5 V) with a 600 V inverter.</p>
+            <p>Panel specifications:</p>
+            <p>Voc at STC (25°C): 49.5 V</p>
+            <p>Vmp at STC (25°C): 41.5 V</p>
+            <p>Temperature coefficient: -0.29%/°C</p>
+            <p>Maximum Voc at -10°C:</p>
+            <p>Temperature difference = 25°C - (-10°C) = 35°C</p>
+            <p>Voltage increase = 35 × 0.29% = 10.15%</p>
+            <p>Voc at -10°C = 49.5 × 1.1015 = <span>54.5 V</span></p>
+            <p>Maximum panels in string:</p>
+            <p>600 V ÷ 54.5 V = 11.0 panels</p>
+            <p>Maximum: 11 panels per string</p>
+            <p>Also check minimum Vmp remains above MPPT minimum (typically 150-200 V)</p>
             <p>
-              Grid-tied inverters convert DC from PV arrays to AC synchronised with the mains
-              supply. They incorporate maximum power point tracking (MPPT), grid monitoring, and
-              safety features required by Engineering Recommendation G98/G99.
+              <strong>Example 3: G98/G99 Assessment</strong>
             </p>
+            <p><strong>Scenario:</strong> Determine connection requirements for a 6 kWp single-phase domestic installation.</p>
+            <p>Installation details:</p>
+            <p>Inverter AC output: 6 kW single-phase</p>
+            <p>Supply: Single-phase 230 V</p>
+            <p>G98 limit check:</p>
+            <p>G98 single-phase limit: 16 A × 230 V = 3.68 kW</p>
+            <p>Proposed installation: 6 kW</p>
+            <p>6 kW &gt; 3.68 kW - G98 limit exceeded</p>
+            <p>Requirement:</p>
+            <p>G99 application required before installation</p>
+            <p>Alternative: Install 3.68 kW inverter to qualify for G98 notification only</p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Inverter Types</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Advantages</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Limitations</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">String Inverter</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Central unit for one or more strings
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cost-effective, easy maintenance, high efficiency
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Shade affects entire string, requires matching
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Microinverter</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Individual unit per panel
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Panel-level MPPT, no high-voltage DC, shade tolerant
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher cost, more components to fail
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DC Optimiser + Inverter</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Panel-level optimiser with string inverter
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Panel-level MPPT, string inverter benefits
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Additional cost, still has DC cabling
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hybrid Inverter</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        PV input plus battery interface
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Integrated storage solution, backup capability
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher cost, more complex installation
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">G98 vs G99 Requirements</p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="font-medium text-white mb-1">G98 (Notification Only)</p>
-                  <ul className="text-white space-y-1">
-                    <li>• Single-phase: ≤ 3.68 kW (16 A × 230 V)</li>
-                    <li>• Three-phase: ≤ 11.04 kW (3 × 3.68 kW)</li>
-                    <li>• Notify DNO within 28 days of commissioning</li>
-                    <li>• No approval required</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium text-white mb-1">G99 (Application Required)</p>
-                  <ul className="text-white space-y-1">
-                    <li>• Exceeds G98 limits</li>
-                    <li>• Apply before installation</li>
-                    <li>• DNO assesses network impact</li>
-                    <li>• May require network reinforcement</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Inverter Safety Features (G98/G99 Compliance)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Anti-islanding:</strong> Disconnects within 0.5 seconds of grid failure -
-                  prevents energising dead network
-                </li>
-                <li className="pl-1">
-                  <strong>Voltage monitoring:</strong> Disconnects if voltage outside 207-253 V (230
-                  V +10%/-10%)
-                </li>
-                <li className="pl-1">
-                  <strong>Frequency monitoring:</strong> Disconnects if frequency outside 47.5-52 Hz
-                </li>
-                <li className="pl-1">
-                  <strong>Rate of Change of Frequency (RoCoF):</strong> 1 Hz/s protection setting
-                </li>
-                <li className="pl-1">
-                  <strong>Power factor:</strong> Adjustable, typically set at 0.95 lagging to unity
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Important:</strong> All grid-connected inverters must comply with G98/G99 and
-              carry appropriate type-test certification (e.g., EN 50549).
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: MCS Standards and Performance Monitoring */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            MCS Standards and Performance Monitoring
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              The Microgeneration Certification Scheme (MCS) sets quality standards for renewable
-              energy installations in the UK. MCS certification is required for customers to access
-              Smart Export Guarantee (SEG) payments. Ongoing performance monitoring ensures systems
-              deliver expected yields.
+              <strong>PV System Design Checklist:</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">MCS Requirements</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>MCS 012:</strong> Installation standards
-                  </li>
-                  <li className="pl-1">
-                    <strong>MCS 005:</strong> Product certification
-                  </li>
-                  <li className="pl-1">Approved installer training</li>
-                  <li className="pl-1">Registered design software</li>
-                  <li className="pl-1">Generation meter installation</li>
-                  <li className="pl-1">10-year record retention</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Installation Documentation
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">MCS certificate (unique number)</li>
-                  <li className="pl-1">Electrical Installation Certificate</li>
-                  <li className="pl-1">G98/G99 notification/approval</li>
-                  <li className="pl-1">Commissioning checklist</li>
-                  <li className="pl-1">Estimated annual yield calculation</li>
-                  <li className="pl-1">O&M documentation and warranties</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Performance Monitoring Systems
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Monitoring Level
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Data Captured</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Benefits</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Generation meter only</td>
-                      <td className="border border-white/10 px-3 py-2">Total kWh generated</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Basic verification, SEG compliance
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Inverter monitoring</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Real-time power, daily yield, fault codes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Remote fault detection, performance tracking
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Panel-level monitoring</td>
-                      <td className="border border-white/10 px-3 py-2">Individual panel output</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Identify underperforming panels, shade impact
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Weather-compensated</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Irradiance, temperature, actual vs expected
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        True performance ratio calculation
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Performance Ratio Monitoring
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Performance Ratio (PR) calculation:</p>
-                <p className="mt-2 text-green-400">
-                  PR = Actual Energy Output ÷ (Installed kWp × Plane of Array Irradiation ÷ 1,000)
-                </p>
-                <p className="mt-4 text-white">Expected values:</p>
-                <p>
-                  New system: <span className="text-green-400">0.80-0.85</span>
-                </p>
-                <p>
-                  After degradation (10+ years): <span className="text-yellow-400">0.75-0.80</span>
-                </p>
-                <p>
-                  Indicating fault: <span className="text-red-400">&lt; 0.70</span>
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Maintenance consideration:</strong> Panels typically degrade 0.5-0.7% per
-              year. Inverters have 10-15 year typical lifespan. Factor replacement costs into
-              lifecycle analysis.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Survey roof orientation, pitch, shading, and structural capacity</li>
+              <li>Calculate available area and maximum system size</li>
+              <li>Select appropriate panel technology and inverter type</li>
+              <li>Verify string voltage within inverter limits at temperature extremes</li>
+              <li>Assess G98/G99 requirements based on export capacity</li>
+              <li>Calculate estimated annual yield using local irradiation data</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>UK annual yield: <strong>800-1,000 kWh per kWp</strong></li>
+              <li>G98 single-phase limit: <strong>3.68 kW</strong> (16 A × 230 V)</li>
+              <li>Performance ratio: <strong>0.75-0.85</strong></li>
+              <li>Temperature coefficient: <strong>-0.35% to -0.45% per °C</strong></li>
+              <li>Anti-islanding disconnect: <strong>&lt; 0.5 seconds</strong></li>
+              <li>Annual degradation: <strong>0.5-0.7% per year</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Annual Yield Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate annual yield for a 4 kWp system in Birmingham,
-                south-facing at 35° pitch.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Given data:</p>
-                <p>System size: 4 kWp</p>
-                <p>Location: Birmingham (950 kWh/m² annual irradiation)</p>
-                <p>Orientation: South-facing, 35° pitch (factor 0.97)</p>
-                <p>Performance ratio: 0.80</p>
-                <p className="mt-4 text-white">Calculation:</p>
-                <p>Peak Sun Hours (PSH) = 950 kWh/m² ÷ 1 kW/m² = 950 hours</p>
-                <p>Annual Yield = 4 kWp × 950 × 0.80 × 0.97</p>
-                <p className="text-green-400 mt-2">Annual Yield = 2,941 kWh</p>
-                <p className="text-white mt-2">
-                  Simplified: 4 × 900 = 3,600 kWh (using 900 kWh/kWp rule of thumb)
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: String Voltage Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Determine maximum panels per string for 400 W panels (Voc
-                = 49.5 V, Vmp = 41.5 V) with a 600 V inverter.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Panel specifications:</p>
-                <p>Voc at STC (25°C): 49.5 V</p>
-                <p>Vmp at STC (25°C): 41.5 V</p>
-                <p>Temperature coefficient: -0.29%/°C</p>
-                <p className="mt-4 text-white">Maximum Voc at -10°C:</p>
-                <p>Temperature difference = 25°C - (-10°C) = 35°C</p>
-                <p>Voltage increase = 35 × 0.29% = 10.15%</p>
-                <p>
-                  Voc at -10°C = 49.5 × 1.1015 = <span className="text-yellow-400">54.5 V</span>
-                </p>
-                <p className="mt-4 text-white">Maximum panels in string:</p>
-                <p>600 V ÷ 54.5 V = 11.0 panels</p>
-                <p className="text-green-400 mt-2">Maximum: 11 panels per string</p>
-                <p className="text-white mt-4">
-                  Also check minimum Vmp remains above MPPT minimum (typically 150-200 V)
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: G98/G99 Assessment
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Determine connection requirements for a 6 kWp
-                single-phase domestic installation.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Installation details:</p>
-                <p>Inverter AC output: 6 kW single-phase</p>
-                <p>Supply: Single-phase 230 V</p>
-                <p className="mt-4 text-white">G98 limit check:</p>
-                <p>G98 single-phase limit: 16 A × 230 V = 3.68 kW</p>
-                <p>Proposed installation: 6 kW</p>
-                <p className="text-red-400 mt-2">6 kW &gt; 3.68 kW - G98 limit exceeded</p>
-                <p className="mt-4 text-white">Requirement:</p>
-                <p className="text-yellow-400">G99 application required before installation</p>
-                <p className="text-white mt-2">
-                  Alternative: Install 3.68 kW inverter to qualify for G98 notification only
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                PV System Design Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Survey roof orientation, pitch, shading, and structural capacity
-                </li>
-                <li className="pl-1">Calculate available area and maximum system size</li>
-                <li className="pl-1">Select appropriate panel technology and inverter type</li>
-                <li className="pl-1">
-                  Verify string voltage within inverter limits at temperature extremes
-                </li>
-                <li className="pl-1">Assess G98/G99 requirements based on export capacity</li>
-                <li className="pl-1">
-                  Calculate estimated annual yield using local irradiation data
-                </li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Ignoring temperature coefficients</strong> - String voltage at -10°C can exceed inverter limits</li>
+                <li><strong>Underestimating shading</strong> - Even partial shade dramatically reduces string output</li>
+                <li><strong>Incorrect G98/G99 assessment</strong> - Based on inverter export capacity, not panel rating</li>
+                <li><strong>Omitting DC isolation</strong> - DC isolator at inverter required, fireman's switch where applicable</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  UK annual yield: <strong>800-1,000 kWh per kWp</strong>
-                </li>
-                <li className="pl-1">
-                  G98 single-phase limit: <strong>3.68 kW</strong> (16 A × 230 V)
-                </li>
-                <li className="pl-1">
-                  Performance ratio: <strong>0.75-0.85</strong>
-                </li>
-                <li className="pl-1">
-                  Temperature coefficient: <strong>-0.35% to -0.45% per °C</strong>
-                </li>
-                <li className="pl-1">
-                  Anti-islanding disconnect: <strong>&lt; 0.5 seconds</strong>
-                </li>
-                <li className="pl-1">
-                  Annual degradation: <strong>0.5-0.7% per year</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Ignoring temperature coefficients</strong> - String voltage at -10°C can
-                  exceed inverter limits
-                </li>
-                <li className="pl-1">
-                  <strong>Underestimating shading</strong> - Even partial shade dramatically reduces
-                  string output
-                </li>
-                <li className="pl-1">
-                  <strong>Incorrect G98/G99 assessment</strong> - Based on inverter export capacity,
-                  not panel rating
-                </li>
-                <li className="pl-1">
-                  <strong>Omitting DC isolation</strong> - DC isolator at inverter required,
-                  fireman's switch where applicable
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="G99 application stalls a 30 kWp commercial array"
+            situation={
+              <>
+                A 30 kWp rooftop array on a small industrial unit. The contractor assumed G98 fit-and-inform applied because the inverter is single-phase per string, but the total per-phase current exceeds 16 A. The DNO refuses to register the system, demands a G99 application, and the export limit is now under negotiation.
+              </>
+            }
+            whatToDo={
+              <>
+                Submit a full G99 application immediately — typical lead time is 8–13 weeks for a connection offer. While waiting, the system can run in zero-export mode (with active export limitation) under DNO temporary acceptance. Verify the inverter has the certified export-limiting function. Update the customer expectation: revenue from SEG cannot start until the DNO formally accepts the connection. Always check threshold per phase against the inverter rating before tendering.
+              </>
+            }
+            whyItMatters={
+              <>
+                Misapplying G98 vs G99 is one of the most common installer errors and creates programme risk on every commercial PV project. The DNO can refuse connection or impose constraints (export limiting, voltage management) that materially change project economics. Determine the route at design stage, not commissioning.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Panel Specifications</p>
-                <ul className="space-y-0.5">
-                  <li>Monocrystalline: 18-22% efficiency</li>
-                  <li>STC: 1,000 W/m², 25°C, AM 1.5</li>
-                  <li>Temp coefficient: -0.35% to -0.45%/°C</li>
-                  <li>Typical module: 350-450 Wp</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">DNO Connection</p>
-                <ul className="space-y-0.5">
-                  <li>G98: ≤ 3.68 kW/phase (notification)</li>
-                  <li>G99: &gt; 3.68 kW/phase (application)</li>
-                  <li>Anti-islanding: &lt; 0.5 s disconnect</li>
-                  <li>Voltage: 207-253 V operating range</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              "UK yield: 850–950 kWh/kWp/year for south-facing 30–40° unshaded pitched roof.",
+              "BS 7671 Section 712 = electrical design rules; BS EN 62446 = commissioning + documentation.",
+              "G98 = ≤16 A per phase fit-and-inform; G99 = >16 A application required (apply at least 8 weeks early).",
+              "MCS certification required for SEG — products + installer both MCS-registered.",
+              "DC isolator within reach of the array, AC isolator at the consumer unit, both lockable off.",
+              "Annual inspection per BS EN 62446-2 — string IV curve test catches degraded modules early.",
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section2-2">
-              Next: Battery Storage Systems
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section2")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Renewable energy systems
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section2-2")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Heat pump technology
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

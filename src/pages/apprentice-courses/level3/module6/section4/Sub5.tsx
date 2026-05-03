@@ -439,19 +439,20 @@ export default function Sub5() {
 
           <RegsCallout
             source="BS 7671:2018+A4:2026 — Regulation 543.1.1 (Cross-sectional area of protective conductor)"
-            clause="The cross-sectional area of every protective conductor, other than a protective bonding conductor, shall be: (a) calculated in accordance with Regulation 543.1.3."
+            clause="The cross-sectional area of every protective conductor, other than a protective bonding conductor, shall be calculated in accordance with Regulation 543.1.4 (selection from Table 54.7). Calculation in accordance with Regulation 543.1.3 (the adiabatic equation) is necessary where the choice of cross-sectional area of line conductors has been determined by considerations of short-circuit current and where the earth fault current is expected to be less than the short-circuit current."
             meaning={
               <>
-                Reg 543.1.1 sits one rung above Reg 543.1.3 in the hierarchy of Chapter 54.
-                The general rule: every protective conductor (other than a bonding conductor)
-                must have its CSA either calculated against the adiabatic equation in 543.1.3,
-                or selected from the simplified Table 54.7 method (which is itself derived from
-                a worst-case 543.1.3 calc). This Sub focuses on the calculated route under
-                543.1.3; the simplified table route is for designers who do not have time/current
-                data to hand and accept the more conservative answer.
+                Reg 543.1.1 sits one rung above Regs 543.1.3 and 543.1.4 in the hierarchy of
+                Chapter 54. The default route is the simplified table method in 543.1.4 (Table
+                54.7), which is itself derived from a worst-case adiabatic calculation. The
+                calculated route in 543.1.3 is only required where the line-conductor sizing has
+                already been driven by short-circuit considerations and the earth-fault current
+                is expected to be lower than the short-circuit current — a condition typical of
+                large industrial / sub-main installations rather than domestic. This Sub focuses
+                on the calculated route under 543.1.3.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Part 5, Chapter 54, Regulation 543.1.1."
+            cite="Source: BS 7671:2018+A4:2026 Part 5, Chapter 54, Regulations 543.1.1, 543.1.3 and 543.1.4."
           />
 
           <SectionRule />

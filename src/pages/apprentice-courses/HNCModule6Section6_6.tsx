@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 6 · Section 6 · Subsection 6 — Post-Occupancy Evaluation
+ * HNC Electrical Engineering for Building Services (Sustainability and Environmental Engineering)
+ *   Performance monitoring, user satisfaction, lessons learned, and continuous improvement for building services
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Post-Occupancy Evaluation - HNC Module 6 Section 6.6';
@@ -248,822 +265,360 @@ const faqs = [
 ];
 
 const HNCModule6Section6_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section6")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module6-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.6.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Post-Occupancy Evaluation
-          </h1>
-          <p className="text-white">
-            Performance monitoring, user satisfaction, lessons learned, and continuous improvement
-            for building services
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 6 · Section 6 · Subsection 6"
+            title="Post-Occupancy Evaluation"
+            description="Performance monitoring, user satisfaction, lessons learned, and continuous improvement for building services"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>POE:</strong> Systematic assessment of building performance in use
-              </li>
-              <li className="pl-1">
-                <strong>Soft Landings:</strong> Framework for aftercare and performance focus
-              </li>
-              <li className="pl-1">
-                <strong>Performance gap:</strong> Design vs actual energy often 2-5x different
-              </li>
-              <li className="pl-1">
-                <strong>Feedback loop:</strong> Lessons learned inform future projects
-              </li>
+          <TLDR
+            points={[
+              "Post-Occupancy Evaluation (POE) systematically reviews building performance after handover — measuring energy, occupant satisfaction, IEQ (indoor environmental quality), and operational issues — to close the design-vs-actual gap and inform future design.",
+              "CIBSE TM61 (operational performance), TM62 (occupant satisfaction surveys) and TM63 (in-use energy benchmarking) are the institutional UK methodology — turning POE from a discretionary post-project task into a structured engineering discipline.",
+              "BUS (Building Use Studies) Methodology and Soft Landings (BSRIA BG 54) are the practical delivery frameworks — most major UK developers and public-sector clients now contractually require POE on completed projects.",
+            ]}
+          />
+
+          <RegsCallout
+            source="CIBSE TM61–63 (Operational Performance) + Soft Landings BSRIA BG 54 + Government Soft Landings (GSL)"
+            clause="Post-occupancy evaluation shall be carried out at appropriate intervals (typically 6 months and 12-24 months post-handover) using the methodology in CIBSE TM61-63. The evaluation shall include energy and water consumption analysis benchmarked against design predictions and industry norms (TM63), occupant satisfaction surveys covering thermal comfort, indoor air quality, lighting, acoustics and overall workplace quality (TM62 / BUS Methodology), and operational performance review of building services systems against the commissioned strategy (TM61)."
+            meaning={
+              <>
+                CIBSE TM61–63 is the UK technical reference for POE. Government Soft Landings (GSL) makes POE mandatory on central government projects. BUS Methodology survey is the most widely-used occupant satisfaction tool in the UK. POE outputs feed lessons learned into future projects and inform corrective action (re-commissioning, controls adjustment, training) on the current building.
+              </>
+            }
+            cite="Source: CIBSE TM61 (2020), TM62 (2020), TM63 (2020) — cibse.org; BSRIA BG 54 Soft Landings Framework (2018); Government Soft Landings policy — gov.uk"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Explain POE methodology and its role in building performance",
+              "Apply the Soft Landings framework to building services projects",
+              "Design performance monitoring strategies using sub-metering",
+              "Conduct user satisfaction surveys using BUS methodology",
+              "Analyse the performance gap and implement closure strategies",
+              "Develop lessons learned processes for continuous improvement",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="POE Fundamentals and Soft Landings">
+            <p>Post-Occupancy Evaluation (POE) is the systematic assessment of buildings in use, comparing actual performance against design intent. It addresses a critical industry failing: the disconnection between design predictions and operational reality that results in buildings consuming 2-5 times more energy than anticipated.</p>
+            <p><strong>Key POE objectives:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Performance verification:</strong> Confirm systems deliver design intent</li>
+              <li><strong>User satisfaction:</strong> Assess occupant comfort and productivity</li>
+              <li><strong>Operational optimisation:</strong> Identify and implement improvements</li>
+              <li><strong>Lessons learned:</strong> Feed findings back to future designs</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Energy monitoring:</strong> 12-month minimum for seasonal cycle
-              </li>
-              <li className="pl-1">
-                <strong>User surveys:</strong> BUS methodology for benchmarking
-              </li>
-              <li className="pl-1">
-                <strong>Continuous commissioning:</strong> Ongoing optimisation
-              </li>
-              <li className="pl-1">
-                <strong>Sub-metering:</strong> Disaggregated performance analysis
-              </li>
+            <p><strong>Soft Landings Framework Stages</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Stage 1:</strong> Inception and Briefing — Define performance targets, agree POE scope</li>
+              <li><strong>Stage 2:</strong> Design Development — Reality checking, metering strategy, user input</li>
+              <li><strong>Stage 3:</strong> Pre-Handover — Commissioning reviews, O&M preparation</li>
+              <li><strong>Stage 4:</strong> Initial Aftercare (0-12 months) — Resident on-site support, fine-tuning</li>
+              <li><strong>Stage 5:</strong> Extended Aftercare (1-3 years) — Formal POE, seasonal reviews, user surveys</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Key principle:</strong> Soft Landings commits the design team to operational outcomes, not just design delivery - a fundamental shift from traditional project completion approaches.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Explain POE methodology and its role in building performance',
-              'Apply the Soft Landings framework to building services projects',
-              'Design performance monitoring strategies using sub-metering',
-              'Conduct user satisfaction surveys using BUS methodology',
-              'Analyse the performance gap and implement closure strategies',
-              'Develop lessons learned processes for continuous improvement',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: POE Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            POE Fundamentals and Soft Landings
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Performance Monitoring and Sub-Metering">
+            <p>Effective performance monitoring requires comprehensive metering strategies that enable disaggregation of energy use by system, zone, and end use. Without sub-metering, identifying performance issues and optimisation opportunities becomes impossible.</p>
+            <p><strong>Energy Metering</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Fiscal meters for billing</li>
+              <li>Sub-meters by system/zone</li>
+              <li>Automatic meter reading</li>
+              <li>Half-hourly data logging</li>
+            </ul>
+            <p><strong>Environmental Monitoring</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Temperature and humidity</li>
+              <li>CO2 levels (air quality)</li>
+              <li>Lux levels (lighting)</li>
+              <li>Acoustic measurements</li>
+            </ul>
+            <p><strong>System Performance</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Plant efficiency (COP/EER)</li>
+              <li>Flow rates and pressures</li>
+              <li>Operating hours</li>
+              <li>Control system logs</li>
+            </ul>
+            <p><strong>Recommended Sub-Metering Strategy</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>HVAC:</strong> Chillers, boilers, AHUs, pumps, fans — Plant efficiency analysis</li>
+              <li><strong>Lighting:</strong> General, emergency, external — Lighting energy density (W/m²)</li>
+              <li><strong>Small Power:</strong> Floor/zone distribution boards — Unregulated load assessment</li>
+              <li><strong>Lifts and Escalators:</strong> Per lift/bank — Transportation energy</li>
+              <li><strong>Server Rooms:</strong> IT load and cooling — PUE calculation</li>
+            </ul>
+            <p><strong>Monitoring tip:</strong> Data without analysis is useless - implement automated fault detection and diagnostics (FDD) to convert data into actionable insights.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="User Satisfaction and BUS Methodology">
+            <p>User satisfaction assessment provides essential feedback on how occupants experience the building environment. The Building Use Studies (BUS) methodology offers a standardised, benchmarked approach enabling comparison against hundreds of similar buildings.</p>
+            <p><strong>BUS Survey Categories</strong></p>
+            <p><strong>Environmental Factors</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>- Temperature in winter and summer</li>
+              <li>- Air quality (fresh/stuffy, dry/humid)</li>
+              <li>- Lighting (natural and artificial)</li>
+              <li>- Noise (from inside and outside)</li>
+            </ul>
+            <p><strong>Building Factors</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>- Overall comfort</li>
+              <li>- Design and image</li>
+              <li>- Needs (does building meet needs?)</li>
+              <li>- Productivity (perceived impact)</li>
+              <li>- Health (perceived impact)</li>
+            </ul>
+            <p><strong>Survey Implementation Best Practice</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Timing:</strong> Conduct surveys at consistent times (avoid holiday periods, extreme weather)</li>
+              <li><strong>Response rate:</strong> Target &gt;40% minimum for statistical validity</li>
+              <li><strong>Anonymity:</strong> Ensure responses cannot be traced to individuals</li>
+              <li><strong>Communication:</strong> Explain purpose and how results will be used</li>
+              <li><strong>Follow-up:</strong> Share results and planned actions with respondents</li>
+            </ul>
+            <p><strong>Interpreting BUS Results</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>&gt;75th percentile:</strong> Excellent - top quartile performance — Maintain, share best practice</li>
+              <li><strong>50th-75th percentile:</strong> Good - above average — Minor improvements possible</li>
+              <li><strong>25th-50th percentile:</strong> Fair - below average — Investigate and address issues</li>
+              <li><strong>&lt;25th percentile:</strong> Poor - bottom quartile — Priority intervention required</li>
+            </ul>
+            <p><strong>User engagement:</strong> Involve occupants in POE from the start - they provide invaluable operational insight and their buy-in improves survey response rates.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Lessons Learned and Continuous Improvement">
+            <p>The ultimate value of POE lies in feeding lessons learned back into future projects. Without this feedback loop, the industry repeats the same mistakes. Continuous commissioning extends this principle to ongoing building optimisation.</p>
+            <p><strong>Performance Gap Causes and Solutions</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Unregulated loads excluded:</strong> +30-50% energy use — TM54 operational energy modelling</li>
+              <li><strong>Extended operating hours:</strong> +20-40% energy use — Realistic occupancy assumptions</li>
+              <li><strong>Poor controls commissioning:</strong> +15-30% energy use — Extended commissioning, seasonal proving</li>
+              <li><strong>Specification changes:</strong> Variable — Change impact assessment on energy</li>
+              <li><strong>User behaviour differences:</strong> +10-20% energy use — User guides, displays, engagement</li>
+            </ul>
+            <p><strong>Continuous Commissioning</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Ongoing BMS trend analysis</li>
+              <li>Seasonal setpoint optimisation</li>
+              <li>Fault detection and diagnostics</li>
+              <li>Preventive maintenance triggers</li>
+              <li>Energy baseline tracking</li>
+            </ul>
+            <p><strong>Lessons Learned Categories</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Design assumptions to revise</li>
+              <li>Specification improvements</li>
+              <li>Commissioning process changes</li>
+              <li>Handover documentation gaps</li>
+              <li>Innovations to repeat</li>
+            </ul>
+            <p><strong>Feedback Loop Implementation</strong></p>
+            <p><strong>Step 1 - Capture:</strong> Document findings systematically using standard templates</p>
+            <p><strong>Step 2 - Analyse:</strong> Identify root causes, not just symptoms</p>
+            <p><strong>Step 3 - Validate:</strong> Review findings with project team and client</p>
+            <p><strong>Step 4 - Disseminate:</strong> Share through design standards, briefing documents, CPD</p>
+            <p><strong>Step 5 - Implement:</strong> Update specifications, checklists, and procedures</p>
+            <p><strong>Step 6 - Verify:</strong> Check subsequent projects for improvement</p>
+            <p><strong>Industry improvement:</strong> Consider contributing anonymised POE data to initiatives like CarbonBuzz to help close the industry-wide performance gap.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Post-Occupancy Evaluation (POE) is the systematic assessment of buildings in use,
-              comparing actual performance against design intent. It addresses a critical industry
-              failing: the disconnection between design predictions and operational reality that
-              results in buildings consuming 2-5 times more energy than anticipated.
+              <strong>Example 1: Energy Performance Gap Analysis</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key POE objectives:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Performance verification:</strong> Confirm systems deliver design intent
-                </li>
-                <li className="pl-1">
-                  <strong>User satisfaction:</strong> Assess occupant comfort and productivity
-                </li>
-                <li className="pl-1">
-                  <strong>Operational optimisation:</strong> Identify and implement improvements
-                </li>
-                <li className="pl-1">
-                  <strong>Lessons learned:</strong> Feed findings back to future designs
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Soft Landings Framework Stages
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Stage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Timing</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Activities</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Stage 1</td>
-                      <td className="border border-white/10 px-3 py-2">Inception and Briefing</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Define performance targets, agree POE scope
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Stage 2</td>
-                      <td className="border border-white/10 px-3 py-2">Design Development</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reality checking, metering strategy, user input
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Stage 3</td>
-                      <td className="border border-white/10 px-3 py-2">Pre-Handover</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Commissioning reviews, O&M preparation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Stage 4</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Initial Aftercare (0-12 months)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Resident on-site support, fine-tuning
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Stage 5</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Extended Aftercare (1-3 years)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Formal POE, seasonal reviews, user surveys
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key principle:</strong> Soft Landings commits the design team to operational
-              outcomes, not just design delivery - a fundamental shift from traditional project
-              completion approaches.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Performance Monitoring */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Performance Monitoring and Sub-Metering
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> An office building was designed to achieve 85 kWh/m²/year but is consuming 195 kWh/m²/year after 12 months. Analyse the gap.</p>
+            <p>Performance gap analysis:</p>
+            <p>Design prediction: 85 kWh/m²/year</p>
+            <p>Actual consumption: 195 kWh/m²/year</p>
+            <p>Gap: 110 kWh/m²/year (129% over prediction)</p>
+            <p>Sub-meter analysis reveals:</p>
+            <p>- HVAC: 52 kWh/m² (design 45) → +7 kWh/m²</p>
+            <p>- Lighting: 28 kWh/m² (design 22) → +6 kWh/m²</p>
+            <p>- Small power: 85 kWh/m² (design 18) → +67 kWh/m²</p>
+            <p>- Lifts/other: 30 kWh/m² (not in design) → +30 kWh/m²</p>
+            <p>Key finding: 88% of gap from unregulated loads</p>
+            <p>Action: Implement small power management, review</p>
+            <p>TM54 methodology for future projects</p>
             <p>
-              Effective performance monitoring requires comprehensive metering strategies that
-              enable disaggregation of energy use by system, zone, and end use. Without
-              sub-metering, identifying performance issues and optimisation opportunities becomes
-              impossible.
+              <strong>Example 2: BUS Survey Results Interpretation</strong>
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Energy Metering</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Fiscal meters for billing</li>
-                  <li className="pl-1">Sub-meters by system/zone</li>
-                  <li className="pl-1">Automatic meter reading</li>
-                  <li className="pl-1">Half-hourly data logging</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Environmental Monitoring
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Temperature and humidity</li>
-                  <li className="pl-1">CO2 levels (air quality)</li>
-                  <li className="pl-1">Lux levels (lighting)</li>
-                  <li className="pl-1">Acoustic measurements</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">System Performance</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Plant efficiency (COP/EER)</li>
-                  <li className="pl-1">Flow rates and pressures</li>
-                  <li className="pl-1">Operating hours</li>
-                  <li className="pl-1">Control system logs</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Recommended Sub-Metering Strategy
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        System Category
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Sub-Meter Points
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">HVAC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Chillers, boilers, AHUs, pumps, fans
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Plant efficiency analysis
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lighting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        General, emergency, external
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lighting energy density (W/m²)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Small Power</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Floor/zone distribution boards
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Unregulated load assessment
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lifts and Escalators</td>
-                      <td className="border border-white/10 px-3 py-2">Per lift/bank</td>
-                      <td className="border border-white/10 px-3 py-2">Transportation energy</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Server Rooms</td>
-                      <td className="border border-white/10 px-3 py-2">IT load and cooling</td>
-                      <td className="border border-white/10 px-3 py-2">PUE calculation</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Monitoring tip:</strong> Data without analysis is useless - implement
-              automated fault detection and diagnostics (FDD) to convert data into actionable
-              insights.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: User Satisfaction and BUS Methodology */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            User Satisfaction and BUS Methodology
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> A newly occupied building scores 4.2/7 for summer temperature comfort (benchmark mean 4.8). Interpret and recommend actions.</p>
+            <p>BUS survey analysis:</p>
+            <p>Parameter: Temperature in summer</p>
+            <p>Building score: 4.2/7</p>
+            <p>Benchmark mean: 4.8/7</p>
+            <p>Percentile: 32nd (below average)</p>
+            <p>Associated comments analysis:</p>
+            <p>- "Too hot in afternoon" (47 mentions)</p>
+            <p>- "Solar glare from windows" (23 mentions)</p>
+            <p>- "Cannot control temperature" (18 mentions)</p>
+            <p>Recommended investigation:</p>
+            <p>1. Review solar shading commissioning</p>
+            <p>2. Check cooling setpoints and schedules</p>
+            <p>3. Assess local control provision</p>
+            <p>4. Log afternoon internal temperatures</p>
             <p>
-              User satisfaction assessment provides essential feedback on how occupants experience
-              the building environment. The Building Use Studies (BUS) methodology offers a
-              standardised, benchmarked approach enabling comparison against hundreds of similar
-              buildings.
+              <strong>Example 3: Lessons Learned Documentation</strong>
             </p>
+            <p><strong>Scenario:</strong> Document a lesson learned regarding lighting control commissioning issues discovered during POE.</p>
+            <p>Lesson learned template:</p>
+            <p><strong>Issue:</strong> Lighting controls operating inefficiently</p>
+            <p><strong>Discovery:</strong> 12-month POE energy analysis</p>
+            <p><strong>Impact:</strong> +15% lighting energy consumption</p>
+            <p><strong>Root cause:</strong></p>
+            <p>- Daylight dimming sensors facing wrong direction</p>
+            <p>- Absence detection timeout set to 30 min (spec: 10 min)</p>
+            <p>- Scene settings not configured post-handover</p>
+            <p><strong>Recommendation for future projects:</strong></p>
+            <p>1. Add lighting controls to extended commissioning</p>
+            <p>2. Include sensor orientation check in ITP</p>
+            <p>3. Require scene programming in commissioning scope</p>
+            <p>4. Specify post-occupancy lighting adjustment period</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">BUS Survey Categories</p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="font-medium text-white mb-1">Environmental Factors</p>
-                  <ul className="text-white space-y-0.5">
-                    <li>- Temperature in winter and summer</li>
-                    <li>- Air quality (fresh/stuffy, dry/humid)</li>
-                    <li>- Lighting (natural and artificial)</li>
-                    <li>- Noise (from inside and outside)</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium text-white mb-1">Building Factors</p>
-                  <ul className="text-white space-y-0.5">
-                    <li>- Overall comfort</li>
-                    <li>- Design and image</li>
-                    <li>- Needs (does building meet needs?)</li>
-                    <li>- Productivity (perceived impact)</li>
-                    <li>- Health (perceived impact)</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Survey Implementation Best Practice
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Timing:</strong> Conduct surveys at consistent times (avoid holiday
-                  periods, extreme weather)
-                </li>
-                <li className="pl-1">
-                  <strong>Response rate:</strong> Target &gt;40% minimum for statistical validity
-                </li>
-                <li className="pl-1">
-                  <strong>Anonymity:</strong> Ensure responses cannot be traced to individuals
-                </li>
-                <li className="pl-1">
-                  <strong>Communication:</strong> Explain purpose and how results will be used
-                </li>
-                <li className="pl-1">
-                  <strong>Follow-up:</strong> Share results and planned actions with respondents
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Interpreting BUS Results
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Percentile Ranking
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Interpretation</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Action Required
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">&gt;75th percentile</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Excellent - top quartile performance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Maintain, share best practice
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">50th-75th percentile</td>
-                      <td className="border border-white/10 px-3 py-2">Good - above average</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Minor improvements possible
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">25th-50th percentile</td>
-                      <td className="border border-white/10 px-3 py-2">Fair - below average</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Investigate and address issues
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">&lt;25th percentile</td>
-                      <td className="border border-white/10 px-3 py-2">Poor - bottom quartile</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Priority intervention required
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>User engagement:</strong> Involve occupants in POE from the start - they
-              provide invaluable operational insight and their buy-in improves survey response
-              rates.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Lessons Learned and Continuous Improvement */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Lessons Learned and Continuous Improvement
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              The ultimate value of POE lies in feeding lessons learned back into future projects.
-              Without this feedback loop, the industry repeats the same mistakes. Continuous
-              commissioning extends this principle to ongoing building optimisation.
+              <strong>POE Implementation Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Performance Gap Causes and Solutions
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Gap Cause</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Impact</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Mitigation Strategy
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Unregulated loads excluded
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">+30-50% energy use</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        TM54 operational energy modelling
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Extended operating hours</td>
-                      <td className="border border-white/10 px-3 py-2">+20-40% energy use</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Realistic occupancy assumptions
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Poor controls commissioning
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">+15-30% energy use</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Extended commissioning, seasonal proving
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Specification changes</td>
-                      <td className="border border-white/10 px-3 py-2">Variable</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Change impact assessment on energy
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        User behaviour differences
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">+10-20% energy use</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        User guides, displays, engagement
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Continuous Commissioning
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Ongoing BMS trend analysis</li>
-                  <li className="pl-1">Seasonal setpoint optimisation</li>
-                  <li className="pl-1">Fault detection and diagnostics</li>
-                  <li className="pl-1">Preventive maintenance triggers</li>
-                  <li className="pl-1">Energy baseline tracking</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Lessons Learned Categories
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Design assumptions to revise</li>
-                  <li className="pl-1">Specification improvements</li>
-                  <li className="pl-1">Commissioning process changes</li>
-                  <li className="pl-1">Handover documentation gaps</li>
-                  <li className="pl-1">Innovations to repeat</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Feedback Loop Implementation
-              </p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <strong>Step 1 - Capture:</strong> Document findings systematically using standard
-                  templates
-                </p>
-                <p>
-                  <strong>Step 2 - Analyse:</strong> Identify root causes, not just symptoms
-                </p>
-                <p>
-                  <strong>Step 3 - Validate:</strong> Review findings with project team and client
-                </p>
-                <p>
-                  <strong>Step 4 - Disseminate:</strong> Share through design standards, briefing
-                  documents, CPD
-                </p>
-                <p>
-                  <strong>Step 5 - Implement:</strong> Update specifications, checklists, and
-                  procedures
-                </p>
-                <p>
-                  <strong>Step 6 - Verify:</strong> Check subsequent projects for improvement
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Industry improvement:</strong> Consider contributing anonymised POE data to
-              initiatives like CarbonBuzz to help close the industry-wide performance gap.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Define POE scope and objectives during project inception</li>
+              <li>Establish performance targets and monitoring strategy</li>
+              <li>Ensure sub-metering installed per CIBSE TM39 guidance</li>
+              <li>Plan user surveys for 12 months post-occupation</li>
+              <li>Allocate budget for POE activities (typically 0.5-1% of project cost)</li>
+              <li>Identify Soft Landings Champion and responsibilities</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Performance gap: typically <strong>2-5 times</strong> design prediction</li>
+              <li>Monitoring period: <strong>12 months minimum</strong> for seasonal cycle</li>
+              <li>Survey response rate: <strong>&gt;40%</strong> for validity</li>
+              <li>TM54 uplift factor: <strong>20-40%</strong> on design predictions</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Energy Performance Gap Analysis
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> An office building was designed to achieve 85 kWh/m²/year
-                but is consuming 195 kWh/m²/year after 12 months. Analyse the gap.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Performance gap analysis:</p>
-                <p className="mt-2">Design prediction: 85 kWh/m²/year</p>
-                <p>Actual consumption: 195 kWh/m²/year</p>
-                <p>Gap: 110 kWh/m²/year (129% over prediction)</p>
-                <p className="mt-2">Sub-meter analysis reveals:</p>
-                <p className="ml-4">- HVAC: 52 kWh/m² (design 45) → +7 kWh/m²</p>
-                <p className="ml-4">- Lighting: 28 kWh/m² (design 22) → +6 kWh/m²</p>
-                <p className="ml-4">- Small power: 85 kWh/m² (design 18) → +67 kWh/m²</p>
-                <p className="ml-4">- Lifts/other: 30 kWh/m² (not in design) → +30 kWh/m²</p>
-                <p className="mt-2 text-green-400">
-                  Key finding: 88% of gap from unregulated loads
-                </p>
-                <p className="text-green-400">Action: Implement small power management, review</p>
-                <p className="text-green-400">TM54 methodology for future projects</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: BUS Survey Results Interpretation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A newly occupied building scores 4.2/7 for summer
-                temperature comfort (benchmark mean 4.8). Interpret and recommend actions.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">BUS survey analysis:</p>
-                <p className="mt-2">Parameter: Temperature in summer</p>
-                <p>Building score: 4.2/7</p>
-                <p>Benchmark mean: 4.8/7</p>
-                <p>Percentile: 32nd (below average)</p>
-                <p className="mt-2">Associated comments analysis:</p>
-                <p className="ml-4">- "Too hot in afternoon" (47 mentions)</p>
-                <p className="ml-4">- "Solar glare from windows" (23 mentions)</p>
-                <p className="ml-4">- "Cannot control temperature" (18 mentions)</p>
-                <p className="mt-2 text-green-400">Recommended investigation:</p>
-                <p className="ml-4 text-green-400">1. Review solar shading commissioning</p>
-                <p className="ml-4 text-green-400">2. Check cooling setpoints and schedules</p>
-                <p className="ml-4 text-green-400">3. Assess local control provision</p>
-                <p className="ml-4 text-green-400">4. Log afternoon internal temperatures</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Lessons Learned Documentation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Document a lesson learned regarding lighting control
-                commissioning issues discovered during POE.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Lesson learned template:</p>
-                <p className="mt-2">
-                  <strong>Issue:</strong> Lighting controls operating inefficiently
-                </p>
-                <p>
-                  <strong>Discovery:</strong> 12-month POE energy analysis
-                </p>
-                <p>
-                  <strong>Impact:</strong> +15% lighting energy consumption
-                </p>
-                <p className="mt-2">
-                  <strong>Root cause:</strong>
-                </p>
-                <p className="ml-4">- Daylight dimming sensors facing wrong direction</p>
-                <p className="ml-4">- Absence detection timeout set to 30 min (spec: 10 min)</p>
-                <p className="ml-4">- Scene settings not configured post-handover</p>
-                <p className="mt-2">
-                  <strong>Recommendation for future projects:</strong>
-                </p>
-                <p className="ml-4 text-green-400">
-                  1. Add lighting controls to extended commissioning
-                </p>
-                <p className="ml-4 text-green-400">2. Include sensor orientation check in ITP</p>
-                <p className="ml-4 text-green-400">
-                  3. Require scene programming in commissioning scope
-                </p>
-                <p className="ml-4 text-green-400">
-                  4. Specify post-occupancy lighting adjustment period
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                POE Implementation Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Define POE scope and objectives during project inception</li>
-                <li className="pl-1">Establish performance targets and monitoring strategy</li>
-                <li className="pl-1">Ensure sub-metering installed per CIBSE TM39 guidance</li>
-                <li className="pl-1">Plan user surveys for 12 months post-occupation</li>
-                <li className="pl-1">
-                  Allocate budget for POE activities (typically 0.5-1% of project cost)
-                </li>
-                <li className="pl-1">Identify Soft Landings Champion and responsibilities</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Starting POE at handover</strong> - engagement should begin at project inception</li>
+                <li><strong>Insufficient metering</strong> - cannot analyse what you cannot measure</li>
+                <li><strong>Ignoring user feedback</strong> - occupants provide critical operational insight</li>
+                <li><strong>No feedback loop</strong> - lessons not captured or disseminated waste the POE investment</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Performance gap: typically <strong>2-5 times</strong> design prediction
-                </li>
-                <li className="pl-1">
-                  Monitoring period: <strong>12 months minimum</strong> for seasonal cycle
-                </li>
-                <li className="pl-1">
-                  Survey response rate: <strong>&gt;40%</strong> for validity
-                </li>
-                <li className="pl-1">
-                  TM54 uplift factor: <strong>20-40%</strong> on design predictions
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Starting POE at handover</strong> - engagement should begin at project
-                  inception
-                </li>
-                <li className="pl-1">
-                  <strong>Insufficient metering</strong> - cannot analyse what you cannot measure
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring user feedback</strong> - occupants provide critical operational
-                  insight
-                </li>
-                <li className="pl-1">
-                  <strong>No feedback loop</strong> - lessons not captured or disseminated waste the
-                  POE investment
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="POE survey reveals lighting controls source of major occupant complaint"
+            situation={
+              <>
+                A 12-month POE on a new office building shows the lighting controls (DALI scenes with daylight harvesting and presence detection) are the largest single source of occupant complaint — 68% rate dissatisfied. The energy data (TM63) shows lighting consumption 35% below benchmark — the design works technically, but occupants find the dimming response erratic and find ceiling sensors triggering unwanted scene changes during meetings.
+              </>
+            }
+            whatToDo={
+              <>
+                Investigate cause: typically (1) commissioning set scene transitions too rapid for human comfort (target 30–60 second fade); (2) presence sensors not zoned tightly enough — meeting rooms picked up by adjacent corridor sensors; (3) daylight harvesting target lux too aggressive (350 lux design vs occupant preference closer to 500). Re-commission with longer fades, tighter zoning, increased target lux. Re-survey at 6 months. Update the design standard for future projects: DALI commissioning is a comfort design decision, not just a technical setting.
+              </>
+            }
+            whyItMatters={
+              <>
+                POE catches the gap between technical performance and occupant experience. Many "energy-saving" features fail in practice because the user experience is not designed alongside the energy intent. Lighting controls is the most common offender. Without POE, this learning never feeds back into design — and the same mistakes are repeated on the next project.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">POE Key Elements</p>
-                <ul className="space-y-0.5">
-                  <li>Energy performance monitoring</li>
-                  <li>User satisfaction surveys (BUS)</li>
-                  <li>Environmental measurements</li>
-                  <li>Lessons learned documentation</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Soft Landings Principles</p>
-                <ul className="space-y-0.5">
-                  <li>Early engagement (Stage 1 inception)</li>
-                  <li>Performance focus throughout</li>
-                  <li>Extended aftercare (1-3 years)</li>
-                  <li>Feedback to future projects</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              "POE = systematic review post-handover — energy, IEQ, occupant satisfaction, operational issues.",
+              "CIBSE TM61 (operational), TM62 (satisfaction), TM63 (energy benchmark) — UK methodology.",
+              "BUS Methodology survey is the most widely-used UK occupant satisfaction tool.",
+              "Soft Landings (BSRIA BG 54) and Government Soft Landings (GSL) are the delivery frameworks.",
+              "Standard intervals: 6 months (settling-in) + 12-24 months (full annual cycle).",
+              "POE feeds learning into future design — lessons learned register.",
+              "Lighting controls + thermal comfort are the most common occupant complaints.",
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section6-5")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Circular economy principles
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next module <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Module 7
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

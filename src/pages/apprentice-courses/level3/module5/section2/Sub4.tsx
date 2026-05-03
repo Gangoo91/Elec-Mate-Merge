@@ -5,7 +5,7 @@
  * Visual inspection of cable selection, sizing, routing, support, fixing,
  * fire stopping, and the safe-zones rule (Reg 522.6). Identification per
  * Reg 514.3 (post-harmonisation colours) and the mixed-colours warning
- * notice (Reg 514.14) for older installations.
+ * notice for older installations (the mixed-colours warning notice — formerly Reg 514.14, deleted by BS 7671:2018+A2:2022, now industry good practice rather than a regulatory requirement).
  */
 
 import { useNavigate } from 'react-router-dom';
@@ -57,7 +57,7 @@ const checks = [
     ],
     correctIndex: 1,
     explanation:
-      "Post-harmonisation (UK adoption from 2004 onwards in BS 7671): single-phase line = brown. Three-phase L1/L2/L3 = brown/black/grey. Neutral = blue. CPC = green/yellow. Older red/yellow/blue installations require the Reg 514.14 mixed-colour warning notice.",
+      "Post-harmonisation (UK adoption from 2004 onwards in BS 7671): single-phase line = brown. Three-phase L1/L2/L3 = brown/black/grey. Neutral = blue. CPC = green/yellow. On older red/yellow/blue installations, a mixed-colours warning notice is industry good practice (formerly required by Reg 514.14, deleted by BS 7671:2018+A2:2022).",
   },
   {
     id: 'm5-s2-sub4-fire-stop',
@@ -77,16 +77,16 @@ const checks = [
 const quizQuestions = [
   {
     id: 1,
-    question: 'BS 7671 Reg 514.14 (mixed colours notice) is required when:',
+    question: 'In BS 7671:2018+A4:2026, the mixed-colours warning notice (formerly Regulation 514.14) is:',
     options: [
-      'On every install.',
-      'On installations where pre-harmonisation (red/yellow/blue) and post-harmonisation (brown/black/grey) cable colours are present in the same installation — to alert future workers to verify polarity before connection.',
-      'Only on industrial.',
-      'Never required.',
+      'A current BS 7671 regulatory requirement on every install.',
+      'No longer a BS 7671 regulatory requirement — Regulation 514.14 was deleted by Amendment 2:2022. The mixed-colours notice remains industry good practice where pre-harmonisation (red/yellow/blue) and post-harmonisation (brown/black/grey) colours coexist, but it is not mandated by the current Wiring Regulations.',
+      'A current requirement only on industrial installations.',
+      'Never relevant.',
     ],
     correctAnswer: 1,
     explanation:
-      "Reg 514.14 — where mixed colours are present (typical on alterations to older installations), a durable warning notice is required at the consumer unit / DB. Visual inspection confirms the notice is present where mixed colours are present, legible, and durable.",
+      "Regulation 514.14 was deleted by BS 7671:2018+A2:2022. The mixed-colours notice is therefore no longer a regulatory requirement under the current standard — but it remains sensible practice on legacy installations where mixed colours coexist, as a means of warning future workers to verify polarity before connection. Absence of the notice is no longer a coded non-compliance against 514.14 on an EICR.",
   },
   {
     id: 2,
@@ -190,7 +190,7 @@ const faqs = [
   {
     question: "When is the mixed-colours warning notice required?",
     answer:
-      "Reg 514.14 — wherever pre-harmonisation (red/yellow/blue) and post-harmonisation (brown/black/grey) cable colours are present in the same installation. Common on alterations to pre-2004 installations. Notice is durable, at the CU / DB, alerting future workers to verify polarity before connection.",
+      "It is no longer required by BS 7671 — Regulation 514.14 was deleted by Amendment 2:2022 and is not in the active edition (2018+A4:2026). It remains industry good practice on legacy installations where pre-harmonisation (red/yellow/blue) and post-harmonisation (brown/black/grey) cable colours coexist: a durable notice at the consumer unit / distribution board warning future workers to verify polarity before connection. Common on alterations to pre-2004 installations, but no longer a regulatory non-compliance if absent.",
   },
   {
     question: "How do I know the cable CSA is correct?",
@@ -200,7 +200,7 @@ const faqs = [
   {
     question: "Are cable colours retrospective?",
     answer:
-      "No — pre-harmonisation installations don't need re-cabling just because the colours have changed. The warning notice (Reg 514.14) is the intervention required. Future additions to a pre-harmonisation installation must use new colours — and the mixed-colours notice triggers when both are present.",
+      "No — pre-harmonisation installations don't need re-cabling just because the colours have changed. Future additions to a pre-harmonisation installation must use the post-harmonisation colours per Reg 514.3, but the older wiring is not retrospectively non-compliant. The mixed-colours warning notice (formerly Reg 514.14, deleted by A2:2022) is no longer a BS 7671 requirement, but it remains good practice on legacy installations to flag the mixed-colour state for future workers.",
   },
   {
     question: "What about cables in conduit — what do I check?",
@@ -240,7 +240,7 @@ export default function Sub4() {
             points={[
               "Reg 522.6.201 — cables in walls less than 50 mm from surface must be in safe zones AND/OR have RCD ≤ 30 mA AND/OR earthed mechanical protection.",
               "Post-harmonisation colours (Reg 514.3) — single-phase L brown, three-phase L1/L2/L3 brown/black/grey, N blue, CPC green/yellow.",
-              "Reg 514.14 mixed-colours warning notice required where pre- and post-harmonisation colours coexist in one installation.",
+              "Mixed-colours warning notice — industry good practice (formerly Reg 514.14, deleted by A2:2022) where pre- and post-harmonisation colours coexist in one installation.",
               "Section 527 fire stopping at every penetration of a fire-resisting element — use tested intumescent products matched to rating, cable, and bundle size.",
             ]}
           />
@@ -248,7 +248,7 @@ export default function Sub4() {
           <LearningOutcomes
             outcomes={[
               "Apply the Reg 522.6.201 safe-zone rules to cables concealed in walls / partitions.",
-              "Identify post-harmonisation cable colours per Reg 514.3 and recognise the Reg 514.14 mixed-colours notice requirement.",
+              "Identify post-harmonisation cable colours per Reg 514.3 and recognise the mixed-colours notice as industry good practice (formerly Reg 514.14, deleted by A2:2022) on legacy installations.",
               "Verify cable CSA against design, accounting for installation method derating (Appendix 4, Methods 100/101 for thermal insulation).",
               "Confirm cable support / fixing intervals against IET on-site guide and manufacturer recommendations.",
               "Apply Section 527 fire-stopping requirements at penetrations through fire-resisting walls / floors.",
@@ -312,7 +312,7 @@ export default function Sub4() {
 
           <ConceptBlock
             title="Post-harmonisation colours and the legacy installations you'll meet"
-            plainEnglish="UK harmonised cable colours from 2004. Single-phase L = brown, N = blue. Three-phase L1/L2/L3 = brown/black/grey. CPC = green/yellow. Older installations (red/yellow/blue) are still in service — when new and old meet, Reg 514.14 requires a warning notice."
+            plainEnglish="UK harmonised cable colours from 2004. Single-phase L = brown, N = blue. Three-phase L1/L2/L3 = brown/black/grey. CPC = green/yellow. Older installations (red/yellow/blue) are still in service — when new and old meet on the same installation, a mixed-colours warning notice is industry good practice (formerly Reg 514.14, deleted by A2:2022)."
           >
             <p>The colour identification rules:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -335,25 +335,30 @@ export default function Sub4() {
               </li>
             </ul>
             <p>
-              Where mixed colours are present, Reg 514.14 requires a durable warning notice at
+              Where mixed colours are present, industry good practice (formerly required by Reg 514.14, deleted by A2:2022) is a durable warning notice at
               the CU / origin of the alteration, alerting future workers to verify polarity
               before connection. Visual inspection confirms the notice presence and legibility.
             </p>
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 514.14 (Notice of mixed colours)"
-            clause="Where wiring additions or alterations are made to an installation such that some of the wiring complies with the colours required by Regulation 514.3 (post-harmonisation) and the rest of the wiring is to previous colours, a warning notice shall be affixed at or near the appropriate distribution board."
+            source="BS 7671:2018+A4:2026 — Regulation 514.14 (Notice of mixed colours) — DELETED by Amendment 2:2022"
+            clause="Regulation 514.14, which previously required a mixed-colours warning notice, was deleted from the text of the Wiring Regulations by BS 7671:2018+A2:2022. There is no current regulation at clause 514.14 in the active edition (2018+A4:2026). Any guidance or requirements concerning non-standard or mixed colours must now be sought elsewhere in BS 7671 or in supporting documents (e.g. IET Guidance Notes, On-Site Guide)."
             meaning={
               <>
-                Visual inspection on existing installations checks for the mixed-colours notice
-                wherever both colour systems are present. Missing notice is a recordable
-                non-compliance — Cross on schedule, C3 on EICR (improvement recommended;
-                upgrade to C2 if the lack of notice could plausibly contribute to an injury, e.g.
-                in a commercial install with regular other-trade works).
+                <strong>Important — what this means in practice.</strong> The mixed-colours
+                warning notice is no longer a BS 7671 regulatory requirement. It remains{' '}
+                <strong>industry good practice</strong> on legacy installations where
+                pre-harmonisation (red/yellow/blue) and post-harmonisation (brown/black/grey)
+                cable colours coexist — a durable notice at the consumer unit warning future
+                workers to verify polarity is sensible engineering, but it is not mandated by
+                the current Wiring Regulations. On an EICR, absence of such a notice is no
+                longer a coded non-compliance against 514.14; an inspector may still record an
+                observation under the appropriate current clause if mixed colours present a
+                safety concern in the specific installation.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Part 5, Chapter 51, Regulation 514.14."
+            cite="Source: BS 7671:2018+A4:2026 Part 5, Chapter 51 — Regulation 514.14 deleted by BS 7671:2018+A2:2022."
           />
 
           <InlineCheck
@@ -571,7 +576,7 @@ export default function Sub4() {
           <ConceptBlock
             title="Cable colour identification on three-phase — the L2 black trap"
             plainEnglish="Post-harmonisation, three-phase L2 is black. In pre-harmonisation, black was neutral. Workers crossing between editions can easily mis-identify a black conductor as neutral when it's actually L2 — with potentially fatal consequences if a 'neutral' is left exposed and is actually live."
-            onSite="When you see black, check what edition you're working in. Three-phase post-2004 = L2 (line). Anything pre-2004 = neutral. Mixed installation = warning notice required (Reg 514.14) and verify polarity before any termination. Black is the most common error point in three-phase identification."
+            onSite="When you see black, check what edition you're working in. Three-phase post-2004 = L2 (line). Anything pre-2004 = neutral. Mixed installation: a warning notice is industry good practice (formerly Reg 514.14, deleted by A2:2022) and verify polarity before any termination. Black is the most common error point in three-phase identification."
           >
             <p>Three-phase identification — pre and post harmonisation:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -585,7 +590,7 @@ export default function Sub4() {
                 NEUTRAL.
               </li>
               <li>
-                <strong>Mixed colours (Reg 514.14).</strong> Where both colour systems exist in
+                <strong>Mixed colours — formerly Reg 514.14 (deleted by A2:2022).</strong> Where both colour systems exist in
                 one installation, durable warning notice required at CU / DB. Workers must
                 verify polarity before any termination on conductors of ambiguous colour.
               </li>
@@ -697,7 +702,7 @@ export default function Sub4() {
             points={[
               "Reg 522.6.201 — cables in walls less than 50 mm from surface must be in safe zones AND/OR have RCD ≤ 30 mA AND/OR earthed mechanical protection. Combination required for certain wall types.",
               "Post-harmonisation colours (Reg 514.3) — single-phase L brown, N blue, CPC green/yellow. Three-phase L1/L2/L3 brown/black/grey.",
-              "Reg 514.14 — mixed-colours warning notice required where pre- and post-harmonisation colours coexist in one installation.",
+              "Mixed-colours warning notice — industry good practice (formerly Reg 514.14, deleted by A2:2022) where pre- and post-harmonisation colours coexist in one installation.",
               "Section 527 — every cable penetration of a fire-resisting element must be sealed with a tested product matched to the rating. Untested foam is a defect.",
               "Cable derating per Appendix 4 — Method 100 (cable in insulation) typically halves the free-air rating. Visual inspection confirms installed CSA against actual installation method.",
               "Cable support intervals per IET on-site guide / manufacturer — typical PVC/PVC T+E: 250 mm horizontal / 400 mm vertical. Heavier cables need closer support.",

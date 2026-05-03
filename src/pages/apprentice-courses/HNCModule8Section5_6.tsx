@@ -1,8 +1,21 @@
-import { ArrowLeft, Settings, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 8 · Section 5 · Subsection 6 — System Optimisation
+ * HNC Electrical Engineering for Building Services (HVAC Systems)
+ *   Energy monitoring, fault detection, performance analytics and continuous commissioning
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'System Optimisation - HNC Module 8 Section 5.6';
@@ -249,1007 +262,373 @@ const faqs = [
 ];
 
 const HNCModule8Section5_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section5")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module8-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Settings className="h-4 w-4" />
-            <span>Module 8.5.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            System Optimisation
-          </h1>
-          <p className="text-white">
-            Energy monitoring, fault detection, performance analytics and continuous commissioning
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 8 · Section 5 · Subsection 6"
+            title="System Optimisation"
+            description="Energy monitoring, fault detection, performance analytics and continuous commissioning"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Energy monitoring:</strong> Sub-metering and dashboards track consumption
-              </li>
-              <li className="pl-1">
-                <strong>FDD:</strong> Automated detection of faults and inefficiencies
-              </li>
-              <li className="pl-1">
-                <strong>Analytics:</strong> Data-driven insights for optimisation
-              </li>
-              <li className="pl-1">
-                <strong>CCx:</strong> Ongoing commissioning maintains performance
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Design effective energy monitoring and sub-metering strategies",
+              "Configure BMS dashboards for operational insight",
+              "Implement fault detection and diagnostics (FDD) systems",
+              "Apply analytics techniques for performance trending",
+              "Establish continuous commissioning (CCx) programmes",
+              "Understand NABERS and DEC rating methodologies",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Energy Monitoring and Dashboards">
+            <p>Effective energy management requires comprehensive monitoring systems that capture consumption data at appropriate granularity. Modern BMS platforms provide sophisticated dashboards that transform raw data into actionable insights for building operators.</p>
+            <p><strong>Sub-Metering Hierarchy:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Level 1 - Main incoming:</strong> Fiscal meters at utility supply point</li>
+              <li><strong>Level 2 - Building/zone:</strong> Major distribution boards, tenant areas</li>
+              <li><strong>Level 3 - System:</strong> HVAC plant, lighting circuits, lifts</li>
+              <li><strong>Level 4 - Equipment:</strong> Individual AHUs, chillers, pumps</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>CCx savings:</strong> 10-30% energy reduction typical
-              </li>
-              <li className="pl-1">
-                <strong>FDD detection:</strong> Identifies 60-80% of operational faults
-              </li>
-              <li className="pl-1">
-                <strong>NABERS/DEC:</strong> Operational performance ratings
-              </li>
-              <li className="pl-1">
-                <strong>Payback:</strong> Analytics platforms 1-3 years typical
-              </li>
+            <p><strong>Sub-Metering Strategy Guide</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Level 1:</strong> 100% of supply — Billing, overall tracking — Essential - mandatory</li>
+              <li><strong>Level 2:</strong> 80-90% of load — Zone allocation, tenant billing — High value - recommended</li>
+              <li><strong>Level 3:</strong> 60-80% of load — System benchmarking, M&amp;V — Good value for large systems</li>
+              <li><strong>Level 4:</strong> Critical equipment — Fault detection, optimisation — Selective - high-value plant</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Dashboard Design Principles</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Executive summary:</strong> Top-level KPIs visible at a glance (EUI, cost, carbon)</li>
+              <li><strong>Drill-down capability:</strong> From building to system to equipment level</li>
+              <li><strong>Comparative views:</strong> Actual vs target, this year vs last year, building vs benchmark</li>
+              <li><strong>Trend visualisation:</strong> Time-series charts showing patterns and anomalies</li>
+              <li><strong>Alert integration:</strong> Traffic light indicators for out-of-range conditions</li>
+              <li><strong>Mobile accessibility:</strong> Responsive design for on-site viewing</li>
+            </ul>
+            <p><strong>Key Dashboard Metrics</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Energy Use Intensity (EUI):</strong> kWh/m²/year - normalised consumption</li>
+              <li><strong>Peak Demand:</strong> kW maximum - capacity and charges</li>
+              <li><strong>Power Factor:</strong> Target &gt; 0.95 - reactive charges</li>
+              <li><strong>Base Load Ratio:</strong> Night/day consumption - identifies waste</li>
+              <li><strong>Carbon Intensity:</strong> kgCO₂/m² - sustainability reporting</li>
+            </ul>
+            <p><strong>Best practice:</strong> Implement automatic meter validation to flag missing data, negative readings, and implausible values before they corrupt analysis.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Design effective energy monitoring and sub-metering strategies',
-              'Configure BMS dashboards for operational insight',
-              'Implement fault detection and diagnostics (FDD) systems',
-              'Apply analytics techniques for performance trending',
-              'Establish continuous commissioning (CCx) programmes',
-              'Understand NABERS and DEC rating methodologies',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Energy Monitoring and Dashboards */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Energy Monitoring and Dashboards
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Fault Detection and Diagnostics (FDD)">
+            <p>Fault Detection and Diagnostics (FDD) software automatically analyses BMS data to identify equipment faults, control sequence errors, and operational inefficiencies. FDD can detect issues that would otherwise go unnoticed until causing significant energy waste or equipment failure.</p>
+            <p><strong>Rule-Based FDD</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Predefined engineering rules</li>
+              <li>Transparent logic - easy to understand</li>
+              <li>Requires expert rule development</li>
+              <li>Limited to anticipated fault modes</li>
+              <li>Example: "If OAT &lt; 15°C AND chiller ON, flag"</li>
+            </ul>
+            <p><strong>Machine Learning FDD</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Learns normal patterns from data</li>
+              <li>Adapts to building-specific behaviour</li>
+              <li>Can detect novel fault patterns</li>
+              <li>Requires training data period</li>
+              <li>May generate false positives initially</li>
+            </ul>
+            <p><strong>Common FDD Rules for HVAC Systems</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Simultaneous heating/cooling:</strong> Heating AND cooling active in same zone — High - systems fight each other</li>
+              <li><strong>Economiser not working:</strong> OAT favourable but dampers at minimum — Moderate - missed free cooling</li>
+              <li><strong>Stuck valve:</strong> Valve command changes but output unchanged — Variable - depends on stuck position</li>
+              <li><strong>Sensor drift:</strong> Sensor reading implausible vs related sensors — High - incorrect control decisions</li>
+              <li><strong>Schedule mismatch:</strong> Equipment running outside occupied hours — Moderate - unnecessary runtime</li>
+            </ul>
+            <p><strong>FDD Implementation Steps</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Data audit:</strong> Verify BMS trending captures required points at sufficient intervals</li>
+              <li><strong>Rule configuration:</strong> Select and tune rules for building systems and climate</li>
+              <li><strong>Threshold setting:</strong> Balance sensitivity (catch faults) vs specificity (avoid false alarms)</li>
+              <li><strong>Prioritisation logic:</strong> Rank faults by energy impact, comfort impact, and urgency</li>
+              <li><strong>Integration:</strong> Link to CAFM/maintenance systems for work order generation</li>
+              <li><strong>Feedback loop:</strong> Capture resolution data to improve detection accuracy</li>
+            </ul>
+            <p><strong>FDD Benefits Quantified</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Energy savings: 5-15% from fault correction</li>
+              <li>Maintenance efficiency: 30-40% reduction in reactive calls</li>
+              <li>Equipment life: Extended through early problem detection</li>
+              <li>Comfort complaints: 50-70% reduction through proactive response</li>
+            </ul>
+            <p><strong>Implementation tip:</strong> Start with a limited rule set focused on high-impact faults, then expand as the team builds confidence with the system.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Performance Analytics and Trending">
+            <p>Building analytics transforms raw operational data into insights that drive optimisation decisions. Advanced analytics techniques reveal patterns, predict problems, and benchmark performance against targets and similar buildings.</p>
+            <p><strong>Key Analytics Techniques</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Time-series trending:</strong> Any measured parameter — Patterns, anomalies, seasonality</li>
+              <li><strong>Regression analysis:</strong> Energy vs weather/occupancy — Weather normalisation, baseline models</li>
+              <li><strong>CUSUM analysis:</strong> Cumulative variance tracking — Performance drift detection</li>
+              <li><strong>Load duration curves:</strong> Demand analysis — Base load, peak shaving opportunities</li>
+              <li><strong>Carpet plots (heat maps):</strong> Hour-by-day visualisation — Schedule effectiveness, weekend operation</li>
+            </ul>
+            <p><strong>CUSUM Analysis Example</strong></p>
+            <p>Purpose: Detect when performance deviates from baseline</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Baseline model:</strong> kWh = 1,500 + (25 × HDD)</li>
+              <li><strong>Week 1 actual:</strong> 2,100 kWh, HDD = 20</li>
+              <li><strong>Week 1 predicted:</strong> 1,500 + (25 × 20) = 2,000 kWh</li>
+              <li><strong>Week 1 variance:</strong> 2,100 - 2,000 = +100 kWh</li>
+              <li><strong>CUSUM after W1:</strong> +100 kWh</li>
+            </ul>
+            <p>Accumulate weekly variances - rising CUSUM indicates degradation</p>
+            <p><strong>Building Analytics Platform Features</strong></p>
+            <p><strong>Data Integration</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>BMS via BACnet/Modbus/API</li>
+              <li>Utility meters (AMR/smart meters)</li>
+              <li>Weather data feeds</li>
+              <li>Occupancy/access control systems</li>
+              <li>IoT sensors and sub-meters</li>
+            </ul>
+            <p><strong>Analysis Capabilities</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Automated benchmarking</li>
+              <li>Fault detection and diagnostics</li>
+              <li>Energy modelling and M&amp;V</li>
+              <li>Comfort monitoring</li>
+              <li>Predictive maintenance</li>
+            </ul>
+            <p><strong>Benchmarking Comparisons:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Internal:</strong> Same building year-on-year, adjusted for weather</li>
+              <li><strong>Portfolio:</strong> Compare similar buildings within organisation</li>
+              <li><strong>Industry:</strong> CIBSE TM46 benchmarks by building type</li>
+              <li><strong>Best practice:</strong> BREEAM/LEED exemplar performance targets</li>
+            </ul>
+            <p><strong>Analytics insight:</strong> A scatter plot of energy vs outdoor temperature should show a clear V-shape for buildings with heating and cooling - deviations indicate control or operational issues.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Continuous Commissioning and Performance Ratings">
+            <p>Continuous commissioning (CCx) extends the benefits of initial commissioning throughout the building lifecycle. Combined with formal performance ratings like NABERS and DEC, CCx provides a framework for sustained operational excellence.</p>
+            <p><strong>Commissioning Types Compared</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Initial (Cx):</strong> Construction/handover — Design intent verification — Baseline establishment</li>
+              <li><strong>Retro-commissioning (RCx):</strong> Existing buildings — Restoring performance — 10-20%</li>
+              <li><strong>Re-commissioning:</strong> Periodic (3-5 years) — Performance recovery — 5-15%</li>
+              <li><strong>Continuous (CCx):</strong> Ongoing — Sustained optimisation — 10-30%</li>
+            </ul>
+            <p><strong>CCx Programme Elements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Monitoring infrastructure:</strong> Comprehensive sub-metering and BMS trending</li>
+              <li><strong>Analytics platform:</strong> FDD, dashboards, and reporting tools</li>
+              <li><strong>Review cadence:</strong> Daily monitoring, weekly analysis, monthly reporting</li>
+              <li><strong>Skilled resources:</strong> Trained operators with analytics interpretation skills</li>
+              <li><strong>Action tracking:</strong> Fault logging, work orders, and resolution verification</li>
+              <li><strong>Continuous improvement:</strong> Regular setpoint optimisation and sequence tuning</li>
+            </ul>
+            <p><strong>NABERS UK Rating</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1-6 star scale (6 = best)</li>
+              <li>Based on 12 months operational data</li>
+              <li>Weather and hours normalised</li>
+              <li>Separate base building and tenancy ratings</li>
+              <li>Growing adoption in UK commercial sector</li>
+              <li>Links to Design for Performance framework</li>
+            </ul>
+            <p><strong>Display Energy Certificate (DEC)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>A-G scale (A = best)</li>
+              <li>Mandatory for public buildings &gt; 250m²</li>
+              <li>Based on actual energy consumption</li>
+              <li>Displayed prominently in building</li>
+              <li>Renewed annually</li>
+              <li>Advisory report identifies improvements</li>
+            </ul>
+            <p><strong>DEC Rating Calculation</strong></p>
+            <p>Step 1: Calculate building energy use</p>
+            <p>Total kWh = Electricity kWh + (Gas kWh × 1.0)</p>
+            <p>Step 2: Calculate energy use intensity</p>
+            <p>EUI = Total kWh ÷ Gross Internal Area (m²)</p>
+            <p>Step 3: Compare to benchmark</p>
+            <p>Operational Rating = (EUI ÷ Benchmark EUI) × 100</p>
+            <p>Step 4: Convert to letter grade</p>
+            <p>A = 0-25, B = 26-50, C = 51-75, D = 76-100</p>
+            <p>E = 101-125, F = 126-150, G = &gt; 150</p>
+            <p><strong>Common CCx Issues to Address</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Schedule creep:</strong> Operating hours extended beyond occupancy requirements</li>
+              <li><strong>Setpoint drift:</strong> Temperatures adjusted for complaints not reset</li>
+              <li><strong>Override accumulation:</strong> Manual overrides left in place permanently</li>
+              <li><strong>Sensor degradation:</strong> Calibration drift causing incorrect control</li>
+              <li><strong>Sequence bypass:</strong> Optimisation routines disabled for troubleshooting</li>
+            </ul>
+            <p><strong>Performance principle:</strong> Buildings rarely maintain their as-commissioned efficiency without active management. CCx addresses the natural tendency for performance to degrade over time through operational drift, equipment wear, and changing use patterns.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Effective energy management requires comprehensive monitoring systems that capture
-              consumption data at appropriate granularity. Modern BMS platforms provide
-              sophisticated dashboards that transform raw data into actionable insights for building
-              operators.
+              <strong>Example 1: Sub-Metering Coverage Analysis</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Sub-Metering Hierarchy:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Level 1 - Main incoming:</strong> Fiscal meters at utility supply point
-                </li>
-                <li className="pl-1">
-                  <strong>Level 2 - Building/zone:</strong> Major distribution boards, tenant areas
-                </li>
-                <li className="pl-1">
-                  <strong>Level 3 - System:</strong> HVAC plant, lighting circuits, lifts
-                </li>
-                <li className="pl-1">
-                  <strong>Level 4 - Equipment:</strong> Individual AHUs, chillers, pumps
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Sub-Metering Strategy Guide
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Level</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Coverage
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Cost/Benefit</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Level 1</td>
-                      <td className="border border-white/10 px-3 py-2">100% of supply</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Billing, overall tracking
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Essential - mandatory</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Level 2</td>
-                      <td className="border border-white/10 px-3 py-2">80-90% of load</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Zone allocation, tenant billing
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">High value - recommended</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Level 3</td>
-                      <td className="border border-white/10 px-3 py-2">60-80% of load</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        System benchmarking, M&amp;V
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Good value for large systems
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Level 4</td>
-                      <td className="border border-white/10 px-3 py-2">Critical equipment</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fault detection, optimisation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Selective - high-value plant
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Dashboard Design Principles
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Executive summary:</strong> Top-level KPIs visible at a glance (EUI, cost,
-                  carbon)
-                </li>
-                <li className="pl-1">
-                  <strong>Drill-down capability:</strong> From building to system to equipment level
-                </li>
-                <li className="pl-1">
-                  <strong>Comparative views:</strong> Actual vs target, this year vs last year,
-                  building vs benchmark
-                </li>
-                <li className="pl-1">
-                  <strong>Trend visualisation:</strong> Time-series charts showing patterns and
-                  anomalies
-                </li>
-                <li className="pl-1">
-                  <strong>Alert integration:</strong> Traffic light indicators for out-of-range
-                  conditions
-                </li>
-                <li className="pl-1">
-                  <strong>Mobile accessibility:</strong> Responsive design for on-site viewing
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Key Dashboard Metrics</p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">Energy Use Intensity (EUI):</span>{' '}
-                  <span className="text-white">kWh/m²/year - normalised consumption</span>
-                </p>
-                <p>
-                  <span className="text-white">Peak Demand:</span>{' '}
-                  <span className="text-white">kW maximum - capacity and charges</span>
-                </p>
-                <p>
-                  <span className="text-white">Power Factor:</span>{' '}
-                  <span className="text-white">Target &gt; 0.95 - reactive charges</span>
-                </p>
-                <p>
-                  <span className="text-white">Base Load Ratio:</span>{' '}
-                  <span className="text-white">Night/day consumption - identifies waste</span>
-                </p>
-                <p>
-                  <span className="text-white">Carbon Intensity:</span>{' '}
-                  <span className="text-white">kgCO₂/m² - sustainability reporting</span>
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> Implement automatic meter validation to flag missing
-              data, negative readings, and implausible values before they corrupt analysis.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Fault Detection and Diagnostics */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Fault Detection and Diagnostics (FDD)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Determine sub-metering coverage for a 5,000m² office building.</p>
+            <p>Main meter reading:</p>
+            <p>Total building consumption: 850,000 kWh/year</p>
+            <p>Sub-meter readings:</p>
+            <p>Chiller plant: 280,000 kWh (33%)</p>
+            <p>AHU/FCU motors: 85,000 kWh (10%)</p>
+            <p>Lighting floors 1-3: 120,000 kWh (14%)</p>
+            <p>Lifts: 35,000 kWh (4%)</p>
+            <p>Small power/unmetered: 330,000 kWh (39%)</p>
+            <p>Coverage calculation:</p>
+            <p>Metered load: 280k + 85k + 120k + 35k = 520,000 kWh</p>
+            <p>Coverage: 520,000 ÷ 850,000 = 61%</p>
+            <p>Recommendation: Add small power sampling (5-10 circuits)</p>
+            <p>and tenant meters to achieve 80% coverage target</p>
             <p>
-              Fault Detection and Diagnostics (FDD) software automatically analyses BMS data to
-              identify equipment faults, control sequence errors, and operational inefficiencies.
-              FDD can detect issues that would otherwise go unnoticed until causing significant
-              energy waste or equipment failure.
+              <strong>Example 2: FDD Energy Impact Prioritisation</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Rule-Based FDD</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Predefined engineering rules</li>
-                  <li className="pl-1">Transparent logic - easy to understand</li>
-                  <li className="pl-1">Requires expert rule development</li>
-                  <li className="pl-1">Limited to anticipated fault modes</li>
-                  <li className="pl-1">Example: "If OAT &lt; 15°C AND chiller ON, flag"</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Machine Learning FDD</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Learns normal patterns from data</li>
-                  <li className="pl-1">Adapts to building-specific behaviour</li>
-                  <li className="pl-1">Can detect novel fault patterns</li>
-                  <li className="pl-1">Requires training data period</li>
-                  <li className="pl-1">May generate false positives initially</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common FDD Rules for HVAC Systems
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Fault Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Detection Rule</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Energy Impact</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Simultaneous heating/cooling
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heating AND cooling active in same zone
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High - systems fight each other
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Economiser not working</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        OAT favourable but dampers at minimum
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Moderate - missed free cooling
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Stuck valve</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Valve command changes but output unchanged
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Variable - depends on stuck position
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Sensor drift</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sensor reading implausible vs related sensors
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High - incorrect control decisions
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Schedule mismatch</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Equipment running outside occupied hours
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Moderate - unnecessary runtime
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                FDD Implementation Steps
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Data audit:</strong> Verify BMS trending captures required points at
-                  sufficient intervals
-                </li>
-                <li className="pl-1">
-                  <strong>Rule configuration:</strong> Select and tune rules for building systems
-                  and climate
-                </li>
-                <li className="pl-1">
-                  <strong>Threshold setting:</strong> Balance sensitivity (catch faults) vs
-                  specificity (avoid false alarms)
-                </li>
-                <li className="pl-1">
-                  <strong>Prioritisation logic:</strong> Rank faults by energy impact, comfort
-                  impact, and urgency
-                </li>
-                <li className="pl-1">
-                  <strong>Integration:</strong> Link to CAFM/maintenance systems for work order
-                  generation
-                </li>
-                <li className="pl-1">
-                  <strong>Feedback loop:</strong> Capture resolution data to improve detection
-                  accuracy
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-2">FDD Benefits Quantified</p>
-              <ul className="text-sm text-white space-y-1">
-                <li>Energy savings: 5-15% from fault correction</li>
-                <li>Maintenance efficiency: 30-40% reduction in reactive calls</li>
-                <li>Equipment life: Extended through early problem detection</li>
-                <li>Comfort complaints: 50-70% reduction through proactive response</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Implementation tip:</strong> Start with a limited rule set focused on
-              high-impact faults, then expand as the team builds confidence with the system.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Performance Analytics and Trending */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Performance Analytics and Trending
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Prioritise three detected faults by energy impact.</p>
+            <p>Fault A - Simultaneous heating/cooling:</p>
+            <p>Duration: 8 hours/day × 5 days × 40 weeks = 1,600 hours</p>
+            <p>Wasted capacity: 15 kW heating + 12 kW cooling = 27 kW</p>
+            <p>Annual waste: 27 kW × 1,600 h = 43,200 kWh = £12,960</p>
+            <p>Fault B - Economiser disabled:</p>
+            <p>Free cooling hours lost: 800 hours/year</p>
+            <p>Additional chiller load: 25 kW</p>
+            <p>Annual waste: 25 kW × 800 h = 20,000 kWh = £6,000</p>
+            <p>Fault C - Out-of-hours operation:</p>
+            <p>Unnecessary runtime: 2 hours/day × 250 days = 500 hours</p>
+            <p>System load: 8 kW</p>
+            <p>Annual waste: 8 kW × 500 h = 4,000 kWh = £1,200</p>
+            <p>Priority ranking: Fault A &gt; Fault B &gt; Fault C</p>
             <p>
-              Building analytics transforms raw operational data into insights that drive
-              optimisation decisions. Advanced analytics techniques reveal patterns, predict
-              problems, and benchmark performance against targets and similar buildings.
+              <strong>Example 3: DEC Rating Calculation</strong>
             </p>
+            <p><strong>Scenario:</strong> Calculate DEC rating for a public building.</p>
+            <p>Building data:</p>
+            <p>Gross internal area: 2,500 m²</p>
+            <p>Building type: General office</p>
+            <p>Electricity: 425,000 kWh/year</p>
+            <p>Gas: 180,000 kWh/year</p>
+            <p>Step 1 - Total energy:</p>
+            <p>Total = 425,000 + 180,000 = 605,000 kWh/year</p>
+            <p>Step 2 - Energy Use Intensity:</p>
+            <p>EUI = 605,000 ÷ 2,500 = 242 kWh/m²/year</p>
+            <p>Step 3 - Compare to benchmark (TM46):</p>
+            <p>General office benchmark: 210 kWh/m²/year</p>
+            <p>Operational Rating = (242 ÷ 210) × 100 = 115</p>
+            <p>Step 4 - DEC grade:</p>
+            <p>Rating 115 falls in range 101-125</p>
+            <p>DEC Rating: E (Advisory report required)</p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Analytics Techniques
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Technique</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Insight Provided
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Time-series trending</td>
-                      <td className="border border-white/10 px-3 py-2">Any measured parameter</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Patterns, anomalies, seasonality
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Regression analysis</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Energy vs weather/occupancy
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Weather normalisation, baseline models
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CUSUM analysis</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cumulative variance tracking
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Performance drift detection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Load duration curves</td>
-                      <td className="border border-white/10 px-3 py-2">Demand analysis</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Base load, peak shaving opportunities
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Carpet plots (heat maps)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Hour-by-day visualisation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Schedule effectiveness, weekend operation
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">CUSUM Analysis Example</p>
-              <div className="font-mono text-sm space-y-1">
-                <p className="text-white">
-                  Purpose: Detect when performance deviates from baseline
-                </p>
-                <p className="mt-2">
-                  <span className="text-white">Baseline model:</span>{' '}
-                  <span className="text-white">kWh = 1,500 + (25 × HDD)</span>
-                </p>
-                <p>
-                  <span className="text-white">Week 1 actual:</span>{' '}
-                  <span className="text-white">2,100 kWh, HDD = 20</span>
-                </p>
-                <p>
-                  <span className="text-white">Week 1 predicted:</span>{' '}
-                  <span className="text-white">1,500 + (25 × 20) = 2,000 kWh</span>
-                </p>
-                <p>
-                  <span className="text-white">Week 1 variance:</span>{' '}
-                  <span className="text-white">2,100 - 2,000 = +100 kWh</span>
-                </p>
-                <p>
-                  <span className="text-white">CUSUM after W1:</span>{' '}
-                  <span className="text-white">+100 kWh</span>
-                </p>
-                <p className="mt-2 text-white">
-                  Accumulate weekly variances - rising CUSUM indicates degradation
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Analytics Platform Features
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">Data Integration</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>BMS via BACnet/Modbus/API</li>
-                    <li>Utility meters (AMR/smart meters)</li>
-                    <li>Weather data feeds</li>
-                    <li>Occupancy/access control systems</li>
-                    <li>IoT sensors and sub-meters</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">Analysis Capabilities</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Automated benchmarking</li>
-                    <li>Fault detection and diagnostics</li>
-                    <li>Energy modelling and M&amp;V</li>
-                    <li>Comfort monitoring</li>
-                    <li>Predictive maintenance</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Benchmarking Comparisons:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Internal:</strong> Same building year-on-year, adjusted for weather
-                </li>
-                <li className="pl-1">
-                  <strong>Portfolio:</strong> Compare similar buildings within organisation
-                </li>
-                <li className="pl-1">
-                  <strong>Industry:</strong> CIBSE TM46 benchmarks by building type
-                </li>
-                <li className="pl-1">
-                  <strong>Best practice:</strong> BREEAM/LEED exemplar performance targets
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Analytics insight:</strong> A scatter plot of energy vs outdoor temperature
-              should show a clear V-shape for buildings with heating and cooling - deviations
-              indicate control or operational issues.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Continuous Commissioning and Ratings */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Continuous Commissioning and Performance Ratings
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Continuous commissioning (CCx) extends the benefits of initial commissioning
-              throughout the building lifecycle. Combined with formal performance ratings like
-              NABERS and DEC, CCx provides a framework for sustained operational excellence.
+              <strong>System Optimisation Implementation Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Commissioning Types Compared
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Timing</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Focus</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Savings
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Initial (Cx)</td>
-                      <td className="border border-white/10 px-3 py-2">Construction/handover</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Design intent verification
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Baseline establishment</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Retro-commissioning (RCx)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Existing buildings</td>
-                      <td className="border border-white/10 px-3 py-2">Restoring performance</td>
-                      <td className="border border-white/10 px-3 py-2">10-20%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Re-commissioning</td>
-                      <td className="border border-white/10 px-3 py-2">Periodic (3-5 years)</td>
-                      <td className="border border-white/10 px-3 py-2">Performance recovery</td>
-                      <td className="border border-white/10 px-3 py-2">5-15%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Continuous (CCx)</td>
-                      <td className="border border-white/10 px-3 py-2">Ongoing</td>
-                      <td className="border border-white/10 px-3 py-2">Sustained optimisation</td>
-                      <td className="border border-white/10 px-3 py-2">10-30%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">CCx Programme Elements</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Monitoring infrastructure:</strong> Comprehensive sub-metering and BMS
-                  trending
-                </li>
-                <li className="pl-1">
-                  <strong>Analytics platform:</strong> FDD, dashboards, and reporting tools
-                </li>
-                <li className="pl-1">
-                  <strong>Review cadence:</strong> Daily monitoring, weekly analysis, monthly
-                  reporting
-                </li>
-                <li className="pl-1">
-                  <strong>Skilled resources:</strong> Trained operators with analytics
-                  interpretation skills
-                </li>
-                <li className="pl-1">
-                  <strong>Action tracking:</strong> Fault logging, work orders, and resolution
-                  verification
-                </li>
-                <li className="pl-1">
-                  <strong>Continuous improvement:</strong> Regular setpoint optimisation and
-                  sequence tuning
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-                <p className="text-sm font-medium text-green-400 mb-2">NABERS UK Rating</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">1-6 star scale (6 = best)</li>
-                  <li className="pl-1">Based on 12 months operational data</li>
-                  <li className="pl-1">Weather and hours normalised</li>
-                  <li className="pl-1">Separate base building and tenancy ratings</li>
-                  <li className="pl-1">Growing adoption in UK commercial sector</li>
-                  <li className="pl-1">Links to Design for Performance framework</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-                <p className="text-sm font-medium text-blue-400 mb-2">
-                  Display Energy Certificate (DEC)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">A-G scale (A = best)</li>
-                  <li className="pl-1">Mandatory for public buildings &gt; 250m²</li>
-                  <li className="pl-1">Based on actual energy consumption</li>
-                  <li className="pl-1">Displayed prominently in building</li>
-                  <li className="pl-1">Renewed annually</li>
-                  <li className="pl-1">Advisory report identifies improvements</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">DEC Rating Calculation</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Step 1: Calculate building energy use</p>
-                <p className="ml-4">Total kWh = Electricity kWh + (Gas kWh × 1.0)</p>
-                <p className="mt-2 text-white">Step 2: Calculate energy use intensity</p>
-                <p className="ml-4">EUI = Total kWh ÷ Gross Internal Area (m²)</p>
-                <p className="mt-2 text-white">Step 3: Compare to benchmark</p>
-                <p className="ml-4">Operational Rating = (EUI ÷ Benchmark EUI) × 100</p>
-                <p className="mt-2 text-white">Step 4: Convert to letter grade</p>
-                <p className="ml-4">A = 0-25, B = 26-50, C = 51-75, D = 76-100</p>
-                <p className="ml-4">E = 101-125, F = 126-150, G = &gt; 150</p>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Common CCx Issues to Address</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Schedule creep:</strong> Operating hours extended beyond occupancy
-                  requirements
-                </li>
-                <li className="pl-1">
-                  <strong>Setpoint drift:</strong> Temperatures adjusted for complaints not reset
-                </li>
-                <li className="pl-1">
-                  <strong>Override accumulation:</strong> Manual overrides left in place permanently
-                </li>
-                <li className="pl-1">
-                  <strong>Sensor degradation:</strong> Calibration drift causing incorrect control
-                </li>
-                <li className="pl-1">
-                  <strong>Sequence bypass:</strong> Optimisation routines disabled for
-                  troubleshooting
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Performance principle:</strong> Buildings rarely maintain their
-              as-commissioned efficiency without active management. CCx addresses the natural
-              tendency for performance to degrade over time through operational drift, equipment
-              wear, and changing use patterns.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Audit existing metering and identify gaps against 80% coverage target</li>
+              <li>Configure BMS trending for key points at 15-minute intervals minimum</li>
+              <li>Implement energy dashboards with drill-down capability</li>
+              <li>Deploy FDD rules starting with high-impact fault types</li>
+              <li>Establish review cadence: daily monitoring, weekly analysis, monthly reports</li>
+              <li>Train operations staff on analytics interpretation and response</li>
+              <li>Link fault detection to maintenance work order system</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Sub-metering coverage target: <strong>80%</strong> of total consumption</li>
+              <li>Trend logging interval: <strong>15 minutes</strong> standard</li>
+              <li>FDD detection rate: <strong>60-80%</strong> of operational faults</li>
+              <li>CCx savings potential: <strong>10-30%</strong> of baseline</li>
+              <li>DEC renewal: <strong>Annual</strong> for public buildings</li>
+              <li>NABERS stars: <strong>4+</strong> considered good performance</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Sub-Metering Coverage Analysis
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Determine sub-metering coverage for a 5,000m² office
-                building.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Main meter reading:</p>
-                <p className="ml-4">Total building consumption: 850,000 kWh/year</p>
-                <p className="mt-2 text-white">Sub-meter readings:</p>
-                <p className="ml-4">Chiller plant: 280,000 kWh (33%)</p>
-                <p className="ml-4">AHU/FCU motors: 85,000 kWh (10%)</p>
-                <p className="ml-4">Lighting floors 1-3: 120,000 kWh (14%)</p>
-                <p className="ml-4">Lifts: 35,000 kWh (4%)</p>
-                <p className="ml-4">Small power/unmetered: 330,000 kWh (39%)</p>
-                <p className="mt-2 text-white">Coverage calculation:</p>
-                <p className="ml-4">Metered load: 280k + 85k + 120k + 35k = 520,000 kWh</p>
-                <p className="ml-4">Coverage: 520,000 ÷ 850,000 = 61%</p>
-                <p className="mt-2 text-green-400">
-                  Recommendation: Add small power sampling (5-10 circuits)
-                </p>
-                <p className="text-green-400">and tenant meters to achieve 80% coverage target</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: FDD Energy Impact Prioritisation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Prioritise three detected faults by energy impact.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Fault A - Simultaneous heating/cooling:</p>
-                <p className="ml-4">Duration: 8 hours/day × 5 days × 40 weeks = 1,600 hours</p>
-                <p className="ml-4">Wasted capacity: 15 kW heating + 12 kW cooling = 27 kW</p>
-                <p className="ml-4">Annual waste: 27 kW × 1,600 h = 43,200 kWh = £12,960</p>
-                <p className="mt-2 text-white">Fault B - Economiser disabled:</p>
-                <p className="ml-4">Free cooling hours lost: 800 hours/year</p>
-                <p className="ml-4">Additional chiller load: 25 kW</p>
-                <p className="ml-4">Annual waste: 25 kW × 800 h = 20,000 kWh = £6,000</p>
-                <p className="mt-2 text-white">Fault C - Out-of-hours operation:</p>
-                <p className="ml-4">Unnecessary runtime: 2 hours/day × 250 days = 500 hours</p>
-                <p className="ml-4">System load: 8 kW</p>
-                <p className="ml-4">Annual waste: 8 kW × 500 h = 4,000 kWh = £1,200</p>
-                <p className="mt-2 text-green-400">
-                  Priority ranking: Fault A &gt; Fault B &gt; Fault C
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: DEC Rating Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate DEC rating for a public building.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Building data:</p>
-                <p className="ml-4">Gross internal area: 2,500 m²</p>
-                <p className="ml-4">Building type: General office</p>
-                <p className="ml-4">Electricity: 425,000 kWh/year</p>
-                <p className="ml-4">Gas: 180,000 kWh/year</p>
-                <p className="mt-2 text-white">Step 1 - Total energy:</p>
-                <p className="ml-4">Total = 425,000 + 180,000 = 605,000 kWh/year</p>
-                <p className="mt-2 text-white">Step 2 - Energy Use Intensity:</p>
-                <p className="ml-4">EUI = 605,000 ÷ 2,500 = 242 kWh/m²/year</p>
-                <p className="mt-2 text-white">Step 3 - Compare to benchmark (TM46):</p>
-                <p className="ml-4">General office benchmark: 210 kWh/m²/year</p>
-                <p className="ml-4">Operational Rating = (242 ÷ 210) × 100 = 115</p>
-                <p className="mt-2 text-white">Step 4 - DEC grade:</p>
-                <p className="ml-4">Rating 115 falls in range 101-125</p>
-                <p className="mt-2 text-green-400">DEC Rating: E (Advisory report required)</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                System Optimisation Implementation Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Audit existing metering and identify gaps against 80% coverage target
-                </li>
-                <li className="pl-1">
-                  Configure BMS trending for key points at 15-minute intervals minimum
-                </li>
-                <li className="pl-1">Implement energy dashboards with drill-down capability</li>
-                <li className="pl-1">Deploy FDD rules starting with high-impact fault types</li>
-                <li className="pl-1">
-                  Establish review cadence: daily monitoring, weekly analysis, monthly reports
-                </li>
-                <li className="pl-1">
-                  Train operations staff on analytics interpretation and response
-                </li>
-                <li className="pl-1">Link fault detection to maintenance work order system</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Data overload:</strong> Trending everything without analysis capacity</li>
+                <li><strong>Alert fatigue:</strong> Too many low-priority alarms desensitise operators</li>
+                <li><strong>No action loop:</strong> Detecting faults without resolution tracking</li>
+                <li><strong>Static thresholds:</strong> Not adjusting FDD rules for seasonal changes</li>
+                <li><strong>Ignoring base load:</strong> Focusing on peaks whilst night consumption drifts</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Sub-metering coverage target: <strong>80%</strong> of total consumption
-                </li>
-                <li className="pl-1">
-                  Trend logging interval: <strong>15 minutes</strong> standard
-                </li>
-                <li className="pl-1">
-                  FDD detection rate: <strong>60-80%</strong> of operational faults
-                </li>
-                <li className="pl-1">
-                  CCx savings potential: <strong>10-30%</strong> of baseline
-                </li>
-                <li className="pl-1">
-                  DEC renewal: <strong>Annual</strong> for public buildings
-                </li>
-                <li className="pl-1">
-                  NABERS stars: <strong>4+</strong> considered good performance
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Data overload:</strong> Trending everything without analysis capacity
-                </li>
-                <li className="pl-1">
-                  <strong>Alert fatigue:</strong> Too many low-priority alarms desensitise operators
-                </li>
-                <li className="pl-1">
-                  <strong>No action loop:</strong> Detecting faults without resolution tracking
-                </li>
-                <li className="pl-1">
-                  <strong>Static thresholds:</strong> Not adjusting FDD rules for seasonal changes
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring base load:</strong> Focusing on peaks whilst night consumption
-                  drifts
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Sub-Metering Levels</p>
-                <ul className="space-y-0.5">
-                  <li>Level 1: Main incoming - 100% (mandatory)</li>
-                  <li>Level 2: Building/zone - 80-90%</li>
-                  <li>Level 3: System/end-use - 60-80%</li>
-                  <li>Level 4: Equipment - critical items</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">DEC Ratings</p>
-                <ul className="space-y-0.5">
-                  <li>A: 0-25 (excellent)</li>
-                  <li>B: 26-50, C: 51-75, D: 76-100</li>
-                  <li>E: 101-125, F: 126-150</li>
-                  <li>G: &gt; 150 (poor)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">FDD Approaches</p>
-                <ul className="space-y-0.5">
-                  <li>Rule-based: Expert logic, transparent</li>
-                  <li>Machine learning: Data-driven, adaptive</li>
-                  <li>Hybrid: Combined for best results</li>
-                  <li>Prioritise by energy/comfort impact</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">CCx Review Cadence</p>
-                <ul className="space-y-0.5">
-                  <li>Daily: Automated FDD monitoring</li>
-                  <li>Weekly: Dashboard review, fault triage</li>
-                  <li>Monthly: Detailed analysis, reporting</li>
-                  <li>Quarterly: Setpoint optimisation</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section6-1">
-              Next: Section 6.1
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section5-5")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Control strategies
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section6")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Services coordination
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

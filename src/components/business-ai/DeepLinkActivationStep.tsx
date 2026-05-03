@@ -66,7 +66,31 @@ export function DeepLinkActivationStep({ onActivated }: DeepLinkActivationStepPr
           }
         );
 
-        if (fnErr) throw new Error(fnErr.message);
+        if (fnErr) {
+          // supabase-js wraps non-2xx responses with a generic message
+          // ("Edge Function returned a non-2xx status code"). The real error
+          // is in the response body — pull it out so users see what's wrong.
+          let realMsg = fnErr.message;
+          const ctx = (fnErr as { context?: Response }).context;
+          if (ctx && typeof ctx.json === 'function') {
+            try {
+              const body = await ctx.json();
+              if (body?.error || body?.message) {
+                realMsg = body.error || body.message;
+              }
+            } catch {
+              // Body wasn't JSON or already consumed — keep the wrapped message.
+            }
+          }
+          // Translate the most common server-side reason into something
+          // the user can act on, rather than a raw validation string.
+          if (/business ai subscription is not active/i.test(realMsg)) {
+            throw new Error(
+              "Your Mate subscription isn't showing as active yet. If you've just paid, give it 30 seconds and tap 'Try again'. If you've cancelled and want to come back, head to Subscriptions to re-subscribe."
+            );
+          }
+          throw new Error(realMsg);
+        }
         if (data?.error) throw new Error(data.error);
 
         if (data?.already_active) {

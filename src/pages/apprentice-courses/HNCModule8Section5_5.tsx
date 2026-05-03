@@ -1,8 +1,21 @@
-import { ArrowLeft, BarChart3, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 8 · Section 5 · Subsection 5 — Control Strategies
+ * HNC Electrical Engineering for Building Services (HVAC Systems)
+ *   Advanced BMS control techniques for optimising HVAC system performance and energy efficiency
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Control Strategies - HNC Module 8 Section 5.5';
@@ -242,1127 +255,350 @@ const faqs = [
 ];
 
 const HNCModule8Section5_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section5")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module8-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <BarChart3 className="h-4 w-4" />
-            <span>Module 8.5.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Control Strategies
-          </h1>
-          <p className="text-white">
-            Advanced BMS control techniques for optimising HVAC system performance and energy
-            efficiency
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 8 · Section 5 · Subsection 5"
+            title="Control Strategies"
+            description="Advanced BMS control techniques for optimising HVAC system performance and energy efficiency"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>PID control:</strong> Proportional, Integral, Derivative action
-              </li>
-              <li className="pl-1">
-                <strong>Cascade control:</strong> Inner/outer loops for faster response
-              </li>
-              <li className="pl-1">
-                <strong>Optimum start/stop:</strong> Minimise pre-conditioning time
-              </li>
-              <li className="pl-1">
-                <strong>Setpoint reset:</strong> Adjust setpoints based on demand
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Explain PID control theory and the role of each term",
+              "Describe common PID tuning methods including Ziegler-Nichols",
+              "Design cascade control loops for improved disturbance rejection",
+              "Implement optimum start/stop algorithms for energy savings",
+              "Configure demand-controlled ventilation using CO2 sensing",
+              "Apply chilled water and supply air temperature reset strategies",
+              "Implement night setback and unoccupied mode control",
+              "Troubleshoot common control loop problems",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="PID Control Theory">
+            <p>PID (Proportional-Integral-Derivative) control is the foundation of most HVAC control loops. It continuously calculates an error value as the difference between a desired setpoint and a measured process variable, then applies a correction based on proportional, integral, and derivative terms.</p>
+            <p><strong>The PID Control Equation</strong></p>
+            <p>Output = K<sub>p</sub>e + K<sub>i</sub>&int;e dt + K<sub>d</sub>(de/dt)</p>
+            <p>Where: e = error (setpoint - measured value)</p>
+            <p>K<sub>p</sub> = proportional gain, K<sub>i</sub> = integral gain, K<sub>d</sub> = derivative gain</p>
+            <p><strong>The Three PID Terms</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Proportional (P):</strong> Output proportional to current error — Fast initial response — Cannot eliminate steady-state error</li>
+              <li><strong>Integral (I):</strong> Output proportional to accumulated error — Eliminates steady-state offset — Can cause overshoot and windup</li>
+              <li><strong>Derivative (D):</strong> Output proportional to rate of change — Anticipates and reduces overshoot — Sensitive to noise, rarely used in HVAC</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Energy Saving Strategies</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>DCV:</strong> Ventilate based on CO2/occupancy
-              </li>
-              <li className="pl-1">
-                <strong>CHW reset:</strong> Raise chilled water temp at part load
-              </li>
-              <li className="pl-1">
-                <strong>SAT reset:</strong> Optimise supply air temperature
-              </li>
-              <li className="pl-1">
-                <strong>Night setback:</strong> Wider deadband when unoccupied
-              </li>
+            <p><strong>Common HVAC Control Modes</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>P-only:</strong> Simple, fast, but has offset</li>
+              <li><strong>PI:</strong> Most common for HVAC, eliminates offset</li>
+              <li><strong>PID:</strong> Best response, used for critical loops</li>
+              <li><strong>On/off:</strong> Simple switching, causes cycling</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Tuning Parameters</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Proportional band:</strong> Range over which output modulates</li>
+              <li><strong>Integral time (Ti):</strong> Time to repeat P action</li>
+              <li><strong>Derivative time (Td):</strong> Prediction horizon</li>
+              <li><strong>Deadband:</strong> Neutral zone, no control action</li>
+            </ul>
+            <p><strong>PID Tuning Methods</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Ziegler-Nichols (ultimate gain):</strong> Increase P until oscillation, calculate from K<sub>u</sub> and P<sub>u</sub> — Fast response, some overshoot acceptable</li>
+              <li><strong>Ziegler-Nichols (step response):</strong> Measure delay and time constant from step test — When oscillation testing is impractical</li>
+              <li><strong>Lambda tuning:</strong> Specify desired closed-loop time constant — Conservative, no overshoot required</li>
+              <li><strong>Trial and error:</strong> Systematically adjust and observe — Fine-tuning, experienced engineers</li>
+              <li><strong>Auto-tuning:</strong> Controller performs automated tests — Modern BMS, initial commissioning</li>
+            </ul>
+            <p><strong>Practical tip:</strong> Most HVAC loops use PI control. Start with manufacturer defaults, then adjust proportional band first, followed by integral time. Only add derivative if overshoot is problematic and the signal is noise-free.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Explain PID control theory and the role of each term',
-              'Describe common PID tuning methods including Ziegler-Nichols',
-              'Design cascade control loops for improved disturbance rejection',
-              'Implement optimum start/stop algorithms for energy savings',
-              'Configure demand-controlled ventilation using CO2 sensing',
-              'Apply chilled water and supply air temperature reset strategies',
-              'Implement night setback and unoccupied mode control',
-              'Troubleshoot common control loop problems',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: PID Control Theory */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            PID Control Theory
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Cascade Control">
+            <p>Cascade control uses two or more controllers in series, where the output of the outer (primary or master) controller becomes the setpoint for the inner (secondary or slave) controller. This configuration provides faster disturbance rejection and improved stability.</p>
+            <p><strong>Cascade Control Structure</strong></p>
+            <p>{` Primary (Outer) Loop Secondary (Inner) Loop ┌─────────────────┐ ┌─────────────────┐ │ │ Setpoint │ │ │ Room Temp ────┼──────────────▶│ Supply Air ────┼──▶ Valve │ Controller │ │ Controller │ │ │ │ │ └────────┬────────┘ └────────┬────────┘ │ │ │ Room Temp │ Supply Air Temp │ Sensor │ Sensor ▼ ▼ ┌─────────┐ ┌─────────┐ │ Room │ │ Coil │ └─────────┘ └─────────┘ Outer loop is SLOW (room thermal mass) Inner loop is FAST (coil response)`}</p>
+            <p><strong>Requirements for Cascade Control</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Inner loop must be faster than outer loop (3-5x typical)</li>
+              <li>Measurable intermediate variable required</li>
+              <li>Significant disturbances affect inner loop</li>
+              <li>Additional sensor and control logic needed</li>
+            </ul>
+            <p><strong>Benefits</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Faster rejection of secondary disturbances</li>
+              <li>Improved stability and reduced overshoot</li>
+              <li>Inner loop linearises valve characteristics</li>
+              <li>Outer loop sees simpler process dynamics</li>
+            </ul>
+            <p><strong>Common HVAC Cascade Applications</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>AHU heating:</strong> Room/return air temp — Supply air temp — LTHW temp/pressure changes</li>
+              <li><strong>Chilled water system:</strong> Zone temperature — CHW flow/valve position — CHW supply temp variations</li>
+              <li><strong>VAV box:</strong> Zone temperature — Airflow rate — Duct pressure changes</li>
+              <li><strong>Boiler plant:</strong> Flow temperature — Boiler firing rate — Return temp, load changes</li>
+            </ul>
+            <p><strong>Tuning Cascade Loops</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Always tune the inner loop first with outer loop in manual</li>
+              <li>Inner loop should have faster response (lower Ti, higher gain)</li>
+              <li>Once inner loop is stable, tune outer loop</li>
+              <li>Outer loop should be slower to avoid interaction</li>
+              <li>Test both loops together under various load conditions</li>
+            </ul>
+            <p><strong>Key principle:</strong> The inner loop must settle before the outer loop makes its next adjustment. If the outer loop is too fast, it will fight the inner loop causing instability.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Optimised Start/Stop">
+            <p>Optimised start/stop (also called optimum start/stop) algorithms automatically calculate the minimum pre-conditioning time required to achieve comfort conditions by occupancy start, and the earliest time plant can be switched off whilst maintaining comfort until occupancy ends.</p>
+            <p><strong>Optimum Start</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Calculates latest possible start time</li>
+              <li>Achieves setpoint just before occupancy</li>
+              <li>Considers outside temperature, building mass</li>
+              <li>Learns from historical performance</li>
+              <li>Reduces overnight/weekend heating costs</li>
+            </ul>
+            <p><strong>Optimum Stop</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Calculates earliest possible stop time</li>
+              <li>Maintains comfort until end of occupancy</li>
+              <li>Uses building thermal storage</li>
+              <li>Considers thermal decay rate</li>
+              <li>Reduces end-of-day energy consumption</li>
+            </ul>
+            <p><strong>Optimum Start Algorithm Factors</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Outside air temperature:</strong> Lower temp = earlier start — OAT sensor</li>
+              <li><strong>Inside air temperature:</strong> Lower temp = earlier start — Zone sensor</li>
+              <li><strong>Building thermal mass:</strong> Higher mass = earlier start — Configured parameter</li>
+              <li><strong>Plant heating/cooling capacity:</strong> Higher capacity = later start — Learned or configured</li>
+              <li><strong>Historical performance:</strong> Algorithm adapts over time — Self-learning</li>
+            </ul>
+            <p><strong>Basic Optimum Start Calculation</strong></p>
+            <p>{`Pre-heat time (hours) = (T_setpoint - T_inside) x Building Factor ──────────────────────────────────────── (T_inside - T_outside) x k Where: T_setpoint = desired occupied temperature (e.g., 21C) T_inside = current inside temperature T_outside = outside air temperature Building Factor = thermal mass coefficient (0.5-2.0 typical) k = plant capacity factor Example: Inside 15C, Outside 5C, Setpoint 21C, Factor 1.0, k = 0.6 Pre-heat = (21-15) x 1.0 / ((15-5) x 0.6) = 6/6 = 1 hour Start plant 1 hour before occupancy`}</p>
+            <p><strong>Implementation Considerations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Minimum start time:</strong> Ensure adequate time for air quality (pre-occupancy purge)</li>
+              <li><strong>Maximum start time:</strong> Limit to prevent excessively early starts in extreme weather</li>
+              <li><strong>Boost mode:</strong> Override for rapid warm-up if algorithm underestimates</li>
+              <li><strong>Holiday schedules:</strong> Integrate with calendar for bank holidays</li>
+              <li><strong>Frost protection:</strong> Override optimum stop if freeze risk</li>
+            </ul>
+            <p><strong>Energy savings:</strong> Properly implemented optimum start can reduce heating energy by 10-20% compared to fixed start times, with even greater savings possible for heavyweight buildings.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Demand-Based Control and Setpoint Reset">
+            <p>Demand-based control adjusts system operation based on actual requirements rather than fixed schedules or worst-case assumptions. Setpoint reset strategies optimise operating conditions to match current load, improving efficiency without sacrificing comfort.</p>
+            <p><strong>Demand-Controlled Ventilation (DCV)</strong></p>
+            <p>DCV modulates outdoor air quantity based on actual occupancy indicators, typically CO2 concentration. This reduces the energy required to condition outdoor air during partial occupancy periods.</p>
+            <p><strong>CO2-Based DCV Control:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Outdoor CO2: typically 400 ppm</li>
+              <li>Target: 800-1000 ppm above outdoor</li>
+              <li>Minimum ventilation always maintained</li>
+              <li>Proportional control of OA damper</li>
+            </ul>
+            <p><strong>Alternative DCV Methods:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Occupancy sensors (PIR, counting)</li>
+              <li>Schedule-based (meeting room bookings)</li>
+              <li>VOC sensors (laboratories, kitchens)</li>
+              <li>Combined sensing strategies</li>
+            </ul>
+            <p><strong>Chilled Water Temperature Reset</strong></p>
+            <p>Raising the chilled water supply temperature during part-load conditions improves chiller efficiency (higher COP at elevated evaporator temperature) whilst still meeting cooling demand.</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Outside air reset:</strong> CHW temp increases as OAT decreases — 6C at 30C OAT to 12C at 15C OAT</li>
+              <li><strong>Valve position reset:</strong> CHW temp increases if no valves &gt;90% open — Gradual increase until demand satisfied</li>
+              <li><strong>Return water reset:</strong> CHW temp based on return temperature — Maintain minimum delta-T</li>
+            </ul>
+            <p><strong>Supply Air Temperature Reset</strong></p>
+            <p>Adjusting supply air temperature based on zone demand reduces simultaneous heating and cooling, improves dehumidification control, and optimises fan energy.</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Low cooling demand:</strong> Raise SAT (e.g., 13C to 16C) — Reduced cooling and reheat energy</li>
+              <li><strong>High humidity:</strong> Lower SAT for dehumidification — Improved comfort, mould prevention</li>
+              <li><strong>Heating season:</strong> Raise SAT based on zone demand — Reduced reheat, improved efficiency</li>
+            </ul>
+            <p><strong>Static Pressure Reset (VAV Systems)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Concept:</strong> Reduce duct pressure setpoint when VAV boxes are not fully open</li>
+              <li><strong>Method:</strong> Monitor VAV damper positions; if none &gt;90% open, reduce SP setpoint</li>
+              <li><strong>Benefit:</strong> Significant fan energy savings (fan power varies with cube of speed)</li>
+              <li><strong>Typical range:</strong> Design pressure 400 Pa, reset down to 200 Pa minimum</li>
+              <li><strong>Limitation:</strong> Requires DDC VAV boxes with position feedback</li>
+            </ul>
+            <p><strong>Night Setback and Unoccupied Mode</strong></p>
+            <p><strong>Night Setback Settings:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Heating setpoint: 10-12C (frost protection)</li>
+              <li>Cooling setpoint: 28-30C (equipment protection)</li>
+              <li>Ventilation: minimum or off</li>
+              <li>Override facility for late working</li>
+            </ul>
+            <p><strong>Considerations:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Frost protection for pipes and coils</li>
+              <li>Humidity limits for sensitive equipment</li>
+              <li>Night purge for free cooling</li>
+              <li>Security lighting requirements</li>
+            </ul>
+            <p><strong>Heating Hot Water Reset</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Weather compensation:</strong> Reduce flow temp as OAT rises</li>
+              <li><strong>Typical curve:</strong> 82C at -5C OAT down to 60C at 15C OAT</li>
+              <li><strong>Minimum temperature:</strong> 60C for legionella prevention in HWS</li>
+              <li><strong>Condensing boilers:</strong> Lower return temps improve efficiency</li>
+              <li><strong>Heat pumps:</strong> Lower flow temps dramatically improve COP</li>
+            </ul>
+            <p><strong>Integration note:</strong> Multiple reset strategies should be coordinated to avoid conflicts. For example, chilled water reset must consider dehumidification requirements that may need lower temperatures regardless of sensible cooling load.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              PID (Proportional-Integral-Derivative) control is the foundation of most HVAC control
-              loops. It continuously calculates an error value as the difference between a desired
-              setpoint and a measured process variable, then applies a correction based on
-              proportional, integral, and derivative terms.
+              <strong>Example 1: PID Controller Response</strong>
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The PID Control Equation
-              </p>
-              <p className="font-mono text-center text-lg mb-2">
-                Output = K<sub>p</sub>e + K<sub>i</sub>&int;e dt + K<sub>d</sub>(de/dt)
-              </p>
-              <div className="text-xs text-white text-center space-y-1">
-                <p>Where: e = error (setpoint - measured value)</p>
-                <p>
-                  K<sub>p</sub> = proportional gain, K<sub>i</sub> = integral gain, K<sub>d</sub> =
-                  derivative gain
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Three PID Terms</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Term</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Action</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Effect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Limitations</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Proportional (P)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Output proportional to current error
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Fast initial response</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cannot eliminate steady-state error
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Integral (I)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Output proportional to accumulated error
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Eliminates steady-state offset
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Can cause overshoot and windup
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Derivative (D)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Output proportional to rate of change
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Anticipates and reduces overshoot
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sensitive to noise, rarely used in HVAC
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Common HVAC Control Modes
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>P-only:</strong> Simple, fast, but has offset
-                  </li>
-                  <li className="pl-1">
-                    <strong>PI:</strong> Most common for HVAC, eliminates offset
-                  </li>
-                  <li className="pl-1">
-                    <strong>PID:</strong> Best response, used for critical loops
-                  </li>
-                  <li className="pl-1">
-                    <strong>On/off:</strong> Simple switching, causes cycling
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Tuning Parameters</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Proportional band:</strong> Range over which output modulates
-                  </li>
-                  <li className="pl-1">
-                    <strong>Integral time (Ti):</strong> Time to repeat P action
-                  </li>
-                  <li className="pl-1">
-                    <strong>Derivative time (Td):</strong> Prediction horizon
-                  </li>
-                  <li className="pl-1">
-                    <strong>Deadband:</strong> Neutral zone, no control action
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">PID Tuning Methods</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Approach</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Best For</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ziegler-Nichols (ultimate gain)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Increase P until oscillation, calculate from K<sub>u</sub> and P<sub>u</sub>
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fast response, some overshoot acceptable
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ziegler-Nichols (step response)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Measure delay and time constant from step test
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        When oscillation testing is impractical
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lambda tuning</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Specify desired closed-loop time constant
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Conservative, no overshoot required
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Trial and error</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Systematically adjust and observe
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fine-tuning, experienced engineers
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Auto-tuning</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Controller performs automated tests
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Modern BMS, initial commissioning
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Practical tip:</strong> Most HVAC loops use PI control. Start with
-              manufacturer defaults, then adjust proportional band first, followed by integral time.
-              Only add derivative if overshoot is problematic and the signal is noise-free.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Cascade Control */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Cascade Control
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> A room temperature controller has setpoint 21C. Current temperature is 19C. With P-only control (K<sub>p</sub> = 10%/C), what is the controller output?</p>
+            <p>Error = Setpoint - Measured = 21C - 19C = 2C</p>
+            <p>Proportional output = K<sub>p</sub> x Error</p>
+            <p>Output = 10%/C x 2C = <strong>20%</strong></p>
+            <p>The heating valve opens 20% to respond to the 2C error.</p>
+            <p>Note: With P-only control, there will be a steady-state offset because the valve cannot reach 100% output for small errors.</p>
             <p>
-              Cascade control uses two or more controllers in series, where the output of the outer
-              (primary or master) controller becomes the setpoint for the inner (secondary or slave)
-              controller. This configuration provides faster disturbance rejection and improved
-              stability.
+              <strong>Example 2: Optimum Start Calculation</strong>
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cascade Control Structure
-              </p>
-              <div className="p-4 rounded bg-black/30">
-                <pre className="text-xs text-white font-mono whitespace-pre overflow-x-auto">
-                  {`  Primary (Outer) Loop              Secondary (Inner) Loop
-  ┌─────────────────┐               ┌─────────────────┐
-  │                 │   Setpoint    │                 │
-  │  Room Temp  ────┼──────────────▶│  Supply Air ────┼──▶ Valve
-  │  Controller     │               │  Controller     │
-  │                 │               │                 │
-  └────────┬────────┘               └────────┬────────┘
-           │                                  │
-           │ Room Temp                        │ Supply Air Temp
-           │ Sensor                           │ Sensor
-           ▼                                  ▼
-      ┌─────────┐                       ┌─────────┐
-      │  Room   │                       │  Coil   │
-      └─────────┘                       └─────────┘
-
-  Outer loop is SLOW (room thermal mass)
-  Inner loop is FAST (coil response)`}
-                </pre>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Requirements for Cascade Control
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Inner loop must be faster than outer loop (3-5x typical)</li>
-                  <li className="pl-1">Measurable intermediate variable required</li>
-                  <li className="pl-1">Significant disturbances affect inner loop</li>
-                  <li className="pl-1">Additional sensor and control logic needed</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Benefits</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Faster rejection of secondary disturbances</li>
-                  <li className="pl-1">Improved stability and reduced overshoot</li>
-                  <li className="pl-1">Inner loop linearises valve characteristics</li>
-                  <li className="pl-1">Outer loop sees simpler process dynamics</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common HVAC Cascade Applications
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Outer Loop</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Inner Loop</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Disturbance Rejected
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">AHU heating</td>
-                      <td className="border border-white/10 px-3 py-2">Room/return air temp</td>
-                      <td className="border border-white/10 px-3 py-2">Supply air temp</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        LTHW temp/pressure changes
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Chilled water system</td>
-                      <td className="border border-white/10 px-3 py-2">Zone temperature</td>
-                      <td className="border border-white/10 px-3 py-2">CHW flow/valve position</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        CHW supply temp variations
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">VAV box</td>
-                      <td className="border border-white/10 px-3 py-2">Zone temperature</td>
-                      <td className="border border-white/10 px-3 py-2">Airflow rate</td>
-                      <td className="border border-white/10 px-3 py-2">Duct pressure changes</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Boiler plant</td>
-                      <td className="border border-white/10 px-3 py-2">Flow temperature</td>
-                      <td className="border border-white/10 px-3 py-2">Boiler firing rate</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Return temp, load changes
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Tuning Cascade Loops</p>
-              <ol className="text-sm text-white space-y-1.5 list-decimal list-outside ml-5">
-                <li className="pl-1">Always tune the inner loop first with outer loop in manual</li>
-                <li className="pl-1">
-                  Inner loop should have faster response (lower Ti, higher gain)
-                </li>
-                <li className="pl-1">Once inner loop is stable, tune outer loop</li>
-                <li className="pl-1">Outer loop should be slower to avoid interaction</li>
-                <li className="pl-1">Test both loops together under various load conditions</li>
-              </ol>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key principle:</strong> The inner loop must settle before the outer loop makes
-              its next adjustment. If the outer loop is too fast, it will fight the inner loop
-              causing instability.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Optimised Start/Stop */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Optimised Start/Stop
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> A building has inside temp 14C, outside -2C, setpoint 21C. Building factor is 1.2, plant factor k = 0.5. Calculate pre-heat time.</p>
+            <p>Temperature rise required = 21C - 14C = 7C</p>
+            <p>Temperature difference (inside-outside) = 14C - (-2C) = 16C</p>
+            <p>Pre-heat time = (7 x 1.2) / (16 x 0.5)</p>
+            <p>Pre-heat time = 8.4 / 8 = <strong>1.05 hours (63 minutes)</strong></p>
+            <p>If occupancy starts at 08:00, plant should start at 06:57.</p>
+            <p>In practice, round to 07:00 or add safety margin (06:45).</p>
             <p>
-              Optimised start/stop (also called optimum start/stop) algorithms automatically
-              calculate the minimum pre-conditioning time required to achieve comfort conditions by
-              occupancy start, and the earliest time plant can be switched off whilst maintaining
-              comfort until occupancy ends.
+              <strong>Example 3: DCV CO2-Based Control</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Optimum Start</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Calculates latest possible start time</li>
-                  <li className="pl-1">Achieves setpoint just before occupancy</li>
-                  <li className="pl-1">Considers outside temperature, building mass</li>
-                  <li className="pl-1">Learns from historical performance</li>
-                  <li className="pl-1">Reduces overnight/weekend heating costs</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Optimum Stop</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Calculates earliest possible stop time</li>
-                  <li className="pl-1">Maintains comfort until end of occupancy</li>
-                  <li className="pl-1">Uses building thermal storage</li>
-                  <li className="pl-1">Considers thermal decay rate</li>
-                  <li className="pl-1">Reduces end-of-day energy consumption</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Optimum Start Algorithm Factors
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Factor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Effect on Start Time
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Measurement/Input
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Outside air temperature</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lower temp = earlier start
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">OAT sensor</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Inside air temperature</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lower temp = earlier start
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Zone sensor</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Building thermal mass</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher mass = earlier start
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Configured parameter</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Plant heating/cooling capacity
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher capacity = later start
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Learned or configured</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Historical performance</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Algorithm adapts over time
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Self-learning</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Basic Optimum Start Calculation
-              </p>
-              <div className="p-4 rounded bg-black/30">
-                <pre className="text-xs text-white font-mono whitespace-pre overflow-x-auto">
-                  {`Pre-heat time (hours) = (T_setpoint - T_inside) x Building Factor
-                        ────────────────────────────────────────
-                              (T_inside - T_outside) x k
-
-Where:
-  T_setpoint = desired occupied temperature (e.g., 21C)
-  T_inside   = current inside temperature
-  T_outside  = outside air temperature
-  Building Factor = thermal mass coefficient (0.5-2.0 typical)
-  k = plant capacity factor
-
-Example: Inside 15C, Outside 5C, Setpoint 21C, Factor 1.0, k = 0.6
-Pre-heat = (21-15) x 1.0 / ((15-5) x 0.6) = 6/6 = 1 hour
-
-Start plant 1 hour before occupancy`}
-                </pre>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Implementation Considerations</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Minimum start time:</strong> Ensure adequate time for air quality
-                  (pre-occupancy purge)
-                </li>
-                <li className="pl-1">
-                  <strong>Maximum start time:</strong> Limit to prevent excessively early starts in
-                  extreme weather
-                </li>
-                <li className="pl-1">
-                  <strong>Boost mode:</strong> Override for rapid warm-up if algorithm
-                  underestimates
-                </li>
-                <li className="pl-1">
-                  <strong>Holiday schedules:</strong> Integrate with calendar for bank holidays
-                </li>
-                <li className="pl-1">
-                  <strong>Frost protection:</strong> Override optimum stop if freeze risk
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Energy savings:</strong> Properly implemented optimum start can reduce heating
-              energy by 10-20% compared to fixed start times, with even greater savings possible for
-              heavyweight buildings.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Demand-Based Control and Setpoint Reset */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Demand-Based Control and Setpoint Reset
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> A meeting room has 800 ppm CO2 setpoint, outdoor 400 ppm. At 100% occupancy, the outdoor air damper should be 100% open. Current CO2 is 600 ppm. What damper position?</p>
+            <p>CO2 above outdoor = 600 - 400 = 200 ppm</p>
+            <p>Target CO2 above outdoor = 800 - 400 = 400 ppm</p>
+            <p>Occupancy proxy = 200 / 400 = 50%</p>
+            <p>OA damper position = <strong>50%</strong></p>
+            <p>As occupancy increases and CO2 rises toward 800 ppm, the damper will progressively open to 100%.</p>
             <p>
-              Demand-based control adjusts system operation based on actual requirements rather than
-              fixed schedules or worst-case assumptions. Setpoint reset strategies optimise
-              operating conditions to match current load, improving efficiency without sacrificing
-              comfort.
+              <strong>Example 4: Chilled Water Reset Energy Savings</strong>
             </p>
+            <p><strong>Scenario:</strong> A chiller produces 500 kW cooling. At 6C CHW, COP is 4.0. At 10C CHW, COP is 5.0. Calculate power reduction.</p>
+            <p>At 6C: Compressor power = 500 / 4.0 = 125 kW</p>
+            <p>At 10C: Compressor power = 500 / 5.0 = 100 kW</p>
+            <p>Power saving = 125 - 100 = <strong>25 kW (20% reduction)</strong></p>
+            <p>At 3000 operating hours/year and 0.15/kWh:</p>
+            <p>Annual saving = 25 x 3000 x 0.15 = <strong>GBP 11,250/year</strong></p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Demand-Controlled Ventilation (DCV)
-              </p>
-              <p className="text-sm text-white mb-3">
-                DCV modulates outdoor air quantity based on actual occupancy indicators, typically
-                CO2 concentration. This reduces the energy required to condition outdoor air during
-                partial occupancy periods.
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-xs font-medium text-white mb-1">CO2-Based DCV Control:</p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Outdoor CO2: typically 400 ppm</li>
-                    <li>Target: 800-1000 ppm above outdoor</li>
-                    <li>Minimum ventilation always maintained</li>
-                    <li>Proportional control of OA damper</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-xs font-medium text-white mb-1">Alternative DCV Methods:</p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Occupancy sensors (PIR, counting)</li>
-                    <li>Schedule-based (meeting room bookings)</li>
-                    <li>VOC sensors (laboratories, kitchens)</li>
-                    <li>Combined sensing strategies</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Chilled Water Temperature Reset
-              </p>
-              <p className="text-sm text-white mb-3">
-                Raising the chilled water supply temperature during part-load conditions improves
-                chiller efficiency (higher COP at elevated evaporator temperature) whilst still
-                meeting cooling demand.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Reset Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Range</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Outside air reset</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        CHW temp increases as OAT decreases
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        6C at 30C OAT to 12C at 15C OAT
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Valve position reset</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        CHW temp increases if no valves &gt;90% open
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Gradual increase until demand satisfied
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Return water reset</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        CHW temp based on return temperature
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Maintain minimum delta-T</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Supply Air Temperature Reset
-              </p>
-              <p className="text-sm text-white mb-3">
-                Adjusting supply air temperature based on zone demand reduces simultaneous heating
-                and cooling, improves dehumidification control, and optimises fan energy.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Condition</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        SAT Reset Action
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Benefit</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Low cooling demand</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Raise SAT (e.g., 13C to 16C)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reduced cooling and reheat energy
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">High humidity</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lower SAT for dehumidification
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Improved comfort, mould prevention
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Heating season</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Raise SAT based on zone demand
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reduced reheat, improved efficiency
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Static Pressure Reset (VAV Systems)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Concept:</strong> Reduce duct pressure setpoint when VAV boxes are not
-                  fully open
-                </li>
-                <li className="pl-1">
-                  <strong>Method:</strong> Monitor VAV damper positions; if none &gt;90% open,
-                  reduce SP setpoint
-                </li>
-                <li className="pl-1">
-                  <strong>Benefit:</strong> Significant fan energy savings (fan power varies with
-                  cube of speed)
-                </li>
-                <li className="pl-1">
-                  <strong>Typical range:</strong> Design pressure 400 Pa, reset down to 200 Pa
-                  minimum
-                </li>
-                <li className="pl-1">
-                  <strong>Limitation:</strong> Requires DDC VAV boxes with position feedback
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Night Setback and Unoccupied Mode
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-xs font-medium text-white mb-1">Night Setback Settings:</p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Heating setpoint: 10-12C (frost protection)</li>
-                    <li>Cooling setpoint: 28-30C (equipment protection)</li>
-                    <li>Ventilation: minimum or off</li>
-                    <li>Override facility for late working</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-xs font-medium text-white mb-1">Considerations:</p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Frost protection for pipes and coils</li>
-                    <li>Humidity limits for sensitive equipment</li>
-                    <li>Night purge for free cooling</li>
-                    <li>Security lighting requirements</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Heating Hot Water Reset</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Weather compensation:</strong> Reduce flow temp as OAT rises
-                </li>
-                <li className="pl-1">
-                  <strong>Typical curve:</strong> 82C at -5C OAT down to 60C at 15C OAT
-                </li>
-                <li className="pl-1">
-                  <strong>Minimum temperature:</strong> 60C for legionella prevention in HWS
-                </li>
-                <li className="pl-1">
-                  <strong>Condensing boilers:</strong> Lower return temps improve efficiency
-                </li>
-                <li className="pl-1">
-                  <strong>Heat pumps:</strong> Lower flow temps dramatically improve COP
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Integration note:</strong> Multiple reset strategies should be coordinated to
-              avoid conflicts. For example, chilled water reset must consider dehumidification
-              requirements that may need lower temperatures regardless of sensible cooling load.
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Control Loop Troubleshooting:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Continuous oscillation:</strong> Excessive gain (P or I) — Reduce proportional gain, increase Ti</li>
+              <li><strong>Slow response:</strong> Insufficient gain, Ti too long — Increase gain, reduce Ti</li>
+              <li><strong>Steady-state offset:</strong> No integral action, or Ti too long — Enable integral, reduce Ti</li>
+              <li><strong>Overshoot then settling:</strong> Ti too short, no derivative — Increase Ti, add derivative if appropriate</li>
+              <li><strong>Output stuck at limit:</strong> Integral windup, undersized plant — Enable anti-windup, check plant sizing</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>DCV CO2 setpoint: <strong>800-1000 ppm</strong> (above outdoor)</li>
+              <li>CHW reset range: <strong>6C to 12C</strong> typical</li>
+              <li>SAT reset range: <strong>12C to 16C</strong> (cooling mode)</li>
+              <li>Night setback heating: <strong>10-12C</strong> (frost protection)</li>
+              <li>LTHW minimum: <strong>60C</strong> (legionella prevention)</li>
+              <li>Cascade inner loop: <strong>3-5x faster</strong> than outer loop</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: PID Controller Response
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A room temperature controller has setpoint 21C. Current
-                temperature is 19C. With P-only control (K<sub>p</sub> = 10%/C), what is the
-                controller output?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Error = Setpoint - Measured = 21C - 19C = 2C</p>
-                <p className="mt-2">
-                  Proportional output = K<sub>p</sub> x Error
-                </p>
-                <p>
-                  Output = 10%/C x 2C = <strong>20%</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  The heating valve opens 20% to respond to the 2C error.
-                </p>
-                <p className="mt-2 text-white">
-                  Note: With P-only control, there will be a steady-state offset because the valve
-                  cannot reach 100% output for small errors.
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Optimum Start Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A building has inside temp 14C, outside -2C, setpoint
-                21C. Building factor is 1.2, plant factor k = 0.5. Calculate pre-heat time.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Temperature rise required = 21C - 14C = 7C</p>
-                <p>Temperature difference (inside-outside) = 14C - (-2C) = 16C</p>
-                <p className="mt-2">Pre-heat time = (7 x 1.2) / (16 x 0.5)</p>
-                <p>
-                  Pre-heat time = 8.4 / 8 = <strong>1.05 hours (63 minutes)</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  If occupancy starts at 08:00, plant should start at 06:57.
-                </p>
-                <p className="text-white">
-                  In practice, round to 07:00 or add safety margin (06:45).
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: DCV CO2-Based Control
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A meeting room has 800 ppm CO2 setpoint, outdoor 400 ppm.
-                At 100% occupancy, the outdoor air damper should be 100% open. Current CO2 is 600
-                ppm. What damper position?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>CO2 above outdoor = 600 - 400 = 200 ppm</p>
-                <p>Target CO2 above outdoor = 800 - 400 = 400 ppm</p>
-                <p className="mt-2">Occupancy proxy = 200 / 400 = 50%</p>
-                <p>
-                  OA damper position = <strong>50%</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  As occupancy increases and CO2 rises toward 800 ppm, the damper will progressively
-                  open to 100%.
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 4: Chilled Water Reset Energy Savings
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A chiller produces 500 kW cooling. At 6C CHW, COP is 4.0.
-                At 10C CHW, COP is 5.0. Calculate power reduction.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>At 6C: Compressor power = 500 / 4.0 = 125 kW</p>
-                <p>At 10C: Compressor power = 500 / 5.0 = 100 kW</p>
-                <p className="mt-2">
-                  Power saving = 125 - 100 = <strong>25 kW (20% reduction)</strong>
-                </p>
-                <p className="mt-2 text-white">At 3000 operating hours/year and 0.15/kWh:</p>
-                <p className="text-white">
-                  Annual saving = 25 x 3000 x 0.15 = <strong>GBP 11,250/year</strong>
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Control Loop Troubleshooting
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Symptom</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Likely Cause</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Solution</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Continuous oscillation</td>
-                      <td className="border border-white/10 px-3 py-2">Excessive gain (P or I)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reduce proportional gain, increase Ti
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Slow response</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Insufficient gain, Ti too long
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Increase gain, reduce Ti</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Steady-state offset</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        No integral action, or Ti too long
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Enable integral, reduce Ti
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Overshoot then settling</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ti too short, no derivative
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Increase Ti, add derivative if appropriate
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Output stuck at limit</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Integral windup, undersized plant
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Enable anti-windup, check plant sizing
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  DCV CO2 setpoint: <strong>800-1000 ppm</strong> (above outdoor)
-                </li>
-                <li className="pl-1">
-                  CHW reset range: <strong>6C to 12C</strong> typical
-                </li>
-                <li className="pl-1">
-                  SAT reset range: <strong>12C to 16C</strong> (cooling mode)
-                </li>
-                <li className="pl-1">
-                  Night setback heating: <strong>10-12C</strong> (frost protection)
-                </li>
-                <li className="pl-1">
-                  LTHW minimum: <strong>60C</strong> (legionella prevention)
-                </li>
-                <li className="pl-1">
-                  Cascade inner loop: <strong>3-5x faster</strong> than outer loop
-                </li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Tuning outer loop first:</strong> Always tune cascade inner loop first</li>
+                <li><strong>Ignoring anti-windup:</strong> Essential for any loop that can saturate</li>
+                <li><strong>Over-aggressive reset:</strong> Maintain minimum for dehumidification, legionella</li>
+                <li><strong>Fixed optimum start times:</strong> Algorithm should adapt to conditions</li>
+                <li><strong>No sensor maintenance:</strong> CO2 sensors drift, calibrate annually</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Tuning outer loop first:</strong> Always tune cascade inner loop first
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring anti-windup:</strong> Essential for any loop that can saturate
-                </li>
-                <li className="pl-1">
-                  <strong>Over-aggressive reset:</strong> Maintain minimum for dehumidification,
-                  legionella
-                </li>
-                <li className="pl-1">
-                  <strong>Fixed optimum start times:</strong> Algorithm should adapt to conditions
-                </li>
-                <li className="pl-1">
-                  <strong>No sensor maintenance:</strong> CO2 sensors drift, calibrate annually
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">PID Control</p>
-                <ul className="space-y-0.5">
-                  <li>P: Proportional to current error</li>
-                  <li>I: Eliminates steady-state offset</li>
-                  <li>D: Anticipates based on rate of change</li>
-                  <li>PI most common for HVAC loops</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Energy Saving Strategies</p>
-                <ul className="space-y-0.5">
-                  <li>Optimum start: 10-20% heating savings</li>
-                  <li>CHW reset: 2-3% per degree raised</li>
-                  <li>Static pressure reset: 20-40% fan savings</li>
-                  <li>DCV: 20-50% ventilation savings</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section5-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Communication Protocols
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section5-6">
-              Next: System Optimisation
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section5-4")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Communication protocols
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section5-6")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                System optimisation
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

@@ -1,6 +1,13 @@
 import { Card, CardContent } from '@/components/ui/card';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
-import { CheckCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { ArrowLeft, CheckCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  PageFrame,
+  PageHero,
+  itemVariants,
+} from '@/components/college/primitives';
 
 const professionalBodies = [
   {
@@ -135,17 +142,17 @@ const industryEvents = [
 const onlineCommunities = [
   {
     name: 'LinkedIn',
-    members: '150,000+ UK electricians',
+    members: 'Professional network',
     cost: 'Free',
     description:
-      'The primary professional networking platform. Join electrical industry groups, follow key companies, and share your work to build your professional profile.',
+      'The primary professional networking platform. Join electrical industry groups, follow contractors and manufacturers, and share your work.',
   },
   {
     name: 'ElectriciansForums.net',
-    members: '100,000+ members',
+    members: 'UK electricians forum',
     cost: 'Free',
     description:
-      "The largest UK electricians' forum. Technical discussions, career advice, regulation queries, and a supportive community of professionals.",
+      "Long-running UK electricians' forum. Technical discussions, regulation queries (especially active around amendment releases), career advice.",
   },
   {
     name: 'IET Communities',
@@ -165,24 +172,24 @@ const onlineCommunities = [
 
 const linkedInTips = [
   {
-    tip: 'Professional Headline',
+    tip: 'Clear headline',
     detail:
-      'Use a clear headline like "Qualified Electrician | 18th Edition | NICEIC Registered" — profiles with good headlines get 3x more views.',
+      'Something a hiring contractor would actually search for: "Apprentice Electrician — Year 3 · 18th Edition · BS 7671:2018+A4:2026". State qualifications and stage plainly.',
   },
   {
-    tip: 'Complete Your Profile',
+    tip: 'Fill the basics',
     detail:
-      'Add all qualifications, experience, and a professional photo. Complete profiles receive 40x more opportunities than incomplete ones.',
+      'Photo, current employer, qualifications, ECS card status. Recruiters skim — if the basics are blank they move on. Doesn\'t need to be polished, needs to be there.',
   },
   {
-    tip: 'Share Your Work',
+    tip: 'Show real work',
     detail:
-      'Post photos of completed projects (with client permission). Visual content gets 10x more engagement and builds your reputation.',
+      'Post photos of jobs you\'re proud of (with employer + client permission). One good board, one tidy second-fix run, one finished cert — that\'s a portfolio.',
   },
   {
-    tip: 'Engage Daily',
+    tip: 'Comment more than you post',
     detail:
-      'Comment on industry posts, congratulate connections on achievements, and share useful content. Consistent engagement grows your network 5x faster.',
+      'Replying to other people\'s posts with a useful technical thought is faster than writing your own and gets you in front of more people. Show you know your stuff.',
   },
 ];
 
@@ -246,13 +253,28 @@ const mentorshipProgrammes = [
 ];
 
 const IndustryNetworking = () => {
+  const navigate = useNavigate();
   return (
-    <div className="animate-fade-in max-w-2xl mx-auto px-4 pb-20 space-y-6 text-left">
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <SmartBackButton />
-        <h1 className="text-2xl font-bold tracking-tight text-white">Industry Networking</h1>
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice/professional-development')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
+
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Network"
+          title="Industry networking"
+          description="Trade bodies, conferences and mentor programmes — the rooms where progression actually happens. Most apprentices skip this until late; the ones who don't get the better jobs."
+          tone="yellow"
+        />
+      </motion.div>
 
       {/* Intro */}
       <Card className="border-orange-500/20 bg-white/5">
@@ -475,7 +497,7 @@ const IndustryNetworking = () => {
           </p>
         </CardContent>
       </Card>
-    </div>
+    </PageFrame>
   );
 };
 

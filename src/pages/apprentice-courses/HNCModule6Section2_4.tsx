@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 6 · Section 2 · Subsection 4 — Small-Scale Wind
+ * HNC Electrical Engineering for Building Services (Sustainability and Environmental Engineering)
+ *   Building-mounted and standalone turbines, site assessment, planning considerations, and grid connection
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Small-Scale Wind - HNC Module 6 Section 2.4';
@@ -222,922 +239,387 @@ const faqs = [
 ];
 
 const HNCModule6Section2_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section2")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module6-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.2.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Small-Scale Wind
-          </h1>
-          <p className="text-white">
-            Building-mounted and standalone turbines, site assessment, planning considerations, and
-            grid connection
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 6 · Section 2 · Subsection 4"
+            title="Small-Scale Wind"
+            description="Building-mounted and standalone turbines, site assessment, planning considerations, and grid connection"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Wind power:</strong> P = ½ρAV³ (cubed relationship)
-              </li>
-              <li className="pl-1">
-                <strong>Betz limit:</strong> 59.3% maximum theoretical efficiency
-              </li>
-              <li className="pl-1">
-                <strong>Capacity factor:</strong> 15-30% typical for small wind
-              </li>
-              <li className="pl-1">
-                <strong>Grid connection:</strong> G98/G99 requirements apply
-              </li>
+          <TLDR
+            points={[
+              "Small-scale wind covers turbines below ~50 kW: building-mounted (rare, low yield, vibration risk) and standalone pole-mounted (mast height critical for yield).",
+              "Annual mean wind speed at hub height drives economics — below 5 m/s the project rarely repays; the NOABL database is the UK starting point but on-site mast measurement (ideally 12 months) is the only reliable basis for sizing.",
+              "Planning permission is almost always required (Permitted Development is highly limited); G98/G99 connection rules apply identically to PV; MCS MIS 3003 covers small wind certification.",
+            ]}
+          />
+
+          <RegsCallout
+            source="MCS MIS 3003 — Microgeneration Installation Standard for Wind Turbine Systems + ENA EREC G98/G99"
+            clause="The wind turbine and its installation shall comply with BS EN 61400 series for design and BS EN 50438 / G98 / G99 for grid connection. The site assessment shall include consideration of wind resource, turbulence intensity, planning constraints, noise emissions to BS 4142, electromagnetic interference, ice throw zone, and structural loading on the supporting structure."
+            meaning={
+              <>
+                Small wind has more failure modes than PV — turbulence (especially building-mounted), noise to BS 4142 boundaries, ice throw, telecoms interference, and shadow flicker all need site assessment. MIS 3003 sets the certification standard; without it, no SEG/MCS payment route is available.
+              </>
+            }
+            cite="Source: MIS 3003 Issue 4.0 — MCS / mcscertified.com"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Analyse wind turbine types and their operating principles",
+              "Apply the Weibull distribution to wind resource assessment",
+              "Calculate annual energy yield and capacity factor",
+              "Evaluate building-mounted versus freestanding installations",
+              "Understand UK planning requirements and permitted development",
+              "Specify grid connection requirements under G98/G99",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Wind Turbine Fundamentals">
+            <p>Small-scale wind turbines convert kinetic energy from wind into electrical energy. Understanding the fundamental physics and turbine configurations is essential for system design and performance prediction.</p>
+            <p><strong>Wind Power Equation</strong></p>
+            <p><span>P = ½ρAV³</span></p>
+            <p>Where:</p>
+            <p>P = Power (W)</p>
+            <p>ρ = Air density (≈1.225 kg/m³ at sea level)</p>
+            <p>A = Swept area (m²) = πr² for HAWT</p>
+            <p>V = Wind velocity (m/s)</p>
+            <p><strong>Turbine Type Comparison</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Typical Cp (efficiency):</strong> 0.35-0.45 — 0.25-0.35</li>
+              <li><strong>Yaw mechanism:</strong> Required (tail vane or motor) — Not required - omnidirectional</li>
+              <li><strong>Turbulence tolerance:</strong> Lower - affected by gusts — Higher - better in urban sites</li>
+              <li><strong>Starting wind speed:</strong> 2.5-4 m/s typical — Savonius: 2 m/s, Darrieus: 4+ m/s</li>
+              <li><strong>Noise level:</strong> Moderate (tip noise) — Lower typically</li>
+              <li><strong>Market availability:</strong> Dominant (90%+ of market) — Niche applications</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">UK Context</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Permitted development:</strong> 11.1m hub height limit
-              </li>
-              <li className="pl-1">
-                <strong>Noise limit:</strong> 35-45 dB(A) at dwellings
-              </li>
-              <li className="pl-1">
-                <strong>MCS certification:</strong> Required for SEG payments
-              </li>
-              <li className="pl-1">
-                <strong>Site assessment:</strong> NOABL database available
-              </li>
+            <p><strong>Key operating parameters:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Cut-in speed:</strong> Minimum wind speed for generation (typically 2.5-4 m/s)</li>
+              <li><strong>Rated speed:</strong> Wind speed at which rated power is achieved (10-14 m/s)</li>
+              <li><strong>Cut-out speed:</strong> Maximum operating wind speed before shutdown (25-30 m/s)</li>
+              <li><strong>Survival speed:</strong> Maximum wind speed the structure can withstand (50-70 m/s)</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Betz limit:</strong> No turbine can extract more than 59.3% (16/27) of the wind's kinetic energy, as some air must pass through to maintain flow.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Analyse wind turbine types and their operating principles',
-              'Apply the Weibull distribution to wind resource assessment',
-              'Calculate annual energy yield and capacity factor',
-              'Evaluate building-mounted versus freestanding installations',
-              'Understand UK planning requirements and permitted development',
-              'Specify grid connection requirements under G98/G99',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Wind Turbine Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Wind Turbine Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Wind Resource Assessment">
+            <p>Accurate wind resource assessment is critical for predicting turbine performance. The Weibull distribution provides a statistical model for wind speed variation, while understanding wind shear and turbulence helps optimise turbine placement.</p>
+            <p><strong>Weibull Distribution</strong></p>
+            <p><span>f(V) = (k/c)(V/c)^(k-1) × e^(-(V/c)^k)</span></p>
+            <p>Where:</p>
+            <p>k = Shape parameter (typically 1.8-2.5 in UK)</p>
+            <p>c = Scale parameter (related to mean wind speed)</p>
+            <p>V = Wind speed</p>
+            <p>When k = 2, this becomes the Rayleigh distribution</p>
+            <p><strong>NOABL Database</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>UK wind speed estimates</li>
+              <li>1 km grid resolution</li>
+              <li>10m, 25m, 45m heights</li>
+              <li>Free resource for initial assessment</li>
+            </ul>
+            <p><strong>Wind Shear Correction</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>V₂/V₁ = (h₂/h₁)^α</li>
+              <li>α = 0.14 (open terrain)</li>
+              <li>α = 0.25 (suburban)</li>
+              <li>α = 0.4+ (urban)</li>
+            </ul>
+            <p><strong>Site Selection Criteria</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Mean speed &gt; 5 m/s at hub</li>
+              <li>10m clearance above obstacles</li>
+              <li>Turbulence intensity &lt; 18%</li>
+              <li>Unobstructed prevailing wind</li>
+            </ul>
+            <p><strong>Annual Energy Yield Calculation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Capacity factor method:</strong> AEY = P_rated × 8760 × CF — ±20-30%</li>
+              <li><strong>Weibull integration:</strong> AEY = ∫P(V)×f(V)dV × 8760 — ±10-15%</li>
+              <li><strong>Bin method (measured data):</strong> AEY = Σ(P_i × hours_i) — ±5-10%</li>
+            </ul>
+            <p><strong>Critical insight:</strong> Due to the V³ relationship, a 1 m/s error in mean wind speed assessment can result in 30-50% error in energy prediction.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Installation Types and Planning Considerations">
+            <p>Small wind turbines can be installed as freestanding (pole/tower mounted) or building-mounted systems. Each has distinct structural, planning, and performance characteristics that significantly affect viability.</p>
+            <p><strong>Freestanding vs Building-Mounted Comparison</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Wind quality:</strong> Cleaner, laminar flow — Turbulent, reduced speed</li>
+              <li><strong>Expected output:</strong> 100% of rated potential — 30-60% of rated potential</li>
+              <li><strong>Structural concerns:</strong> Foundation design — Vibration, resonance, load transfer</li>
+              <li><strong>Permitted development (England):</strong> Possible with conditions — Generally not permitted</li>
+              <li><strong>Typical lifespan:</strong> 20-25 years — 10-15 years (fatigue issues)</li>
+            </ul>
+            <p><strong>Permitted Development Conditions (England)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Only one turbine per property (standalone)</li>
+              <li>Hub height ≤ 11.1 metres</li>
+              <li>Total height ≤ hub height + 0.5 × rotor diameter</li>
+              <li>Distance from property boundary ≥ hub height + 10%</li>
+              <li>Not in Conservation Areas, AONB, World Heritage Sites, or listed building curtilage</li>
+              <li>Noise level ≤ 45 dB(A) at nearest premises</li>
+              <li>Must be removed when no longer needed</li>
+            </ul>
+            <p><strong>Structural Requirements for Building-Mounted Turbines</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Structural assessment:</strong> Building must withstand dynamic loads (thrust + cyclic)</li>
+              <li><strong>Resonance check:</strong> Building natural frequency must differ from turbine operating frequency</li>
+              <li><strong>Mounting detail:</strong> Loads transferred to main structure, not just roof covering</li>
+              <li><strong>Vibration isolation:</strong> Anti-vibration mounts typically required</li>
+              <li><strong>Waterproofing:</strong> Roof penetrations must maintain weather integrity</li>
+            </ul>
+            <p><strong>Noise Considerations (ETSU-R-97 Guidelines)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Daytime (07:00-23:00):</strong> 35-40 dB(A) LA90 — Background + 5 dB (if higher)</li>
+              <li><strong>Night-time (23:00-07:00):</strong> 43 dB(A) LA90 — Background + 5 dB (if higher)</li>
+            </ul>
+            <p><strong>Planning tip:</strong> Pre-application consultation with the Local Planning Authority can identify potential issues before incurring full application costs.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Grid Connection Requirements">
+            <p>Grid-connected small wind systems must comply with Engineering Recommendations G98 or G99, which specify technical requirements for protection, power quality, and safe disconnection. MCS certification is required for Smart Export Guarantee payments.</p>
+            <p><strong>G98 vs G99 Application</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Single-phase limit:</strong> ≤ 3.68 kW (16A) — &gt; 3.68 kW</li>
+              <li><strong>Three-phase limit:</strong> ≤ 11.04 kW (16A/phase) — &gt; 11.04 kW</li>
+              <li><strong>Process:</strong> Notification (28-day wait) — Formal application required</li>
+              <li><strong>Cost:</strong> Usually free — Application and study fees apply</li>
+              <li><strong>Timeline:</strong> 28 days from notification — 45-90 days typical</li>
+            </ul>
+            <p><strong>Grid Protection Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Over/under voltage:</strong> Trip at ±10% of nominal (230V: 207-253V)</li>
+              <li><strong>Over/under frequency:</strong> Trip at 47.5-52 Hz (GB grid)</li>
+              <li><strong>Loss of mains:</strong> Rate of change of frequency (RoCoF) or vector shift detection</li>
+              <li><strong>Reconnection delay:</strong> Minimum 20 seconds after grid restoration</li>
+              <li><strong>Power factor:</strong> 0.95 lagging to 0.95 leading capability</li>
+            </ul>
+            <p><strong>Inverter Types for Wind Turbines</strong></p>
+            <p><strong>AC-Coupled (Synchronous)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Turbine generates AC directly</li>
+              <li>Frequency varies with speed</li>
+              <li>Power electronics convert to grid frequency</li>
+              <li>Common in larger systems</li>
+            </ul>
+            <p><strong>DC-Coupled (PMG + Rectifier)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Permanent magnet generator</li>
+              <li>Rectified to DC, then inverted</li>
+              <li>MPPT tracking for optimal power</li>
+              <li>Common in small turbines</li>
+            </ul>
+            <p><strong>Electrical Installation Requirements (BS 7671)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Section 712:</strong> Solar PV power supply systems (principles apply)</li>
+              <li><strong>Section 551:</strong> Low voltage generating sets</li>
+              <li><strong>Isolation:</strong> Double-pole isolation between turbine and grid</li>
+              <li><strong>Labelling:</strong> Warning labels at meter position and consumer unit</li>
+              <li><strong>Earthing:</strong> Turbine and tower earthed per manufacturer and BS 7671</li>
+              <li><strong>Protection:</strong> Type II SPDs recommended for exposed locations</li>
+            </ul>
+            <p><strong>MCS Certification Requirements</strong></p>
+            <p><strong>For SEG eligibility:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Turbine must be MCS-certified product</li>
+              <li>Installation by MCS-certified installer</li>
+              <li>Compliance with MCS 006 (Wind) installation standard</li>
+              <li>MCS certificate issued and registered</li>
+              <li>Metering to comply with SEG requirements</li>
+            </ul>
+            <p><strong>Export tariff:</strong> SEG rates vary by supplier (3-15p/kWh typically). Some suppliers offer time-of-use export rates with higher payments during peak demand.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Small-scale wind turbines convert kinetic energy from wind into electrical energy.
-              Understanding the fundamental physics and turbine configurations is essential for
-              system design and performance prediction.
+              <strong>Example 1: Wind Shear Correction</strong>
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Wind Power Equation</p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">P = ½ρAV³</span>
-                </p>
-                <p className="text-white mt-2">Where:</p>
-                <p className="text-white">P = Power (W)</p>
-                <p className="text-white">ρ = Air density (≈1.225 kg/m³ at sea level)</p>
-                <p className="text-white">A = Swept area (m²) = πr² for HAWT</p>
-                <p className="text-white">V = Wind velocity (m/s)</p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Turbine Type Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Characteristic</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">HAWT</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        VAWT (Darrieus/Savonius)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Typical Cp (efficiency)</td>
-                      <td className="border border-white/10 px-3 py-2">0.35-0.45</td>
-                      <td className="border border-white/10 px-3 py-2">0.25-0.35</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Yaw mechanism</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Required (tail vane or motor)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Not required - omnidirectional
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Turbulence tolerance</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lower - affected by gusts
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher - better in urban sites
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Starting wind speed</td>
-                      <td className="border border-white/10 px-3 py-2">2.5-4 m/s typical</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Savonius: 2 m/s, Darrieus: 4+ m/s
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Noise level</td>
-                      <td className="border border-white/10 px-3 py-2">Moderate (tip noise)</td>
-                      <td className="border border-white/10 px-3 py-2">Lower typically</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Market availability</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dominant (90%+ of market)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Niche applications</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key operating parameters:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Cut-in speed:</strong> Minimum wind speed for generation (typically 2.5-4
-                  m/s)
-                </li>
-                <li className="pl-1">
-                  <strong>Rated speed:</strong> Wind speed at which rated power is achieved (10-14
-                  m/s)
-                </li>
-                <li className="pl-1">
-                  <strong>Cut-out speed:</strong> Maximum operating wind speed before shutdown
-                  (25-30 m/s)
-                </li>
-                <li className="pl-1">
-                  <strong>Survival speed:</strong> Maximum wind speed the structure can withstand
-                  (50-70 m/s)
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Betz limit:</strong> No turbine can extract more than 59.3% (16/27) of the
-              wind's kinetic energy, as some air must pass through to maintain flow.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Wind Resource Assessment */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Wind Resource Assessment
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> NOABL data gives 5.2 m/s at 10m height. Calculate wind speed at 15m hub height in suburban terrain (α = 0.25).</p>
+            <p>Using wind shear power law:</p>
+            <p>V₂/V₁ = (h₂/h₁)^α</p>
+            <p>V₁₅/V₁₀ = (15/10)^0.25</p>
+            <p>V₁₅/V₁₀ = (1.5)^0.25</p>
+            <p>V₁₅/V₁₀ = 1.107</p>
+            <p>V₁₅ = 5.2 × 1.107 = <span>5.76 m/s at hub height</span></p>
+            <p>Note: This 11% increase in wind speed translates to (1.107)³ = 36% more available power</p>
             <p>
-              Accurate wind resource assessment is critical for predicting turbine performance. The
-              Weibull distribution provides a statistical model for wind speed variation, while
-              understanding wind shear and turbulence helps optimise turbine placement.
+              <strong>Example 2: Annual Energy Yield Calculation</strong>
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Weibull Distribution</p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">f(V) = (k/c)(V/c)^(k-1) × e^(-(V/c)^k)</span>
-                </p>
-                <p className="text-white mt-2">Where:</p>
-                <p className="text-white">k = Shape parameter (typically 1.8-2.5 in UK)</p>
-                <p className="text-white">c = Scale parameter (related to mean wind speed)</p>
-                <p className="text-white">V = Wind speed</p>
-                <p className="text-white mt-2">
-                  When k = 2, this becomes the Rayleigh distribution
-                </p>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">NOABL Database</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">UK wind speed estimates</li>
-                  <li className="pl-1">1 km grid resolution</li>
-                  <li className="pl-1">10m, 25m, 45m heights</li>
-                  <li className="pl-1">Free resource for initial assessment</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Wind Shear Correction
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">V₂/V₁ = (h₂/h₁)^α</li>
-                  <li className="pl-1">α = 0.14 (open terrain)</li>
-                  <li className="pl-1">α = 0.25 (suburban)</li>
-                  <li className="pl-1">α = 0.4+ (urban)</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Site Selection Criteria
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Mean speed &gt; 5 m/s at hub</li>
-                  <li className="pl-1">10m clearance above obstacles</li>
-                  <li className="pl-1">Turbulence intensity &lt; 18%</li>
-                  <li className="pl-1">Unobstructed prevailing wind</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Annual Energy Yield Calculation
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Formula</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Accuracy</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Capacity factor method</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        AEY = P_rated × 8760 × CF
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">±20-30%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Weibull integration</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        AEY = ∫P(V)×f(V)dV × 8760
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">±10-15%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Bin method (measured data)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">AEY = Σ(P_i × hours_i)</td>
-                      <td className="border border-white/10 px-3 py-2">±5-10%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Critical insight:</strong> Due to the V³ relationship, a 1 m/s error in mean
-              wind speed assessment can result in 30-50% error in energy prediction.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Installation Types and Planning */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Installation Types and Planning Considerations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> A 6 kW rated turbine is installed at a site with estimated capacity factor of 0.24. Calculate annual energy yield.</p>
+            <p>Annual Energy Yield = Rated Power × Hours per Year × Capacity Factor</p>
+            <p>AEY = P_rated × 8760 × CF</p>
+            <p>AEY = 6 kW × 8760 h × 0.24</p>
+            <p>AEY = <span>12,614 kWh/year</span></p>
+            <p>At electricity cost of £0.28/kWh:</p>
+            <p>Savings = 12,614 × £0.28 = <span>£3,532/year</span></p>
+            <p>Plus SEG export (assume 50% exported at 10p/kWh):</p>
+            <p>Export income = 6,307 × £0.10 = £631/year</p>
+            <p>Total annual value = <span>£3,847/year</span></p>
             <p>
-              Small wind turbines can be installed as freestanding (pole/tower mounted) or
-              building-mounted systems. Each has distinct structural, planning, and performance
-              characteristics that significantly affect viability.
+              <strong>Example 3: Weibull Distribution Application</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Freestanding vs Building-Mounted Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Freestanding</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Building-Mounted
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Wind quality</td>
-                      <td className="border border-white/10 px-3 py-2">Cleaner, laminar flow</td>
-                      <td className="border border-white/10 px-3 py-2">Turbulent, reduced speed</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Expected output</td>
-                      <td className="border border-white/10 px-3 py-2">100% of rated potential</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        30-60% of rated potential
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Structural concerns</td>
-                      <td className="border border-white/10 px-3 py-2">Foundation design</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Vibration, resonance, load transfer
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Permitted development (England)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Possible with conditions</td>
-                      <td className="border border-white/10 px-3 py-2">Generally not permitted</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Typical lifespan</td>
-                      <td className="border border-white/10 px-3 py-2">20-25 years</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        10-15 years (fatigue issues)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Permitted Development Conditions (England)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Only one turbine per property (standalone)</li>
-                <li className="pl-1">Hub height ≤ 11.1 metres</li>
-                <li className="pl-1">Total height ≤ hub height + 0.5 × rotor diameter</li>
-                <li className="pl-1">Distance from property boundary ≥ hub height + 10%</li>
-                <li className="pl-1">
-                  Not in Conservation Areas, AONB, World Heritage Sites, or listed building
-                  curtilage
-                </li>
-                <li className="pl-1">Noise level ≤ 45 dB(A) at nearest premises</li>
-                <li className="pl-1">Must be removed when no longer needed</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Structural Requirements for Building-Mounted Turbines
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Structural assessment:</strong> Building must withstand dynamic loads
-                  (thrust + cyclic)
-                </li>
-                <li className="pl-1">
-                  <strong>Resonance check:</strong> Building natural frequency must differ from
-                  turbine operating frequency
-                </li>
-                <li className="pl-1">
-                  <strong>Mounting detail:</strong> Loads transferred to main structure, not just
-                  roof covering
-                </li>
-                <li className="pl-1">
-                  <strong>Vibration isolation:</strong> Anti-vibration mounts typically required
-                </li>
-                <li className="pl-1">
-                  <strong>Waterproofing:</strong> Roof penetrations must maintain weather integrity
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Noise Considerations (ETSU-R-97 Guidelines)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Period</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Noise Limit</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Alternative</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Daytime (07:00-23:00)</td>
-                      <td className="border border-white/10 px-3 py-2">35-40 dB(A) LA90</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Background + 5 dB (if higher)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Night-time (23:00-07:00)</td>
-                      <td className="border border-white/10 px-3 py-2">43 dB(A) LA90</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Background + 5 dB (if higher)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Planning tip:</strong> Pre-application consultation with the Local Planning
-              Authority can identify potential issues before incurring full application costs.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Grid Connection Requirements */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Grid Connection Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> A site has Weibull parameters k = 2.1, c = 6.5 m/s. Estimate percentage of time wind speed exceeds 4 m/s (turbine cut-in).</p>
+            <p>Probability P(V &gt; v) = e^(-(v/c)^k)</p>
+            <p>P(V &gt; 4) = e^(-(4/6.5)^2.1)</p>
+            <p>P(V &gt; 4) = e^(-(0.615)^2.1)</p>
+            <p>P(V &gt; 4) = e^(-0.354)</p>
+            <p>P(V &gt; 4) = <span>0.702 = 70.2% of the time</span></p>
+            <p>The turbine will operate approximately 70% of hours annually</p>
+            <p>Operating hours = 8760 × 0.702 = 6,150 hours/year</p>
             <p>
-              Grid-connected small wind systems must comply with Engineering Recommendations G98 or
-              G99, which specify technical requirements for protection, power quality, and safe
-              disconnection. MCS certification is required for Smart Export Guarantee payments.
+              <strong>Example 4: Available Wind Power</strong>
             </p>
+            <p><strong>Scenario:</strong> Calculate the theoretical power available in wind for a 5m diameter rotor at 8 m/s wind speed (air density 1.225 kg/m³).</p>
+            <p>Swept area A = πr² = π × 2.5² = 19.63 m²</p>
+            <p>Available power P = ½ρAV³</p>
+            <p>P = 0.5 × 1.225 × 19.63 × 8³</p>
+            <p>P = 0.5 × 1.225 × 19.63 × 512</p>
+            <p>P = <span>6,158 W (6.16 kW) available</span></p>
+            <p>With Cp = 0.40 (typical HAWT efficiency):</p>
+            <p>Extracted power = 6,158 × 0.40 =  <span>2,463 W electrical output</span></p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">G98 vs G99 Application</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        G98 (Small Scale)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        G99 (Larger Scale)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Single-phase limit</td>
-                      <td className="border border-white/10 px-3 py-2">≤ 3.68 kW (16A)</td>
-                      <td className="border border-white/10 px-3 py-2">&gt; 3.68 kW</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Three-phase limit</td>
-                      <td className="border border-white/10 px-3 py-2">≤ 11.04 kW (16A/phase)</td>
-                      <td className="border border-white/10 px-3 py-2">&gt; 11.04 kW</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Process</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Notification (28-day wait)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Formal application required
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cost</td>
-                      <td className="border border-white/10 px-3 py-2">Usually free</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Application and study fees apply
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Timeline</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        28 days from notification
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">45-90 days typical</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Grid Protection Requirements</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Over/under voltage:</strong> Trip at ±10% of nominal (230V: 207-253V)
-                </li>
-                <li className="pl-1">
-                  <strong>Over/under frequency:</strong> Trip at 47.5-52 Hz (GB grid)
-                </li>
-                <li className="pl-1">
-                  <strong>Loss of mains:</strong> Rate of change of frequency (RoCoF) or vector
-                  shift detection
-                </li>
-                <li className="pl-1">
-                  <strong>Reconnection delay:</strong> Minimum 20 seconds after grid restoration
-                </li>
-                <li className="pl-1">
-                  <strong>Power factor:</strong> 0.95 lagging to 0.95 leading capability
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Inverter Types for Wind Turbines
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">AC-Coupled (Synchronous)</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Turbine generates AC directly</li>
-                    <li>Frequency varies with speed</li>
-                    <li>Power electronics convert to grid frequency</li>
-                    <li>Common in larger systems</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">DC-Coupled (PMG + Rectifier)</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Permanent magnet generator</li>
-                    <li>Rectified to DC, then inverted</li>
-                    <li>MPPT tracking for optimal power</li>
-                    <li>Common in small turbines</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Electrical Installation Requirements (BS 7671)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Section 712:</strong> Solar PV power supply systems (principles apply)
-                </li>
-                <li className="pl-1">
-                  <strong>Section 551:</strong> Low voltage generating sets
-                </li>
-                <li className="pl-1">
-                  <strong>Isolation:</strong> Double-pole isolation between turbine and grid
-                </li>
-                <li className="pl-1">
-                  <strong>Labelling:</strong> Warning labels at meter position and consumer unit
-                </li>
-                <li className="pl-1">
-                  <strong>Earthing:</strong> Turbine and tower earthed per manufacturer and BS 7671
-                </li>
-                <li className="pl-1">
-                  <strong>Protection:</strong> Type II SPDs recommended for exposed locations
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                MCS Certification Requirements
-              </p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <strong>For SEG eligibility:</strong>
-                </p>
-                <ul className="list-disc list-outside ml-5 space-y-1">
-                  <li>Turbine must be MCS-certified product</li>
-                  <li>Installation by MCS-certified installer</li>
-                  <li>Compliance with MCS 006 (Wind) installation standard</li>
-                  <li>MCS certificate issued and registered</li>
-                  <li>Metering to comply with SEG requirements</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Export tariff:</strong> SEG rates vary by supplier (3-15p/kWh typically). Some
-              suppliers offer time-of-use export rates with higher payments during peak demand.
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Site Assessment Checklist:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Obtain NOABL wind speed data for location and apply shear correction</li>
+              <li>Survey obstructions within 150m radius and check 10m clearance rule</li>
+              <li>Identify prevailing wind direction and potential wake effects</li>
+              <li>Consider terrain roughness class for turbulence assessment</li>
+              <li>Check planning constraints (Conservation Area, AONB, listed buildings)</li>
+              <li>Assess noise sensitivity of nearest receptors</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Betz limit: <strong>59.3%</strong> maximum theoretical efficiency</li>
+              <li>Typical HAWT Cp: <strong>0.35-0.45</strong></li>
+              <li>Capacity factor range: <strong>15-30%</strong> for small wind UK</li>
+              <li>G98 single-phase limit: <strong>3.68 kW</strong></li>
+              <li>Permitted development hub height: <strong>11.1m</strong> maximum</li>
+              <li>Noise limit: <strong>35-45 dB(A)</strong> at nearest dwelling</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Wind Shear Correction
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> NOABL data gives 5.2 m/s at 10m height. Calculate wind
-                speed at 15m hub height in suburban terrain (α = 0.25).
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Using wind shear power law:</p>
-                <p className="mt-2">V₂/V₁ = (h₂/h₁)^α</p>
-                <p className="mt-1">V₁₅/V₁₀ = (15/10)^0.25</p>
-                <p className="mt-1">V₁₅/V₁₀ = (1.5)^0.25</p>
-                <p className="mt-1">V₁₅/V₁₀ = 1.107</p>
-                <p className="mt-2">
-                  V₁₅ = 5.2 × 1.107 = <span className="text-green-400">5.76 m/s at hub height</span>
-                </p>
-                <p className="mt-2 text-white">
-                  Note: This 11% increase in wind speed translates to (1.107)³ = 36% more available
-                  power
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Annual Energy Yield Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A 6 kW rated turbine is installed at a site with
-                estimated capacity factor of 0.24. Calculate annual energy yield.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Annual Energy Yield = Rated Power × Hours per Year × Capacity Factor</p>
-                <p className="mt-2">AEY = P_rated × 8760 × CF</p>
-                <p className="mt-1">AEY = 6 kW × 8760 h × 0.24</p>
-                <p className="mt-1">
-                  AEY = <span className="text-green-400">12,614 kWh/year</span>
-                </p>
-                <p className="mt-2">At electricity cost of £0.28/kWh:</p>
-                <p className="mt-1">
-                  Savings = 12,614 × £0.28 = <span className="text-green-400">£3,532/year</span>
-                </p>
-                <p className="mt-1">Plus SEG export (assume 50% exported at 10p/kWh):</p>
-                <p className="mt-1">Export income = 6,307 × £0.10 = £631/year</p>
-                <p className="mt-1">
-                  Total annual value = <span className="text-green-400">£3,847/year</span>
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Weibull Distribution Application
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A site has Weibull parameters k = 2.1, c = 6.5 m/s.
-                Estimate percentage of time wind speed exceeds 4 m/s (turbine cut-in).
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Probability P(V &gt; v) = e^(-(v/c)^k)</p>
-                <p className="mt-2">P(V &gt; 4) = e^(-(4/6.5)^2.1)</p>
-                <p className="mt-1">P(V &gt; 4) = e^(-(0.615)^2.1)</p>
-                <p className="mt-1">P(V &gt; 4) = e^(-0.354)</p>
-                <p className="mt-1">
-                  P(V &gt; 4) = <span className="text-green-400">0.702 = 70.2% of the time</span>
-                </p>
-                <p className="mt-2 text-white">
-                  The turbine will operate approximately 70% of hours annually
-                </p>
-                <p className="mt-1 text-white">
-                  Operating hours = 8760 × 0.702 = 6,150 hours/year
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 4: Available Wind Power
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate the theoretical power available in wind for a
-                5m diameter rotor at 8 m/s wind speed (air density 1.225 kg/m³).
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Swept area A = πr² = π × 2.5² = 19.63 m²</p>
-                <p className="mt-2">Available power P = ½ρAV³</p>
-                <p className="mt-1">P = 0.5 × 1.225 × 19.63 × 8³</p>
-                <p className="mt-1">P = 0.5 × 1.225 × 19.63 × 512</p>
-                <p className="mt-1">
-                  P = <span className="text-green-400">6,158 W (6.16 kW) available</span>
-                </p>
-                <p className="mt-2">With Cp = 0.40 (typical HAWT efficiency):</p>
-                <p className="mt-1">
-                  Extracted power = 6,158 × 0.40 ={' '}
-                  <span className="text-green-400">2,463 W electrical output</span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Site Assessment Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Obtain NOABL wind speed data for location and apply shear correction
-                </li>
-                <li className="pl-1">
-                  Survey obstructions within 150m radius and check 10m clearance rule
-                </li>
-                <li className="pl-1">
-                  Identify prevailing wind direction and potential wake effects
-                </li>
-                <li className="pl-1">Consider terrain roughness class for turbulence assessment</li>
-                <li className="pl-1">
-                  Check planning constraints (Conservation Area, AONB, listed buildings)
-                </li>
-                <li className="pl-1">Assess noise sensitivity of nearest receptors</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Using unadjusted NOABL data</strong> - Always apply wind shear correction for actual hub height</li>
+                <li><strong>Ignoring turbulence</strong> - Building-mounted and urban sites have severe performance penalties</li>
+                <li><strong>Optimistic yield estimates</strong> - Use conservative capacity factors (0.15-0.20) for financial calculations</li>
+                <li><strong>Assuming permitted development</strong> - Check all conditions carefully; many sites require full planning</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Betz limit: <strong>59.3%</strong> maximum theoretical efficiency
-                </li>
-                <li className="pl-1">
-                  Typical HAWT Cp: <strong>0.35-0.45</strong>
-                </li>
-                <li className="pl-1">
-                  Capacity factor range: <strong>15-30%</strong> for small wind UK
-                </li>
-                <li className="pl-1">
-                  G98 single-phase limit: <strong>3.68 kW</strong>
-                </li>
-                <li className="pl-1">
-                  Permitted development hub height: <strong>11.1m</strong> maximum
-                </li>
-                <li className="pl-1">
-                  Noise limit: <strong>35-45 dB(A)</strong> at nearest dwelling
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Using unadjusted NOABL data</strong> - Always apply wind shear correction
-                  for actual hub height
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring turbulence</strong> - Building-mounted and urban sites have
-                  severe performance penalties
-                </li>
-                <li className="pl-1">
-                  <strong>Optimistic yield estimates</strong> - Use conservative capacity factors
-                  (0.15-0.20) for financial calculations
-                </li>
-                <li className="pl-1">
-                  <strong>Assuming permitted development</strong> - Check all conditions carefully;
-                  many sites require full planning
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="Building-mounted turbine fails noise complaint at neighbouring dwelling"
+            situation={
+              <>
+                A 2.5 kW building-mounted wind turbine is installed on a four-storey commercial building. NOABL predicted 5.2 m/s mean wind speed but actual yield in the first six months is 38% of forecast. A neighbouring residential property submits a noise complaint; environmental health measure 7 dB(A) above background at the boundary in light wind, breaching BS 4142.
+              </>
+            }
+            whatToDo={
+              <>
+                Building-mounted turbines almost always under-perform NOABL because of building-induced turbulence — and they are often noisier than freestanding equivalents because vibration couples through the structure. Options: (1) decommission, (2) anti-vibration mounting kit (limited improvement), (3) operating restriction at low wind speed (defeats the economics). Lesson for next time: use site-mast wind data not NOABL, and prefer pole-mounted standalone turbines.
+              </>
+            }
+            whyItMatters={
+              <>
+                Small wind is the hardest microgeneration to make work in the UK — most installed building-mounted turbines under-deliver and many are removed within 5 years. Pole-mounted rural installations on validated wind sites can succeed but require careful planning consultation, measured wind data and conservative yield assumptions.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Wind Power Fundamentals</p>
-                <ul className="space-y-0.5">
-                  <li>P = ½ρAV³ (cubed relationship)</li>
-                  <li>Betz limit: 59.3% maximum</li>
-                  <li>Weibull: k (shape), c (scale)</li>
-                  <li>Rayleigh distribution when k = 2</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">UK Requirements</p>
-                <ul className="space-y-0.5">
-                  <li>G98: ≤3.68 kW single-phase</li>
-                  <li>Permitted development: 11.1m hub</li>
-                  <li>MCS certification for SEG</li>
-                  <li>ETSU-R-97 noise guidance</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              "Mean wind speed at hub height >5.5 m/s for viable economics; >6.5 m/s for good payback.",
+              "NOABL is a starting point only — on-site mast measurement is the only reliable basis.",
+              "Building-mounted turbines: high turbulence, vibration coupling, noise risk — almost always disappoint.",
+              "Planning permission required (Permitted Development very limited); BS 4142 noise + shadow flicker assessments.",
+              "Connection: G98 (≤16 A/phase) or G99 (>16 A) — same DNO process as PV.",
+              "MCS MIS 3003 + BS EN 61400 series for certification and design.",
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section2-5">
-              Next: Heat Pumps
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section2-3")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Biomass systems
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section2-5")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Battery storage systems
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

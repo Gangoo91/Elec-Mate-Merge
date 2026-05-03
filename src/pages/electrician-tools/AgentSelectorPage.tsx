@@ -1,129 +1,202 @@
-import { ArrowLeft, ChevronRight, Sparkles } from 'lucide-react';
+import { useMemo } from 'react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { SavedResultsCard } from '@/components/electrician-tools/saved-results';
 import { useSavedAgentResults } from '@/hooks/useSavedAgentResults';
+import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
+import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.05, delayChildren: 0.05 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 12 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { type: 'spring', stiffness: 300, damping: 24 },
-  },
-};
 
 interface Agent {
   id: string;
+  eyebrow: string;
   name: string;
   description: string;
   expertise: string[];
-  gradient: string;
-  textColour: string;
-  pillBg: string;
-  glowColour: string;
+  route: string;
 }
 
 const AGENTS: Agent[] = [
   {
     id: 'designer',
+    eyebrow: 'Design & sizing',
     name: 'Circuit Designer',
-    description: 'BS 7671 compliant circuit design and cable sizing',
+    description: 'BS 7671 compliant circuit design, cable sizing, voltage drop and CU layouts.',
     expertise: ['Circuit calculations', 'Cable sizing', 'CU layouts', 'Voltage drop'],
-    gradient: 'from-blue-500 via-blue-400 to-cyan-400',
-    textColour: 'text-blue-400',
-    pillBg: 'bg-blue-500/10',
-    glowColour: 'rgba(96,165,250,0.2)',
+    route: '/electrician/circuit-designer',
   },
   {
     id: 'cost-engineer',
+    eyebrow: 'Pricing & quotes',
     name: 'Cost Engineer',
-    description: 'Full project quotes with materials, labour and timescales',
+    description: 'Full project quotes with materials, labour and realistic timescales.',
     expertise: ['Material pricing', 'Labour estimates', 'Timescales', 'Quotes'],
-    gradient: 'from-elec-yellow via-amber-400 to-elec-yellow',
-    textColour: 'text-elec-yellow',
-    pillBg: 'bg-elec-yellow/10',
-    glowColour: 'rgba(250,204,21,0.2)',
+    route: '/electrician/cost-engineer',
   },
   {
     id: 'installer',
+    eyebrow: 'On-site method',
     name: 'Installation Specialist',
-    description: 'Step-by-step installation methods and practical guidance',
+    description: 'Step-by-step installation methods and practical guidance for the job.',
     expertise: ['Methods', 'Practical tips', 'Tool selection', 'Best practices'],
-    gradient: 'from-blue-400 via-blue-300 to-cyan-300',
-    textColour: 'text-blue-300',
-    pillBg: 'bg-blue-400/10',
-    glowColour: 'rgba(147,197,253,0.2)',
+    route: '/electrician/installation-specialist',
   },
   {
     id: 'maintenance',
+    eyebrow: 'Service & faults',
     name: 'Maintenance Specialist',
-    description: 'Periodic inspections, preventive maintenance & fault diagnosis',
+    description: 'Periodic inspections, preventive maintenance and fault diagnosis.',
     expertise: ['Inspections', 'Fault diagnosis', 'Servicing', 'Preventive'],
-    gradient: 'from-emerald-500 via-teal-400 to-emerald-500',
-    textColour: 'text-emerald-400',
-    pillBg: 'bg-emerald-500/10',
-    glowColour: 'rgba(52,211,153,0.2)',
+    route: '/electrician/maintenance',
   },
   {
     id: 'health-safety',
+    eyebrow: 'RAMS & PPE',
     name: 'Health & Safety',
-    description: 'Risk assessments, PPE requirements and safety procedures',
+    description: 'Risk assessments, method statements, PPE and emergency procedures.',
     expertise: ['RAMS', 'Risk assessments', 'PPE', 'Emergency procedures'],
-    gradient: 'from-orange-500 via-amber-400 to-red-500',
-    textColour: 'text-orange-400',
-    pillBg: 'bg-orange-500/10',
-    glowColour: 'rgba(251,146,60,0.2)',
+    route: '/electrician/health-safety',
   },
 ];
 
+const AGENT_COUNT_KEY: Record<string, keyof ReturnType<typeof useSavedAgentResults>['counts']> = {
+  designer: 'circuit-designer',
+  'cost-engineer': 'cost-engineer',
+  installer: 'installer',
+  maintenance: 'maintenance',
+  'health-safety': 'health-safety',
+};
+
+function partOfDay(): 'MORNING' | 'AFTERNOON' | 'EVENING' {
+  const h = new Date().getHours();
+  if (h < 12) return 'MORNING';
+  if (h < 18) return 'AFTERNOON';
+  return 'EVENING';
+}
+
+function dateEyebrow(): string {
+  const d = new Date();
+  const weekday = d.toLocaleDateString('en-GB', { weekday: 'long' }).toUpperCase();
+  const day = d.getDate();
+  const month = d.toLocaleDateString('en-GB', { month: 'long' }).toUpperCase();
+  return `${weekday} · ${day} ${month} · ${partOfDay()}`;
+}
+
 const AgentSelectorPage = () => {
   const navigate = useNavigate();
-  const { totalCount } = useSavedAgentResults();
+  const { profile } = useAuth();
+  const { counts, totalCount, results } = useSavedAgentResults();
 
-  const handleAgentSelect = (agentId: string) => {
-    const routes: Record<string, string> = {
-      designer: '/electrician/circuit-designer',
-      'cost-engineer': '/electrician/cost-engineer',
-      installer: '/electrician/installation-specialist',
-      'health-safety': '/electrician/health-safety',
-      commissioning: '/electrician/commissioning',
-      'project-manager': '/electrician/project-manager',
-      maintenance: '/electrician/maintenance',
-      tutor: '/electrician/tutor',
+  const firstName = useMemo(() => {
+    const full = profile?.full_name?.trim();
+    if (!full) return null;
+    return full.split(/\s+/)[0]?.toUpperCase() ?? null;
+  }, [profile?.full_name]);
+
+  // Stats: rolling 7-day completions and most-active specialist
+  const lastSevenDays = useMemo(() => {
+    const since = Date.now() - 7 * 24 * 60 * 60 * 1000;
+    return results.filter((r) => new Date(r.completedAt).getTime() >= since).length;
+  }, [results]);
+
+  const topSpecialist = useMemo(() => {
+    const entries = Object.entries(counts) as [keyof typeof counts, number][];
+    const top = entries.reduce(
+      (best, [k, v]) => (v > best.value ? { key: k, value: v } : best),
+      { key: '' as keyof typeof counts | '', value: 0 }
+    );
+    if (!top.key || top.value === 0) return null;
+    const labelMap: Record<string, string> = {
+      'circuit-designer': 'Designer',
+      'cost-engineer': 'Cost',
+      'health-safety': 'H&S',
+      installer: 'Installer',
+      maintenance: 'Maintenance',
     };
+    return labelMap[top.key as string] ?? null;
+  }, [counts]);
 
-    const route = routes[agentId];
-    if (route) {
-      navigate(route, { state: { fromAgentSelector: true } });
-    } else {
-      navigate('/electrician/install-planner?mode=ai', {
-        state: { preSelectedAgent: agentId },
-      });
+  // Verdict line — adapts to recent activity
+  const verdict = useMemo(() => {
+    if (totalCount === 0) {
+      return 'Five specialists on call. Brief one with the job details and get a designer-grade output back in minutes.';
     }
+    if (lastSevenDays > 0) {
+      return `${lastSevenDays} consultation${lastSevenDays === 1 ? '' : 's'} this week — your team's been busy. Pick a specialist below to start a new one.`;
+    }
+    return `${totalCount} consultation${totalCount === 1 ? '' : 's'} on file. Open a specialist to brief a new job.`;
+  }, [totalCount, lastSevenDays]);
+
+  const scrollToTeam = () => {
+    document.getElementById('your-ai-team')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+  const scrollToRecent = () => {
+    document
+      .getElementById('recent-work')
+      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
+  type Stat = {
+    label: string;
+    value: string | number;
+    sub: string;
+    accent?: boolean;
+    onClick: () => void;
+  };
+  const stats: Stat[] = [
+    {
+      label: 'Specialists',
+      value: AGENTS.length,
+      sub: 'On the team',
+      accent: true,
+      onClick: scrollToTeam,
+    },
+    {
+      label: 'Completed',
+      value: totalCount,
+      sub: totalCount > 0 ? 'Saved consultations' : 'No jobs yet',
+      onClick: scrollToRecent,
+    },
+    {
+      label: 'This week',
+      value: lastSevenDays,
+      sub: lastSevenDays > 0 ? 'In the last 7 days' : 'Nothing logged',
+      onClick: scrollToRecent,
+    },
+    {
+      label: 'Most used',
+      value: topSpecialist ?? '—',
+      sub: topSpecialist ? 'Top specialist' : 'Brief one to start',
+      onClick: scrollToTeam,
+    },
+  ];
+
   return (
-    <div className="bg-background min-h-screen pb-8">
-      {/* Sticky Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-xl border-b border-white/[0.06]">
-        <div className="px-4 py-2 max-w-3xl mx-auto">
-          <button
-            onClick={() => navigate('/electrician')}
-            className="flex items-center gap-2 text-white active:scale-[0.98] transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span className="text-sm font-medium">Electrician Hub</span>
-          </button>
+    <div className="bg-elec-dark min-h-screen pb-24 -mx-3 sm:-mx-4 md:-mx-6 lg:-mx-8 -mt-1 sm:-mt-3 md:-mt-6">
+      {/* Sticky editorial header */}
+      <div className="sticky top-0 z-50 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.06]">
+        <div className="px-4 sm:px-6 md:px-10 lg:px-16">
+          <div className="flex items-center h-12 gap-4 sm:gap-6">
+            <button
+              type="button"
+              onClick={() => navigate('/electrician')}
+              aria-label="Back to Electrician Hub"
+              className="flex items-center gap-2 text-[12.5px] font-medium text-white hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <span>Electrician Hub</span>
+            </button>
+            <div className="flex-1 min-w-0 flex items-baseline gap-2.5">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/75 hidden sm:inline">
+                Electrician
+              </span>
+              <span className="hidden sm:inline h-3 w-px bg-white/10" aria-hidden />
+              <h1 className="text-[13px] sm:text-sm font-semibold text-white truncate tracking-tight">
+                AI Design Consultation
+              </h1>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -131,92 +204,211 @@ const AgentSelectorPage = () => {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="px-4 py-5 space-y-6 max-w-3xl mx-auto"
+        className="w-full px-4 sm:px-6 md:px-10 lg:px-16 py-4 space-y-7 sm:space-y-12 lg:space-y-16"
       >
-        {/* Hero */}
-        <motion.div variants={itemVariants}>
-          <div className="relative overflow-hidden glass-premium rounded-2xl glow-yellow">
-            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
-            <div className="absolute top-0 right-0 w-40 h-40 bg-elec-yellow/[0.04] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
+        {/* HERO */}
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="relative pt-2 sm:pt-4"
+        >
+          <motion.div variants={itemVariants}>
+            <Eyebrow>{dateEyebrow()}</Eyebrow>
+          </motion.div>
 
-            <div className="relative z-10 p-6 text-center">
-              <h1 className="text-2xl font-bold text-white tracking-tight mb-1">
-                <span className="text-elec-yellow">AI</span> Design Consultation
-              </h1>
-              <p className="text-sm text-white">Your specialist team, always on call</p>
-              {totalCount > 0 && (
-                <div className="inline-flex items-center gap-1.5 mt-3 px-3 py-1 rounded-full bg-white/[0.04] ring-1 ring-white/[0.06]">
-                  <span className="relative flex h-1.5 w-1.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-400" />
-                  </span>
-                  <span className="text-[11px] text-white">{totalCount} consultations completed</span>
-                </div>
-              )}
-            </div>
-          </div>
-        </motion.div>
+          <motion.h1
+            variants={itemVariants}
+            className="mt-3 font-semibold tracking-tight leading-[1.05] text-[34px] sm:text-[44px] lg:text-[56px]"
+          >
+            <span className="text-elec-yellow">AI</span>{' '}
+            <span className="text-white">Design Consultation.</span>
+          </motion.h1>
 
-        {/* Saved Results */}
-        <motion.div variants={itemVariants}>
-          <SavedResultsCard />
-        </motion.div>
+          <motion.p
+            variants={itemVariants}
+            className="mt-3 sm:mt-4 text-[14px] sm:text-[15px] leading-relaxed text-white/90 max-w-2xl"
+          >
+            {verdict}
+          </motion.p>
 
-        {/* AI Team */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-            Your AI Team
-          </h2>
+          {firstName && (
+            <motion.p
+              variants={itemVariants}
+              className="mt-1 text-[12px] uppercase tracking-[0.18em] text-white/60"
+            >
+              Logged in as {firstName}
+            </motion.p>
+          )}
+        </motion.section>
 
-          <motion.div variants={containerVariants} className="space-y-3">
-            {AGENTS.map((agent) => (
-              <motion.button
-                key={agent.id}
-                variants={itemVariants}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => handleAgentSelect(agent.id)}
-                className="w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation group"
-              >
-                <div
-                  className="relative glass-premium rounded-2xl overflow-hidden transition-all duration-200 group-hover:border-white/20"
-                  style={{ '--glow': agent.glowColour } as React.CSSProperties}
+        {/* 01 · THIS MONTH */}
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-4"
+        >
+          <motion.div variants={itemVariants}>
+            <Eyebrow>01 · THIS MONTH</Eyebrow>
+          </motion.div>
+          <motion.div
+            variants={itemVariants}
+            className="relative grid grid-cols-2 lg:grid-cols-4 gap-px bg-black sm:border sm:border-white/[0.08] sm:rounded-2xl sm:overflow-hidden border-y border-white/[0.06]"
+          >
+            <div className="hidden sm:block absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
+            {stats.map((s) => {
+              const v = String(s.value);
+              const sizeClass =
+                v.length <= 4
+                  ? 'text-4xl sm:text-5xl lg:text-[56px]'
+                  : v.length <= 8
+                    ? 'text-3xl sm:text-4xl lg:text-5xl'
+                    : 'text-2xl sm:text-3xl lg:text-4xl';
+              return (
+                <button
+                  key={s.label}
+                  type="button"
+                  onClick={s.onClick}
+                  className={cn(
+                    'group relative bg-[hsl(0_0%_10%)] px-4 py-5 sm:px-7 sm:py-8 flex flex-col text-left touch-manipulation active:scale-[0.99] hover:bg-elec-yellow/[0.04] transition-all',
+                    s.accent &&
+                      'bg-gradient-to-br from-elec-yellow/[0.08] via-amber-500/[0.03] to-transparent hover:from-elec-yellow/[0.14]'
+                  )}
                 >
-                  {/* Coloured accent line */}
-                  <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-50 group-hover:opacity-80 transition-opacity', agent.gradient)} />
-
-                  <div className="flex items-center gap-4 p-4">
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-[15px] font-semibold text-white tracking-tight mb-1">
-                        {agent.name}
-                      </h3>
-                      <p className="text-[13px] text-white leading-relaxed mb-2.5">
-                        {agent.description}
-                      </p>
-                      {/* Expertise tags — text only, no icons */}
-                      <div className="flex flex-wrap gap-1.5">
-                        {agent.expertise.map((tag) => (
-                          <span
-                            key={tag}
-                            className={cn(
-                              'text-[10px] font-medium px-2 py-0.5 rounded-md',
-                              agent.pillBg,
-                              agent.textColour
-                            )}
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Arrow */}
-                    <div className="flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center bg-white/[0.05] border border-white/[0.08] group-hover:bg-white/[0.10] transition-all">
-                      <ChevronRight className="h-4 w-4 text-white group-hover:translate-x-0.5 transition-transform" />
-                    </div>
+                  <div
+                    className={cn(
+                      'text-[10.5px] font-semibold uppercase tracking-[0.18em]',
+                      s.accent ? 'text-elec-yellow' : 'text-white/75'
+                    )}
+                  >
+                    {s.label}
                   </div>
-                </div>
-              </motion.button>
-            ))}
+                  <span
+                    className={cn(
+                      'mt-2.5 sm:mt-4 font-semibold tabular-nums tracking-tight leading-none',
+                      sizeClass,
+                      s.accent ? 'text-elec-yellow' : 'text-white'
+                    )}
+                  >
+                    {s.value}
+                  </span>
+                  <span className="mt-2.5 text-[11.5px] text-white/80 group-hover:text-white transition-colors leading-snug">
+                    {s.sub}
+                  </span>
+                </button>
+              );
+            })}
+          </motion.div>
+        </motion.section>
+
+        {/* 02 · YOUR AI TEAM */}
+        <motion.section
+          id="your-ai-team"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-4"
+        >
+          <motion.div variants={itemVariants} className="flex items-baseline justify-between gap-3">
+            <Eyebrow>02 · YOUR AI TEAM</Eyebrow>
+            <span className="text-[11px] text-white/50 tabular-nums">
+              {AGENTS.length} specialists
+            </span>
+          </motion.div>
+          <motion.div
+            variants={itemVariants}
+            className="relative grid gap-px bg-black grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:border sm:border-white/[0.08] sm:rounded-2xl sm:overflow-hidden border-y border-white/[0.06]"
+          >
+            <div className="hidden sm:block absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
+            {AGENTS.map((agent, i) => {
+              const countKey = AGENT_COUNT_KEY[agent.id];
+              const completed = countKey ? counts[countKey] : 0;
+              const meta =
+                completed > 0
+                  ? `${completed} consultation${completed === 1 ? '' : 's'}`
+                  : 'No jobs yet';
+              return (
+                <button
+                  key={agent.id}
+                  type="button"
+                  onClick={() => navigate(agent.route, { state: { fromAgentSelector: true } })}
+                  className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] active:scale-[0.99] transition-all p-5 sm:p-7 lg:p-8 text-left touch-manipulation flex flex-col min-h-[200px] sm:min-h-[260px]"
+                >
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow tabular-nums">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/75 truncate">
+                      · {agent.eyebrow}
+                    </span>
+                  </div>
+                  <h3 className="mt-3 sm:mt-5 text-[22px] sm:text-[26px] lg:text-[30px] font-semibold tracking-tight leading-[1.1] text-white group-hover:text-elec-yellow transition-colors">
+                    {agent.name}
+                  </h3>
+                  <p className="mt-2 text-[13px] leading-relaxed text-white/85 max-w-[34ch]">
+                    {agent.description}
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {agent.expertise.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-[10px] font-medium px-2 py-0.5 rounded-md bg-white/[0.05] text-white/80 border border-white/[0.06]"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex-grow" />
+                  <div className="mt-4 sm:mt-6 flex items-center justify-between gap-3 pt-3 sm:pt-4 border-t border-white/[0.08]">
+                    <span className="text-[11.5px] text-white/85 truncate tabular-nums">
+                      {meta}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-elec-yellow shrink-0">
+                      Open
+                      <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
+            {/* Tease cell — fills the 6th slot from sm upward (mobile is single-column so no gap) */}
+            <div className="hidden sm:flex bg-[hsl(0_0%_10%)] p-5 sm:p-7 lg:p-8 flex-col min-h-[200px] sm:min-h-[260px]">
+              <div className="flex items-baseline gap-2">
+                <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/40 tabular-nums">
+                  06
+                </span>
+                <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/40">
+                  · Coming soon
+                </span>
+              </div>
+              <h3 className="mt-3 sm:mt-5 text-[22px] sm:text-[26px] lg:text-[30px] font-semibold tracking-tight leading-[1.1] text-white/40">
+                More specialists.
+              </h3>
+              <p className="mt-2 text-[13px] leading-relaxed text-white/40 max-w-[34ch]">
+                Commissioning, Project Manager and Tutor agents are in development.
+              </p>
+              <div className="flex-grow" />
+              <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-white/[0.06]">
+                <span className="text-[11.5px] text-white/40 tabular-nums">In development</span>
+              </div>
+            </div>
+          </motion.div>
+        </motion.section>
+
+        {/* 03 · RECENT WORK */}
+        <motion.section
+          id="recent-work"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-4"
+        >
+          <motion.div variants={itemVariants}>
+            <Eyebrow>03 · RECENT WORK</Eyebrow>
+          </motion.div>
+          <motion.div variants={itemVariants}>
+            <SavedResultsCard />
           </motion.div>
         </motion.section>
       </motion.main>

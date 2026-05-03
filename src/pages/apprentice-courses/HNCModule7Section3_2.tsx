@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 7 · Section 3 · Subsection 2 — Lumen Method Calculations
+ * HNC Electrical Engineering for Building Services (Power and Lighting Systems)
+ *   Room index, utilisation factors, maintenance factors, and average illuminance calculations for interior lighting design
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Lumen Method Calculations - HNC Module 7 Section 3.2';
@@ -235,899 +248,330 @@ const faqs = [
 ];
 
 const HNCModule7Section3_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section3")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module7-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.3.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Lumen Method Calculations
-          </h1>
-          <p className="text-white">
-            Room index, utilisation factors, maintenance factors, and average illuminance
-            calculations for interior lighting design
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 7 · Section 3 · Subsection 2"
+            title="Lumen Method Calculations"
+            description="Room index, utilisation factors, maintenance factors, and average illuminance calculations for interior lighting design"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Lumen method:</strong> E = (n × F × UF × MF) / A
-              </li>
-              <li className="pl-1">
-                <strong>Room index:</strong> K = L×W / [Hm(L+W)]
-              </li>
-              <li className="pl-1">
-                <strong>UF:</strong> Depends on K and reflectances
-              </li>
-              <li className="pl-1">
-                <strong>MF:</strong> Accounts for depreciation over time
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Apply the lumen method formula to calculate average illuminance",
+              "Calculate room index for various room dimensions",
+              "Select utilisation factors from manufacturer data",
+              "Determine appropriate maintenance factors for different environments",
+              "Calculate the number of luminaires required for a given illuminance",
+              "Complete full lighting design calculations with worked examples",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="The Lumen Method Formula">
+            <p>The lumen method is the standard technique for calculating average illuminance in interior spaces. It determines how many luminaires are needed to achieve a specified maintained illuminance level across the working plane of a room.</p>
+            <p><strong>Lumen Method Formula</strong></p>
+            <p>E = (n × F × UF × MF) / A</p>
+            <p>= Average illuminance (lux)</p>
+            <p>= Number of luminaires</p>
+            <p>= Luminous flux per luminaire (lumens)</p>
+            <p>= Utilisation factor (0-1)</p>
+            <p>= Maintenance factor (0-1)</p>
+            <p>= Room area (m²)</p>
+            <p><strong>Rearranged Forms of the Formula</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Illuminance (E):</strong> E = (n × F × UF × MF) / A — Verify existing installation</li>
+              <li><strong>Number of luminaires (n):</strong> n = (E × A) / (F × UF × MF) — New lighting design</li>
+              <li><strong>Total flux required:</strong> Φ = (E × A) / (UF × MF) — Luminaire selection</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Practical Application</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Typical offices:</strong> 500 lux maintained
-              </li>
-              <li className="pl-1">
-                <strong>Working plane:</strong> 0.85m above floor
-              </li>
-              <li className="pl-1">
-                <strong>MF range:</strong> 0.7-0.9 typically
-              </li>
-              <li className="pl-1">
-                <strong>UF range:</strong> 0.3-0.7 typically
-              </li>
+            <p><strong>Key assumptions of the lumen method:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Uniform distribution:</strong> Luminaires are evenly spaced across the ceiling</li>
+              <li><strong>Regular room shape:</strong> Rectangular rooms work best; irregular shapes need subdivision</li>
+              <li><strong>Average illuminance:</strong> Calculates mean value, not minimum or maximum</li>
+              <li><strong>Horizontal working plane:</strong> Results apply to a flat surface at specified height</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Design principle:</strong> The lumen method gives average illuminance. For uniformity requirements, spacing-to-height ratios must also be checked.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Apply the lumen method formula to calculate average illuminance',
-              'Calculate room index for various room dimensions',
-              'Select utilisation factors from manufacturer data',
-              'Determine appropriate maintenance factors for different environments',
-              'Calculate the number of luminaires required for a given illuminance',
-              'Complete full lighting design calculations with worked examples',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: The Lumen Method Formula */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Lumen Method Formula
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Room Index Calculation">
+            <p>The room index (K) is a dimensionless number that describes room proportions relative to the luminaire mounting height. It determines how effectively light from luminaires reaches the working plane.</p>
+            <p><strong>Room Index Formula</strong></p>
+            <p>K = (L × W) / [Hm × (L + W)]</p>
+            <p>= Room index (dimensionless)</p>
+            <p>= Room length (m)</p>
+            <p>= Room width (m)</p>
+            <p>= Mounting height above working plane (m)</p>
+            <p><strong>Mounting Height (Hm)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Ceiling height minus working plane height</li>
+              <li>Office working plane: typically 0.85m</li>
+              <li>Standing work: typically 0.95m</li>
+              <li>Floor-level tasks: 0m working plane</li>
+            </ul>
+            <p><strong>Typical K Values</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Small rooms: K = 0.6-1.0</li>
+              <li>Medium rooms: K = 1.0-2.5</li>
+              <li>Large rooms: K = 2.5-5.0</li>
+              <li>Very large halls: K &gt; 5.0</li>
+            </ul>
+            <p><strong>Room Index Example Calculations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Small office:</strong> 6 × 4 — 2.0 — 24 / (2.0 × 10) — 1.2</li>
+              <li><strong>Open plan:</strong> 20 × 15 — 2.4 — 300 / (2.4 × 35) — 3.57</li>
+              <li><strong>Classroom:</strong> 10 × 8 — 2.15 — 80 / (2.15 × 18) — 2.07</li>
+              <li><strong>Warehouse:</strong> 40 × 25 — 6.0 — 1000 / (6.0 × 65) — 2.56</li>
+            </ul>
+            <p><strong>Key insight:</strong> Higher K values mean better light utilisation. Square rooms have higher K than narrow rooms of equal area.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Utilisation Factors">
+            <p>The utilisation factor (UF) represents the proportion of luminaire output that reaches the working plane. It depends on the room index, luminaire light distribution, and the reflectances of room surfaces.</p>
+            <p><strong>Factors Affecting Utilisation Factor</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Room index (K):</strong> Higher K = higher UF (larger rooms utilise light better)</li>
+              <li><strong>Ceiling reflectance:</strong> Most significant; typical values 0.7-0.8 for white</li>
+              <li><strong>Wall reflectance:</strong> Second most important; typical values 0.3-0.7</li>
+              <li><strong>Floor reflectance:</strong> Least impact; typical values 0.1-0.3</li>
+              <li><strong>Luminaire type:</strong> Light distribution pattern (direct, indirect, general)</li>
+            </ul>
+            <p><strong>Example UF Table (Typical Recessed LED Panel)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>0.75:</strong> 0.41 — 0.37 — 0.33</li>
+              <li><strong>1.00:</strong> 0.48 — 0.44 — 0.39</li>
+              <li><strong>1.25:</strong> 0.53 — 0.49 — 0.44</li>
+              <li><strong>1.50:</strong> 0.57 — 0.53 — 0.47</li>
+              <li><strong>2.00:</strong> 0.63 — 0.58 — 0.52</li>
+              <li><strong>2.50:</strong> 0.67 — 0.62 — 0.56</li>
+              <li><strong>3.00:</strong> 0.70 — 0.65 — 0.58</li>
+            </ul>
+            <p>Values are illustrative. Always use manufacturer's actual photometric data.</p>
+            <p><strong>Linear Interpolation for UF</strong></p>
+            <p>When K falls between tabulated values, interpolate linearly:</p>
+            <p>UF = UF₁ + [(K - K₁) / (K₂ - K₁)] × (UF₂ - UF₁)</p>
+            <p>Example: For K = 1.75 between K = 1.5 (UF = 0.57) and K = 2.0 (UF = 0.63): <br /> UF = 0.57 + [(1.75 - 1.5) / (2.0 - 1.5)] × (0.63 - 0.57) = 0.57 + 0.5 × 0.06 = 0.60</p>
+            <p><strong>Practical tip:</strong> Dark walls and ceilings significantly reduce UF. In industrial spaces with dark surfaces, UF may be 30-40% lower than in offices with light finishes.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Maintenance Factors">
+            <p>The maintenance factor (MF) accounts for the reduction in light output over time due to lamp depreciation, luminaire soiling, and room surface degradation. It ensures the maintained illuminance meets requirements at the end of the maintenance cycle.</p>
+            <p><strong>Maintenance Factor Components</strong></p>
+            <p>MF = LLMF × LMF × RSMF</p>
+            <p><strong>LLMF</strong> = Lamp Lumen Maintenance Factor (lamp output depreciation)</p>
+            <p><strong>LMF</strong> = Luminaire Maintenance Factor (dirt on luminaire surfaces)</p>
+            <p><strong>RSMF</strong> = Room Surface Maintenance Factor (dirt on room surfaces)</p>
+            <p><strong>Typical Component Values</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>LLMF (LED at 50,000h):</strong> 0.90 — 0.90 — 0.90</li>
+              <li><strong>LMF (3-year cycle):</strong> 0.95 — 0.90 — 0.80</li>
+              <li><strong>RSMF (3-year cycle):</strong> 0.98 — 0.95 — 0.90</li>
+              <li><strong>Combined MF:</strong> 0.84 — 0.77 — 0.65</li>
+            </ul>
+            <p><strong>Environment Categories</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Very clean:</strong> Clean rooms, hospitals (MF ≈ 0.9)</li>
+              <li><strong>Clean:</strong> Offices, schools (MF ≈ 0.8)</li>
+              <li><strong>Normal:</strong> Retail, light industry (MF ≈ 0.75)</li>
+              <li><strong>Dirty:</strong> Heavy industry, workshops (MF ≈ 0.65)</li>
+            </ul>
+            <p><strong>Maintenance Cycle Impact</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Annual cleaning:</strong> Higher LMF values</li>
+              <li><strong>3-year cycle:</strong> Standard commercial</li>
+              <li><strong>5-year cycle:</strong> Lower MF required</li>
+              <li><strong>IP65+ luminaires:</strong> Better LMF in dirty areas</li>
+            </ul>
+            <p><strong>Initial vs Maintained Illuminance</strong></p>
+            <p><strong>Initial illuminance</strong> = E / MF (what you get when luminaires are new) <br /> <strong>Maintained illuminance</strong> = E (what you get at end of maintenance period) <br /> <br /> Example: If design requires 500 lux maintained and MF = 0.8: <br /> Initial illuminance = 500 / 0.8 = 625 lux</p>
+            <p><strong>Design consideration:</strong> Higher MF allows fewer luminaires but requires more frequent maintenance. Balance capital cost against maintenance costs.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              The lumen method is the standard technique for calculating average illuminance in
-              interior spaces. It determines how many luminaires are needed to achieve a specified
-              maintained illuminance level across the working plane of a room.
+              <strong>Example 1: Office Lighting Design</strong>
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-3">Lumen Method Formula</p>
-              <div className="font-mono text-lg text-center text-white mb-3">
-                E = (n × F × UF × MF) / A
-              </div>
-              <div className="grid sm:grid-cols-2 gap-2 text-sm">
-                <div>
-                  <strong>E</strong> = Average illuminance (lux)
-                </div>
-                <div>
-                  <strong>n</strong> = Number of luminaires
-                </div>
-                <div>
-                  <strong>F</strong> = Luminous flux per luminaire (lumens)
-                </div>
-                <div>
-                  <strong>UF</strong> = Utilisation factor (0-1)
-                </div>
-                <div>
-                  <strong>MF</strong> = Maintenance factor (0-1)
-                </div>
-                <div>
-                  <strong>A</strong> = Room area (m²)
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Rearranged Forms of the Formula
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">To Find</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Formula</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Illuminance (E)</td>
-                      <td className="border border-white/10 px-3 py-2 font-mono">
-                        E = (n × F × UF × MF) / A
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Verify existing installation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Number of luminaires (n)</td>
-                      <td className="border border-white/10 px-3 py-2 font-mono">
-                        n = (E × A) / (F × UF × MF)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">New lighting design</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Total flux required</td>
-                      <td className="border border-white/10 px-3 py-2 font-mono">
-                        Φ = (E × A) / (UF × MF)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Luminaire selection</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Key assumptions of the lumen method:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Uniform distribution:</strong> Luminaires are evenly spaced across the
-                  ceiling
-                </li>
-                <li className="pl-1">
-                  <strong>Regular room shape:</strong> Rectangular rooms work best; irregular shapes
-                  need subdivision
-                </li>
-                <li className="pl-1">
-                  <strong>Average illuminance:</strong> Calculates mean value, not minimum or
-                  maximum
-                </li>
-                <li className="pl-1">
-                  <strong>Horizontal working plane:</strong> Results apply to a flat surface at
-                  specified height
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design principle:</strong> The lumen method gives average illuminance. For
-              uniformity requirements, spacing-to-height ratios must also be checked.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Room Index Calculation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Room Index Calculation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Brief:</strong> Design general lighting for an office 15m × 12m with 3m ceiling height and 0.85m working plane. Required illuminance: 500 lux maintained. Using LED panels rated at 4,000 lumens each.</p>
+            <p>Step 1: Calculate mounting height</p>
+            <p>Hm = 3.0 - 0.85 = 2.15m</p>
+            <p>Step 2: Calculate room index</p>
+            <p>K = (L × W) / [Hm × (L + W)]</p>
+            <p>K = (15 × 12) / [2.15 × (15 + 12)]</p>
+            <p>K = 180 / (2.15 × 27) = 180 / 58.05</p>
+            <p>K = 3.10</p>
+            <p>Step 3: Determine UF (from table, C/W/F = 0.7/0.5/0.2)</p>
+            <p>For K = 3.0, UF = 0.70 (interpolate if needed)</p>
+            <p>UF = 0.70</p>
+            <p>Step 4: Determine MF (clean office, 3-year maintenance)</p>
+            <p>MF = 0.80</p>
+            <p>Step 5: Calculate number of luminaires</p>
+            <p>n = (E × A) / (F × UF × MF)</p>
+            <p>n = (500 × 180) / (4,000 × 0.70 × 0.80)</p>
+            <p>n = 90,000 / 2,240</p>
+            <p>n = 40.2 → Use 40 luminaires</p>
+            <p>Step 6: Verify illuminance with 40 luminaires</p>
+            <p>E = (40 × 4,000 × 0.70 × 0.80) / 180</p>
+            <p>E = 497 lux ✓ (acceptable, within 10% of target)</p>
+            <p>Step 7: Arrange luminaires (5 rows × 8 columns)</p>
+            <p>Spacing: 15m / 8 = 1.875m (along length)</p>
+            <p>Spacing: 12m / 5 = 2.4m (along width)</p>
             <p>
-              The room index (K) is a dimensionless number that describes room proportions relative
-              to the luminaire mounting height. It determines how effectively light from luminaires
-              reaches the working plane.
+              <strong>Example 2: Classroom Verification</strong>
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-3">Room Index Formula</p>
-              <div className="font-mono text-lg text-center text-white mb-3">
-                K = (L × W) / [Hm × (L + W)]
-              </div>
-              <div className="grid sm:grid-cols-2 gap-2 text-sm">
-                <div>
-                  <strong>K</strong> = Room index (dimensionless)
-                </div>
-                <div>
-                  <strong>L</strong> = Room length (m)
-                </div>
-                <div>
-                  <strong>W</strong> = Room width (m)
-                </div>
-                <div>
-                  <strong>Hm</strong> = Mounting height above working plane (m)
-                </div>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Mounting Height (Hm)</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Ceiling height minus working plane height</li>
-                  <li className="pl-1">Office working plane: typically 0.85m</li>
-                  <li className="pl-1">Standing work: typically 0.95m</li>
-                  <li className="pl-1">Floor-level tasks: 0m working plane</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Typical K Values</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Small rooms: K = 0.6-1.0</li>
-                  <li className="pl-1">Medium rooms: K = 1.0-2.5</li>
-                  <li className="pl-1">Large rooms: K = 2.5-5.0</li>
-                  <li className="pl-1">Very large halls: K &gt; 5.0</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Room Index Example Calculations
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Room</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">L × W (m)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Hm (m)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Calculation</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">K</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Small office</td>
-                      <td className="border border-white/10 px-3 py-2">6 × 4</td>
-                      <td className="border border-white/10 px-3 py-2">2.0</td>
-                      <td className="border border-white/10 px-3 py-2 font-mono">
-                        24 / (2.0 × 10)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">1.2</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Open plan</td>
-                      <td className="border border-white/10 px-3 py-2">20 × 15</td>
-                      <td className="border border-white/10 px-3 py-2">2.4</td>
-                      <td className="border border-white/10 px-3 py-2 font-mono">
-                        300 / (2.4 × 35)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">3.57</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Classroom</td>
-                      <td className="border border-white/10 px-3 py-2">10 × 8</td>
-                      <td className="border border-white/10 px-3 py-2">2.15</td>
-                      <td className="border border-white/10 px-3 py-2 font-mono">
-                        80 / (2.15 × 18)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">2.07</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Warehouse</td>
-                      <td className="border border-white/10 px-3 py-2">40 × 25</td>
-                      <td className="border border-white/10 px-3 py-2">6.0</td>
-                      <td className="border border-white/10 px-3 py-2 font-mono">
-                        1000 / (6.0 × 65)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">2.56</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key insight:</strong> Higher K values mean better light utilisation. Square
-              rooms have higher K than narrow rooms of equal area.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Utilisation Factors */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Utilisation Factors
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Brief:</strong> A classroom 10m × 8m has 18 luminaires installed, each rated at 3,600 lumens. Ceiling height 3m, working plane 0.85m. Surface reflectances: ceiling 0.7, walls 0.5, floor 0.2. Verify maintained illuminance with MF = 0.75.</p>
+            <p>Step 1: Calculate mounting height and room index</p>
+            <p>Hm = 3.0 - 0.85 = 2.15m</p>
+            <p>K = (10 × 8) / [2.15 × (10 + 8)]</p>
+            <p>K = 80 / 38.7 = 2.07</p>
+            <p>K ≈ 2.0</p>
+            <p>Step 2: Determine UF from table</p>
+            <p>For K = 2.0 and reflectances 0.7/0.5/0.2:</p>
+            <p>UF = 0.63</p>
+            <p>Step 3: Calculate maintained illuminance</p>
+            <p>A = 10 × 8 = 80 m²</p>
+            <p>E = (n × F × UF × MF) / A</p>
+            <p>E = (18 × 3,600 × 0.63 × 0.75) / 80</p>
+            <p>E = 30,618 / 80</p>
+            <p>E = 383 lux</p>
+            <p>Step 4: Compare with standard requirement</p>
+            <p>Classroom requirement (BS EN 12464-1): 300 lux minimum</p>
+            <p>383 lux &gt; 300 lux ✓ Installation complies</p>
             <p>
-              The utilisation factor (UF) represents the proportion of luminaire output that reaches
-              the working plane. It depends on the room index, luminaire light distribution, and the
-              reflectances of room surfaces.
+              <strong>Example 3: Industrial Workshop</strong>
             </p>
+            <p><strong>Brief:</strong> Calculate luminaires for a workshop 30m × 20m with 6m ceiling height (floor-level working plane). Required: 300 lux. High-bay LED luminaires rated at 20,000 lumens. Environment: normal industrial.</p>
+            <p>Step 1: Calculate room index</p>
+            <p>Hm = 6.0m (working plane at floor)</p>
+            <p>K = (30 × 20) / [6.0 × (30 + 20)]</p>
+            <p>K = 600 / 300 = 2.0</p>
+            <p>K = 2.0</p>
+            <p>Step 2: Determine UF (darker industrial surfaces)</p>
+            <p>Reflectances approximately 0.5/0.3/0.1</p>
+            <p>UF = 0.52</p>
+            <p>Step 3: Determine MF (industrial environment)</p>
+            <p>Normal industrial, IP65 luminaires</p>
+            <p>MF = 0.70</p>
+            <p>Step 4: Calculate number of luminaires</p>
+            <p>A = 30 × 20 = 600 m²</p>
+            <p>n = (E × A) / (F × UF × MF)</p>
+            <p>n = (300 × 600) / (20,000 × 0.52 × 0.70)</p>
+            <p>n = 180,000 / 7,280</p>
+            <p>n = 24.7 → Use 25 luminaires</p>
+            <p>Step 5: Arrangement (5 × 5 grid)</p>
+            <p>Spacing: 30m / 5 = 6m along length</p>
+            <p>Spacing: 20m / 5 = 4m along width</p>
+            <p>Step 6: Verify with 25 luminaires</p>
+            <p>E = (25 × 20,000 × 0.52 × 0.70) / 600</p>
+            <p>E = 303 lux ✓</p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Factors Affecting Utilisation Factor
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Room index (K):</strong> Higher K = higher UF (larger rooms utilise light
-                  better)
-                </li>
-                <li className="pl-1">
-                  <strong>Ceiling reflectance:</strong> Most significant; typical values 0.7-0.8 for
-                  white
-                </li>
-                <li className="pl-1">
-                  <strong>Wall reflectance:</strong> Second most important; typical values 0.3-0.7
-                </li>
-                <li className="pl-1">
-                  <strong>Floor reflectance:</strong> Least impact; typical values 0.1-0.3
-                </li>
-                <li className="pl-1">
-                  <strong>Luminaire type:</strong> Light distribution pattern (direct, indirect,
-                  general)
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example UF Table (Typical Recessed LED Panel)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/10">
-                      <th className="border border-white/10 px-2 py-2 text-left" rowSpan={2}>
-                        Room Index (K)
-                      </th>
-                      <th className="border border-white/10 px-2 py-2 text-center" colSpan={3}>
-                        Reflectances (Ceiling/Walls/Floor)
-                      </th>
-                    </tr>
-                    <tr className="bg-white/10">
-                      <th className="border border-white/10 px-2 py-2 text-center">0.7/0.5/0.2</th>
-                      <th className="border border-white/10 px-2 py-2 text-center">0.7/0.3/0.2</th>
-                      <th className="border border-white/10 px-2 py-2 text-center">0.5/0.3/0.1</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">0.75</td>
-                      <td className="border border-white/10 px-2 py-2 text-center">0.41</td>
-                      <td className="border border-white/10 px-2 py-2 text-center">0.37</td>
-                      <td className="border border-white/10 px-2 py-2 text-center">0.33</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">1.00</td>
-                      <td className="border border-white/10 px-2 py-2 text-center">0.48</td>
-                      <td className="border border-white/10 px-2 py-2 text-center">0.44</td>
-                      <td className="border border-white/10 px-2 py-2 text-center">0.39</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">1.25</td>
-                      <td className="border border-white/10 px-2 py-2 text-center">0.53</td>
-                      <td className="border border-white/10 px-2 py-2 text-center">0.49</td>
-                      <td className="border border-white/10 px-2 py-2 text-center">0.44</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">1.50</td>
-                      <td className="border border-white/10 px-2 py-2 text-center">0.57</td>
-                      <td className="border border-white/10 px-2 py-2 text-center">0.53</td>
-                      <td className="border border-white/10 px-2 py-2 text-center">0.47</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">2.00</td>
-                      <td className="border border-white/10 px-2 py-2 text-center">0.63</td>
-                      <td className="border border-white/10 px-2 py-2 text-center">0.58</td>
-                      <td className="border border-white/10 px-2 py-2 text-center">0.52</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">2.50</td>
-                      <td className="border border-white/10 px-2 py-2 text-center">0.67</td>
-                      <td className="border border-white/10 px-2 py-2 text-center">0.62</td>
-                      <td className="border border-white/10 px-2 py-2 text-center">0.56</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-2 py-2">3.00</td>
-                      <td className="border border-white/10 px-2 py-2 text-center">0.70</td>
-                      <td className="border border-white/10 px-2 py-2 text-center">0.65</td>
-                      <td className="border border-white/10 px-2 py-2 text-center">0.58</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-2">
-                Values are illustrative. Always use manufacturer's actual photometric data.
-              </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Linear Interpolation for UF</p>
-              <p className="text-sm text-white mb-2">
-                When K falls between tabulated values, interpolate linearly:
-              </p>
-              <div className="font-mono text-sm text-white">
-                UF = UF₁ + [(K - K₁) / (K₂ - K₁)] × (UF₂ - UF₁)
-              </div>
-              <p className="text-sm text-white mt-2">
-                Example: For K = 1.75 between K = 1.5 (UF = 0.57) and K = 2.0 (UF = 0.63):
-                <br />
-                UF = 0.57 + [(1.75 - 1.5) / (2.0 - 1.5)] × (0.63 - 0.57) = 0.57 + 0.5 × 0.06 = 0.60
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Practical tip:</strong> Dark walls and ceilings significantly reduce UF. In
-              industrial spaces with dark surfaces, UF may be 30-40% lower than in offices with
-              light finishes.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Maintenance Factors */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Maintenance Factors
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              The maintenance factor (MF) accounts for the reduction in light output over time due
-              to lamp depreciation, luminaire soiling, and room surface degradation. It ensures the
-              maintained illuminance meets requirements at the end of the maintenance cycle.
+              <strong>Design Process Checklist:</strong>
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Maintenance Factor Components
-              </p>
-              <div className="font-mono text-lg text-center text-white mb-3">
-                MF = LLMF × LMF × RSMF
-              </div>
-              <div className="text-sm space-y-1">
-                <p>
-                  <strong>LLMF</strong> = Lamp Lumen Maintenance Factor (lamp output depreciation)
-                </p>
-                <p>
-                  <strong>LMF</strong> = Luminaire Maintenance Factor (dirt on luminaire surfaces)
-                </p>
-                <p>
-                  <strong>RSMF</strong> = Room Surface Maintenance Factor (dirt on room surfaces)
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Component Values
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Component</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Clean Environment
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Normal</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Dirty/Industrial
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LLMF (LED at 50,000h)</td>
-                      <td className="border border-white/10 px-3 py-2">0.90</td>
-                      <td className="border border-white/10 px-3 py-2">0.90</td>
-                      <td className="border border-white/10 px-3 py-2">0.90</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LMF (3-year cycle)</td>
-                      <td className="border border-white/10 px-3 py-2">0.95</td>
-                      <td className="border border-white/10 px-3 py-2">0.90</td>
-                      <td className="border border-white/10 px-3 py-2">0.80</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">RSMF (3-year cycle)</td>
-                      <td className="border border-white/10 px-3 py-2">0.98</td>
-                      <td className="border border-white/10 px-3 py-2">0.95</td>
-                      <td className="border border-white/10 px-3 py-2">0.90</td>
-                    </tr>
-                    <tr className="bg-white/5">
-                      <td className="border border-white/10 px-3 py-2 font-medium">Combined MF</td>
-                      <td className="border border-white/10 px-3 py-2 font-medium">0.84</td>
-                      <td className="border border-white/10 px-3 py-2 font-medium">0.77</td>
-                      <td className="border border-white/10 px-3 py-2 font-medium">0.65</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Environment Categories
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Very clean:</strong> Clean rooms, hospitals (MF ≈ 0.9)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Clean:</strong> Offices, schools (MF ≈ 0.8)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Normal:</strong> Retail, light industry (MF ≈ 0.75)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Dirty:</strong> Heavy industry, workshops (MF ≈ 0.65)
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Maintenance Cycle Impact
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Annual cleaning:</strong> Higher LMF values
-                  </li>
-                  <li className="pl-1">
-                    <strong>3-year cycle:</strong> Standard commercial
-                  </li>
-                  <li className="pl-1">
-                    <strong>5-year cycle:</strong> Lower MF required
-                  </li>
-                  <li className="pl-1">
-                    <strong>IP65+ luminaires:</strong> Better LMF in dirty areas
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Initial vs Maintained Illuminance
-              </p>
-              <p className="text-sm text-white">
-                <strong>Initial illuminance</strong> = E / MF (what you get when luminaires are new)
-                <br />
-                <strong>Maintained illuminance</strong> = E (what you get at end of maintenance
-                period)
-                <br />
-                <br />
-                Example: If design requires 500 lux maintained and MF = 0.8:
-                <br />
-                Initial illuminance = 500 / 0.8 = 625 lux
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design consideration:</strong> Higher MF allows fewer luminaires but requires
-              more frequent maintenance. Balance capital cost against maintenance costs.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Confirm illuminance requirement from BS EN 12464-1 or client specification</li>
+              <li>Measure or obtain room dimensions (L, W) and ceiling height</li>
+              <li>Determine working plane height for the application</li>
+              <li>Calculate room index K = L×W / [Hm(L+W)]</li>
+              <li>Assess surface reflectances (ceiling, walls, floor)</li>
+              <li>Select luminaire type and obtain UF data from manufacturer</li>
+              <li>Determine maintenance factor based on environment and cleaning regime</li>
+              <li>Calculate number of luminaires required</li>
+              <li>Verify illuminance achieved with practical arrangement</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Office working plane: <strong>0.85m</strong></li>
+              <li>Office illuminance: <strong>500 lux</strong> (writing, typing, reading)</li>
+              <li>Classroom illuminance: <strong>300-500 lux</strong></li>
+              <li>Typical MF range: <strong>0.7-0.9</strong></li>
+              <li>Typical UF range: <strong>0.4-0.7</strong></li>
+              <li>White ceiling reflectance: <strong>0.7-0.8</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Office Lighting Design
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Brief:</strong> Design general lighting for an office 15m × 12m with 3m
-                ceiling height and 0.85m working plane. Required illuminance: 500 lux maintained.
-                Using LED panels rated at 4,000 lumens each.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Step 1: Calculate mounting height</p>
-                <p>Hm = 3.0 - 0.85 = 2.15m</p>
-                <p className="mt-2 text-white">Step 2: Calculate room index</p>
-                <p>K = (L × W) / [Hm × (L + W)]</p>
-                <p>K = (15 × 12) / [2.15 × (15 + 12)]</p>
-                <p>K = 180 / (2.15 × 27) = 180 / 58.05</p>
-                <p className="text-green-400">K = 3.10</p>
-                <p className="mt-2 text-white">
-                  Step 3: Determine UF (from table, C/W/F = 0.7/0.5/0.2)
-                </p>
-                <p>For K = 3.0, UF = 0.70 (interpolate if needed)</p>
-                <p className="text-green-400">UF = 0.70</p>
-                <p className="mt-2 text-white">
-                  Step 4: Determine MF (clean office, 3-year maintenance)
-                </p>
-                <p className="text-green-400">MF = 0.80</p>
-                <p className="mt-2 text-white">Step 5: Calculate number of luminaires</p>
-                <p>n = (E × A) / (F × UF × MF)</p>
-                <p>n = (500 × 180) / (4,000 × 0.70 × 0.80)</p>
-                <p>n = 90,000 / 2,240</p>
-                <p className="text-green-400">n = 40.2 → Use 40 luminaires</p>
-                <p className="mt-2 text-white">Step 6: Verify illuminance with 40 luminaires</p>
-                <p>E = (40 × 4,000 × 0.70 × 0.80) / 180</p>
-                <p className="text-green-400">E = 497 lux ✓ (acceptable, within 10% of target)</p>
-                <p className="mt-2 text-white">
-                  Step 7: Arrange luminaires (5 rows × 8 columns)
-                </p>
-                <p>Spacing: 15m / 8 = 1.875m (along length)</p>
-                <p>Spacing: 12m / 5 = 2.4m (along width)</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Classroom Verification
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Brief:</strong> A classroom 10m × 8m has 18 luminaires installed, each rated
-                at 3,600 lumens. Ceiling height 3m, working plane 0.85m. Surface reflectances:
-                ceiling 0.7, walls 0.5, floor 0.2. Verify maintained illuminance with MF = 0.75.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Step 1: Calculate mounting height and room index</p>
-                <p>Hm = 3.0 - 0.85 = 2.15m</p>
-                <p>K = (10 × 8) / [2.15 × (10 + 8)]</p>
-                <p>K = 80 / 38.7 = 2.07</p>
-                <p className="text-green-400">K ≈ 2.0</p>
-                <p className="mt-2 text-white">Step 2: Determine UF from table</p>
-                <p>For K = 2.0 and reflectances 0.7/0.5/0.2:</p>
-                <p className="text-green-400">UF = 0.63</p>
-                <p className="mt-2 text-white">Step 3: Calculate maintained illuminance</p>
-                <p>A = 10 × 8 = 80 m²</p>
-                <p>E = (n × F × UF × MF) / A</p>
-                <p>E = (18 × 3,600 × 0.63 × 0.75) / 80</p>
-                <p>E = 30,618 / 80</p>
-                <p className="text-green-400">E = 383 lux</p>
-                <p className="mt-2 text-white">Step 4: Compare with standard requirement</p>
-                <p>Classroom requirement (BS EN 12464-1): 300 lux minimum</p>
-                <p className="text-green-400">383 lux &gt; 300 lux ✓ Installation complies</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Industrial Workshop
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Brief:</strong> Calculate luminaires for a workshop 30m × 20m with 6m
-                ceiling height (floor-level working plane). Required: 300 lux. High-bay LED
-                luminaires rated at 20,000 lumens. Environment: normal industrial.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Step 1: Calculate room index</p>
-                <p>Hm = 6.0m (working plane at floor)</p>
-                <p>K = (30 × 20) / [6.0 × (30 + 20)]</p>
-                <p>K = 600 / 300 = 2.0</p>
-                <p className="text-green-400">K = 2.0</p>
-                <p className="mt-2 text-white">
-                  Step 2: Determine UF (darker industrial surfaces)
-                </p>
-                <p>Reflectances approximately 0.5/0.3/0.1</p>
-                <p className="text-green-400">UF = 0.52</p>
-                <p className="mt-2 text-white">Step 3: Determine MF (industrial environment)</p>
-                <p>Normal industrial, IP65 luminaires</p>
-                <p className="text-green-400">MF = 0.70</p>
-                <p className="mt-2 text-white">Step 4: Calculate number of luminaires</p>
-                <p>A = 30 × 20 = 600 m²</p>
-                <p>n = (E × A) / (F × UF × MF)</p>
-                <p>n = (300 × 600) / (20,000 × 0.52 × 0.70)</p>
-                <p>n = 180,000 / 7,280</p>
-                <p className="text-green-400">n = 24.7 → Use 25 luminaires</p>
-                <p className="mt-2 text-white">Step 5: Arrangement (5 × 5 grid)</p>
-                <p>Spacing: 30m / 5 = 6m along length</p>
-                <p>Spacing: 20m / 5 = 4m along width</p>
-                <p className="mt-2 text-white">Step 6: Verify with 25 luminaires</p>
-                <p>E = (25 × 20,000 × 0.52 × 0.70) / 600</p>
-                <p className="text-green-400">E = 303 lux ✓</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Design Process Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Confirm illuminance requirement from BS EN 12464-1 or client specification
-                </li>
-                <li className="pl-1">
-                  Measure or obtain room dimensions (L, W) and ceiling height
-                </li>
-                <li className="pl-1">Determine working plane height for the application</li>
-                <li className="pl-1">Calculate room index K = L×W / [Hm(L+W)]</li>
-                <li className="pl-1">Assess surface reflectances (ceiling, walls, floor)</li>
-                <li className="pl-1">Select luminaire type and obtain UF data from manufacturer</li>
-                <li className="pl-1">
-                  Determine maintenance factor based on environment and cleaning regime
-                </li>
-                <li className="pl-1">Calculate number of luminaires required</li>
-                <li className="pl-1">Verify illuminance achieved with practical arrangement</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Wrong mounting height:</strong> Using ceiling height instead of Hm (ceiling to working plane)</li>
+                <li><strong>Ignoring reflectances:</strong> Using standard UF without considering actual surface colours</li>
+                <li><strong>Overestimating MF:</strong> Using 0.9 for normal environments (0.8 is more realistic)</li>
+                <li><strong>Forgetting to verify:</strong> Not recalculating illuminance with the actual number of luminaires installed</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Office working plane: <strong>0.85m</strong>
-                </li>
-                <li className="pl-1">
-                  Office illuminance: <strong>500 lux</strong> (writing, typing, reading)
-                </li>
-                <li className="pl-1">
-                  Classroom illuminance: <strong>300-500 lux</strong>
-                </li>
-                <li className="pl-1">
-                  Typical MF range: <strong>0.7-0.9</strong>
-                </li>
-                <li className="pl-1">
-                  Typical UF range: <strong>0.4-0.7</strong>
-                </li>
-                <li className="pl-1">
-                  White ceiling reflectance: <strong>0.7-0.8</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Wrong mounting height:</strong> Using ceiling height instead of Hm
-                  (ceiling to working plane)
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring reflectances:</strong> Using standard UF without considering
-                  actual surface colours
-                </li>
-                <li className="pl-1">
-                  <strong>Overestimating MF:</strong> Using 0.9 for normal environments (0.8 is more
-                  realistic)
-                </li>
-                <li className="pl-1">
-                  <strong>Forgetting to verify:</strong> Not recalculating illuminance with the
-                  actual number of luminaires installed
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Key Formulae</p>
-                <ul className="space-y-0.5 font-mono">
-                  <li>E = (n × F × UF × MF) / A</li>
-                  <li>n = (E × A) / (F × UF × MF)</li>
-                  <li>K = (L × W) / [Hm × (L + W)]</li>
-                  <li>MF = LLMF × LMF × RSMF</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Typical Values</p>
-                <ul className="space-y-0.5">
-                  <li>Office illuminance: 500 lux</li>
-                  <li>Working plane: 0.85m</li>
-                  <li>Office MF: 0.8</li>
-                  <li>Typical UF: 0.5-0.65</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section3-3">
-              Next: Lighting Design Software
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section3-1")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Lighting fundamentals
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section3-3")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Point-by-point method
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

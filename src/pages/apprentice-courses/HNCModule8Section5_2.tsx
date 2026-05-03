@@ -1,8 +1,21 @@
-import { ArrowLeft, Thermometer, CheckCircle, Droplets, Gauge, Wind, Activity } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 8 · Section 5 · Subsection 2 — Sensors and Measurement
+ * HNC Electrical Engineering for Building Services (HVAC Systems)
+ *   Understanding HVAC sensors: temperature, humidity, pressure, flow and air quality measurement for BMS integration
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Sensors and Measurement - HNC Module 8 Section 5.2';
@@ -227,977 +240,298 @@ const faqs = [
 ];
 
 const HNCModule8Section5_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section5")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module8-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Thermometer className="h-4 w-4" />
-            <span>Module 8.5.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Sensors and Measurement
-          </h1>
-          <p className="text-white">
-            Understanding HVAC sensors: temperature, humidity, pressure, flow and air quality
-            measurement for BMS integration
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 8 · Section 5 · Subsection 2"
+            title="Sensors and Measurement"
+            description="Understanding HVAC sensors: temperature, humidity, pressure, flow and air quality measurement for BMS integration"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Temperature:</strong> Pt100/Pt1000 RTDs, NTC thermistors, thermocouples
-              </li>
-              <li className="pl-1">
-                <strong>Humidity:</strong> Capacitive sensors, 0-100% RH range
-              </li>
-              <li className="pl-1">
-                <strong>Pressure:</strong> Absolute, gauge, differential transducers
-              </li>
-              <li className="pl-1">
-                <strong>Signals:</strong> 4-20mA, 0-10V, resistance outputs
-              </li>
+          <ConceptBlock title="Temperature Sensors">
+            <p>Temperature is the most commonly measured parameter in HVAC systems. Accurate temperature measurement is essential for comfort control, energy efficiency and equipment protection. Different sensor technologies suit different applications.</p>
+            <p><strong>Resistance Temperature Detectors (RTDs)</strong></p>
+            <p>RTDs use the principle that metal resistance increases with temperature. Platinum is the most common material due to its stability, linearity and wide temperature range.</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Pt100:</strong> 100 ohms — -50 to +200 deg C — Standard HVAC, AHU coils</li>
+              <li><strong>Pt1000:</strong> 1000 ohms — -50 to +200 deg C — Long cable runs, remote sensors</li>
+              <li><strong>Ni1000:</strong> 1000 ohms — -50 to +150 deg C — Room sensors, lower cost</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>BMS integration:</strong> Sensor selection for outstations
-              </li>
-              <li className="pl-1">
-                <strong>Accuracy:</strong> Class A/B RTDs, calibration requirements
-              </li>
-              <li className="pl-1">
-                <strong>Installation:</strong> Thermowells, averaging elements
-              </li>
-              <li className="pl-1">
-                <strong>Maintenance:</strong> Calibration schedules and records
-              </li>
+            <p><strong>RTD Accuracy Classes (IEC 60751)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Class AA:</strong> Plus or minus 0.1 deg C at 0 deg C - Laboratory grade</li>
+              <li><strong>Class A:</strong> Plus or minus 0.15 deg C at 0 deg C - High accuracy HVAC</li>
+              <li><strong>Class B:</strong> Plus or minus 0.3 deg C at 0 deg C - Standard HVAC applications</li>
+              <li><strong>Class C:</strong> Plus or minus 0.6 deg C at 0 deg C - Non-critical applications</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>NTC Thermistors</strong></p>
+            <p>Negative Temperature Coefficient (NTC) thermistors decrease in resistance as temperature rises. They offer high sensitivity but non-linear output requiring linearisation.</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>10k NTC:</strong> 10,000 ohms at 25 deg C - Common room sensor type</li>
+              <li><strong>High sensitivity:</strong> Large resistance change per degree</li>
+              <li><strong>Non-linear:</strong> Requires lookup tables or linearisation</li>
+              <li><strong>Lower cost:</strong> Suitable for mass-market applications</li>
+            </ul>
+            <p><strong>Thermocouples</strong></p>
+            <p>Thermocouples generate a voltage (Seebeck effect) proportional to temperature difference between the measurement junction and reference junction. They suit high-temperature applications.</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Type K:</strong> Chromel-Alumel — -200 to +1350 deg C — Boilers, flue gases</li>
+              <li><strong>Type J:</strong> Iron-Constantan — -40 to +750 deg C — Industrial heating</li>
+              <li><strong>Type T:</strong> Copper-Constantan — -200 to +350 deg C — Low temperature, food</li>
+            </ul>
+            <p><strong>Wiring Configurations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>2-wire:</strong> Simple but cable resistance adds to reading (not recommended for Pt100)</li>
+              <li><strong>3-wire:</strong> Compensates for cable resistance - standard for Pt100 BMS applications</li>
+              <li><strong>4-wire:</strong> Most accurate, eliminates cable effects - for laboratory/precision use</li>
+            </ul>
+            <p><strong>Selection tip:</strong> Use Pt1000 for cable runs greater than 20m to minimise cable resistance errors. Each 1 ohm cable resistance causes approximately 2.5 deg C error with Pt100 but only 0.25 deg C with Pt1000.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Identify and select appropriate temperature sensors for HVAC applications',
-              'Understand humidity sensor technologies and their characteristics',
-              'Apply pressure and flow measurement principles to BMS systems',
-              'Interpret 4-20mA and 0-10V signal specifications',
-              'Specify sensor accuracy, resolution and range requirements',
-              'Implement calibration procedures and maintain records',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Temperature Sensors */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Temperature Sensors
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Humidity and Air Quality Sensors">
+            <p>Humidity control is critical for comfort, health and building protection. CO2 sensors enable demand-controlled ventilation, optimising energy use while maintaining air quality.</p>
+            <p><strong>Humidity Sensor Technologies</strong></p>
+            <p><strong>Capacitive Sensors</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Polymer film absorbs moisture</li>
+              <li>Capacitance changes with humidity</li>
+              <li>Accuracy: plus or minus 2-3% RH typical</li>
+              <li>Most common in HVAC applications</li>
+              <li>Good stability and response time</li>
+            </ul>
+            <p><strong>Resistive Sensors</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Conductive polymer changes resistance</li>
+              <li>Lower cost than capacitive</li>
+              <li>Accuracy: plus or minus 3-5% RH</li>
+              <li>Less stable over time</li>
+              <li>Suitable for non-critical applications</li>
+            </ul>
+            <p><strong>Humidity Sensor Specifications</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Range:</strong> 0-100% RH — Full range measurement</li>
+              <li><strong>Accuracy:</strong> Plus or minus 2% RH — At 25 deg C, 10-90% RH</li>
+              <li><strong>Long-term drift:</strong> Less than 1% RH/year — Affects calibration interval</li>
+              <li><strong>Response time:</strong> Less than 30 seconds — To reach 63% of step change</li>
+            </ul>
+            <p><strong>CO2 Sensors for Demand-Controlled Ventilation</strong></p>
+            <p>CO2 concentration indicates occupancy and air quality. Non-dispersive infrared (NDIR) sensors are standard for BMS applications, measuring CO2 absorption of infrared light.</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Outdoor air:</strong> Approximately 400-420 ppm (rising due to climate change)</li>
+              <li><strong>Occupied spaces target:</strong> Less than 1000 ppm (800 ppm above outdoor)</li>
+              <li><strong>Poor air quality:</strong> Greater than 1500 ppm - increase ventilation</li>
+              <li><strong>Sensor range:</strong> 0-2000 ppm typical, 0-5000 ppm for high-occupancy</li>
+              <li><strong>Accuracy:</strong> Plus or minus 50 ppm or plus or minus 3% of reading</li>
+            </ul>
+            <p><strong>CIBSE Guide A - Recommended CO2 Levels</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Category I (high expectation):</strong> Less than 550 ppm above outdoor</li>
+              <li><strong>Category II (normal expectation):</strong> Less than 800 ppm above outdoor</li>
+              <li><strong>Category III (moderate expectation):</strong> Less than 1350 ppm above outdoor</li>
+            </ul>
+            <p><strong>Installation tip:</strong> Mount CO2 sensors at breathing height (1.1-1.5m) away from doors, windows and supply air diffusers. Avoid locations near plants or areas where people congregate.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Pressure and Flow Sensors">
+            <p>Pressure and flow measurement are fundamental to HVAC control. Pressure sensors monitor duct static pressure, filter condition and pump operation. Flow meters verify water and air flow rates.</p>
+            <p><strong>Pressure Measurement Types</strong></p>
+            <p><strong>Absolute</strong></p>
+            <p>Referenced to perfect vacuum. Used for altitude compensation.</p>
+            <p><strong>Gauge</strong></p>
+            <p>Referenced to atmospheric pressure. Pump head, vessel pressure.</p>
+            <p><strong>Differential</strong></p>
+            <p>Difference between two points. Filter DP, duct static.</p>
+            <p><strong>Pressure Transducer Technologies</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Piezoresistive:</strong> Strain gauges on silicon diaphragm - most common in HVAC</li>
+              <li><strong>Capacitive:</strong> Diaphragm deflection changes capacitance - high accuracy</li>
+              <li><strong>Piezoelectric:</strong> Crystal generates voltage - for dynamic pressure/vibration</li>
+            </ul>
+            <p><strong>HVAC Pressure Sensor Applications</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Duct static pressure:</strong> Differential — 0-1000 Pa</li>
+              <li><strong>Filter differential:</strong> Differential — 0-500 Pa</li>
+              <li><strong>Room pressure:</strong> Differential — 0-100 Pa</li>
+              <li><strong>LTHW/CHW system:</strong> Gauge — 0-10 bar</li>
+              <li><strong>Pump differential:</strong> Differential — 0-6 bar</li>
+            </ul>
+            <p><strong>Flow Measurement Methods</strong></p>
+            <p><strong>Air Flow</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Pitot tube array:</strong> DP measurement across array</li>
+              <li><strong>Thermal anemometer:</strong> Hot wire/film cooling rate</li>
+              <li><strong>Vortex shedding:</strong> Frequency of vortices</li>
+              <li><strong>Averaging element:</strong> Multiple sensing points</li>
+            </ul>
+            <p><strong>Water Flow</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Electromagnetic:</strong> Conductive fluids, no moving parts</li>
+              <li><strong>Ultrasonic:</strong> Transit time, clamp-on available</li>
+              <li><strong>Turbine:</strong> Rotating impeller, pulse output</li>
+              <li><strong>Orifice plate:</strong> DP across restriction</li>
+            </ul>
+            <p><strong>Flow-Pressure Relationship</strong></p>
+            <p>For differential pressure flow measurement, flow is proportional to the square root of pressure:</p>
+            <p>Q = k x sqrt(delta P)</p>
+            <p>Where Q = flow rate, k = constant, delta P = differential pressure</p>
+            <p><strong>Key point:</strong> Electromagnetic flow meters are preferred for chilled/heating water as they have no moving parts, minimal pressure drop, and work across wide flow ranges. Ensure adequate straight pipe lengths upstream (10 x diameter) and downstream (5 x diameter).</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Signal Types, Accuracy and Calibration">
+            <p>Understanding signal types, accuracy specifications and calibration requirements is essential for proper BMS integration and maintaining measurement quality over the sensor lifetime.</p>
+            <p><strong>Analogue Signal Types</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>4-20mA:</strong> Noise immune, fault detection (0mA = break) — Requires loop power, higher cost — Long runs, noisy environments</li>
+              <li><strong>0-10V DC:</strong> Simple, low cost, easy to measure — Susceptible to noise, voltage drop — Short runs, clean environments</li>
+              <li><strong>2-10V DC:</strong> Live zero for fault detection — Less common, limited compatibility — Critical applications needing fault detection</li>
+              <li><strong>Resistance:</strong> Direct connection, no transmitter — Cable resistance affects reading — RTDs, thermistors with short cables</li>
+            </ul>
+            <p><strong>4-20mA Signal Calculations</strong></p>
+            <p><strong>Signal to Value</strong></p>
+            <p>Value = ((mA - 4) / 16) x Span + Zero</p>
+            <p>Example: 12mA on 0-100 deg C sensor = ((12-4)/16) x 100 + 0 = 50 deg C</p>
+            <p><strong>Value to Signal</strong></p>
+            <p>mA = ((Value - Zero) / Span) x 16 + 4</p>
+            <p>Example: 75 deg C on 0-100 deg C sensor = ((75-0)/100) x 16 + 4 = 16mA</p>
+            <p><strong>Understanding Accuracy Specifications</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Accuracy (% FS):</strong> Error as percentage of full scale range - applies at any reading</li>
+              <li><strong>Accuracy (% reading):</strong> Error as percentage of actual reading - better at low readings</li>
+              <li><strong>Resolution:</strong> Smallest detectable change - not the same as accuracy</li>
+              <li><strong>Repeatability:</strong> Consistency of readings under same conditions</li>
+              <li><strong>Hysteresis:</strong> Difference between increasing and decreasing readings</li>
+              <li><strong>Drift:</strong> Change in accuracy over time - affects calibration interval</li>
+            </ul>
+            <p><strong>Accuracy Example</strong></p>
+            <p>A pressure sensor has 0-10 bar range with 0.5% FS accuracy:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Maximum error = 0.5% x 10 bar = <strong>0.05 bar</strong> at any reading</li>
+              <li>At 8 bar reading: true value is 7.95 to 8.05 bar</li>
+              <li>At 2 bar reading: true value is 1.95 to 2.05 bar (larger % error at low readings)</li>
+            </ul>
+            <p><strong>Calibration Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Traceability:</strong> Reference standards traceable to national standards (UKAS in UK)</li>
+              <li><strong>Frequency:</strong> Typically 6-12 months for critical sensors, annually for standard</li>
+              <li><strong>Documentation:</strong> As-found, as-left readings, date, reference used, technician</li>
+              <li><strong>Adjustment:</strong> Zero and span adjustment if within tolerance, replace if not</li>
+              <li><strong>Environment:</strong> Calibrate at conditions similar to installed environment</li>
+            </ul>
+            <p><strong>Calibration Procedure (General)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Record sensor identification, location and current date</li>
+              <li>Connect reference standard and allow stabilisation</li>
+              <li>Record as-found readings at zero, mid and full scale</li>
+              <li>Adjust zero offset if required</li>
+              <li>Adjust span (gain) if required</li>
+              <li>Record as-left readings at all test points</li>
+              <li>Verify readings are within specification</li>
+              <li>Apply calibration label and update records</li>
+            </ul>
+            <p><strong>Compliance note:</strong> For buildings with environmental controls (laboratories, hospitals, data centres), calibration records may be required for regulatory compliance. Maintain traceable records for audit purposes.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Practical guidance">
             <p>
-              Temperature is the most commonly measured parameter in HVAC systems. Accurate
-              temperature measurement is essential for comfort control, energy efficiency and
-              equipment protection. Different sensor technologies suit different applications.
+              <strong>Sensor Selection Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Resistance Temperature Detectors (RTDs)
-              </p>
-              <p className="text-sm text-white mb-3">
-                RTDs use the principle that metal resistance increases with temperature. Platinum is
-                the most common material due to its stability, linearity and wide temperature range.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Sensor Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">R at 0 deg C</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Range</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        HVAC Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pt100</td>
-                      <td className="border border-white/10 px-3 py-2">100 ohms</td>
-                      <td className="border border-white/10 px-3 py-2">-50 to +200 deg C</td>
-                      <td className="border border-white/10 px-3 py-2">Standard HVAC, AHU coils</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pt1000</td>
-                      <td className="border border-white/10 px-3 py-2">1000 ohms</td>
-                      <td className="border border-white/10 px-3 py-2">-50 to +200 deg C</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Long cable runs, remote sensors
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ni1000</td>
-                      <td className="border border-white/10 px-3 py-2">1000 ohms</td>
-                      <td className="border border-white/10 px-3 py-2">-50 to +150 deg C</td>
-                      <td className="border border-white/10 px-3 py-2">Room sensors, lower cost</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                RTD Accuracy Classes (IEC 60751)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Class AA:</strong> Plus or minus 0.1 deg C at 0 deg C - Laboratory grade
-                </li>
-                <li className="pl-1">
-                  <strong>Class A:</strong> Plus or minus 0.15 deg C at 0 deg C - High accuracy HVAC
-                </li>
-                <li className="pl-1">
-                  <strong>Class B:</strong> Plus or minus 0.3 deg C at 0 deg C - Standard HVAC
-                  applications
-                </li>
-                <li className="pl-1">
-                  <strong>Class C:</strong> Plus or minus 0.6 deg C at 0 deg C - Non-critical
-                  applications
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">NTC Thermistors</p>
-              <p className="text-sm text-white mb-3">
-                Negative Temperature Coefficient (NTC) thermistors decrease in resistance as
-                temperature rises. They offer high sensitivity but non-linear output requiring
-                linearisation.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>10k NTC:</strong> 10,000 ohms at 25 deg C - Common room sensor type
-                </li>
-                <li className="pl-1">
-                  <strong>High sensitivity:</strong> Large resistance change per degree
-                </li>
-                <li className="pl-1">
-                  <strong>Non-linear:</strong> Requires lookup tables or linearisation
-                </li>
-                <li className="pl-1">
-                  <strong>Lower cost:</strong> Suitable for mass-market applications
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Thermocouples</p>
-              <p className="text-sm text-white mb-3">
-                Thermocouples generate a voltage (Seebeck effect) proportional to temperature
-                difference between the measurement junction and reference junction. They suit
-                high-temperature applications.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Materials</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Range</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Type K</td>
-                      <td className="border border-white/10 px-3 py-2">Chromel-Alumel</td>
-                      <td className="border border-white/10 px-3 py-2">-200 to +1350 deg C</td>
-                      <td className="border border-white/10 px-3 py-2">Boilers, flue gases</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Type J</td>
-                      <td className="border border-white/10 px-3 py-2">Iron-Constantan</td>
-                      <td className="border border-white/10 px-3 py-2">-40 to +750 deg C</td>
-                      <td className="border border-white/10 px-3 py-2">Industrial heating</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Type T</td>
-                      <td className="border border-white/10 px-3 py-2">Copper-Constantan</td>
-                      <td className="border border-white/10 px-3 py-2">-200 to +350 deg C</td>
-                      <td className="border border-white/10 px-3 py-2">Low temperature, food</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Wiring Configurations</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>2-wire:</strong> Simple but cable resistance adds to reading (not
-                  recommended for Pt100)
-                </li>
-                <li className="pl-1">
-                  <strong>3-wire:</strong> Compensates for cable resistance - standard for Pt100 BMS
-                  applications
-                </li>
-                <li className="pl-1">
-                  <strong>4-wire:</strong> Most accurate, eliminates cable effects - for
-                  laboratory/precision use
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Selection tip:</strong> Use Pt1000 for cable runs greater than 20m to minimise
-              cable resistance errors. Each 1 ohm cable resistance causes approximately 2.5 deg C
-              error with Pt100 but only 0.25 deg C with Pt1000.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Humidity and Air Quality Sensors */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Humidity and Air Quality Sensors
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Measurement range covers expected operating conditions with margin</li>
+              <li>Accuracy suitable for control requirements (typically 3-5x better than deadband)</li>
+              <li>Signal output compatible with BMS controller inputs</li>
+              <li>Environmental rating (IP rating, temperature range) suitable for location</li>
+              <li>Response time adequate for control loop dynamics</li>
+              <li>Mounting method and cable length considered</li>
+            </ul>
             <p>
-              Humidity control is critical for comfort, health and building protection. CO2 sensors
-              enable demand-controlled ventilation, optimising energy use while maintaining air
-              quality.
+              <strong>Troubleshooting Sensor Problems:</strong>
             </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Erratic readings:</strong> Check wiring, shielding, earthing. Look for electrical interference sources.</li>
+              <li><strong>Offset error:</strong> Check zero calibration, thermal effects on wiring, reference junction compensation.</li>
+              <li><strong>Slow response:</strong> Check for fouling, thermal mass of installation, air in pressure lines.</li>
+              <li><strong>Drift over time:</strong> Normal ageing - recalibrate. Excessive drift may indicate contamination or damage.</li>
+              <li><strong>0mA or 0V:</strong> Check power supply, wiring continuity, sensor failure.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Humidity Sensor Technologies
-              </p>
-              <div className="grid sm:grid-cols-2 gap-6 my-4">
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <Droplets className="h-4 w-4 text-elec-yellow/70" />
-                    <p className="text-sm font-medium text-white">Capacitive Sensors</p>
-                  </div>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Polymer film absorbs moisture</li>
-                    <li className="pl-1">Capacitance changes with humidity</li>
-                    <li className="pl-1">Accuracy: plus or minus 2-3% RH typical</li>
-                    <li className="pl-1">Most common in HVAC applications</li>
-                    <li className="pl-1">Good stability and response time</li>
-                  </ul>
-                </div>
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <Activity className="h-4 w-4 text-elec-yellow/70" />
-                    <p className="text-sm font-medium text-white">Resistive Sensors</p>
-                  </div>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Conductive polymer changes resistance</li>
-                    <li className="pl-1">Lower cost than capacitive</li>
-                    <li className="pl-1">Accuracy: plus or minus 3-5% RH</li>
-                    <li className="pl-1">Less stable over time</li>
-                    <li className="pl-1">Suitable for non-critical applications</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Humidity Sensor Specifications
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Parameter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Specification
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Range</td>
-                      <td className="border border-white/10 px-3 py-2">0-100% RH</td>
-                      <td className="border border-white/10 px-3 py-2">Full range measurement</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Accuracy</td>
-                      <td className="border border-white/10 px-3 py-2">Plus or minus 2% RH</td>
-                      <td className="border border-white/10 px-3 py-2">At 25 deg C, 10-90% RH</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Long-term drift</td>
-                      <td className="border border-white/10 px-3 py-2">Less than 1% RH/year</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Affects calibration interval
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Response time</td>
-                      <td className="border border-white/10 px-3 py-2">Less than 30 seconds</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        To reach 63% of step change
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CO2 Sensors for Demand-Controlled Ventilation
-              </p>
-              <p className="text-sm text-white mb-3">
-                CO2 concentration indicates occupancy and air quality. Non-dispersive infrared
-                (NDIR) sensors are standard for BMS applications, measuring CO2 absorption of
-                infrared light.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Outdoor air:</strong> Approximately 400-420 ppm (rising due to climate
-                  change)
-                </li>
-                <li className="pl-1">
-                  <strong>Occupied spaces target:</strong> Less than 1000 ppm (800 ppm above
-                  outdoor)
-                </li>
-                <li className="pl-1">
-                  <strong>Poor air quality:</strong> Greater than 1500 ppm - increase ventilation
-                </li>
-                <li className="pl-1">
-                  <strong>Sensor range:</strong> 0-2000 ppm typical, 0-5000 ppm for high-occupancy
-                </li>
-                <li className="pl-1">
-                  <strong>Accuracy:</strong> Plus or minus 50 ppm or plus or minus 3% of reading
-                </li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Temperature:</strong> Insufficient immersion depth, thermal bridging from poor insulation</li>
+                <li><strong>Humidity:</strong> Located in stagnant air, exposed to direct spray or condensation</li>
+                <li><strong>Pressure:</strong> Impulse lines too long or not properly sloped, air trapped in liquid lines</li>
+                <li><strong>Flow:</strong> Insufficient straight pipe lengths, air in water flow meters</li>
+                <li><strong>CO2:</strong> Too close to supply diffusers, wrong height, drafty locations</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CIBSE Guide A - Recommended CO2 Levels
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Category I (high expectation):</strong> Less than 550 ppm above outdoor
-                </li>
-                <li className="pl-1">
-                  <strong>Category II (normal expectation):</strong> Less than 800 ppm above outdoor
-                </li>
-                <li className="pl-1">
-                  <strong>Category III (moderate expectation):</strong> Less than 1350 ppm above
-                  outdoor
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Installation tip:</strong> Mount CO2 sensors at breathing height (1.1-1.5m)
-              away from doors, windows and supply air diffusers. Avoid locations near plants or
-              areas where people congregate.
-            </p>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* Section 3: Pressure and Flow Sensors */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Pressure and Flow Sensors
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Pressure and flow measurement are fundamental to HVAC control. Pressure sensors
-              monitor duct static pressure, filter condition and pump operation. Flow meters verify
-              water and air flow rates.
-            </p>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Pressure Measurement Types
-              </p>
-              <div className="grid sm:grid-cols-3 gap-4 my-4">
-                <div className="p-3 rounded bg-white/5">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Gauge className="h-4 w-4 text-elec-yellow/70" />
-                    <p className="font-medium text-sm">Absolute</p>
-                  </div>
-                  <p className="text-xs text-white">
-                    Referenced to perfect vacuum. Used for altitude compensation.
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Gauge className="h-4 w-4 text-elec-yellow/70" />
-                    <p className="font-medium text-sm">Gauge</p>
-                  </div>
-                  <p className="text-xs text-white">
-                    Referenced to atmospheric pressure. Pump head, vessel pressure.
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Gauge className="h-4 w-4 text-elec-yellow/70" />
-                    <p className="font-medium text-sm">Differential</p>
-                  </div>
-                  <p className="text-xs text-white">
-                    Difference between two points. Filter DP, duct static.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Pressure Transducer Technologies
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Piezoresistive:</strong> Strain gauges on silicon diaphragm - most common
-                  in HVAC
-                </li>
-                <li className="pl-1">
-                  <strong>Capacitive:</strong> Diaphragm deflection changes capacitance - high
-                  accuracy
-                </li>
-                <li className="pl-1">
-                  <strong>Piezoelectric:</strong> Crystal generates voltage - for dynamic
-                  pressure/vibration
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                HVAC Pressure Sensor Applications
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Range</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Duct static pressure</td>
-                      <td className="border border-white/10 px-3 py-2">Differential</td>
-                      <td className="border border-white/10 px-3 py-2">0-1000 Pa</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Filter differential</td>
-                      <td className="border border-white/10 px-3 py-2">Differential</td>
-                      <td className="border border-white/10 px-3 py-2">0-500 Pa</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Room pressure</td>
-                      <td className="border border-white/10 px-3 py-2">Differential</td>
-                      <td className="border border-white/10 px-3 py-2">0-100 Pa</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LTHW/CHW system</td>
-                      <td className="border border-white/10 px-3 py-2">Gauge</td>
-                      <td className="border border-white/10 px-3 py-2">0-10 bar</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pump differential</td>
-                      <td className="border border-white/10 px-3 py-2">Differential</td>
-                      <td className="border border-white/10 px-3 py-2">0-6 bar</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Flow Measurement Methods
-              </p>
-              <div className="grid sm:grid-cols-2 gap-6 my-4">
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <Wind className="h-4 w-4 text-elec-yellow/70" />
-                    <p className="text-sm font-medium text-white">Air Flow</p>
-                  </div>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">
-                      <strong>Pitot tube array:</strong> DP measurement across array
-                    </li>
-                    <li className="pl-1">
-                      <strong>Thermal anemometer:</strong> Hot wire/film cooling rate
-                    </li>
-                    <li className="pl-1">
-                      <strong>Vortex shedding:</strong> Frequency of vortices
-                    </li>
-                    <li className="pl-1">
-                      <strong>Averaging element:</strong> Multiple sensing points
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <Droplets className="h-4 w-4 text-elec-yellow/70" />
-                    <p className="text-sm font-medium text-white">Water Flow</p>
-                  </div>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">
-                      <strong>Electromagnetic:</strong> Conductive fluids, no moving parts
-                    </li>
-                    <li className="pl-1">
-                      <strong>Ultrasonic:</strong> Transit time, clamp-on available
-                    </li>
-                    <li className="pl-1">
-                      <strong>Turbine:</strong> Rotating impeller, pulse output
-                    </li>
-                    <li className="pl-1">
-                      <strong>Orifice plate:</strong> DP across restriction
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Flow-Pressure Relationship
-              </p>
-              <p className="text-sm text-white mb-2">
-                For differential pressure flow measurement, flow is proportional to the square root
-                of pressure:
-              </p>
-              <p className="font-mono text-center text-lg text-elec-yellow mb-2">
-                Q = k x sqrt(delta P)
-              </p>
-              <p className="text-xs text-white text-center">
-                Where Q = flow rate, k = constant, delta P = differential pressure
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Electromagnetic flow meters are preferred for
-              chilled/heating water as they have no moving parts, minimal pressure drop, and work
-              across wide flow ranges. Ensure adequate straight pipe lengths upstream (10 x
-              diameter) and downstream (5 x diameter).
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Signal Types, Accuracy and Calibration */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Signal Types, Accuracy and Calibration
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Understanding signal types, accuracy specifications and calibration requirements is
-              essential for proper BMS integration and maintaining measurement quality over the
-              sensor lifetime.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Analogue Signal Types</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Signal</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Advantages</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Disadvantages</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Use When</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4-20mA</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Noise immune, fault detection (0mA = break)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Requires loop power, higher cost
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Long runs, noisy environments
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">0-10V DC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Simple, low cost, easy to measure
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Susceptible to noise, voltage drop
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Short runs, clean environments
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2-10V DC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Live zero for fault detection
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Less common, limited compatibility
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Critical applications needing fault detection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Resistance</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Direct connection, no transmitter
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable resistance affects reading
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        RTDs, thermistors with short cables
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                4-20mA Signal Calculations
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4 my-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm font-medium text-white mb-2">Signal to Value</p>
-                  <p className="font-mono text-sm text-elec-yellow">
-                    Value = ((mA - 4) / 16) x Span + Zero
-                  </p>
-                  <p className="text-xs text-white mt-2">
-                    Example: 12mA on 0-100 deg C sensor = ((12-4)/16) x 100 + 0 = 50 deg C
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm font-medium text-white mb-2">Value to Signal</p>
-                  <p className="font-mono text-sm text-elec-yellow">
-                    mA = ((Value - Zero) / Span) x 16 + 4
-                  </p>
-                  <p className="text-xs text-white mt-2">
-                    Example: 75 deg C on 0-100 deg C sensor = ((75-0)/100) x 16 + 4 = 16mA
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Understanding Accuracy Specifications
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Accuracy (% FS):</strong> Error as percentage of full scale range -
-                  applies at any reading
-                </li>
-                <li className="pl-1">
-                  <strong>Accuracy (% reading):</strong> Error as percentage of actual reading -
-                  better at low readings
-                </li>
-                <li className="pl-1">
-                  <strong>Resolution:</strong> Smallest detectable change - not the same as accuracy
-                </li>
-                <li className="pl-1">
-                  <strong>Repeatability:</strong> Consistency of readings under same conditions
-                </li>
-                <li className="pl-1">
-                  <strong>Hysteresis:</strong> Difference between increasing and decreasing readings
-                </li>
-                <li className="pl-1">
-                  <strong>Drift:</strong> Change in accuracy over time - affects calibration
-                  interval
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Accuracy Example</p>
-              <p className="text-sm text-white">
-                A pressure sensor has 0-10 bar range with 0.5% FS accuracy:
-              </p>
-              <ul className="text-sm text-white mt-2 space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Maximum error = 0.5% x 10 bar = <strong>0.05 bar</strong> at any reading
-                </li>
-                <li className="pl-1">At 8 bar reading: true value is 7.95 to 8.05 bar</li>
-                <li className="pl-1">
-                  At 2 bar reading: true value is 1.95 to 2.05 bar (larger % error at low readings)
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Calibration Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Traceability:</strong> Reference standards traceable to national standards
-                  (UKAS in UK)
-                </li>
-                <li className="pl-1">
-                  <strong>Frequency:</strong> Typically 6-12 months for critical sensors, annually
-                  for standard
-                </li>
-                <li className="pl-1">
-                  <strong>Documentation:</strong> As-found, as-left readings, date, reference used,
-                  technician
-                </li>
-                <li className="pl-1">
-                  <strong>Adjustment:</strong> Zero and span adjustment if within tolerance, replace
-                  if not
-                </li>
-                <li className="pl-1">
-                  <strong>Environment:</strong> Calibrate at conditions similar to installed
-                  environment
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Calibration Procedure (General)
-              </p>
-              <ol className="text-sm text-white space-y-1.5 list-decimal list-outside ml-5">
-                <li className="pl-1">Record sensor identification, location and current date</li>
-                <li className="pl-1">Connect reference standard and allow stabilisation</li>
-                <li className="pl-1">Record as-found readings at zero, mid and full scale</li>
-                <li className="pl-1">Adjust zero offset if required</li>
-                <li className="pl-1">Adjust span (gain) if required</li>
-                <li className="pl-1">Record as-left readings at all test points</li>
-                <li className="pl-1">Verify readings are within specification</li>
-                <li className="pl-1">Apply calibration label and update records</li>
-              </ol>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Compliance note:</strong> For buildings with environmental controls
-              (laboratories, hospitals, data centres), calibration records may be required for
-              regulatory compliance. Maintain traceable records for audit purposes.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Sensor Selection Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Measurement range covers expected operating conditions with margin
-                </li>
-                <li className="pl-1">
-                  Accuracy suitable for control requirements (typically 3-5x better than deadband)
-                </li>
-                <li className="pl-1">Signal output compatible with BMS controller inputs</li>
-                <li className="pl-1">
-                  Environmental rating (IP rating, temperature range) suitable for location
-                </li>
-                <li className="pl-1">Response time adequate for control loop dynamics</li>
-                <li className="pl-1">Mounting method and cable length considered</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Installation Mistakes
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Temperature:</strong> Insufficient immersion depth, thermal bridging from
-                  poor insulation
-                </li>
-                <li className="pl-1">
-                  <strong>Humidity:</strong> Located in stagnant air, exposed to direct spray or
-                  condensation
-                </li>
-                <li className="pl-1">
-                  <strong>Pressure:</strong> Impulse lines too long or not properly sloped, air
-                  trapped in liquid lines
-                </li>
-                <li className="pl-1">
-                  <strong>Flow:</strong> Insufficient straight pipe lengths, air in water flow
-                  meters
-                </li>
-                <li className="pl-1">
-                  <strong>CO2:</strong> Too close to supply diffusers, wrong height, drafty
-                  locations
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">
-                Troubleshooting Sensor Problems
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Erratic readings:</strong> Check wiring, shielding, earthing. Look for
-                  electrical interference sources.
-                </li>
-                <li className="pl-1">
-                  <strong>Offset error:</strong> Check zero calibration, thermal effects on wiring,
-                  reference junction compensation.
-                </li>
-                <li className="pl-1">
-                  <strong>Slow response:</strong> Check for fouling, thermal mass of installation,
-                  air in pressure lines.
-                </li>
-                <li className="pl-1">
-                  <strong>Drift over time:</strong> Normal ageing - recalibrate. Excessive drift may
-                  indicate contamination or damage.
-                </li>
-                <li className="pl-1">
-                  <strong>0mA or 0V:</strong> Check power supply, wiring continuity, sensor failure.
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Temperature Sensors</p>
-                <ul className="space-y-0.5">
-                  <li>Pt100: 100 ohms at 0 deg C, 3-wire preferred</li>
-                  <li>Pt1000: 1000 ohms at 0 deg C, long runs</li>
-                  <li>NTC: High sensitivity, non-linear</li>
-                  <li>Thermocouple: High temp, mV output</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Signal Types</p>
-                <ul className="space-y-0.5">
-                  <li>4-20mA: Noise immune, 4mA = 0%</li>
-                  <li>0-10V: Simple, short runs only</li>
-                  <li>Accuracy: % FS or % reading</li>
-                  <li>Calibrate: 6-12 months typical</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section5-3">
-              Next: Actuators and Output Devices
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section5-1")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                BMS fundamentals
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section5-3")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Actuators and output devices
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

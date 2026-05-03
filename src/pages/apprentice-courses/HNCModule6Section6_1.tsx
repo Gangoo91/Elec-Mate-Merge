@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 6 · Section 6 · Subsection 1 — Passive Design Principles
+ * HNC Electrical Engineering for Building Services (Sustainability and Environmental Engineering)
+ *   Solar orientation, natural ventilation, daylighting, thermal mass and passive cooling strategies for energy-efficient buildings
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Passive Design Principles - HNC Module 6 Section 6.1';
@@ -244,991 +261,406 @@ const faqs = [
 ];
 
 const HNCModule6Section6_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section6")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module6-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.6.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Passive Design Principles
-          </h1>
-          <p className="text-white">
-            Solar orientation, natural ventilation, daylighting, thermal mass and passive cooling
-            strategies for energy-efficient buildings
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 6 · Section 6 · Subsection 1"
+            title="Passive Design Principles"
+            description="Solar orientation, natural ventilation, daylighting, thermal mass and passive cooling strategies for energy-efficient buildings"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Passive design:</strong> Reduces energy demand through building form and
-                fabric
-              </li>
-              <li className="pl-1">
-                <strong>Solar orientation:</strong> South-facing glazing maximises useful solar gain
-              </li>
-              <li className="pl-1">
-                <strong>Natural ventilation:</strong> Cross-flow and stack effect strategies
-              </li>
-              <li className="pl-1">
-                <strong>Thermal mass:</strong> Moderates temperature swings, enables night cooling
-              </li>
+          <TLDR
+            points={[
+              "Passive design uses the building's form, orientation, fabric and layout to deliver comfort with minimum mechanical input — solar gain in winter, shading in summer, natural ventilation, daylight, and thermal mass tuning.",
+              "Done well, passive design halves the load on M&E systems before any mechanical kit is sized — but it requires architect-engineer integration from RIBA Stage 1, not bolting M&E onto a finished form.",
+              "CIBSE Guide A (Environmental Design) is the institutional UK reference; LETI Climate Emergency Design Guide adds net-zero performance targets that make passive measures essentially mandatory.",
+            ]}
+          />
+
+          <RegsCallout
+            source="CIBSE Guide A (8th edition, 2015 with 2021 updates) + Building Regulations Part O Overheating"
+            clause="Where natural ventilation is provided as the means of meeting Part O criteria, the design shall demonstrate that opening areas, opening configurations and security provisions allow adequate cross-ventilation or stack ventilation under the design conditions, taking into account building geometry, prevailing wind direction, internal heat gains, and occupant control. The design shall be evidenced through dynamic thermal modelling per CIBSE TM59 or the simplified method in Part O Schedule 1."
+            meaning={
+              <>
+                Part O integrates overheating directly into Building Regulations. Natural ventilation is permitted but must be evidenced — the simplified method is geometry/orientation rules; the dynamic method is TM59 hour-by-hour analysis. CIBSE Guide A provides the engineering basis for both.
+              </>
+            }
+            cite="Source: CIBSE Guide A (2015 + 2021 updates) — cibse.org; Approved Document O: Overheating, 2021 edition — gov.uk"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Explain passive design principles and the fabric first approach",
+              "Apply solar orientation strategies for UK building design",
+              "Design natural ventilation systems using cross-flow and stack effect",
+              "Calculate daylight factors and specify daylighting strategies",
+              "Utilise thermal mass and phase change materials for temperature control",
+              "Implement passive cooling strategies including night purge and solar shading",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Passive Design Fundamentals">
+            <p>Passive design utilises building form, orientation, and fabric to provide heating, cooling, ventilation, and lighting with minimal mechanical intervention. This approach prioritises reducing energy demand before considering how remaining demand is met - the foundation of sustainable building design.</p>
+            <p><strong>Key passive design principles:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Fabric first:</strong> Invest in building envelope before mechanical systems</li>
+              <li><strong>Climate response:</strong> Design responds to local climate conditions</li>
+              <li><strong>Natural forces:</strong> Harness sun, wind, and buoyancy for comfort</li>
+              <li><strong>Occupant interaction:</strong> Enable user control of natural systems</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Building Services Impact</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Reduced loads:</strong> 30-50% smaller heating/cooling plant
-              </li>
-              <li className="pl-1">
-                <strong>Daylighting:</strong> 40-60% less artificial lighting energy
-              </li>
-              <li className="pl-1">
-                <strong>Controls integration:</strong> BMS-automated passive systems
-              </li>
-              <li className="pl-1">
-                <strong>Mixed-mode:</strong> Natural and mechanical working together
-              </li>
+            <p><strong>Passive vs Active Design Comparison</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Heating:</strong> Solar gain, insulation, thermal mass — Boilers, heat pumps, radiators</li>
+              <li><strong>Cooling:</strong> Shading, ventilation, night purge — Chillers, air conditioning, FCUs</li>
+              <li><strong>Ventilation:</strong> Natural cross-flow, stack effect — AHUs, extract fans, ductwork</li>
+              <li><strong>Lighting:</strong> Daylighting, light shelves, rooflights — LED luminaires, control systems</li>
+              <li><strong>Energy use:</strong> Minimal operational energy — Continuous energy consumption</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>The Energy Hierarchy</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>1. Reduce demand:</strong> Passive design, fabric performance</li>
+              <li><strong>2. Use energy efficiently:</strong> High-efficiency systems, heat recovery</li>
+              <li><strong>3. Supply from renewables:</strong> PV, solar thermal, heat pumps</li>
+              <li><strong>4. Offset remaining carbon:</strong> Green tariffs, carbon credits</li>
+            </ul>
+            <p><strong>Design principle:</strong> Every kWh of demand reduced through passive measures is worth more than a kWh generated - it saves capital cost, maintenance, and space throughout the building's life.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Explain passive design principles and the fabric first approach',
-              'Apply solar orientation strategies for UK building design',
-              'Design natural ventilation systems using cross-flow and stack effect',
-              'Calculate daylight factors and specify daylighting strategies',
-              'Utilise thermal mass and phase change materials for temperature control',
-              'Implement passive cooling strategies including night purge and solar shading',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Passive Design Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Passive Design Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Solar Orientation and Daylighting">
+            <p>Solar orientation determines how buildings interact with the sun throughout the day and year. Optimal orientation maximises beneficial winter solar gain whilst minimising summer overheating risk, while providing adequate daylight to reduce artificial lighting requirements.</p>
+            <p><strong>South-Facing (UK)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Maximum solar gain potential</li>
+              <li>High winter sun penetration</li>
+              <li>Easily shaded in summer</li>
+              <li>Ideal for living spaces, offices</li>
+            </ul>
+            <p><strong>North-Facing (UK)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>No direct solar gain</li>
+              <li>Diffuse, even daylight</li>
+              <li>No overheating risk</li>
+              <li>Ideal for studios, galleries</li>
+            </ul>
+            <p><strong>East-Facing</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Morning sun, cooler afternoons</li>
+              <li>Lower overheating risk</li>
+              <li>Moderate shading needed</li>
+              <li>Good for bedrooms, kitchens</li>
+            </ul>
+            <p><strong>West-Facing</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Intense afternoon/evening sun</li>
+              <li>Highest overheating risk</li>
+              <li>Difficult to shade (low angles)</li>
+              <li>Minimise glazing or use vertical fins</li>
+            </ul>
+            <p><strong>Daylighting Design Parameters</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Daylight Factor:</strong> Internal/external illuminance ratio — 2% minimum, 5% for tasks</li>
+              <li><strong>Uniformity Ratio:</strong> Min/average daylight factor — ≥0.4 for good distribution</li>
+              <li><strong>Daylit Depth:</strong> Distance daylight penetrates — 1.5-2.5 × window head height</li>
+              <li><strong>Glazing Ratio:</strong> Window area / floor area — 15-25% typical office</li>
+              <li><strong>View Out:</strong> Visual connection to outside — 75% of floor area with view</li>
+            </ul>
+            <p><strong>Daylighting strategies:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Light shelves:</strong> Horizontal reflectors bounce daylight deeper into rooms</li>
+              <li><strong>Clerestory windows:</strong> High-level glazing provides even illumination</li>
+              <li><strong>Rooflights:</strong> 3× more effective than vertical glazing (per m²)</li>
+              <li><strong>Atria:</strong> Bring daylight to deep-plan building cores</li>
+              <li><strong>Light tubes:</strong> Channel daylight to internal rooms via reflective ducts</li>
+            </ul>
+            <p><strong>Best practice:</strong> Design for 300-500 lux average daylight in workspaces. Provide daylight-linked dimming controls to maximise energy savings from natural light.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Natural Ventilation Strategies">
+            <p>Natural ventilation uses wind pressure and buoyancy (stack effect) to move air through buildings without mechanical fans. When designed correctly, natural ventilation provides fresh air, removes heat and pollutants, and significantly reduces energy consumption compared to fully air-conditioned buildings.</p>
+            <p><strong>Natural Ventilation Driving Forces</strong></p>
+            <p><strong>Wind-Driven (Cross Ventilation)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Pressure difference across building</li>
+              <li>• Requires openings on opposite facades</li>
+              <li>• Effective to ~5× ceiling height depth</li>
+              <li>• Depends on wind speed and direction</li>
+            </ul>
+            <p><strong>Buoyancy-Driven (Stack Effect)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Warm air rises, exits at high level</li>
+              <li>• Cool air drawn in at low level</li>
+              <li>• Requires vertical height difference</li>
+              <li>• Works even in calm conditions</li>
+            </ul>
+            <p><strong>Ventilation Strategy Options</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Single-Sided:</strong> Openings on one facade only — Rooms ≤2.5× ceiling height deep</li>
+              <li><strong>Cross Ventilation:</strong> Openings on opposite/adjacent walls — Narrow plan buildings (≤15m)</li>
+              <li><strong>Stack Ventilation:</strong> Vertical shafts or atria — Multi-storey, deep plan buildings</li>
+              <li><strong>Wind Towers:</strong> Roof-mounted wind catchers — Hot climates, traditional buildings</li>
+              <li><strong>Mixed Mode:</strong> Natural with mechanical backup — UK offices, schools, hospitals</li>
+            </ul>
+            <p><strong>Design requirements for natural ventilation:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Opening area:</strong> Typically 5% of floor area for background, 10% for rapid cooling</li>
+              <li><strong>Inlet/outlet ratio:</strong> 1:1 for cross-flow; outlets larger for stack effect</li>
+              <li><strong>Clear air paths:</strong> Internal doors, transfer grilles, open plan layouts</li>
+              <li><strong>Controls:</strong> Actuated windows, BMS integration, weather monitoring</li>
+              <li><strong>Acoustic treatment:</strong> Attenuators for urban sites, sound-resistant vents</li>
+            </ul>
+            <p><strong>Ventilation Rate Calculation (Stack Effect)</strong></p>
+            <p>Q = Cd × A × √(2 × g × H × ΔT / Tavg)</p>
+            <p>Where:</p>
+            <p>Q = Volume flow rate (m³/s)</p>
+            <p>Cd = Discharge coefficient (typically 0.6)</p>
+            <p>A = Free opening area (m²)</p>
+            <p>g = 9.81 m/s²</p>
+            <p>H = Height between openings (m)</p>
+            <p>ΔT = Temperature difference (K)</p>
+            <p>Tavg = Average absolute temperature (K)</p>
+            <p><strong>Integration tip:</strong> Natural ventilation requires BMS integration for automated window/damper control, weather monitoring, and changeover to mechanical systems when natural ventilation cannot maintain comfort conditions.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Thermal Mass and Passive Cooling">
+            <p>Thermal mass refers to a material's ability to absorb, store, and release heat. When combined with night ventilation, thermal mass provides effective passive cooling - storing heat during the day and releasing it at night, significantly reducing or eliminating mechanical cooling requirements in UK buildings.</p>
+            <p><strong>Thermal Mass Properties of Common Materials</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Dense concrete:</strong> 2400 — 1000 — High</li>
+              <li><strong>Brick:</strong> 1700 — 800 — High</li>
+              <li><strong>Water:</strong> 1000 — 4186 — Very high</li>
+              <li><strong>Timber:</strong> 500 — 1600 — Low</li>
+              <li><strong>Steel:</strong> 7800 — 450 — Medium</li>
+            </ul>
+            <p><strong>Accessing Thermal Mass</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Exposed concrete soffits (no suspended ceilings)</li>
+              <li>Fair-faced blockwork walls</li>
+              <li>Screed floors with hard finishes</li>
+              <li>Internal masonry partitions</li>
+              <li>Phase change material panels</li>
+            </ul>
+            <p><strong>Night Purge Ventilation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Cool night air flushes stored heat</li>
+              <li>Requires 6-10 ACH for 4-8 hours</li>
+              <li>External temp must be ≥3°C below mass</li>
+              <li>Secure, weather-protected openings</li>
+              <li>BMS-controlled automatic operation</li>
+            </ul>
+            <p><strong>Passive Cooling Strategies</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>External solar shading:</strong> Prevents solar gain entering — 30-50%</li>
+              <li><strong>Night purge ventilation:</strong> Pre-cools thermal mass — 20-40%</li>
+              <li><strong>Exposed thermal mass:</strong> Absorbs peak gains — 15-25%</li>
+              <li><strong>Solar control glazing:</strong> Reduces transmitted radiation — 20-35%</li>
+              <li><strong>Green roofs/walls:</strong> Evaporative cooling, insulation — 10-20%</li>
+            </ul>
+            <p><strong>Solar Shading Design</strong></p>
+            <p><strong>South facades:</strong> Horizontal overhangs or brise-soleil - effective against high summer sun</p>
+            <p><strong>East/West facades:</strong> Vertical fins or adjustable louvres - needed for low-angle sun</p>
+            <p><strong>Sizing rule:</strong> Overhang depth = window height × (1 / tan(summer sun altitude))</p>
+            <p><strong>Example:</strong> 1.5m high window at 52°N latitude, June noon sun at 62°</p>
+            <p>Overhang = 1.5 / tan(62°) = 1.5 / 1.88 = 0.8m projection</p>
+            <p><strong>Phase Change Materials (PCMs)</strong></p>
+            <p>PCMs (typically paraffin waxes or salt hydrates) melt at around 21-25°C, absorbing significant latent heat without temperature rise. When incorporated into ceiling tiles, plasterboard, or dedicated panels, PCMs provide thermal mass equivalent to much heavier concrete. Particularly valuable in lightweight construction where traditional thermal mass is impractical. PCM systems can absorb 100-200 Wh/m² of ceiling area.</p>
+            <p><strong>Services integration:</strong> Passive cooling strategies significantly reduce chiller sizing. A well-designed passive office in the UK may need only 40-60 W/m² cooling capacity versus 80-120 W/m² for a conventional air-conditioned building.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Passive design utilises building form, orientation, and fabric to provide heating,
-              cooling, ventilation, and lighting with minimal mechanical intervention. This approach
-              prioritises reducing energy demand before considering how remaining demand is met -
-              the foundation of sustainable building design.
+              <strong>Example 1: Daylight Factor Calculation</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key passive design principles:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Fabric first:</strong> Invest in building envelope before mechanical
-                  systems
-                </li>
-                <li className="pl-1">
-                  <strong>Climate response:</strong> Design responds to local climate conditions
-                </li>
-                <li className="pl-1">
-                  <strong>Natural forces:</strong> Harness sun, wind, and buoyancy for comfort
-                </li>
-                <li className="pl-1">
-                  <strong>Occupant interaction:</strong> Enable user control of natural systems
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Passive vs Active Design Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Passive Approach
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Active Approach
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Heating</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Solar gain, insulation, thermal mass
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Boilers, heat pumps, radiators
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cooling</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Shading, ventilation, night purge
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Chillers, air conditioning, FCUs
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ventilation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Natural cross-flow, stack effect
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        AHUs, extract fans, ductwork
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lighting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Daylighting, light shelves, rooflights
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        LED luminaires, control systems
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Energy use</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Minimal operational energy
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Continuous energy consumption
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">The Energy Hierarchy</p>
-              <div className="text-sm space-y-1">
-                <p>
-                  <span className="text-white">1. Reduce demand:</span>{' '}
-                  <span className="text-white">Passive design, fabric performance</span>
-                </p>
-                <p>
-                  <span className="text-white">2. Use energy efficiently:</span>{' '}
-                  <span className="text-white">High-efficiency systems, heat recovery</span>
-                </p>
-                <p>
-                  <span className="text-white">3. Supply from renewables:</span>{' '}
-                  <span className="text-white">PV, solar thermal, heat pumps</span>
-                </p>
-                <p>
-                  <span className="text-white">4. Offset remaining carbon:</span>{' '}
-                  <span className="text-white">Green tariffs, carbon credits</span>
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design principle:</strong> Every kWh of demand reduced through passive
-              measures is worth more than a kWh generated - it saves capital cost, maintenance, and
-              space throughout the building's life.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Solar Orientation and Daylighting */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Solar Orientation and Daylighting
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Calculate average daylight factor for a 6m × 8m office with a south-facing window 4m wide × 1.8m high, head height 2.7m from floor.</p>
+            <p>Simplified average daylight factor formula:</p>
+            <p>DF = (Aw × T × θ) / (A × (1 - R²))</p>
+            <p>Where:</p>
+            <p>Aw = Window area = 4 × 1.8 = 7.2 m²</p>
+            <p>T = Glass transmittance = 0.7 (double glazed)</p>
+            <p>θ = Angle of visible sky = 0.5 (assume 50% unobstructed)</p>
+            <p>A = Total room surface area = 2(6×8) + 2(6×3) + 2(8×3) = 180 m²</p>
+            <p>R = Average surface reflectance = 0.5</p>
+            <p>DF = (7.2 × 0.7 × 0.5) / (180 × (1 - 0.25))</p>
+            <p>= 2.52 / 135 = 0.019 = 1.9%</p>
+            <p>Daylit depth check: 2.5 × 2.7m = 6.75m (adequate for 6m room depth)</p>
+            <p>Result: DF ~2% meets minimum; supplementary artificial lighting needed for task areas</p>
             <p>
-              Solar orientation determines how buildings interact with the sun throughout the day
-              and year. Optimal orientation maximises beneficial winter solar gain whilst minimising
-              summer overheating risk, while providing adequate daylight to reduce artificial
-              lighting requirements.
+              <strong>Example 2: Natural Ventilation Sizing</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">South-Facing (UK)</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Maximum solar gain potential</li>
-                  <li className="pl-1">High winter sun penetration</li>
-                  <li className="pl-1">Easily shaded in summer</li>
-                  <li className="pl-1">Ideal for living spaces, offices</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">North-Facing (UK)</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">No direct solar gain</li>
-                  <li className="pl-1">Diffuse, even daylight</li>
-                  <li className="pl-1">No overheating risk</li>
-                  <li className="pl-1">Ideal for studios, galleries</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">East-Facing</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Morning sun, cooler afternoons</li>
-                  <li className="pl-1">Lower overheating risk</li>
-                  <li className="pl-1">Moderate shading needed</li>
-                  <li className="pl-1">Good for bedrooms, kitchens</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">West-Facing</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Intense afternoon/evening sun</li>
-                  <li className="pl-1">Highest overheating risk</li>
-                  <li className="pl-1">Difficult to shade (low angles)</li>
-                  <li className="pl-1">Minimise glazing or use vertical fins</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Daylighting Design Parameters
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Parameter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Target Values</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Daylight Factor</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Internal/external illuminance ratio
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">2% minimum, 5% for tasks</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Uniformity Ratio</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Min/average daylight factor
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        ≥0.4 for good distribution
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Daylit Depth</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Distance daylight penetrates
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        1.5-2.5 × window head height
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Glazing Ratio</td>
-                      <td className="border border-white/10 px-3 py-2">Window area / floor area</td>
-                      <td className="border border-white/10 px-3 py-2">15-25% typical office</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">View Out</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Visual connection to outside
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        75% of floor area with view
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Daylighting strategies:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Light shelves:</strong> Horizontal reflectors bounce daylight deeper into
-                  rooms
-                </li>
-                <li className="pl-1">
-                  <strong>Clerestory windows:</strong> High-level glazing provides even illumination
-                </li>
-                <li className="pl-1">
-                  <strong>Rooflights:</strong> 3× more effective than vertical glazing (per m²)
-                </li>
-                <li className="pl-1">
-                  <strong>Atria:</strong> Bring daylight to deep-plan building cores
-                </li>
-                <li className="pl-1">
-                  <strong>Light tubes:</strong> Channel daylight to internal rooms via reflective
-                  ducts
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> Design for 300-500 lux average daylight in workspaces.
-              Provide daylight-linked dimming controls to maximise energy savings from natural
-              light.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Natural Ventilation Strategies */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Natural Ventilation Strategies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Size openings for stack ventilation in a 4m high atrium serving offices with 50 occupants requiring 10 l/s per person.</p>
+            <p>Required ventilation rate:</p>
+            <p>Q = 50 × 10 l/s = 500 l/s = 0.5 m³/s</p>
+            <p>Stack effect formula rearranged for area:</p>
+            <p>A = Q / (Cd × √(2gHΔT/Tavg))</p>
+            <p>Assumptions:</p>
+            <p>H = 4m (height difference)</p>
+            <p>ΔT = 3°C (internal-external difference)</p>
+            <p>Tavg = 293K (20°C average)</p>
+            <p>Cd = 0.6</p>
+            <p>A = 0.5 / (0.6 × √(2 × 9.81 × 4 × 3 / 293))</p>
+            <p>= 0.5 / (0.6 × √(0.804))</p>
+            <p>= 0.5 / (0.6 × 0.897)</p>
+            <p>= 0.5 / 0.538 = 0.93 m²</p>
+            <p>Result: Minimum 0.93 m² free opening area at both inlet and outlet</p>
+            <p>Specify 1.2 m² to allow for reduced ΔT conditions</p>
             <p>
-              Natural ventilation uses wind pressure and buoyancy (stack effect) to move air through
-              buildings without mechanical fans. When designed correctly, natural ventilation
-              provides fresh air, removes heat and pollutants, and significantly reduces energy
-              consumption compared to fully air-conditioned buildings.
+              <strong>Example 3: Thermal Mass Night Cooling Assessment</strong>
             </p>
+            <p><strong>Scenario:</strong> Assess thermal mass capacity of exposed 200mm concrete soffit in a 100m² office to absorb next-day heat gains.</p>
+            <p>Thermal storage capacity:</p>
+            <p>Q = m × c × ΔT</p>
+            <p>Parameters:</p>
+            <p>Concrete density = 2400 kg/m³</p>
+            <p>Specific heat = 1000 J/kgK</p>
+            <p>Effective depth = 75mm (first 75mm participates in diurnal cycle)</p>
+            <p>Temperature swing = 4°C (assumed)</p>
+            <p>Mass participating:</p>
+            <p>m = 100 m² × 0.075m × 2400 kg/m³ = 18,000 kg</p>
+            <p>Heat storage:</p>
+            <p>Q = 18,000 × 1000 × 4 = 72,000,000 J = 72 MJ</p>
+            <p>= 72 MJ / 3.6 = 20 kWh</p>
+            <p>Heat absorption rate (over 8-hour day):</p>
+            <p>= 20 kWh / 8h = 2.5 kW = 25 W/m²</p>
+            <p>Result: Soffit can absorb 25 W/m² of heat gains - significant contribution to cooling</p>
+            <p>Combined with 35 W/m² internal gains = substantial peak reduction</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Natural Ventilation Driving Forces
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="font-medium text-white mb-1">Wind-Driven (Cross Ventilation)</p>
-                  <ul className="text-white space-y-1">
-                    <li>• Pressure difference across building</li>
-                    <li>• Requires openings on opposite facades</li>
-                    <li>• Effective to ~5× ceiling height depth</li>
-                    <li>• Depends on wind speed and direction</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium text-white mb-1">Buoyancy-Driven (Stack Effect)</p>
-                  <ul className="text-white space-y-1">
-                    <li>• Warm air rises, exits at high level</li>
-                    <li>• Cool air drawn in at low level</li>
-                    <li>• Requires vertical height difference</li>
-                    <li>• Works even in calm conditions</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Ventilation Strategy Options
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Strategy</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Single-Sided</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Openings on one facade only
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rooms ≤2.5× ceiling height deep
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cross Ventilation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Openings on opposite/adjacent walls
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Narrow plan buildings (≤15m)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Stack Ventilation</td>
-                      <td className="border border-white/10 px-3 py-2">Vertical shafts or atria</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multi-storey, deep plan buildings
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Wind Towers</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Roof-mounted wind catchers
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Hot climates, traditional buildings
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mixed Mode</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Natural with mechanical backup
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        UK offices, schools, hospitals
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Design requirements for natural ventilation:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Opening area:</strong> Typically 5% of floor area for background, 10% for
-                  rapid cooling
-                </li>
-                <li className="pl-1">
-                  <strong>Inlet/outlet ratio:</strong> 1:1 for cross-flow; outlets larger for stack
-                  effect
-                </li>
-                <li className="pl-1">
-                  <strong>Clear air paths:</strong> Internal doors, transfer grilles, open plan
-                  layouts
-                </li>
-                <li className="pl-1">
-                  <strong>Controls:</strong> Actuated windows, BMS integration, weather monitoring
-                </li>
-                <li className="pl-1">
-                  <strong>Acoustic treatment:</strong> Attenuators for urban sites, sound-resistant
-                  vents
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Ventilation Rate Calculation (Stack Effect)
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Q = Cd × A × √(2 × g × H × ΔT / Tavg)</p>
-                <p className="mt-2 text-white">Where:</p>
-                <p className="ml-4">Q = Volume flow rate (m³/s)</p>
-                <p className="ml-4">Cd = Discharge coefficient (typically 0.6)</p>
-                <p className="ml-4">A = Free opening area (m²)</p>
-                <p className="ml-4">g = 9.81 m/s²</p>
-                <p className="ml-4">H = Height between openings (m)</p>
-                <p className="ml-4">ΔT = Temperature difference (K)</p>
-                <p className="ml-4">Tavg = Average absolute temperature (K)</p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Integration tip:</strong> Natural ventilation requires BMS integration for
-              automated window/damper control, weather monitoring, and changeover to mechanical
-              systems when natural ventilation cannot maintain comfort conditions.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Thermal Mass and Passive Cooling */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Thermal Mass and Passive Cooling
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Thermal mass refers to a material's ability to absorb, store, and release heat. When
-              combined with night ventilation, thermal mass provides effective passive cooling -
-              storing heat during the day and releasing it at night, significantly reducing or
-              eliminating mechanical cooling requirements in UK buildings.
+              <strong>Passive Design Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Thermal Mass Properties of Common Materials
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Material</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Density (kg/m³)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Specific Heat (J/kgK)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Thermal Mass Rating
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Dense concrete</td>
-                      <td className="border border-white/10 px-3 py-2">2400</td>
-                      <td className="border border-white/10 px-3 py-2">1000</td>
-                      <td className="border border-white/10 px-3 py-2">High</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Brick</td>
-                      <td className="border border-white/10 px-3 py-2">1700</td>
-                      <td className="border border-white/10 px-3 py-2">800</td>
-                      <td className="border border-white/10 px-3 py-2">High</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Water</td>
-                      <td className="border border-white/10 px-3 py-2">1000</td>
-                      <td className="border border-white/10 px-3 py-2">4186</td>
-                      <td className="border border-white/10 px-3 py-2">Very high</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Timber</td>
-                      <td className="border border-white/10 px-3 py-2">500</td>
-                      <td className="border border-white/10 px-3 py-2">1600</td>
-                      <td className="border border-white/10 px-3 py-2">Low</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Steel</td>
-                      <td className="border border-white/10 px-3 py-2">7800</td>
-                      <td className="border border-white/10 px-3 py-2">450</td>
-                      <td className="border border-white/10 px-3 py-2">Medium</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Accessing Thermal Mass
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Exposed concrete soffits (no suspended ceilings)</li>
-                  <li className="pl-1">Fair-faced blockwork walls</li>
-                  <li className="pl-1">Screed floors with hard finishes</li>
-                  <li className="pl-1">Internal masonry partitions</li>
-                  <li className="pl-1">Phase change material panels</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Night Purge Ventilation
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Cool night air flushes stored heat</li>
-                  <li className="pl-1">Requires 6-10 ACH for 4-8 hours</li>
-                  <li className="pl-1">External temp must be ≥3°C below mass</li>
-                  <li className="pl-1">Secure, weather-protected openings</li>
-                  <li className="pl-1">BMS-controlled automatic operation</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Passive Cooling Strategies
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Strategy</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Mechanism</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Peak Load Reduction
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">External solar shading</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Prevents solar gain entering
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">30-50%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Night purge ventilation</td>
-                      <td className="border border-white/10 px-3 py-2">Pre-cools thermal mass</td>
-                      <td className="border border-white/10 px-3 py-2">20-40%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Exposed thermal mass</td>
-                      <td className="border border-white/10 px-3 py-2">Absorbs peak gains</td>
-                      <td className="border border-white/10 px-3 py-2">15-25%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Solar control glazing</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reduces transmitted radiation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">20-35%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Green roofs/walls</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Evaporative cooling, insulation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">10-20%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Solar Shading Design</p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <strong>South facades:</strong> Horizontal overhangs or brise-soleil - effective
-                  against high summer sun
-                </p>
-                <p>
-                  <strong>East/West facades:</strong> Vertical fins or adjustable louvres - needed
-                  for low-angle sun
-                </p>
-                <p>
-                  <strong>Sizing rule:</strong> Overhang depth = window height × (1 / tan(summer sun
-                  altitude))
-                </p>
-                <p>
-                  <strong>Example:</strong> 1.5m high window at 52°N latitude, June noon sun at 62°
-                </p>
-                <p className="font-mono bg-black/30 p-2 rounded">
-                  Overhang = 1.5 / tan(62°) = 1.5 / 1.88 = 0.8m projection
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-2">
-                Phase Change Materials (PCMs)
-              </p>
-              <p className="text-sm text-white">
-                PCMs (typically paraffin waxes or salt hydrates) melt at around 21-25°C, absorbing
-                significant latent heat without temperature rise. When incorporated into ceiling
-                tiles, plasterboard, or dedicated panels, PCMs provide thermal mass equivalent to
-                much heavier concrete. Particularly valuable in lightweight construction where
-                traditional thermal mass is impractical. PCM systems can absorb 100-200 Wh/m² of
-                ceiling area.
-              </p>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Services integration:</strong> Passive cooling strategies significantly reduce
-              chiller sizing. A well-designed passive office in the UK may need only 40-60 W/m²
-              cooling capacity versus 80-120 W/m² for a conventional air-conditioned building.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Analyse site orientation and optimise building position for solar access</li>
+              <li>Design narrow floor plates (≤15m) to enable cross-ventilation</li>
+              <li>Maximise south-facing glazing with appropriate shading</li>
+              <li>Minimise west-facing glazing or provide robust shading</li>
+              <li>Expose thermal mass internally (avoid suspended ceilings where possible)</li>
+              <li>Provide openable windows/vents for natural ventilation</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Daylight factor targets: <strong>2% minimum, 5% for task areas</strong></li>
+              <li>Daylit depth: <strong>1.5-2.5 × window head height</strong></li>
+              <li>Cross-ventilation depth: <strong>≤5 × ceiling height</strong></li>
+              <li>Night purge rate: <strong>6-10 ACH for 4-8 hours</strong></li>
+              <li>Effective thermal mass depth: <strong>~75mm for diurnal cycle</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Daylight Factor Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate average daylight factor for a 6m × 8m office
-                with a south-facing window 4m wide × 1.8m high, head height 2.7m from floor.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Simplified average daylight factor formula:</p>
-                <p className="mt-2">DF = (Aw × T × θ) / (A × (1 - R²))</p>
-                <p className="mt-2 text-white">Where:</p>
-                <p className="ml-4">Aw = Window area = 4 × 1.8 = 7.2 m²</p>
-                <p className="ml-4">T = Glass transmittance = 0.7 (double glazed)</p>
-                <p className="ml-4">θ = Angle of visible sky = 0.5 (assume 50% unobstructed)</p>
-                <p className="ml-4">
-                  A = Total room surface area = 2(6×8) + 2(6×3) + 2(8×3) = 180 m²
-                </p>
-                <p className="ml-4">R = Average surface reflectance = 0.5</p>
-                <p className="mt-2">DF = (7.2 × 0.7 × 0.5) / (180 × (1 - 0.25))</p>
-                <p className="ml-4">= 2.52 / 135 = 0.019 = 1.9%</p>
-                <p className="mt-2 text-white">
-                  Daylit depth check: 2.5 × 2.7m = 6.75m (adequate for 6m room depth)
-                </p>
-                <p className="mt-2 text-green-400">
-                  Result: DF ~2% meets minimum; supplementary artificial lighting needed for task
-                  areas
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Natural Ventilation Sizing
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Size openings for stack ventilation in a 4m high atrium
-                serving offices with 50 occupants requiring 10 l/s per person.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Required ventilation rate:</p>
-                <p className="ml-4">Q = 50 × 10 l/s = 500 l/s = 0.5 m³/s</p>
-                <p className="mt-2">Stack effect formula rearranged for area:</p>
-                <p className="ml-4">A = Q / (Cd × √(2gHΔT/Tavg))</p>
-                <p className="mt-2 text-white">Assumptions:</p>
-                <p className="ml-4">H = 4m (height difference)</p>
-                <p className="ml-4">ΔT = 3°C (internal-external difference)</p>
-                <p className="ml-4">Tavg = 293K (20°C average)</p>
-                <p className="ml-4">Cd = 0.6</p>
-                <p className="mt-2">A = 0.5 / (0.6 × √(2 × 9.81 × 4 × 3 / 293))</p>
-                <p className="ml-4">= 0.5 / (0.6 × √(0.804))</p>
-                <p className="ml-4">= 0.5 / (0.6 × 0.897)</p>
-                <p className="ml-4">= 0.5 / 0.538 = 0.93 m²</p>
-                <p className="mt-2 text-green-400">
-                  Result: Minimum 0.93 m² free opening area at both inlet and outlet
-                </p>
-                <p className="text-white mt-1">
-                  Specify 1.2 m² to allow for reduced ΔT conditions
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Thermal Mass Night Cooling Assessment
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Assess thermal mass capacity of exposed 200mm concrete
-                soffit in a 100m² office to absorb next-day heat gains.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Thermal storage capacity:</p>
-                <p className="ml-4">Q = m × c × ΔT</p>
-                <p className="mt-2 text-white">Parameters:</p>
-                <p className="ml-4">Concrete density = 2400 kg/m³</p>
-                <p className="ml-4">Specific heat = 1000 J/kgK</p>
-                <p className="ml-4">
-                  Effective depth = 75mm (first 75mm participates in diurnal cycle)
-                </p>
-                <p className="ml-4">Temperature swing = 4°C (assumed)</p>
-                <p className="mt-2">Mass participating:</p>
-                <p className="ml-4">m = 100 m² × 0.075m × 2400 kg/m³ = 18,000 kg</p>
-                <p className="mt-2">Heat storage:</p>
-                <p className="ml-4">Q = 18,000 × 1000 × 4 = 72,000,000 J = 72 MJ</p>
-                <p className="ml-4">= 72 MJ / 3.6 = 20 kWh</p>
-                <p className="mt-2">Heat absorption rate (over 8-hour day):</p>
-                <p className="ml-4">= 20 kWh / 8h = 2.5 kW = 25 W/m²</p>
-                <p className="mt-2 text-green-400">
-                  Result: Soffit can absorb 25 W/m² of heat gains - significant contribution to
-                  cooling
-                </p>
-                <p className="text-white mt-1">
-                  Combined with 35 W/m² internal gains = substantial peak reduction
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Passive Design Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Analyse site orientation and optimise building position for solar access
-                </li>
-                <li className="pl-1">
-                  Design narrow floor plates (≤15m) to enable cross-ventilation
-                </li>
-                <li className="pl-1">Maximise south-facing glazing with appropriate shading</li>
-                <li className="pl-1">Minimise west-facing glazing or provide robust shading</li>
-                <li className="pl-1">
-                  Expose thermal mass internally (avoid suspended ceilings where possible)
-                </li>
-                <li className="pl-1">Provide openable windows/vents for natural ventilation</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Suspended ceilings hiding thermal mass</strong> - coordinate with acoustics early</li>
+                <li><strong>Relying on internal blinds for solar control</strong> - heat already inside</li>
+                <li><strong>Deep floor plates without toplighting</strong> - creates permanently dark cores</li>
+                <li><strong>Ignoring security/weather for night ventilation</strong> - openings must be secure and rain-proof</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Daylight factor targets: <strong>2% minimum, 5% for task areas</strong>
-                </li>
-                <li className="pl-1">
-                  Daylit depth: <strong>1.5-2.5 × window head height</strong>
-                </li>
-                <li className="pl-1">
-                  Cross-ventilation depth: <strong>≤5 × ceiling height</strong>
-                </li>
-                <li className="pl-1">
-                  Night purge rate: <strong>6-10 ACH for 4-8 hours</strong>
-                </li>
-                <li className="pl-1">
-                  Effective thermal mass depth: <strong>~75mm for diurnal cycle</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Suspended ceilings hiding thermal mass</strong> - coordinate with
-                  acoustics early
-                </li>
-                <li className="pl-1">
-                  <strong>Relying on internal blinds for solar control</strong> - heat already
-                  inside
-                </li>
-                <li className="pl-1">
-                  <strong>Deep floor plates without toplighting</strong> - creates permanently dark
-                  cores
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring security/weather for night ventilation</strong> - openings must
-                  be secure and rain-proof
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="Single-aspect south-facing flat fails Part O TM59"
+            situation={
+              <>
+                A 38 m² studio flat on the south aspect of a residential block. Single-aspect (no cross-ventilation), full-height glazing, 1.5 m balcony overhang. Part O TM59 dynamic modelling shows operative temperature exceeding 26°C for 480 hours/year (limit ~3% = 263 hours). Design fails Part O.
+              </>
+            }
+            whatToDo={
+              <>
+                Three options: (1) external solid shading (brise-soleil, deep recessed reveals) — typically 30–50% reduction in overheating hours, often architecturally challenging; (2) reduce glazing area and add insulated spandrel panels — most effective but visually intrusive; (3) mechanical cooling (MVHR with summer bypass + limited active cooling) — works technically but adds capital and operational cost. Most common solution is a combination of moderate glazing reduction + external shading + MVHR with night purge. Re-run TM59 to verify.
+              </>
+            }
+            whyItMatters={
+              <>
+                Part O has been the most disruptive change to residential design in a decade. Single-aspect dwellings on hot facades are the worst case. The cheapest fix is at concept stage (orientation, dual aspect, glazing area); by RIBA Stage 4 only mechanical cooling typically works. Engage the M&E and overheating engineer at Stage 1.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Passive Design Hierarchy</p>
-                <ul className="space-y-0.5">
-                  <li>1. Reduce demand (fabric, orientation)</li>
-                  <li>2. Passive heating/cooling (sun, mass, ventilation)</li>
-                  <li>3. Efficient active systems (if needed)</li>
-                  <li>4. Renewable supply (PV, heat pumps)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Services Impact</p>
-                <ul className="space-y-0.5">
-                  <li>Cooling load reduction: 30-50%</li>
-                  <li>Lighting energy savings: 40-60%</li>
-                  <li>Smaller plant rooms and risers</li>
-                  <li>Requires BMS integration for control</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              "Passive design = form, orientation, fabric, layout deliver comfort with minimum M&E.",
+              "Halves M&E load before mechanical sizing — but needs Stage 1 integration.",
+              "CIBSE Guide A is the UK environmental design reference.",
+              "Part O makes overheating compliance mandatory under Building Regulations.",
+              "TM59 (dynamic thermal modelling) or Part O simplified method for evidencing.",
+              "Single-aspect south-facing dwellings are the hardest Part O case.",
+              "Solar control glazing, external shading, cross-ventilation, night purge — the passive toolkit.",
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section6-2">
-              Next: Active Systems Integration
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section6")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Sustainable design integration
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section6-2")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Fabric first approach
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

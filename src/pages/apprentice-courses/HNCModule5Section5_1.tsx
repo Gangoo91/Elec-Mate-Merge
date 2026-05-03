@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 5 · Section 5 · Subsection 1 — Commissioning Planning
+ * HNC Electrical Engineering for Building Services (Project Management — Pearson U4004 + BSE PM context)
+ *   CIBSE Code M, BSRIA Soft Landings, commissioning management plans and integration of commissioning with the project programme.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Commissioning Planning - HNC Module 5 Section 5.1';
@@ -240,794 +257,535 @@ const faqs = [
 ];
 
 const HNCModule5Section5_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section5')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module5-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 5.5.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Commissioning Planning
-          </h1>
-          <p className="text-white">
-            CIBSE Code M principles, commissioning management plans, and coordination of building
-            services commissioning
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 5 · Section 5 · Subsection 1"
+            title="Commissioning Planning"
+            description="CIBSE Code M principles, commissioning management plans, and coordination of building services commissioning."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>CIBSE Code M:</strong> Industry standard for commissioning management
-              </li>
-              <li className="pl-1">
-                <strong>CMP:</strong> Commissioning Management Plan coordinates all activities
-              </li>
-              <li className="pl-1">
-                <strong>Pre-requisites:</strong> Static completion before dynamic commissioning
-              </li>
-              <li className="pl-1">
-                <strong>Integration:</strong> Aligns with construction programme and handover
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>HVAC:</strong> Air and water balancing, BMS integration
-              </li>
-              <li className="pl-1">
-                <strong>Electrical:</strong> Protection settings, metering, controls
-              </li>
-              <li className="pl-1">
-                <strong>Fire systems:</strong> Detection, suppression, cause and effect
-              </li>
-              <li className="pl-1">
-                <strong>Lifts:</strong> Safety devices, door timing, levelling
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              "Commissioning is a process, not an event — planned from RIBA Stage 2, executed across stages 4–6, validated post-occupancy.",
+              "CIBSE Commissioning Code M is the UK reference for management of commissioning; BSRIA BG 49/50 frame Soft Landings.",
+              "Commissioning Management Plan (CMP) defines scope, programme, responsibilities, witness requirements, deliverables.",
+              "Programme integration: commissioning windows in the master programme, not bolted on at the end.",
+              "Soft Landings: design intent → build → handover → aftercare (Year 1 / Year 2 / Year 3) — close the performance gap.",
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="CIBSE Commissioning Code M: Commissioning Management"
+            clause="CIBSE Commissioning Code M provides guidance on the management of the commissioning of building services, including the role of the commissioning manager, programme integration, witnessing, documentation and handover."
+            meaning={
+              <>
+                Code M is the management spine for commissioning: who does what, when, to what standard, with what evidence. A commissioning plan aligned to Code M is the deliverable that gives the client confidence the building will perform — not just be built. Many specifications now explicitly require Code M compliance.
+              </>
+            }
+            cite="Source: CIBSE Commissioning Code M (refer to CIBSE published text for verbatim clauses)."
+          />
+
+
+          <LearningOutcomes
+            outcomes={[
               'Understand CIBSE Code M structure and application',
               'Develop commissioning management plans for building services',
               'Schedule commissioning activities and resource requirements',
               'Identify pre-requisites for commissioning different systems',
               'Coordinate specialist commissioning contractors',
               'Integrate commissioning with project handover requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: CIBSE Code M Structure */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            CIBSE Code M Structure and Principles
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="CIBSE Code M Structure and Principles">
             <p>
               CIBSE Code M (Commissioning Management) is the industry standard guidance document for
               commissioning building services systems. It provides a structured framework ensuring
               that installed systems operate as designed and meet the client's requirements.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Code M Structure:</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Part</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Title</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Coverage</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Part A</td>
-                      <td className="border border-white/10 px-3 py-2">Commissioning Management</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Planning, organisation, documentation, handover
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Part B</td>
-                      <td className="border border-white/10 px-3 py-2">Air Distribution Systems</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ductwork, AHUs, terminals, extract systems
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Part C</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Water Distribution Systems
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heating, chilled water, domestic water
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Commissioning Principles
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Early planning:</strong> Commissioning requirements identified at design
-                  stage
-                </li>
-                <li className="pl-1">
-                  <strong>Clear responsibilities:</strong> Defined roles for all parties involved
-                </li>
-                <li className="pl-1">
-                  <strong>Systematic approach:</strong> Logical sequence from static to dynamic
-                  commissioning
-                </li>
-                <li className="pl-1">
-                  <strong>Documentation:</strong> Comprehensive records of all commissioning
-                  activities
-                </li>
-                <li className="pl-1">
-                  <strong>Verification:</strong> Independent checking and witness testing
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Related Standards and Guidance
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>BSRIA BG 8:</strong> Model Commissioning Plan
-                </li>
-                <li className="pl-1">
-                  <strong>BSRIA BG 29:</strong> Pre-commission Cleaning of Pipework Systems
-                </li>
-                <li className="pl-1">
-                  <strong>BSRIA AG 1:</strong> Commissioning Air Systems
-                </li>
-                <li className="pl-1">
-                  <strong>BSRIA AG 2:</strong> Commissioning Water Systems
-                </li>
-                <li className="pl-1">
-                  <strong>BS 7671:</strong> Electrical installation testing and commissioning
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Code M structure:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Part A — Commissioning Management:</strong> Planning, organisation,
+                documentation, handover
+              </li>
+              <li>
+                <strong>Part B — Air Distribution Systems:</strong> Ductwork, AHUs, terminals,
+                extract systems
+              </li>
+              <li>
+                <strong>Part C — Water Distribution Systems:</strong> Heating, chilled water,
+                domestic water
+              </li>
+            </ul>
+            <p>
+              <strong>Key commissioning principles:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Early planning:</strong> Commissioning requirements identified at design
+                stage
+              </li>
+              <li>
+                <strong>Clear responsibilities:</strong> Defined roles for all parties involved
+              </li>
+              <li>
+                <strong>Systematic approach:</strong> Logical sequence from static to dynamic
+                commissioning
+              </li>
+              <li>
+                <strong>Documentation:</strong> Comprehensive records of all commissioning
+                activities
+              </li>
+              <li>
+                <strong>Verification:</strong> Independent checking and witness testing
+              </li>
+            </ul>
+            <p>
+              <strong>Related standards and guidance:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>BSRIA BG 8:</strong> Model Commissioning Plan
+              </li>
+              <li>
+                <strong>BSRIA BG 29:</strong> Pre-commission Cleaning of Pipework Systems
+              </li>
+              <li>
+                <strong>BSRIA AG 1:</strong> Commissioning Air Systems
+              </li>
+              <li>
+                <strong>BSRIA AG 2:</strong> Commissioning Water Systems
+              </li>
+              <li>
+                <strong>BS 7671:</strong> Electrical installation testing and commissioning
+              </li>
+            </ul>
+            <p>
               <strong>Industry requirement:</strong> Most major building contracts and BREEAM
               assessments require compliance with CIBSE Code M commissioning principles.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Commissioning Management Plan */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Commissioning Management Plan Content
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Commissioning Management Plan Content">
             <p>
               The Commissioning Management Plan (CMP) is the master document that defines how
               commissioning will be organised, executed, and documented. It is a living document
               updated throughout the project.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Management Sections</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Project description and scope</li>
-                  <li className="pl-1">Commissioning objectives and criteria</li>
-                  <li className="pl-1">Organisation and responsibilities</li>
-                  <li className="pl-1">Communication protocols</li>
-                  <li className="pl-1">Quality assurance procedures</li>
-                  <li className="pl-1">Health and safety requirements</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Technical Sections</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Systems to be commissioned</li>
-                  <li className="pl-1">Commissioning procedures per system</li>
-                  <li className="pl-1">Pre-requisites and interfaces</li>
-                  <li className="pl-1">Test equipment requirements</li>
-                  <li className="pl-1">Acceptance criteria</li>
-                  <li className="pl-1">Record formats and templates</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">CMP Development Stages</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Stage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">RIBA Stage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">CMP Content</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Initial</td>
-                      <td className="border border-white/10 px-3 py-2">3-4</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Strategy, objectives, initial programme
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Developed</td>
-                      <td className="border border-white/10 px-3 py-2">4-5</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Detailed procedures, responsibilities, schedules
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Final</td>
-                      <td className="border border-white/10 px-3 py-2">5</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Complete commissioning records, as-built data
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Real-World Example: Hospital Development
-              </p>
-              <p className="text-sm text-white">
-                A 400-bed hospital CMP identified 47 separate building services systems requiring
-                commissioning, with 12 specialist commissioning contractors. The CMP included
-                detailed interface matrices showing dependencies between systems (e.g., medical gas
-                commissioning requiring electrical completion, theatre ventilation requiring BMS
-                integration). The commissioning programme spanned 18 months with seasonal
-                commissioning provisions for heating and cooling systems.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Management sections:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Project description and scope</li>
+              <li>Commissioning objectives and criteria</li>
+              <li>Organisation and responsibilities</li>
+              <li>Communication protocols</li>
+              <li>Quality assurance procedures</li>
+              <li>Health and safety requirements</li>
+            </ul>
+            <p>
+              <strong>Technical sections:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Systems to be commissioned</li>
+              <li>Commissioning procedures per system</li>
+              <li>Pre-requisites and interfaces</li>
+              <li>Test equipment requirements</li>
+              <li>Acceptance criteria</li>
+              <li>Record formats and templates</li>
+            </ul>
+            <p>
+              <strong>CMP development stages:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Initial (RIBA 3-4):</strong> Strategy, objectives, initial programme
+              </li>
+              <li>
+                <strong>Developed (RIBA 4-5):</strong> Detailed procedures, responsibilities,
+                schedules
+              </li>
+              <li>
+                <strong>Final (RIBA 5):</strong> Complete commissioning records, as-built data
+              </li>
+            </ul>
+            <p>
+              <strong>Real-world example — hospital development:</strong> A 400-bed hospital CMP
+              identified 47 separate building services systems requiring commissioning, with 12
+              specialist commissioning contractors. The CMP included detailed interface matrices
+              showing dependencies between systems (e.g., medical gas commissioning requiring
+              electrical completion, theatre ventilation requiring BMS integration). The
+              commissioning programme spanned 18 months with seasonal commissioning provisions for
+              heating and cooling systems.
+            </p>
+            <p>
               <strong>Best practice:</strong> The CMP should be reviewed and updated at each project
               milestone and after significant changes to design or programme.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Scheduling and Resource Coordination */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Scheduling and Resource Coordination
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Scheduling and Resource Coordination">
             <p>
               Effective commissioning scheduling requires integration with the main construction
               programme and coordination of specialist resources across multiple disciplines.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Commissioning Programme Structure
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Level 1:</strong> Master commissioning milestones aligned with main
-                  programme
-                </li>
-                <li className="pl-1">
-                  <strong>Level 2:</strong> Commissioning phases by building zone or system type
-                </li>
-                <li className="pl-1">
-                  <strong>Level 3:</strong> Detailed commissioning activities with durations and
-                  resources
-                </li>
-                <li className="pl-1">
-                  <strong>Level 4:</strong> Daily task schedules during active commissioning
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Commissioning Durations
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Duration Range</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Factors</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Electrical distribution</td>
-                      <td className="border border-white/10 px-3 py-2">2-4 weeks</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Number of boards, protection coordination
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lighting controls</td>
-                      <td className="border border-white/10 px-3 py-2">1-3 weeks</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        System complexity, scene programming
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">HVAC air systems</td>
-                      <td className="border border-white/10 px-3 py-2">4-8 weeks</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Number of AHUs, VAV terminals
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">HVAC water systems</td>
-                      <td className="border border-white/10 px-3 py-2">3-6 weeks</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Number of circuits, balancing complexity
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BMS and controls</td>
-                      <td className="border border-white/10 px-3 py-2">6-12 weeks</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Points count, integration requirements
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fire detection</td>
-                      <td className="border border-white/10 px-3 py-2">2-4 weeks</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Device count, cause and effect
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lifts</td>
-                      <td className="border border-white/10 px-3 py-2">2-4 weeks per lift</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Type, traffic analysis, firefighting mode
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Specialist Resources</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Air balancing engineers (BSRIA/NEBB)</li>
-                  <li className="pl-1">Water balancing engineers</li>
-                  <li className="pl-1">BMS commissioning engineers</li>
-                  <li className="pl-1">Lighting control programmers</li>
-                  <li className="pl-1">Fire system engineers</li>
-                  <li className="pl-1">Lift commissioning engineers</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Coordination Requirements
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Weekly commissioning coordination meetings</li>
-                  <li className="pl-1">Shared access schedules for plant rooms</li>
-                  <li className="pl-1">Coordinated witness testing programme</li>
-                  <li className="pl-1">Interface management between contractors</li>
-                  <li className="pl-1">Progress reporting and KPI tracking</li>
-                  <li className="pl-1">Defect management and resolution</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Commissioning programme structure:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Level 1:</strong> Master commissioning milestones aligned with main
+                programme
+              </li>
+              <li>
+                <strong>Level 2:</strong> Commissioning phases by building zone or system type
+              </li>
+              <li>
+                <strong>Level 3:</strong> Detailed commissioning activities with durations and
+                resources
+              </li>
+              <li>
+                <strong>Level 4:</strong> Daily task schedules during active commissioning
+              </li>
+            </ul>
+            <p>
+              <strong>Typical commissioning durations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Electrical distribution:</strong> 2-4 weeks — Number of boards, protection
+                coordination
+              </li>
+              <li>
+                <strong>Lighting controls:</strong> 1-3 weeks — System complexity, scene programming
+              </li>
+              <li>
+                <strong>HVAC air systems:</strong> 4-8 weeks — Number of AHUs, VAV terminals
+              </li>
+              <li>
+                <strong>HVAC water systems:</strong> 3-6 weeks — Number of circuits, balancing
+                complexity
+              </li>
+              <li>
+                <strong>BMS and controls:</strong> 6-12 weeks — Points count, integration
+                requirements
+              </li>
+              <li>
+                <strong>Fire detection:</strong> 2-4 weeks — Device count, cause and effect
+              </li>
+              <li>
+                <strong>Lifts:</strong> 2-4 weeks per lift — Type, traffic analysis, firefighting
+                mode
+              </li>
+            </ul>
+            <p>
+              <strong>Specialist resources:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Air balancing engineers (BSRIA/NEBB)</li>
+              <li>Water balancing engineers</li>
+              <li>BMS commissioning engineers</li>
+              <li>Lighting control programmers</li>
+              <li>Fire system engineers</li>
+              <li>Lift commissioning engineers</li>
+            </ul>
+            <p>
+              <strong>Coordination requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Weekly commissioning coordination meetings</li>
+              <li>Shared access schedules for plant rooms</li>
+              <li>Coordinated witness testing programme</li>
+              <li>Interface management between contractors</li>
+              <li>Progress reporting and KPI tracking</li>
+              <li>Defect management and resolution</li>
+            </ul>
+            <p>
               <strong>Programme tip:</strong> Build in 15-25% contingency for snagging and
               re-commissioning. Complex systems rarely commission perfectly first time.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Pre-requisites for Commissioning */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Pre-requisites for Commissioning
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Pre-requisites for Commissioning">
             <p>
               Each building services system has specific pre-requisites that must be complete before
               commissioning can commence. Missing pre-requisites are a major cause of commissioning
               delays.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                General Pre-requisites (All Systems)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Installation physically complete (static completion)</li>
-                <li className="pl-1">
-                  All safety systems operational or suitable temporary measures
-                </li>
-                <li className="pl-1">Area clean and free from construction debris</li>
-                <li className="pl-1">Adequate lighting for commissioning activities</li>
-                <li className="pl-1">Safe access to all equipment and controls</li>
-                <li className="pl-1">Relevant drawings and documentation available</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                System-Specific Pre-requisites
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Key Pre-requisites
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Electrical distribution</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        DNO supply available, installation certificates, earthing complete
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">HVAC air systems</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ductwork pressure tested, electrical supplies, controls wired
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">HVAC water systems</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pipework flushed and cleaned, chemical treatment, pump rotation checked
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BMS</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        All field devices connected, network installed, graphics available
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fire detection</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        All devices installed, ceilings complete, interfaces connected
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lifts</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Shaft complete, machine room ready, electrical supplies, fire service
-                        connections
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Emergency lighting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Permanent power available, batteries charged (24-48 hours minimum)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Pre-commissioning Checklist Process
-              </p>
-              <ol className="text-sm text-white space-y-1.5 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  Installing contractor completes pre-commissioning checklist
-                </li>
-                <li className="pl-1">Commissioning manager reviews and signs off checklist</li>
-                <li className="pl-1">Any outstanding items documented with resolution dates</li>
-                <li className="pl-1">Commissioning start date confirmed once all items complete</li>
-                <li className="pl-1">Checklist forms part of commissioning record</li>
-              </ol>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-2">
-                Real-World Example: Office Building HVAC
-              </p>
-              <p className="text-sm text-white">
-                A 15-storey office building commissioning was delayed by 3 weeks because water
-                system pre-commissioning flushing was incomplete. Debris in pipework damaged pump
-                seals during initial operation. The lesson: commissioning manager now requires
-                photographic evidence of strainer condition and water sample test results before
-                allowing pump energisation.
-              </p>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>General pre-requisites (all systems):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Installation physically complete (static completion)</li>
+              <li>All safety systems operational or suitable temporary measures</li>
+              <li>Area clean and free from construction debris</li>
+              <li>Adequate lighting for commissioning activities</li>
+              <li>Safe access to all equipment and controls</li>
+              <li>Relevant drawings and documentation available</li>
+            </ul>
+            <p>
+              <strong>System-specific pre-requisites:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Electrical distribution:</strong> DNO supply available, installation
+                certificates, earthing complete
+              </li>
+              <li>
+                <strong>HVAC air systems:</strong> Ductwork pressure tested, electrical supplies,
+                controls wired
+              </li>
+              <li>
+                <strong>HVAC water systems:</strong> Pipework flushed and cleaned, chemical
+                treatment, pump rotation checked
+              </li>
+              <li>
+                <strong>BMS:</strong> All field devices connected, network installed, graphics
+                available
+              </li>
+              <li>
+                <strong>Fire detection:</strong> All devices installed, ceilings complete,
+                interfaces connected
+              </li>
+              <li>
+                <strong>Lifts:</strong> Shaft complete, machine room ready, electrical supplies,
+                fire service connections
+              </li>
+              <li>
+                <strong>Emergency lighting:</strong> Permanent power available, batteries charged
+                (24-48 hours minimum)
+              </li>
+            </ul>
+            <p>
+              <strong>Pre-commissioning checklist process:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Installing contractor completes pre-commissioning checklist</li>
+              <li>Commissioning manager reviews and signs off checklist</li>
+              <li>Any outstanding items documented with resolution dates</li>
+              <li>Commissioning start date confirmed once all items complete</li>
+              <li>Checklist forms part of commissioning record</li>
+            </ul>
+            <p>
+              <strong>Real-world example — office building HVAC:</strong> A 15-storey office
+              building commissioning was delayed by 3 weeks because water system pre-commissioning
+              flushing was incomplete. Debris in pipework damaged pump seals during initial
+              operation. The lesson: commissioning manager now requires photographic evidence of
+              strainer condition and water sample test results before allowing pump energisation.
+            </p>
+            <p>
               <strong>Critical interface:</strong> Electrical installation must be complete with EIC
               issued before any HVAC, BMS, or life safety system commissioning can commence.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — Commissioning schedule development:</strong> Develop commissioning
+              milestone dates for a 5,000m2 office building with handover on 1st September.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1 Sept: Handover (practical completion)</li>
+              <li>15 Aug: Witness testing complete (-2 weeks)</li>
+              <li>1 Aug: BMS commissioning complete (-2 weeks)</li>
+              <li>15 July: HVAC commissioning complete (-2 weeks)</li>
+              <li>1 July: Electrical commissioning complete (-2 weeks)</li>
+              <li>15 June: Static completion all systems (-2 weeks)</li>
+              <li>Allow 2-week contingency before handover</li>
+            </ul>
+            <p>
+              <strong>Example 2 — Resource calculation:</strong> Calculate air balancing resource
+              requirement for 25 AHUs and 400 VAV terminals.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>AHU commissioning: 1-2 days each = 25-50 days</li>
+              <li>VAV commissioning: 8-12 per day = 33-50 days</li>
+              <li>Total air balancing duration: 58-100 days</li>
+              <li>With 2-person team (standard): Programme duration: 29-50 working days</li>
+              <li>Allow 8-10 weeks for air balancing phase</li>
+            </ul>
+            <p>
+              <strong>Example 3 — Interface matrix:</strong> Identify commissioning dependencies for
+              a fire alarm system.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Before fire alarm:</strong> Electrical distribution commissioned
+              </li>
+              <li>All detectors and sounders installed</li>
+              <li>Ceilings substantially complete</li>
+              <li>Interface wiring to AHUs, dampers, lifts</li>
+              <li>
+                <strong>After fire alarm (dependent systems):</strong> Smoke damper operation
+                testing
+              </li>
+              <li>AHU shutdown sequences</li>
+              <li>Lift recall testing</li>
+              <li>Door holder release testing</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Commissioning Schedule Development
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Develop commissioning milestone dates for a 5,000m2
-                office building with handover on 1st September.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Working backwards from handover:</p>
-                <p className="mt-2">1 Sept: Handover (practical completion)</p>
-                <p>15 Aug: Witness testing complete (-2 weeks)</p>
-                <p>1 Aug: BMS commissioning complete (-2 weeks)</p>
-                <p>15 July: HVAC commissioning complete (-2 weeks)</p>
-                <p>1 July: Electrical commissioning complete (-2 weeks)</p>
-                <p>15 June: Static completion all systems (-2 weeks)</p>
-                <p className="mt-2 text-green-400">Allow 2-week contingency before handover</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Resource Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate air balancing resource requirement for 25 AHUs
-                and 400 VAV terminals.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Typical production rates:</p>
-                <p>AHU commissioning: 1-2 days each = 25-50 days</p>
-                <p>VAV commissioning: 8-12 per day = 33-50 days</p>
-                <p className="mt-2">Total air balancing duration: 58-100 days</p>
-                <p className="mt-2">With 2-person team (standard):</p>
-                <p>Programme duration: 29-50 working days</p>
-                <p className="mt-2 text-green-400">Allow 8-10 weeks for air balancing phase</p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Commissioning manager checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Produce and maintain Commissioning Management Plan</li>
+              <li>Chair weekly commissioning coordination meetings</li>
+              <li>Review and approve pre-commissioning checklists</li>
+              <li>Coordinate specialist commissioning contractors</li>
+              <li>Arrange and attend witness testing</li>
+              <li>Compile commissioning records for handover</li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Witness testing notice: <strong>7 days minimum</strong>
+              </li>
+              <li>
+                Snagging contingency: <strong>15-25% of programme</strong>
+              </li>
+              <li>
+                BMS commissioning: <strong>longest duration system</strong>
+              </li>
+              <li>
+                CMP first issue: <strong>RIBA Stage 3-4</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Interface Matrix
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Identify commissioning dependencies for a fire alarm
-                system.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Fire alarm commissioning requires:</p>
-                <p className="mt-2">Before fire alarm:</p>
-                <p className="ml-4">- Electrical distribution commissioned</p>
-                <p className="ml-4">- All detectors and sounders installed</p>
-                <p className="ml-4">- Ceilings substantially complete</p>
-                <p className="ml-4">- Interface wiring to AHUs, dampers, lifts</p>
-                <p className="mt-2">After fire alarm (dependent systems):</p>
-                <p className="ml-4">- Smoke damper operation testing</p>
-                <p className="ml-4">- AHU shutdown sequences</p>
-                <p className="ml-4">- Lift recall testing</p>
-                <p className="ml-4">- Door holder release testing</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Commissioning Manager Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Produce and maintain Commissioning Management Plan</li>
-                <li className="pl-1">Chair weekly commissioning coordination meetings</li>
-                <li className="pl-1">Review and approve pre-commissioning checklists</li>
-                <li className="pl-1">Coordinate specialist commissioning contractors</li>
-                <li className="pl-1">Arrange and attend witness testing</li>
-                <li className="pl-1">Compile commissioning records for handover</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Witness testing notice: <strong>7 days minimum</strong>
-                </li>
-                <li className="pl-1">
-                  Snagging contingency: <strong>15-25% of programme</strong>
-                </li>
-                <li className="pl-1">
-                  BMS commissioning: <strong>longest duration system</strong>
-                </li>
-                <li className="pl-1">
-                  CMP first issue: <strong>RIBA Stage 3-4</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Late CMP development</strong> - Leads to inadequate planning and resource
                   issues
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring pre-requisites</strong> - Starting commissioning before systems
                   ready
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Insufficient contingency</strong> - Unrealistic programmes without
                   snagging allowance
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Poor coordination</strong> - Commissioning clashes between trades
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Issue the CMP at RIBA 3-4, sign off pre-commissioning checklists before energising, build 15-25% snagging contingency into the programme, and chair weekly coordination meetings between all specialist contractors."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Commissioning bolted onto the end of the programme — chaos at handover"
+            situation={
+              <>
+                The construction programme shows "commissioning" as a single 4-week activity at the end. As handover approaches, electrical commissioning is incomplete (cables still being terminated), mechanical balancing is starting on systems that have not been tested, the BMS contractor is on holiday, and witness testing is scheduled before functional performance is verified. Handover slips by 6 weeks.
+              </>
+            }
+            whatToDo={
+              <>
+                Commissioning must be planned from day one. Build a Commissioning Management Plan aligned to CIBSE Code M; identify dependencies between commissioning activities (e.g., electrical complete before mechanical pre-commissioning before BMS integration). Show the dependencies on the master programme as logically-linked activities, not a single block. Brief subcontractors on commissioning programme. Hold weekly commissioning meetings from month nine onwards. Avoid the "commissioning as afterthought" trap — it is the most common cause of late handover in building services.
+              </>
+            }
+            whyItMatters={
+              <>
+                Commissioning controls the handover date. A well-planned commissioning programme delivers a building that works on day one; a poorly-planned one delivers a building that limps into use, generates complaints, and absorbs aftercare resources for years. The PM's discipline at planning stage pays dividends at handover.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">CIBSE Code M Structure</p>
-                <ul className="space-y-0.5">
-                  <li>Part A - Commissioning management</li>
-                  <li>Part B - Air distribution systems</li>
-                  <li>Part C - Water distribution systems</li>
-                  <li>Related: BSRIA BG 8, AG 1, AG 2</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">CMP Key Contents</p>
-                <ul className="space-y-0.5">
-                  <li>Systems and procedures</li>
-                  <li>Organisation and responsibilities</li>
-                  <li>Programme and resources</li>
-                  <li>Documentation and records</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+                    <KeyTakeaways
+            points={[
+              "Commissioning = process, not event. Planned RIBA Stage 2, executed Stages 4–6, validated post-occupancy.",
+              "CIBSE Code M = management spine; BSRIA BG 49/50 = Soft Landings framework.",
+              "Commissioning Management Plan (CMP) defines scope, programme, responsibilities, witness, deliverables.",
+              "Programme integration: dependencies shown logically, not \"one block at end\".",
+              "Soft Landings: design intent → build → handover → aftercare (Year 1, 2, 3).",
+              "Independent commissioning manager increasingly common on complex projects.",
+              "Witness testing to be planned with client/end-user attendance — not surprise calls.",
+              "Performance verification post-occupancy closes the design-vs-actual gap.",
+            ]}
+          />
+
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section5-2">
-              Next: Commissioning Procedures
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section5')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Commissioning and handover
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section5-2')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Electrical commissioning
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

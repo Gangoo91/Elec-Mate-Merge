@@ -248,11 +248,11 @@ const HNCModule3Section2_3 = () => {
 
           <TLDR
             points={[
-              'You can represent any sinusoidal voltage or current as a phasor (magnitude \u2220 angle) and convert between time-domain v(t) = V_max sin(\u03c9t + \u03c6) and phasor V \u2220 \u03c6.',
-              'You can add and subtract phasors graphically (head-to-tail) and analytically (rectangular: a + jb, polar: r \u2220 \u03b8).',
+              'You can represent any sinusoidal voltage or current as a phasor (magnitude ∠ angle) and convert between time-domain v(t) = V_max sin(ωt + φ) and phasor V ∠ φ.',
+              'You can add and subtract phasors graphically (head-to-tail) and analytically (rectangular: a + jb, polar: r ∠ θ).',
               'You can construct the impedance triangle (R, X, Z) and the power triangle (P, Q, S) and read the phase angle off either.',
-              'You can use phasor analysis to combine three-phase voltages 120\u00b0 apart and prove that a balanced linear three-phase load has zero neutral current.',
-              'You can spot leading and lagging power factors from the relative angle of I to V \u2014 the basis of every PFC calculation.',
+              'You can use phasor analysis to combine three-phase voltages 120° apart and prove that a balanced linear three-phase load has zero neutral current.',
+              'You can spot leading and lagging power factors from the relative angle of I to V — the basis of every PFC calculation.',
             ]}
           />
 
@@ -264,7 +264,7 @@ const HNCModule3Section2_3 = () => {
                 Power-quality and energy-monitoring CTs in a building services switchroom
                 are specified by accuracy class AND phase displacement. A phase error of even
                 a few minutes shows up as an apparent power-factor offset on the BMS metering
-                screen \u2014 phasor arithmetic is the only way to interpret what the readings
+                screen — phasor arithmetic is the only way to interpret what the readings
                 actually mean.
               </>
             }
@@ -781,19 +781,19 @@ const HNCModule3Section2_3 = () => {
             }
             whatToDo={
               <>
-                Sketch the supply phasor diagram \u2014 in a healthy 400 V system, V_L1, V_L2,
-                V_L3 sit 120\u00b0 apart in positive sequence (L1 \u2192 L2 \u2192 L3 anticlockwise).
+                Sketch the supply phasor diagram — in a healthy 400 V system, V_L1, V_L2,
+                V_L3 sit 120° apart in positive sequence (L1 → L2 → L3 anticlockwise).
                 Verify with a phase-rotation meter at the panel terminals. If the meter
                 confirms reverse rotation, swap any two phases at the upstream feeder. The CT
-                reverse-power flag is the same problem expressed in phasor terms \u2014 the
-                current phasor on the misconnected channel is sitting 180\u00b0 from where the
+                reverse-power flag is the same problem expressed in phasor terms — the
+                current phasor on the misconnected channel is sitting 180° from where the
                 BMS expects it. Re-check after the swap and clear both alarms.
               </>
             }
             whyItMatters={
               <>
-                Phasor diagrams turn an abstract \u201cphase rotation\u201d alarm into a picture you
-                can fix. Without phasor reasoning you would be guessing at terminations \u2014
+                Phasor diagrams turn an abstract “phase rotation” alarm into a picture you
+                can fix. Without phasor reasoning you would be guessing at terminations —
                 with it, the diagnosis is one sketch and one swap.
               </>
             }
@@ -807,14 +807,14 @@ const HNCModule3Section2_3 = () => {
 
           <KeyTakeaways
             points={[
-              'A phasor is a frozen snapshot of a sinusoid \u2014 magnitude (RMS) and angle (phase). Time disappears, geometry takes over.',
-              'Time-to-phasor: v(t) = V_max sin(\u03c9t + \u03c6) \u2192 V = V_RMS \u2220 \u03c6.',
-              'Polar to rectangular: r \u2220 \u03b8 = r cos\u03b8 + j r sin\u03b8. Use rectangular for addition; use polar for multiplication and division.',
-              'Phasor addition obeys the parallelogram rule \u2014 the sum of two AC voltages is NOT just the arithmetic sum unless they are in phase.',
-              'Three-phase balanced linear load: I_L1 + I_L2 + I_L3 = 0 by phasor sum \u2014 the basis of zero neutral current and the equilateral phasor triangle.',
-              'Impedance triangle (R, X_L\u2212X_C, Z) and power triangle (P, Q, S) share the same phase angle \u03c6.',
-              'Lagging PF (inductive load) \u2192 current phasor sits behind voltage phasor. Leading PF (capacitive load) \u2192 current phasor sits ahead.',
-              'CT phase displacement (BS EN 61869 / IEC 60044-1) shows up directly as a power-factor error on the metering screen \u2014 phasor arithmetic decodes it.',
+              'A phasor is a frozen snapshot of a sinusoid — magnitude (RMS) and angle (phase). Time disappears, geometry takes over.',
+              'Time-to-phasor: v(t) = V_max sin(ωt + φ) → V = V_RMS ∠ φ.',
+              'Polar to rectangular: r ∠ θ = r cosθ + j r sinθ. Use rectangular for addition; use polar for multiplication and division.',
+              'Phasor addition obeys the parallelogram rule — the sum of two AC voltages is NOT just the arithmetic sum unless they are in phase.',
+              'Three-phase balanced linear load: I_L1 + I_L2 + I_L3 = 0 by phasor sum — the basis of zero neutral current and the equilateral phasor triangle.',
+              'Impedance triangle (R, X_L−X_C, Z) and power triangle (P, Q, S) share the same phase angle φ.',
+              'Lagging PF (inductive load) → current phasor sits behind voltage phasor. Leading PF (capacitive load) → current phasor sits ahead.',
+              'CT phase displacement (BS EN 61869 / IEC 60044-1) shows up directly as a power-factor error on the metering screen — phasor arithmetic decodes it.',
             ]}
           />
 

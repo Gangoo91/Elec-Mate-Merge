@@ -375,7 +375,10 @@ const COLLEGE_GROUPS: FeatureGroup[] = [
 // Flatten helper so the legacy `features` field stays populated
 const flatten = (groups: FeatureGroup[]) => groups.flatMap((g) => g.items);
 
-// Native App Store / Google Play fallback prices (only Apprentice + Electrician on native)
+// Native App Store / Google Play fallback prices.
+// Native (IAP) doesn't support the £29.99 Mate founder coupon — that's a Stripe-only
+// path. Native users always pay the standard price; founder pricing is reserved for
+// users who buy through the web (where we control the discount via Stripe).
 export const nativePriceData = {
   monthly: [
     {
@@ -403,6 +406,21 @@ export const nativePriceData = {
       popular: true,
       color: '',
       priceId: '',
+    },
+    {
+      id: 'mate-monthly',
+      name: 'Mate',
+      price: '£34.99',
+      period: '/month',
+      description: 'Your AI assistant on WhatsApp — handles admin while you work',
+      featureGroups: MATE_GROUPS,
+      features: flatten(MATE_GROUPS),
+      notIncluded: [],
+      popular: false,
+      color: '',
+      priceId: '',
+      earlyAccess: true,
+      inheritsFrom: 'Electrician',
     },
   ],
   yearly: [
@@ -434,6 +452,9 @@ export const nativePriceData = {
       savings: 'Save £29.89 vs monthly',
       priceId: '',
     },
+    // Mate is intentionally monthly-only on native — no yearly IAP. Keeps the
+    // pricing surface simple and lets us iterate on Mate without locking
+    // anyone into 12 months of an early-stage product.
   ],
 };
 

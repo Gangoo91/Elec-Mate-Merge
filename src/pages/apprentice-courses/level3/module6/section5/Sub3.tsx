@@ -332,20 +332,20 @@ export default function Sub3() {
           />
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 411.4.5 (TN systems — protection by ADS, redrafted in A4:2026)"
-            clause="Regulation 411.4.5 in the A4:2026 amendment was redrafted from earlier editions. It contains the acceptance criterion for automatic disconnection of supply in TN systems, requiring that the protective device disconnect the supply within the maximum disconnection time required by Regulation 411.3.2.2 (the times listed in Table 41.1) for the type of circuit and the system, and that this be demonstrated by calculation at the design stage using Zs(design) ≤ Table 41.3 max for the protective device, and confirmed by measurement at verification."
+            source="BS 7671:2018+A4:2026 — Chapter 41 ADS framework (Regs 411.3.2.2, 411.4 and Table 41.3, with Cmin = 0.95)"
+            clause="The Chapter 41 ADS verification for TN systems requires that the protective device disconnect the supply within the maximum disconnection time required by Regulation 411.3.2.2 (Table 41.1 times) for the type of circuit and the system. This is demonstrated by calculation at the design stage — Zs(design) ≤ Table 41.3 max for the protective device — and confirmed by measurement at verification. Reg 411.4.5 was redrafted in A4:2026; the operative numerical effect of the amendment is the explicit Cmin = 0.95 voltage factor that drives the new Table 41.3 values."
             meaning={
               <>
-                Reg 411.4.5 is the regulatory hook for Zs design and verification in TN systems.
-                Practical effect: at design, calculate Zs at conductor operating temperature with
-                Cmin = 0.95 applied to U0, and verify Zs(design) ≤ Table 41.3 max. At
-                verification, measure Zs at ambient temperature and apply the 0.8 acceptance
-                criterion to allow for the cold-vs-hot difference. The reg was redrafted in
-                A4:2026; users should consult the published A4:2026 wording for the exact text
-                and any consequential changes flagged in the amendment.
+                The Chapter 41 ADS framework is the regulatory hook for Zs design and verification
+                in TN systems. Practical effect: at design, calculate Zs at conductor operating
+                temperature with Cmin = 0.95 applied to U0, and verify Zs(design) ≤ Table 41.3
+                max. At verification, measure Zs at ambient temperature and apply the 0.8
+                acceptance criterion to allow for the cold-vs-hot difference. The wording of Reg
+                411.4.5 itself was redrafted in A4:2026; consult the published amendment for the
+                exact text and any consequential changes.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Part 4, Chapter 41, Regulation 411.4.5 (redrafted in A4:2026)."
+            cite="Source: BS 7671:2018+A4:2026 Chapter 41 — Regulations 411.3.2.2, 411.4 (incl. 411.4.5 as redrafted in A4:2026) and Table 41.3."
           />
 
           <SectionRule />
@@ -549,7 +549,7 @@ export default function Sub3() {
                 a documented design comparator is an EIC trace failure, not just a missed step.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 132.2(a) and Regulation 132.13 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 132.2(a) and Regulation 132.13."
           />
 
           <ConceptBlock

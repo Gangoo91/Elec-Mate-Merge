@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 6 · Section 2 · Subsection 3 — Biomass Systems
+ * HNC Electrical Engineering for Building Services (Sustainability and Environmental Engineering)
+ *   Biomass boilers, fuel storage, handling systems, emissions control and integration with building services
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Biomass Systems - HNC Module 6 Section 2.3';
@@ -235,899 +252,384 @@ const faqs = [
 ];
 
 const HNCModule6Section2_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section2")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module6-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.2.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Biomass Systems
-          </h1>
-          <p className="text-white">
-            Biomass boilers, fuel storage, handling systems, emissions control and integration with
-            building services
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 6 · Section 2 · Subsection 3"
+            title="Biomass Systems"
+            description="Biomass boilers, fuel storage, handling systems, emissions control and integration with building services"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Biomass:</strong> Carbon-neutral renewable heat from organic material
-              </li>
-              <li className="pl-1">
-                <strong>Fuel types:</strong> Pellets, chips, logs - varying automation levels
-              </li>
-              <li className="pl-1">
-                <strong>Storage:</strong> Dry, accessible for delivery, fire-separated
-              </li>
-              <li className="pl-1">
-                <strong>Integration:</strong> Buffer vessel essential, backup boiler typical
-              </li>
+          <TLDR
+            points={[
+              "Biomass boilers burn wood pellets, chips or logs — a low-carbon (not zero-carbon) fuel where the regrowth carbon cycle is shorter than the combustion release. Typical efficiencies 85–92% for pellets, 75–85% for chips.",
+              "Air-quality compliance is now the dominant design constraint: Clean Air Act smoke control areas require Defra-exempt appliances and Ecodesign Lot 20 (PM ≤40 mg/Nm³ for pellets, ≤60 for chips) emissions limits.",
+              "Fuel storage and handling drive most of the design complexity — pellet silo capacity for 4–8 weeks consumption, auger or vacuum feed, ash removal, and statutory annual sweep/inspection.",
+            ]}
+          />
+
+          <RegsCallout
+            source="The Air Quality (Domestic Solid Fuels Standards) (England) Regulations 2020 + Ecodesign Lot 20"
+            clause="No person shall sell, offer for sale or supply for use in a domestic premises any solid fuel that does not meet the prescribed sulphur content, smoke emission and particulate matter standards. Solid fuel boilers placed on the market shall meet the seasonal space heating efficiency and emission limits set out in Commission Regulation (EU) 2015/1189 (Ecodesign Lot 20)."
+            meaning={
+              <>
+                Even outside smoke control areas, only Ecodesign-compliant biomass boilers can lawfully be installed in dwellings. Within smoke control areas (most urban England), the appliance must additionally appear on the Defra exempt appliance list. Old log boilers and stoves cannot be specified for new installations.
+              </>
+            }
+            cite="Source: SI 2020/1095 — legislation.gov.uk; Ecodesign Lot 20 — eur-lex.europa.eu"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Compare biomass boiler types and their applications",
+              "Specify fuel storage and automatic handling systems",
+              "Design emissions control and flue systems to regulations",
+              "Size buffer vessels and thermal stores for biomass integration",
+              "Plan ash handling and maintenance requirements",
+              "Integrate biomass with conventional heating systems",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Biomass Boiler Types and Fuel">
+            <p>Biomass heating uses organic material - primarily wood in various forms - as fuel to generate heat. When sourced sustainably, biomass is considered carbon-neutral as the CO2 released during combustion equals that absorbed during growth. Boiler selection depends on fuel availability, automation requirements, and heat demand profile.</p>
+            <p><strong>Biomass fuel comparison:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Wood pellets:</strong> &lt;10% — 4.8 kWh/kg — Fully automatic</li>
+              <li><strong>Wood chips (G30):</strong> 20-30% — 3.5 kWh/kg — Automatic</li>
+              <li><strong>Wood chips (G50):</strong> 30-50% — 2.5-3.0 kWh/kg — Automatic</li>
+              <li><strong>Logs (seasoned):</strong> 15-20% — 4.0-4.3 kWh/kg — Manual batch</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Applications:</strong> District heating, commercial, industrial
-              </li>
-              <li className="pl-1">
-                <strong>Sizing:</strong> Heat demand + diversity + buffer capacity
-              </li>
-              <li className="pl-1">
-                <strong>Emissions:</strong> MCPD compliance, particulate control
-              </li>
-              <li className="pl-1">
-                <strong>Maintenance:</strong> Regular ash removal, annual service
-              </li>
+            <p><strong>Boiler Types by Application</strong></p>
+            <p><strong>Pellet Boilers (10-500kW)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Fully automated operation</li>
+              <li>High modulation range (30-100%)</li>
+              <li>Compact fuel storage</li>
+              <li>Low ash production (&lt;1%)</li>
+              <li>Ideal: commercial, schools, care homes</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Chip Boilers (50kW-10MW)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Lower fuel cost per kWh</li>
+              <li>Larger fuel store required</li>
+              <li>More robust feed systems</li>
+              <li>Higher ash content (1-3%)</li>
+              <li>Ideal: estates, industry, district heating</li>
+            </ul>
+            <p><strong>Fuel Quality Standards</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>ENplus:</strong> European pellet quality certification (A1, A2, B grades)</li>
+              <li><strong>Woodsure:</strong> UK quality assurance for logs, chips, briquettes</li>
+              <li><strong>BSL:</strong> Biomass Suppliers List - sustainability certification</li>
+            </ul>
+            <p><strong>Specification note:</strong> Always specify fuel quality requirements in tender documents - poor fuel quality is the primary cause of biomass system problems.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Compare biomass boiler types and their applications',
-              'Specify fuel storage and automatic handling systems',
-              'Design emissions control and flue systems to regulations',
-              'Size buffer vessels and thermal stores for biomass integration',
-              'Plan ash handling and maintenance requirements',
-              'Integrate biomass with conventional heating systems',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Biomass Boiler Types and Fuel */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Biomass Boiler Types and Fuel
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Fuel Storage and Handling Systems">
+            <p>Proper fuel storage is critical for biomass system reliability. Storage must keep fuel dry, allow efficient delivery and extraction, and maintain fire separation from the boiler plant. Automatic handling systems transport fuel from store to boiler with minimal operator intervention.</p>
+            <p><strong>Pellet Storage</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Bulk silo (internal/external)</li>
+              <li>Underground tank</li>
+              <li>Purpose-built store room</li>
+              <li>Fabric silo systems</li>
+              <li>Pneumatic delivery via tanker</li>
+            </ul>
+            <p><strong>Chip Storage</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Walking floor bunker</li>
+              <li>Inclined agitator system</li>
+              <li>Rotating arm/sweep system</li>
+              <li>Tipper access required</li>
+              <li>Larger volumes (2-3x pellets)</li>
+            </ul>
+            <p><strong>Key Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Weatherproof construction</li>
+              <li>Ventilation to control humidity</li>
+              <li>Fire-rated separation</li>
+              <li>Vehicle access for delivery</li>
+              <li>Level sensors for monitoring</li>
+            </ul>
+            <p><strong>Automatic Feed Systems</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Auger (screw conveyor):</strong> 6-8 metres — Short, straight runs — Simple, reliable, limited flexibility</li>
+              <li><strong>Pneumatic vacuum:</strong> 20-25 metres — Remote stores, direction changes — Pellets only, quiet operation</li>
+              <li><strong>Macerating auger:</strong> 8-15 metres — Larger chips (G50) — Handles variable chip sizes</li>
+              <li><strong>Belt/chain conveyor:</strong> 50+ metres — Large chip installations — Higher capacity, more maintenance</li>
+            </ul>
+            <p><strong>Fire Safety - Burn-Back Prevention</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Drop tube:</strong> Creates air gap between feed system and combustion chamber</li>
+              <li><strong>Rotary valve:</strong> Provides positive isolation, thermal fuse triggers closure</li>
+              <li><strong>Water dousing:</strong> Temperature sensor activates water spray in feed tube</li>
+              <li><strong>Fire-rated construction:</strong> 60-minute separation between store and boiler</li>
+            </ul>
+            <p><strong>Design tip:</strong> Allow 15-20% additional storage capacity beyond calculated requirements to accommodate delivery schedule variations and ensure continuous operation.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Emissions Control and Flue Systems">
+            <p>Biomass combustion produces particulate matter (PM), nitrogen oxides (NOx), carbon monoxide (CO), and volatile organic compounds (VOCs). Modern boilers incorporate primary combustion controls and may require secondary abatement equipment to meet emission limits, particularly for larger installations subject to environmental permitting.</p>
+            <p><strong>Emission Limits (Medium Combustion Plant Directive)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Thermal input:</strong> 1-50 MW</li>
+              <li><strong>NOx limit:</strong> 300 mg/Nm3 (new plant &gt;5MW)</li>
+              <li><strong>PM limit:</strong> 30 mg/Nm3 (new plant &gt;5MW)</li>
+              <li><strong>SO2 limit:</strong> 200 mg/Nm3</li>
+            </ul>
+            <p>Note: Tighter limits apply in certain areas and for larger plant</p>
+            <p><strong>Emissions Control Technologies</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Primary measures:</strong> Optimised combustion air, staged combustion, lambda control</li>
+              <li><strong>Cyclonic separator:</strong> 70-85% PM removal, low maintenance, common on chip boilers</li>
+              <li><strong>Multicyclone:</strong> 85-95% PM removal, moderate cost</li>
+              <li><strong>Electrostatic precipitator (ESP):</strong> &gt;99% PM removal, higher cost, required for strict limits</li>
+              <li><strong>Fabric filter (baghouse):</strong> &gt;99% PM removal, used in larger industrial plant</li>
+            </ul>
+            <p><strong>Flue System Design</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Flue material:</strong> Stainless steel 316L minimum — Condensing flues require higher grades</li>
+              <li><strong>Terminal height:</strong> 1m above highest point within 10m — Dispersion modelling may require more</li>
+              <li><strong>Insulation:</strong> Twin-wall insulated throughout — Maintains flue gas temperature</li>
+              <li><strong>Condensate drain:</strong> Required at base of flue — Acidic - may need neutralisation</li>
+              <li><strong>Access for cleaning:</strong> Inspection hatches required — Annual cleaning essential</li>
+            </ul>
+            <p><strong>Planning consideration:</strong> Flue heights above 10m may require planning permission. Early consultation with local authority is recommended for installations over 200kW.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="System Integration and Operation">
+            <p>Successful biomass integration requires careful hydraulic design to maximise efficiency, prevent operational problems, and ensure seamless integration with building heating systems. Buffer vessels, thermal stores, and backup provision are key design considerations.</p>
+            <p><strong>Hydraulic Integration Components</strong></p>
+            <p><strong>Buffer Vessel</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Prevents short-cycling (on/off)</li>
+              <li>Absorbs load variations</li>
+              <li>Size: 10-20 litres per kW</li>
+              <li>Single temperature zone</li>
+              <li>Essential for all biomass systems</li>
+            </ul>
+            <p><strong>Thermal Store</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Stratified temperature zones</li>
+              <li>Multiple heat source integration</li>
+              <li>DHW via internal coil possible</li>
+              <li>Size: 25-50 litres per kW</li>
+              <li>Preferred for multi-source systems</li>
+            </ul>
+            <p><strong>Typical System Configuration</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Biomass boiler:</strong> Primary heat generation — 60-80% of design heat load</li>
+              <li><strong>Buffer vessel:</strong> Load smoothing, anti-cycling — 10-20 litres per kW biomass</li>
+              <li><strong>Backup boiler (gas/oil):</strong> Peak load, maintenance cover — 100% of design load</li>
+              <li><strong>Low-loss header:</strong> Hydraulic separation — For multiple circuit systems</li>
+              <li><strong>Plate heat exchanger:</strong> System separation — If water quality differs</li>
+            </ul>
+            <p><strong>Control Strategy</strong></p>
+            <p><strong>Cascade control:</strong> Biomass boiler operates as lead, backup as lag</p>
+            <p><strong>Weather compensation:</strong> Flow temperature varies with external conditions</p>
+            <p><strong>Buffer management:</strong> Boiler fires to maintain buffer temperature band</p>
+            <p><strong>Modulation:</strong> Modern boilers modulate 30-100% to match load</p>
+            <p><strong>Anti-cycling:</strong> Minimum run time and rest periods programmed</p>
+            <p><strong>BMS integration:</strong> Enable/disable, alarm monitoring, energy metering</p>
+            <p><strong>Ash Handling Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Automatic de-ashing:</strong> Auger removes ash from grate to external bin</li>
+              <li><strong>Ash bin sizing:</strong> Typically 4-8 weeks between emptying for pellet systems</li>
+              <li><strong>Disposal:</strong> Wood ash can be used as fertiliser (pH alkaline) or general waste</li>
+              <li><strong>Access:</strong> Ensure ash bin is accessible for manual removal</li>
+              <li><strong>Compaction:</strong> Some systems compact ash to reduce emptying frequency</li>
+            </ul>
+            <p><strong>Design note:</strong> Undersizing the biomass boiler to 60-80% of peak load and relying on backup for peaks is often more cost-effective than sizing biomass for 100% peak load.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Biomass heating uses organic material - primarily wood in various forms - as fuel to
-              generate heat. When sourced sustainably, biomass is considered carbon-neutral as the
-              CO2 released during combustion equals that absorbed during growth. Boiler selection
-              depends on fuel availability, automation requirements, and heat demand profile.
+              <strong>Example 1: Fuel Store Sizing</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Biomass fuel comparison:</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Fuel Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Moisture</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Calorific Value
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Automation</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Wood pellets</td>
-                      <td className="border border-white/10 px-3 py-2">&lt;10%</td>
-                      <td className="border border-white/10 px-3 py-2">4.8 kWh/kg</td>
-                      <td className="border border-white/10 px-3 py-2">Fully automatic</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Wood chips (G30)</td>
-                      <td className="border border-white/10 px-3 py-2">20-30%</td>
-                      <td className="border border-white/10 px-3 py-2">3.5 kWh/kg</td>
-                      <td className="border border-white/10 px-3 py-2">Automatic</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Wood chips (G50)</td>
-                      <td className="border border-white/10 px-3 py-2">30-50%</td>
-                      <td className="border border-white/10 px-3 py-2">2.5-3.0 kWh/kg</td>
-                      <td className="border border-white/10 px-3 py-2">Automatic</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Logs (seasoned)</td>
-                      <td className="border border-white/10 px-3 py-2">15-20%</td>
-                      <td className="border border-white/10 px-3 py-2">4.0-4.3 kWh/kg</td>
-                      <td className="border border-white/10 px-3 py-2">Manual batch</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Boiler Types by Application
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Pellet Boilers (10-500kW)</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Fully automated operation</li>
-                    <li>High modulation range (30-100%)</li>
-                    <li>Compact fuel storage</li>
-                    <li>Low ash production (&lt;1%)</li>
-                    <li>Ideal: commercial, schools, care homes</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Chip Boilers (50kW-10MW)</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Lower fuel cost per kWh</li>
-                    <li>Larger fuel store required</li>
-                    <li>More robust feed systems</li>
-                    <li>Higher ash content (1-3%)</li>
-                    <li>Ideal: estates, industry, district heating</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-2">Fuel Quality Standards</p>
-              <ul className="text-sm text-white space-y-1">
-                <li>
-                  <strong>ENplus:</strong> European pellet quality certification (A1, A2, B grades)
-                </li>
-                <li>
-                  <strong>Woodsure:</strong> UK quality assurance for logs, chips, briquettes
-                </li>
-                <li>
-                  <strong>BSL:</strong> Biomass Suppliers List - sustainability certification
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Specification note:</strong> Always specify fuel quality requirements in
-              tender documents - poor fuel quality is the primary cause of biomass system problems.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Fuel Storage and Handling */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Fuel Storage and Handling Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Calculate pellet storage for a 150kW boiler serving a care home with 1,200,000 kWh annual heat demand.</p>
+            <p>Step 1: Calculate annual fuel requirement</p>
+            <p>Annual heat demand: 1,200,000 kWh</p>
+            <p>Boiler efficiency: 90%</p>
+            <p>Fuel energy required: 1,200,000 / 0.90 = 1,333,333 kWh</p>
+            <p>Step 2: Convert to fuel mass</p>
+            <p>Pellet calorific value: 4,800 kWh/tonne</p>
+            <p>Annual pellet requirement: 1,333,333 / 4,800 = 278 tonnes</p>
+            <p>Step 3: Size fuel store</p>
+            <p>Delivery capacity: 6 tonnes (blown delivery tanker)</p>
+            <p>Deliveries per year: 278 / 6 = 46 deliveries</p>
+            <p>Target: One delivery per week maximum in winter</p>
+            <p>Recommended store: 10-12 tonnes capacity</p>
+            <p>Pellet bulk density: 650 kg/m3</p>
+            <p>Store volume: 12,000 / 650 = 18.5 m3 (minimum 20 m3)</p>
             <p>
-              Proper fuel storage is critical for biomass system reliability. Storage must keep fuel
-              dry, allow efficient delivery and extraction, and maintain fire separation from the
-              boiler plant. Automatic handling systems transport fuel from store to boiler with
-              minimal operator intervention.
+              <strong>Example 2: Buffer Vessel Sizing</strong>
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Pellet Storage</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Bulk silo (internal/external)</li>
-                  <li className="pl-1">Underground tank</li>
-                  <li className="pl-1">Purpose-built store room</li>
-                  <li className="pl-1">Fabric silo systems</li>
-                  <li className="pl-1">Pneumatic delivery via tanker</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Chip Storage</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Walking floor bunker</li>
-                  <li className="pl-1">Inclined agitator system</li>
-                  <li className="pl-1">Rotating arm/sweep system</li>
-                  <li className="pl-1">Tipper access required</li>
-                  <li className="pl-1">Larger volumes (2-3x pellets)</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Requirements</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Weatherproof construction</li>
-                  <li className="pl-1">Ventilation to control humidity</li>
-                  <li className="pl-1">Fire-rated separation</li>
-                  <li className="pl-1">Vehicle access for delivery</li>
-                  <li className="pl-1">Level sensors for monitoring</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Automatic Feed Systems</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Max Distance</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Best Application
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Considerations</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Auger (screw conveyor)</td>
-                      <td className="border border-white/10 px-3 py-2">6-8 metres</td>
-                      <td className="border border-white/10 px-3 py-2">Short, straight runs</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Simple, reliable, limited flexibility
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pneumatic vacuum</td>
-                      <td className="border border-white/10 px-3 py-2">20-25 metres</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Remote stores, direction changes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pellets only, quiet operation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Macerating auger</td>
-                      <td className="border border-white/10 px-3 py-2">8-15 metres</td>
-                      <td className="border border-white/10 px-3 py-2">Larger chips (G50)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Handles variable chip sizes
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Belt/chain conveyor</td>
-                      <td className="border border-white/10 px-3 py-2">50+ metres</td>
-                      <td className="border border-white/10 px-3 py-2">Large chip installations</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher capacity, more maintenance
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Fire Safety - Burn-Back Prevention
-              </p>
-              <ul className="text-sm text-white space-y-1">
-                <li>
-                  <strong>Drop tube:</strong> Creates air gap between feed system and combustion
-                  chamber
-                </li>
-                <li>
-                  <strong>Rotary valve:</strong> Provides positive isolation, thermal fuse triggers
-                  closure
-                </li>
-                <li>
-                  <strong>Water dousing:</strong> Temperature sensor activates water spray in feed
-                  tube
-                </li>
-                <li>
-                  <strong>Fire-rated construction:</strong> 60-minute separation between store and
-                  boiler
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design tip:</strong> Allow 15-20% additional storage capacity beyond
-              calculated requirements to accommodate delivery schedule variations and ensure
-              continuous operation.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Emissions Control and Flue Systems */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Emissions Control and Flue Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Size a buffer vessel for a 200kW wood chip boiler with minimum modulation of 40%.</p>
+            <p>Step 1: Determine minimum output</p>
+            <p>Minimum modulation: 40% of 200kW = 80kW</p>
+            <p>Building base load (summer): ~30kW</p>
+            <p>Excess heat when cycling: 80 - 30 = 50kW</p>
+            <p>Step 2: Calculate storage requirement</p>
+            <p>Minimum run time (for clean burn): 30 minutes</p>
+            <p>Energy to store: 50kW x 0.5h = 25 kWh</p>
+            <p>Temperature differential: 80°C - 60°C = 20K</p>
+            <p>Water specific heat: 4.18 kJ/kg·K</p>
+            <p>Step 3: Size buffer</p>
+            <p>Volume = (25 x 3600) / (4.18 x 20 x 1) = 1,076 litres</p>
+            <p>Recommended: 1,500 litre buffer vessel</p>
+            <p>Check: 1,500 / 200 = 7.5 litres/kW (within 10-20 range)</p>
             <p>
-              Biomass combustion produces particulate matter (PM), nitrogen oxides (NOx), carbon
-              monoxide (CO), and volatile organic compounds (VOCs). Modern boilers incorporate
-              primary combustion controls and may require secondary abatement equipment to meet
-              emission limits, particularly for larger installations subject to environmental
-              permitting.
+              <strong>Example 3: Ash Production Estimate</strong>
             </p>
+            <p><strong>Scenario:</strong> Estimate ash bin emptying frequency for a 100kW pellet boiler.</p>
+            <p>Step 1: Estimate fuel consumption</p>
+            <p>Average load: 60kW (60% of rated output)</p>
+            <p>Daily operating hours: 12 hours average</p>
+            <p>Daily energy: 60 x 12 = 720 kWh</p>
+            <p>Daily pellet use: 720 / (4.8 x 0.9) = 167 kg</p>
+            <p>Step 2: Calculate ash production</p>
+            <p>Pellet ash content (ENplus A1): 0.5%</p>
+            <p>Daily ash: 167 x 0.005 = 0.84 kg</p>
+            <p>Weekly ash: 0.84 x 7 = 5.9 kg</p>
+            <p>Step 3: Determine emptying frequency</p>
+            <p>Ash bin capacity: 50 litres (typical)</p>
+            <p>Ash bulk density: ~300 kg/m3</p>
+            <p>Bin capacity by mass: 0.05 x 300 = 15 kg</p>
+            <p>Emptying frequency: 15 / 5.9 = every 2.5 weeks</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Emission Limits (Medium Combustion Plant Directive)
-              </p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">Thermal input:</span>{' '}
-                  <span className="text-white">1-50 MW</span>
-                </p>
-                <p>
-                  <span className="text-white">NOx limit:</span>{' '}
-                  <span className="text-white">300 mg/Nm3 (new plant &gt;5MW)</span>
-                </p>
-                <p>
-                  <span className="text-white">PM limit:</span>{' '}
-                  <span className="text-white">30 mg/Nm3 (new plant &gt;5MW)</span>
-                </p>
-                <p>
-                  <span className="text-white">SO2 limit:</span>{' '}
-                  <span className="text-white">200 mg/Nm3</span>
-                </p>
-                <p className="text-white mt-2">
-                  Note: Tighter limits apply in certain areas and for larger plant
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Emissions Control Technologies
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Primary measures:</strong> Optimised combustion air, staged combustion,
-                  lambda control
-                </li>
-                <li className="pl-1">
-                  <strong>Cyclonic separator:</strong> 70-85% PM removal, low maintenance, common on
-                  chip boilers
-                </li>
-                <li className="pl-1">
-                  <strong>Multicyclone:</strong> 85-95% PM removal, moderate cost
-                </li>
-                <li className="pl-1">
-                  <strong>Electrostatic precipitator (ESP):</strong> &gt;99% PM removal, higher
-                  cost, required for strict limits
-                </li>
-                <li className="pl-1">
-                  <strong>Fabric filter (baghouse):</strong> &gt;99% PM removal, used in larger
-                  industrial plant
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Flue System Design</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Requirement</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Flue material</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Stainless steel 316L minimum
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Condensing flues require higher grades
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Terminal height</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        1m above highest point within 10m
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dispersion modelling may require more
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Insulation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Twin-wall insulated throughout
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Maintains flue gas temperature
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Condensate drain</td>
-                      <td className="border border-white/10 px-3 py-2">Required at base of flue</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Acidic - may need neutralisation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Access for cleaning</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Inspection hatches required
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Annual cleaning essential
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Planning consideration:</strong> Flue heights above 10m may require planning
-              permission. Early consultation with local authority is recommended for installations
-              over 200kW.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: System Integration and Operation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            System Integration and Operation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Successful biomass integration requires careful hydraulic design to maximise
-              efficiency, prevent operational problems, and ensure seamless integration with
-              building heating systems. Buffer vessels, thermal stores, and backup provision are key
-              design considerations.
+              <strong>Design Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Hydraulic Integration Components
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Buffer Vessel</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Prevents short-cycling (on/off)</li>
-                    <li>Absorbs load variations</li>
-                    <li>Size: 10-20 litres per kW</li>
-                    <li>Single temperature zone</li>
-                    <li>Essential for all biomass systems</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Thermal Store</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Stratified temperature zones</li>
-                    <li>Multiple heat source integration</li>
-                    <li>DHW via internal coil possible</li>
-                    <li>Size: 25-50 litres per kW</li>
-                    <li>Preferred for multi-source systems</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical System Configuration
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Component</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Function</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Sizing Guidance
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Biomass boiler</td>
-                      <td className="border border-white/10 px-3 py-2">Primary heat generation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        60-80% of design heat load
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Buffer vessel</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Load smoothing, anti-cycling
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        10-20 litres per kW biomass
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Backup boiler (gas/oil)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Peak load, maintenance cover
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">100% of design load</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Low-loss header</td>
-                      <td className="border border-white/10 px-3 py-2">Hydraulic separation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        For multiple circuit systems
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Plate heat exchanger</td>
-                      <td className="border border-white/10 px-3 py-2">System separation</td>
-                      <td className="border border-white/10 px-3 py-2">If water quality differs</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Control Strategy</p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <strong>Cascade control:</strong> Biomass boiler operates as lead, backup as lag
-                </p>
-                <p>
-                  <strong>Weather compensation:</strong> Flow temperature varies with external
-                  conditions
-                </p>
-                <p>
-                  <strong>Buffer management:</strong> Boiler fires to maintain buffer temperature
-                  band
-                </p>
-                <p>
-                  <strong>Modulation:</strong> Modern boilers modulate 30-100% to match load
-                </p>
-                <p>
-                  <strong>Anti-cycling:</strong> Minimum run time and rest periods programmed
-                </p>
-                <p>
-                  <strong>BMS integration:</strong> Enable/disable, alarm monitoring, energy
-                  metering
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Ash Handling Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Automatic de-ashing:</strong> Auger removes ash from grate to external bin
-                </li>
-                <li className="pl-1">
-                  <strong>Ash bin sizing:</strong> Typically 4-8 weeks between emptying for pellet
-                  systems
-                </li>
-                <li className="pl-1">
-                  <strong>Disposal:</strong> Wood ash can be used as fertiliser (pH alkaline) or
-                  general waste
-                </li>
-                <li className="pl-1">
-                  <strong>Access:</strong> Ensure ash bin is accessible for manual removal
-                </li>
-                <li className="pl-1">
-                  <strong>Compaction:</strong> Some systems compact ash to reduce emptying frequency
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design note:</strong> Undersizing the biomass boiler to 60-80% of peak load
-              and relying on backup for peaks is often more cost-effective than sizing biomass for
-              100% peak load.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Confirm fuel availability, quality, and supply chain reliability</li>
+              <li>Assess delivery vehicle access - articulated lorry turning circle 25m</li>
+              <li>Calculate fuel store size for minimum 2-3 weeks supply at peak demand</li>
+              <li>Design buffer/thermal store to prevent short-cycling</li>
+              <li>Specify emissions control to meet MCPD limits if applicable</li>
+              <li>Plan flue route and terminal position for dispersion and planning compliance</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Pellet calorific value: <strong>4.8 kWh/kg</strong> at &lt;10% moisture</li>
+              <li>Wood chip calorific value: <strong>3.5 kWh/kg</strong> at 25% moisture</li>
+              <li>Buffer vessel: <strong>10-20 litres per kW</strong> boiler output</li>
+              <li>Flue terminal: <strong>1m above highest point within 10m</strong></li>
+              <li>Boiler efficiency: <strong>85-92%</strong> typical for modern units</li>
+              <li>Pellet bulk density: <strong>650 kg/m3</strong></li>
+            </ul>
+            <p>
+              <strong>Common Problems to Avoid:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Poor fuel quality:</strong> Specify ENplus or Woodsure certification</li>
+              <li><strong>Inadequate storage:</strong> Wet fuel causes bridging and combustion issues</li>
+              <li><strong>No buffer vessel:</strong> Short-cycling damages boiler and increases emissions</li>
+              <li><strong>Undersized flue:</strong> Poor draught causes incomplete combustion</li>
+              <li><strong>Blocked feed systems:</strong> Ensure fuel is correctly sized for feed mechanism</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <Scenario
+            title="Rural school biomass under-performs after fuel switch"
+            situation={
+              <>
+                A rural primary school installed a 100 kW wood-chip boiler under the (now closed) RHI scheme. The original supplier provided G30/G50 chips at 25% moisture and the system met its predicted efficiency. The new fuel supplier delivers G50 chips at 38% moisture. Output drops, ash builds up, and the school overrides to oil backup.
+              </>
+            }
+            whatToDo={
+              <>
+                Verify against the boiler manufacturer fuel specification (typically ENplus or equivalent moisture/ash class). If the new fuel exceeds the spec, the supplier is in breach of contract — switch back. If switching is not viable, clean out the boiler, recalibrate combustion air, and accept reduced output capacity (typically 60–70% of nameplate at high moisture). Long-term: install a moisture-monitored fuel store or specify a boiler with adaptive combustion control. Update the BMS to alarm when oil backup runs &gt;5% of operating hours.
+              </>
+            }
+            whyItMatters={
+              <>
+                Biomass success is 90% fuel quality, 10% boiler. Cheap wet fuel destroys efficiency, increases emissions and accelerates wear. The fuel supply contract is the most important document on the project — moisture %, ash %, particle size, delivery interval.
+              </>
+            }
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <FAQ items={faqs} />
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Fuel Store Sizing
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate pellet storage for a 150kW boiler serving a
-                care home with 1,200,000 kWh annual heat demand.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Step 1: Calculate annual fuel requirement</p>
-                <p className="ml-4">Annual heat demand: 1,200,000 kWh</p>
-                <p className="ml-4">Boiler efficiency: 90%</p>
-                <p className="ml-4">Fuel energy required: 1,200,000 / 0.90 = 1,333,333 kWh</p>
-                <p className="mt-2 text-white">Step 2: Convert to fuel mass</p>
-                <p className="ml-4">Pellet calorific value: 4,800 kWh/tonne</p>
-                <p className="ml-4">Annual pellet requirement: 1,333,333 / 4,800 = 278 tonnes</p>
-                <p className="mt-2 text-white">Step 3: Size fuel store</p>
-                <p className="ml-4">Delivery capacity: 6 tonnes (blown delivery tanker)</p>
-                <p className="ml-4">Deliveries per year: 278 / 6 = 46 deliveries</p>
-                <p className="ml-4">Target: One delivery per week maximum in winter</p>
-                <p className="ml-4">Recommended store: 10-12 tonnes capacity</p>
-                <p className="ml-4">Pellet bulk density: 650 kg/m3</p>
-                <p className="ml-4 text-green-400">
-                  Store volume: 12,000 / 650 = 18.5 m3 (minimum 20 m3)
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Buffer Vessel Sizing
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Size a buffer vessel for a 200kW wood chip boiler with
-                minimum modulation of 40%.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Step 1: Determine minimum output</p>
-                <p className="ml-4">Minimum modulation: 40% of 200kW = 80kW</p>
-                <p className="ml-4">Building base load (summer): ~30kW</p>
-                <p className="ml-4">Excess heat when cycling: 80 - 30 = 50kW</p>
-                <p className="mt-2 text-white">Step 2: Calculate storage requirement</p>
-                <p className="ml-4">Minimum run time (for clean burn): 30 minutes</p>
-                <p className="ml-4">Energy to store: 50kW x 0.5h = 25 kWh</p>
-                <p className="ml-4">Temperature differential: 80°C - 60°C = 20K</p>
-                <p className="ml-4">Water specific heat: 4.18 kJ/kg·K</p>
-                <p className="mt-2 text-white">Step 3: Size buffer</p>
-                <p className="ml-4">Volume = (25 x 3600) / (4.18 x 20 x 1) = 1,076 litres</p>
-                <p className="ml-4 text-green-400">Recommended: 1,500 litre buffer vessel</p>
-                <p className="ml-4 text-white">
-                  Check: 1,500 / 200 = 7.5 litres/kW (within 10-20 range)
-                </p>
-              </div>
-            </div>
+          <KeyTakeaways
+            points={[
+              "Pellet boilers 85–92% efficient, fully automated; chip boilers 75–85%, larger fuel stores; log gasifiers manual.",
+              "Fuel quality (moisture, ash, size) drives performance — ENplus A1 pellets, G30/G50 chips at <25% moisture.",
+              "Ecodesign Lot 20 emissions: PM ≤40 (pellets), ≤60 (chips) mg/Nm³ — non-compliant appliances unlawful.",
+              "Smoke control areas: Defra-exempt appliances only — check the published exempt list.",
+              "Fuel storage: 4–8 weeks consumption typical; auger feed for chips, vacuum or auger for pellets.",
+              "Statutory chimney sweep annually + insurance-required boiler service; ash disposal plan needed.",
+            ]}
+          />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Ash Production Estimate
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Estimate ash bin emptying frequency for a 100kW pellet
-                boiler.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Step 1: Estimate fuel consumption</p>
-                <p className="ml-4">Average load: 60kW (60% of rated output)</p>
-                <p className="ml-4">Daily operating hours: 12 hours average</p>
-                <p className="ml-4">Daily energy: 60 x 12 = 720 kWh</p>
-                <p className="ml-4">Daily pellet use: 720 / (4.8 x 0.9) = 167 kg</p>
-                <p className="mt-2 text-white">Step 2: Calculate ash production</p>
-                <p className="ml-4">Pellet ash content (ENplus A1): 0.5%</p>
-                <p className="ml-4">Daily ash: 167 x 0.005 = 0.84 kg</p>
-                <p className="ml-4">Weekly ash: 0.84 x 7 = 5.9 kg</p>
-                <p className="mt-2 text-white">Step 3: Determine emptying frequency</p>
-                <p className="ml-4">Ash bin capacity: 50 litres (typical)</p>
-                <p className="ml-4">Ash bulk density: ~300 kg/m3</p>
-                <p className="ml-4">Bin capacity by mass: 0.05 x 300 = 15 kg</p>
-                <p className="ml-4 text-green-400">
-                  Emptying frequency: 15 / 5.9 = every 2.5 weeks
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Design Checklist</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Confirm fuel availability, quality, and supply chain reliability
-                </li>
-                <li className="pl-1">
-                  Assess delivery vehicle access - articulated lorry turning circle 25m
-                </li>
-                <li className="pl-1">
-                  Calculate fuel store size for minimum 2-3 weeks supply at peak demand
-                </li>
-                <li className="pl-1">Design buffer/thermal store to prevent short-cycling</li>
-                <li className="pl-1">
-                  Specify emissions control to meet MCPD limits if applicable
-                </li>
-                <li className="pl-1">
-                  Plan flue route and terminal position for dispersion and planning compliance
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Pellet calorific value: <strong>4.8 kWh/kg</strong> at &lt;10% moisture
-                </li>
-                <li className="pl-1">
-                  Wood chip calorific value: <strong>3.5 kWh/kg</strong> at 25% moisture
-                </li>
-                <li className="pl-1">
-                  Buffer vessel: <strong>10-20 litres per kW</strong> boiler output
-                </li>
-                <li className="pl-1">
-                  Flue terminal: <strong>1m above highest point within 10m</strong>
-                </li>
-                <li className="pl-1">
-                  Boiler efficiency: <strong>85-92%</strong> typical for modern units
-                </li>
-                <li className="pl-1">
-                  Pellet bulk density: <strong>650 kg/m3</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Problems to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Poor fuel quality:</strong> Specify ENplus or Woodsure certification
-                </li>
-                <li className="pl-1">
-                  <strong>Inadequate storage:</strong> Wet fuel causes bridging and combustion
-                  issues
-                </li>
-                <li className="pl-1">
-                  <strong>No buffer vessel:</strong> Short-cycling damages boiler and increases
-                  emissions
-                </li>
-                <li className="pl-1">
-                  <strong>Undersized flue:</strong> Poor draught causes incomplete combustion
-                </li>
-                <li className="pl-1">
-                  <strong>Blocked feed systems:</strong> Ensure fuel is correctly sized for feed
-                  mechanism
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Fuel Properties</p>
-                <ul className="space-y-0.5">
-                  <li>Pellets: 4.8 kWh/kg, &lt;10% moisture, 650 kg/m3</li>
-                  <li>Chips G30: 3.5 kWh/kg, 20-30% moisture, 250 kg/m3</li>
-                  <li>ENplus A1: &lt;0.7% ash, &lt;10% moisture</li>
-                  <li>Storage: dry, ventilated, fire-separated</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">System Design</p>
-                <ul className="space-y-0.5">
-                  <li>Buffer vessel: 10-20 L/kW boiler output</li>
-                  <li>Flue: 1m above highest point within 10m</li>
-                  <li>Biomass sizing: 60-80% of peak load typical</li>
-                  <li>MCPD: 1-50 MW thermal, PM &lt;30 mg/Nm3</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section2-4">
-              Next: Section 2.4
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section2-2")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Heat pump technology
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section2-4")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Small-scale wind
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

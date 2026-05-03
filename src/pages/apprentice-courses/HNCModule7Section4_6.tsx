@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 7 · Section 4 · Subsection 6 — BMS Integration
+ * HNC Electrical Engineering for Building Services (Power and Lighting Systems)
+ *   Lighting control interfaces, communication protocols, scheduling, energy monitoring, and system optimisation
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'BMS Integration - HNC Module 7 Section 4.6';
@@ -244,878 +257,324 @@ const faqs = [
 ];
 
 const HNCModule7Section4_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section4")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module7-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.4.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            BMS Integration
-          </h1>
-          <p className="text-white">
-            Lighting control interfaces, communication protocols, scheduling, energy monitoring, and
-            system optimisation
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 7 · Section 4 · Subsection 6"
+            title="BMS Integration"
+            description="Lighting control interfaces, communication protocols, scheduling, energy monitoring, and system optimisation"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>BMS:</strong> Centralised building services control
-              </li>
-              <li className="pl-1">
-                <strong>Protocols:</strong> BACnet, Modbus, KNX for interoperability
-              </li>
-              <li className="pl-1">
-                <strong>Scheduling:</strong> Time-based and calendar control
-              </li>
-              <li className="pl-1">
-                <strong>Optimisation:</strong> Demand response and energy management
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Explain BMS/BEMS functions and architecture for lighting systems",
+              "Compare BACnet, Modbus, and KNX communication protocols",
+              "Design scheduling strategies for energy-efficient operation",
+              "Implement demand response and load management",
+              "Configure energy monitoring and performance analysis",
+              "Apply system optimisation techniques for lighting control",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="BMS/BEMS Fundamentals">
+            <p>A Building Management System (BMS) provides centralised monitoring and control of building services, enabling efficient operation, energy management, and maintenance. When emphasising energy functions, the system is often termed a Building Energy Management System (BEMS).</p>
+            <p><strong>BMS Architecture Layers:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Field level:</strong> Sensors, actuators, luminaires, and local controllers</li>
+              <li><strong>Automation level:</strong> Area controllers processing field data and executing control logic</li>
+              <li><strong>Management level:</strong> Supervisory workstations, databases, and user interfaces</li>
+              <li><strong>Enterprise level:</strong> Integration with IT systems, analytics, and cloud services</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Integration Context</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>DALI-BMS:</strong> Gateway integration common
-              </li>
-              <li className="pl-1">
-                <strong>Energy:</strong> Sub-metering and trending
-              </li>
-              <li className="pl-1">
-                <strong>Control:</strong> Hierarchical override strategy
-              </li>
-              <li className="pl-1">
-                <strong>Monitoring:</strong> Alarms and fault detection
-              </li>
+            <p><strong>BMS Functions for Lighting</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Monitoring:</strong> Real-time status of all lighting circuits — Visibility of building-wide operation</li>
+              <li><strong>Control:</strong> Remote on/off and dimming commands — Centralised management without site visits</li>
+              <li><strong>Scheduling:</strong> Time-based automatic operation — Consistent operation, energy savings</li>
+              <li><strong>Alarming:</strong> Notification of faults and failures — Rapid maintenance response</li>
+              <li><strong>Trending:</strong> Historical data logging and analysis — Performance optimisation, M&amp;V</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Integration approach:</strong> Lighting typically connects to BMS via protocol gateways (DALI-BACnet) or native BACnet/Modbus controllers, enabling enterprise-level management whilst maintaining local control.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Explain BMS/BEMS functions and architecture for lighting systems',
-              'Compare BACnet, Modbus, and KNX communication protocols',
-              'Design scheduling strategies for energy-efficient operation',
-              'Implement demand response and load management',
-              'Configure energy monitoring and performance analysis',
-              'Apply system optimisation techniques for lighting control',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: BMS Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            BMS/BEMS Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Communication Protocols">
+            <p>Building automation relies on standardised communication protocols to enable interoperability between different manufacturers' equipment. The main protocols for lighting integration are BACnet, Modbus, and KNX, each with distinct characteristics.</p>
+            <p><strong>BACnet</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>ASHRAE/ISO standard</li>
+              <li>Object-oriented model</li>
+              <li>IP or MS/TP physical layer</li>
+              <li>Best for enterprise systems</li>
+            </ul>
+            <p><strong>Modbus</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Simple master-slave</li>
+              <li>Register-based data</li>
+              <li>RTU (RS-485) or TCP/IP</li>
+              <li>Widely supported, low cost</li>
+            </ul>
+            <p><strong>KNX</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>European standard (EN 50090)</li>
+              <li>Decentralised peer-to-peer</li>
+              <li>Twisted pair, powerline, RF</li>
+              <li>Strong in lighting/blinds</li>
+            </ul>
+            <p><strong>Protocol Comparison</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Data model:</strong> Objects &amp; properties — Registers &amp; coils — Datapoints &amp; groups</li>
+              <li><strong>Topology:</strong> Client-server — Master-slave — Peer-to-peer</li>
+              <li><strong>Discovery:</strong> Automatic (Who-Is) — Manual configuration — ETS software</li>
+              <li><strong>Complexity:</strong> Medium-high — Low — Medium</li>
+              <li><strong>Typical use:</strong> Large commercial — Industrial, retrofit — Premium residential, commercial</li>
+            </ul>
+            <p><strong>BACnet Object Types for Lighting</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Binary Output (BO):</strong> On/off switching control</li>
+              <li><strong>Analogue Output (AO):</strong> Dimming level (0-100%)</li>
+              <li><strong>Binary Input (BI):</strong> Switch/sensor status</li>
+              <li><strong>Analogue Input (AI):</strong> Light level sensor (lux)</li>
+              <li><strong>Schedule:</strong> Time-based automation</li>
+              <li><strong>Notification Class:</strong> Alarm routing</li>
+            </ul>
+            <p><strong>Integration tip:</strong> Protocol gateways (e.g., DALI-BACnet) enable DALI lighting systems to communicate with BMS platforms, translating between protocols whilst maintaining full functionality.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Scheduling and Control Strategies">
+            <p>Effective scheduling is fundamental to energy-efficient lighting operation. BMS scheduling combines time-based automation with demand response, occupancy integration, and manual override capabilities to balance energy savings with occupant needs.</p>
+            <p><strong>Scheduling Types</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Weekly schedule:</strong> Standard operating hours (e.g., 07:00-19:00 Mon-Fri)</li>
+              <li><strong>Calendar schedule:</strong> Different profiles for holidays, special events</li>
+              <li><strong>Exception schedule:</strong> One-off overrides for specific dates</li>
+              <li><strong>Astronomical schedule:</strong> Sunrise/sunset-based for external lighting</li>
+            </ul>
+            <p><strong>Control Hierarchy</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>1 (Highest):</strong> Life safety — Emergency lighting activation — Until reset</li>
+              <li><strong>2:</strong> Critical override — Security incident response — Manual release</li>
+              <li><strong>3:</strong> Demand response — Grid signal load reduction — Event duration</li>
+              <li><strong>4:</strong> BMS operator — Facilities manager override — Timed (e.g., 2 hours)</li>
+              <li><strong>5:</strong> Local user — Wall switch or app — Timed (e.g., 30 mins)</li>
+              <li><strong>6 (Lowest):</strong> Schedule — Time-based automation — Continuous</li>
+            </ul>
+            <p><strong>Demand Response Integration</strong></p>
+            <p>Demand response enables automatic load reduction during peak grid demand:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>OpenADR:</strong> Standard protocol for automated demand response signals</li>
+              <li><strong>Load shedding:</strong> Turn off non-critical lighting (car parks, corridors)</li>
+              <li><strong>Load shifting:</strong> Reduce dimming levels building-wide (e.g., 100% &gt; 80%)</li>
+              <li><strong>Pre-cooling/heating:</strong> Coordinate with HVAC for thermal mass strategies</li>
+            </ul>
+            <p><strong>Best practice:</strong> Always include timed auto-revert for manual overrides to prevent lights being left on indefinitely after occupant intervention.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Energy Monitoring and System Optimisation">
+            <p>BMS-integrated energy monitoring provides the data foundation for continuous optimisation. Effective systems combine sub-metering, trending, analytics, and automated control adjustments to minimise energy consumption whilst maintaining comfort and productivity.</p>
+            <p><strong>Energy Monitoring Components</strong></p>
+            <p><strong>Sub-metering</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Lighting circuit kWh meters</li>
+              <li>Zone or floor-level metering</li>
+              <li>CT-based power monitoring</li>
+              <li>Pulse counting integration</li>
+              <li>Real-time power (kW) and energy (kWh)</li>
+            </ul>
+            <p><strong>Data Analysis</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Baseline establishment</li>
+              <li>Consumption trending</li>
+              <li>Occupancy correlation</li>
+              <li>Anomaly detection</li>
+              <li>M&amp;V (measurement and verification)</li>
+            </ul>
+            <p><strong>Optimisation Strategies</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Daylight harvesting:</strong> Photocell-based dimming to maintain lux target — 20-40% perimeter zones</li>
+              <li><strong>Occupancy control:</strong> PIR/ultrasonic detection with timeout — 30-50% intermittent spaces</li>
+              <li><strong>Task tuning:</strong> Reduce maximum output to actual requirement — 10-20% over-lit areas</li>
+              <li><strong>Schedule optimisation:</strong> Align schedules with actual occupancy patterns — 10-30% after-hours</li>
+              <li><strong>Demand limiting:</strong> Cap maximum power during peak periods — Peak demand reduction</li>
+            </ul>
+            <p><strong>Key Performance Indicators (KPIs)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Lighting Power Density:</strong> W/m² (target &lt; 10 W/m² for offices)</li>
+              <li><strong>Operating hours:</strong> Actual vs scheduled hours</li>
+              <li><strong>Occupancy ratio:</strong> Occupied hours / lit hours</li>
+              <li><strong>Energy per m²:</strong> kWh/m²/year for benchmarking</li>
+              <li><strong>Demand factor:</strong> Peak demand / connected load</li>
+            </ul>
+            <p><strong>Continuous Commissioning</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Fault detection:</strong> Automatic identification of stuck dampers, failed sensors, or control errors</li>
+              <li><strong>Performance monitoring:</strong> Track energy consumption against baselines and targets</li>
+              <li><strong>Schedule verification:</strong> Confirm actual operation matches intended schedules</li>
+              <li><strong>Sensor calibration:</strong> Detect drift in lux sensors or occupancy detectors</li>
+            </ul>
+            <p><strong>Measurement and verification (M&amp;V):</strong> Use IPMVP (International Performance Measurement and Verification Protocol) methodologies to quantify energy savings from optimisation measures.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              A Building Management System (BMS) provides centralised monitoring and control of
-              building services, enabling efficient operation, energy management, and maintenance.
-              When emphasising energy functions, the system is often termed a Building Energy
-              Management System (BEMS).
+              <strong>Example 1: DALI-BACnet Gateway Integration</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">BMS Architecture Layers:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Field level:</strong> Sensors, actuators, luminaires, and local
-                  controllers
-                </li>
-                <li className="pl-1">
-                  <strong>Automation level:</strong> Area controllers processing field data and
-                  executing control logic
-                </li>
-                <li className="pl-1">
-                  <strong>Management level:</strong> Supervisory workstations, databases, and user
-                  interfaces
-                </li>
-                <li className="pl-1">
-                  <strong>Enterprise level:</strong> Integration with IT systems, analytics, and
-                  cloud services
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BMS Functions for Lighting
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Function</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Benefit</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Monitoring</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Real-time status of all lighting circuits
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Visibility of building-wide operation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Control</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Remote on/off and dimming commands
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Centralised management without site visits
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Scheduling</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Time-based automatic operation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Consistent operation, energy savings
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Alarming</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Notification of faults and failures
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rapid maintenance response
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Trending</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Historical data logging and analysis
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Performance optimisation, M&amp;V
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Integration approach:</strong> Lighting typically connects to BMS via protocol
-              gateways (DALI-BACnet) or native BACnet/Modbus controllers, enabling enterprise-level
-              management whilst maintaining local control.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Communication Protocols */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Communication Protocols
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Integrate a DALI lighting system with a BACnet BMS in a commercial office.</p>
+            <p>System Architecture:</p>
+            <p>BMS Workstation (BACnet IP)</p>
+            <p>|</p>
+            <p>Ethernet Switch</p>
+            <p>|</p>
+            <p>DALI-BACnet Gateway</p>
+            <p>|</p>
+            <p>DALI Bus (64 devices max)</p>
+            <p>├── Luminaires (addressed 1-50)</p>
+            <p>├── PIR sensors (addressed 51-55)</p>
+            <p>└── Lux sensors (addressed 56-58)</p>
+            <p>BACnet Point Mapping:</p>
+            <p>- AO1: Zone 1 dimming level (0-100%)</p>
+            <p>- BI1: Zone 1 occupancy status</p>
+            <p>- AI1: Zone 1 lux level</p>
+            <p>- Schedule-1: Zone 1 weekly schedule</p>
+            <p>Result: Full BMS visibility and control of DALI lighting</p>
             <p>
-              Building automation relies on standardised communication protocols to enable
-              interoperability between different manufacturers' equipment. The main protocols for
-              lighting integration are BACnet, Modbus, and KNX, each with distinct characteristics.
+              <strong>Example 2: Demand Response Configuration</strong>
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">BACnet</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">ASHRAE/ISO standard</li>
-                  <li className="pl-1">Object-oriented model</li>
-                  <li className="pl-1">IP or MS/TP physical layer</li>
-                  <li className="pl-1">Best for enterprise systems</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Modbus</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Simple master-slave</li>
-                  <li className="pl-1">Register-based data</li>
-                  <li className="pl-1">RTU (RS-485) or TCP/IP</li>
-                  <li className="pl-1">Widely supported, low cost</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">KNX</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">European standard (EN 50090)</li>
-                  <li className="pl-1">Decentralised peer-to-peer</li>
-                  <li className="pl-1">Twisted pair, powerline, RF</li>
-                  <li className="pl-1">Strong in lighting/blinds</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Protocol Comparison</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">BACnet</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Modbus</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">KNX</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Data model</td>
-                      <td className="border border-white/10 px-3 py-2">Objects &amp; properties</td>
-                      <td className="border border-white/10 px-3 py-2">Registers &amp; coils</td>
-                      <td className="border border-white/10 px-3 py-2">Datapoints &amp; groups</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Topology</td>
-                      <td className="border border-white/10 px-3 py-2">Client-server</td>
-                      <td className="border border-white/10 px-3 py-2">Master-slave</td>
-                      <td className="border border-white/10 px-3 py-2">Peer-to-peer</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Discovery</td>
-                      <td className="border border-white/10 px-3 py-2">Automatic (Who-Is)</td>
-                      <td className="border border-white/10 px-3 py-2">Manual configuration</td>
-                      <td className="border border-white/10 px-3 py-2">ETS software</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Complexity</td>
-                      <td className="border border-white/10 px-3 py-2">Medium-high</td>
-                      <td className="border border-white/10 px-3 py-2">Low</td>
-                      <td className="border border-white/10 px-3 py-2">Medium</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Typical use</td>
-                      <td className="border border-white/10 px-3 py-2">Large commercial</td>
-                      <td className="border border-white/10 px-3 py-2">Industrial, retrofit</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Premium residential, commercial
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                BACnet Object Types for Lighting
-              </p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">Binary Output (BO):</span>{' '}
-                  <span className="text-white">On/off switching control</span>
-                </p>
-                <p>
-                  <span className="text-white">Analogue Output (AO):</span>{' '}
-                  <span className="text-white">Dimming level (0-100%)</span>
-                </p>
-                <p>
-                  <span className="text-white">Binary Input (BI):</span>{' '}
-                  <span className="text-white">Switch/sensor status</span>
-                </p>
-                <p>
-                  <span className="text-white">Analogue Input (AI):</span>{' '}
-                  <span className="text-white">Light level sensor (lux)</span>
-                </p>
-                <p>
-                  <span className="text-white">Schedule:</span>{' '}
-                  <span className="text-white">Time-based automation</span>
-                </p>
-                <p>
-                  <span className="text-white">Notification Class:</span>{' '}
-                  <span className="text-white">Alarm routing</span>
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Integration tip:</strong> Protocol gateways (e.g., DALI-BACnet) enable DALI
-              lighting systems to communicate with BMS platforms, translating between protocols
-              whilst maintaining full functionality.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Scheduling and Control Strategies */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Scheduling and Control Strategies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Configure lighting load shedding for grid demand response events.</p>
+            <p>Demand Response Levels:</p>
+            <p>Level 0 (Normal): All lighting at normal control</p>
+            <p>Level 1 (Moderate): Reduce common areas to 80%</p>
+            <p>Level 2 (High): Reduce all non-critical to 60%</p>
+            <p>Level 3 (Critical): Non-essential lighting OFF</p>
+            <p>Priority Classification:</p>
+            <p>Essential: Reception, circulation (no reduction)</p>
+            <p>Important: Open-plan offices (reduce to 80% max)</p>
+            <p>Non-essential: Car park, plant rooms (can shed)</p>
+            <p>Trigger Source:</p>
+            <p>OpenADR signal from grid operator</p>
+            <p>OR building peak demand &gt; 500 kW</p>
+            <p>OR electricity tariff &gt; 30p/kWh</p>
+            <p>Expected reduction: 40 kW during Level 3 events</p>
             <p>
-              Effective scheduling is fundamental to energy-efficient lighting operation. BMS
-              scheduling combines time-based automation with demand response, occupancy integration,
-              and manual override capabilities to balance energy savings with occupant needs.
+              <strong>Example 3: Energy Monitoring Point Schedule</strong>
             </p>
+            <p><strong>Scenario:</strong> Specify BMS points for lighting energy monitoring on a floor plate.</p>
+            <p>Point Schedule - Level 3 Lighting:</p>
+            <p>| Point ID | Description | Type | Units | Trend |</p>
+            <p>|----------|-------------|------|-------|-------|</p>
+            <p>| L3-kW | Floor 3 lighting power | AI | kW | 15min |</p>
+            <p>| L3-kWh | Floor 3 lighting energy | AI | kWh | Daily |</p>
+            <p>| L3-Occ | Floor 3 occupancy count | AI | No. | 15min |</p>
+            <p>| L3-Lux | Average daylight level | AI | lux | 15min |</p>
+            <p>| L3-Dim | Average dimming level | AI | % | 15min |</p>
+            <p>| L3-OpHrs | Operating hours today | AI | hrs | Daily |</p>
+            <p>Calculated Values:</p>
+            <p>- W/m² = L3-kW × 1000 / floor area</p>
+            <p>- Occupancy ratio = occupied hours / lit hours</p>
+            <p>Enables detailed energy analysis and optimisation</p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Scheduling Types</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Weekly schedule:</strong> Standard operating hours (e.g., 07:00-19:00
-                  Mon-Fri)
-                </li>
-                <li className="pl-1">
-                  <strong>Calendar schedule:</strong> Different profiles for holidays, special
-                  events
-                </li>
-                <li className="pl-1">
-                  <strong>Exception schedule:</strong> One-off overrides for specific dates
-                </li>
-                <li className="pl-1">
-                  <strong>Astronomical schedule:</strong> Sunrise/sunset-based for external lighting
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Control Hierarchy</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Priority</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Source</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Example</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Duration</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1 (Highest)</td>
-                      <td className="border border-white/10 px-3 py-2">Life safety</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Emergency lighting activation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Until reset</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2</td>
-                      <td className="border border-white/10 px-3 py-2">Critical override</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Security incident response
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Manual release</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3</td>
-                      <td className="border border-white/10 px-3 py-2">Demand response</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Grid signal load reduction
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Event duration</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4</td>
-                      <td className="border border-white/10 px-3 py-2">BMS operator</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Facilities manager override
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Timed (e.g., 2 hours)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5</td>
-                      <td className="border border-white/10 px-3 py-2">Local user</td>
-                      <td className="border border-white/10 px-3 py-2">Wall switch or app</td>
-                      <td className="border border-white/10 px-3 py-2">Timed (e.g., 30 mins)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6 (Lowest)</td>
-                      <td className="border border-white/10 px-3 py-2">Schedule</td>
-                      <td className="border border-white/10 px-3 py-2">Time-based automation</td>
-                      <td className="border border-white/10 px-3 py-2">Continuous</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Demand Response Integration
-              </p>
-              <p className="text-sm text-white mb-3">
-                Demand response enables automatic load reduction during peak grid demand:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>OpenADR:</strong> Standard protocol for automated demand response signals
-                </li>
-                <li className="pl-1">
-                  <strong>Load shedding:</strong> Turn off non-critical lighting (car parks,
-                  corridors)
-                </li>
-                <li className="pl-1">
-                  <strong>Load shifting:</strong> Reduce dimming levels building-wide (e.g., 100%
-                  &gt; 80%)
-                </li>
-                <li className="pl-1">
-                  <strong>Pre-cooling/heating:</strong> Coordinate with HVAC for thermal mass
-                  strategies
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> Always include timed auto-revert for manual overrides
-              to prevent lights being left on indefinitely after occupant intervention.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Energy Monitoring and Optimisation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Energy Monitoring and System Optimisation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              BMS-integrated energy monitoring provides the data foundation for continuous
-              optimisation. Effective systems combine sub-metering, trending, analytics, and
-              automated control adjustments to minimise energy consumption whilst maintaining
-              comfort and productivity.
+              <strong>BMS Integration Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Energy Monitoring Components
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Sub-metering</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Lighting circuit kWh meters</li>
-                    <li>Zone or floor-level metering</li>
-                    <li>CT-based power monitoring</li>
-                    <li>Pulse counting integration</li>
-                    <li>Real-time power (kW) and energy (kWh)</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Data Analysis</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Baseline establishment</li>
-                    <li>Consumption trending</li>
-                    <li>Occupancy correlation</li>
-                    <li>Anomaly detection</li>
-                    <li>M&amp;V (measurement and verification)</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Optimisation Strategies
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Strategy</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Savings
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Daylight harvesting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Photocell-based dimming to maintain lux target
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">20-40% perimeter zones</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Occupancy control</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        PIR/ultrasonic detection with timeout
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        30-50% intermittent spaces
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Task tuning</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reduce maximum output to actual requirement
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">10-20% over-lit areas</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Schedule optimisation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Align schedules with actual occupancy patterns
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">10-30% after-hours</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Demand limiting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cap maximum power during peak periods
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Peak demand reduction</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Key Performance Indicators (KPIs)
-              </p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">Lighting Power Density:</span>{' '}
-                  <span className="text-white">W/m² (target &lt; 10 W/m² for offices)</span>
-                </p>
-                <p>
-                  <span className="text-white">Operating hours:</span>{' '}
-                  <span className="text-white">Actual vs scheduled hours</span>
-                </p>
-                <p>
-                  <span className="text-white">Occupancy ratio:</span>{' '}
-                  <span className="text-white">Occupied hours / lit hours</span>
-                </p>
-                <p>
-                  <span className="text-white">Energy per m²:</span>{' '}
-                  <span className="text-white">kWh/m²/year for benchmarking</span>
-                </p>
-                <p>
-                  <span className="text-white">Demand factor:</span>{' '}
-                  <span className="text-white">Peak demand / connected load</span>
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Continuous Commissioning
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Fault detection:</strong> Automatic identification of stuck dampers,
-                  failed sensors, or control errors
-                </li>
-                <li className="pl-1">
-                  <strong>Performance monitoring:</strong> Track energy consumption against
-                  baselines and targets
-                </li>
-                <li className="pl-1">
-                  <strong>Schedule verification:</strong> Confirm actual operation matches intended
-                  schedules
-                </li>
-                <li className="pl-1">
-                  <strong>Sensor calibration:</strong> Detect drift in lux sensors or occupancy
-                  detectors
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Measurement and verification (M&amp;V):</strong> Use IPMVP (International
-              Performance Measurement and Verification Protocol) methodologies to quantify energy
-              savings from optimisation measures.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Confirm protocol compatibility (BACnet revision, Modbus function codes)</li>
+              <li>Define complete point list with naming convention</li>
+              <li>Specify alarm priorities and routing</li>
+              <li>Document trending requirements and retention periods</li>
+              <li>Plan network architecture and IP addressing</li>
+              <li>Allow adequate commissioning time for integration testing</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>BACnet device instance: <strong>Unique 22-bit number</strong></li>
+              <li>Modbus RTU max devices: <strong>247 per bus</strong></li>
+              <li>KNX line: <strong>64 devices maximum</strong></li>
+              <li>Trending interval: <strong>15 minutes typical</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: DALI-BACnet Gateway Integration
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Integrate a DALI lighting system with a BACnet BMS in a
-                commercial office.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">System Architecture:</p>
-                <p className="mt-2">BMS Workstation (BACnet IP)</p>
-                <p className="ml-4">|</p>
-                <p className="ml-4">Ethernet Switch</p>
-                <p className="ml-4">|</p>
-                <p className="ml-4">DALI-BACnet Gateway</p>
-                <p className="ml-4">|</p>
-                <p className="ml-4">DALI Bus (64 devices max)</p>
-                <p className="ml-4">├── Luminaires (addressed 1-50)</p>
-                <p className="ml-4">├── PIR sensors (addressed 51-55)</p>
-                <p className="ml-4">└── Lux sensors (addressed 56-58)</p>
-                <p className="mt-2 text-white">BACnet Point Mapping:</p>
-                <p>- AO1: Zone 1 dimming level (0-100%)</p>
-                <p>- BI1: Zone 1 occupancy status</p>
-                <p>- AI1: Zone 1 lux level</p>
-                <p>- Schedule-1: Zone 1 weekly schedule</p>
-                <p className="mt-2 text-green-400">
-                  Result: Full BMS visibility and control of DALI lighting
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Demand Response Configuration
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Configure lighting load shedding for grid demand response
-                events.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Demand Response Levels:</p>
-                <p className="mt-2">Level 0 (Normal): All lighting at normal control</p>
-                <p>Level 1 (Moderate): Reduce common areas to 80%</p>
-                <p>Level 2 (High): Reduce all non-critical to 60%</p>
-                <p>Level 3 (Critical): Non-essential lighting OFF</p>
-                <p className="mt-2 text-white">Priority Classification:</p>
-                <p>Essential: Reception, circulation (no reduction)</p>
-                <p>Important: Open-plan offices (reduce to 80% max)</p>
-                <p>Non-essential: Car park, plant rooms (can shed)</p>
-                <p className="mt-2 text-white">Trigger Source:</p>
-                <p>OpenADR signal from grid operator</p>
-                <p>OR building peak demand &gt; 500 kW</p>
-                <p>OR electricity tariff &gt; 30p/kWh</p>
-                <p className="mt-2 text-green-400">
-                  Expected reduction: 40 kW during Level 3 events
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Energy Monitoring Point Schedule
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Specify BMS points for lighting energy monitoring on a
-                floor plate.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Point Schedule - Level 3 Lighting:</p>
-                <p className="mt-2">| Point ID | Description | Type | Units | Trend |</p>
-                <p>|----------|-------------|------|-------|-------|</p>
-                <p>| L3-kW | Floor 3 lighting power | AI | kW | 15min |</p>
-                <p>| L3-kWh | Floor 3 lighting energy | AI | kWh | Daily |</p>
-                <p>| L3-Occ | Floor 3 occupancy count | AI | No. | 15min |</p>
-                <p>| L3-Lux | Average daylight level | AI | lux | 15min |</p>
-                <p>| L3-Dim | Average dimming level | AI | % | 15min |</p>
-                <p>| L3-OpHrs | Operating hours today | AI | hrs | Daily |</p>
-                <p className="mt-2 text-white">Calculated Values:</p>
-                <p>- W/m² = L3-kW × 1000 / floor area</p>
-                <p>- Occupancy ratio = occupied hours / lit hours</p>
-                <p className="mt-2 text-green-400">
-                  Enables detailed energy analysis and optimisation
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BMS Integration Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Confirm protocol compatibility (BACnet revision, Modbus function codes)
-                </li>
-                <li className="pl-1">Define complete point list with naming convention</li>
-                <li className="pl-1">Specify alarm priorities and routing</li>
-                <li className="pl-1">Document trending requirements and retention periods</li>
-                <li className="pl-1">Plan network architecture and IP addressing</li>
-                <li className="pl-1">Allow adequate commissioning time for integration testing</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Incomplete point lists</strong> - Always specify all required points before installation</li>
+                <li><strong>Missing override timeouts</strong> - Manual overrides should auto-revert</li>
+                <li><strong>No baseline data</strong> - Establish consumption baseline before optimisation</li>
+                <li><strong>Insufficient commissioning</strong> - Test all control sequences, not just individual points</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  BACnet device instance: <strong>Unique 22-bit number</strong>
-                </li>
-                <li className="pl-1">
-                  Modbus RTU max devices: <strong>247 per bus</strong>
-                </li>
-                <li className="pl-1">
-                  KNX line: <strong>64 devices maximum</strong>
-                </li>
-                <li className="pl-1">
-                  Trending interval: <strong>15 minutes typical</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Incomplete point lists</strong> - Always specify all required points
-                  before installation
-                </li>
-                <li className="pl-1">
-                  <strong>Missing override timeouts</strong> - Manual overrides should auto-revert
-                </li>
-                <li className="pl-1">
-                  <strong>No baseline data</strong> - Establish consumption baseline before
-                  optimisation
-                </li>
-                <li className="pl-1">
-                  <strong>Insufficient commissioning</strong> - Test all control sequences, not just
-                  individual points
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Communication Protocols</p>
-                <ul className="space-y-0.5">
-                  <li>BACnet - Object-oriented, enterprise systems</li>
-                  <li>Modbus - Simple registers, widely supported</li>
-                  <li>KNX - Decentralised, strong in Europe</li>
-                  <li>Gateways bridge different protocols</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Optimisation Strategies</p>
-                <ul className="space-y-0.5">
-                  <li>Daylight harvesting (20-40% savings)</li>
-                  <li>Occupancy control (30-50% savings)</li>
-                  <li>Task tuning (10-20% savings)</li>
-                  <li>Schedule optimisation (10-30% savings)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section5-1">
-              Next: Section 5.1
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section4-5")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Smart lighting
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section5")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Energy efficient solutions
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

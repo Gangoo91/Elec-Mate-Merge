@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 5 · Section 3 · Subsection 6 — Value Engineering
+ * HNC Electrical Engineering for Building Services (Project Management — Pearson U4004 + BSE PM context)
+ *   Systematically improving value (function ÷ cost) — not crude cost-cutting, but improving outcomes through alternatives, options and life-cycle thinking.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Value Engineering - HNC Module 5 Section 3.6';
@@ -211,850 +228,533 @@ const faqs = [
 ];
 
 const HNCModule5Section3_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section3')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module5-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 5.3.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Value Engineering
-          </h1>
-          <p className="text-white">
-            Options analysis, life cycle costing, whole life value assessment, and cost-benefit
-            evaluation for building services
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 5 · Section 3 · Subsection 6"
+            title="Value Engineering"
+            description="Options analysis, life cycle costing, whole life value assessment, and cost-benefit evaluation for building services."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Value:</strong> Function divided by whole life cost
-              </li>
-              <li className="pl-1">
-                <strong>Life cycle costing:</strong> Capital + operating + maintenance + disposal
-              </li>
-              <li className="pl-1">
-                <strong>NPV:</strong> Compares costs occurring at different times
-              </li>
-              <li className="pl-1">
-                <strong>Best timing:</strong> RIBA Stage 2-3 for maximum impact
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Energy:</strong> Often 50-70% of MEP life cycle cost
-              </li>
-              <li className="pl-1">
-                <strong>Maintenance:</strong> 20-30% of life cycle cost typically
-              </li>
-              <li className="pl-1">
-                <strong>Analysis period:</strong> Usually 20-25 years
-              </li>
-              <li className="pl-1">
-                <strong>Discount rate:</strong> 3.5% public, 8-12% private
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              "Value engineering (VE) = improving value, where value = function / cost. Reduce cost without reducing function, or improve function at the same cost.",
+              "Best applied early (RIBA Stage 2–3) when design freedom is highest; later VE is increasingly difficult and costly.",
+              "Options analysis: identify alternatives, assess against function/cost/risk/buildability, recommend.",
+              "Life-cycle costing (LCC) frames decisions over 25–60 year asset life — capex vs opex, energy, maintenance, replacement.",
+              "PAS 2080 carbon management adds whole-life carbon as a fourth axis alongside cost, function and time.",
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="PAS 2080:2023 — Carbon management in buildings and infrastructure"
+            clause="PAS 2080 sets out the requirements for managing whole-life carbon in buildings and infrastructure assets and networks. It applies to all value chain members and provides a framework for managing whole-life carbon emissions and value."
+            meaning={
+              <>
+                Value engineering decisions now must consider whole-life carbon, not just cost. PAS 2080 provides the framework — embodied carbon (manufacture, transport, install) plus operational carbon (use, maintenance, replacement, end-of-life). Many MEP decisions (LED vs fluorescent, heat pump vs boiler, embodied carbon of switchgear) benefit dramatically from whole-life analysis.
+              </>
+            }
+            cite="Source: PAS 2080:2023 (refer to BSI published text for verbatim clauses)."
+          />
+
+
+          <LearningOutcomes
+            outcomes={[
               'Apply value engineering principles to building services design',
               'Conduct function analysis for MEP system components',
               'Calculate life cycle costs for equipment alternatives',
               'Use NPV and simple payback for investment decisions',
               'Assess whole life value including non-financial factors',
               'Facilitate effective value engineering workshops',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Value Engineering Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Value Engineering Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Value Engineering Fundamentals">
             <p>
               Value engineering (VE) is a systematic method for improving value by analysing
               functions and identifying alternative ways to achieve them at lower whole life cost.
               Unlike simple cost cutting, VE maintains or enhances function whilst optimising
               resources.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Value Equation</p>
-              <p className="font-mono text-center text-lg mb-2">Value = Function / Cost</p>
-              <p className="text-xs text-white text-center">
-                Value increases when function rises or cost falls (or both)
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key principles:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Function focus:</strong> What does the system do, not what is it
-                </li>
-                <li className="pl-1">
-                  <strong>Whole life perspective:</strong> Consider all costs over the asset's life
-                </li>
-                <li className="pl-1">
-                  <strong>Multi-disciplinary approach:</strong> Involves all stakeholders
-                </li>
-                <li className="pl-1">
-                  <strong>Creative solutions:</strong> Challenge assumptions and constraints
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                VE Job Plan (SAVE Standard)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Phase</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Activities</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Output</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1. Information</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Gather project data, understand constraints
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Baseline understanding</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2. Function Analysis</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Identify and classify functions
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">FAST diagram</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3. Creative</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Brainstorm alternative solutions
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Ideas list</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4. Evaluation</td>
-                      <td className="border border-white/10 px-3 py-2">Screen and rank ideas</td>
-                      <td className="border border-white/10 px-3 py-2">Shortlisted options</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5. Development</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Develop proposals with costings
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">VE proposals</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6. Presentation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Present recommendations to client
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Decision and implementation
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>The Value Equation:</strong> Value = Function / Cost. Value increases when
+              function rises or cost falls (or both).
+            </p>
+            <p>
+              <strong>Key principles:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Function focus:</strong> What does the system do, not what is it
+              </li>
+              <li>
+                <strong>Whole life perspective:</strong> Consider all costs over the asset's life
+              </li>
+              <li>
+                <strong>Multi-disciplinary approach:</strong> Involves all stakeholders
+              </li>
+              <li>
+                <strong>Creative solutions:</strong> Challenge assumptions and constraints
+              </li>
+            </ul>
+            <p>
+              <strong>VE Job Plan (SAVE Standard) — (Phase — Activities — Output):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>1. Information:</strong> Gather project data, understand constraints —
+                Baseline understanding
+              </li>
+              <li>
+                <strong>2. Function Analysis:</strong> Identify and classify functions — FAST
+                diagram
+              </li>
+              <li>
+                <strong>3. Creative:</strong> Brainstorm alternative solutions — Ideas list
+              </li>
+              <li>
+                <strong>4. Evaluation:</strong> Screen and rank ideas — Shortlisted options
+              </li>
+              <li>
+                <strong>5. Development:</strong> Develop proposals with costings — VE proposals
+              </li>
+              <li>
+                <strong>6. Presentation:</strong> Present recommendations to client — Decision and
+                implementation
+              </li>
+            </ul>
+            <p>
               <strong>Building services insight:</strong> MEP systems typically represent 30-40% of
               construction cost but 70-80% of operational cost, making them prime candidates for VE
               analysis.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Function Analysis and Options Development */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Function Analysis and Options Development
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Function Analysis and Options Development">
             <p>
               Function analysis is the core of value engineering. By understanding what a system
               must do (rather than what it is), alternative solutions become apparent. Functions are
               expressed as verb-noun pairs to maintain objectivity.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Function Classification
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Basic Functions</p>
-                  <p className="text-sm text-white mb-2">The primary reason the system exists</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Chiller: "Cool space"</li>
-                    <li>Generator: "Provide power"</li>
-                    <li>Lighting: "Illuminate area"</li>
-                    <li>Ventilation: "Supply air"</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Secondary Functions</p>
-                  <p className="text-sm text-white mb-2">
-                    Support the basic function or add features
-                  </p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Chiller: "Control humidity"</li>
-                    <li>Generator: "Reduce noise"</li>
-                    <li>Lighting: "Create ambience"</li>
-                    <li>Ventilation: "Filter particles"</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example: HVAC Options Analysis
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Option</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Capital Cost</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Efficiency</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Flexibility</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">VAV air handling</td>
-                      <td className="border border-white/10 px-3 py-2">Medium</td>
-                      <td className="border border-white/10 px-3 py-2">Good</td>
-                      <td className="border border-white/10 px-3 py-2">Moderate</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">VRF with DOAS</td>
-                      <td className="border border-white/10 px-3 py-2">Higher</td>
-                      <td className="border border-white/10 px-3 py-2">Excellent</td>
-                      <td className="border border-white/10 px-3 py-2">High</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Chilled beams</td>
-                      <td className="border border-white/10 px-3 py-2">High</td>
-                      <td className="border border-white/10 px-3 py-2">Very good</td>
-                      <td className="border border-white/10 px-3 py-2">Low</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fan coil units</td>
-                      <td className="border border-white/10 px-3 py-2">Lower</td>
-                      <td className="border border-white/10 px-3 py-2">Moderate</td>
-                      <td className="border border-white/10 px-3 py-2">High</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Real-World Example: Office Lighting VE
-              </p>
-              <p className="text-sm text-white mb-2">
-                <strong>Original specification:</strong> High-end architectural luminaires at
-                £180/m2
-              </p>
-              <p className="text-sm text-white mb-2">
-                <strong>Function analysis:</strong> Basic function is "illuminate workspace"
-                (300-500 lux)
-              </p>
-              <p className="text-sm text-white">
-                <strong>VE solution:</strong> Standard LED luminaires (£85/m2) with feature lighting
-                in reception only. Saves £95/m2 whilst maintaining function. Feature areas enhanced,
-                general areas adequate.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Workshop tip:</strong> Use "How/Why" logic testing - asking "How?" moves down
+            <p>
+              <strong>Function Classification — Basic Functions</strong> (the primary reason the
+              system exists):
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Chiller: "Cool space"</li>
+              <li>Generator: "Provide power"</li>
+              <li>Lighting: "Illuminate area"</li>
+              <li>Ventilation: "Supply air"</li>
+            </ul>
+            <p>
+              <strong>Secondary Functions</strong> (support the basic function or add features):
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Chiller: "Control humidity"</li>
+              <li>Generator: "Reduce noise"</li>
+              <li>Lighting: "Create ambience"</li>
+              <li>Ventilation: "Filter particles"</li>
+            </ul>
+            <p>
+              <strong>Example — HVAC Options Analysis (Option — Capital — Efficiency — Flexibility):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>VAV air handling:</strong> Medium — Good — Moderate
+              </li>
+              <li>
+                <strong>VRF with DOAS:</strong> Higher — Excellent — High
+              </li>
+              <li>
+                <strong>Chilled beams:</strong> High — Very good — Low
+              </li>
+              <li>
+                <strong>Fan coil units:</strong> Lower — Moderate — High
+              </li>
+            </ul>
+            <p>
+              <strong>Real-World Example — Office Lighting VE:</strong> Original specification:
+              high-end architectural luminaires at £180/m2. Function analysis: Basic function is
+              "illuminate workspace" (300-500 lux). VE solution: Standard LED luminaires (£85/m2)
+              with feature lighting in reception only. Saves £95/m2 whilst maintaining function.
+              Feature areas enhanced, general areas adequate.
+            </p>
+            <p>
+              <strong>Workshop tip:</strong> Use "How/Why" logic testing — asking "How?" moves down
               the FAST diagram (more specific), asking "Why?" moves up (more abstract).
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 3: Life Cycle Costing Methods */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Life Cycle Costing Methods
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Life Cycle Costing Methods">
             <p>
               Life cycle costing (LCC) evaluates the total cost of ownership over an asset's life.
               For building services, energy and maintenance costs often exceed the initial capital
               cost, making LCC essential for informed decision-making.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Life Cycle Cost Components
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Cost Category</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Includes</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical % (HVAC)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Capital</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Equipment, installation, commissioning
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">15-25%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Energy/Operating</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Electricity, gas, water consumption
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">50-70%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Maintenance</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        PPM, reactive repairs, consumables
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">15-25%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Replacement</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Component renewal during life
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">5-15%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Disposal</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Removal, recycling, remediation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">1-5%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Simple Life Cycle Cost Calculation
-              </p>
-              <p className="font-mono text-center text-base mb-2">
-                LCC = Capital + (Annual Operating × Years) + Replacements
-              </p>
-              <p className="text-xs text-white text-center">
-                Does not account for time value of money - suitable for quick comparisons
-              </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Net Present Value (NPV) Method
-              </p>
-              <p className="font-mono text-center text-base mb-2">
-                NPV = C0 + C1/(1+r) + C2/(1+r)² + ... + Cn/(1+r)ⁿ
-              </p>
-              <p className="text-xs text-white text-center">
-                Where C = cost in year n, r = discount rate
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Discount Rates for UK Projects
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Public Sector (Green Book)</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Years 0-30: 3.5%</li>
-                    <li>Years 31-75: 3.0%</li>
-                    <li>Years 76-125: 2.5%</li>
-                    <li>Health projects may use 1.5%</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Private Sector</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Typical WACC: 8-12%</li>
-                    <li>Developer speculative: 10-15%</li>
-                    <li>Owner-occupied: 6-10%</li>
-                    <li>Infrastructure funds: 5-8%</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Life Cycle Cost Components (Category — Includes — Typical % HVAC):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Capital:</strong> Equipment, installation, commissioning — 15-25%
+              </li>
+              <li>
+                <strong>Energy/Operating:</strong> Electricity, gas, water consumption — 50-70%
+              </li>
+              <li>
+                <strong>Maintenance:</strong> PPM, reactive repairs, consumables — 15-25%
+              </li>
+              <li>
+                <strong>Replacement:</strong> Component renewal during life — 5-15%
+              </li>
+              <li>
+                <strong>Disposal:</strong> Removal, recycling, remediation — 1-5%
+              </li>
+            </ul>
+            <p>
+              <strong>Simple Life Cycle Cost Calculation:</strong> LCC = Capital + (Annual
+              Operating × Years) + Replacements. Does not account for time value of money — suitable
+              for quick comparisons.
+            </p>
+            <p>
+              <strong>Net Present Value (NPV) Method:</strong> NPV = C0 + C1/(1+r) + C2/(1+r)² +
+              ... + Cn/(1+r)ⁿ. Where C = cost in year n, r = discount rate.
+            </p>
+            <p>
+              <strong>Discount Rates for UK Projects — Public Sector (Green Book):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Years 0-30: 3.5%</li>
+              <li>Years 31-75: 3.0%</li>
+              <li>Years 76-125: 2.5%</li>
+              <li>Health projects may use 1.5%</li>
+            </ul>
+            <p>
+              <strong>Private Sector:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Typical WACC: 8-12%</li>
+              <li>Developer speculative: 10-15%</li>
+              <li>Owner-occupied: 6-10%</li>
+              <li>Infrastructure funds: 5-8%</li>
+            </ul>
+            <p>
               <strong>Impact of discount rate:</strong> Higher rates favour lower capital cost
               options; lower rates favour energy-efficient options with higher capital but lower
               running costs.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 4: Energy Efficiency and Payback Analysis */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Energy Efficiency and Payback Analysis
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Energy Efficiency and Payback Analysis">
             <p>
               Energy efficiency measures often require higher capital investment but deliver ongoing
               savings. Payback analysis helps quantify when the investment is recovered and informs
               the business case for more efficient equipment.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Simple Payback Period</p>
-              <p className="font-mono text-center text-lg mb-2">
-                Payback = Additional Cost / Annual Saving
-              </p>
-              <p className="text-xs text-white text-center">
-                Quick metric but ignores time value of money and savings beyond payback
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Energy Efficiency Measures - Building Services
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Measure</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Saving</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Payback
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LED lighting retrofit</td>
-                      <td className="border border-white/10 px-3 py-2">40-60%</td>
-                      <td className="border border-white/10 px-3 py-2">2-4 years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lighting controls (PIR, daylight)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">20-40%</td>
-                      <td className="border border-white/10 px-3 py-2">1-3 years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">VSD on pumps/fans</td>
-                      <td className="border border-white/10 px-3 py-2">20-50%</td>
-                      <td className="border border-white/10 px-3 py-2">2-5 years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">High-efficiency chillers</td>
-                      <td className="border border-white/10 px-3 py-2">15-30%</td>
-                      <td className="border border-white/10 px-3 py-2">5-8 years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heat recovery ventilation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">30-50%</td>
-                      <td className="border border-white/10 px-3 py-2">4-7 years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BMS optimisation</td>
-                      <td className="border border-white/10 px-3 py-2">10-25%</td>
-                      <td className="border border-white/10 px-3 py-2">1-3 years</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-2">
-                Worked Example: Chiller Comparison
-              </p>
-              <div className="text-sm text-white space-y-2">
-                <p>
-                  <strong>Option A:</strong> Standard chiller £85,000, COP 3.5, energy £18,000/year
-                </p>
-                <p>
-                  <strong>Option B:</strong> High-efficiency chiller £120,000, COP 5.0, energy
-                  £12,600/year
-                </p>
-                <p className="mt-3">
-                  <strong>Additional cost:</strong> £120,000 - £85,000 = £35,000
-                </p>
-                <p>
-                  <strong>Annual saving:</strong> £18,000 - £12,600 = £5,400
-                </p>
-                <p>
-                  <strong>Simple payback:</strong> £35,000 / £5,400 = 6.5 years
-                </p>
-                <p className="mt-3 text-green-300">
-                  <strong>Decision:</strong> With 15-20 year chiller life, Option B delivers
-                  significant whole-life savings despite longer payback.
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Maintenance Cost Projections
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Planned maintenance:</strong> Use CIBSE Guide M benchmarks (typically 2-5%
-                  of capital/year)
-                </li>
-                <li className="pl-1">
-                  <strong>Reactive repairs:</strong> Budget 30-50% of PPM cost for breakdown
-                  response
-                </li>
-                <li className="pl-1">
-                  <strong>Major replacements:</strong> Component lifecycles (motors 15yr, controls
-                  10yr, compressors 12yr)
-                </li>
-                <li className="pl-1">
-                  <strong>Escalation:</strong> Apply inflation to future maintenance costs
-                  (typically 2-3%/year)
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Simple Payback Period:</strong> Payback = Additional Cost / Annual Saving.
+              Quick metric but ignores time value of money and savings beyond payback.
+            </p>
+            <p>
+              <strong>Typical Energy Efficiency Measures — Building Services (Measure — Saving — Payback):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>LED lighting retrofit:</strong> 40-60% — 2-4 years
+              </li>
+              <li>
+                <strong>Lighting controls (PIR, daylight):</strong> 20-40% — 1-3 years
+              </li>
+              <li>
+                <strong>VSD on pumps/fans:</strong> 20-50% — 2-5 years
+              </li>
+              <li>
+                <strong>High-efficiency chillers:</strong> 15-30% — 5-8 years
+              </li>
+              <li>
+                <strong>Heat recovery ventilation:</strong> 30-50% — 4-7 years
+              </li>
+              <li>
+                <strong>BMS optimisation:</strong> 10-25% — 1-3 years
+              </li>
+            </ul>
+            <p>
+              <strong>Worked Example — Chiller Comparison:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Option A:</strong> Standard chiller £85,000, COP 3.5, energy £18,000/year
+              </li>
+              <li>
+                <strong>Option B:</strong> High-efficiency chiller £120,000, COP 5.0, energy
+                £12,600/year
+              </li>
+              <li>
+                <strong>Additional cost:</strong> £120,000 - £85,000 = £35,000
+              </li>
+              <li>
+                <strong>Annual saving:</strong> £18,000 - £12,600 = £5,400
+              </li>
+              <li>
+                <strong>Simple payback:</strong> £35,000 / £5,400 = 6.5 years
+              </li>
+              <li>
+                <strong>Decision:</strong> With 15-20 year chiller life, Option B delivers
+                significant whole-life savings despite longer payback.
+              </li>
+            </ul>
+            <p>
+              <strong>Maintenance Cost Projections:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Planned maintenance:</strong> Use CIBSE Guide M benchmarks (typically 2-5%
+                of capital/year)
+              </li>
+              <li>
+                <strong>Reactive repairs:</strong> Budget 30-50% of PPM cost for breakdown response
+              </li>
+              <li>
+                <strong>Major replacements:</strong> Component lifecycles (motors 15yr, controls
+                10yr, compressors 12yr)
+              </li>
+              <li>
+                <strong>Escalation:</strong> Apply inflation to future maintenance costs (typically
+                2-3%/year)
+              </li>
+            </ul>
+            <p>
               <strong>Energy price sensitivity:</strong> Test LCC calculations with high and low
               energy price scenarios (e.g., +/-30%) to understand investment risk.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — Simple Payback Calculation:</strong> A heat pump costs £45,000
+              more than a gas boiler system but saves £6,500/year in energy. Calculate the simple
+              payback.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Simple payback = Additional cost / Annual saving</li>
+              <li>Payback = £45,000 / £6,500</li>
+              <li>
+                <strong>Payback = 6.9 years</strong>
+              </li>
+              <li>With 20-year system life, total savings = £6,500 × (20-6.9) = £85,150.</li>
+            </ul>
+            <p>
+              <strong>Example 2 — Life Cycle Cost Comparison:</strong> Compare two lighting options
+              over 20 years (simple method): Option A: £12,000 capital, £3,200/year energy,
+              £800/year maintenance. Option B: £18,000 capital, £1,800/year energy, £600/year
+              maintenance.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Option A LCC = Capital + (Energy + Maintenance) × Years</li>
+              <li>Option A = £12,000 + (£3,200 + £800) × 20</li>
+              <li>
+                Option A = £12,000 + £80,000 = <strong>£92,000</strong>
+              </li>
+              <li>Option B LCC = £18,000 + (£1,800 + £600) × 20</li>
+              <li>
+                Option B = £18,000 + £48,000 = <strong>£66,000</strong>
+              </li>
+              <li>
+                <strong>Option B saves £26,000 over 20 years</strong> despite £6,000 higher capital
+                cost.
+              </li>
+            </ul>
+            <p>
+              <strong>Example 3 — NPV Calculation:</strong> Calculate NPV of £10,000/year energy
+              savings over 5 years at 3.5% discount rate.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Year 1: £10,000 / 1.035 = £9,662</li>
+              <li>Year 2: £10,000 / 1.035² = £9,335</li>
+              <li>Year 3: £10,000 / 1.035³ = £9,019</li>
+              <li>Year 4: £10,000 / 1.035⁴ = £8,714</li>
+              <li>Year 5: £10,000 / 1.035⁵ = £8,420</li>
+              <li>NPV = £9,662 + £9,335 + £9,019 + £8,714 + £8,420</li>
+              <li>
+                <strong>NPV = £45,150</strong>
+              </li>
+              <li>
+                Compare to simple sum: £10,000 × 5 = £50,000. NPV reflects true present value.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Simple Payback Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A heat pump costs £45,000 more than a gas boiler system
-                but saves £6,500/year in energy. Calculate the simple payback.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Simple payback = Additional cost / Annual saving</p>
-                <p className="mt-2">Payback = £45,000 / £6,500</p>
-                <p className="mt-2">
-                  <strong>Payback = 6.9 years</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  With 20-year system life, total savings = £6,500 × (20-6.9) = £85,150
-                </p>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Life Cycle Cost Comparison
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Compare two lighting options over 20 years (simple
-                method): Option A: £12,000 capital, £3,200/year energy, £800/year maintenance Option
-                B: £18,000 capital, £1,800/year energy, £600/year maintenance
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Option A LCC = Capital + (Energy + Maintenance) × Years</p>
-                <p>Option A = £12,000 + (£3,200 + £800) × 20</p>
-                <p>
-                  Option A = £12,000 + £80,000 = <strong>£92,000</strong>
-                </p>
-                <p className="mt-2">Option B LCC = £18,000 + (£1,800 + £600) × 20</p>
-                <p>
-                  Option B = £18,000 + £48,000 = <strong>£66,000</strong>
-                </p>
-                <p className="mt-2 text-green-400">
-                  → Option B saves £26,000 over 20 years despite £6,000 higher capital cost
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: NPV Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Calculate NPV of £10,000/year energy savings over 5 years
-                at 3.5% discount rate.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Year 1: £10,000 / 1.035 = £9,662</p>
-                <p>Year 2: £10,000 / 1.035² = £9,335</p>
-                <p>Year 3: £10,000 / 1.035³ = £9,019</p>
-                <p>Year 4: £10,000 / 1.035⁴ = £8,714</p>
-                <p>Year 5: £10,000 / 1.035⁵ = £8,420</p>
-                <p className="mt-2">NPV = £9,662 + £9,335 + £9,019 + £8,714 + £8,420</p>
-                <p>
-                  <strong>NPV = £45,150</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Compare to simple sum: £10,000 × 5 = £50,000. NPV reflects true present value.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Value Engineering Workshops">
+            <p>
+              <strong>Workshop preparation:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Distribute design information 1-2 weeks before workshop</li>
+              <li>Prepare cost plan breakdown by system/element</li>
+              <li>Identify constraints and non-negotiable requirements</li>
+              <li>Invite multi-disciplinary team (design, cost, FM, contractor)</li>
+              <li>Allow full day for significant projects</li>
+            </ul>
+            <p>
+              <strong>Effective workshop facilitation:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Use independent facilitator where possible</li>
+              <li>Focus on functions not solutions initially</li>
+              <li>No criticism during creative phase (brainstorming)</li>
+              <li>Rank ideas by potential value (saving × probability)</li>
+              <li>Assign owners and deadlines for proposals</li>
+            </ul>
+            <p>
+              <strong>MEP-Specific VE Opportunities (System — Common Opportunities):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>HVAC:</strong> System selection, zoning, plant rationalisation, heat
+                recovery
+              </li>
+              <li>
+                <strong>Electrical:</strong> Diversity review, distribution topology, lighting
+                control strategy
+              </li>
+              <li>
+                <strong>Plumbing:</strong> Water heating strategy, pipe routing, rainwater
+                harvesting
+              </li>
+              <li>
+                <strong>Fire:</strong> Addressable vs conventional, suppression alternatives
+              </li>
+              <li>
+                <strong>BMS:</strong> Integration scope, points schedule, proprietary vs open
+                protocol
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Value Engineering Workshop Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Value Engineering Workshops</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Workshop Preparation</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Distribute design information 1-2 weeks before workshop</li>
-                <li className="pl-1">Prepare cost plan breakdown by system/element</li>
-                <li className="pl-1">Identify constraints and non-negotiable requirements</li>
-                <li className="pl-1">
-                  Invite multi-disciplinary team (design, cost, FM, contractor)
-                </li>
-                <li className="pl-1">Allow full day for significant projects</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Effective Workshop Facilitation
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Use independent facilitator where possible</li>
-                <li className="pl-1">Focus on functions not solutions initially</li>
-                <li className="pl-1">No criticism during creative phase (brainstorming)</li>
-                <li className="pl-1">Rank ideas by potential value (saving × probability)</li>
-                <li className="pl-1">Assign owners and deadlines for proposals</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                MEP-Specific VE Opportunities
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Common VE Opportunities
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">HVAC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        System selection, zoning, plant rationalisation, heat recovery
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Electrical</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Diversity review, distribution topology, lighting control strategy
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Plumbing</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Water heating strategy, pipe routing, rainwater harvesting
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fire</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Addressable vs conventional, suppression alternatives
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BMS</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Integration scope, points schedule, proprietary vs open protocol
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">
-                Common VE Pitfalls to Avoid
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Cost cutting disguised as VE</strong> - Removing scope without function
+          <CommonMistake
+            title="Common VE pitfalls to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Cost cutting disguised as VE</strong> — Removing scope without function
                   analysis
                 </li>
-                <li className="pl-1">
-                  <strong>Ignoring whole life cost</strong> - Focusing only on capital savings
+                <li>
+                  <strong>Ignoring whole life cost</strong> — Focusing only on capital savings
                 </li>
-                <li className="pl-1">
-                  <strong>Late implementation</strong> - Making changes when design is fixed
+                <li>
+                  <strong>Late implementation</strong> — Making changes when design is fixed
                 </li>
-                <li className="pl-1">
-                  <strong>Siloed thinking</strong> - Not considering system interactions
+                <li>
+                  <strong>Siloed thinking</strong> — Not considering system interactions
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Anchor every VE proposal in function analysis, evaluate options on whole-life cost not capital alone, run VE workshops at RIBA Stage 2-3 while design is flexible, and assess interactions between MEP systems before adopting changes."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Late VE eliminates a critical commissioning hold"
+            situation={
+              <>
+                At month seven of a 14-month school project, the client demands £180k of VE. The design team proposes substituting the specified DALI lighting controls with a simpler 0–10V system. The cost saving is £140k. You as project manager raise a concern: the building is already wired for DALI; a change now means re-pulling drivers, modifying the BMS interface and re-commissioning. The net cost change after rework is +£40k, with three weeks programme impact.
+              </>
+            }
+            whatToDo={
+              <>
+                VE done late is rarely cheap. Always ask: what is the cost of change, including rework, design rev, programme impact and risk? Run the alternative through the design team, the M&E subcontractor and the commissioning manager before committing. Often the headline saving evaporates after rework. Recommend the VE proposal be rejected and propose alternative savings (specification of luminaire, lamp type, sensor count) that do not unwind installed work.
+              </>
+            }
+            whyItMatters={
+              <>
+                VE is most powerful when applied early. Late VE is often a cost-shifting exercise where the saving in one place reappears as cost elsewhere. Discipline of options-analysis with full cost-of-change protects the project from headline-driven decisions.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Value Engineering Essentials</p>
-                <ul className="space-y-0.5">
-                  <li>Value = Function / Cost</li>
-                  <li>Focus on functions (verb-noun pairs)</li>
-                  <li>FAST diagrams for function hierarchy</li>
-                  <li>Best timing: RIBA Stage 2-3</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Life Cycle Costing</p>
-                <ul className="space-y-0.5">
-                  <li>Capital + Operating + Maintenance + Disposal</li>
-                  <li>Simple payback = Cost / Annual saving</li>
-                  <li>NPV for time value of money</li>
-                  <li>Discount: 3.5% public, 8-12% private</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+                    <KeyTakeaways
+            points={[
+              "Value = function / cost. VE improves value, not just cost.",
+              "Best applied at RIBA Stage 2–3 when design freedom is highest.",
+              "Options analysis: alternatives × (function, cost, risk, buildability) → recommendation.",
+              "Life-cycle costing over 25–60 year asset life — capex + opex + energy + maintenance + replacement.",
+              "PAS 2080 adds whole-life carbon — embodied + operational.",
+              "Late VE often shifts cost rather than saving — check rework and programme impact.",
+              "Document VE decisions: option considered, rationale, agreed by whom, when implemented.",
+              "VE workshop is a structured exercise — design team, contractor, client, all in the room together.",
+            ]}
+          />
+
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Cost Management
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section3-5')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Final account
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section4')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Module 5 · Section 4
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

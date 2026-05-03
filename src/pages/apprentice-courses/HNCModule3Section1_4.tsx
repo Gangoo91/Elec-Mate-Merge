@@ -231,8 +231,8 @@ const HNCModule3Section1_4 = () => {
 
           <TLDR
             points={[
-              'You can recognise a parallel circuit (multiple paths, common voltage) and apply 1/R_T = 1/R\u2081 + 1/R\u2082 + 1/R\u2083 to find the equivalent resistance.',
-              'You can use the current-divider rule to predict how load current splits between branches \u2014 the basis for sizing tap-off circuits at a distribution board.',
+              'You can recognise a parallel circuit (multiple paths, common voltage) and apply 1/R_T = 1/R₁ + 1/R₂ + 1/R₃ to find the equivalent resistance.',
+              'You can use the current-divider rule to predict how load current splits between branches — the basis for sizing tap-off circuits at a distribution board.',
               'You can spot why a ring final has lower effective resistance than a single radial of the same conductor size, and why that matters for fault current.',
               'You can predict total currents on a parallel bank of luminaires or socket outlets and pick the right MCB rating.',
               'You can use parallel analysis on PFC capacitor banks, parallel UPS feeds and any redundant-supply arrangement.',
@@ -245,9 +245,9 @@ const HNCModule3Section1_4 = () => {
             meaning={
               <>
                 On a parallel-fed distribution board the design current at any point is the
-                sum of the branch currents at that node \u2014 derived directly from the
+                sum of the branch currents at that node — derived directly from the
                 parallel-circuit current-divider analysis. Get the parallel arithmetic right
-                and the I\u1d47 \u2264 I\u2099 \u2264 I_z chain holds for every device in the board.
+                and the Iᵇ ≤ Iₙ ≤ I_z chain holds for every device in the board.
               </>
             }
             cite="Source: BS 7671 (latest edition incl. A4:2026) Regulation 433.1.1."
@@ -661,11 +661,11 @@ const HNCModule3Section1_4 = () => {
             }
             whatToDo={
               <>
-                Apply the parallel-current rule: I_T = I\u2081 + I\u2082 + I\u2083 + I\u2084 = 5 + 4 +
-                6 + 3 = 18 A. Pick the next standard device above 18 A \u2014 a 20 A Type B
-                MCB \u2014 and check the upstream cable I_z is at least 20 A under installation
+                Apply the parallel-current rule: I_T = I₁ + I₂ + I₃ + I₄ = 5 + 4 +
+                6 + 3 = 18 A. Pick the next standard device above 18 A — a 20 A Type B
+                MCB — and check the upstream cable I_z is at least 20 A under installation
                 method, ambient and grouping factors. Confirm voltage drop on the longest
-                branch using mV/A/m \u00d7 length \u00d7 I_b. Allow diversity per BS 7671
+                branch using mV/A/m × length × I_b. Allow diversity per BS 7671
                 Appendix 1 if all four circuits are not switched on simultaneously.
               </>
             }
@@ -687,13 +687,13 @@ const HNCModule3Section1_4 = () => {
 
           <KeyTakeaways
             points={[
-              'Parallel circuits share a common voltage across every branch (V_T = V\u2081 = V\u2082 = V\u2083) \u2014 the model behind any distribution board, ring final or socket bank.',
-              'Total resistance: 1/R_T = 1/R\u2081 + 1/R\u2082 + 1/R\u2083 + ... \u2014 always less than the smallest single R.',
-              'Two-resistor shortcut: R_T = (R\u2081 \u00d7 R\u2082) / (R\u2081 + R\u2082) \u2014 quick to use on parallel sub-mains and dual-source feeds.',
-              'Currents add: I_T = I\u2081 + I\u2082 + I\u2083 \u2014 the basis for upstream device sizing on a distribution board.',
-              'Current-divider rule: I\u2099 = I_T \u00d7 (R_T / R\u2099) \u2014 lower-resistance branch carries more current.',
-              'Parallel reduces effective conductor resistance \u2014 why a ring final has roughly half the loop impedance of a single radial of the same conductor.',
-              'Parallel paths give redundancy \u2014 lose one branch and the rest keep working, the design model for dual-feed UPS and dual-source switchgear.',
+              'Parallel circuits share a common voltage across every branch (V_T = V₁ = V₂ = V₃) — the model behind any distribution board, ring final or socket bank.',
+              'Total resistance: 1/R_T = 1/R₁ + 1/R₂ + 1/R₃ + ... — always less than the smallest single R.',
+              'Two-resistor shortcut: R_T = (R₁ × R₂) / (R₁ + R₂) — quick to use on parallel sub-mains and dual-source feeds.',
+              'Currents add: I_T = I₁ + I₂ + I₃ — the basis for upstream device sizing on a distribution board.',
+              'Current-divider rule: Iₙ = I_T × (R_T / Rₙ) — lower-resistance branch carries more current.',
+              'Parallel reduces effective conductor resistance — why a ring final has roughly half the loop impedance of a single radial of the same conductor.',
+              'Parallel paths give redundancy — lose one branch and the rest keep working, the design model for dual-feed UPS and dual-source switchgear.',
               'Diversity (BS 7671 Appendix 1) lets you size the upstream device below the simple sum of branch currents when not all loads run together.',
             ]}
           />

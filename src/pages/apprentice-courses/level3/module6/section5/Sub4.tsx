@@ -315,20 +315,29 @@ export default function Sub4() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 411.5 (TT systems — protection by ADS using RCDs)"
-            clause="In TT systems, automatic disconnection of supply by means of a residual current device shall be provided. The product RA × IΔn shall not exceed 50 V, where RA is the sum of the resistances of the earth electrode and the protective conductor connecting it to the exposed-conductive-parts in ohms, and IΔn is the rated residual operating current of the RCD providing automatic disconnection in amperes."
+            source="BS 7671:2018+A4:2026 — Regulation 411.5.3 (TT systems — protection by ADS using RCDs)"
+            clause={`Where an RCD is used for fault protection, the following conditions shall be fulfilled:
+(a) the disconnection time shall be that required by Regulation 411.3.2.2 or 411.3.2.4; and
+(b) RA × IΔn ≤ 50 V
+
+where:
+RA is the sum of the resistances of the earth electrode and the protective conductor connecting it to the exposed-conductive-parts (in ohms)
+IΔn is the rated residual operating current of the RCD.
+
+The requirements of this regulation are met if the earth fault loop impedance of the circuit protected by the RCD meets the requirements of Table 41.5.`}
             meaning={
               <>
-                Reg 411.5 is the TT system acceptance criterion. The 50 V is the conventional safe
-                AC touch voltage (UL); higher voltages cause harmful current to flow through the
-                body. The product RA × IΔn is the worst-case touch voltage that would appear on
-                exposed-conductive-parts during a fault before the RCD trips. Practical effect:
-                even a high earth electrode resistance can satisfy the criterion if combined
-                with a sufficiently sensitive RCD — 1500 Ω × 30 mA = 45 V passes; 1000 Ω × 100 mA
-                = 100 V fails.
+                Reg 411.5.3 is the TT system acceptance criterion. The 50 V is the conventional
+                safe AC touch voltage (UL); higher voltages cause harmful current to flow through
+                the body. The product RA × IΔn is the worst-case touch voltage that would appear
+                on exposed-conductive-parts during a fault before the RCD trips. Practical effect:
+                even a high earth electrode resistance can satisfy the criterion if combined with
+                a sufficiently sensitive RCD — 1500 Ω × 30 mA = 45 V passes; 1000 Ω × 100 mA = 100
+                V fails. Table 41.5 publishes the equivalent maximum Zs values directly for
+                non-delayed and 'S' type RCDs at U₀ = 230 V.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Part 4, Chapter 41, Regulation 411.5."
+            cite="Source: BS 7671:2018+A4:2026 Part 4, Chapter 41, Regulation 411.5.3 and Table 41.5."
           />
 
           <SectionRule />

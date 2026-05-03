@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 6 · Section 2 · Subsection 6 — CHP and District Energy
+ * HNC Electrical Engineering for Building Services (Sustainability and Environmental Engineering)
+ *   Combined heat and power systems, district heating networks, energy centres, and system optimisation
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'CHP and District Energy - HNC Module 6 Section 2.6';
@@ -231,934 +248,375 @@ const faqs = [
 ];
 
 const HNCModule6Section2_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section2")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module6-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.2.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            CHP and District Energy
-          </h1>
-          <p className="text-white">
-            Combined heat and power systems, district heating networks, energy centres, and system
-            optimisation
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 6 · Section 2 · Subsection 6"
+            title="CHP and District Energy"
+            description="Combined heat and power systems, district heating networks, energy centres, and system optimisation"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>CHP:</strong> Simultaneous generation of electricity and useful heat
-              </li>
-              <li className="pl-1">
-                <strong>Efficiency:</strong> 70-90% overall vs 35-45% for power stations
-              </li>
-              <li className="pl-1">
-                <strong>District heating:</strong> Centralised heat distribution via pipe networks
-              </li>
-              <li className="pl-1">
-                <strong>Baseload sizing:</strong> Target 4,000-5,000+ running hours annually
-              </li>
+          <TLDR
+            points={[
+              "Combined Heat and Power (CHP) generates electricity locally and recovers the engine waste heat for space heating or DHW — typical electrical efficiency 30–40%, total efficiency 75–90% when heat is fully utilised.",
+              "District heating networks (DHN) distribute heat from a central energy centre via insulated pre-insulated pipes to multiple buildings — the carbon case is now driven by heat-pump-led networks (5GDHC, ambient loops), not gas CHP.",
+              "CIBSE CP1 (2nd edition, 2020) is the UK Heat Networks Code of Practice — required for Heat Network Investment Project (HNIP) funding and increasingly mandated by local authorities.",
+            ]}
+          />
+
+          <RegsCallout
+            source="CIBSE CP1 (2020) Heat Networks: Code of Practice for the UK"
+            clause="Heat networks shall be designed for low return temperatures (typically <40°C from the customer) to maximise condensing-boiler / heat-pump efficiency and to enable 4th generation network performance. The network shall be designed with a connection charge methodology and a heat tariff structure that enables transparent customer billing in compliance with the Heat Network (Metering and Billing) Regulations 2014."
+            meaning={
+              <>
+                CP1 is the UK design standard. Low return temperatures (the single most important design parameter) drive efficient generation. The Heat Networks (Metering and Billing) Regulations 2014 mandate metering of every customer and transparent tariffs — non-compliance is a criminal offence enforced by the Office for Product Safety and Standards (OPSS).
+              </>
+            }
+            cite="Source: CIBSE CP1 (2020) — cibse.org; SI 2014/3120 — legislation.gov.uk"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Explain CHP principles, efficiency gains, and heat-to-power ratios",
+              "Compare prime mover technologies: gas engines, gas turbines, and fuel cells",
+              "Design district heating networks with appropriate flow and return temperatures",
+              "Specify heat interface units and their components",
+              "Size CHP for baseload operation and calculate economic viability",
+              "Integrate thermal stores and backup plant for system optimisation",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="CHP Fundamentals and Efficiency">
+            <p>Combined heat and power (CHP), also known as cogeneration, is the simultaneous generation of electricity and useful heat from a single fuel source. By capturing and utilising the heat that would otherwise be wasted in conventional power generation, CHP systems achieve overall efficiencies of 70-90% compared to 35-45% for grid electricity.</p>
+            <p><strong>CHP efficiency compared to separate generation:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Conventional power station:</strong> 35-45% electrical efficiency; remaining 55-65% lost as waste heat</li>
+              <li><strong>Gas engine CHP:</strong> 35-42% electrical + 45-50% thermal = 80-88% overall</li>
+              <li><strong>Gas turbine CHP:</strong> 25-40% electrical + 40-50% thermal = 70-85% overall</li>
+              <li><strong>Fuel cell CHP:</strong> 40-60% electrical + 30-40% thermal = 80-90% overall</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Applications:</strong> Hospitals, hotels, campuses, residential estates
-              </li>
-              <li className="pl-1">
-                <strong>Prime movers:</strong> Gas engines (common), gas turbines (large scale)
-              </li>
-              <li className="pl-1">
-                <strong>Heat recovery:</strong> Jacket water, exhaust gas, oil cooling
-              </li>
-              <li className="pl-1">
-                <strong>Integration:</strong> Thermal stores, backup boilers, HIUs
-              </li>
+            <p><strong>Heat-to-Power Ratio</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Gas engine:</strong> 1.0-1.5:1 — 50 kWe - 5 MWe — Buildings, district heating</li>
+              <li><strong>Gas turbine:</strong> 1.5-2.5:1 — 500 kWe - 50+ MWe — Large industrial, utilities</li>
+              <li><strong>Micro-CHP (Stirling):</strong> 6-10:1 — 1-3 kWe — Domestic, small commercial</li>
+              <li><strong>Fuel cell:</strong> 0.5-1.0:1 — 1 kWe - 2 MWe — High electrical demand sites</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Efficiency Calculation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Overall efficiency:</strong> η = (Pelec + Qheat) / Qfuel × 100%</li>
+              <li><strong>Electrical efficiency:</strong> ηe = Pelec / Qfuel × 100%</li>
+              <li><strong>Thermal efficiency:</strong> ηth = Qheat / Qfuel × 100%</li>
+              <li><strong>Example:</strong> 500 kW gas input, 180 kWe electrical, 250 kWth heat</li>
+              <li><strong>Overall:</strong> (180 + 250) / 500 × 100 = 86%</li>
+            </ul>
+            <p><strong>Key principle:</strong> CHP only saves energy when all generated heat is usefully absorbed. Dumping heat via dry coolers negates the efficiency advantage.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Explain CHP principles, efficiency gains, and heat-to-power ratios',
-              'Compare prime mover technologies: gas engines, gas turbines, and fuel cells',
-              'Design district heating networks with appropriate flow and return temperatures',
-              'Specify heat interface units and their components',
-              'Size CHP for baseload operation and calculate economic viability',
-              'Integrate thermal stores and backup plant for system optimisation',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: CHP Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            CHP Fundamentals and Efficiency
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Prime Movers and Heat Recovery">
+            <p>The prime mover is the engine or turbine that converts fuel energy into mechanical power, which drives the electrical generator. Each technology has distinct characteristics affecting its suitability for different applications.</p>
+            <p><strong>Reciprocating Gas Engine</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Spark ignition (natural gas) or compression (dual fuel)</li>
+              <li>High electrical efficiency: 35-45%</li>
+              <li>Good part-load performance (down to 50%)</li>
+              <li>Fast start-up: 2-5 minutes</li>
+              <li>Heat recovery: jacket water (80-90°C), exhaust (450°C)</li>
+            </ul>
+            <p><strong>Gas Turbine</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Combustion turbine driving generator</li>
+              <li>Lower electrical efficiency: 25-40%</li>
+              <li>Poor part-load efficiency (avoid below 75%)</li>
+              <li>Slower start-up: 10-30 minutes</li>
+              <li>High grade exhaust heat: 450-550°C for steam</li>
+            </ul>
+            <p><strong>Heat Recovery Systems</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Jacket water (engine):</strong> 80-95°C — Plate heat exchanger — 25-30%</li>
+              <li><strong>Exhaust gas:</strong> 400-550°C — Exhaust heat exchanger — 20-25%</li>
+              <li><strong>Lubricating oil:</strong> 70-85°C — Oil cooler heat exchanger — 5-8%</li>
+              <li><strong>Intercooler (turbo):</strong> 40-60°C — Low-grade heat recovery — 3-5%</li>
+            </ul>
+            <p><strong>Electrical Generation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Synchronous generator:</strong> Three-phase alternator producing 400V or 11kV output</li>
+              <li><strong>Frequency:</strong> f = (n × p) / 120 where n = RPM, p = poles (typically 1500 RPM, 4-pole for 50 Hz)</li>
+              <li><strong>Grid synchronisation:</strong> Voltage, frequency, phase angle must match before paralleling</li>
+              <li><strong>Protection:</strong> G99/G98 compliant interface protection relay for grid connection</li>
+            </ul>
+            <p><strong>Design consideration:</strong> Gas engines suit variable loads and are more common in UK building services. Gas turbines suit large, continuous loads with steam requirements.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="District Heating Networks">
+            <p>District heating distributes heat from a central source to multiple buildings via insulated underground pipework. The UK has over 14,000 heat networks serving approximately 480,000 customers, with significant growth anticipated under net zero targets.</p>
+            <p><strong>Network Temperature Generations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>3rd Generation (current):</strong> Flow 70-90°C, Return 40-60°C, ΔT 30 K</li>
+              <li><strong>4th Generation (emerging):</strong> Flow 50-60°C, Return 25-35°C, ΔT 25 K</li>
+              <li><strong>5th Generation (ambient):</strong> Flow 10-25°C with building-level heat pumps</li>
+            </ul>
+            <p><strong>Network Components</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Pre-insulated pipe:</strong> Heat distribution — Steel carrier, PUR insulation, PE casing</li>
+              <li><strong>Expansion loops:</strong> Thermal expansion accommodation — U-bends, L-bends, or expansion joints</li>
+              <li><strong>Isolation valves:</strong> Section isolation for maintenance — Ball or butterfly valves, typically PN16</li>
+              <li><strong>Distribution pumps:</strong> Circulate water through network — Variable speed for flow modulation</li>
+              <li><strong>Pressurisation set:</strong> Maintain system pressure — Typically 3-6 bar depending on height</li>
+            </ul>
+            <p><strong>Heat Interface Units (HIUs)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Direct connection:</strong> Network water enters building system (rare, no hydraulic separation)</li>
+              <li><strong>Indirect connection:</strong> Plate heat exchangers provide hydraulic separation (standard approach)</li>
+              <li><strong>Space heating:</strong> PHE sized for design load, typically 40-60°C secondary flow</li>
+              <li><strong>DHW production:</strong> Instantaneous PHE or storage options, Legionella compliance essential</li>
+              <li><strong>Heat metering:</strong> MID-approved meter for billing, typically ultrasonic type</li>
+              <li><strong>DPVC:</strong> Differential pressure control valve maintains stable ΔP across HIU</li>
+            </ul>
+            <p><strong>Network efficiency:</strong> Achieving high ΔT (30 K+) is crucial - higher temperature differential means lower flow rates and reduced pumping energy.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Energy Centre Design and Optimisation">
+            <p>The energy centre houses all heat generation plant and is the heart of a district heating system. Design must balance CHP baseload operation, peak load coverage from boilers, and thermal storage to maximise efficiency and economic return.</p>
+            <p><strong>CHP Sizing</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Size for baseload demand</li>
+              <li>Target 4,000-6,000+ hours/year</li>
+              <li>Typically 30-50% of peak load</li>
+              <li>Meet 70-80% annual demand</li>
+            </ul>
+            <p><strong>Backup Boilers</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Cover peak loads above CHP</li>
+              <li>N+1 redundancy typical</li>
+              <li>Gas-fired condensing</li>
+              <li>Cascade control with CHP</li>
+            </ul>
+            <p><strong>Thermal Store</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Buffer heat production/demand</li>
+              <li>Enable continuous CHP run</li>
+              <li>Typically 2-6 hours capacity</li>
+              <li>Stratified tank design</li>
+            </ul>
+            <p><strong>Spark Spread Analysis</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Spark spread:</strong> Electricity price - (Gas price / ηe) — 15p - (3p / 0.38) = 7.1p/kWh</li>
+              <li><strong>Heat credit:</strong> Avoided boiler gas × ηboiler — 3p × 0.90 = 2.7p/kWh saved</li>
+              <li><strong>Operating margin:</strong> Spark spread + heat credit - costs — Must exceed maintenance cost</li>
+              <li><strong>Break-even hours:</strong> Capital cost / annual saving — Target payback 5-7 years</li>
+            </ul>
+            <p><strong>Control Strategy Hierarchy</strong></p>
+            <p><strong>1. Heat demand signal:</strong> Network return temperature and flow rate determine total heat demand</p>
+            <p><strong>2. CHP priority:</strong> Run CHP at optimal load when spark spread positive and heat absorbable</p>
+            <p><strong>3. Thermal store management:</strong> Charge when CHP output exceeds demand; discharge to extend CHP off-periods</p>
+            <p><strong>4. Boiler cascade:</strong> Stage boilers to meet demand above CHP + store capacity</p>
+            <p><strong>5. Network pump control:</strong> Variable speed to maintain ΔP at index HIU</p>
+            <p><strong>Energy Centre Plant Schedule (Typical 5 MW Peak)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Gas engine CHP:</strong> 500 kWe / 600 kWth — 2 — Lead/lag baseload operation</li>
+              <li><strong>Gas boiler:</strong> 2,000 kW — 2 — Peak and backup, N+1</li>
+              <li><strong>Thermal store:</strong> 50,000 litres — 1 — ~2 hours at average load</li>
+              <li><strong>Distribution pump:</strong> 150 m³/h @ 6 bar — 2 — Variable speed, duty/standby</li>
+            </ul>
+            <p><strong>Optimisation goal:</strong> Maximise CHP running hours while ensuring all generated heat is utilised - unused heat negates the efficiency benefit.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Combined heat and power (CHP), also known as cogeneration, is the simultaneous
-              generation of electricity and useful heat from a single fuel source. By capturing and
-              utilising the heat that would otherwise be wasted in conventional power generation,
-              CHP systems achieve overall efficiencies of 70-90% compared to 35-45% for grid
-              electricity.
+              <strong>Example 1: CHP Efficiency Calculation</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                CHP efficiency compared to separate generation:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Conventional power station:</strong> 35-45% electrical efficiency;
-                  remaining 55-65% lost as waste heat
-                </li>
-                <li className="pl-1">
-                  <strong>Gas engine CHP:</strong> 35-42% electrical + 45-50% thermal = 80-88%
-                  overall
-                </li>
-                <li className="pl-1">
-                  <strong>Gas turbine CHP:</strong> 25-40% electrical + 40-50% thermal = 70-85%
-                  overall
-                </li>
-                <li className="pl-1">
-                  <strong>Fuel cell CHP:</strong> 40-60% electrical + 30-40% thermal = 80-90%
-                  overall
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Heat-to-Power Ratio</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Prime Mover</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Heat:Power Ratio
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Size Range
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Best Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Gas engine</td>
-                      <td className="border border-white/10 px-3 py-2">1.0-1.5:1</td>
-                      <td className="border border-white/10 px-3 py-2">50 kWe - 5 MWe</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Buildings, district heating
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Gas turbine</td>
-                      <td className="border border-white/10 px-3 py-2">1.5-2.5:1</td>
-                      <td className="border border-white/10 px-3 py-2">500 kWe - 50+ MWe</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large industrial, utilities
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Micro-CHP (Stirling)</td>
-                      <td className="border border-white/10 px-3 py-2">6-10:1</td>
-                      <td className="border border-white/10 px-3 py-2">1-3 kWe</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Domestic, small commercial
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fuel cell</td>
-                      <td className="border border-white/10 px-3 py-2">0.5-1.0:1</td>
-                      <td className="border border-white/10 px-3 py-2">1 kWe - 2 MWe</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High electrical demand sites
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Efficiency Calculation</p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">Overall efficiency:</span>{' '}
-                  <span className="text-white">η = (Pelec + Qheat) / Qfuel × 100%</span>
-                </p>
-                <p>
-                  <span className="text-white">Electrical efficiency:</span>{' '}
-                  <span className="text-white">ηe = Pelec / Qfuel × 100%</span>
-                </p>
-                <p>
-                  <span className="text-white">Thermal efficiency:</span>{' '}
-                  <span className="text-white">ηth = Qheat / Qfuel × 100%</span>
-                </p>
-                <p className="mt-2">
-                  <span className="text-white">Example:</span>{' '}
-                  <span className="text-white">
-                    500 kW gas input, 180 kWe electrical, 250 kWth heat
-                  </span>
-                </p>
-                <p>
-                  <span className="text-white">Overall:</span>{' '}
-                  <span className="text-green-400">(180 + 250) / 500 × 100 = 86%</span>
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key principle:</strong> CHP only saves energy when all generated heat is
-              usefully absorbed. Dumping heat via dry coolers negates the efficiency advantage.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Prime Movers and Heat Recovery */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Prime Movers and Heat Recovery
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> A gas engine CHP consumes 1,200 kW of natural gas and produces 450 kWe electrical and 550 kWth thermal output. Calculate all efficiencies.</p>
+            <p>Given:</p>
+            <p>Fuel input (Qfuel) = 1,200 kW</p>
+            <p>Electrical output (Pelec) = 450 kW</p>
+            <p>Thermal output (Qheat) = 550 kW</p>
+            <p>Electrical efficiency:</p>
+            <p>ηe = Pelec / Qfuel × 100</p>
+            <p>ηe = 450 / 1,200 × 100 = <span>37.5%</span></p>
+            <p>Thermal efficiency:</p>
+            <p>ηth = Qheat / Qfuel × 100</p>
+            <p>ηth = 550 / 1,200 × 100 = <span>45.8%</span></p>
+            <p>Overall efficiency:</p>
+            <p>ηoverall = (Pelec + Qheat) / Qfuel × 100</p>
+            <p>ηoverall = (450 + 550) / 1,200 × 100 =  <span>83.3%</span></p>
+            <p>Heat-to-power ratio:</p>
+            <p>H:P = 550 / 450 = <span>1.22:1</span></p>
             <p>
-              The prime mover is the engine or turbine that converts fuel energy into mechanical
-              power, which drives the electrical generator. Each technology has distinct
-              characteristics affecting its suitability for different applications.
+              <strong>Example 2: District Heating Flow Rate</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Reciprocating Gas Engine
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Spark ignition (natural gas) or compression (dual fuel)</li>
-                  <li className="pl-1">High electrical efficiency: 35-45%</li>
-                  <li className="pl-1">Good part-load performance (down to 50%)</li>
-                  <li className="pl-1">Fast start-up: 2-5 minutes</li>
-                  <li className="pl-1">Heat recovery: jacket water (80-90°C), exhaust (450°C)</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Gas Turbine</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Combustion turbine driving generator</li>
-                  <li className="pl-1">Lower electrical efficiency: 25-40%</li>
-                  <li className="pl-1">Poor part-load efficiency (avoid below 75%)</li>
-                  <li className="pl-1">Slower start-up: 10-30 minutes</li>
-                  <li className="pl-1">High grade exhaust heat: 450-550°C for steam</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Heat Recovery Systems</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Heat Source</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Temperature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Recovery Method
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">% of Heat</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Jacket water (engine)</td>
-                      <td className="border border-white/10 px-3 py-2">80-95°C</td>
-                      <td className="border border-white/10 px-3 py-2">Plate heat exchanger</td>
-                      <td className="border border-white/10 px-3 py-2">25-30%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Exhaust gas</td>
-                      <td className="border border-white/10 px-3 py-2">400-550°C</td>
-                      <td className="border border-white/10 px-3 py-2">Exhaust heat exchanger</td>
-                      <td className="border border-white/10 px-3 py-2">20-25%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lubricating oil</td>
-                      <td className="border border-white/10 px-3 py-2">70-85°C</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Oil cooler heat exchanger
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">5-8%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Intercooler (turbo)</td>
-                      <td className="border border-white/10 px-3 py-2">40-60°C</td>
-                      <td className="border border-white/10 px-3 py-2">Low-grade heat recovery</td>
-                      <td className="border border-white/10 px-3 py-2">3-5%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Electrical Generation</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Synchronous generator:</strong> Three-phase alternator producing 400V or
-                  11kV output
-                </li>
-                <li className="pl-1">
-                  <strong>Frequency:</strong> f = (n × p) / 120 where n = RPM, p = poles (typically
-                  1500 RPM, 4-pole for 50 Hz)
-                </li>
-                <li className="pl-1">
-                  <strong>Grid synchronisation:</strong> Voltage, frequency, phase angle must match
-                  before paralleling
-                </li>
-                <li className="pl-1">
-                  <strong>Protection:</strong> G99/G98 compliant interface protection relay for grid
-                  connection
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design consideration:</strong> Gas engines suit variable loads and are more
-              common in UK building services. Gas turbines suit large, continuous loads with steam
-              requirements.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: District Heating Networks */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            District Heating Networks
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> A district heating network must deliver 3 MW of heat. Flow temperature is 85°C, return temperature is 55°C. Calculate the required flow rate.</p>
+            <p>Given:</p>
+            <p>Heat load (Q) = 3,000 kW</p>
+            <p>Flow temp (Tf) = 85°C</p>
+            <p>Return temp (Tr) = 55°C</p>
+            <p>ΔT = 85 - 55 = 30 K</p>
+            <p>Specific heat (Cp) = 4.18 kJ/kg·K</p>
+            <p>Heat transfer equation:</p>
+            <p>Q = ṁ × Cp × ΔT</p>
+            <p>ṁ = Q / (Cp × ΔT)</p>
+            <p>ṁ = 3,000 / (4.18 × 30)</p>
+            <p>ṁ = 3,000 / 125.4 = <span>23.9 kg/s</span></p>
+            <p>Volume flow rate:</p>
+            <p>V̇ = 23.9 / 1,000 × 3,600 = <span>86 m³/h</span></p>
             <p>
-              District heating distributes heat from a central source to multiple buildings via
-              insulated underground pipework. The UK has over 14,000 heat networks serving
-              approximately 480,000 customers, with significant growth anticipated under net zero
-              targets.
+              <strong>Example 3: CHP Economic Analysis (Spark Spread)</strong>
             </p>
+            <p><strong>Scenario:</strong> Evaluate CHP viability with electricity at 18p/kWh, gas at 4p/kWh, electrical efficiency 38%, and CHP output of 500 kWe.</p>
+            <p>Step 1: Calculate gas consumption</p>
+            <p>Gas input = 500 kWe / 0.38 = 1,316 kW</p>
+            <p>Step 2: Calculate spark spread</p>
+            <p>Cost of gas per kWh electrical:</p>
+            <p>= Gas price / ηe = 4p / 0.38 = 10.5p/kWh</p>
+            <p>Spark spread = Electricity price - gas cost per kWhe</p>
+            <p>= 18p - 10.5p = <span>7.5p/kWh positive</span></p>
+            <p>Step 3: Annual electrical savings (5,000 hrs)</p>
+            <p>= 500 kWe × 5,000 hrs × 7.5p/kWh</p>
+            <p>= <span>£187,500/year electrical benefit</span></p>
+            <p>Step 4: Add heat credit (600 kWth at 90% boiler efficiency)</p>
+            <p>Avoided boiler gas = 600 / 0.90 = 667 kW</p>
+            <p>Heat credit = 667 × 5,000 × 4p =  <span>£133,400/year</span></p>
+            <p>Total annual benefit:</p>
+            <p><span>£320,900/year (before maintenance)</span></p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Network Temperature Generations
-              </p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">3rd Generation (current):</span>{' '}
-                  <span className="text-white">Flow 70-90°C, Return 40-60°C, ΔT 30 K</span>
-                </p>
-                <p>
-                  <span className="text-white">4th Generation (emerging):</span>{' '}
-                  <span className="text-white">Flow 50-60°C, Return 25-35°C, ΔT 25 K</span>
-                </p>
-                <p>
-                  <span className="text-white">5th Generation (ambient):</span>{' '}
-                  <span className="text-white">Flow 10-25°C with building-level heat pumps</span>
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Network Components</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Component</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Function</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Key Specification
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pre-insulated pipe</td>
-                      <td className="border border-white/10 px-3 py-2">Heat distribution</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Steel carrier, PUR insulation, PE casing
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Expansion loops</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Thermal expansion accommodation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        U-bends, L-bends, or expansion joints
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Isolation valves</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Section isolation for maintenance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ball or butterfly valves, typically PN16
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Distribution pumps</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Circulate water through network
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Variable speed for flow modulation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pressurisation set</td>
-                      <td className="border border-white/10 px-3 py-2">Maintain system pressure</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Typically 3-6 bar depending on height
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Heat Interface Units (HIUs)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Direct connection:</strong> Network water enters building system (rare, no
-                  hydraulic separation)
-                </li>
-                <li className="pl-1">
-                  <strong>Indirect connection:</strong> Plate heat exchangers provide hydraulic
-                  separation (standard approach)
-                </li>
-                <li className="pl-1">
-                  <strong>Space heating:</strong> PHE sized for design load, typically 40-60°C
-                  secondary flow
-                </li>
-                <li className="pl-1">
-                  <strong>DHW production:</strong> Instantaneous PHE or storage options, Legionella
-                  compliance essential
-                </li>
-                <li className="pl-1">
-                  <strong>Heat metering:</strong> MID-approved meter for billing, typically
-                  ultrasonic type
-                </li>
-                <li className="pl-1">
-                  <strong>DPVC:</strong> Differential pressure control valve maintains stable ΔP
-                  across HIU
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Network efficiency:</strong> Achieving high ΔT (30 K+) is crucial - higher
-              temperature differential means lower flow rates and reduced pumping energy.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Energy Centre Design and Optimisation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Energy Centre Design and Optimisation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              The energy centre houses all heat generation plant and is the heart of a district
-              heating system. Design must balance CHP baseload operation, peak load coverage from
-              boilers, and thermal storage to maximise efficiency and economic return.
+              <strong>CHP Feasibility Checklist:</strong>
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">CHP Sizing</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Size for baseload demand</li>
-                  <li className="pl-1">Target 4,000-6,000+ hours/year</li>
-                  <li className="pl-1">Typically 30-50% of peak load</li>
-                  <li className="pl-1">Meet 70-80% annual demand</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Backup Boilers</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Cover peak loads above CHP</li>
-                  <li className="pl-1">N+1 redundancy typical</li>
-                  <li className="pl-1">Gas-fired condensing</li>
-                  <li className="pl-1">Cascade control with CHP</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Thermal Store</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Buffer heat production/demand</li>
-                  <li className="pl-1">Enable continuous CHP run</li>
-                  <li className="pl-1">Typically 2-6 hours capacity</li>
-                  <li className="pl-1">Stratified tank design</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Spark Spread Analysis</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Parameter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Calculation</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Example</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Spark spread</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Electricity price - (Gas price / ηe)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        15p - (3p / 0.38) = 7.1p/kWh
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Heat credit</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Avoided boiler gas × ηboiler
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        3p × 0.90 = 2.7p/kWh saved
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Operating margin</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Spark spread + heat credit - costs
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Must exceed maintenance cost
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Break-even hours</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Capital cost / annual saving
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Target payback 5-7 years</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Control Strategy Hierarchy
-              </p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <strong>1. Heat demand signal:</strong> Network return temperature and flow rate
-                  determine total heat demand
-                </p>
-                <p>
-                  <strong>2. CHP priority:</strong> Run CHP at optimal load when spark spread
-                  positive and heat absorbable
-                </p>
-                <p>
-                  <strong>3. Thermal store management:</strong> Charge when CHP output exceeds
-                  demand; discharge to extend CHP off-periods
-                </p>
-                <p>
-                  <strong>4. Boiler cascade:</strong> Stage boilers to meet demand above CHP + store
-                  capacity
-                </p>
-                <p>
-                  <strong>5. Network pump control:</strong> Variable speed to maintain ΔP at index
-                  HIU
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Energy Centre Plant Schedule (Typical 5 MW Peak)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Plant Item</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Capacity</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Quantity</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Gas engine CHP</td>
-                      <td className="border border-white/10 px-3 py-2">500 kWe / 600 kWth</td>
-                      <td className="border border-white/10 px-3 py-2">2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lead/lag baseload operation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Gas boiler</td>
-                      <td className="border border-white/10 px-3 py-2">2,000 kW</td>
-                      <td className="border border-white/10 px-3 py-2">2</td>
-                      <td className="border border-white/10 px-3 py-2">Peak and backup, N+1</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Thermal store</td>
-                      <td className="border border-white/10 px-3 py-2">50,000 litres</td>
-                      <td className="border border-white/10 px-3 py-2">1</td>
-                      <td className="border border-white/10 px-3 py-2">~2 hours at average load</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Distribution pump</td>
-                      <td className="border border-white/10 px-3 py-2">150 m³/h @ 6 bar</td>
-                      <td className="border border-white/10 px-3 py-2">2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Variable speed, duty/standby
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Optimisation goal:</strong> Maximise CHP running hours while ensuring all
-              generated heat is utilised - unused heat negates the efficiency benefit.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Establish baseload heat demand from metered data or heat loss calculations</li>
+              <li>Confirm 4,000+ annual running hours are achievable</li>
+              <li>Verify spark spread is positive (typically 3p/kWh minimum margin)</li>
+              <li>Check gas and electrical connection capacity</li>
+              <li>Assess space requirements for plant room and acoustic treatment</li>
+              <li>Consider grid export potential and G99/G98 connection requirements</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Gas engine electrical efficiency: <strong>35-42%</strong></li>
+              <li>CHP overall efficiency target: <strong>80%+</strong></li>
+              <li>Minimum viable running hours: <strong>4,000-5,000/year</strong></li>
+              <li>District heating ΔT target: <strong>30 K or higher</strong></li>
+              <li>Water specific heat capacity: <strong>4.18 kJ/kg·K</strong></li>
+              <li>Typical payback period: <strong>5-7 years</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: CHP Efficiency Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A gas engine CHP consumes 1,200 kW of natural gas and
-                produces 450 kWe electrical and 550 kWth thermal output. Calculate all efficiencies.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Given:</p>
-                <p className="ml-4">Fuel input (Qfuel) = 1,200 kW</p>
-                <p className="ml-4">Electrical output (Pelec) = 450 kW</p>
-                <p className="ml-4">Thermal output (Qheat) = 550 kW</p>
-                <p className="mt-2">Electrical efficiency:</p>
-                <p className="ml-4">ηe = Pelec / Qfuel × 100</p>
-                <p className="ml-4">
-                  ηe = 450 / 1,200 × 100 = <span className="text-green-400">37.5%</span>
-                </p>
-                <p className="mt-2">Thermal efficiency:</p>
-                <p className="ml-4">ηth = Qheat / Qfuel × 100</p>
-                <p className="ml-4">
-                  ηth = 550 / 1,200 × 100 = <span className="text-green-400">45.8%</span>
-                </p>
-                <p className="mt-2">Overall efficiency:</p>
-                <p className="ml-4">ηoverall = (Pelec + Qheat) / Qfuel × 100</p>
-                <p className="ml-4">
-                  ηoverall = (450 + 550) / 1,200 × 100 ={' '}
-                  <span className="text-green-400">83.3%</span>
-                </p>
-                <p className="mt-2">Heat-to-power ratio:</p>
-                <p className="ml-4">
-                  H:P = 550 / 450 = <span className="text-green-400">1.22:1</span>
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: District Heating Flow Rate
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A district heating network must deliver 3 MW of heat.
-                Flow temperature is 85°C, return temperature is 55°C. Calculate the required flow
-                rate.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Given:</p>
-                <p className="ml-4">Heat load (Q) = 3,000 kW</p>
-                <p className="ml-4">Flow temp (Tf) = 85°C</p>
-                <p className="ml-4">Return temp (Tr) = 55°C</p>
-                <p className="ml-4">ΔT = 85 - 55 = 30 K</p>
-                <p className="ml-4">Specific heat (Cp) = 4.18 kJ/kg·K</p>
-                <p className="mt-2">Heat transfer equation:</p>
-                <p className="ml-4">Q = ṁ × Cp × ΔT</p>
-                <p className="ml-4">ṁ = Q / (Cp × ΔT)</p>
-                <p className="ml-4">ṁ = 3,000 / (4.18 × 30)</p>
-                <p className="ml-4">
-                  ṁ = 3,000 / 125.4 = <span className="text-green-400">23.9 kg/s</span>
-                </p>
-                <p className="mt-2">Volume flow rate:</p>
-                <p className="ml-4">
-                  V̇ = 23.9 / 1,000 × 3,600 = <span className="text-green-400">86 m³/h</span>
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: CHP Economic Analysis (Spark Spread)
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Evaluate CHP viability with electricity at 18p/kWh, gas
-                at 4p/kWh, electrical efficiency 38%, and CHP output of 500 kWe.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Step 1: Calculate gas consumption</p>
-                <p className="ml-4">Gas input = 500 kWe / 0.38 = 1,316 kW</p>
-                <p className="mt-2 text-white">Step 2: Calculate spark spread</p>
-                <p className="ml-4">Cost of gas per kWh electrical:</p>
-                <p className="ml-4">= Gas price / ηe = 4p / 0.38 = 10.5p/kWh</p>
-                <p className="ml-4">Spark spread = Electricity price - gas cost per kWhe</p>
-                <p className="ml-4">
-                  = 18p - 10.5p = <span className="text-green-400">7.5p/kWh positive</span>
-                </p>
-                <p className="mt-2 text-white">Step 3: Annual electrical savings (5,000 hrs)</p>
-                <p className="ml-4">= 500 kWe × 5,000 hrs × 7.5p/kWh</p>
-                <p className="ml-4">
-                  = <span className="text-green-400">£187,500/year electrical benefit</span>
-                </p>
-                <p className="mt-2 text-white">
-                  Step 4: Add heat credit (600 kWth at 90% boiler efficiency)
-                </p>
-                <p className="ml-4">Avoided boiler gas = 600 / 0.90 = 667 kW</p>
-                <p className="ml-4">
-                  Heat credit = 667 × 5,000 × 4p ={' '}
-                  <span className="text-green-400">£133,400/year</span>
-                </p>
-                <p className="mt-2 text-white">Total annual benefit:</p>
-                <p className="ml-4">
-                  <span className="text-green-400">£320,900/year (before maintenance)</span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CHP Feasibility Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Establish baseload heat demand from metered data or heat loss calculations
-                </li>
-                <li className="pl-1">Confirm 4,000+ annual running hours are achievable</li>
-                <li className="pl-1">
-                  Verify spark spread is positive (typically 3p/kWh minimum margin)
-                </li>
-                <li className="pl-1">Check gas and electrical connection capacity</li>
-                <li className="pl-1">
-                  Assess space requirements for plant room and acoustic treatment
-                </li>
-                <li className="pl-1">
-                  Consider grid export potential and G99/G98 connection requirements
-                </li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Oversizing CHP</strong> - leads to excessive cycling and poor economics</li>
+                <li><strong>Ignoring summer loads</strong> - CHP needs year-round heat demand</li>
+                <li><strong>Poor ΔT design</strong> - low temperature differential increases pumping costs</li>
+                <li><strong>Inadequate thermal storage</strong> - forces CHP cycling instead of continuous operation</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Gas engine electrical efficiency: <strong>35-42%</strong>
-                </li>
-                <li className="pl-1">
-                  CHP overall efficiency target: <strong>80%+</strong>
-                </li>
-                <li className="pl-1">
-                  Minimum viable running hours: <strong>4,000-5,000/year</strong>
-                </li>
-                <li className="pl-1">
-                  District heating ΔT target: <strong>30 K or higher</strong>
-                </li>
-                <li className="pl-1">
-                  Water specific heat capacity: <strong>4.18 kJ/kg·K</strong>
-                </li>
-                <li className="pl-1">
-                  Typical payback period: <strong>5-7 years</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Oversizing CHP</strong> - leads to excessive cycling and poor economics
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring summer loads</strong> - CHP needs year-round heat demand
-                </li>
-                <li className="pl-1">
-                  <strong>Poor ΔT design</strong> - low temperature differential increases pumping
-                  costs
-                </li>
-                <li className="pl-1">
-                  <strong>Inadequate thermal storage</strong> - forces CHP cycling instead of
-                  continuous operation
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="Existing gas CHP becomes uneconomic as gas/elec spark spread reverses"
+            situation={
+              <>
+                A 2015-installed 350 kWe gas CHP serving a residential heat network was sized on a 3:1 gas-to-electricity price ratio. By 2024, the spark spread is closer to 1.5:1, gas tariffs include carbon levies, and the CHP is now operating only 1,800 hours/year. The heat network operator is breaching CP1 affordability targets and customers are receiving high bills.
+              </>
+            }
+            whatToDo={
+              <>
+                Three-stage transition: (1) immediately, run the CHP only at peak winter as a peak-lopping unit; (2) within 12 months, install a high-temperature heat pump (e.g. CO₂ refrigerant cycle to &gt;65°C) to take base load; (3) within 5 years, replace the CHP entirely with heat pump + thermal store. Lower the return temperature (typically the largest CO₂ and cost win) by replacing customer HIUs with low-return-temperature variants and re-balancing the network. Apply for HNIP / Green Heat Network Fund support.
+              </>
+            }
+            whyItMatters={
+              <>
+                Every UK heat network with gas CHP needs a transition plan. The carbon and economic case has flipped within a decade. The institutional designs being installed today are heat-pump-based, often with ambient-temperature distribution loops (5GDHC) — not the high-temperature gas-CHP networks of 2010–2020.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">CHP Efficiencies</p>
-                <ul className="space-y-0.5">
-                  <li>Gas engine electrical: 35-42%</li>
-                  <li>Gas engine thermal: 45-50%</li>
-                  <li>Gas turbine electrical: 25-40%</li>
-                  <li>Overall CHP target: 80-90%</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">District Heating</p>
-                <ul className="space-y-0.5">
-                  <li>3rd gen: 70-90°C flow, 40-60°C return</li>
-                  <li>4th gen: 50-60°C flow, 25-35°C return</li>
-                  <li>Target ΔT: 30 K minimum</li>
-                  <li>Network losses: 5-15% typical</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              "CHP electrical efficiency 30–40%, total efficiency 75–90% when heat is fully utilised.",
+              "Spark spread (gas vs electricity price ratio) is the headline economic driver — has reversed since 2022.",
+              "CIBSE CP1 (2020) is the UK heat network design code.",
+              "Low return temperature (<40°C ideal) is the single most important design parameter.",
+              "5GDHC (5th generation low-temperature ambient loop with heat pumps at each building) is the new institutional design.",
+              "Heat Network (Metering and Billing) Regulations 2014 mandate per-customer metering — criminal offence if breached.",
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section3-1">
-              Next: Section 3.1
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section2-5")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Battery storage systems
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section3-1")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                BREEAM overview
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

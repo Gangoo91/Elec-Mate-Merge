@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 7 · Section 1 · Subsection 6 — Load Assessment
+ * HNC Electrical Engineering for Building Services (Power and Lighting Systems)
+ *   Maximum demand, diversity factors, supply capacity, and future expansion planning
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Load Assessment - HNC Module 7 Section 1.6';
@@ -254,939 +267,324 @@ const faqs = [
 ];
 
 const HNCModule7Section1_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section1")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module7-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.1.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Load Assessment
-          </h1>
-          <p className="text-white">
-            Maximum demand, diversity factors, supply capacity, and future expansion planning
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 7 · Section 1 · Subsection 6"
+            title="Load Assessment"
+            description="Maximum demand, diversity factors, supply capacity, and future expansion planning"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Maximum demand:</strong> Highest expected current at any time
-              </li>
-              <li className="pl-1">
-                <strong>Diversity:</strong> Accounts for non-simultaneous operation
-              </li>
-              <li className="pl-1">
-                <strong>Supply capacity:</strong> DNO network capability assessment
-              </li>
-              <li className="pl-1">
-                <strong>Growth allowance:</strong> 10-25% for future expansion
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Calculate maximum demand using diversity factors",
+              "Apply BS 7671 Appendix 1 guidance correctly",
+              "Assess DNO supply capacity requirements",
+              "Determine appropriate load growth allowances",
+              "Plan for future expansion and technology changes",
+              "Coordinate with DNO for supply applications",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Maximum Demand Fundamentals">
+            <p>Maximum demand (MD) is the highest electrical load expected to be drawn from the supply at any point in time. It forms the basis for sizing the incoming supply, main switchgear, and distribution equipment. Accurate assessment prevents both undersizing (causing overloading) and oversizing (increasing costs unnecessarily).</p>
+            <p><strong>Key maximum demand principles:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Connected load:</strong> Sum of all equipment ratings - always greater than MD</li>
+              <li><strong>Maximum demand:</strong> Actual peak load considering usage patterns</li>
+              <li><strong>Diversity:</strong> Factor accounting for non-simultaneous operation</li>
+              <li><strong>Load factor:</strong> Ratio of average demand to maximum demand</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key References</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>BS 7671:</strong> Appendix 1 - Current demand
-              </li>
-              <li className="pl-1">
-                <strong>CIBSE Guide K:</strong> Electricity in buildings
-              </li>
-              <li className="pl-1">
-                <strong>Engineering Recommendation P2:</strong> DNO planning
-              </li>
-              <li className="pl-1">
-                <strong>ESQCR:</strong> Supply quality requirements
-              </li>
+            <p><strong>Maximum Demand vs Connected Load</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Domestic dwelling:</strong> 50-80 kW — 8-15 kW — 0.15-0.25</li>
+              <li><strong>Office building:</strong> Variable — 40-80 VA/m² — 0.4-0.7</li>
+              <li><strong>Retail premises:</strong> Variable — 50-150 VA/m² — 0.5-0.8</li>
+              <li><strong>Industrial (process):</strong> Variable — Process dependent — 0.6-0.9</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Maximum Demand Formula</strong></p>
+            <p><span>Maximum Demand (MD):</span></p>
+            <p>MD = Σ(Connected Load × Diversity Factor × Utilisation Factor)</p>
+            <p>Where:</p>
+            <p>Diversity Factor = accounts for non-simultaneous operation</p>
+            <p>Utilisation Factor = proportion of rated capacity actually used</p>
+            <p><strong>Design principle:</strong> Maximum demand assessment requires understanding of how the installation will actually be used, not just what is connected.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Calculate maximum demand using diversity factors',
-              'Apply BS 7671 Appendix 1 guidance correctly',
-              'Assess DNO supply capacity requirements',
-              'Determine appropriate load growth allowances',
-              'Plan for future expansion and technology changes',
-              'Coordinate with DNO for supply applications',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Maximum Demand Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Maximum Demand Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Diversity Factors by Load Type">
+            <p>Diversity factors reflect the statistical probability that loads will operate simultaneously. BS 7671 Appendix 1 provides guidance for domestic installations, while commercial and industrial applications require engineering judgement and industry-specific data.</p>
+            <p><strong>BS 7671 Appendix 1 - Domestic Diversity</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Lighting:</strong> 66% of total load — Assumes not all lights on simultaneously</li>
+              <li><strong>Heating (instantaneous):</strong> 100% of largest + 40% of others — Immersion heaters, electric heating</li>
+              <li><strong>Standard circuits:</strong> 100% of largest + 40% of others — Including ring final circuits</li>
+              <li><strong>Cooker:</strong> 10A + 30% remainder + 5A socket — Specific formula for domestic cookers</li>
+              <li><strong>Motors (AC):</strong> Full load + 1/3 starting current — Or largest at 125% + others at 100%</li>
+            </ul>
+            <p><strong>Commercial/Industrial Diversity</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Lighting:</strong> 0.9 (90%) commercial</li>
+              <li><strong>Small power:</strong> 0.4-0.6 office, 0.3-0.5 retail</li>
+              <li><strong>HVAC:</strong> 0.8-1.0 depending on control</li>
+              <li><strong>Process equipment:</strong> 0.7-0.9 typically</li>
+            </ul>
+            <p><strong>Multiple Dwellings Diversity</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>2-4 dwellings:</strong> 0.6-0.8</li>
+              <li><strong>5-9 dwellings:</strong> 0.5-0.6</li>
+              <li><strong>10-19 dwellings:</strong> 0.4-0.5</li>
+              <li><strong>20+ dwellings:</strong> 0.3-0.4</li>
+            </ul>
+            <p><strong>Commercial Socket Outlet Assessment</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>General office:</strong> 25-35 — Standard office with PCs</li>
+              <li><strong>Dealing room/IT intensive:</strong> 50-80 — High equipment density</li>
+              <li><strong>Retail (general):</strong> 15-25 — Shop floor areas</li>
+              <li><strong>Restaurant/kitchen:</strong> 100-200 — Commercial kitchen equipment</li>
+            </ul>
+            <p><strong>Best practice:</strong> Document all diversity assumptions clearly. If historical data or metering is available, use it to validate assumptions.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="DNO Supply Capacity">
+            <p>Distribution Network Operators (DNOs) manage the electricity distribution network and determine available supply capacity. Understanding DNO processes is essential for ensuring adequate supply for new installations and upgrades.</p>
+            <p><strong>Standard DNO Supply Options</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Single-phase domestic:</strong> 60A, 80A, or 100A (230V)</li>
+              <li><strong>Three-phase domestic:</strong> 60A or 100A per phase (400V)</li>
+              <li><strong>Small commercial LV:</strong> Up to 150 kVA (typically)</li>
+              <li><strong>Larger commercial LV:</strong> Up to 1 MVA (network dependent)</li>
+              <li><strong>HV supply:</strong> &gt;1 MVA, customer owns HV equipment</li>
+            </ul>
+            <p><strong>DNO Application Process</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Budget estimate:</strong> Preliminary cost indication — Approximate load, location, phasing</li>
+              <li><strong>Formal application:</strong> Detailed assessment request — Max demand, load breakdown, power factor</li>
+              <li><strong>Connection offer:</strong> DNO quote for supply — Review capacity, costs, timescales</li>
+              <li><strong>Acceptance:</strong> Contract agreement — Agree terms, pay connection charges</li>
+              <li><strong>Energisation:</strong> Supply connected — Installation complete, certificates issued</li>
+            </ul>
+            <p><strong>Network Constraints</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Transformer capacity</li>
+              <li>Cable thermal ratings</li>
+              <li>Voltage regulation limits</li>
+              <li>Fault level capacity</li>
+            </ul>
+            <p><strong>Cost Factors</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Distance from network</li>
+              <li>Reinforcement needed</li>
+              <li>Metering requirements</li>
+              <li>HV vs LV supply costs</li>
+            </ul>
+            <p><strong>Timescales</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Simple: 4-8 weeks</li>
+              <li>Standard: 8-16 weeks</li>
+              <li>With reinforcement: 6-12 months</li>
+              <li>HV installation: 12-24 months</li>
+            </ul>
+            <p><strong>Planning tip:</strong> Engage with the DNO early in design. Network constraints may require design changes or alternative strategies such as on-site generation or demand management.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Load Growth and Future Expansion">
+            <p>Prudent electrical design considers future load growth to avoid costly upgrades. BS 7671 recommends allowing for future expansion. The appropriate allowance depends on building type, client intentions, and technological trends.</p>
+            <p><strong>Typical Load Growth Allowances</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Domestic (new build):</strong> 20-30% — EV charging, heat pumps, home working</li>
+              <li><strong>Office building:</strong> 15-25% — Technology changes, tenant fit-out</li>
+              <li><strong>Data centre:</strong> 30-50% — Rapid IT growth, cooling demands</li>
+              <li><strong>Industrial:</strong> 20-30% — Process expansion, automation</li>
+              <li><strong>Healthcare:</strong> 25-35% — Medical equipment, imaging technology</li>
+            </ul>
+            <p><strong>Emerging Load Considerations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>EV charging:</strong> 7-22 kW per point domestic/commercial</li>
+              <li><strong>Heat pumps:</strong> 3-12 kW replacing gas heating</li>
+              <li><strong>Battery storage:</strong> Bidirectional power flow</li>
+              <li><strong>Solar PV:</strong> Export capacity and integration</li>
+            </ul>
+            <p><strong>Planning Strategies</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Size cables/busbar for future capacity</li>
+              <li>Allow spare ways in distribution boards</li>
+              <li>Install larger containment systems</li>
+              <li>Reserve transformer/switchboard space</li>
+            </ul>
+            <p><strong>Load Growth Calculation Example</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Current assessed maximum demand:</strong> 200 kVA</li>
+              <li><strong>Growth allowance (20%):</strong> 40 kVA</li>
+              <li><strong>Design maximum demand:</strong> 240 kVA</li>
+              <li><strong>With EV charging (10 × 7 kW):</strong> +70 kVA (with diversity 0.3 = 21 kVA)</li>
+              <li><strong>Revised design MD:</strong> 261 kVA → specify 300 kVA supply</li>
+            </ul>
+            <p><strong>BS 7671 Appendix 1 Guidance</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Appendix 1 provides current demand assessment methods</li>
+              <li>Encourages consideration of future requirements at design stage</li>
+              <li>Notes that allowance should be made for anticipated load increases</li>
+              <li>Recognises that good design accommodates change without major rework</li>
+            </ul>
+            <p><strong>Cost-benefit consideration:</strong> The marginal cost of specifying slightly larger infrastructure at installation is typically much less than retrofitting upgrades later.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Maximum demand (MD) is the highest electrical load expected to be drawn from the
-              supply at any point in time. It forms the basis for sizing the incoming supply, main
-              switchgear, and distribution equipment. Accurate assessment prevents both undersizing
-              (causing overloading) and oversizing (increasing costs unnecessarily).
+              <strong>Example 1: Domestic Maximum Demand</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key maximum demand principles:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Connected load:</strong> Sum of all equipment ratings - always greater
-                  than MD
-                </li>
-                <li className="pl-1">
-                  <strong>Maximum demand:</strong> Actual peak load considering usage patterns
-                </li>
-                <li className="pl-1">
-                  <strong>Diversity:</strong> Factor accounting for non-simultaneous operation
-                </li>
-                <li className="pl-1">
-                  <strong>Load factor:</strong> Ratio of average demand to maximum demand
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Maximum Demand vs Connected Load
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Installation Type
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Connected Load</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical MD</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Diversity Applied
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Domestic dwelling</td>
-                      <td className="border border-white/10 px-3 py-2">50-80 kW</td>
-                      <td className="border border-white/10 px-3 py-2">8-15 kW</td>
-                      <td className="border border-white/10 px-3 py-2">0.15-0.25</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Office building</td>
-                      <td className="border border-white/10 px-3 py-2">Variable</td>
-                      <td className="border border-white/10 px-3 py-2">40-80 VA/m²</td>
-                      <td className="border border-white/10 px-3 py-2">0.4-0.7</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Retail premises</td>
-                      <td className="border border-white/10 px-3 py-2">Variable</td>
-                      <td className="border border-white/10 px-3 py-2">50-150 VA/m²</td>
-                      <td className="border border-white/10 px-3 py-2">0.5-0.8</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Industrial (process)</td>
-                      <td className="border border-white/10 px-3 py-2">Variable</td>
-                      <td className="border border-white/10 px-3 py-2">Process dependent</td>
-                      <td className="border border-white/10 px-3 py-2">0.6-0.9</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Maximum Demand Formula</p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">Maximum Demand (MD):</span>
-                </p>
-                <p className="text-white">
-                  MD = Σ(Connected Load × Diversity Factor × Utilisation Factor)
-                </p>
-                <p className="mt-2 text-white">Where:</p>
-                <p className="text-white">
-                  Diversity Factor = accounts for non-simultaneous operation
-                </p>
-                <p className="text-white">
-                  Utilisation Factor = proportion of rated capacity actually used
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design principle:</strong> Maximum demand assessment requires understanding of
-              how the installation will actually be used, not just what is connected.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Diversity Factors */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Diversity Factors by Load Type
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Calculate maximum demand for a 4-bedroom house with electric cooker (12 kW), immersion heater (3 kW), electric shower (9.5 kW), and standard ring circuits.</p>
+            <p>Lighting: 100 outlets × 100W = 10 kW × 66% =  <span>6.6 kW</span></p>
+            <p>Cooker (12 kW at 230V = 52.2A):</p>
+            <p>First 10A = 10A</p>
+            <p>Remainder: (52.2 - 10) × 30% = 12.7A</p>
+            <p>Socket: 5A</p>
+            <p>Total: 27.7A × 230V = <span>6.4 kW</span></p>
+            <p>Heating loads (immersion + shower):</p>
+            <p>Larger (9.5 kW) at 100% = 9.5 kW</p>
+            <p>Smaller (3 kW) at 40% = 1.2 kW</p>
+            <p>Total: <span>10.7 kW</span></p>
+            <p>Socket circuits (assume 4 rings):</p>
+            <p>Largest at 100% + others at 40%</p>
+            <p>Assume typical usage: <span>~5 kW</span></p>
+            <p>Total Maximum Demand ≈ 28.7 kW = 125A at 230V</p>
+            <p>100A single-phase supply adequate with managed usage</p>
             <p>
-              Diversity factors reflect the statistical probability that loads will operate
-              simultaneously. BS 7671 Appendix 1 provides guidance for domestic installations, while
-              commercial and industrial applications require engineering judgement and
-              industry-specific data.
+              <strong>Example 2: Commercial Office Block Load</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BS 7671 Appendix 1 - Domestic Diversity
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Load Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Diversity Factor
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lighting</td>
-                      <td className="border border-white/10 px-3 py-2">66% of total load</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Assumes not all lights on simultaneously
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Heating (instantaneous)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        100% of largest + 40% of others
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Immersion heaters, electric heating
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Standard circuits</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        100% of largest + 40% of others
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Including ring final circuits
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cooker</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        10A + 30% remainder + 5A socket
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Specific formula for domestic cookers
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Motors (AC)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full load + 1/3 starting current
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Or largest at 125% + others at 100%
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Commercial/Industrial Diversity
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Lighting:</strong> 0.9 (90%) commercial
-                  </li>
-                  <li className="pl-1">
-                    <strong>Small power:</strong> 0.4-0.6 office, 0.3-0.5 retail
-                  </li>
-                  <li className="pl-1">
-                    <strong>HVAC:</strong> 0.8-1.0 depending on control
-                  </li>
-                  <li className="pl-1">
-                    <strong>Process equipment:</strong> 0.7-0.9 typically
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Multiple Dwellings Diversity
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>2-4 dwellings:</strong> 0.6-0.8
-                  </li>
-                  <li className="pl-1">
-                    <strong>5-9 dwellings:</strong> 0.5-0.6
-                  </li>
-                  <li className="pl-1">
-                    <strong>10-19 dwellings:</strong> 0.4-0.5
-                  </li>
-                  <li className="pl-1">
-                    <strong>20+ dwellings:</strong> 0.3-0.4
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Commercial Socket Outlet Assessment
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Building Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Small Power (VA/m²)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">General office</td>
-                      <td className="border border-white/10 px-3 py-2">25-35</td>
-                      <td className="border border-white/10 px-3 py-2">Standard office with PCs</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dealing room/IT intensive
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">50-80</td>
-                      <td className="border border-white/10 px-3 py-2">High equipment density</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Retail (general)</td>
-                      <td className="border border-white/10 px-3 py-2">15-25</td>
-                      <td className="border border-white/10 px-3 py-2">Shop floor areas</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Restaurant/kitchen</td>
-                      <td className="border border-white/10 px-3 py-2">100-200</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Commercial kitchen equipment
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> Document all diversity assumptions clearly. If
-              historical data or metering is available, use it to validate assumptions.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: DNO Supply Capacity */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            DNO Supply Capacity
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Assess maximum demand for a 2,000 m² office building with HVAC.</p>
+            <p>Lighting: 12 W/m² × 2,000 m² × 0.9 diversity =  <span>21.6 kW</span></p>
+            <p>Small power: 30 VA/m² × 2,000 m² × 0.5 diversity =  <span>30 kVA</span></p>
+            <p>HVAC (cooling dominant):</p>
+            <p>Chillers: 80 kW × 0.9 = 72 kW</p>
+            <p>AHUs/FCUs: 25 kW × 0.85 = 21.3 kW</p>
+            <p>Pumps: 10 kW × 0.8 = 8 kW</p>
+            <p>Total HVAC: <span>101.3 kW</span></p>
+            <p>Lifts: 2 × 15 kW × 0.3 (diversity for 2) =  <span>9 kW</span></p>
+            <p>Ancillary (BMS, security, etc.): <span>5 kW</span></p>
+            <p>Subtotal: 166.9 kW (at 0.95 pf = 175.7 kVA)</p>
+            <p>Add 20% growth: 175.7 × 1.2 = 210.8 kVA</p>
+            <p>Specify 250 kVA supply (standard transformer size)</p>
             <p>
-              Distribution Network Operators (DNOs) manage the electricity distribution network and
-              determine available supply capacity. Understanding DNO processes is essential for
-              ensuring adequate supply for new installations and upgrades.
+              <strong>Example 3: Motor Load Assessment</strong>
             </p>
+            <p><strong>Scenario:</strong> Calculate maximum demand for a pump room with 3 motors: 22 kW, 15 kW, and 11 kW.</p>
+            <p>Motor ratings (assume pf 0.85, efficiency 0.9):</p>
+            <p>22 kW: I = 22000 / (√3 × 400 × 0.85 × 0.9) = 41.5A</p>
+            <p>15 kW: I = 15000 / (√3 × 400 × 0.85 × 0.9) = 28.3A</p>
+            <p>11 kW: I = 11000 / (√3 × 400 × 0.85 × 0.9) = 20.8A</p>
+            <p>Maximum demand calculation:</p>
+            <p>Largest motor (22 kW) at 125% = 51.9A</p>
+            <p>Others at full load: 28.3 + 20.8 = 49.1A</p>
+            <p>Total: <span>101A</span></p>
+            <p>In kVA: 101 × √3 × 400 / 1000 = <span>70 kVA</span></p>
+            <p>Note: Starting current considerations may require higher short-term capacity</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Standard DNO Supply Options</p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">Single-phase domestic:</span>{' '}
-                  <span className="text-white">60A, 80A, or 100A (230V)</span>
-                </p>
-                <p>
-                  <span className="text-white">Three-phase domestic:</span>{' '}
-                  <span className="text-white">60A or 100A per phase (400V)</span>
-                </p>
-                <p>
-                  <span className="text-white">Small commercial LV:</span>{' '}
-                  <span className="text-white">Up to 150 kVA (typically)</span>
-                </p>
-                <p>
-                  <span className="text-white">Larger commercial LV:</span>{' '}
-                  <span className="text-white">Up to 1 MVA (network dependent)</span>
-                </p>
-                <p>
-                  <span className="text-white">HV supply:</span>{' '}
-                  <span className="text-white">&gt;1 MVA, customer owns HV equipment</span>
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                DNO Application Process
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Stage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Information Required
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Budget estimate</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Preliminary cost indication
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Approximate load, location, phasing
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Formal application</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Detailed assessment request
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Max demand, load breakdown, power factor
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Connection offer</td>
-                      <td className="border border-white/10 px-3 py-2">DNO quote for supply</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Review capacity, costs, timescales
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Acceptance</td>
-                      <td className="border border-white/10 px-3 py-2">Contract agreement</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Agree terms, pay connection charges
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Energisation</td>
-                      <td className="border border-white/10 px-3 py-2">Supply connected</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Installation complete, certificates issued
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Network Constraints</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Transformer capacity</li>
-                  <li className="pl-1">Cable thermal ratings</li>
-                  <li className="pl-1">Voltage regulation limits</li>
-                  <li className="pl-1">Fault level capacity</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cost Factors</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Distance from network</li>
-                  <li className="pl-1">Reinforcement needed</li>
-                  <li className="pl-1">Metering requirements</li>
-                  <li className="pl-1">HV vs LV supply costs</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Timescales</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Simple: 4-8 weeks</li>
-                  <li className="pl-1">Standard: 8-16 weeks</li>
-                  <li className="pl-1">With reinforcement: 6-12 months</li>
-                  <li className="pl-1">HV installation: 12-24 months</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Planning tip:</strong> Engage with the DNO early in design. Network
-              constraints may require design changes or alternative strategies such as on-site
-              generation or demand management.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Load Growth and Future Expansion */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Load Growth and Future Expansion
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Prudent electrical design considers future load growth to avoid costly upgrades. BS
-              7671 recommends allowing for future expansion. The appropriate allowance depends on
-              building type, client intentions, and technological trends.
+              <strong>Load Assessment Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Load Growth Allowances
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Building Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Spare Capacity</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Rationale</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Domestic (new build)</td>
-                      <td className="border border-white/10 px-3 py-2">20-30%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        EV charging, heat pumps, home working
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Office building</td>
-                      <td className="border border-white/10 px-3 py-2">15-25%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Technology changes, tenant fit-out
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Data centre</td>
-                      <td className="border border-white/10 px-3 py-2">30-50%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rapid IT growth, cooling demands
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Industrial</td>
-                      <td className="border border-white/10 px-3 py-2">20-30%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Process expansion, automation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Healthcare</td>
-                      <td className="border border-white/10 px-3 py-2">25-35%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Medical equipment, imaging technology
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Emerging Load Considerations
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>EV charging:</strong> 7-22 kW per point domestic/commercial
-                  </li>
-                  <li className="pl-1">
-                    <strong>Heat pumps:</strong> 3-12 kW replacing gas heating
-                  </li>
-                  <li className="pl-1">
-                    <strong>Battery storage:</strong> Bidirectional power flow
-                  </li>
-                  <li className="pl-1">
-                    <strong>Solar PV:</strong> Export capacity and integration
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Planning Strategies</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Size cables/busbar for future capacity</li>
-                  <li className="pl-1">Allow spare ways in distribution boards</li>
-                  <li className="pl-1">Install larger containment systems</li>
-                  <li className="pl-1">Reserve transformer/switchboard space</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Load Growth Calculation Example
-              </p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">Current assessed maximum demand:</span>{' '}
-                  <span className="text-white">200 kVA</span>
-                </p>
-                <p>
-                  <span className="text-white">Growth allowance (20%):</span>{' '}
-                  <span className="text-white">40 kVA</span>
-                </p>
-                <p>
-                  <span className="text-white">Design maximum demand:</span>{' '}
-                  <span className="text-white">240 kVA</span>
-                </p>
-                <p className="mt-2">
-                  <span className="text-white">With EV charging (10 × 7 kW):</span>{' '}
-                  <span className="text-white">+70 kVA (with diversity 0.3 = 21 kVA)</span>
-                </p>
-                <p>
-                  <span className="text-white">Revised design MD:</span>{' '}
-                  <span className="text-white">261 kVA → specify 300 kVA supply</span>
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BS 7671 Appendix 1 Guidance
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Appendix 1 provides current demand assessment methods</li>
-                <li className="pl-1">
-                  Encourages consideration of future requirements at design stage
-                </li>
-                <li className="pl-1">
-                  Notes that allowance should be made for anticipated load increases
-                </li>
-                <li className="pl-1">
-                  Recognises that good design accommodates change without major rework
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Cost-benefit consideration:</strong> The marginal cost of specifying slightly
-              larger infrastructure at installation is typically much less than retrofitting
-              upgrades later.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Obtain complete load schedule from design documentation</li>
+              <li>Identify load types: lighting, power, HVAC, specialist equipment</li>
+              <li>Apply appropriate diversity factors from BS 7671 or industry data</li>
+              <li>Consider power factor and correct if necessary</li>
+              <li>Add reasonable growth allowance based on building type</li>
+              <li>Verify DNO supply availability early in design process</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Domestic lighting diversity: <strong>66%</strong></li>
+              <li>Commercial lighting diversity: <strong>90%</strong></li>
+              <li>Office small power: <strong>25-35 VA/m²</strong></li>
+              <li>Typical growth allowance: <strong>15-25%</strong></li>
+              <li>EV charger (domestic): <strong>7 kW</strong> per point</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Domestic Maximum Demand
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate maximum demand for a 4-bedroom house with
-                electric cooker (12 kW), immersion heater (3 kW), electric shower (9.5 kW), and
-                standard ring circuits.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  Lighting: 100 outlets × 100W = 10 kW × 66% ={' '}
-                  <span className="text-green-400">6.6 kW</span>
-                </p>
-                <p className="mt-2">Cooker (12 kW at 230V = 52.2A):</p>
-                <p className="ml-4">First 10A = 10A</p>
-                <p className="ml-4">Remainder: (52.2 - 10) × 30% = 12.7A</p>
-                <p className="ml-4">Socket: 5A</p>
-                <p className="ml-4">
-                  Total: 27.7A × 230V = <span className="text-green-400">6.4 kW</span>
-                </p>
-                <p className="mt-2">Heating loads (immersion + shower):</p>
-                <p className="ml-4">Larger (9.5 kW) at 100% = 9.5 kW</p>
-                <p className="ml-4">Smaller (3 kW) at 40% = 1.2 kW</p>
-                <p className="ml-4">
-                  Total: <span className="text-green-400">10.7 kW</span>
-                </p>
-                <p className="mt-2">Socket circuits (assume 4 rings):</p>
-                <p className="ml-4">Largest at 100% + others at 40%</p>
-                <p className="ml-4">
-                  Assume typical usage: <span className="text-green-400">~5 kW</span>
-                </p>
-                <p className="mt-3 text-white border-t border-white/20 pt-2">
-                  Total Maximum Demand ≈ 28.7 kW = 125A at 230V
-                </p>
-                <p className="text-green-400">
-                  100A single-phase supply adequate with managed usage
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Commercial Office Block Load
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Assess maximum demand for a 2,000 m² office building with
-                HVAC.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  Lighting: 12 W/m² × 2,000 m² × 0.9 diversity ={' '}
-                  <span className="text-green-400">21.6 kW</span>
-                </p>
-                <p className="mt-2">
-                  Small power: 30 VA/m² × 2,000 m² × 0.5 diversity ={' '}
-                  <span className="text-green-400">30 kVA</span>
-                </p>
-                <p className="mt-2">HVAC (cooling dominant):</p>
-                <p className="ml-4">Chillers: 80 kW × 0.9 = 72 kW</p>
-                <p className="ml-4">AHUs/FCUs: 25 kW × 0.85 = 21.3 kW</p>
-                <p className="ml-4">Pumps: 10 kW × 0.8 = 8 kW</p>
-                <p className="ml-4">
-                  Total HVAC: <span className="text-green-400">101.3 kW</span>
-                </p>
-                <p className="mt-2">
-                  Lifts: 2 × 15 kW × 0.3 (diversity for 2) ={' '}
-                  <span className="text-green-400">9 kW</span>
-                </p>
-                <p className="mt-2">
-                  Ancillary (BMS, security, etc.): <span className="text-green-400">5 kW</span>
-                </p>
-                <p className="mt-3 text-white border-t border-white/20 pt-2">
-                  Subtotal: 166.9 kW (at 0.95 pf = 175.7 kVA)
-                </p>
-                <p>Add 20% growth: 175.7 × 1.2 = 210.8 kVA</p>
-                <p className="text-green-400">Specify 250 kVA supply (standard transformer size)</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Motor Load Assessment
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate maximum demand for a pump room with 3 motors:
-                22 kW, 15 kW, and 11 kW.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Motor ratings (assume pf 0.85, efficiency 0.9):</p>
-                <p className="ml-4">22 kW: I = 22000 / (√3 × 400 × 0.85 × 0.9) = 41.5A</p>
-                <p className="ml-4">15 kW: I = 15000 / (√3 × 400 × 0.85 × 0.9) = 28.3A</p>
-                <p className="ml-4">11 kW: I = 11000 / (√3 × 400 × 0.85 × 0.9) = 20.8A</p>
-                <p className="mt-2">Maximum demand calculation:</p>
-                <p className="ml-4">Largest motor (22 kW) at 125% = 51.9A</p>
-                <p className="ml-4">Others at full load: 28.3 + 20.8 = 49.1A</p>
-                <p className="ml-4">
-                  Total: <span className="text-green-400">101A</span>
-                </p>
-                <p className="mt-2">
-                  In kVA: 101 × √3 × 400 / 1000 = <span className="text-green-400">70 kVA</span>
-                </p>
-                <p className="text-white mt-2">
-                  Note: Starting current considerations may require higher short-term capacity
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Load Assessment Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Obtain complete load schedule from design documentation</li>
-                <li className="pl-1">
-                  Identify load types: lighting, power, HVAC, specialist equipment
-                </li>
-                <li className="pl-1">
-                  Apply appropriate diversity factors from BS 7671 or industry data
-                </li>
-                <li className="pl-1">Consider power factor and correct if necessary</li>
-                <li className="pl-1">Add reasonable growth allowance based on building type</li>
-                <li className="pl-1">Verify DNO supply availability early in design process</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Using connected load as MD</strong> - always apply diversity</li>
+                <li><strong>Ignoring power factor</strong> - kVA ≠ kW unless pf = 1</li>
+                <li><strong>No growth allowance</strong> - leads to costly future upgrades</li>
+                <li><strong>Late DNO engagement</strong> - can delay entire project</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Domestic lighting diversity: <strong>66%</strong>
-                </li>
-                <li className="pl-1">
-                  Commercial lighting diversity: <strong>90%</strong>
-                </li>
-                <li className="pl-1">
-                  Office small power: <strong>25-35 VA/m²</strong>
-                </li>
-                <li className="pl-1">
-                  Typical growth allowance: <strong>15-25%</strong>
-                </li>
-                <li className="pl-1">
-                  EV charger (domestic): <strong>7 kW</strong> per point
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Using connected load as MD</strong> - always apply diversity
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring power factor</strong> - kVA ≠ kW unless pf = 1
-                </li>
-                <li className="pl-1">
-                  <strong>No growth allowance</strong> - leads to costly future upgrades
-                </li>
-                <li className="pl-1">
-                  <strong>Late DNO engagement</strong> - can delay entire project
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Domestic Diversity (BS 7671)</p>
-                <ul className="space-y-0.5">
-                  <li>Lighting: 66% of total</li>
-                  <li>Cooker: 10A + 30% remainder + 5A socket</li>
-                  <li>Heating: 100% largest + 40% others</li>
-                  <li>Standard circuits: 100% + 40% others</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Commercial Allowances</p>
-                <ul className="space-y-0.5">
-                  <li>Lighting: 90% diversity</li>
-                  <li>Small power: 25-35 VA/m² (office)</li>
-                  <li>Growth: 15-25% typical</li>
-                  <li>EV charging: consider with diversity 0.2-0.5</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section2-1">
-              Next: Section 2.1
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section1-5")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Power quality
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section2")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Emergency systems
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

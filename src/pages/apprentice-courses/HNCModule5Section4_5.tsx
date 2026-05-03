@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 5 · Section 4 · Subsection 5 — Testing and Verification
+ * HNC Electrical Engineering for Building Services (Project Management — Pearson U4004 + BSE PM context)
+ *   Test procedures, acceptance criteria and compliance demonstration — proving the installation meets the specification, the standard and the contract.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Testing and Verification - HNC Module 5 Section 4.5';
@@ -260,1001 +277,656 @@ const faqs = [
 ];
 
 const HNCModule5Section4_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section4')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module5-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 5.4.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Testing and Verification
-          </h1>
-          <p className="text-white">
-            Test procedures, acceptance criteria, and compliance demonstration for building services
-            systems
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 5 · Section 4 · Subsection 5"
+            title="Testing and Verification"
+            description="Test procedures, acceptance criteria, and compliance demonstration for building services systems."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Pre-commissioning:</strong> Safety tests before energisation
-              </li>
-              <li className="pl-1">
-                <strong>System testing:</strong> Verifying performance against design
-              </li>
-              <li className="pl-1">
-                <strong>Acceptance criteria:</strong> Defined standards for pass/fail
-              </li>
-              <li className="pl-1">
-                <strong>Compliance:</strong> Documentation proving regulatory adherence
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Electrical:</strong> BS 7671 verification tests
-              </li>
-              <li className="pl-1">
-                <strong>HVAC:</strong> CIBSE commissioning codes
-              </li>
-              <li className="pl-1">
-                <strong>Mechanical:</strong> Pressure and leak testing
-              </li>
-              <li className="pl-1">
-                <strong>Controls:</strong> BMS point-to-point verification
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              "Testing = measurement against acceptance criteria. Verification = formal confirmation the installation conforms to design and standard.",
+              "For electrical, BS 7671 Part 6 sequence: continuity, insulation resistance, polarity, earth fault loop impedance, RCD operation, functional testing.",
+              "Test instruments calibrated to UKAS-traceable standard; calibration certificates available on site.",
+              "Test results recorded contemporaneously on the schedule of test results — never reconstructed retrospectively.",
+              "Acceptance criteria from the standard (BS 7671 limits), the specification (designer’s tighter limits), and the contract — all three must be met.",
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Regulation 643.1 (Testing — General)"
+            clause="Testing shall be carried out, where relevant, in the following sequence — continuity of conductors, insulation resistance, protection by SELV, PELV or by electrical separation, basic protection by a barrier or enclosure provided during erection, insulation resistance/impedance of floors and walls, polarity, earth electrode resistance, protection by automatic disconnection of supply, additional protection, phase sequence, functional testing, and voltage drop where deemed necessary."
+            meaning={
+              <>
+                BS 7671 prescribes the test sequence — and the sequence matters. Insulation resistance before energisation; polarity before connection of single-pole devices; earth fault loop impedance after the supply is energised. Out-of-sequence testing risks safety incidents and invalid results. Embed the sequence as a non-negotiable procedure.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 643.1."
+          />
+
+
+          <LearningOutcomes
+            outcomes={[
               'Plan and conduct pre-commissioning tests for building services',
               'Define appropriate acceptance criteria for different system types',
               'Implement systematic test procedures and documentation',
               'Verify system performance against design specifications',
               'Prepare test certificates and compliance documentation',
               'Manage test failures and remedial actions',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Pre-Commissioning Tests */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Pre-Commissioning Tests
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Pre-Commissioning Tests">
             <p>
               Pre-commissioning tests verify that systems are correctly installed and safe to
               energise or start. These tests must be completed and documented before any system is
               made operational, protecting both personnel and equipment from potential damage.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Pre-commissioning test categories:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Visual inspection:</strong> Checking installation quality and compliance
-                  with drawings
-                </li>
-                <li className="pl-1">
-                  <strong>Continuity tests:</strong> Verifying electrical connections and earthing
-                </li>
-                <li className="pl-1">
-                  <strong>Insulation tests:</strong> Confirming no short circuits or earth faults
-                </li>
-                <li className="pl-1">
-                  <strong>Pressure tests:</strong> Checking pipework integrity for HVAC and plumbing
-                </li>
-                <li className="pl-1">
-                  <strong>Ductwork tests:</strong> Air leakage testing to DW/144 standards
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Electrical Pre-Commissioning Tests (BS 7671)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Test</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Criteria
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Continuity of protective conductors
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Verify earth path integrity
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        R1+R2 within expected range
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Insulation resistance</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Detect insulation failures
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">&gt;1 MΩ at 500V d.c.</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Polarity</td>
-                      <td className="border border-white/10 px-3 py-2">Confirm correct wiring</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Phase on switched contacts
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Earth fault loop impedance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Verify fault current path
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Zs ≤ tabulated maximum</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">RCD operation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Confirm protection function
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Trip ≤40ms at IΔn</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                HVAC Pressure Testing Requirements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Test Pressure</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Duration</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Acceptance</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LTHW heating</td>
-                      <td className="border border-white/10 px-3 py-2">1.5 × working pressure</td>
-                      <td className="border border-white/10 px-3 py-2">2 hours minimum</td>
-                      <td className="border border-white/10 px-3 py-2">No visible drop</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Chilled water</td>
-                      <td className="border border-white/10 px-3 py-2">1.5 × working pressure</td>
-                      <td className="border border-white/10 px-3 py-2">2 hours minimum</td>
-                      <td className="border border-white/10 px-3 py-2">No visible drop</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Refrigerant pipework</td>
-                      <td className="border border-white/10 px-3 py-2">Per F-gas regulations</td>
-                      <td className="border border-white/10 px-3 py-2">24 hours</td>
-                      <td className="border border-white/10 px-3 py-2">&lt;1% pressure loss</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Natural gas</td>
-                      <td className="border border-white/10 px-3 py-2">Per IGE/UP/1</td>
-                      <td className="border border-white/10 px-3 py-2">Varies by volume</td>
-                      <td className="border border-white/10 px-3 py-2">Specific criteria</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Pre-commissioning test categories:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Visual inspection:</strong> Checking installation quality and compliance
+                with drawings
+              </li>
+              <li>
+                <strong>Continuity tests:</strong> Verifying electrical connections and earthing
+              </li>
+              <li>
+                <strong>Insulation tests:</strong> Confirming no short circuits or earth faults
+              </li>
+              <li>
+                <strong>Pressure tests:</strong> Checking pipework integrity for HVAC and plumbing
+              </li>
+              <li>
+                <strong>Ductwork tests:</strong> Air leakage testing to DW/144 standards
+              </li>
+            </ul>
+            <p>
+              <strong>Electrical pre-commissioning tests (BS 7671):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Continuity of protective conductors:</strong> Verify earth path integrity —
+                R1+R2 within expected range
+              </li>
+              <li>
+                <strong>Insulation resistance:</strong> Detect insulation failures — &gt;1 MΩ at
+                500V d.c.
+              </li>
+              <li>
+                <strong>Polarity:</strong> Confirm correct wiring — Phase on switched contacts
+              </li>
+              <li>
+                <strong>Earth fault loop impedance:</strong> Verify fault current path — Zs ≤
+                tabulated maximum
+              </li>
+              <li>
+                <strong>RCD operation:</strong> Confirm protection function — Trip ≤40ms at IΔn
+              </li>
+            </ul>
+            <p>
+              <strong>HVAC pressure testing requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>LTHW heating:</strong> 1.5 × working pressure — 2 hours minimum — No visible
+                drop
+              </li>
+              <li>
+                <strong>Chilled water:</strong> 1.5 × working pressure — 2 hours minimum — No
+                visible drop
+              </li>
+              <li>
+                <strong>Refrigerant pipework:</strong> Per F-gas regulations — 24 hours — &lt;1%
+                pressure loss
+              </li>
+              <li>
+                <strong>Natural gas:</strong> Per IGE/UP/1 — Varies by volume — Specific criteria
+              </li>
+            </ul>
+            <p>
               <strong>Critical principle:</strong> Never energise or start any system until all
               pre-commissioning tests are complete and documented with satisfactory results.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: System Testing Procedures */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            System Testing Procedures
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="System Testing Procedures">
             <p>
               System testing verifies that installed equipment and systems perform as designed. This
               follows pre-commissioning and involves operating systems under controlled conditions
               to measure actual performance against specified requirements.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Electrical System Tests
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Functional testing of switchgear</li>
-                  <li className="pl-1">Protection relay settings verification</li>
-                  <li className="pl-1">Generator load bank testing</li>
-                  <li className="pl-1">UPS autonomy verification</li>
-                  <li className="pl-1">Lighting level measurements</li>
-                  <li className="pl-1">Emergency lighting duration tests</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">HVAC System Tests</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Air flow measurement and balancing</li>
-                  <li className="pl-1">Water flow regulation</li>
-                  <li className="pl-1">Temperature control verification</li>
-                  <li className="pl-1">Humidity control testing</li>
-                  <li className="pl-1">Noise level measurements</li>
-                  <li className="pl-1">Vibration assessment</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Test Procedure Structure
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Scope:</strong> Define exactly what will be tested and what is excluded
-                </li>
-                <li className="pl-1">
-                  <strong>Prerequisites:</strong> List conditions that must be met before testing
-                </li>
-                <li className="pl-1">
-                  <strong>Equipment:</strong> Specify calibrated instruments required
-                </li>
-                <li className="pl-1">
-                  <strong>Method:</strong> Step-by-step testing process
-                </li>
-                <li className="pl-1">
-                  <strong>Acceptance criteria:</strong> Specific pass/fail values
-                </li>
-                <li className="pl-1">
-                  <strong>Recording:</strong> Data capture requirements and format
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example: AHU Performance Test Procedure
-              </p>
-              <div className="text-sm text-white space-y-2">
-                <p>
-                  <strong>1. Prerequisites:</strong>
-                </p>
-                <ul className="list-disc list-outside ml-5 mb-2">
-                  <li>Ductwork pressure tested and passed</li>
-                  <li>Filters installed and grilles/diffusers fitted</li>
-                  <li>BMS controls commissioned</li>
-                  <li>Electrical supply verified</li>
-                </ul>
-                <p>
-                  <strong>2. Test method:</strong>
-                </p>
-                <ul className="list-disc list-outside ml-5 mb-2">
-                  <li>Start AHU and allow to stabilise (15 minutes minimum)</li>
-                  <li>Measure supply air volume at each diffuser using calibrated hood</li>
-                  <li>Record supply and extract temperatures</li>
-                  <li>Measure external static pressure</li>
-                  <li>Check fan speed against design</li>
-                </ul>
-                <p>
-                  <strong>3. Acceptance:</strong> ±10% of design air volume, temperature within
-                  0.5°C of setpoint
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BMS Point-to-Point Verification
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Point Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Test Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Verification</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Temperature sensor</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Compare with calibrated reference
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">±0.5°C accuracy</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Digital input</td>
-                      <td className="border border-white/10 px-3 py-2">Force input state change</td>
-                      <td className="border border-white/10 px-3 py-2">Correct status displayed</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Analogue output</td>
-                      <td className="border border-white/10 px-3 py-2">Command 0%, 50%, 100%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Actuator responds correctly
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Digital output</td>
-                      <td className="border border-white/10 px-3 py-2">Command on/off</td>
-                      <td className="border border-white/10 px-3 py-2">Equipment starts/stops</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Electrical system tests:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Functional testing of switchgear</li>
+              <li>Protection relay settings verification</li>
+              <li>Generator load bank testing</li>
+              <li>UPS autonomy verification</li>
+              <li>Lighting level measurements</li>
+              <li>Emergency lighting duration tests</li>
+            </ul>
+            <p>
+              <strong>HVAC system tests:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Air flow measurement and balancing</li>
+              <li>Water flow regulation</li>
+              <li>Temperature control verification</li>
+              <li>Humidity control testing</li>
+              <li>Noise level measurements</li>
+              <li>Vibration assessment</li>
+            </ul>
+            <p>
+              <strong>Test procedure structure:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Scope:</strong> Define exactly what will be tested and what is excluded
+              </li>
+              <li>
+                <strong>Prerequisites:</strong> List conditions that must be met before testing
+              </li>
+              <li>
+                <strong>Equipment:</strong> Specify calibrated instruments required
+              </li>
+              <li>
+                <strong>Method:</strong> Step-by-step testing process
+              </li>
+              <li>
+                <strong>Acceptance criteria:</strong> Specific pass/fail values
+              </li>
+              <li>
+                <strong>Recording:</strong> Data capture requirements and format
+              </li>
+            </ul>
+            <p>
+              <strong>Example: AHU performance test procedure — Prerequisites:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Ductwork pressure tested and passed</li>
+              <li>Filters installed and grilles/diffusers fitted</li>
+              <li>BMS controls commissioned</li>
+              <li>Electrical supply verified</li>
+            </ul>
+            <p>
+              <strong>Test method:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Start AHU and allow to stabilise (15 minutes minimum)</li>
+              <li>Measure supply air volume at each diffuser using calibrated hood</li>
+              <li>Record supply and extract temperatures</li>
+              <li>Measure external static pressure</li>
+              <li>Check fan speed against design</li>
+              <li>
+                <strong>Acceptance:</strong> ±10% of design air volume, temperature within 0.5°C of
+                setpoint
+              </li>
+            </ul>
+            <p>
+              <strong>BMS point-to-point verification:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Temperature sensor:</strong> Compare with calibrated reference — ±0.5°C
+                accuracy
+              </li>
+              <li>
+                <strong>Digital input:</strong> Force input state change — Correct status displayed
+              </li>
+              <li>
+                <strong>Analogue output:</strong> Command 0%, 50%, 100% — Actuator responds
+                correctly
+              </li>
+              <li>
+                <strong>Digital output:</strong> Command on/off — Equipment starts/stops
+              </li>
+            </ul>
+            <p>
               <strong>Best practice:</strong> Use standardised test sheets for consistency and
               ensure all instruments are within calibration date.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Acceptance Criteria and Performance Verification */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Acceptance Criteria and Performance Verification
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Acceptance Criteria and Performance Verification">
             <p>
               Acceptance criteria define the specific performance standards that systems must
               achieve. These must be measurable, achievable, and agreed by all parties before
               installation begins. Clear criteria prevent disputes and ensure objective assessment
               of system performance.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Essential Elements of Acceptance Criteria
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Specific:</strong> Exact numerical values, not vague descriptions
-                </li>
-                <li className="pl-1">
-                  <strong>Measurable:</strong> Can be verified with available test equipment
-                </li>
-                <li className="pl-1">
-                  <strong>Achievable:</strong> Realistic given equipment specifications
-                </li>
-                <li className="pl-1">
-                  <strong>Documented:</strong> Written in commissioning specification before tender
-                </li>
-                <li className="pl-1">
-                  <strong>Tolerances:</strong> Acceptable range around target values
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Acceptance Criteria by System
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Parameter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Criteria
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Air distribution</td>
-                      <td className="border border-white/10 px-3 py-2">Volume flow rate</td>
-                      <td className="border border-white/10 px-3 py-2">±10% of design</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Air distribution</td>
-                      <td className="border border-white/10 px-3 py-2">Noise level (NR rating)</td>
-                      <td className="border border-white/10 px-3 py-2">≤ specified NR value</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Heating system</td>
-                      <td className="border border-white/10 px-3 py-2">Temperature control</td>
-                      <td className="border border-white/10 px-3 py-2">±1°C of setpoint</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Chilled water</td>
-                      <td className="border border-white/10 px-3 py-2">Flow rate</td>
-                      <td className="border border-white/10 px-3 py-2">±5% of design</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lighting</td>
-                      <td className="border border-white/10 px-3 py-2">Illuminance</td>
-                      <td className="border border-white/10 px-3 py-2">≥ specified lux level</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Generator</td>
-                      <td className="border border-white/10 px-3 py-2">Start time</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        &lt;15 seconds to full load
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">UPS</td>
-                      <td className="border border-white/10 px-3 py-2">Autonomy</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        ≥ specified minutes at full load
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Performance Verification Process
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Stage 1 - Static tests:</strong> Component checks before operation
-                </li>
-                <li className="pl-1">
-                  <strong>Stage 2 - Dynamic tests:</strong> System operation under controlled
-                  conditions
-                </li>
-                <li className="pl-1">
-                  <strong>Stage 3 - Integrated tests:</strong> Multiple systems operating together
-                </li>
-                <li className="pl-1">
-                  <strong>Stage 4 - Witnessed tests:</strong> Key tests observed by
-                  client/consultant
-                </li>
-                <li className="pl-1">
-                  <strong>Stage 5 - Extended operation:</strong> Burn-in period under realistic
-                  loads
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Real-World Example: Data Centre Cooling Verification
-              </p>
-              <div className="text-sm text-white space-y-2">
-                <p>
-                  A 500kW data centre cooling system requires comprehensive performance
-                  verification:
-                </p>
-                <ul className="list-disc list-outside ml-5">
-                  <li>
-                    <strong>Design criteria:</strong> 20°C ±1°C supply temperature, 45% ±5% RH
-                  </li>
-                  <li>
-                    <strong>Test method:</strong> Operate at 25%, 50%, 75%, 100% load using load
-                    banks
-                  </li>
-                  <li>
-                    <strong>Measurement:</strong> Temperature at 12 points per room, humidity at 4
-                    points
-                  </li>
-                  <li>
-                    <strong>Duration:</strong> 4 hours stable operation at each load point
-                  </li>
-                  <li>
-                    <strong>Acceptance:</strong> All readings within tolerance, N+1 redundancy
-                    proven
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Essential elements of acceptance criteria:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Specific:</strong> Exact numerical values, not vague descriptions
+              </li>
+              <li>
+                <strong>Measurable:</strong> Can be verified with available test equipment
+              </li>
+              <li>
+                <strong>Achievable:</strong> Realistic given equipment specifications
+              </li>
+              <li>
+                <strong>Documented:</strong> Written in commissioning specification before tender
+              </li>
+              <li>
+                <strong>Tolerances:</strong> Acceptable range around target values
+              </li>
+            </ul>
+            <p>
+              <strong>Typical acceptance criteria by system:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Air distribution — Volume flow rate:</strong> ±10% of design
+              </li>
+              <li>
+                <strong>Air distribution — Noise level (NR rating):</strong> ≤ specified NR value
+              </li>
+              <li>
+                <strong>Heating system — Temperature control:</strong> ±1°C of setpoint
+              </li>
+              <li>
+                <strong>Chilled water — Flow rate:</strong> ±5% of design
+              </li>
+              <li>
+                <strong>Lighting — Illuminance:</strong> ≥ specified lux level
+              </li>
+              <li>
+                <strong>Generator — Start time:</strong> &lt;15 seconds to full load
+              </li>
+              <li>
+                <strong>UPS — Autonomy:</strong> ≥ specified minutes at full load
+              </li>
+            </ul>
+            <p>
+              <strong>Performance verification process:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Stage 1 - Static tests:</strong> Component checks before operation
+              </li>
+              <li>
+                <strong>Stage 2 - Dynamic tests:</strong> System operation under controlled
+                conditions
+              </li>
+              <li>
+                <strong>Stage 3 - Integrated tests:</strong> Multiple systems operating together
+              </li>
+              <li>
+                <strong>Stage 4 - Witnessed tests:</strong> Key tests observed by client/consultant
+              </li>
+              <li>
+                <strong>Stage 5 - Extended operation:</strong> Burn-in period under realistic loads
+              </li>
+            </ul>
+            <p>
+              <strong>Real-world example — data centre cooling verification:</strong> A 500kW data
+              centre cooling system requires comprehensive performance verification.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Design criteria:</strong> 20°C ±1°C supply temperature, 45% ±5% RH
+              </li>
+              <li>
+                <strong>Test method:</strong> Operate at 25%, 50%, 75%, 100% load using load banks
+              </li>
+              <li>
+                <strong>Measurement:</strong> Temperature at 12 points per room, humidity at 4
+                points
+              </li>
+              <li>
+                <strong>Duration:</strong> 4 hours stable operation at each load point
+              </li>
+              <li>
+                <strong>Acceptance:</strong> All readings within tolerance, N+1 redundancy proven
+              </li>
+            </ul>
+            <p>
               <strong>Industry guidance:</strong> CIBSE Commissioning Codes and BSRIA guides provide
               detailed acceptance criteria templates for common building services systems.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Test Certificates and Compliance Demonstration */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Test Certificates and Compliance Demonstration
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Test Certificates and Compliance Demonstration">
             <p>
               Test certificates provide formal documentation that systems have been tested and meet
               specified requirements. They form part of the building's permanent records and
               demonstrate compliance with Building Regulations, British Standards, and contractual
               obligations.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Certification Documents
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Certificate</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Issued By</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Electrical Installation Certificate
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">BS 7671 compliance</td>
-                      <td className="border border-white/10 px-3 py-2">Competent electrician</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        HVAC Commissioning Certificate
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        System performance verified
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Commissioning engineer</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pressure Test Certificate
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Pipework integrity</td>
-                      <td className="border border-white/10 px-3 py-2">Mechanical contractor</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">F-Gas Certificate</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Refrigerant system compliance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">F-Gas certified engineer</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fire Alarm Certificate</td>
-                      <td className="border border-white/10 px-3 py-2">BS 5839 compliance</td>
-                      <td className="border border-white/10 px-3 py-2">Fire alarm installer</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Gas Safe Certificate</td>
-                      <td className="border border-white/10 px-3 py-2">Gas installation safety</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Gas Safe registered engineer
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Regulations Compliance Documentation
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Part L:</strong> Energy efficiency calculations, commissioning
-                  certificates, EPC
-                </li>
-                <li className="pl-1">
-                  <strong>Part F:</strong> Ventilation system commissioning, air flow test results
-                </li>
-                <li className="pl-1">
-                  <strong>Part B:</strong> Fire alarm certificates, emergency lighting tests
-                </li>
-                <li className="pl-1">
-                  <strong>Part P:</strong> Electrical installation certificates
-                </li>
-                <li className="pl-1">
-                  <strong>Part G:</strong> Hot water safety device certification
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">O&M Manual Contents</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">System descriptions and schematics</li>
-                  <li className="pl-1">Equipment data sheets</li>
-                  <li className="pl-1">Commissioning records and certificates</li>
-                  <li className="pl-1">As-built drawings</li>
-                  <li className="pl-1">Maintenance schedules</li>
-                  <li className="pl-1">Spare parts lists</li>
-                  <li className="pl-1">Warranty information</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Health and Safety File
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Design risk assessments</li>
-                  <li className="pl-1">Hazardous materials register</li>
-                  <li className="pl-1">Safe isolation procedures</li>
-                  <li className="pl-1">Access requirements for maintenance</li>
-                  <li className="pl-1">Emergency procedures</li>
-                  <li className="pl-1">Key contact information</li>
-                  <li className="pl-1">Residual risks register</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Handover Documentation Checklist
-              </p>
-              <div className="grid sm:grid-cols-2 gap-2 text-sm text-white">
-                <div>
-                  <p className="font-medium mb-1">Before Practical Completion:</p>
-                  <ul className="space-y-1 list-disc list-outside ml-5">
-                    <li>All test certificates issued</li>
-                    <li>Snagging lists cleared</li>
-                    <li>Building control sign-off</li>
-                    <li>Training completed</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium mb-1">At Handover:</p>
-                  <ul className="space-y-1 list-disc list-outside ml-5">
-                    <li>O&M manuals delivered</li>
-                    <li>As-built drawings issued</li>
-                    <li>Keys and access cards</li>
-                    <li>Warranty documents</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Key certification documents:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Electrical Installation Certificate:</strong> BS 7671 compliance — Competent
+                electrician
+              </li>
+              <li>
+                <strong>HVAC Commissioning Certificate:</strong> System performance verified —
+                Commissioning engineer
+              </li>
+              <li>
+                <strong>Pressure Test Certificate:</strong> Pipework integrity — Mechanical
+                contractor
+              </li>
+              <li>
+                <strong>F-Gas Certificate:</strong> Refrigerant system compliance — F-Gas certified
+                engineer
+              </li>
+              <li>
+                <strong>Fire Alarm Certificate:</strong> BS 5839 compliance — Fire alarm installer
+              </li>
+              <li>
+                <strong>Gas Safe Certificate:</strong> Gas installation safety — Gas Safe registered
+                engineer
+              </li>
+            </ul>
+            <p>
+              <strong>Building Regulations compliance documentation:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Part L:</strong> Energy efficiency calculations, commissioning certificates,
+                EPC
+              </li>
+              <li>
+                <strong>Part F:</strong> Ventilation system commissioning, air flow test results
+              </li>
+              <li>
+                <strong>Part B:</strong> Fire alarm certificates, emergency lighting tests
+              </li>
+              <li>
+                <strong>Part P:</strong> Electrical installation certificates
+              </li>
+              <li>
+                <strong>Part G:</strong> Hot water safety device certification
+              </li>
+            </ul>
+            <p>
+              <strong>O&M manual contents:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>System descriptions and schematics</li>
+              <li>Equipment data sheets</li>
+              <li>Commissioning records and certificates</li>
+              <li>As-built drawings</li>
+              <li>Maintenance schedules</li>
+              <li>Spare parts lists</li>
+              <li>Warranty information</li>
+            </ul>
+            <p>
+              <strong>Health and safety file:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Design risk assessments</li>
+              <li>Hazardous materials register</li>
+              <li>Safe isolation procedures</li>
+              <li>Access requirements for maintenance</li>
+              <li>Emergency procedures</li>
+              <li>Key contact information</li>
+              <li>Residual risks register</li>
+            </ul>
+            <p>
+              <strong>Handover documentation — before practical completion:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>All test certificates issued</li>
+              <li>Snagging lists cleared</li>
+              <li>Building control sign-off</li>
+              <li>Training completed</li>
+            </ul>
+            <p>
+              <strong>At handover:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>O&M manuals delivered</li>
+              <li>As-built drawings issued</li>
+              <li>Keys and access cards</li>
+              <li>Warranty documents</li>
+            </ul>
+            <p>
               <strong>Legal requirement:</strong> Under CDM Regulations, the health and safety file
               must be handed to the client and maintained for the life of the building.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — Electrical testing programme:</strong> Plan the testing programme
+              for a new office building distribution system.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Phase 1 - Pre-energisation:</strong> Visual inspection of all switchgear and
+                cabling
+              </li>
+              <li>Continuity of protective conductors</li>
+              <li>Insulation resistance (all circuits isolated)</li>
+              <li>Polarity checks</li>
+              <li>
+                <strong>Phase 2 - Energisation:</strong> Phase rotation verification
+              </li>
+              <li>Voltage measurements at all distribution boards</li>
+              <li>Earth fault loop impedance</li>
+              <li>RCD functional tests</li>
+              <li>
+                <strong>Phase 3 - Functional:</strong> Protective device discrimination tests
+              </li>
+              <li>Generator changeover tests</li>
+              <li>Emergency lighting duration (3-hour test)</li>
+            </ul>
+            <p>
+              <strong>Example 2 — HVAC acceptance test failure:</strong> An AHU delivers 4,200 l/s
+              against design requirement of 5,000 l/s. How should this be managed?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Shortfall = 5,000 - 4,200 = 800 l/s (16% below design)</li>
+              <li>Acceptance tolerance = ±10% = 4,500 - 5,500 l/s</li>
+              <li>
+                <strong>Result:</strong> FAIL - outside tolerance
+              </li>
+              <li>Check fan running at correct speed</li>
+              <li>Verify filter condition (pressure drop)</li>
+              <li>Check damper positions (fully open)</li>
+              <li>Measure system static pressure</li>
+              <li>Review ductwork for restrictions</li>
+              <li>
+                <strong>Resolution:</strong> Found partially closed fire damper
+              </li>
+              <li>After correction, retest achieved 4,950 l/s = PASS</li>
+            </ul>
+            <p>
+              <strong>Example 3 — Witness test documentation:</strong> Document a witnessed
+              generator load test.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>TEST RECORD:</strong> Generator Load Bank Test
+              </li>
+              <li>Date: 15/01/2026 | Project: Office Block A</li>
+              <li>Equipment: 500kVA standby generator</li>
+              <li>Start within 15 seconds of mains failure</li>
+              <li>Accept 100% load within 10 seconds</li>
+              <li>Maintain voltage ±2.5% at all loads</li>
+              <li>Maintain frequency ±0.5Hz</li>
+              <li>Start time: 11.2 seconds — PASS</li>
+              <li>Load acceptance: 8.5 seconds — PASS</li>
+              <li>Voltage at 100%: 398V (±0.5%) — PASS</li>
+              <li>Frequency at 100%: 50.1Hz — PASS</li>
+              <li>Witnessed by: J. Smith (Client) / M. Jones (Consultant)</li>
+              <li>Tested by: A. Brown (Commissioning Engineer)</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Electrical Testing Programme
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Plan the testing programme for a new office building
-                distribution system.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Phase 1 - Pre-energisation:</strong>
-                </p>
-                <p>• Visual inspection of all switchgear and cabling</p>
-                <p>• Continuity of protective conductors</p>
-                <p>• Insulation resistance (all circuits isolated)</p>
-                <p>• Polarity checks</p>
-                <p className="mt-2">
-                  <strong>Phase 2 - Energisation:</strong>
-                </p>
-                <p>• Phase rotation verification</p>
-                <p>• Voltage measurements at all distribution boards</p>
-                <p>• Earth fault loop impedance</p>
-                <p>• RCD functional tests</p>
-                <p className="mt-2">
-                  <strong>Phase 3 - Functional:</strong>
-                </p>
-                <p>• Protective device discrimination tests</p>
-                <p>• Generator changeover tests</p>
-                <p>• Emergency lighting duration (3-hour test)</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: HVAC Acceptance Test Failure
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> An AHU delivers 4,200 l/s against design requirement of
-                5,000 l/s. How should this be managed?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Analysis:</strong>
-                </p>
-                <p>Shortfall = 5,000 - 4,200 = 800 l/s (16% below design)</p>
-                <p>Acceptance tolerance = ±10% = 4,500 - 5,500 l/s</p>
-                <p>
-                  Result: <span className="text-red-400">FAIL</span> - outside tolerance
-                </p>
-                <p className="mt-2">
-                  <strong>Investigation steps:</strong>
-                </p>
-                <p>1. Check fan running at correct speed</p>
-                <p>2. Verify filter condition (pressure drop)</p>
-                <p>3. Check damper positions (fully open)</p>
-                <p>4. Measure system static pressure</p>
-                <p>5. Review ductwork for restrictions</p>
-                <p className="mt-2">
-                  <strong>Resolution:</strong> Found partially closed fire damper
-                </p>
-                <p>
-                  After correction, retest achieved 4,950 l/s ={' '}
-                  <span className="text-green-400">PASS</span>
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Testing programme checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Review commissioning specification for all test requirements</li>
+              <li>Prepare test procedures and record sheets in advance</li>
+              <li>Verify all test instruments are calibrated and in date</li>
+              <li>Confirm prerequisites are complete before each test</li>
+              <li>Schedule witnessed tests with appropriate notice</li>
+              <li>Document all results, including failures and retests</li>
+            </ul>
+            <p>
+              <strong>Key standards to know:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>BS 7671:</strong> Electrical installation testing
+              </li>
+              <li>
+                <strong>CIBSE Commissioning Codes:</strong> HVAC systems (A, B, C, M, R, W)
+              </li>
+              <li>
+                <strong>BSRIA BG 8:</strong> Model commissioning specification
+              </li>
+              <li>
+                <strong>DW/144:</strong> Ductwork air leakage testing
+              </li>
+              <li>
+                <strong>BS 5839:</strong> Fire detection and alarm systems
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Witness Test Documentation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Document a witnessed generator load test.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>TEST RECORD - Generator Load Bank Test</strong>
-                </p>
-                <p>Date: 15/01/2026 | Project: Office Block A</p>
-                <p>Equipment: 500kVA standby generator</p>
-                <p className="mt-2">
-                  <strong>Test criteria:</strong>
-                </p>
-                <p>• Start within 15 seconds of mains failure</p>
-                <p>• Accept 100% load within 10 seconds</p>
-                <p>• Maintain voltage ±2.5% at all loads</p>
-                <p>• Maintain frequency ±0.5Hz</p>
-                <p className="mt-2">
-                  <strong>Results:</strong>
-                </p>
-                <p>
-                  Start time: 11.2 seconds <span className="text-green-400">✓ PASS</span>
-                </p>
-                <p>
-                  Load acceptance: 8.5 seconds <span className="text-green-400">✓ PASS</span>
-                </p>
-                <p>
-                  Voltage at 100%: 398V (±0.5%) <span className="text-green-400">✓ PASS</span>
-                </p>
-                <p>
-                  Frequency at 100%: 50.1Hz <span className="text-green-400">✓ PASS</span>
-                </p>
-                <p className="mt-2">Witnessed by: J. Smith (Client) / M. Jones (Consultant)</p>
-                <p>Tested by: A. Brown (Commissioning Engineer)</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Testing Programme Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Review commissioning specification for all test requirements
-                </li>
-                <li className="pl-1">Prepare test procedures and record sheets in advance</li>
-                <li className="pl-1">Verify all test instruments are calibrated and in date</li>
-                <li className="pl-1">Confirm prerequisites are complete before each test</li>
-                <li className="pl-1">Schedule witnessed tests with appropriate notice</li>
-                <li className="pl-1">Document all results, including failures and retests</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Standards to Know
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>BS 7671:</strong> Electrical installation testing
-                </li>
-                <li className="pl-1">
-                  <strong>CIBSE Commissioning Codes:</strong> HVAC systems (A, B, C, M, R, W)
-                </li>
-                <li className="pl-1">
-                  <strong>BSRIA BG 8:</strong> Model commissioning specification
-                </li>
-                <li className="pl-1">
-                  <strong>DW/144:</strong> Ductwork air leakage testing
-                </li>
-                <li className="pl-1">
-                  <strong>BS 5839:</strong> Fire detection and alarm systems
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">
-                Common Testing Mistakes to Avoid
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common testing mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Skipping pre-commissioning:</strong> Risks equipment damage and safety
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Vague acceptance criteria:</strong> Leads to disputes at handover
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Incomplete documentation:</strong> Affects building control sign-off
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Out-of-calibration instruments:</strong> Invalidates test results
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Not recording failures:</strong> Loses audit trail for due diligence
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Run every pre-commissioning test before energisation, lock numerical acceptance criteria into the spec, log failures alongside successful retests, and keep instrument calibration certs on file."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Insulation resistance test skipped — fault discovered at energisation"
+            situation={
+              <>
+                At handover, the electrical sub energises a distribution board for the first time. A fault to earth on a circuit causes the upstream RCD to trip immediately. Investigation reveals a damaged cable on a circuit installed two months earlier. The IR test on this DB had been skipped due to time pressure; the schedule of test results was being completed retrospectively.
+              </>
+            }
+            whatToDo={
+              <>
+                De-energise. Locate and rectify the cable damage. Repeat full IR testing on every circuit on the DB. Issue NCR for the skipped test and reconstructed records. Re-brief the test team on the BS 7671 sequence and the requirement for contemporaneous records. Audit other DBs on the project for similar shortcuts. Update the ITP to require sign-off of test results as each circuit is tested, by the operative doing the test — not by office staff after the fact.
+              </>
+            }
+            whyItMatters={
+              <>
+                Testing is the safety-critical verification step. Skipped tests can mean energising onto a fault — risk of injury, fire, equipment damage. Reconstructed test results are also a regulatory and contractual breach: the EIC says the test was carried out in compliance with the regulations; if it was not, the certificate is invalid.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Testing Sequence</p>
-                <ul className="space-y-0.5">
-                  <li>1. Visual inspection</li>
-                  <li>2. Pre-commissioning (dead) tests</li>
-                  <li>3. Energisation/start-up</li>
-                  <li>4. Performance verification</li>
-                  <li>5. Integrated system tests</li>
-                  <li>6. Witnessed tests and sign-off</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Documentation Required</p>
-                <ul className="space-y-0.5">
-                  <li>Test certificates (BS 7671, etc.)</li>
-                  <li>Commissioning records</li>
-                  <li>As-built drawings</li>
-                  <li>O&M manuals</li>
-                  <li>Health and safety file</li>
-                  <li>Warranty documents</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+                    <KeyTakeaways
+            points={[
+              "Testing = measurement against acceptance criteria. Verification = formal compliance confirmation.",
+              "BS 7671 Reg 643.1 sequence: continuity → IR → polarity → Zs → RCD → functional.",
+              "Test instruments calibrated UKAS-traceable; certificates available on site.",
+              "Results recorded contemporaneously on schedule of test results — never reconstructed.",
+              "Acceptance criteria: standard + specification + contract — all three must be met.",
+              "Out-of-sequence testing risks safety incidents and invalid results.",
+              "Test certificates (EIC, EICR, MWC) signed by competent persons.",
+              "Functional testing verifies the system as a whole performs its intended function.",
+            ]}
+          />
+
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Quality Management
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section4-6">
-              Next: Continuous Improvement
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section4')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Quality management
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section4-6')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Defects and snagging
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

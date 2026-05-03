@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 7 · Section 5 · Subsection 2 — Power Factor Correction
+ * HNC Electrical Engineering for Building Services (Power and Lighting Systems)
+ *   Reactive power fundamentals, capacitor bank sizing, automatic PFC systems, and harmonic considerations for industrial installations
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Power Factor Correction - HNC Module 7 Section 5.2';
@@ -217,893 +230,292 @@ const faqs = [
 ];
 
 const HNCModule7Section5_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section5")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module7-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.5.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Power Factor Correction
-          </h1>
-          <p className="text-white">
-            Reactive power fundamentals, capacitor bank sizing, automatic PFC systems, and harmonic
-            considerations for industrial installations
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 7 · Section 5 · Subsection 2"
+            title="Power Factor Correction"
+            description="Reactive power fundamentals, capacitor bank sizing, automatic PFC systems, and harmonic considerations for industrial installations"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Power factor:</strong> Ratio of real power (kW) to apparent power (kVA)
-              </li>
-              <li className="pl-1">
-                <strong>Reactive power:</strong> kVAr - energy oscillating, not doing work
-              </li>
-              <li className="pl-1">
-                <strong>Target PF:</strong> 0.95 lagging minimum for UK industrial
-              </li>
-              <li className="pl-1">
-                <strong>Correction method:</strong> Capacitor banks (fixed or automatic)
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Explain the power triangle and relationship between P, Q, and S",
+              "Calculate reactive power requirements for power factor correction",
+              "Size capacitor banks for fixed and automatic PFC applications",
+              "Specify detuned reactors for harmonic-rich environments",
+              "Apply BS 7671 and BS EN 61921 requirements to PFC installations",
+              "Design protection and control systems for capacitor banks",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Reactive Power Fundamentals">
+            <p>In AC electrical systems, the relationship between voltage and current determines how effectively power is delivered to loads. When current and voltage are in phase, all power delivered does useful work. However, inductive loads such as motors, transformers, and fluorescent lighting cause current to lag behind voltage, creating reactive power.</p>
+            <p><strong>The Power Triangle</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Real power (P):</strong> Measured in kW - power that does useful work (heating, mechanical output)</li>
+              <li><strong>Reactive power (Q):</strong> Measured in kVAr - power oscillating between source and load, establishing magnetic/electric fields</li>
+              <li><strong>Apparent power (S):</strong> Measured in kVA - the vector sum of P and Q, representing total supply demand</li>
+              <li><strong>Power factor (pf):</strong> Dimensionless ratio P/S = cos φ, where φ is the phase angle between voltage and current</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Calculations</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>S = P / pf</strong> (apparent from real power)
-              </li>
-              <li className="pl-1">
-                <strong>Q = P × tan φ</strong> (reactive power)
-              </li>
-              <li className="pl-1">
-                <strong>kVAr = P × (tan φ₁ - tan φ₂)</strong> (capacitor sizing)
-              </li>
-              <li className="pl-1">
-                <strong>
-                  I<sub>c</sub> = kVAr × 1000 / (√3 × V)
-                </strong>{' '}
-                (capacitor current)
-              </li>
+            <p><strong>Power Triangle Relationships</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>S² = P² + Q²:</strong> Pythagorean relationship — Finding any power component</li>
+              <li><strong>pf = P / S = cos φ:</strong> Power factor definition — Determining phase angle</li>
+              <li><strong>Q = P × tan φ:</strong> Reactive from real power — Calculating kVAr demand</li>
+              <li><strong>S = P / pf:</strong> Apparent from real power — Supply sizing calculations</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Why Power Factor Matters</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Supply capacity:</strong> Poor pf means higher kVA demand for the same kW load</li>
+              <li><strong>Cable sizing:</strong> Current increases as pf decreases (I = P / (√3 × V × pf))</li>
+              <li><strong>Transformer loading:</strong> Transformers are rated in kVA, not kW</li>
+              <li><strong>Utility charges:</strong> Reactive power charges apply below 0.95 pf</li>
+              <li><strong>Voltage regulation:</strong> High reactive current causes increased voltage drop</li>
+            </ul>
+            <p><strong>Key principle:</strong> Improving power factor from 0.7 to 0.95 reduces apparent power by 26% - equivalent to increasing supply capacity without infrastructure upgrades.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Explain the power triangle and relationship between P, Q, and S',
-              'Calculate reactive power requirements for power factor correction',
-              'Size capacitor banks for fixed and automatic PFC applications',
-              'Specify detuned reactors for harmonic-rich environments',
-              'Apply BS 7671 and BS EN 61921 requirements to PFC installations',
-              'Design protection and control systems for capacitor banks',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Reactive Power Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Reactive Power Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Capacitor Bank Sizing and Selection">
+            <p>Capacitors provide leading reactive power that cancels the lagging reactive power drawn by inductive loads. Correct sizing ensures the target power factor is achieved without over-correction, which would cause leading power factor and potential problems.</p>
+            <p><strong>Fixed Capacitor Banks</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Suitable for constant loads (large motors)</li>
+              <li>Simple, lower cost installation</li>
+              <li>No control equipment required</li>
+              <li>Risk of over-correction at light loads</li>
+              <li>Often installed at motor terminals</li>
+            </ul>
+            <p><strong>Automatic PFC Banks</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Suited for varying loads (most industrial)</li>
+              <li>Multiple switched capacitor stages</li>
+              <li>Controller maintains target pf</li>
+              <li>Prevents over-correction</li>
+              <li>Typically installed at main switchboard</li>
+            </ul>
+            <p><strong>Capacitor Sizing Calculation</strong></p>
+            <p>Step 1: Determine existing power factor and target</p>
+            <p>Existing pf = 0.75 lagging → φ₁ = cos⁻¹(0.75) = 41.41°</p>
+            <p>Target pf = 0.95 lagging → φ₂ = cos⁻¹(0.95) = 18.19°</p>
+            <p>Step 2: Calculate tangent values</p>
+            <p>tan φ₁ = tan(41.41°) = 0.882</p>
+            <p>tan φ₂ = tan(18.19°) = 0.329</p>
+            <p>Step 3: Calculate required kVAr per kW of load</p>
+            <p>kVAr/kW = tan φ₁ - tan φ₂ = 0.882 - 0.329 = 0.553</p>
+            <p>Step 4: Apply to actual load</p>
+            <p>For 200 kW load: kVAr = 200 × 0.553 =  <span>110.6 kVAr</span></p>
+            <p><strong>Standard Capacitor Bank Ratings</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>5 kVAr:</strong> Small commercial, fine control — Contactor</li>
+              <li><strong>10 kVAr:</strong> Light industrial, retail — Contactor</li>
+              <li><strong>25 kVAr:</strong> Medium industrial — Contactor or thyristor</li>
+              <li><strong>50 kVAr:</strong> Heavy industrial — Contactor or circuit breaker</li>
+              <li><strong>100+ kVAr:</strong> Large industrial, substations — Circuit breaker</li>
+            </ul>
+            <p><strong>Sizing tip:</strong> For automatic PFC, select stage sizes that provide adequate resolution. A 150 kVAr bank might use 6 × 25 kVAr or 5 × 25 kVAr + 5 × 5 kVAr for finer control.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Automatic Power Factor Correction">
+            <p>Automatic PFC systems continuously monitor power factor and switch capacitor stages in or out to maintain the target value. This is essential for installations with varying loads where fixed correction would cause over-correction during light load periods.</p>
+            <p><strong>Automatic PFC Components</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Power factor controller:</strong> Microprocessor unit measuring V, I, and calculating pf continuously</li>
+              <li><strong>Current transformer (CT):</strong> Measures load current for pf calculation (typically 5A secondary)</li>
+              <li><strong>Capacitor stages:</strong> Individual capacitor units with contactors for switching</li>
+              <li><strong>Switching contactors:</strong> Special capacitor-duty contactors with pre-insertion resistors</li>
+              <li><strong>Discharge resistors:</strong> Ensure safe voltage decay when capacitors disconnect</li>
+              <li><strong>Protection devices:</strong> HRC fuses or MCCBs rated for capacitor duty</li>
+            </ul>
+            <p><strong>Controller Operation Sequence</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>1:</strong> Measure voltage and current — Determine load conditions</li>
+              <li><strong>2:</strong> Calculate power factor — Compare with target setpoint</li>
+              <li><strong>3:</strong> Determine correction needed — Calculate kVAr deficit/excess</li>
+              <li><strong>4:</strong> Check discharge time — Ensure capacitor ready for reconnection</li>
+              <li><strong>5:</strong> Switch appropriate stage — Add/remove capacitors</li>
+              <li><strong>6:</strong> Wait settling time — Allow system to stabilise</li>
+            </ul>
+            <p><strong>Contactor Switching</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Pre-insertion resistors limit inrush</li>
+              <li>30-60 second minimum off time</li>
+              <li>Lower cost, proven technology</li>
+              <li>Mechanical wear limits life</li>
+              <li>Suitable for most applications</li>
+            </ul>
+            <p><strong>Thyristor Switching</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Zero-crossing switching eliminates transients</li>
+              <li>Rapid response (&lt;20ms)</li>
+              <li>No mechanical wear</li>
+              <li>Higher cost, requires cooling</li>
+              <li>For fast-changing loads, welders, cranes</li>
+            </ul>
+            <p><strong>CT placement:</strong> The current transformer must be installed on the supply side of the PFC connection point, measuring the total load current including any existing correction.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Harmonic Filters and Detuned Reactors">
+            <p>Modern installations contain significant non-linear loads (VSDs, LED drivers, IT equipment) that generate harmonic currents. Standard capacitors can create dangerous resonance with system inductance, amplifying harmonics and causing capacitor failure. Detuned reactors prevent this by shifting the resonant frequency below harmful harmonics.</p>
+            <p><strong>Warning: Harmonic Resonance</strong></p>
+            <p>When system inductance (transformers, cables) resonates with capacitor banks at a harmonic frequency, currents at that frequency are amplified dramatically. This causes:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Capacitor overheating and premature failure</li>
+              <li>Blown fuses and nuisance tripping</li>
+              <li>Voltage distortion and equipment malfunction</li>
+              <li>Potential fire risk in severe cases</li>
+            </ul>
+            <p><strong>Detuning Reactor Principles</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Series reactor:</strong> Inductor connected in series with each capacitor stage</li>
+              <li><strong>Detuning factor (p):</strong> Expressed as percentage (typically 7%, 5.67%, or 14%)</li>
+              <li><strong>Resonant frequency:</strong> f<sub>r</sub> = 50 / √p (for 7%: f <sub>r</sub> = 189 Hz)</li>
+              <li><strong>Purpose:</strong> Shift resonance below 5th harmonic (250 Hz) to prevent amplification</li>
+            </ul>
+            <p><strong>Detuning Factor Selection</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>5.67%:</strong> 210 Hz — Low harmonic environments (THD &lt;8%)</li>
+              <li><strong>7%:</strong> 189 Hz — Standard industrial (THD 8-15%)</li>
+              <li><strong>14%:</strong> 134 Hz — High harmonic environments (THD &gt;15%)</li>
+            </ul>
+            <p><strong>Detuned vs Active Filters</strong></p>
+            <p><strong>Detuned Reactors</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Prevent resonance only</li>
+              <li>• Do not reduce harmonics</li>
+              <li>• Passive, reliable technology</li>
+              <li>• Lower cost</li>
+            </ul>
+            <p><strong>Active Harmonic Filters</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Actively cancel harmonics</li>
+              <li>• Can provide reactive power</li>
+              <li>• Complex, require maintenance</li>
+              <li>• Higher cost, higher benefit</li>
+            </ul>
+            <p><strong>Survey first:</strong> Always conduct a power quality survey before specifying PFC equipment. Harmonic levels determine whether standard, detuned, or active solutions are required.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              In AC electrical systems, the relationship between voltage and current determines how
-              effectively power is delivered to loads. When current and voltage are in phase, all
-              power delivered does useful work. However, inductive loads such as motors,
-              transformers, and fluorescent lighting cause current to lag behind voltage, creating
-              reactive power.
+              <strong>Example 1: Complete PFC Sizing Calculation</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">The Power Triangle</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Real power (P):</strong> Measured in kW - power that does useful work
-                  (heating, mechanical output)
-                </li>
-                <li className="pl-1">
-                  <strong>Reactive power (Q):</strong> Measured in kVAr - power oscillating between
-                  source and load, establishing magnetic/electric fields
-                </li>
-                <li className="pl-1">
-                  <strong>Apparent power (S):</strong> Measured in kVA - the vector sum of P and Q,
-                  representing total supply demand
-                </li>
-                <li className="pl-1">
-                  <strong>Power factor (pf):</strong> Dimensionless ratio P/S = cos φ, where φ is
-                  the phase angle between voltage and current
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Power Triangle Relationships
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Formula</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">S² = P² + Q²</td>
-                      <td className="border border-white/10 px-3 py-2">Pythagorean relationship</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Finding any power component
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">
-                        pf = P / S = cos φ
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Power factor definition</td>
-                      <td className="border border-white/10 px-3 py-2">Determining phase angle</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">Q = P × tan φ</td>
-                      <td className="border border-white/10 px-3 py-2">Reactive from real power</td>
-                      <td className="border border-white/10 px-3 py-2">Calculating kVAr demand</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">S = P / pf</td>
-                      <td className="border border-white/10 px-3 py-2">Apparent from real power</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Supply sizing calculations
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Why Power Factor Matters</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Supply capacity:</strong> Poor pf means higher kVA demand for the same kW
-                  load
-                </li>
-                <li className="pl-1">
-                  <strong>Cable sizing:</strong> Current increases as pf decreases (I = P / (√3 × V
-                  × pf))
-                </li>
-                <li className="pl-1">
-                  <strong>Transformer loading:</strong> Transformers are rated in kVA, not kW
-                </li>
-                <li className="pl-1">
-                  <strong>Utility charges:</strong> Reactive power charges apply below 0.95 pf
-                </li>
-                <li className="pl-1">
-                  <strong>Voltage regulation:</strong> High reactive current causes increased
-                  voltage drop
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key principle:</strong> Improving power factor from 0.7 to 0.95 reduces
-              apparent power by 26% - equivalent to increasing supply capacity without
-              infrastructure upgrades.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Capacitor Bank Sizing */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Capacitor Bank Sizing and Selection
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> A factory has 300 kW load at 0.72 power factor. Calculate capacitor bank size to achieve 0.95 pf.</p>
+            <p>Given:</p>
+            <p>P = 300 kW, pf₁ = 0.72, pf₂ = 0.95 (target)</p>
+            <p>Step 1: Find phase angles</p>
+            <p>φ₁ = cos⁻¹(0.72) = 43.95°</p>
+            <p>φ₂ = cos⁻¹(0.95) = 18.19°</p>
+            <p>Step 2: Calculate tangent values</p>
+            <p>tan(43.95°) = 0.964</p>
+            <p>tan(18.19°) = 0.329</p>
+            <p>Step 3: Calculate kVAr required</p>
+            <p>kVAr = P × (tan φ₁ - tan φ₂)</p>
+            <p>kVAr = 300 × (0.964 - 0.329)</p>
+            <p>kVAr = 300 × 0.635 = <span>190.5 kVAr</span></p>
+            <p>Step 4: Select bank configuration</p>
+            <p>Option A: 8 × 25 kVAr = 200 kVAr (automatic)</p>
+            <p>Option B: 6 × 25 kVAr + 4 × 10 kVAr = 190 kVAr (finer control)</p>
             <p>
-              Capacitors provide leading reactive power that cancels the lagging reactive power
-              drawn by inductive loads. Correct sizing ensures the target power factor is achieved
-              without over-correction, which would cause leading power factor and potential
-              problems.
+              <strong>Example 2: Financial Payback Analysis</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Fixed Capacitor Banks
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Suitable for constant loads (large motors)</li>
-                  <li className="pl-1">Simple, lower cost installation</li>
-                  <li className="pl-1">No control equipment required</li>
-                  <li className="pl-1">Risk of over-correction at light loads</li>
-                  <li className="pl-1">Often installed at motor terminals</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Automatic PFC Banks</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Suited for varying loads (most industrial)</li>
-                  <li className="pl-1">Multiple switched capacitor stages</li>
-                  <li className="pl-1">Controller maintains target pf</li>
-                  <li className="pl-1">Prevents over-correction</li>
-                  <li className="pl-1">Typically installed at main switchboard</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Capacitor Sizing Calculation
-              </p>
-              <div className="bg-black/30 p-4 rounded text-sm font-mono text-white">
-                <p className="text-white">Step 1: Determine existing power factor and target</p>
-                <p>Existing pf = 0.75 lagging → φ₁ = cos⁻¹(0.75) = 41.41°</p>
-                <p>Target pf = 0.95 lagging → φ₂ = cos⁻¹(0.95) = 18.19°</p>
-                <p className="mt-3 text-white">Step 2: Calculate tangent values</p>
-                <p>tan φ₁ = tan(41.41°) = 0.882</p>
-                <p>tan φ₂ = tan(18.19°) = 0.329</p>
-                <p className="mt-3 text-white">Step 3: Calculate required kVAr per kW of load</p>
-                <p>kVAr/kW = tan φ₁ - tan φ₂ = 0.882 - 0.329 = 0.553</p>
-                <p className="mt-3 text-white">Step 4: Apply to actual load</p>
-                <p>
-                  For 200 kW load: kVAr = 200 × 0.553 ={' '}
-                  <span className="text-green-400">110.6 kVAr</span>
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Standard Capacitor Bank Ratings
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Stage Size</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Switching Method
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5 kVAr</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Small commercial, fine control
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Contactor</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">10 kVAr</td>
-                      <td className="border border-white/10 px-3 py-2">Light industrial, retail</td>
-                      <td className="border border-white/10 px-3 py-2">Contactor</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">25 kVAr</td>
-                      <td className="border border-white/10 px-3 py-2">Medium industrial</td>
-                      <td className="border border-white/10 px-3 py-2">Contactor or thyristor</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">50 kVAr</td>
-                      <td className="border border-white/10 px-3 py-2">Heavy industrial</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Contactor or circuit breaker
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">100+ kVAr</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large industrial, substations
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Circuit breaker</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Sizing tip:</strong> For automatic PFC, select stage sizes that provide
-              adequate resolution. A 150 kVAr bank might use 6 × 25 kVAr or 5 × 25 kVAr + 5 × 5 kVAr
-              for finer control.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Automatic PFC Systems */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Automatic Power Factor Correction
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Calculate annual savings and payback for a 200 kVAr PFC installation.</p>
+            <p>Current situation:</p>
+            <p>Max demand: 500 kVA at 0.75 pf → P = 375 kW</p>
+            <p>kVA charge: £8/kVA/month × 500 kVA = £4,000/month</p>
+            <p>kVAr charge: £0.50/kVAr/month × 331 kVAr = £166/month</p>
+            <p>After PFC (200 kVAr correction):</p>
+            <p>New pf ≈ 0.95, new kVA = 375/0.95 = 395 kVA</p>
+            <p>New kVA charge: £8 × 395 = £3,160/month</p>
+            <p>New kVAr: 331 - 200 = 131 kVAr</p>
+            <p>New kVAr charge: £0.50 × 131 = £66/month (or zero if &gt;0.95)</p>
+            <p>Annual savings:</p>
+            <p>kVA saving: (4,000 - 3,160) × 12 = <span>£10,080</span></p>
+            <p>kVAr saving: (166 - 66) × 12 = <span>£1,200</span></p>
+            <p>Total annual saving: <span>£11,280</span></p>
+            <p>Payback (200 kVAr detuned bank ~£15,000 installed):</p>
+            <p>Payback = £15,000 / £11,280 = <span>1.3 years</span></p>
             <p>
-              Automatic PFC systems continuously monitor power factor and switch capacitor stages in
-              or out to maintain the target value. This is essential for installations with varying
-              loads where fixed correction would cause over-correction during light load periods.
+              <strong>Example 3: Motor Individual Correction</strong>
             </p>
+            <p><strong>Scenario:</strong> Size a fixed capacitor for a 45 kW motor running at 0.82 pf.</p>
+            <p>Motor data:</p>
+            <p>P = 45 kW, pf = 0.82, target pf = 0.95</p>
+            <p>Calculation:</p>
+            <p>φ₁ = cos⁻¹(0.82) = 34.92°, tan φ₁ = 0.698</p>
+            <p>φ₂ = cos⁻¹(0.95) = 18.19°, tan φ₂ = 0.329</p>
+            <p>kVAr = 45 × (0.698 - 0.329) = <span>16.6 kVAr</span></p>
+            <p>Selection:</p>
+            <p>Use standard 15 kVAr capacitor (nearest lower value)</p>
+            <p>Note: Never exceed motor no-load magnetising current</p>
+            <p>or self-excitation can occur during motor run-down</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Automatic PFC Components
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Power factor controller:</strong> Microprocessor unit measuring V, I, and
-                  calculating pf continuously
-                </li>
-                <li className="pl-1">
-                  <strong>Current transformer (CT):</strong> Measures load current for pf
-                  calculation (typically 5A secondary)
-                </li>
-                <li className="pl-1">
-                  <strong>Capacitor stages:</strong> Individual capacitor units with contactors for
-                  switching
-                </li>
-                <li className="pl-1">
-                  <strong>Switching contactors:</strong> Special capacitor-duty contactors with
-                  pre-insertion resistors
-                </li>
-                <li className="pl-1">
-                  <strong>Discharge resistors:</strong> Ensure safe voltage decay when capacitors
-                  disconnect
-                </li>
-                <li className="pl-1">
-                  <strong>Protection devices:</strong> HRC fuses or MCCBs rated for capacitor duty
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Controller Operation Sequence
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Step</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Action</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Measure voltage and current
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Determine load conditions
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2</td>
-                      <td className="border border-white/10 px-3 py-2">Calculate power factor</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Compare with target setpoint
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Determine correction needed
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Calculate kVAr deficit/excess
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4</td>
-                      <td className="border border-white/10 px-3 py-2">Check discharge time</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ensure capacitor ready for reconnection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5</td>
-                      <td className="border border-white/10 px-3 py-2">Switch appropriate stage</td>
-                      <td className="border border-white/10 px-3 py-2">Add/remove capacitors</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6</td>
-                      <td className="border border-white/10 px-3 py-2">Wait settling time</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Allow system to stabilise
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <FAQ items={faqs} />
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Contactor Switching</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Pre-insertion resistors limit inrush</li>
-                  <li className="pl-1">30-60 second minimum off time</li>
-                  <li className="pl-1">Lower cost, proven technology</li>
-                  <li className="pl-1">Mechanical wear limits life</li>
-                  <li className="pl-1">Suitable for most applications</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Thyristor Switching</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Zero-crossing switching eliminates transients</li>
-                  <li className="pl-1">Rapid response (&lt;20ms)</li>
-                  <li className="pl-1">No mechanical wear</li>
-                  <li className="pl-1">Higher cost, requires cooling</li>
-                  <li className="pl-1">For fast-changing loads, welders, cranes</li>
-                </ul>
-              </div>
-            </div>
+          <SectionRule />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>CT placement:</strong> The current transformer must be installed on the supply
-              side of the PFC connection point, measuring the total load current including any
-              existing correction.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Harmonic Considerations and Detuned Systems */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Harmonic Filters and Detuned Reactors
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Modern installations contain significant non-linear loads (VSDs, LED drivers, IT
-              equipment) that generate harmonic currents. Standard capacitors can create dangerous
-              resonance with system inductance, amplifying harmonics and causing capacitor failure.
-              Detuned reactors prevent this by shifting the resonant frequency below harmful
-              harmonics.
-            </p>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Warning: Harmonic Resonance</p>
-              <p className="text-sm text-white">
-                When system inductance (transformers, cables) resonates with capacitor banks at a
-                harmonic frequency, currents at that frequency are amplified dramatically. This
-                causes:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 mt-2">
-                <li className="pl-1">Capacitor overheating and premature failure</li>
-                <li className="pl-1">Blown fuses and nuisance tripping</li>
-                <li className="pl-1">Voltage distortion and equipment malfunction</li>
-                <li className="pl-1">Potential fire risk in severe cases</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Detuning Reactor Principles
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Series reactor:</strong> Inductor connected in series with each capacitor
-                  stage
-                </li>
-                <li className="pl-1">
-                  <strong>Detuning factor (p):</strong> Expressed as percentage (typically 7%,
-                  5.67%, or 14%)
-                </li>
-                <li className="pl-1">
-                  <strong>Resonant frequency:</strong> f<sub>r</sub> = 50 / √p (for 7%: f
-                  <sub>r</sub> = 189 Hz)
-                </li>
-                <li className="pl-1">
-                  <strong>Purpose:</strong> Shift resonance below 5th harmonic (250 Hz) to prevent
-                  amplification
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Detuning Factor Selection
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Detuning %</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Resonant Freq.</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5.67%</td>
-                      <td className="border border-white/10 px-3 py-2">210 Hz</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Low harmonic environments (THD &lt;8%)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">7%</td>
-                      <td className="border border-white/10 px-3 py-2">189 Hz</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Standard industrial (THD 8-15%)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">14%</td>
-                      <td className="border border-white/10 px-3 py-2">134 Hz</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High harmonic environments (THD &gt;15%)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Detuned vs Active Filters</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">Detuned Reactors</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>• Prevent resonance only</li>
-                    <li>• Do not reduce harmonics</li>
-                    <li>• Passive, reliable technology</li>
-                    <li>• Lower cost</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">Active Harmonic Filters</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>• Actively cancel harmonics</li>
-                    <li>• Can provide reactive power</li>
-                    <li>• Complex, require maintenance</li>
-                    <li>• Higher cost, higher benefit</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Survey first:</strong> Always conduct a power quality survey before specifying
-              PFC equipment. Harmonic levels determine whether standard, detuned, or active
-              solutions are required.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Installation Requirements */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Installation Requirements</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BS 7671 Requirements for Capacitor Installations
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Regulation 559.6:</strong> Capacitors must have discharge devices reducing
-                  voltage to 50V or less within 5 minutes
-                </li>
-                <li className="pl-1">
-                  <strong>Regulation 559.7:</strong> Direct connection to motors without intervening
-                  switch permitted only with appropriate precautions
-                </li>
-                <li className="pl-1">
-                  <strong>Cable sizing:</strong> Minimum 1.5 × rated capacitor current (accounting
-                  for harmonics and tolerance)
-                </li>
-                <li className="pl-1">
-                  <strong>Protection:</strong> Suitable for capacitor duty with adequate breaking
-                  capacity for inrush currents
-                </li>
-                <li className="pl-1">
-                  <strong>Isolation:</strong> Capacitors must be capable of isolation for
-                  maintenance
-                </li>
-              </ul>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Protection Device Sizing
-              </h3>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Capacitor rated current calculation:</p>
-                <p>
-                  I<sub>c</sub> = kVAr × 1000 / (√3 × V<sub>L</sub>)
-                </p>
-                <p className="mt-2">For 50 kVAr at 400V:</p>
-                <p>
-                  I<sub>c</sub> = 50,000 / (1.732 × 400) ={' '}
-                  <span className="text-green-400">72.2 A</span>
-                </p>
-                <p className="mt-2 text-white">
-                  Fuse/MCCB rating (1.5 × I<sub>c</sub> minimum):
-                </p>
-                <p>
-                  I<sub>protection</sub> = 1.5 × 72.2 ={' '}
-                  <span className="text-green-400">108 A (use 125A)</span>
-                </p>
-                <p className="mt-2 text-white">
-                  Cable rating (1.5 × I<sub>c</sub> minimum):
-                </p>
-                <p>
-                  I<sub>cable</sub> ≥ 108 A → <span className="text-green-400">35mm² minimum</span>
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Physical Installation Considerations
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Ventilation:</strong> Capacitors generate heat - ensure adequate airflow
-                  or forced cooling
-                </li>
-                <li className="pl-1">
-                  <strong>Ambient temperature:</strong> Derate capacity above 35°C (typically -1%
-                  per °C)
-                </li>
-                <li className="pl-1">
-                  <strong>Clearances:</strong> Maintain manufacturer's specified clearances for heat
-                  dissipation
-                </li>
-                <li className="pl-1">
-                  <strong>Mounting:</strong> Secure mounting to withstand electromagnetic forces
-                  during switching
-                </li>
-                <li className="pl-1">
-                  <strong>Access:</strong> Provide safe access for maintenance and inspection
-                </li>
-                <li className="pl-1">
-                  <strong>Warning labels:</strong> "Caution: Capacitors - may retain charge after
-                  isolation"
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Complete PFC Sizing Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A factory has 300 kW load at 0.72 power factor. Calculate
-                capacitor bank size to achieve 0.95 pf.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Given:</p>
-                <p>P = 300 kW, pf₁ = 0.72, pf₂ = 0.95 (target)</p>
-                <p className="mt-2 text-white">Step 1: Find phase angles</p>
-                <p>φ₁ = cos⁻¹(0.72) = 43.95°</p>
-                <p>φ₂ = cos⁻¹(0.95) = 18.19°</p>
-                <p className="mt-2 text-white">Step 2: Calculate tangent values</p>
-                <p>tan(43.95°) = 0.964</p>
-                <p>tan(18.19°) = 0.329</p>
-                <p className="mt-2 text-white">Step 3: Calculate kVAr required</p>
-                <p>kVAr = P × (tan φ₁ - tan φ₂)</p>
-                <p>kVAr = 300 × (0.964 - 0.329)</p>
-                <p>
-                  kVAr = 300 × 0.635 = <span className="text-green-400">190.5 kVAr</span>
-                </p>
-                <p className="mt-2 text-white">Step 4: Select bank configuration</p>
-                <p>Option A: 8 × 25 kVAr = 200 kVAr (automatic)</p>
-                <p>Option B: 6 × 25 kVAr + 4 × 10 kVAr = 190 kVAr (finer control)</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Financial Payback Analysis
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate annual savings and payback for a 200 kVAr PFC
-                installation.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Current situation:</p>
-                <p>Max demand: 500 kVA at 0.75 pf → P = 375 kW</p>
-                <p>kVA charge: £8/kVA/month × 500 kVA = £4,000/month</p>
-                <p>kVAr charge: £0.50/kVAr/month × 331 kVAr = £166/month</p>
-                <p className="mt-2 text-white">After PFC (200 kVAr correction):</p>
-                <p>New pf ≈ 0.95, new kVA = 375/0.95 = 395 kVA</p>
-                <p>New kVA charge: £8 × 395 = £3,160/month</p>
-                <p>New kVAr: 331 - 200 = 131 kVAr</p>
-                <p>New kVAr charge: £0.50 × 131 = £66/month (or zero if &gt;0.95)</p>
-                <p className="mt-2 text-white">Annual savings:</p>
-                <p>
-                  kVA saving: (4,000 - 3,160) × 12 = <span className="text-green-400">£10,080</span>
-                </p>
-                <p>
-                  kVAr saving: (166 - 66) × 12 = <span className="text-green-400">£1,200</span>
-                </p>
-                <p>
-                  Total annual saving: <span className="text-green-400">£11,280</span>
-                </p>
-                <p className="mt-2 text-white">
-                  Payback (200 kVAr detuned bank ~£15,000 installed):
-                </p>
-                <p>
-                  Payback = £15,000 / £11,280 = <span className="text-green-400">1.3 years</span>
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Motor Individual Correction
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Size a fixed capacitor for a 45 kW motor running at 0.82
-                pf.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Motor data:</p>
-                <p>P = 45 kW, pf = 0.82, target pf = 0.95</p>
-                <p className="mt-2 text-white">Calculation:</p>
-                <p>φ₁ = cos⁻¹(0.82) = 34.92°, tan φ₁ = 0.698</p>
-                <p>φ₂ = cos⁻¹(0.95) = 18.19°, tan φ₂ = 0.329</p>
-                <p>
-                  kVAr = 45 × (0.698 - 0.329) = <span className="text-green-400">16.6 kVAr</span>
-                </p>
-                <p className="mt-2 text-white">Selection:</p>
-                <p>Use standard 15 kVAr capacitor (nearest lower value)</p>
-                <p className="text-yellow-400">
-                  Note: Never exceed motor no-load magnetising current
-                </p>
-                <p>or self-excitation can occur during motor run-down</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Key Formulae</p>
-                <ul className="space-y-0.5 font-mono">
-                  <li>S = P / pf (kVA)</li>
-                  <li>Q = P × tan φ (kVAr)</li>
-                  <li>kVAr = P × (tan φ₁ - tan φ₂)</li>
-                  <li>
-                    I<sub>c</sub> = kVAr × 1000 / (√3 × V)
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Values</p>
-                <ul className="space-y-0.5">
-                  <li>Target pf: 0.95 lagging (UK)</li>
-                  <li>
-                    Cable/fuse: 1.5 × I<sub>c</sub> minimum
-                  </li>
-                  <li>Discharge time: ≤5 minutes to 50V</li>
-                  <li>
-                    7% detuning: f<sub>r</sub> = 189 Hz
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section5-3">
-              Next: Section 5.3
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section5-1")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                LED technology
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section5-3")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Harmonic mitigation
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

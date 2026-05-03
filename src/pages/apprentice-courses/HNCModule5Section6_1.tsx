@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 5 · Section 6 · Subsection 1 — Site Organisation
+ * HNC Electrical Engineering for Building Services (Project Management — Pearson U4004 + BSE PM context)
+ *   Site facilities, welfare, security, access control and temporary services — the operational base on which all delivery sits.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Site Organisation - HNC Module 5 Section 6.1';
@@ -230,848 +247,573 @@ const faqs = [
 ];
 
 const HNCModule5Section6_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section6')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module5-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 5.6.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Site Organisation
-          </h1>
-          <p className="text-white">
-            Site facilities, welfare provisions, security arrangements, access control and temporary
-            services coordination
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 5 · Section 6 · Subsection 1"
+            title="Site Organisation"
+            description="Site facilities, welfare provisions, security arrangements, access control and temporary services coordination."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Principal contractor:</strong> Responsible for welfare and site setup
-              </li>
-              <li className="pl-1">
-                <strong>CDM Schedule 2:</strong> Defines minimum welfare requirements
-              </li>
-              <li className="pl-1">
-                <strong>110V CTE:</strong> Standard for portable tools on site
-              </li>
-              <li className="pl-1">
-                <strong>Access control:</strong> Induction before entry mandatory
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Temporary power:</strong> Transformers, distribution boards, RCDs
-              </li>
-              <li className="pl-1">
-                <strong>Services coordination:</strong> Water, power, data routing
-              </li>
-              <li className="pl-1">
-                <strong>Tool storage:</strong> Secure compound for valuable equipment
-              </li>
-              <li className="pl-1">
-                <strong>Phased handover:</strong> Permanent services take over from temporary
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              "Site organisation = the physical and procedural infrastructure that lets the project be built safely and productively.",
+              "CDM 2015 Schedule 2 minimum welfare: WCs, washing facilities, drinking water, changing/storage, rest facilities — non-negotiable.",
+              "Security: perimeter fencing, access control (signing-in, induction), CCTV, lighting — protect both people and materials.",
+              "Temporary services: power, water, drainage, lighting, heating — sized for the construction phase, not just occupancy.",
+              "Site logistics: lay-down areas, crane positions, deliveries, waste streams — planned in pre-construction.",
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="CDM 2015 — Regulation 13(4)(c) (Duties of a principal contractor)"
+            clause="The principal contractor must consult and engage with workers in matters which may affect their health, safety or welfare; ensure that workers are provided with suitable site induction; and ensure that the necessary welfare facilities are provided in accordance with Schedule 2 throughout the construction phase."
+            meaning={
+              <>
+                CDM 2015 places explicit welfare duties on the principal contractor — Schedule 2 minimums must be in place from the start of work, not "when convenient". Site organisation is therefore a CDM compliance matter, not an operational nicety. HSE inspectors check welfare on every visit.
+              </>
+            }
+            cite="Source: Construction (Design and Management) Regulations 2015 — legislation.gov.uk"
+          />
+
+
+          <LearningOutcomes
+            outcomes={[
               'Plan site compound layout for safe and efficient operations',
               'Specify welfare facilities compliant with CDM 2015 requirements',
               'Design temporary electrical distribution systems for construction',
               'Implement effective security and access control measures',
               'Coordinate temporary services between multiple contractors',
               'Manage material storage and handling logistics',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Site Setup Planning */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Site Setup Planning
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Site Setup Planning">
             <p>
               Effective site organisation begins before construction starts. The principal
               contractor must plan the compound layout, access routes, and temporary services to
               support safe and efficient work throughout the project duration.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Site Setup Planning Sequence:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Pre-construction survey:</strong> Ground conditions, services, access
-                  constraints
-                </li>
-                <li className="pl-1">
-                  <strong>Compound layout design:</strong> Offices, welfare, storage, parking zones
-                </li>
-                <li className="pl-1">
-                  <strong>Traffic management plan:</strong> Vehicle/pedestrian segregation, delivery
-                  routes
-                </li>
-                <li className="pl-1">
-                  <strong>Temporary services specification:</strong> Power, water, drainage,
-                  communications
-                </li>
-                <li className="pl-1">
-                  <strong>Security strategy:</strong> Fencing, CCTV, access control, lighting
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Compound Layout Considerations
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Zone</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Key Requirements
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Positioning</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Site entrance</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Gatehouse, signing-in, wheel wash
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Main road access with visibility
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Offices</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Meeting space, document storage
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Near entrance, overlooking site
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Welfare</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Toilets, canteen, drying room
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Central for all workers, drainage access
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Material storage</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Level ground, secure, weather protection
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Crane/forklift accessible
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Waste management</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Segregated skips, recycling
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Vehicle access for collection
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Site setup planning sequence:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Pre-construction survey:</strong> Ground conditions, services, access
+                constraints
+              </li>
+              <li>
+                <strong>Compound layout design:</strong> Offices, welfare, storage, parking zones
+              </li>
+              <li>
+                <strong>Traffic management plan:</strong> Vehicle/pedestrian segregation, delivery
+                routes
+              </li>
+              <li>
+                <strong>Temporary services specification:</strong> Power, water, drainage,
+                communications
+              </li>
+              <li>
+                <strong>Security strategy:</strong> Fencing, CCTV, access control, lighting
+              </li>
+            </ul>
+            <p>
+              <strong>Compound layout considerations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Site entrance:</strong> Gatehouse, signing-in, wheel wash — Main road access
+                with visibility
+              </li>
+              <li>
+                <strong>Offices:</strong> Meeting space, document storage — Near entrance,
+                overlooking site
+              </li>
+              <li>
+                <strong>Welfare:</strong> Toilets, canteen, drying room — Central for all workers,
+                drainage access
+              </li>
+              <li>
+                <strong>Material storage:</strong> Level ground, secure, weather protection —
+                Crane/forklift accessible
+              </li>
+              <li>
+                <strong>Waste management:</strong> Segregated skips, recycling — Vehicle access for
+                collection
+              </li>
+            </ul>
+            <p>
               <strong>Planning principle:</strong> Site layout should evolve through project phases
               - plan for adaptability as work progresses from groundworks through to fit-out.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Welfare Facilities (CDM Requirements) */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Welfare Facilities (CDM Requirements)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Welfare Facilities (CDM Requirements)">
             <p>
               CDM 2015 Schedule 2 mandates specific welfare provisions for construction sites. The
               principal contractor must ensure adequate facilities are available from day one and
               maintained throughout the project.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                CDM 2015 Schedule 2 - Mandatory Welfare Provisions
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Sanitary conveniences:</strong> Adequate numbers, properly ventilated,
-                  lit, maintained
-                </li>
-                <li className="pl-1">
-                  <strong>Washing facilities:</strong> Hot and cold (or warm) water, soap, towels or
-                  drying
-                </li>
-                <li className="pl-1">
-                  <strong>Drinking water:</strong> Readily accessible, clearly marked, cups provided
-                </li>
-                <li className="pl-1">
-                  <strong>Changing/storage:</strong> Secure lockers for clothing and personal
-                  effects
-                </li>
-                <li className="pl-1">
-                  <strong>Rest facilities:</strong> Shelter, seating, means to heat food, boil water
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Welfare Provision Ratios
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Number of Workers
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">WCs</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Wash Stations</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1-5</td>
-                      <td className="border border-white/10 px-3 py-2">1</td>
-                      <td className="border border-white/10 px-3 py-2">1</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6-25</td>
-                      <td className="border border-white/10 px-3 py-2">2</td>
-                      <td className="border border-white/10 px-3 py-2">2</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">26-50</td>
-                      <td className="border border-white/10 px-3 py-2">3</td>
-                      <td className="border border-white/10 px-3 py-2">3</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">51-75</td>
-                      <td className="border border-white/10 px-3 py-2">4</td>
-                      <td className="border border-white/10 px-3 py-2">4</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">76-100</td>
-                      <td className="border border-white/10 px-3 py-2">5</td>
-                      <td className="border border-white/10 px-3 py-2">5</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-2">
-                Note: Additional facilities may be required for mixed-gender workforces
-              </p>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Rest Facilities Must Include
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Adequate seating with backs</li>
-                  <li className="pl-1">Tables for eating</li>
-                  <li className="pl-1">Means to heat food (microwave)</li>
-                  <li className="pl-1">Boiling water for hot drinks</li>
-                  <li className="pl-1">Heating in cold weather</li>
-                  <li className="pl-1">Protection from tobacco smoke</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Additional Considerations
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Drying room for wet clothing</li>
-                  <li className="pl-1">Separate facilities for women</li>
-                  <li className="pl-1">Accessible facilities (disabled)</li>
-                  <li className="pl-1">First aid room for larger sites</li>
-                  <li className="pl-1">Cleaning regime and supplies</li>
-                  <li className="pl-1">Waste disposal arrangements</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>CDM 2015 Schedule 2 — mandatory welfare provisions:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Sanitary conveniences:</strong> Adequate numbers, properly ventilated, lit,
+                maintained
+              </li>
+              <li>
+                <strong>Washing facilities:</strong> Hot and cold (or warm) water, soap, towels or
+                drying
+              </li>
+              <li>
+                <strong>Drinking water:</strong> Readily accessible, clearly marked, cups provided
+              </li>
+              <li>
+                <strong>Changing/storage:</strong> Secure lockers for clothing and personal effects
+              </li>
+              <li>
+                <strong>Rest facilities:</strong> Shelter, seating, means to heat food, boil water
+              </li>
+            </ul>
+            <p>
+              <strong>Welfare provision ratios:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>1-5 workers:</strong> 1 WC, 1 wash station
+              </li>
+              <li>
+                <strong>6-25 workers:</strong> 2 WCs, 2 wash stations
+              </li>
+              <li>
+                <strong>26-50 workers:</strong> 3 WCs, 3 wash stations
+              </li>
+              <li>
+                <strong>51-75 workers:</strong> 4 WCs, 4 wash stations
+              </li>
+              <li>
+                <strong>76-100 workers:</strong> 5 WCs, 5 wash stations
+              </li>
+              <li>Note: Additional facilities may be required for mixed-gender workforces</li>
+            </ul>
+            <p>
+              <strong>Rest facilities must include:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Adequate seating with backs</li>
+              <li>Tables for eating</li>
+              <li>Means to heat food (microwave)</li>
+              <li>Boiling water for hot drinks</li>
+              <li>Heating in cold weather</li>
+              <li>Protection from tobacco smoke</li>
+            </ul>
+            <p>
+              <strong>Additional considerations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Drying room for wet clothing</li>
+              <li>Separate facilities for women</li>
+              <li>Accessible facilities (disabled)</li>
+              <li>First aid room for larger sites</li>
+              <li>Cleaning regime and supplies</li>
+              <li>Waste disposal arrangements</li>
+            </ul>
+            <p>
               <strong>Compliance tip:</strong> Document welfare provision in the construction phase
               plan and conduct regular inspections to maintain standards.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 3: Security and Access Control */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Security and Access Control
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Security and Access Control">
             <p>
               Construction sites present security challenges from theft, vandalism, and unauthorised
               access. Effective security protects workers, the public, and valuable materials and
               equipment.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Security Measures</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Measure</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Specification</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Perimeter fencing</td>
-                      <td className="border border-white/10 px-3 py-2">2.0m minimum, anti-climb</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Prevent unauthorised entry
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Security lighting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Motion-activated, full perimeter
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Deter intruders, CCTV effectiveness
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CCTV</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        IP cameras, remote monitoring
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Surveillance, incident evidence
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Intruder alarms</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Monitored, compound and stores
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Alert security/response</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Secure containers</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heavy-duty locks, ground anchors
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Protect valuable tools/materials
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Access Control Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Site induction:</strong> Mandatory before any access, covers hazards,
-                  rules, emergency procedures
-                </li>
-                <li className="pl-1">
-                  <strong>Identity verification:</strong> Check CSCS/ECS cards, photo ID, right to
-                  work
-                </li>
-                <li className="pl-1">
-                  <strong>Sign-in/out system:</strong> Electronic or manual register for fire
-                  evacuation roll call
-                </li>
-                <li className="pl-1">
-                  <strong>Visitor management:</strong> Escorted access, visitor PPE, limited areas
-                </li>
-                <li className="pl-1">
-                  <strong>Vehicle control:</strong> Delivery booking system, authorised drivers only
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Induction Content (Minimum)
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Site-specific hazards</li>
-                  <li className="pl-1">Emergency procedures and assembly</li>
-                  <li className="pl-1">First aid arrangements</li>
-                  <li className="pl-1">PPE requirements</li>
-                </ul>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Prohibited areas/activities</li>
-                  <li className="pl-1">Reporting procedures</li>
-                  <li className="pl-1">Welfare facilities location</li>
-                  <li className="pl-1">Working hours and access times</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Security measures:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Perimeter fencing:</strong> 2.0m minimum, anti-climb — Prevent unauthorised
+                entry
+              </li>
+              <li>
+                <strong>Security lighting:</strong> Motion-activated, full perimeter — Deter
+                intruders, CCTV effectiveness
+              </li>
+              <li>
+                <strong>CCTV:</strong> IP cameras, remote monitoring — Surveillance, incident
+                evidence
+              </li>
+              <li>
+                <strong>Intruder alarms:</strong> Monitored, compound and stores — Alert
+                security/response
+              </li>
+              <li>
+                <strong>Secure containers:</strong> Heavy-duty locks, ground anchors — Protect
+                valuable tools/materials
+              </li>
+            </ul>
+            <p>
+              <strong>Access control requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Site induction:</strong> Mandatory before any access, covers hazards, rules,
+                emergency procedures
+              </li>
+              <li>
+                <strong>Identity verification:</strong> Check CSCS/ECS cards, photo ID, right to work
+              </li>
+              <li>
+                <strong>Sign-in/out system:</strong> Electronic or manual register for fire
+                evacuation roll call
+              </li>
+              <li>
+                <strong>Visitor management:</strong> Escorted access, visitor PPE, limited areas
+              </li>
+              <li>
+                <strong>Vehicle control:</strong> Delivery booking system, authorised drivers only
+              </li>
+            </ul>
+            <p>
+              <strong>Induction content (minimum):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Site-specific hazards</li>
+              <li>Emergency procedures and assembly</li>
+              <li>First aid arrangements</li>
+              <li>PPE requirements</li>
+              <li>Prohibited areas/activities</li>
+              <li>Reporting procedures</li>
+              <li>Welfare facilities location</li>
+              <li>Working hours and access times</li>
+            </ul>
+            <p>
               <strong>Best practice:</strong> Use electronic access control cards that integrate
               with time recording and automatically prevent access for workers with expired
               inductions.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 4: Temporary Services Coordination */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Temporary Services Coordination
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Temporary Services Coordination">
             <p>
               Temporary electrical supplies, water, and other services are critical infrastructure
               for construction operations. The building services contractor often leads this
               coordination given their technical expertise.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Temporary Electrical Installation Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>110V CTE:</strong> Standard for all portable hand tools (55V to earth)
-                </li>
-                <li className="pl-1">
-                  <strong>RCD protection:</strong> 30mA on all socket circuits, time-delay on
-                  upstream
-                </li>
-                <li className="pl-1">
-                  <strong>IP rating:</strong> Minimum IP44 for outdoor distribution boards
-                </li>
-                <li className="pl-1">
-                  <strong>Inspection:</strong> Initial certification, 3-monthly periodic inspection
-                </li>
-                <li className="pl-1">
-                  <strong>PAT testing:</strong> All portable equipment before first use, then
-                  3-monthly
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Temporary Power Distribution Layout
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Equipment</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Rating</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Location</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Site transformer (110V)</td>
-                      <td className="border border-white/10 px-3 py-2">5-10 kVA per work area</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Central to work activities
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Main distribution board</td>
-                      <td className="border border-white/10 px-3 py-2">100-200A three-phase</td>
-                      <td className="border border-white/10 px-3 py-2">Near DNO supply point</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Sub-distribution</td>
-                      <td className="border border-white/10 px-3 py-2">32-63A per floor/zone</td>
-                      <td className="border border-white/10 px-3 py-2">Each working level</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Tower/task lighting</td>
-                      <td className="border border-white/10 px-3 py-2">LED, 110V or SELV</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Work areas, access routes
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Temporary Water Supply
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Mains connection or bowser tanks</li>
-                  <li className="pl-1">Potable water clearly marked</li>
-                  <li className="pl-1">Hose points for dust suppression</li>
-                  <li className="pl-1">Protection from freezing</li>
-                  <li className="pl-1">Regular testing if from bowser</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Storage Areas</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Segregated by trade/material type</li>
-                  <li className="pl-1">Weather protection for moisture-sensitive</li>
-                  <li className="pl-1">COSHH store for hazardous substances</li>
-                  <li className="pl-1">Cylinder storage (gases) ventilated</li>
-                  <li className="pl-1">Cable drum storage area</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Coordination Responsibilities
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Principal contractor:</strong> Overall temporary services strategy, main
-                  supplies
-                </li>
-                <li className="pl-1">
-                  <strong>Building services contractor:</strong> Distribution design, installation,
-                  maintenance
-                </li>
-                <li className="pl-1">
-                  <strong>Individual contractors:</strong> Comply with connection rules, report
-                  faults
-                </li>
-                <li className="pl-1">
-                  <strong>Coordination meetings:</strong> Weekly review of capacity, routing, phased
-                  handover
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Temporary electrical installation requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>110V CTE:</strong> Standard for all portable hand tools (55V to earth)
+              </li>
+              <li>
+                <strong>RCD protection:</strong> 30mA on all socket circuits, time-delay on upstream
+              </li>
+              <li>
+                <strong>IP rating:</strong> Minimum IP44 for outdoor distribution boards
+              </li>
+              <li>
+                <strong>Inspection:</strong> Initial certification, 3-monthly periodic inspection
+              </li>
+              <li>
+                <strong>PAT testing:</strong> All portable equipment before first use, then 3-monthly
+              </li>
+            </ul>
+            <p>
+              <strong>Temporary power distribution layout:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Site transformer (110V):</strong> 5-10 kVA per work area — Central to work
+                activities
+              </li>
+              <li>
+                <strong>Main distribution board:</strong> 100-200A three-phase — Near DNO supply
+                point
+              </li>
+              <li>
+                <strong>Sub-distribution:</strong> 32-63A per floor/zone — Each working level
+              </li>
+              <li>
+                <strong>Tower/task lighting:</strong> LED, 110V or SELV — Work areas, access routes
+              </li>
+            </ul>
+            <p>
+              <strong>Temporary water supply:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Mains connection or bowser tanks</li>
+              <li>Potable water clearly marked</li>
+              <li>Hose points for dust suppression</li>
+              <li>Protection from freezing</li>
+              <li>Regular testing if from bowser</li>
+            </ul>
+            <p>
+              <strong>Storage areas:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Segregated by trade/material type</li>
+              <li>Weather protection for moisture-sensitive</li>
+              <li>COSHH store for hazardous substances</li>
+              <li>Cylinder storage (gases) ventilated</li>
+              <li>Cable drum storage area</li>
+            </ul>
+            <p>
+              <strong>Coordination responsibilities:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Principal contractor:</strong> Overall temporary services strategy, main
+                supplies
+              </li>
+              <li>
+                <strong>Building services contractor:</strong> Distribution design, installation,
+                maintenance
+              </li>
+              <li>
+                <strong>Individual contractors:</strong> Comply with connection rules, report faults
+              </li>
+              <li>
+                <strong>Coordination meetings:</strong> Weekly review of capacity, routing, phased
+                handover
+              </li>
+            </ul>
+            <p>
               <strong>Handover planning:</strong> As permanent electrical and mechanical services
               are commissioned, plan phased transfer from temporary supplies. Maintain temporary
               backup until permanent systems proven reliable.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — Welfare provision calculation:</strong> A construction site has
+              peak workforce of 85 workers. What welfare facilities are required?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Using CDM Schedule 2 ratios for 76-100 workers:</li>
+              <li>
+                Toilets: <strong>5 minimum</strong>
+              </li>
+              <li>
+                Wash stations: <strong>5 minimum</strong>
+              </li>
+              <li>Rest area seating for 85 (typically provide for 50% = 43 seats minimum)</li>
+              <li>Drinking water points - minimum 2 locations</li>
+              <li>Changing/locker facilities for 85 workers</li>
+              <li>Also consider: drying room, separate female facilities if mixed workforce</li>
+            </ul>
+            <p>
+              <strong>Example 2 — Temporary power sizing:</strong> Estimate temporary power
+              requirement for fit-out phase with 20 electricians and 15 mechanical fitters working
+              across 4 floors.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Power tools: 1.5kW average, 3kW peak</li>
+              <li>Task lighting: 0.5kW per work area</li>
+              <li>35 workers × 1.5kW = 52.5kW average connected</li>
+              <li>
+                Apply diversity (0.4): 52.5 × 0.4 = <strong>21kW typical demand</strong>
+              </li>
+              <li>Plus site lighting: 4 floors × 2kW = 8kW</li>
+              <li>Plus welfare: 15kW (heating, water heating, canteen)</li>
+              <li>
+                Total: 21 + 8 + 15 = <strong>44kW</strong>
+              </li>
+              <li>Provision: 63A three-phase supply (44kVA at 0.8 PF = 55kVA)</li>
+              <li>4× 5kVA 110V transformers (one per floor)</li>
+            </ul>
+            <p>
+              <strong>Example 3 — Security assessment:</strong> A city centre site has high-value
+              M&E equipment arriving for installation. What security measures are appropriate?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Urban location: higher theft risk</li>
+              <li>High-value equipment: attractive target</li>
+              <li>City centre: public access nearby</li>
+              <li>1. Solid hoarding (2.4m) replacing mesh fencing</li>
+              <li>2. 24-hour manned security during equipment delivery phase</li>
+              <li>3. CCTV with remote monitoring and recording</li>
+              <li>4. Secure internal compound for high-value items</li>
+              <li>5. Just-in-time delivery to minimise storage time</li>
+              <li>6. Asset tracking tags on major equipment</li>
+              <li>
+                Consider: coordinated delivery with immediate installation to avoid overnight
+                storage
+              </li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Welfare Provision Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A construction site has peak workforce of 85 workers.
-                What welfare facilities are required?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Using CDM Schedule 2 ratios for 76-100 workers:</p>
-                <p className="mt-2">
-                  Toilets: <strong>5 minimum</strong>
-                </p>
-                <p>
-                  Wash stations: <strong>5 minimum</strong>
-                </p>
-                <p className="mt-2">Additional requirements:</p>
-                <p>- Rest area seating for 85 (typically provide for 50% = 43 seats minimum)</p>
-                <p>- Drinking water points - minimum 2 locations</p>
-                <p>- Changing/locker facilities for 85 workers</p>
-                <p className="mt-2 text-green-400">
-                  Also consider: drying room, separate female facilities if mixed workforce
-                </p>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Temporary Power Sizing
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Estimate temporary power requirement for fit-out phase
-                with 20 electricians and 15 mechanical fitters working across 4 floors.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Typical tool loads per trade worker:</p>
-                <p>- Power tools: 1.5kW average, 3kW peak</p>
-                <p>- Task lighting: 0.5kW per work area</p>
-                <p className="mt-2">Calculation:</p>
-                <p>35 workers × 1.5kW = 52.5kW average connected</p>
-                <p>
-                  Apply diversity (0.4): 52.5 × 0.4 = <strong>21kW typical demand</strong>
-                </p>
-                <p className="mt-2">Plus site lighting: 4 floors × 2kW = 8kW</p>
-                <p>Plus welfare: 15kW (heating, water heating, canteen)</p>
-                <p className="mt-2">
-                  Total: 21 + 8 + 15 = <strong>44kW</strong>
-                </p>
-                <p className="mt-2 text-green-400">
-                  Provision: 63A three-phase supply (44kVA at 0.8 PF = 55kVA)
-                </p>
-                <p className="text-green-400">4× 5kVA 110V transformers (one per floor)</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Security Assessment
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A city centre site has high-value M&E equipment arriving
-                for installation. What security measures are appropriate?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Risk factors:</p>
-                <p>- Urban location: higher theft risk</p>
-                <p>- High-value equipment: attractive target</p>
-                <p>- City centre: public access nearby</p>
-                <p className="mt-2">Recommended measures:</p>
-                <p>1. Solid hoarding (2.4m) replacing mesh fencing</p>
-                <p>2. 24-hour manned security during equipment delivery phase</p>
-                <p>3. CCTV with remote monitoring and recording</p>
-                <p>4. Secure internal compound for high-value items</p>
-                <p>5. Just-in-time delivery to minimise storage time</p>
-                <p>6. Asset tracking tags on major equipment</p>
-                <p className="mt-2 text-green-400">
-                  Consider: coordinated delivery with immediate installation to avoid overnight
-                  storage
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Site setup checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Perimeter secured with appropriate fencing/hoarding</li>
+              <li>Welfare facilities in place and operational</li>
+              <li>Temporary power connected and distribution installed</li>
+              <li>Water supply available (potable and construction use)</li>
+              <li>Access control and induction system ready</li>
+              <li>Emergency procedures posted and assembly point marked</li>
+              <li>First aid provision in place</li>
+              <li>Waste management arrangements operational</li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Security fencing: <strong>2.0m minimum height</strong>
+              </li>
+              <li>
+                Portable tool voltage: <strong>110V CTE</strong>
+              </li>
+              <li>
+                Welfare lighting: <strong>150 lux minimum</strong>
+              </li>
+              <li>
+                Distribution board IP rating: <strong>IP44 minimum outdoor</strong>
+              </li>
+              <li>
+                RCD rating: <strong>30mA, 40ms</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Site Setup Checklist</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Perimeter secured with appropriate fencing/hoarding</li>
-                <li className="pl-1">Welfare facilities in place and operational</li>
-                <li className="pl-1">Temporary power connected and distribution installed</li>
-                <li className="pl-1">Water supply available (potable and construction use)</li>
-                <li className="pl-1">Access control and induction system ready</li>
-                <li className="pl-1">Emergency procedures posted and assembly point marked</li>
-                <li className="pl-1">First aid provision in place</li>
-                <li className="pl-1">Waste management arrangements operational</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Security fencing: <strong>2.0m minimum height</strong>
-                </li>
-                <li className="pl-1">
-                  Portable tool voltage: <strong>110V CTE</strong>
-                </li>
-                <li className="pl-1">
-                  Welfare lighting: <strong>150 lux minimum</strong>
-                </li>
-                <li className="pl-1">
-                  Distribution board IP rating: <strong>IP44 minimum outdoor</strong>
-                </li>
-                <li className="pl-1">
-                  RCD rating: <strong>30mA, 40ms</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Insufficient welfare:</strong> Calculate for peak workforce, not average
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Poor transformer positioning:</strong> Leads to excessive cable runs and
                   voltage drop
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring phased requirements:</strong> Site layout must adapt through
                   project
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Inadequate records:</strong> Maintain inspection logs for temporary
                   installations
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Late handover planning:</strong> Plan permanent services takeover early
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Size welfare for peak workforce, position transformers central to demand, refresh layout each project phase, log every 3-monthly inspection, and design the temporary-to-permanent transition into the programme from day one."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="HSE prohibition notice over inadequate welfare"
+            situation={
+              <>
+                An MEP refurbishment of an occupied office. The contractor is using two portable toilets shared with the existing building's cleaners; no dedicated welfare cabin; nowhere to dry wet PPE; nowhere to eat. After a worker complaint, HSE visits. The inspector issues a prohibition notice: works to stop until CDM Schedule 2 welfare is provided. Two-week stoppage; reputational damage with client.
+              </>
+            }
+            whatToDo={
+              <>
+                Welfare is mobilisation Day 1, not Week 4. Engage early with the client about welfare cabin location, drainage and power. If the building is occupied and external space limited, lease a remote welfare cabin and provide transport. Brief subcontractors that they cannot start without the welfare facilities being in place. Use the Construction Phase Plan to formalise the welfare arrangement — HSE inspectors read this on first visit.
+              </>
+            }
+            whyItMatters={
+              <>
+                Welfare is both a legal duty and a productivity issue. Operatives without proper facilities lose time, develop health issues, and leave the site for the wrong reasons. CDM enforcement on welfare is increasingly active — a prohibition notice carries reputational and commercial consequences far beyond the cost of the cabin.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Welfare (CDM Schedule 2)</p>
-                <ul className="space-y-0.5">
-                  <li>Toilets, washing, drinking water</li>
-                  <li>Changing rooms and lockers</li>
-                  <li>Rest area with heating and seating</li>
-                  <li>Means to heat food, boil water</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Temporary Electrical</p>
-                <ul className="space-y-0.5">
-                  <li>110V CTE for portable tools</li>
-                  <li>30mA RCD protection on sockets</li>
-                  <li>IP44 minimum for outdoor DBs</li>
-                  <li>3-monthly periodic inspection</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+                    <KeyTakeaways
+            points={[
+              "Site organisation = physical and procedural infrastructure for safe, productive delivery.",
+              "CDM 2015 Schedule 2 welfare minimums: WCs, washing, drinking water, changing, rest.",
+              "Security: perimeter, access control, CCTV, lighting.",
+              "Temporary services sized for construction phase, not occupancy.",
+              "Site logistics: lay-down, cranes, deliveries, waste streams — planned in pre-construction.",
+              "Welfare from Day 1 — not \"when convenient\". HSE inspects on every visit.",
+              "Construction Phase Plan documents site organisation — legally required under CDM Reg 12.",
+              "Site signage, induction process, visitor protocol — first impressions of project safety culture.",
+            ]}
+          />
+
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section6-2">
-              Next: CDM Regulations
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section6')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Site management and CDM
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section6-2')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Progress monitoring
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 5 · Section 6 · Subsection 4 — CDM Site Compliance
+ * HNC Electrical Engineering for Building Services (Project Management — Pearson U4004 + BSE PM context)
+ *   Construction Phase Plan, site induction, toolbox talks and CDM 2015 site-level compliance — the principal contractor’s daily duties.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'CDM Site Compliance - HNC Module 5 Section 6.4';
@@ -250,908 +267,589 @@ const faqs = [
 ];
 
 const HNCModule5Section6_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section6')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module5-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 5.6.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            CDM Site Compliance
-          </h1>
-          <p className="text-white">
-            Construction phase plan requirements, site inductions, toolbox talks and CDM 2015
-            compliance procedures
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 5 · Section 6 · Subsection 4"
+            title="CDM Site Compliance"
+            description="Construction phase plan requirements, site inductions, toolbox talks and CDM 2015 compliance procedures."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>CDM 2015:</strong> Key regulation for construction H&S management
-              </li>
-              <li className="pl-1">
-                <strong>Construction phase plan:</strong> Required before work starts
-              </li>
-              <li className="pl-1">
-                <strong>Site induction:</strong> Mandatory for all workers
-              </li>
-              <li className="pl-1">
-                <strong>RAMS:</strong> Activity-specific risk control documents
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Coordination:</strong> Must integrate with other trades
-              </li>
-              <li className="pl-1">
-                <strong>Live working:</strong> Specific RAMS required
-              </li>
-              <li className="pl-1">
-                <strong>Work at height:</strong> Common on M&E installations
-              </li>
-              <li className="pl-1">
-                <strong>Permit systems:</strong> Hot works, isolation procedures
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              "CDM 2015 places duties on client, principal designer, principal contractor, designers, contractors and workers — all live during construction.",
+              "Construction Phase Plan (CPP): site-specific, updated as work progresses, available on site — Reg 12 obligation on principal contractor.",
+              "Site induction mandatory before any operative starts work — covers site rules, hazards, welfare, emergency, contacts.",
+              "Toolbox talks weekly minimum: site-specific risks, recent incidents, upcoming high-risk work, safety topics.",
+              "F10 notification (HSE) required for projects exceeding 30 days/500 person-days — client duty (often discharged by PD or PC).",
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="CDM 2015 — Regulation 12(1) (Construction phase plan and health and safety file)"
+            clause="The principal contractor must draw up a construction phase plan, or make arrangements for a construction phase plan to be drawn up, as soon as is practicable prior to setting up a construction site."
+            meaning={
+              <>
+                The CPP is the principal contractor's primary CDM site deliverable. It must be in place before site set-up — not after, not "in development". HSE inspectors ask for the CPP on first visit; absence is a Reg 12 breach. The CPP is also the operational document referenced by site management daily.
+              </>
+            }
+            cite="Source: Construction (Design and Management) Regulations 2015 — legislation.gov.uk"
+          />
+
+
+          <LearningOutcomes
+            outcomes={[
               'Identify CDM 2015 dutyholders and their responsibilities',
               'Understand construction phase plan content requirements',
               'Deliver effective site inductions for building services work',
               'Plan and conduct toolbox talks for electrical teams',
               'Prepare compliant RAMS for building services activities',
               'Apply F10 notification requirements correctly',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: CDM 2015 Dutyholders */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            CDM 2015 Dutyholders and Responsibilities
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="CDM 2015 Dutyholders and Responsibilities">
             <p>
               The Construction (Design and Management) Regulations 2015 establish a framework of
               dutyholders with specific health and safety responsibilities throughout the project
               lifecycle. Understanding these roles is essential for building services contractors
               working on construction projects.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key CDM 2015 Dutyholders:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Client:</strong> Makes suitable arrangements for managing the project and
-                  ensures dutyholders are appointed
-                </li>
-                <li className="pl-1">
-                  <strong>Principal designer:</strong> Plans, manages and coordinates health and
-                  safety during pre-construction phase
-                </li>
-                <li className="pl-1">
-                  <strong>Principal contractor:</strong> Plans, manages and coordinates health and
-                  safety during construction phase
-                </li>
-                <li className="pl-1">
-                  <strong>Designers:</strong> Eliminate, reduce or control foreseeable risks through
-                  design decisions
-                </li>
-                <li className="pl-1">
-                  <strong>Contractors:</strong> Plan, manage and monitor their own work and workers
-                </li>
-                <li className="pl-1">
-                  <strong>Workers:</strong> Cooperate with others and report unsafe conditions
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Principal Contractor Duties (Key for Site Compliance)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Duty</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Practical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Prepare construction phase plan
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Document site rules, emergency procedures, high-risk work controls
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Organise cooperation between contractors
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Coordination meetings, shared access arrangements, sequencing
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ensure site induction provided
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        All workers inducted before starting work
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Prevent unauthorised access
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Site security, fencing, sign-in procedures
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Provide welfare facilities
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Toilets, washing, rest areas, drinking water
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Consult and engage workers
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Toolbox talks, safety committees, feedback mechanisms
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">F10 Notification Requirements</p>
-              <p className="text-sm text-white mb-2">
-                An F10 notification must be submitted to the HSE{' '}
-                <strong>before construction begins</strong> when:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Work will last longer than 30 working days AND have more than 20 workers at any
-                  one time, OR
-                </li>
-                <li className="pl-1">Work will exceed 500 person-days</li>
-              </ul>
-              <p className="text-sm text-white mt-2">
+            <p>
+              <strong>Key CDM 2015 dutyholders:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Client:</strong> Makes suitable arrangements for managing the project and
+                ensures dutyholders are appointed
+              </li>
+              <li>
+                <strong>Principal designer:</strong> Plans, manages and coordinates health and
+                safety during pre-construction phase
+              </li>
+              <li>
+                <strong>Principal contractor:</strong> Plans, manages and coordinates health and
+                safety during construction phase
+              </li>
+              <li>
+                <strong>Designers:</strong> Eliminate, reduce or control foreseeable risks through
+                design decisions
+              </li>
+              <li>
+                <strong>Contractors:</strong> Plan, manage and monitor their own work and workers
+              </li>
+              <li>
+                <strong>Workers:</strong> Cooperate with others and report unsafe conditions
+              </li>
+            </ul>
+            <p>
+              <strong>Principal contractor duties (key for site compliance):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Prepare construction phase plan:</strong> Document site rules, emergency
+                procedures, high-risk work controls
+              </li>
+              <li>
+                <strong>Organise cooperation between contractors:</strong> Coordination meetings,
+                shared access arrangements, sequencing
+              </li>
+              <li>
+                <strong>Ensure site induction provided:</strong> All workers inducted before
+                starting work
+              </li>
+              <li>
+                <strong>Prevent unauthorised access:</strong> Site security, fencing, sign-in
+                procedures
+              </li>
+              <li>
+                <strong>Provide welfare facilities:</strong> Toilets, washing, rest areas, drinking
+                water
+              </li>
+              <li>
+                <strong>Consult and engage workers:</strong> Toolbox talks, safety committees,
+                feedback mechanisms
+              </li>
+            </ul>
+            <p>
+              <strong>F10 notification requirements:</strong> An F10 notification must be submitted
+              to the HSE before construction begins when:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Work will last longer than 30 working days AND have more than 20 workers at any one
+                time, OR
+              </li>
+              <li>Work will exceed 500 person-days</li>
+              <li>
                 The F10 must be displayed prominently on site and contains project details, client
                 information, and dutyholder appointments.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+              </li>
+            </ul>
+            <p>
               <strong>Building services context:</strong> As a subcontractor, you are classified as
               a 'contractor' under CDM 2015 and must comply with the principal contractor's site
               rules and construction phase plan.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Construction Phase Plan */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Construction Phase Plan Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Construction Phase Plan Requirements">
             <p>
               The construction phase plan is the cornerstone document for site health and safety
               management. It must be prepared by the principal contractor before the construction
               phase begins and developed throughout the project as circumstances change.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Management Arrangements
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Project description and scope</li>
-                  <li className="pl-1">Management structure and responsibilities</li>
-                  <li className="pl-1">Communication arrangements</li>
-                  <li className="pl-1">Monitoring and review procedures</li>
-                  <li className="pl-1">Training and competence requirements</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Site Rules and Procedures
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Site access and security</li>
-                  <li className="pl-1">Emergency procedures</li>
-                  <li className="pl-1">First aid arrangements</li>
-                  <li className="pl-1">Welfare facilities</li>
-                  <li className="pl-1">PPE requirements</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Schedule 3 High-Risk Activities
-              </p>
-              <p className="text-sm text-white mb-2">
-                The construction phase plan must include specific arrangements for controlling these
-                high-risk activities:
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Activity</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Building Services Relevance
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Work at height</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable tray installation, lighting, ceiling voids
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Work with asbestos</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Refurbishment work in older buildings
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Confined spaces</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Service ducts, risers, plant rooms
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Excavation work</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Underground cable installation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Work near live services</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Alterations to existing electrical systems
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Work involving explosives
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cartridge-operated fixing tools
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Construction Phase Plan Review Triggers
-              </p>
-              <p className="text-sm text-white mb-2">The plan must be reviewed and updated when:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">New contractors join the project</li>
-                <li className="pl-1">Work activities or sequences change</li>
-                <li className="pl-1">Incidents, near-misses or complaints occur</li>
-                <li className="pl-1">Design changes affect construction methods</li>
-                <li className="pl-1">Site conditions change (e.g., weather, ground conditions)</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Management arrangements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Project description and scope</li>
+              <li>Management structure and responsibilities</li>
+              <li>Communication arrangements</li>
+              <li>Monitoring and review procedures</li>
+              <li>Training and competence requirements</li>
+            </ul>
+            <p>
+              <strong>Site rules and procedures:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Site access and security</li>
+              <li>Emergency procedures</li>
+              <li>First aid arrangements</li>
+              <li>Welfare facilities</li>
+              <li>PPE requirements</li>
+            </ul>
+            <p>
+              <strong>Schedule 3 high-risk activities — the construction phase plan must include
+              specific arrangements for controlling these high-risk activities:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Work at height:</strong> Cable tray installation, lighting, ceiling voids
+              </li>
+              <li>
+                <strong>Work with asbestos:</strong> Refurbishment work in older buildings
+              </li>
+              <li>
+                <strong>Confined spaces:</strong> Service ducts, risers, plant rooms
+              </li>
+              <li>
+                <strong>Excavation work:</strong> Underground cable installation
+              </li>
+              <li>
+                <strong>Work near live services:</strong> Alterations to existing electrical systems
+              </li>
+              <li>
+                <strong>Work involving explosives:</strong> Cartridge-operated fixing tools
+              </li>
+            </ul>
+            <p>
+              <strong>Construction phase plan review triggers — the plan must be reviewed and
+              updated when:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>New contractors join the project</li>
+              <li>Work activities or sequences change</li>
+              <li>Incidents, near-misses or complaints occur</li>
+              <li>Design changes affect construction methods</li>
+              <li>Site conditions change (e.g., weather, ground conditions)</li>
+            </ul>
+            <p>
               <strong>Practical tip:</strong> Always request a copy of the construction phase plan
               before starting work on any site. Review it to understand site-specific requirements
               and how your work interfaces with other trades.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Site Inductions and Toolbox Talks */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Site Inductions and Toolbox Talks
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Site Inductions and Toolbox Talks">
             <p>
               Site inductions and toolbox talks are essential communication tools that ensure
               workers understand site-specific hazards and safe working procedures. They form a
               critical part of the principal contractor's duty to provide information and training.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-2">
-                Site Induction - Essential Content
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Site overview and current activities</li>
-                  <li className="pl-1">Emergency procedures and muster points</li>
-                  <li className="pl-1">First aid locations and arrangements</li>
-                  <li className="pl-1">Site-specific hazards and controls</li>
-                  <li className="pl-1">Traffic management and pedestrian routes</li>
-                </ul>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">PPE requirements</li>
-                  <li className="pl-1">Welfare facilities location</li>
-                  <li className="pl-1">Permit-to-work systems</li>
-                  <li className="pl-1">Reporting procedures (incidents, hazards)</li>
-                  <li className="pl-1">Working hours and access restrictions</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Toolbox Talks - Delivery Best Practice
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Element</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Guidance</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Duration</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        5-15 minutes - focused and concise
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Frequency</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Weekly minimum, plus when hazards change
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Topic selection</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Relevant to current work, recent incidents, seasonal risks
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Delivery style</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Interactive - ask questions, encourage discussion
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Documentation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Record topic, date, attendees (signatures)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Toolbox Talk Topics for Building Services
-              </p>
-              <div className="grid sm:grid-cols-3 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Electrical Safety</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Isolation procedures</li>
-                    <li>Safe use of test equipment</li>
-                    <li>Cable damage prevention</li>
-                    <li>Temporary supplies</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Working at Height</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Ladder safety</li>
-                    <li>MEWP operation</li>
-                    <li>Scaffold use</li>
-                    <li>Edge protection</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">General Site Safety</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Manual handling</li>
-                    <li>Housekeeping</li>
-                    <li>Fire prevention</li>
-                    <li>PPE care and use</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Site induction — essential content:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Site overview and current activities</li>
+              <li>Emergency procedures and muster points</li>
+              <li>First aid locations and arrangements</li>
+              <li>Site-specific hazards and controls</li>
+              <li>Traffic management and pedestrian routes</li>
+              <li>PPE requirements</li>
+              <li>Welfare facilities location</li>
+              <li>Permit-to-work systems</li>
+              <li>Reporting procedures (incidents, hazards)</li>
+              <li>Working hours and access restrictions</li>
+            </ul>
+            <p>
+              <strong>Toolbox talks — delivery best practice:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Duration:</strong> 5-15 minutes - focused and concise
+              </li>
+              <li>
+                <strong>Frequency:</strong> Weekly minimum, plus when hazards change
+              </li>
+              <li>
+                <strong>Topic selection:</strong> Relevant to current work, recent incidents,
+                seasonal risks
+              </li>
+              <li>
+                <strong>Delivery style:</strong> Interactive - ask questions, encourage discussion
+              </li>
+              <li>
+                <strong>Documentation:</strong> Record topic, date, attendees (signatures)
+              </li>
+            </ul>
+            <p>
+              <strong>Electrical safety toolbox talk topics:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Isolation procedures</li>
+              <li>Safe use of test equipment</li>
+              <li>Cable damage prevention</li>
+              <li>Temporary supplies</li>
+            </ul>
+            <p>
+              <strong>Working at height topics:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Ladder safety</li>
+              <li>MEWP operation</li>
+              <li>Scaffold use</li>
+              <li>Edge protection</li>
+            </ul>
+            <p>
+              <strong>General site safety topics:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Manual handling</li>
+              <li>Housekeeping</li>
+              <li>Fire prevention</li>
+              <li>PPE care and use</li>
+            </ul>
+            <p>
               <strong>Documentation tip:</strong> Keep attendance records for all toolbox talks.
               These demonstrate due diligence and are valuable evidence if incidents occur. Many
               sites use digital sign-in systems for efficiency.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: RAMS Process */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            RAMS Process and Implementation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="RAMS Process and Implementation">
             <p>
               Risk Assessments and Method Statements (RAMS) are the foundation of safe working on
               construction sites. They translate general safety requirements into specific,
               actionable control measures for individual work activities.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">RAMS Components</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-lg bg-white/5">
-                  <p className="text-sm font-medium text-white mb-2">Risk Assessment</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Identify hazards associated with the activity</li>
-                    <li className="pl-1">Assess who might be harmed and how</li>
-                    <li className="pl-1">Evaluate risk level (severity x likelihood)</li>
-                    <li className="pl-1">Specify control measures (hierarchy of control)</li>
-                    <li className="pl-1">Document residual risk after controls</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded-lg bg-white/5">
-                  <p className="text-sm font-medium text-white mb-2">Method Statement</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Step-by-step work procedure</li>
-                    <li className="pl-1">Sequence of operations</li>
-                    <li className="pl-1">Equipment and materials required</li>
-                    <li className="pl-1">Personnel and competence requirements</li>
-                    <li className="pl-1">Interface with other trades</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">RAMS Workflow</p>
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 text-sm text-white">
-                <div className="p-2 rounded bg-elec-yellow/20 text-center flex-1 w-full sm:w-auto">
-                  1. Prepare RAMS
-                </div>
-                <span className="hidden sm:block">&rarr;</span>
-                <span className="block sm:hidden text-center w-full">&darr;</span>
-                <div className="p-2 rounded bg-elec-yellow/20 text-center flex-1 w-full sm:w-auto">
-                  2. Submit to PC
-                </div>
-                <span className="hidden sm:block">&rarr;</span>
-                <span className="block sm:hidden text-center w-full">&darr;</span>
-                <div className="p-2 rounded bg-elec-yellow/20 text-center flex-1 w-full sm:w-auto">
-                  3. Approval/Review
-                </div>
-                <span className="hidden sm:block">&rarr;</span>
-                <span className="block sm:hidden text-center w-full">&darr;</span>
-                <div className="p-2 rounded bg-elec-yellow/20 text-center flex-1 w-full sm:w-auto">
-                  4. Brief Workers
-                </div>
-                <span className="hidden sm:block">&rarr;</span>
-                <span className="block sm:hidden text-center w-full">&darr;</span>
-                <div className="p-2 rounded bg-elec-yellow/20 text-center flex-1 w-full sm:w-auto">
-                  5. Execute Work
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services RAMS Examples
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Activity</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Hazards</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Critical Controls
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable installation in ceiling void
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Falls, existing services, dust
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Tower scaffold, service detection, RPE
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Distribution board installation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Electrical contact, manual handling
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Isolation, team lift, insulated tools
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        External containment installation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Work at height, weather, traffic
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        MEWP, hi-vis, traffic management
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Testing and commissioning
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Electrical shock, arc flash
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Permit to work, competent person, PPE
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fire alarm installation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Work at height, dust activation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Step ladders, detector covers, notification
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Common RAMS Deficiencies</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Generic content:</strong> Copy-paste documents that don't reflect actual
-                  site conditions
-                </li>
-                <li className="pl-1">
-                  <strong>Missing signatures:</strong> Workers not briefed or signing before work
-                </li>
-                <li className="pl-1">
-                  <strong>No review dates:</strong> Outdated RAMS still in use after conditions
-                  change
-                </li>
-                <li className="pl-1">
-                  <strong>Inadequate controls:</strong> Relying on PPE when elimination or
-                  engineering controls are possible
-                </li>
-                <li className="pl-1">
-                  <strong>Poor communication:</strong> RAMS not available at the work face
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Risk assessment:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Identify hazards associated with the activity</li>
+              <li>Assess who might be harmed and how</li>
+              <li>Evaluate risk level (severity x likelihood)</li>
+              <li>Specify control measures (hierarchy of control)</li>
+              <li>Document residual risk after controls</li>
+            </ul>
+            <p>
+              <strong>Method statement:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Step-by-step work procedure</li>
+              <li>Sequence of operations</li>
+              <li>Equipment and materials required</li>
+              <li>Personnel and competence requirements</li>
+              <li>Interface with other trades</li>
+            </ul>
+            <p>
+              <strong>RAMS workflow:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1. Prepare RAMS</li>
+              <li>2. Submit to PC</li>
+              <li>3. Approval/Review</li>
+              <li>4. Brief Workers</li>
+              <li>5. Execute Work</li>
+            </ul>
+            <p>
+              <strong>Building services RAMS examples:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cable installation in ceiling void:</strong> Falls, existing services, dust
+                — Tower scaffold, service detection, RPE
+              </li>
+              <li>
+                <strong>Distribution board installation:</strong> Electrical contact, manual
+                handling — Isolation, team lift, insulated tools
+              </li>
+              <li>
+                <strong>External containment installation:</strong> Work at height, weather, traffic
+                — MEWP, hi-vis, traffic management
+              </li>
+              <li>
+                <strong>Testing and commissioning:</strong> Electrical shock, arc flash — Permit to
+                work, competent person, PPE
+              </li>
+              <li>
+                <strong>Fire alarm installation:</strong> Work at height, dust activation — Step
+                ladders, detector covers, notification
+              </li>
+            </ul>
+            <p>
+              <strong>Common RAMS deficiencies:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Generic content:</strong> Copy-paste documents that don't reflect actual
+                site conditions
+              </li>
+              <li>
+                <strong>Missing signatures:</strong> Workers not briefed or signing before work
+              </li>
+              <li>
+                <strong>No review dates:</strong> Outdated RAMS still in use after conditions change
+              </li>
+              <li>
+                <strong>Inadequate controls:</strong> Relying on PPE when elimination or engineering
+                controls are possible
+              </li>
+              <li>
+                <strong>Poor communication:</strong> RAMS not available at the work face
+              </li>
+            </ul>
+            <p>
               <strong>Legal requirement:</strong> RAMS must be task-specific and site-specific.
               Generic documents are not compliant and provide no legal protection if incidents
               occur.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Scenarios</h2>
+          <ConceptBlock title="Practical Scenarios">
+            <p>
+              <strong>Scenario 1 — Arriving at a new site:</strong> You are starting electrical
+              first fix on a new-build office block. What CDM compliance steps must you complete?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Complete site induction delivered by principal contractor</li>
+              <li>Review construction phase plan - understand site rules and emergency procedures</li>
+              <li>Submit your company RAMS to principal contractor for approval</li>
+              <li>Attend any pre-start meetings to coordinate with other trades</li>
+              <li>Check F10 notification is displayed (if applicable)</li>
+              <li>Brief your team on site-specific requirements</li>
+            </ul>
+            <p>
+              <strong>Scenario 2 — Delivering a toolbox talk:</strong> Your team will be installing
+              cable tray at 4m height tomorrow. Prepare a toolbox talk outline.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Topic:</strong> Safe working at height - cable tray installation
+              </li>
+              <li>
+                <strong>Duration:</strong> 10 minutes
+              </li>
+              <li>
+                <strong>Key points:</strong> Tower scaffold erection/inspection, tool lanyards,
+                exclusion zone below, emergency descent
+              </li>
+              <li>
+                <strong>Discussion questions:</strong> "What would you do if you noticed damaged
+                scaffold boards?"
+              </li>
+              <li>
+                <strong>Record:</strong> Date, topic, attendees with signatures
+              </li>
+            </ul>
+            <p>
+              <strong>Scenario 3 — RAMS development:</strong> You need to isolate and modify an
+              existing distribution board in an occupied office. Key RAMS considerations?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Isolation:</strong> Permit to work, lock-off procedures, proving dead
+              </li>
+              <li>
+                <strong>Existing services:</strong> Survey for unknown cables, asbestos check
+              </li>
+              <li>
+                <strong>Occupied building:</strong> Coordination with building management, affected
+                areas notification
+              </li>
+              <li>
+                <strong>Sequence:</strong> Step-by-step isolation, modification, re-energisation
+              </li>
+              <li>
+                <strong>Emergency:</strong> First aid, fire procedures, contact numbers
+              </li>
+              <li>
+                <strong>Competence:</strong> Qualified electricians only, specific training
+                requirements
+              </li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Scenario 1: Arriving at a New Site
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Situation:</strong> You are starting electrical first fix on a new-build
-                office block. What CDM compliance steps must you complete?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white">
-                <p className="font-medium mb-2">Required Steps:</p>
-                <ol className="list-decimal list-inside space-y-1">
-                  <li>Complete site induction delivered by principal contractor</li>
-                  <li>
-                    Review construction phase plan - understand site rules and emergency procedures
-                  </li>
-                  <li>Submit your company RAMS to principal contractor for approval</li>
-                  <li>Attend any pre-start meetings to coordinate with other trades</li>
-                  <li>Check F10 notification is displayed (if applicable)</li>
-                  <li>Brief your team on site-specific requirements</li>
-                </ol>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Scenario 2: Delivering a Toolbox Talk
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Situation:</strong> Your team will be installing cable tray at 4m height
-                tomorrow. Prepare a toolbox talk outline.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white">
-                <p className="font-medium mb-2">Toolbox Talk Structure:</p>
-                <ul className="list-disc list-inside space-y-1">
-                  <li>
-                    <strong>Topic:</strong> Safe working at height - cable tray installation
-                  </li>
-                  <li>
-                    <strong>Duration:</strong> 10 minutes
-                  </li>
-                  <li>
-                    <strong>Key points:</strong> Tower scaffold erection/inspection, tool lanyards,
-                    exclusion zone below, emergency descent
-                  </li>
-                  <li>
-                    <strong>Discussion questions:</strong> "What would you do if you noticed damaged
-                    scaffold boards?"
-                  </li>
-                  <li>
-                    <strong>Record:</strong> Date, topic, attendees with signatures
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Site compliance checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Site induction completed and recorded</li>
+              <li>Copy of construction phase plan reviewed</li>
+              <li>RAMS submitted and approved by principal contractor</li>
+              <li>Workers briefed on RAMS content</li>
+              <li>Toolbox talk schedule established</li>
+              <li>Emergency procedures understood by all team members</li>
+              <li>PPE requirements checked and compliant</li>
+              <li>Permit systems understood (if applicable)</li>
+            </ul>
+            <p>
+              <strong>Key CDM 2015 values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                F10 threshold: <strong>30 days + 20 workers OR 500 person-days</strong>
+              </li>
+              <li>
+                Toolbox talk frequency: <strong>Weekly minimum</strong>
+              </li>
+              <li>
+                RAMS submission: <strong>Before activity starts</strong>
+              </li>
+              <li>
+                Construction phase plan: <strong>Before construction phase begins</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Scenario 3: RAMS Development
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Situation:</strong> You need to isolate and modify an existing distribution
-                board in an occupied office. Key RAMS considerations?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white">
-                <p className="font-medium mb-2">RAMS Must Address:</p>
-                <ul className="list-disc list-inside space-y-1">
-                  <li>
-                    <strong>Isolation:</strong> Permit to work, lock-off procedures, proving dead
-                  </li>
-                  <li>
-                    <strong>Existing services:</strong> Survey for unknown cables, asbestos check
-                  </li>
-                  <li>
-                    <strong>Occupied building:</strong> Coordination with building management,
-                    affected areas notification
-                  </li>
-                  <li>
-                    <strong>Sequence:</strong> Step-by-step isolation, modification, re-energisation
-                  </li>
-                  <li>
-                    <strong>Emergency:</strong> First aid, fire procedures, contact numbers
-                  </li>
-                  <li>
-                    <strong>Competence:</strong> Qualified electricians only, specific training
-                    requirements
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Site Compliance Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Site induction completed and recorded</li>
-                <li className="pl-1">Copy of construction phase plan reviewed</li>
-                <li className="pl-1">RAMS submitted and approved by principal contractor</li>
-                <li className="pl-1">Workers briefed on RAMS content</li>
-                <li className="pl-1">Toolbox talk schedule established</li>
-                <li className="pl-1">Emergency procedures understood by all team members</li>
-                <li className="pl-1">PPE requirements checked and compliant</li>
-                <li className="pl-1">Permit systems understood (if applicable)</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key CDM 2015 Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  F10 threshold: <strong>30 days + 20 workers OR 500 person-days</strong>
-                </li>
-                <li className="pl-1">
-                  Toolbox talk frequency: <strong>Weekly minimum</strong>
-                </li>
-                <li className="pl-1">
-                  RAMS submission: <strong>Before activity starts</strong>
-                </li>
-                <li className="pl-1">
-                  Construction phase plan: <strong>Before construction phase begins</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">
-                Common Compliance Failures
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common compliance failures"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Starting work before induction</strong> - always complete before any work
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Generic RAMS</strong> - must be site and task specific
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Missing toolbox talk records</strong> - no record means no proof
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring the construction phase plan</strong> - it's a legal document
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Not reporting near-misses</strong> - valuable prevention data lost
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Hold induction before any tools come out, write task-specific RAMS aligned to the construction phase plan, capture signed toolbox talk attendance, and treat near-miss reporting as core safety culture."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Generic CPP fails an HSE inspection"
+            situation={
+              <>
+                An HSE inspector arrives at week 6 of an MEP project. They ask to see the CPP. The PM produces a 40-page document that is the company's template — generic risks, generic procedures, no project-specific content. The inspector identifies the CPP does not address: confined space risk in the basement plant room, the live electrical environment, the asbestos report findings, the working at height plan for the riser. Improvement Notice issued.
+              </>
+            }
+            whatToDo={
+              <>
+                The CPP must be project-specific. Re-write within 14 days using actual site information: hazards from PCI, structure of the works, specific risk control measures, welfare arrangement, emergency procedures, briefing arrangements. The CPP is reviewed and updated as the project progresses — not a one-shot document. Brief the site team on CPP content; make it the working document, not a shelf document.
+              </>
+            }
+            whyItMatters={
+              <>
+                The CPP is the project's safety constitution. A generic CPP signals that the principal contractor has not engaged with the actual risks — a finding that exposes the contractor to enforcement, the project to delay, and the operatives to harm. Investment in a real CPP returns in safer, smoother delivery.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">CDM 2015 Dutyholders</p>
-                <ul className="space-y-0.5">
-                  <li>Client - makes arrangements, appoints dutyholders</li>
-                  <li>Principal designer - pre-construction H&S</li>
-                  <li>Principal contractor - construction phase H&S</li>
-                  <li>Contractors - manage own work and workers</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Documents</p>
-                <ul className="space-y-0.5">
-                  <li>Construction phase plan - site rules, procedures</li>
-                  <li>F10 notification - HSE project notification</li>
-                  <li>RAMS - activity-specific controls</li>
-                  <li>Induction records - worker training evidence</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+                    <KeyTakeaways
+            points={[
+              "CDM 2015 duties: client, PD, PC, designers, contractors, workers — all live in construction.",
+              "CPP: project-specific, updated, available on site — Reg 12 obligation on PC.",
+              "Site induction mandatory before any operative starts.",
+              "Toolbox talks weekly minimum: site-specific risks, incidents, high-risk work.",
+              "F10 notification for projects >30 days/500 person-days — client duty.",
+              "CPP referenced daily by site management — not a shelf document.",
+              "HSE inspections look for CPP, induction records, toolbox records, welfare on Day 1.",
+              "Generic CPP = Reg 12 breach = improvement notice or worse.",
+            ]}
+          />
+
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 6
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section6')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Site management and CDM
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section6-5')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Environmental management
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

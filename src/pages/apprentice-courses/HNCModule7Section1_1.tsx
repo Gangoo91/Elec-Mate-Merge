@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 7 · Section 1 · Subsection 1 — Switchgear Selection
+ * HNC Electrical Engineering for Building Services (Power and Lighting Systems)
+ *   LV switchboards, MCCB vs ACB, rated currents, short-circuit ratings, and type-tested assemblies
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Switchgear Selection - HNC Module 7 Section 1.1';
@@ -240,913 +253,315 @@ const faqs = [
 ];
 
 const HNCModule7Section1_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section1")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module7-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.1.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Switchgear Selection
-          </h1>
-          <p className="text-white">
-            LV switchboards, MCCB vs ACB, rated currents, short-circuit ratings, and type-tested
-            assemblies
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 7 · Section 1 · Subsection 1"
+            title="Switchgear Selection"
+            description="LV switchboards, MCCB vs ACB, rated currents, short-circuit ratings, and type-tested assemblies"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>LV switchboards:</strong> Distribute power via MCCBs, ACBs, and MCBs
-              </li>
-              <li className="pl-1">
-                <strong>MCCB:</strong> 100A-1600A, fixed mount, cost-effective
-              </li>
-              <li className="pl-1">
-                <strong>ACB:</strong> 800A-6300A, withdrawable, high breaking capacity
-              </li>
-              <li className="pl-1">
-                <strong>BS EN 61439:</strong> Standard for switchgear assemblies
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Identify LV switchboard configurations and their applications",
+              "Compare MCCB and ACB characteristics for selection",
+              "Apply rated current (In) and breaking capacity (Icu/Ics) criteria",
+              "Specify forms of separation (Forms 1-4) appropriately",
+              "Distinguish between TTA and PTTA under BS EN 61439",
+              "Select switchgear based on fault levels and operational requirements",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="LV Switchboard Fundamentals">
+            <p>Low voltage switchboards are the central distribution point in electrical installations, receiving power from transformers or main supplies and distributing it to downstream circuits. Proper selection ensures safe operation, adequate protection, and efficient power distribution.</p>
+            <p><strong>LV Switchboard Components:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Main incomer:</strong> ACB or MCCB receiving supply from transformer or upstream board</li>
+              <li><strong>Busbar system:</strong> Copper or aluminium bars distributing current to outgoing devices</li>
+              <li><strong>Outgoing circuits:</strong> MCCBs, MCBs, or fused switches protecting downstream circuits</li>
+              <li><strong>Metering:</strong> Current transformers and meters for monitoring and billing</li>
+              <li><strong>Protection relays:</strong> Electronic devices providing advanced protection functions</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Selection Factors</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>In:</strong> Rated current must exceed load current
-              </li>
-              <li className="pl-1">
-                <strong>Icu:</strong> Must exceed prospective fault current
-              </li>
-              <li className="pl-1">
-                <strong>Form:</strong> Level of internal separation required
-              </li>
-              <li className="pl-1">
-                <strong>TTA/PTTA:</strong> Assembly test verification method
-              </li>
+            <p><strong>Switchboard Configurations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Single-ended:</strong> Single incomer feeding all outgoing circuits — Small commercial, non-critical loads</li>
+              <li><strong>Double-ended:</strong> Two incomers with bus section switch — Enhanced reliability, dual supplies</li>
+              <li><strong>Ring main:</strong> Multiple interconnected boards — Large sites, industrial facilities</li>
+              <li><strong>With standby:</strong> Generator or UPS integration — Critical facilities, hospitals, data centres</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Design consideration:</strong> Switchboard configuration directly impacts reliability, maintenance flexibility, and capital cost. Match configuration to the criticality and operational requirements of the installation.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Identify LV switchboard configurations and their applications',
-              'Compare MCCB and ACB characteristics for selection',
-              'Apply rated current (In) and breaking capacity (Icu/Ics) criteria',
-              'Specify forms of separation (Forms 1-4) appropriately',
-              'Distinguish between TTA and PTTA under BS EN 61439',
-              'Select switchgear based on fault levels and operational requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: LV Switchboard Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            LV Switchboard Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="MCCB vs ACB Selection Criteria">
+            <p>The choice between Moulded Case Circuit Breakers (MCCBs) and Air Circuit Breakers (ACBs) depends on rated current, fault level, operational requirements, and budget. Each device type has distinct characteristics suited to specific applications.</p>
+            <p><strong>MCCB Characteristics</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Rated current: 100A to 1600A typical</li>
+              <li>Breaking capacity: up to 70kA</li>
+              <li>Fixed or plug-in mounting</li>
+              <li>Thermal-magnetic or electronic trip</li>
+              <li>Compact design, cost-effective</li>
+              <li>Limited adjustability on basic units</li>
+            </ul>
+            <p><strong>ACB Characteristics</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Rated current: 800A to 6300A</li>
+              <li>Breaking capacity: up to 150kA</li>
+              <li>Withdrawable for maintenance</li>
+              <li>Electronic trip unit standard</li>
+              <li>Comprehensive protection settings</li>
+              <li>Communication interfaces available</li>
+            </ul>
+            <p><strong>Selection Decision Matrix</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Rated current:</strong> &lt;1600A — &gt;800A, especially &gt;1600A</li>
+              <li><strong>Fault level:</strong> &lt;50kA typical — &gt;50kA or high reliability required</li>
+              <li><strong>Maintenance:</strong> Shutdown acceptable — Withdrawable needed, live busbar work</li>
+              <li><strong>Protection:</strong> Basic overcurrent protection — Advanced functions, communication</li>
+              <li><strong>Budget:</strong> Cost-sensitive applications — Reliability justifies premium</li>
+            </ul>
+            <p><strong>Overlap Zone: 800A to 1600A</strong></p>
+            <p>In the 800A-1600A range, both MCCB and ACB are viable. The decision hinges on: withdrawable requirement (ACB); fault level (&gt;50kA favours ACB); protection complexity (ACB for advanced settings); and total cost of ownership including maintenance downtime.</p>
+            <p><strong>Selection tip:</strong> For main incomers in commercial and industrial installations, ACBs provide superior reliability and maintenance flexibility despite higher initial cost.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Rated Currents and Short-Circuit Ratings">
+            <p>Understanding the rated values of switchgear is essential for correct selection. These ratings ensure the device can handle normal operation and fault conditions without damage or danger.</p>
+            <p><strong>Key Rated Values</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>In:</strong> Rated current — Maximum continuous current without exceeding temperature rise limits</li>
+              <li><strong>Ue:</strong> Rated operational voltage — Voltage at which device operates (typically 400V for LV)</li>
+              <li><strong>Icu:</strong> Ultimate short-circuit breaking capacity — Maximum fault current device can interrupt (may require replacement after)</li>
+              <li><strong>Ics:</strong> Service short-circuit breaking capacity — Fault current device can interrupt and remain serviceable</li>
+              <li><strong>Icw:</strong> Short-time withstand current — Fault current withstood for specified duration (typically 1s) without damage</li>
+              <li><strong>Icm:</strong> Rated short-circuit making capacity — Peak fault current device can close onto</li>
+            </ul>
+            <p><strong>Icu Selection Process</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Calculate prospective fault current (PSCC)</li>
+              <li>Apply diversity/impedance factors</li>
+              <li>Select Icu &gt; PSCC at installation point</li>
+              <li>Consider future supply increases</li>
+              <li>Document selection rationale</li>
+            </ul>
+            <p><strong>Ics/Icu Ratios</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>25%:</strong> Budget devices, non-critical</li>
+              <li><strong>50%:</strong> Standard commercial</li>
+              <li><strong>75%:</strong> Enhanced reliability</li>
+              <li><strong>100%:</strong> Critical applications, full serviceability</li>
+            </ul>
+            <p><strong>Worked Example: Breaking Capacity Selection</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Transformer:</strong> 1000kVA, 6% impedance</li>
+              <li><strong>Secondary voltage:</strong> 400V</li>
+              <li><strong>PSCC at transformer:</strong> I<sub>sc</sub> = kVA × 1000 / (√3 × V × Z%)</li>
+              <li><strong>Calculation:</strong> = 1000 × 1000 / (1.732 × 400 × 0.06) = 24.1kA</li>
+              <li><strong>Selection:</strong> MCCB with Icu ≥ 25kA (select 36kA for margin)</li>
+            </ul>
+            <p><strong>Critical point:</strong> Always verify the prospective fault current through calculation or measurement. Undersized breaking capacity creates serious safety risks during fault conditions.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Forms of Separation and Type-Tested Assemblies">
+            <p>BS EN 61439 defines forms of internal separation to protect personnel working on one part of a switchboard from live parts in other areas. The standard also establishes verification requirements through type-tested and partially type-tested assemblies.</p>
+            <p><strong>Forms of Internal Separation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Form 1:</strong> No internal separation — Simple distribution boards, single-user access</li>
+              <li><strong>Form 2a:</strong> Busbars separated from functional units; terminals not separated — Standard commercial switchboards</li>
+              <li><strong>Form 2b:</strong> Form 2a plus terminals in same compartment as busbar — Modified commercial applications</li>
+              <li><strong>Form 3a:</strong> Busbars and functional units separated; terminals not separated from busbars — Industrial, frequent maintenance</li>
+              <li><strong>Form 3b:</strong> Form 3a plus terminals separated from busbars — Higher safety requirement</li>
+              <li><strong>Form 4a:</strong> Form 3b plus terminals separated from each other (in common space) — Critical facilities, hospitals</li>
+              <li><strong>Form 4b:</strong> Form 3b plus terminals enclosed individually — Maximum safety, data centres</li>
+            </ul>
+            <p><strong>Type-Tested Assembly (TTA)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Conforms to established tested design</li>
+              <li>Full type test evidence available</li>
+              <li>No design variations from tested configuration</li>
+              <li>Routine tests verify individual assembly</li>
+              <li>Highest level of verified performance</li>
+            </ul>
+            <p><strong>Partially Type-Tested Assembly (PTTA)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Uses type-tested components</li>
+              <li>Design rules derived from type tests</li>
+              <li>Calculations replace some testing</li>
+              <li>Allows design variations</li>
+              <li>More flexible, requires engineering expertise</li>
+            </ul>
+            <p><strong>BS EN 61439 Verification Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Temperature rise:</strong> Verify conductors and components do not exceed limits under rated current</li>
+              <li><strong>Dielectric properties:</strong> Insulation must withstand rated impulse and power frequency voltages</li>
+              <li><strong>Short-circuit withstand:</strong> Assembly must withstand Icw for rated duration</li>
+              <li><strong>Protection circuits:</strong> Verify effectiveness of protective bonding</li>
+              <li><strong>Clearances and creepage:</strong> Minimum distances between live parts and earth</li>
+              <li><strong>Mechanical operation:</strong> Correct function of operating mechanisms</li>
+              <li><strong>IP rating:</strong> Ingress protection against solid objects and water</li>
+            </ul>
+            <p><strong>Specifying Form of Separation</strong></p>
+            <p><strong>Form 1:</strong> Acceptable where only trained personnel access and full isolation is always applied.</p>
+            <p><strong>Form 2:</strong> Standard for commercial buildings where circuit work requires isolation of affected circuits only.</p>
+            <p><strong>Form 3:</strong> Required where cable termination must proceed with adjacent circuits energised.</p>
+            <p><strong>Form 4:</strong> Essential for critical facilities requiring maximum flexibility and safety during live maintenance.</p>
+            <p><strong>Specification note:</strong> Always specify form of separation in tender documents. Cost increases with form number, but Form 2 or higher is typical for most commercial and industrial applications.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Low voltage switchboards are the central distribution point in electrical
-              installations, receiving power from transformers or main supplies and distributing it
-              to downstream circuits. Proper selection ensures safe operation, adequate protection,
-              and efficient power distribution.
+              <strong>Example 1: Main Switchboard Selection</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">LV Switchboard Components:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Main incomer:</strong> ACB or MCCB receiving supply from transformer or
-                  upstream board
-                </li>
-                <li className="pl-1">
-                  <strong>Busbar system:</strong> Copper or aluminium bars distributing current to
-                  outgoing devices
-                </li>
-                <li className="pl-1">
-                  <strong>Outgoing circuits:</strong> MCCBs, MCBs, or fused switches protecting
-                  downstream circuits
-                </li>
-                <li className="pl-1">
-                  <strong>Metering:</strong> Current transformers and meters for monitoring and
-                  billing
-                </li>
-                <li className="pl-1">
-                  <strong>Protection relays:</strong> Electronic devices providing advanced
-                  protection functions
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Switchboard Configurations
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Configuration</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Single-ended</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Single incomer feeding all outgoing circuits
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Small commercial, non-critical loads
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Double-ended</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Two incomers with bus section switch
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Enhanced reliability, dual supplies
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ring main</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multiple interconnected boards
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large sites, industrial facilities
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">With standby</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Generator or UPS integration
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Critical facilities, hospitals, data centres
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design consideration:</strong> Switchboard configuration directly impacts
-              reliability, maintenance flexibility, and capital cost. Match configuration to the
-              criticality and operational requirements of the installation.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: MCCB vs ACB Selection */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            MCCB vs ACB Selection Criteria
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Specify switchgear for a 1600A main LV switchboard fed from a 1000kVA transformer (6% impedance).</p>
+            <p>Step 1: Calculate prospective fault current</p>
+            <p>I<sub>sc</sub> = (1000 × 1000) / (1.732 × 400 × 0.06) = 24.1kA</p>
+            <p>Step 2: Select main incomer device</p>
+            <p>Options: 1600A MCCB (Icu 36kA) or 1600A ACB (Icu 65kA)</p>
+            <p>Step 3: Evaluate requirements</p>
+            <p>- Withdrawable preferred for maintenance flexibility</p>
+            <p>- Communication interface for BMS integration required</p>
+            <p>- Form 3b separation specified</p>
+            <p>Selection: ACB 1600A, Icu 65kA, withdrawable</p>
+            <p>Rationale: Maintenance flexibility, adequate breaking capacity with margin, integration capability</p>
             <p>
-              The choice between Moulded Case Circuit Breakers (MCCBs) and Air Circuit Breakers
-              (ACBs) depends on rated current, fault level, operational requirements, and budget.
-              Each device type has distinct characteristics suited to specific applications.
+              <strong>Example 2: MCCB Frame Size Selection</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">MCCB Characteristics</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Rated current: 100A to 1600A typical</li>
-                  <li className="pl-1">Breaking capacity: up to 70kA</li>
-                  <li className="pl-1">Fixed or plug-in mounting</li>
-                  <li className="pl-1">Thermal-magnetic or electronic trip</li>
-                  <li className="pl-1">Compact design, cost-effective</li>
-                  <li className="pl-1">Limited adjustability on basic units</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">ACB Characteristics</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Rated current: 800A to 6300A</li>
-                  <li className="pl-1">Breaking capacity: up to 150kA</li>
-                  <li className="pl-1">Withdrawable for maintenance</li>
-                  <li className="pl-1">Electronic trip unit standard</li>
-                  <li className="pl-1">Comprehensive protection settings</li>
-                  <li className="pl-1">Communication interfaces available</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Selection Decision Matrix
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Criterion</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Choose MCCB</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Choose ACB</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Rated current</td>
-                      <td className="border border-white/10 px-3 py-2">&lt;1600A</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        &gt;800A, especially &gt;1600A
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fault level</td>
-                      <td className="border border-white/10 px-3 py-2">&lt;50kA typical</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        &gt;50kA or high reliability required
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Maintenance</td>
-                      <td className="border border-white/10 px-3 py-2">Shutdown acceptable</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Withdrawable needed, live busbar work
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Protection</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Basic overcurrent protection
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Advanced functions, communication
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Budget</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cost-sensitive applications
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reliability justifies premium
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Overlap Zone: 800A to 1600A</p>
-              <p className="text-sm text-white">
-                In the 800A-1600A range, both MCCB and ACB are viable. The decision hinges on:
-                withdrawable requirement (ACB); fault level (&gt;50kA favours ACB); protection
-                complexity (ACB for advanced settings); and total cost of ownership including
-                maintenance downtime.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Selection tip:</strong> For main incomers in commercial and industrial
-              installations, ACBs provide superior reliability and maintenance flexibility despite
-              higher initial cost.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Rated Currents and Breaking Capacities */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Rated Currents and Short-Circuit Ratings
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Select MCCB for a 350A submain with 25kA prospective fault current.</p>
+            <p>Requirements analysis:</p>
+            <p>- Load current: 350A</p>
+            <p>- PSCC: 25kA</p>
+            <p>- Fixed mounting acceptable</p>
+            <p>Frame size options:</p>
+            <p>- 400A frame: Icu options 25kA, 36kA, 50kA</p>
+            <p>- 630A frame: Higher capacity, oversized for application</p>
+            <p>Selection process:</p>
+            <p>Frame: 400A (minimum frame for 350A setting)</p>
+            <p>Icu: 36kA (exceeds 25kA PSCC with margin)</p>
+            <p>Trip unit: Electronic adjustable (Ir 0.4-1 × In, Im 1.5-10 × In)</p>
+            <p>Selection: MCCB 400A frame, 350A setting, 36kA, electronic trip</p>
             <p>
-              Understanding the rated values of switchgear is essential for correct selection. These
-              ratings ensure the device can handle normal operation and fault conditions without
-              damage or danger.
+              <strong>Example 3: Form of Separation Specification</strong>
             </p>
+            <p><strong>Scenario:</strong> Determine form of separation for a data centre main switchboard.</p>
+            <p>Operational requirements:</p>
+            <p>- 24/7 operation, no planned shutdowns</p>
+            <p>- Regular circuit additions expected</p>
+            <p>- Maintenance on individual circuits with others live</p>
+            <p>- Multiple maintenance personnel may work simultaneously</p>
+            <p>Assessment:</p>
+            <p>- Form 1: Inadequate - no separation</p>
+            <p>- Form 2: Inadequate - terminals not separated</p>
+            <p>- Form 3: Marginal - functional units separated but terminals shared</p>
+            <p>- Form 4: Optimal - full separation of all elements</p>
+            <p>Specification: Form 4b</p>
+            <p>Rationale: Maximum safety for live working, individual terminal compartments enable simultaneous work on multiple circuits</p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Rated Values</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Symbol</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Parameter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">In</td>
-                      <td className="border border-white/10 px-3 py-2">Rated current</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Maximum continuous current without exceeding temperature rise limits
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ue</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rated operational voltage
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Voltage at which device operates (typically 400V for LV)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Icu</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ultimate short-circuit breaking capacity
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Maximum fault current device can interrupt (may require replacement after)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ics</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Service short-circuit breaking capacity
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fault current device can interrupt and remain serviceable
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Icw</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Short-time withstand current
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fault current withstood for specified duration (typically 1s) without damage
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Icm</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rated short-circuit making capacity
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Peak fault current device can close onto
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Icu Selection Process
-                </p>
-                <ol className="text-sm text-white space-y-1.5 list-decimal list-outside ml-5">
-                  <li className="pl-1">Calculate prospective fault current (PSCC)</li>
-                  <li className="pl-1">Apply diversity/impedance factors</li>
-                  <li className="pl-1">Select Icu &gt; PSCC at installation point</li>
-                  <li className="pl-1">Consider future supply increases</li>
-                  <li className="pl-1">Document selection rationale</li>
-                </ol>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Ics/Icu Ratios</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>25%:</strong> Budget devices, non-critical
-                  </li>
-                  <li className="pl-1">
-                    <strong>50%:</strong> Standard commercial
-                  </li>
-                  <li className="pl-1">
-                    <strong>75%:</strong> Enhanced reliability
-                  </li>
-                  <li className="pl-1">
-                    <strong>100%:</strong> Critical applications, full serviceability
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Worked Example: Breaking Capacity Selection
-              </p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">Transformer:</span>{' '}
-                  <span className="text-white">1000kVA, 6% impedance</span>
-                </p>
-                <p>
-                  <span className="text-white">Secondary voltage:</span>{' '}
-                  <span className="text-white">400V</span>
-                </p>
-                <p>
-                  <span className="text-white">PSCC at transformer:</span>{' '}
-                  <span className="text-white">
-                    I<sub>sc</sub> = kVA × 1000 / (√3 × V × Z%)
-                  </span>
-                </p>
-                <p>
-                  <span className="text-white">Calculation:</span>{' '}
-                  <span className="text-white">= 1000 × 1000 / (1.732 × 400 × 0.06) = 24.1kA</span>
-                </p>
-                <p>
-                  <span className="text-white">Selection:</span>{' '}
-                  <span className="text-white">MCCB with Icu ≥ 25kA (select 36kA for margin)</span>
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Critical point:</strong> Always verify the prospective fault current through
-              calculation or measurement. Undersized breaking capacity creates serious safety risks
-              during fault conditions.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Forms of Separation and Type-Tested Assemblies */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Forms of Separation and Type-Tested Assemblies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              BS EN 61439 defines forms of internal separation to protect personnel working on one
-              part of a switchboard from live parts in other areas. The standard also establishes
-              verification requirements through type-tested and partially type-tested assemblies.
+              <strong>Switchgear Selection Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Forms of Internal Separation
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Form</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Separation Provided
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Form 1</td>
-                      <td className="border border-white/10 px-3 py-2">No internal separation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Simple distribution boards, single-user access
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Form 2a</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Busbars separated from functional units; terminals not separated
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Standard commercial switchboards
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Form 2b</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Form 2a plus terminals in same compartment as busbar
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Modified commercial applications
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Form 3a</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Busbars and functional units separated; terminals not separated from busbars
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Industrial, frequent maintenance
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Form 3b</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Form 3a plus terminals separated from busbars
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher safety requirement
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Form 4a</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Form 3b plus terminals separated from each other (in common space)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Critical facilities, hospitals
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Form 4b</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Form 3b plus terminals enclosed individually
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Maximum safety, data centres
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Type-Tested Assembly (TTA)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Conforms to established tested design</li>
-                  <li className="pl-1">Full type test evidence available</li>
-                  <li className="pl-1">No design variations from tested configuration</li>
-                  <li className="pl-1">Routine tests verify individual assembly</li>
-                  <li className="pl-1">Highest level of verified performance</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Partially Type-Tested Assembly (PTTA)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Uses type-tested components</li>
-                  <li className="pl-1">Design rules derived from type tests</li>
-                  <li className="pl-1">Calculations replace some testing</li>
-                  <li className="pl-1">Allows design variations</li>
-                  <li className="pl-1">More flexible, requires engineering expertise</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BS EN 61439 Verification Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Temperature rise:</strong> Verify conductors and components do not exceed
-                  limits under rated current
-                </li>
-                <li className="pl-1">
-                  <strong>Dielectric properties:</strong> Insulation must withstand rated impulse
-                  and power frequency voltages
-                </li>
-                <li className="pl-1">
-                  <strong>Short-circuit withstand:</strong> Assembly must withstand Icw for rated
-                  duration
-                </li>
-                <li className="pl-1">
-                  <strong>Protection circuits:</strong> Verify effectiveness of protective bonding
-                </li>
-                <li className="pl-1">
-                  <strong>Clearances and creepage:</strong> Minimum distances between live parts and
-                  earth
-                </li>
-                <li className="pl-1">
-                  <strong>Mechanical operation:</strong> Correct function of operating mechanisms
-                </li>
-                <li className="pl-1">
-                  <strong>IP rating:</strong> Ingress protection against solid objects and water
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Specifying Form of Separation
-              </p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <strong>Form 1:</strong> Acceptable where only trained personnel access and full
-                  isolation is always applied.
-                </p>
-                <p>
-                  <strong>Form 2:</strong> Standard for commercial buildings where circuit work
-                  requires isolation of affected circuits only.
-                </p>
-                <p>
-                  <strong>Form 3:</strong> Required where cable termination must proceed with
-                  adjacent circuits energised.
-                </p>
-                <p>
-                  <strong>Form 4:</strong> Essential for critical facilities requiring maximum
-                  flexibility and safety during live maintenance.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Specification note:</strong> Always specify form of separation in tender
-              documents. Cost increases with form number, but Form 2 or higher is typical for most
-              commercial and industrial applications.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Calculate maximum demand and select In with appropriate margin</li>
+              <li>Determine prospective fault current at each switchboard location</li>
+              <li>Select breaking capacity (Icu) exceeding PSCC</li>
+              <li>Specify Ics/Icu ratio based on criticality</li>
+              <li>Determine operational requirements (withdrawable, communication)</li>
+              <li>Specify form of separation based on maintenance requirements</li>
+              <li>Verify TTA or PTTA compliance with BS EN 61439</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>MCCB range: <strong>100A to 1600A</strong> typical</li>
+              <li>ACB range: <strong>800A to 6300A</strong></li>
+              <li>MCCB breaking capacity: <strong>up to 70kA</strong></li>
+              <li>ACB breaking capacity: <strong>up to 150kA</strong></li>
+              <li>Icw duration: <strong>typically 1 second</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Main Switchboard Selection
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Specify switchgear for a 1600A main LV switchboard fed
-                from a 1000kVA transformer (6% impedance).
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Step 1: Calculate prospective fault current</p>
-                <p>
-                  I<sub>sc</sub> = (1000 × 1000) / (1.732 × 400 × 0.06) = 24.1kA
-                </p>
-                <p className="mt-2 text-white">Step 2: Select main incomer device</p>
-                <p>Options: 1600A MCCB (Icu 36kA) or 1600A ACB (Icu 65kA)</p>
-                <p className="mt-2 text-white">Step 3: Evaluate requirements</p>
-                <p>- Withdrawable preferred for maintenance flexibility</p>
-                <p>- Communication interface for BMS integration required</p>
-                <p>- Form 3b separation specified</p>
-                <p className="mt-2 text-green-400">Selection: ACB 1600A, Icu 65kA, withdrawable</p>
-                <p className="text-green-400">
-                  Rationale: Maintenance flexibility, adequate breaking capacity with margin,
-                  integration capability
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: MCCB Frame Size Selection
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Select MCCB for a 350A submain with 25kA prospective
-                fault current.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Requirements analysis:</p>
-                <p>- Load current: 350A</p>
-                <p>- PSCC: 25kA</p>
-                <p>- Fixed mounting acceptable</p>
-                <p className="mt-2 text-white">Frame size options:</p>
-                <p>- 400A frame: Icu options 25kA, 36kA, 50kA</p>
-                <p>- 630A frame: Higher capacity, oversized for application</p>
-                <p className="mt-2 text-white">Selection process:</p>
-                <p>Frame: 400A (minimum frame for 350A setting)</p>
-                <p>Icu: 36kA (exceeds 25kA PSCC with margin)</p>
-                <p>Trip unit: Electronic adjustable (Ir 0.4-1 × In, Im 1.5-10 × In)</p>
-                <p className="mt-2 text-green-400">
-                  Selection: MCCB 400A frame, 350A setting, 36kA, electronic trip
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Form of Separation Specification
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Determine form of separation for a data centre main
-                switchboard.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Operational requirements:</p>
-                <p>- 24/7 operation, no planned shutdowns</p>
-                <p>- Regular circuit additions expected</p>
-                <p>- Maintenance on individual circuits with others live</p>
-                <p>- Multiple maintenance personnel may work simultaneously</p>
-                <p className="mt-2 text-white">Assessment:</p>
-                <p>- Form 1: Inadequate - no separation</p>
-                <p>- Form 2: Inadequate - terminals not separated</p>
-                <p>- Form 3: Marginal - functional units separated but terminals shared</p>
-                <p>- Form 4: Optimal - full separation of all elements</p>
-                <p className="mt-2 text-green-400">Specification: Form 4b</p>
-                <p className="text-green-400">
-                  Rationale: Maximum safety for live working, individual terminal compartments
-                  enable simultaneous work on multiple circuits
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Switchgear Selection Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Calculate maximum demand and select In with appropriate margin
-                </li>
-                <li className="pl-1">
-                  Determine prospective fault current at each switchboard location
-                </li>
-                <li className="pl-1">Select breaking capacity (Icu) exceeding PSCC</li>
-                <li className="pl-1">Specify Ics/Icu ratio based on criticality</li>
-                <li className="pl-1">
-                  Determine operational requirements (withdrawable, communication)
-                </li>
-                <li className="pl-1">
-                  Specify form of separation based on maintenance requirements
-                </li>
-                <li className="pl-1">Verify TTA or PTTA compliance with BS EN 61439</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Undersized breaking capacity</strong> - failure to calculate actual PSCC</li>
+                <li><strong>Ignoring Ics</strong> - specifying Icu only without considering service requirements</li>
+                <li><strong>Form underspecification</strong> - selecting Form 1 where live working is anticipated</li>
+                <li><strong>No growth margin</strong> - sizing exactly to current load without future capacity</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  MCCB range: <strong>100A to 1600A</strong> typical
-                </li>
-                <li className="pl-1">
-                  ACB range: <strong>800A to 6300A</strong>
-                </li>
-                <li className="pl-1">
-                  MCCB breaking capacity: <strong>up to 70kA</strong>
-                </li>
-                <li className="pl-1">
-                  ACB breaking capacity: <strong>up to 150kA</strong>
-                </li>
-                <li className="pl-1">
-                  Icw duration: <strong>typically 1 second</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">
-                Common Specification Errors
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Undersized breaking capacity</strong> - failure to calculate actual PSCC
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring Ics</strong> - specifying Icu only without considering service
-                  requirements
-                </li>
-                <li className="pl-1">
-                  <strong>Form underspecification</strong> - selecting Form 1 where live working is
-                  anticipated
-                </li>
-                <li className="pl-1">
-                  <strong>No growth margin</strong> - sizing exactly to current load without future
-                  capacity
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Device Selection</p>
-                <ul className="space-y-0.5">
-                  <li>MCCB: 100A-1600A, up to 70kA</li>
-                  <li>ACB: 800A-6300A, up to 150kA</li>
-                  <li>ACB for withdrawable requirement</li>
-                  <li>Icu must exceed PSCC</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Forms of Separation</p>
-                <ul className="space-y-0.5">
-                  <li>Form 1: No internal separation</li>
-                  <li>Form 2: Busbars separated</li>
-                  <li>Form 3: Functional units separated</li>
-                  <li>Form 4: All terminals separated</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section1-2">
-              Next: Protection Coordination
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section1")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                LV distribution design
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section1-2")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Busbar systems
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

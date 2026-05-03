@@ -1,11 +1,16 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ChevronRight, Search, X, GraduationCap } from 'lucide-react';
+import { ArrowLeft, ChevronRight, Search, X, GraduationCap } from 'lucide-react';
 import { siteJargonTerms, siteJargonCategories } from '@/data/apprentice/siteJargonData';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+import {
+  PageFrame,
+  PageHero,
+  itemVariants,
+} from '@/components/college/primitives';
 import JargonTermCard from '@/components/apprentice/site-jargon/JargonTermCard';
 
 const categoryStyles: Record<string, { emoji: string; colour: string; border: string; bg: string }> =
@@ -89,15 +94,26 @@ const SiteJargon = () => {
   const advancedCount = siteJargonTerms.filter((t) => t.difficulty === 'advanced').length;
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6 animate-fade-in px-4 pb-20">
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <SmartBackButton />
-        <div>
-          <h1 className="text-xl font-bold text-white">Site Jargon & Terminology</h1>
-          <p className="text-sm text-white">Master the language of the electrical trade</p>
-        </div>
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice/toolbox')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
+
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Language"
+          title="Site jargon & terminology"
+          description="Every trade has its language. From your first day on site you'll hear 'bang', 'spur', 'first fix', 'second fix' — knowing what they mean keeps you safe, in the conversation, and not looking lost."
+          tone="yellow"
+        />
+      </motion.div>
 
       {/* Intro Card */}
       <Card className="border-elec-yellow/20 bg-white/5">
@@ -223,7 +239,7 @@ const SiteJargon = () => {
           </div>
         </>
       )}
-    </div>
+    </PageFrame>
   );
 };
 

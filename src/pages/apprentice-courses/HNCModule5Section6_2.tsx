@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 5 · Section 6 · Subsection 2 — Progress Monitoring
+ * HNC Electrical Engineering for Building Services (Project Management — Pearson U4004 + BSE PM context)
+ *   Site diaries, progress reports, programme updates, progress meetings and performance measurement — the daily and weekly disciplines of running a site.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Progress Monitoring - HNC Module 5 Section 6.2';
@@ -255,906 +272,599 @@ const faqs = [
 ];
 
 const HNCModule5Section6_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section6')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module5-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 5.6.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Progress Monitoring
-          </h1>
-          <p className="text-white">
-            Site diaries, progress reports, programme updates, progress meetings, and performance
-            measurement
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 5 · Section 6 · Subsection 2"
+            title="Progress Monitoring"
+            description="Site diaries, progress reports, programme updates, progress meetings, and performance measurement."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Site diaries:</strong> Daily contemporaneous records
-              </li>
-              <li className="pl-1">
-                <strong>Progress reports:</strong> Weekly/monthly analysis and forecasts
-              </li>
-              <li className="pl-1">
-                <strong>Programme updates:</strong> Actual vs planned comparison
-              </li>
-              <li className="pl-1">
-                <strong>KPIs:</strong> SPI, CPI, milestone achievement
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>M&E milestones:</strong> First fix, testing, commissioning
-              </li>
-              <li className="pl-1">
-                <strong>Progress metrics:</strong> Metres installed, points terminated
-              </li>
-              <li className="pl-1">
-                <strong>Coordination:</strong> Interface with other trades critical
-              </li>
-              <li className="pl-1">
-                <strong>Hidden work:</strong> Photo records before close-up essential
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              "Progress monitoring = capturing actuals against plan, identifying variance, taking corrective action.",
+              "Site diary daily: weather, labour count, plant on site, deliveries, key events, visitors, incidents — the contemporaneous record.",
+              "Progress report weekly: programme update, % complete by trade, look-ahead 2–4 weeks, risks, issues, EWN summary.",
+              "Programme update: bars statused with actuals, critical path re-run, slip identified, recovery plan documented.",
+              "Progress meeting: client, design, contractor, key subs — chaired by PM, minuted, actions tracked.",
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="NEC4 ECC — Clause 32.2 (Revising the programme)"
+            clause="The Contractor submits a revised programme to the Project Manager for acceptance within the period for reply or, if shorter, the period stated in the Contract Data, and at the intervals stated in the Contract Data, after the starting date."
+            meaning={
+              <>
+                Under NEC4, programme revisions are a contractual rhythm — typically 4 weekly. Each revision is a CPM-disciplined update against actuals, accepted compensation events and forecast changes. The revised programme is the basis of monthly payment certification. Skipping or sloppy revisions break the contract's commercial logic.
+              </>
+            }
+            cite="Source: NEC4 Engineering and Construction Contract — Clause 32 (refer to NEC4 published text for verbatim use)."
+          />
+
+
+          <LearningOutcomes
+            outcomes={[
               'Maintain comprehensive site diaries for building services works',
               'Prepare and interpret progress reports for M&E installations',
               'Update programmes and identify critical path impacts',
               'Conduct effective progress meetings with clear outcomes',
               'Apply KPIs to measure installation performance',
               'Analyse delays and their effects on project completion',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Site Diaries */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Daily Site Diaries
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Daily Site Diaries">
             <p>
               The site diary is the most important contemporaneous record on any construction
               project. For building services contractors, it provides essential evidence of
               progress, delays, instructions, and site conditions that may be needed months or years
               later for claims, disputes, or simply understanding what happened and when.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Essential daily entries:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Date and weather:</strong> Temperature, precipitation, wind affecting work
-                </li>
-                <li className="pl-1">
-                  <strong>Workforce:</strong> Numbers by trade, subcontractors present
-                </li>
-                <li className="pl-1">
-                  <strong>Work areas:</strong> Locations worked, progress achieved
-                </li>
-                <li className="pl-1">
-                  <strong>Deliveries:</strong> Materials received, plant arriving/departing
-                </li>
-                <li className="pl-1">
-                  <strong>Instructions:</strong> Verbal and written directions received
-                </li>
-                <li className="pl-1">
-                  <strong>Visitors:</strong> Client, consultants, inspectors on site
-                </li>
-                <li className="pl-1">
-                  <strong>Issues:</strong> Delays, obstructions, coordination problems
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                M&E-Specific Diary Entries
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Category</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">What to Record</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Why It Matters</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Containment progress</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Metres installed by type and area
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Productivity measurement</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Access issues</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Scaffold not ready, ceiling closed early
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Delay evidence</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Coordination clashes</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        HVAC duct blocking cable route
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Variation/disruption claims
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Testing activities</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pressure tests, insulation resistance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Commissioning evidence</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Drawings received</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Revision numbers, dates, from whom
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Design responsibility</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Best Practice: Photographic Records
-              </p>
-              <p className="text-sm text-white mb-2">
-                Complement diary entries with date-stamped photographs showing:
-              </p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">Work completed before close-up (especially in voids)</li>
-                <li className="pl-1">Conditions preventing access or work</li>
-                <li className="pl-1">Quality issues or defective work by others</li>
-                <li className="pl-1">Site conditions (weather damage, flooding)</li>
-                <li className="pl-1">Coordination clashes and obstruction</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Essential daily entries:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Date and weather:</strong> Temperature, precipitation, wind affecting work
+              </li>
+              <li>
+                <strong>Workforce:</strong> Numbers by trade, subcontractors present
+              </li>
+              <li>
+                <strong>Work areas:</strong> Locations worked, progress achieved
+              </li>
+              <li>
+                <strong>Deliveries:</strong> Materials received, plant arriving/departing
+              </li>
+              <li>
+                <strong>Instructions:</strong> Verbal and written directions received
+              </li>
+              <li>
+                <strong>Visitors:</strong> Client, consultants, inspectors on site
+              </li>
+              <li>
+                <strong>Issues:</strong> Delays, obstructions, coordination problems
+              </li>
+            </ul>
+            <p>
+              <strong>M&E-specific diary entries:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Containment progress:</strong> Metres installed by type and area —
+                Productivity measurement
+              </li>
+              <li>
+                <strong>Access issues:</strong> Scaffold not ready, ceiling closed early — Delay
+                evidence
+              </li>
+              <li>
+                <strong>Coordination clashes:</strong> HVAC duct blocking cable route —
+                Variation/disruption claims
+              </li>
+              <li>
+                <strong>Testing activities:</strong> Pressure tests, insulation resistance —
+                Commissioning evidence
+              </li>
+              <li>
+                <strong>Drawings received:</strong> Revision numbers, dates, from whom — Design
+                responsibility
+              </li>
+            </ul>
+            <p>
+              <strong>Best practice — photographic records. Complement diary entries with
+              date-stamped photographs showing:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Work completed before close-up (especially in voids)</li>
+              <li>Conditions preventing access or work</li>
+              <li>Quality issues or defective work by others</li>
+              <li>Site conditions (weather damage, flooding)</li>
+              <li>Coordination clashes and obstruction</li>
+            </ul>
+            <p>
               <strong>Legal principle:</strong> Contemporaneous records (written at the time) carry
               more weight than recollections made later. Complete your diary daily, not
               retrospectively.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Progress Reports */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Progress Reports and Programme Updates
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Progress Reports and Programme Updates">
             <p>
               While site diaries record daily facts, progress reports analyse and interpret that
               information to communicate status, identify trends, and forecast future performance.
               They transform raw data into actionable intelligence for project stakeholders.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Weekly Progress Report
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Work completed this week by area</li>
-                  <li className="pl-1">Planned vs actual progress comparison</li>
-                  <li className="pl-1">Issues encountered and resolution</li>
-                  <li className="pl-1">Look-ahead for coming week</li>
-                  <li className="pl-1">Resource levels and requirements</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Monthly Progress Report
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Overall programme status and forecast</li>
-                  <li className="pl-1">Milestone achievement summary</li>
-                  <li className="pl-1">Cost vs budget analysis</li>
-                  <li className="pl-1">Risk register updates</li>
-                  <li className="pl-1">Variation and change status</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Programme Update Process
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Step</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Activity</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Output</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1. Data collection</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Gather progress from site diaries, foremen
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Actual start/finish dates, % complete
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2. Programme input</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Update activity status in planning software
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Updated programme file</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3. Analysis</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Compare to baseline, identify variances
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Critical path status, float consumed
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4. Forecasting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Adjust remaining durations, add delays
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Revised completion forecast
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5. Recovery planning</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Identify mitigation measures if behind
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Recovery programme options
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Critical Path Monitoring</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Critical path activities have zero float - any delay extends completion
-                </li>
-                <li className="pl-1">
-                  M&E installation is often on the critical path in fit-out phases
-                </li>
-                <li className="pl-1">
-                  Monitor near-critical activities (low float) as they may become critical
-                </li>
-                <li className="pl-1">
-                  Report critical path delays immediately with recovery proposals
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Weekly progress report:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Work completed this week by area</li>
+              <li>Planned vs actual progress comparison</li>
+              <li>Issues encountered and resolution</li>
+              <li>Look-ahead for coming week</li>
+              <li>Resource levels and requirements</li>
+            </ul>
+            <p>
+              <strong>Monthly progress report:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Overall programme status and forecast</li>
+              <li>Milestone achievement summary</li>
+              <li>Cost vs budget analysis</li>
+              <li>Risk register updates</li>
+              <li>Variation and change status</li>
+            </ul>
+            <p>
+              <strong>Programme update process:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>1. Data collection:</strong> Gather progress from site diaries, foremen —
+                Actual start/finish dates, % complete
+              </li>
+              <li>
+                <strong>2. Programme input:</strong> Update activity status in planning software —
+                Updated programme file
+              </li>
+              <li>
+                <strong>3. Analysis:</strong> Compare to baseline, identify variances — Critical
+                path status, float consumed
+              </li>
+              <li>
+                <strong>4. Forecasting:</strong> Adjust remaining durations, add delays — Revised
+                completion forecast
+              </li>
+              <li>
+                <strong>5. Recovery planning:</strong> Identify mitigation measures if behind —
+                Recovery programme options
+              </li>
+            </ul>
+            <p>
+              <strong>Critical path monitoring:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Critical path activities have zero float - any delay extends completion</li>
+              <li>M&E installation is often on the critical path in fit-out phases</li>
+              <li>Monitor near-critical activities (low float) as they may become critical</li>
+              <li>Report critical path delays immediately with recovery proposals</li>
+            </ul>
+            <p>
               <strong>Reporting principle:</strong> Progress reports should tell a story - what was
               planned, what happened, why any variance occurred, and what will be done about it.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Progress Meetings */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Progress Meetings and Communication
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Progress Meetings and Communication">
             <p>
               Progress meetings are the primary forum for coordinating activities, resolving issues,
               and maintaining alignment between project stakeholders. Effective meetings require
               preparation, clear agendas, and documented outcomes with assigned actions.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Standard Progress Meeting Agenda
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Item</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Content</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Duration
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1. Previous actions</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Review completion status of actions
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">10 minutes</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2. Health and safety</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Incidents, near-misses, safety matters
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">5 minutes</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3. Programme review</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Progress vs plan, critical path status
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">15 minutes</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4. Trade-by-trade</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Each contractor reports progress/issues
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">20 minutes</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5. Design/RFIs</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Outstanding information, drawing status
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">10 minutes</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6. Look-ahead</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Key activities next 2-4 weeks
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">10 minutes</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">7. AOB</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Other matters, next meeting date
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">5 minutes</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Meeting Preparation</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Review previous meeting minutes and actions</li>
-                  <li className="pl-1">Update progress figures from site diaries</li>
-                  <li className="pl-1">Prepare list of issues to raise</li>
-                  <li className="pl-1">Bring supporting documents and photos</li>
-                  <li className="pl-1">Know your information requirements</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Effective Actions</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Specific - exactly what is required</li>
-                  <li className="pl-1">Measurable - how completion is verified</li>
-                  <li className="pl-1">Assigned - named person responsible</li>
-                  <li className="pl-1">Realistic - achievable in the timeframe</li>
-                  <li className="pl-1">Time-bound - clear deadline date</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Meeting Minutes - What to Record
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Attendees and apologies:</strong> Who was present, who sent
-                  representatives
-                </li>
-                <li className="pl-1">
-                  <strong>Decisions made:</strong> What was agreed, by whom
-                </li>
-                <li className="pl-1">
-                  <strong>Actions assigned:</strong> Task, owner, deadline
-                </li>
-                <li className="pl-1">
-                  <strong>Issues raised:</strong> Problems reported, especially if disputed
-                </li>
-                <li className="pl-1">
-                  <strong>Programme status:</strong> Current position, forecast completion
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Standard progress meeting agenda:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>1. Previous actions:</strong> Review completion status of actions — 10
+                minutes
+              </li>
+              <li>
+                <strong>2. Health and safety:</strong> Incidents, near-misses, safety matters — 5
+                minutes
+              </li>
+              <li>
+                <strong>3. Programme review:</strong> Progress vs plan, critical path status — 15
+                minutes
+              </li>
+              <li>
+                <strong>4. Trade-by-trade:</strong> Each contractor reports progress/issues — 20
+                minutes
+              </li>
+              <li>
+                <strong>5. Design/RFIs:</strong> Outstanding information, drawing status — 10
+                minutes
+              </li>
+              <li>
+                <strong>6. Look-ahead:</strong> Key activities next 2-4 weeks — 10 minutes
+              </li>
+              <li>
+                <strong>7. AOB:</strong> Other matters, next meeting date — 5 minutes
+              </li>
+            </ul>
+            <p>
+              <strong>Meeting preparation:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Review previous meeting minutes and actions</li>
+              <li>Update progress figures from site diaries</li>
+              <li>Prepare list of issues to raise</li>
+              <li>Bring supporting documents and photos</li>
+              <li>Know your information requirements</li>
+            </ul>
+            <p>
+              <strong>Effective actions:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Specific - exactly what is required</li>
+              <li>Measurable - how completion is verified</li>
+              <li>Assigned - named person responsible</li>
+              <li>Realistic - achievable in the timeframe</li>
+              <li>Time-bound - clear deadline date</li>
+            </ul>
+            <p>
+              <strong>Meeting minutes — what to record:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Attendees and apologies:</strong> Who was present, who sent representatives
+              </li>
+              <li>
+                <strong>Decisions made:</strong> What was agreed, by whom
+              </li>
+              <li>
+                <strong>Actions assigned:</strong> Task, owner, deadline
+              </li>
+              <li>
+                <strong>Issues raised:</strong> Problems reported, especially if disputed
+              </li>
+              <li>
+                <strong>Programme status:</strong> Current position, forecast completion
+              </li>
+            </ul>
+            <p>
               <strong>Meeting discipline:</strong> Always review minutes when issued. If they do not
               accurately reflect what was said or agreed, respond in writing within 7 days
               requesting correction.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Performance Measurement and Delay Analysis */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Performance Measurement and Delay Analysis
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Performance Measurement and Delay Analysis">
             <p>
               Objective performance measurement using Key Performance Indicators (KPIs) enables
               early identification of problems and supports evidence-based decision making. When
               delays occur, formal delay analysis establishes cause, effect, and entitlement.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Performance Indicators for M&E Projects
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">KPI</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Formula</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Target</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Schedule Performance Index
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        SPI = Earned Value / Planned Value
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">&ge; 1.0</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cost Performance Index</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        CPI = Earned Value / Actual Cost
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">&ge; 1.0</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Productivity rate</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Units installed / Labour hours
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Per tender allowance</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        First-time test pass rate
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Tests passed / Tests conducted
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">&ge; 95%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Defect closure rate</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Defects closed / Defects raised
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">&ge; 90%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">RFI response time</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Average days to receive response
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">&le; 5 days</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Earned Value Analysis Example
-              </p>
-              <p className="font-mono text-center text-base mb-2">
-                Week 8 of 20-week programme, Budget = £500,000
-              </p>
-              <div className="text-sm space-y-1">
-                <p>
-                  <strong>Planned Value (PV):</strong> £200,000 (40% of budget should be complete)
-                </p>
-                <p>
-                  <strong>Earned Value (EV):</strong> £170,000 (34% of work actually complete)
-                </p>
-                <p>
-                  <strong>Actual Cost (AC):</strong> £190,000 (spent to date)
-                </p>
-                <p className="mt-2">
-                  <strong>SPI = 170/200 = 0.85</strong> (15% behind schedule)
-                </p>
-                <p>
-                  <strong>CPI = 170/190 = 0.89</strong> (11% over budget for work done)
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Delay Analysis Methods</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Impacted As-Planned</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Start with baseline programme</li>
-                    <li>Insert delay events</li>
-                    <li>Recalculate end date</li>
-                    <li>Shows theoretical impact</li>
-                    <li>Simpler but less accurate</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Time Impact Analysis</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Use updated programme at delay date</li>
-                    <li>Insert delay event</li>
-                    <li>Compare completion dates</li>
-                    <li>Shows actual impact on critical path</li>
-                    <li>More accurate but requires good records</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Delay Categories</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Excusable, compensable:</strong> Client-caused delay (entitlement to time
-                  and money)
-                </li>
-                <li className="pl-1">
-                  <strong>Excusable, non-compensable:</strong> Neutral event like weather (time
-                  only)
-                </li>
-                <li className="pl-1">
-                  <strong>Non-excusable:</strong> Contractor-caused delay (no entitlement)
-                </li>
-                <li className="pl-1">
-                  <strong>Concurrent:</strong> Multiple delays at same time (complex allocation)
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Key performance indicators for M&E projects:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Schedule Performance Index:</strong> SPI = Earned Value / Planned Value —
+                Target ≥ 1.0
+              </li>
+              <li>
+                <strong>Cost Performance Index:</strong> CPI = Earned Value / Actual Cost — Target ≥
+                1.0
+              </li>
+              <li>
+                <strong>Productivity rate:</strong> Units installed / Labour hours — Per tender
+                allowance
+              </li>
+              <li>
+                <strong>First-time test pass rate:</strong> Tests passed / Tests conducted — Target
+                ≥ 95%
+              </li>
+              <li>
+                <strong>Defect closure rate:</strong> Defects closed / Defects raised — Target ≥ 90%
+              </li>
+              <li>
+                <strong>RFI response time:</strong> Average days to receive response — Target ≤ 5
+                days
+              </li>
+            </ul>
+            <p>
+              <strong>Earned value analysis example — Week 8 of 20-week programme, Budget =
+              £500,000:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Planned Value (PV):</strong> £200,000 (40% of budget should be complete)
+              </li>
+              <li>
+                <strong>Earned Value (EV):</strong> £170,000 (34% of work actually complete)
+              </li>
+              <li>
+                <strong>Actual Cost (AC):</strong> £190,000 (spent to date)
+              </li>
+              <li>
+                <strong>SPI = 170/200 = 0.85</strong> (15% behind schedule)
+              </li>
+              <li>
+                <strong>CPI = 170/190 = 0.89</strong> (11% over budget for work done)
+              </li>
+            </ul>
+            <p>
+              <strong>Impacted as-planned method:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Start with baseline programme</li>
+              <li>Insert delay events</li>
+              <li>Recalculate end date</li>
+              <li>Shows theoretical impact</li>
+              <li>Simpler but less accurate</li>
+            </ul>
+            <p>
+              <strong>Time impact analysis:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Use updated programme at delay date</li>
+              <li>Insert delay event</li>
+              <li>Compare completion dates</li>
+              <li>Shows actual impact on critical path</li>
+              <li>More accurate but requires good records</li>
+            </ul>
+            <p>
+              <strong>Delay categories:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Excusable, compensable:</strong> Client-caused delay (entitlement to time
+                and money)
+              </li>
+              <li>
+                <strong>Excusable, non-compensable:</strong> Neutral event like weather (time only)
+              </li>
+              <li>
+                <strong>Non-excusable:</strong> Contractor-caused delay (no entitlement)
+              </li>
+              <li>
+                <strong>Concurrent:</strong> Multiple delays at same time (complex allocation)
+              </li>
+            </ul>
+            <p>
               <strong>Claims tip:</strong> Maintain a delay register recording all delay events as
               they occur, with dates, causes, effects, and supporting evidence. Do not wait until
               project end to analyse delays.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — Site diary entry:</strong> Record today's events for an M&E
+              subcontractor on a commercial office fit-out.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Date:</strong> 15 January 2026
+              </li>
+              <li>
+                <strong>Weather:</strong> Overcast, 8°C, dry
+              </li>
+              <li>
+                <strong>Workforce:</strong> 4 electricians, 2 apprentices, 1 supervisor
+              </li>
+              <li>
+                <strong>Work areas:</strong> Level 2 North - containment installation
+              </li>
+              <li>
+                <strong>Progress:</strong> 45m cable tray installed, 30m conduit
+              </li>
+              <li>
+                <strong>Deliveries:</strong> Cable drums (10 x 100m 4c 6mm SWA)
+              </li>
+              <li>
+                <strong>Issues:</strong> Unable to access Level 3 South - ceiling grid installed by
+                others before our first fix. Raised with MC at 10:30.
+              </li>
+              <li>
+                <strong>Instructions:</strong> Site instruction SI-042 received - additional socket
+                outlets to meeting rooms.
+              </li>
+              <li>
+                <strong>Visitors:</strong> M&E consultant walkover 14:00-15:00
+              </li>
+            </ul>
+            <p>
+              <strong>Example 2 — Progress status calculation:</strong> Calculate SPI and CPI for a
+              project with: Planned Value £80,000, Earned Value £72,000, Actual Cost £78,000.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                SPI = EV / PV = £72,000 / £80,000 = <strong>0.90</strong>
+              </li>
+              <li>
+                CPI = EV / AC = £72,000 / £78,000 = <strong>0.92</strong>
+              </li>
+              <li>SPI 0.90 = 10% behind schedule</li>
+              <li>CPI 0.92 = 8% over budget for work completed</li>
+              <li>Recovery action required to meet programme and budget</li>
+            </ul>
+            <p>
+              <strong>Example 3 — Delay impact assessment:</strong> Late design information delayed
+              containment installation by 2 weeks. Original programme showed 4 weeks float on this
+              activity. Assess impact.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Activity float: 4 weeks</li>
+              <li>Delay event: 2 weeks</li>
+              <li>Remaining float = 4 - 2 = 2 weeks</li>
+              <li>Activity NOT on critical path (float remains)</li>
+              <li>Float consumption should be recorded</li>
+              <li>Future delays may consume remaining float</li>
+              <li>Disruption costs may still be claimable</li>
+              <li>Notify client of delay event regardless of float impact</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Site Diary Entry
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Record today's events for an M&E subcontractor on a
-                commercial office fit-out.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Date:</strong> 15 January 2026
-                </p>
-                <p>
-                  <strong>Weather:</strong> Overcast, 8°C, dry
-                </p>
-                <p>
-                  <strong>Workforce:</strong> 4 electricians, 2 apprentices, 1 supervisor
-                </p>
-                <p className="mt-2">
-                  <strong>Work areas:</strong> Level 2 North - containment installation
-                </p>
-                <p>
-                  <strong>Progress:</strong> 45m cable tray installed, 30m conduit
-                </p>
-                <p className="mt-2">
-                  <strong>Deliveries:</strong> Cable drums (10 x 100m 4c 6mm SWA)
-                </p>
-                <p>
-                  <strong>Issues:</strong> Unable to access Level 3 South - ceiling grid installed
-                  by others before our first fix. Raised with MC at 10:30.
-                </p>
-                <p>
-                  <strong>Instructions:</strong> Site instruction SI-042 received - additional
-                  socket outlets to meeting rooms.
-                </p>
-                <p>
-                  <strong>Visitors:</strong> M&E consultant walkover 14:00-15:00
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Progress Status Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Calculate SPI and CPI for a project with: Planned Value
-                £80,000, Earned Value £72,000, Actual Cost £78,000.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Schedule Performance Index (SPI):</p>
-                <p>
-                  SPI = EV / PV = £72,000 / £80,000 = <strong>0.90</strong>
-                </p>
-                <p className="mt-2">Cost Performance Index (CPI):</p>
-                <p>
-                  CPI = EV / AC = £72,000 / £78,000 = <strong>0.92</strong>
-                </p>
-                <p className="mt-2 text-white">Interpretation:</p>
-                <p className="text-orange-400">SPI 0.90 = 10% behind schedule</p>
-                <p className="text-orange-400">CPI 0.92 = 8% over budget for work completed</p>
-                <p className="mt-2 text-green-400">
-                  Recovery action required to meet programme and budget
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Daily monitoring checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Complete site diary entries by end of each day</li>
+              <li>Take photographs of progress and issues</li>
+              <li>Record any verbal instructions in writing</li>
+              <li>Note access restrictions or coordination problems</li>
+              <li>Update progress on look-ahead programme</li>
+              <li>Communicate issues to project manager same day</li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                SPI/CPI target: <strong>≥ 1.0</strong> (on or better than plan)
+              </li>
+              <li>
+                Minutes response: <strong>7 days</strong> to dispute
+              </li>
+              <li>
+                Progress reports: <strong>Weekly or monthly</strong>
+              </li>
+              <li>
+                Look-ahead: <strong>2-6 weeks</strong> rolling detail
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Delay Impact Assessment
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Late design information delayed containment installation
-                by 2 weeks. Original programme showed 4 weeks float on this activity. Assess impact.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  <strong>Baseline position:</strong>
-                </p>
-                <p>Activity float: 4 weeks</p>
-                <p>Delay event: 2 weeks</p>
-                <p className="mt-2">
-                  <strong>Analysis:</strong>
-                </p>
-                <p>Remaining float = 4 - 2 = 2 weeks</p>
-                <p>Activity NOT on critical path (float remains)</p>
-                <p className="mt-2">
-                  <strong>However:</strong>
-                </p>
-                <p>- Float consumption should be recorded</p>
-                <p>- Future delays may consume remaining float</p>
-                <p>- Disruption costs may still be claimable</p>
-                <p className="mt-2 text-elec-yellow">
-                  Notify client of delay event regardless of float impact
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Daily Monitoring Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Complete site diary entries by end of each day</li>
-                <li className="pl-1">Take photographs of progress and issues</li>
-                <li className="pl-1">Record any verbal instructions in writing</li>
-                <li className="pl-1">Note access restrictions or coordination problems</li>
-                <li className="pl-1">Update progress on look-ahead programme</li>
-                <li className="pl-1">Communicate issues to project manager same day</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  SPI/CPI target: <strong>&ge; 1.0</strong> (on or better than plan)
-                </li>
-                <li className="pl-1">
-                  Minutes response: <strong>7 days</strong> to dispute
-                </li>
-                <li className="pl-1">
-                  Progress reports: <strong>Weekly or monthly</strong>
-                </li>
-                <li className="pl-1">
-                  Look-ahead: <strong>2-6 weeks</strong> rolling detail
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Retrospective diary entries</strong> - Complete daily, not at week end
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Vague progress descriptions</strong> - Be specific: metres, quantities,
                   locations
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Not photographing hidden work</strong> - No evidence once covered
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Late delay notification</strong> - Report immediately when identified
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Accepting inaccurate minutes</strong> - Challenge within 7 days
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Write site diaries on the day with measured quantities, photograph all concealed work before close-up, raise potential delays in writing the moment they appear, and challenge inaccurate meeting minutes within 7 days."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Site diary reveals a 6-week pattern of late starts"
+            situation={
+              <>
+                The project is running two weeks behind. The site diary review shows that, over the last six weeks, the electrical sub has averaged 09:30 starts (against a 08:00 contractual start), losing approximately 7.5 hours per week per operative. With 12 operatives, that is 90 lost hours per week, or roughly 540 hours over the period — equivalent to two weeks of work on a 5-day/8-hour basis.
+              </>
+            }
+            whatToDo={
+              <>
+                Use the site diary as evidence in a performance meeting with the subcontractor. Document the pattern; agree corrective action (8:00 start enforced, supervisor on site for tea and morning brief, late starts logged as time-related contractor cost). Track for two weeks; if not corrected, escalate to formal warning under the subcontract. The site diary is the contemporaneous evidence base — without it, the conversation becomes "your word against theirs".
+              </>
+            }
+            whyItMatters={
+              <>
+                Progress monitoring is what catches drift before it becomes crisis. The disciplined site diary, weekly progress report and monthly programme update create the audit trail that supports every commercial conversation — from subcontractor performance management to NEC compensation event assessment.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Progress Documentation</p>
-                <ul className="space-y-0.5">
-                  <li>Site diary - daily contemporaneous record</li>
-                  <li>Progress report - weekly/monthly analysis</li>
-                  <li>Programme update - actual vs planned</li>
-                  <li>Look-ahead - detailed 2-6 week forecast</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Performance Metrics</p>
-                <ul className="space-y-0.5">
-                  <li>SPI = EV/PV (&ge;1.0 = on schedule)</li>
-                  <li>CPI = EV/AC (&ge;1.0 = on budget)</li>
-                  <li>Critical path = zero float activities</li>
-                  <li>Early warning essential under NEC</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+                    <KeyTakeaways
+            points={[
+              "Progress monitoring = capture actuals, identify variance, take action.",
+              "Site diary daily: weather, labour, plant, deliveries, events, visitors, incidents.",
+              "Weekly progress report: programme, % complete, 2–4 week look-ahead, risks, EWN.",
+              "Programme update: bars statused, CPM re-run, slip and recovery documented.",
+              "Progress meeting: client, design, contractor, subs — minuted, actions tracked.",
+              "Earned Value tracking gives objective progress measure beyond %-complete.",
+              "Photographic record at key milestones supports as-built and dispute defence.",
+              "Under NEC4 Clause 32, programme revisions are contractual — typically 4-weekly.",
+            ]}
+          />
+
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section6-3">
-              Next: Quality Management
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section6')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Site management and CDM
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section6-3')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Interface coordination
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

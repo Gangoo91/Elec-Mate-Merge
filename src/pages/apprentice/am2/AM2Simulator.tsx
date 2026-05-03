@@ -12,9 +12,11 @@
  */
 
 import { useState, useCallback } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
-import { Target, Lock, Search, BookOpen, Clock, ShieldAlert, Gauge } from 'lucide-react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, Target, Lock, Search, BookOpen, Clock, Gauge } from 'lucide-react';
+import { PageHero, itemVariants } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
 import { AM2ReadinessDashboard } from '@/components/am2/AM2ReadinessDashboard';
 import { SafeIsolationAssessment } from '@/components/am2/safe-isolation/SafeIsolationAssessment';
@@ -38,6 +40,7 @@ const TABS: { id: TabId; label: string; icon: typeof Target }[] = [
 const IMMERSIVE_TABS: TabId[] = ['testing', 'safe-isolation', 'faults'];
 
 const AM2Simulator = () => {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const activeTab = (searchParams.get('tab') as TabId) || 'readiness';
   const setActiveTab = (tab: TabId) => setSearchParams({ tab }, { replace: false });
@@ -59,19 +62,26 @@ const AM2Simulator = () => {
     >
       {/* Header — hidden for immersive tabs */}
       {!isImmersive && (
-        <div className="px-4 pt-4 pb-2">
-          <div className="mb-3">
-            <SmartBackButton />
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-cyan-500/20 rounded-xl shrink-0">
-              <ShieldAlert className="h-7 w-7 text-cyan-400" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight text-white">AM2 Readiness</h1>
-              <p className="text-white text-sm">Identify practical gaps before you book your AM2</p>
-            </div>
-          </div>
+        <div className="px-4 sm:px-6 lg:px-8 pt-4 pb-2 space-y-6">
+          <motion.div variants={itemVariants}>
+            <Button
+              variant="ghost"
+              onClick={() => navigate('/apprentice')}
+              className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+            >
+              <ArrowLeft className="mr-2 h-5 w-5" />
+              Back
+            </Button>
+          </motion.div>
+
+          <motion.div variants={itemVariants}>
+            <PageHero
+              eyebrow="Apprentice · AM2"
+              title="AM2 readiness"
+              description="Six readiness modes — isolation, testing, fault-finding, knowledge and live history. Identify the practical gaps before you book your AM2."
+              tone="yellow"
+            />
+          </motion.div>
         </div>
       )}
 

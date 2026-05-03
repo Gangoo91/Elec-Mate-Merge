@@ -26,7 +26,10 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  AppendixTable,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Earth fault loop impedance — Ze + (R1 + R2) = Zs (5.1) | Level 3 Module 6.5.1 | Elec-Mate';
@@ -382,6 +385,14 @@ export default function Sub1() {
             explanation={checks[0].explanation}
           />
 
+          <VideoCard
+            url={videos.zeTest.url}
+            title={videos.zeTest.title}
+            channel={videos.zeTest.channel}
+            duration={videos.zeTest.duration}
+            topic={videos.zeTest.topic}
+          />
+
           <SectionRule />
 
           <ContentEyebrow>Why temperature correction matters</ContentEyebrow>
@@ -453,25 +464,45 @@ export default function Sub1() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 411.4.5 (Earth fault loop impedance, TN systems)"
-            clause="In a TN system, the characteristics of the protective devices and the circuit impedances shall fulfil the following requirement: Zs × Ia ≤ U0 × Cmin where Zs is the impedance in ohms of the fault loop, Ia is the current in amperes causing automatic operation of the disconnecting device within the time specified in Regulation 411.3.2.2, U0 is the nominal AC RMS line voltage to earth in volts, and Cmin is the voltage factor minimum to take account of voltage variations."
+            source="BS 7671:2018+A4:2026 — Chapter 41 ADS framework (Regs 411.3.2.2, 411.4 and Table 41.3, with the A4:2026 explicit Cmin = 0.95)"
+            clause="The Chapter 41 ADS verification expresses the relationship between fault loop impedance, device operating characteristic and supply voltage as: Zs × Ia ≤ U0 × Cmin, where Zs is the impedance in ohms of the fault loop, Ia is the current in amperes causing automatic operation of the disconnecting device within the time specified in Regulation 411.3.2.2, U0 is the nominal AC RMS line voltage to earth in volts (230 V on UK LV supplies), and Cmin is the voltage factor (0.95 in A4:2026) that accounts for ESQCR-permitted supply voltage variation. Table 41.3 publishes this relationship pre-solved as maximum Zs values for the common BS EN 60898 MCBs and BS EN 61009 RCBOs."
             meaning={
               <>
-                Reg 411.4.5 is the single most important regulation in this whole module. It binds Zs (which the design controls) to Ia (which the device choice controls) to U0 × Cmin (which the supply gives — 230 × 0.95 = 218.5 V). Rearranged: Zs ≤ (U0 × Cmin) / Ia. The Table 41.3 maximum Zs values are this equation pre-solved for common devices. The A4:2026 update changed Cmin from being implicit to being explicit at 0.95 — and that is what dropped the B32 max from 1.37 Ω (pre-A4) to 1.37 Ω (A4:2026).
+                This is the single most important relationship in the whole module. It binds Zs
+                (which the design controls) to Ia (which the device choice controls) to
+                U0 × Cmin (which the supply gives — 230 × 0.95 = 218.5 V). Rearranged:
+                Zs ≤ (U0 × Cmin) / Ia. The Table 41.3 maximum Zs values are this equation
+                pre-solved for common devices. A4:2026 made Cmin explicit at 0.95 — and that
+                is what dropped the B32 maximum Zs from 1.44 Ω (pre-A4) to 1.37 Ω (A4:2026).
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Part 4, Regulation 411.4.5. See also Reg 411.3.2.2 (disconnection times), Table 41.1 (max disconnection times) and Table 41.3 (max Zs values)."
+            cite="Source: BS 7671:2018+A4:2026 Chapter 41 — Regulations 411.3.2.2, 411.4 and Table 41.3."
           />
 
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Table 41.3 (Maximum Zs for fuses and circuit-breakers, Cmin 0.95)"
-            clause="Maximum earth fault loop impedance Zs for circuit-breakers to BS EN 60898 and the overcurrent characteristics of RCBOs to BS EN 61009. Type B (3 In to 5 In) at U0 = 230 V, Cmin = 0.95: B6 = 7.28 Ω; B10 = 4.37 Ω; B16 = 2.73 Ω; B20 = 2.19 Ω; B25 = 1.75 Ω; B32 = 1.37 Ω; B40 = 1.09 Ω; B50 = 0.87 Ω; B63 = 0.69 Ω."
-            meaning={
+          <AppendixTable
+            caption="Maximum earth fault loop impedance Zs — BS EN 60898 Type B circuit-breakers (U₀ = 230 V, Cmin = 0.95)"
+            source="BS 7671:2018+A4:2026 — Table 41.3 (extract). Always cross-check against the current published table before use on a design pack."
+            headers={['Device rating (A)', 'Max Zs (Ω)']}
+            rows={[
+              ['B6', '7.28'],
+              ['B10', '4.37'],
+              ['B16', '2.73'],
+              ['B20', '2.19'],
+              ['B25', '1.75'],
+              ['B32', '1.37'],
+              ['B40', '1.09'],
+              ['B50', '0.87'],
+              ['B63', '0.69'],
+            ]}
+            notes={
               <>
-                Table 41.3 is the lookup table — the pre-solved Zs limits for the common BS EN 60898 MCBs at the A4:2026 Cmin of 0.95. Note the B32 max is now 1.37 Ω. The pre-A4 value (which you may still see on older Zs lookup apps and old design packs) was 1.44 Ω — that figure does NOT incorporate Cmin and is no longer valid for an A4:2026 design. Always confirm you are using the current edition. The Type C and Type D values are also tighter: C32 max Zs = 0.68 Ω (was 0.72); D32 max Zs = 0.34 Ω (was 0.36). Larger cables or lower-rated devices may be needed under A4:2026 where a borderline design just passed under A2.
+                These are the A4:2026 values, which incorporate Cmin = 0.95 explicitly.
+                Pre-A4 lookup apps and old design packs may show 1.44 Ω for B32 (no Cmin) —
+                that value is no longer valid for an A4:2026 design. Type C and Type D values
+                are also tighter under A4:2026 (C32 max Zs = 0.68 Ω; D32 max Zs = 0.34 Ω).
+                Tables 41.2 / 41.4 of BS 7671 cover fuses and other device types respectively.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Chapter 41, Table 41.3 (and Tables 41.2 / 41.4 for fuses and Type C / D MCBs respectively). See also Appendix 14 for the Cmin derivation."
           />
 
           <InlineCheck

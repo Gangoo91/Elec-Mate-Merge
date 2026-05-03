@@ -26,7 +26,9 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Calculating Zs at design stage — Cmin 0.95 (5.2) | Level 3 Module 6.5.2 | Elec-Mate';
@@ -361,6 +363,14 @@ export default function Sub2() {
             options={checks[0].options}
             correctIndex={checks[0].correctIndex}
             explanation={checks[0].explanation}
+          />
+
+          <VideoCard
+            url={videos.zeTest.url}
+            title={videos.zeTest.title}
+            channel={videos.zeTest.channel}
+            duration={videos.zeTest.duration}
+            topic={videos.zeTest.topic}
           />
 
           <SectionRule />

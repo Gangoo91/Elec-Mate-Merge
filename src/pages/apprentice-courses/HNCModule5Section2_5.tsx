@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 5 · Section 2 · Subsection 5 — Tendering Process
+ * HNC Electrical Engineering for Building Services (Project Management — Pearson U4004 + BSE PM context)
+ *   From invitation to bid to contract award — running a competitive, fair and defensible tender process that gets the right contractor at the right price.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Tendering Process - HNC Module 5 Section 2.5';
@@ -262,831 +279,537 @@ const faqs = [
 ];
 
 const HNCModule5Section2_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section2')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module5-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 5.2.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Tendering Process
-          </h1>
-          <p className="text-white">
-            Invitation to tender, bid preparation, evaluation criteria, negotiation strategies, and
-            contract award procedures
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 5 · Section 2 · Subsection 5"
+            title="Tendering Process"
+            description="Invitation to tender, bid preparation, evaluation criteria, negotiation strategies, and contract award procedures."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>ITT:</strong> Formal invitation with scope, terms, and evaluation criteria
-              </li>
-              <li className="pl-1">
-                <strong>Bid preparation:</strong> Compliant submission demonstrating capability and
-                value
-              </li>
-              <li className="pl-1">
-                <strong>Evaluation:</strong> MEAT criteria balancing quality and price
-              </li>
-              <li className="pl-1">
-                <strong>Award:</strong> Standstill period, LOI, then formal contract
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>M&E packages:</strong> Often 30-40% of building cost
-              </li>
-              <li className="pl-1">
-                <strong>Typical weighting:</strong> 60% quality, 40% price
-              </li>
-              <li className="pl-1">
-                <strong>Tender period:</strong> 4-8 weeks for complex projects
-              </li>
-              <li className="pl-1">
-                <strong>Validity:</strong> 90-120 days standard
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              "Tender process: prequalification → invitation → mid-tender clarifications → submission → evaluation → negotiation → award.",
+              "Use balanced evaluation criteria — typically quality 60% / price 40% for complex MEP, 30/70 for commodity work.",
+              "Mid-tender Q&A is critical — issue clarifications equally to all bidders, never bilaterally.",
+              "Bid evaluation is auditable — score each bidder against documented criteria, not subjective preference.",
+              "Negotiation is post-evaluation, with the preferred bidder, on defined matters — never a backdoor price reduction.",
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="Public Contracts Regulations 2015 — Regulation 18 (Principles of procurement)"
+            clause="Contracting authorities shall treat economic operators equally and without discrimination and shall act in a transparent and proportionate manner. The design of the procurement shall not be made with the intention of excluding it from the scope of these Regulations or of artificially narrowing competition. Competition shall be considered to be artificially narrowed where the design of the procurement is made with the intention of unduly favouring or disadvantaging certain economic operators."
+            meaning={
+              <>
+                For public-sector tenders above OJEU/UK threshold, equal treatment, transparency and proportionality are legal duties. Even on private tenders, applying the same principles produces better outcomes and defensible decisions. A challenged tender on a public job can be set aside — embed compliance from invitation.
+              </>
+            }
+            cite="Source: Public Contracts Regulations 2015 — legislation.gov.uk"
+          />
+
+
+          <LearningOutcomes
+            outcomes={[
               'Understand the complete tendering cycle from ITT to contract award',
               'Prepare compliant and competitive tender submissions',
               'Apply effective pricing strategies for building services work',
               'Analyse tender evaluation criteria and scoring methodologies',
               'Navigate post-tender interviews and negotiations',
               'Manage the contract award process including Letters of Intent',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Invitation to Tender */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Invitation to Tender (ITT)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Invitation to Tender (ITT)">
             <p>
               The Invitation to Tender is the formal document package issued to contractors inviting
               them to submit competitive bids for defined work. A well-structured ITT ensures all
               bidders have equal information and submit comparable proposals.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">ITT Document Contents:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Instructions to tenderers:</strong> Submission requirements, deadline,
-                  format, and process
-                </li>
-                <li className="pl-1">
-                  <strong>Form of tender:</strong> The offer document contractors sign and submit
-                </li>
-                <li className="pl-1">
-                  <strong>Conditions of contract:</strong> JCT, NEC, or bespoke terms
-                </li>
-                <li className="pl-1">
-                  <strong>Specification:</strong> Technical requirements and standards
-                </li>
-                <li className="pl-1">
-                  <strong>Drawings:</strong> Design information and layout drawings
-                </li>
-                <li className="pl-1">
-                  <strong>Bills of Quantities/Schedule of Rates:</strong> Pricing document
-                </li>
-                <li className="pl-1">
-                  <strong>Evaluation criteria:</strong> How submissions will be assessed
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Tendering Routes</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Route</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Use</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Open</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Advertised publicly, any contractor may bid
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Public sector, maximum competition
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Selective</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pre-qualified shortlist invited to bid
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Private sector, complex projects
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Negotiated</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Single contractor negotiation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Specialist work, repeat business
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Framework</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pre-agreed terms, mini-competition
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Public sector programmes</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Example: Hospital M&E ITT
-              </p>
-              <p className="text-sm text-white">
-                A new hospital wing requires M&E services worth approximately £12M. The ITT package
-                includes: RIBA Stage 4 drawings, NRM2 Bills of Quantities, NEC4 Option A conditions,
-                6-week tender period, two-envelope submission (technical and commercial separate),
-                mandatory site visit, and MEAT evaluation with 60% quality/40% price weighting.
-                Contractors must demonstrate NHS experience and HTM compliance capability.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>ITT Document Contents:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Instructions to tenderers:</strong> Submission requirements, deadline,
+                format, and process
+              </li>
+              <li>
+                <strong>Form of tender:</strong> The offer document contractors sign and submit
+              </li>
+              <li>
+                <strong>Conditions of contract:</strong> JCT, NEC, or bespoke terms
+              </li>
+              <li>
+                <strong>Specification:</strong> Technical requirements and standards
+              </li>
+              <li>
+                <strong>Drawings:</strong> Design information and layout drawings
+              </li>
+              <li>
+                <strong>Bills of Quantities/Schedule of Rates:</strong> Pricing document
+              </li>
+              <li>
+                <strong>Evaluation criteria:</strong> How submissions will be assessed
+              </li>
+            </ul>
+            <p>
+              <strong>Tendering Routes (Route — Description — Typical Use):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Open:</strong> Advertised publicly, any contractor may bid — Public sector,
+                maximum competition
+              </li>
+              <li>
+                <strong>Selective:</strong> Pre-qualified shortlist invited to bid — Private sector,
+                complex projects
+              </li>
+              <li>
+                <strong>Negotiated:</strong> Single contractor negotiation — Specialist work, repeat
+                business
+              </li>
+              <li>
+                <strong>Framework:</strong> Pre-agreed terms, mini-competition — Public sector
+                programmes
+              </li>
+            </ul>
+            <p>
+              <strong>Building Services Example — Hospital M&E ITT:</strong> A new hospital wing
+              requires M&E services worth approximately £12M. The ITT package includes: RIBA Stage 4
+              drawings, NRM2 Bills of Quantities, NEC4 Option A conditions, 6-week tender period,
+              two-envelope submission (technical and commercial separate), mandatory site visit, and
+              MEAT evaluation with 60% quality/40% price weighting. Contractors must demonstrate NHS
+              experience and HTM compliance capability.
+            </p>
+            <p>
               <strong>Key principle:</strong> The ITT must provide sufficient information for
               contractors to price accurately. Ambiguity leads to inflated risk pricing or disputes
               later.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Bid Preparation and Pricing */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Bid Preparation and Pricing Strategies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Bid Preparation and Pricing Strategies">
             <p>
               Successful tender preparation requires systematic analysis of the ITT, realistic
               pricing, and compelling quality submissions that demonstrate understanding and
               capability.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Bid Assembly Checklist
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Compliance matrix against ITT requirements</li>
-                  <li className="pl-1">Fully completed pricing document</li>
-                  <li className="pl-1">Method statements and programme</li>
-                  <li className="pl-1">Key personnel CVs</li>
-                  <li className="pl-1">Relevant experience and references</li>
-                  <li className="pl-1">Health and safety documentation</li>
-                  <li className="pl-1">Quality management procedures</li>
-                  <li className="pl-1">Signed form of tender</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Pricing Components</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Direct labour costs (site and supervision)</li>
-                  <li className="pl-1">Material costs with procurement strategy</li>
-                  <li className="pl-1">Plant and equipment</li>
-                  <li className="pl-1">Subcontractor packages</li>
-                  <li className="pl-1">Preliminaries (site setup, management)</li>
-                  <li className="pl-1">Overheads and profit margin</li>
-                  <li className="pl-1">Risk allowances</li>
-                  <li className="pl-1">Design fees if design-build</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Pricing Strategies</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Strategy</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Approach</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Risk/Benefit</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Competitive</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Tight margins to win work
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher win rate, lower profit, variation reliance
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Balanced</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fair price with reasonable margin
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sustainable profitability, moderate win rate
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Front-loaded</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher prices in early activities
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Improved cash flow, scrutinised by clients
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Value-based</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Emphasis on quality and capability
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Best for MEAT evaluation with high quality weighting
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Example: Commercial Office Tender
-              </p>
-              <p className="text-sm text-white">
-                An electrical contractor prepares a £2.4M tender for a commercial office fit-out.
-                The pricing breakdown: Labour 35% (£840k), Materials 40% (£960k), Plant 5% (£120k),
-                Preliminaries 12% (£288k), Overheads 5% (£120k), Profit 3% (£72k). The contractor
-                front-loads containment installation to improve cash flow but keeps rates within 15%
-                of market norms to avoid rejection. Risk allowance of 2% is included for design
-                development.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Bid Assembly Checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Compliance matrix against ITT requirements</li>
+              <li>Fully completed pricing document</li>
+              <li>Method statements and programme</li>
+              <li>Key personnel CVs</li>
+              <li>Relevant experience and references</li>
+              <li>Health and safety documentation</li>
+              <li>Quality management procedures</li>
+              <li>Signed form of tender</li>
+            </ul>
+            <p>
+              <strong>Pricing Components:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Direct labour costs (site and supervision)</li>
+              <li>Material costs with procurement strategy</li>
+              <li>Plant and equipment</li>
+              <li>Subcontractor packages</li>
+              <li>Preliminaries (site setup, management)</li>
+              <li>Overheads and profit margin</li>
+              <li>Risk allowances</li>
+              <li>Design fees if design-build</li>
+            </ul>
+            <p>
+              <strong>Pricing Strategies (Strategy — Approach — Risk/Benefit):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Competitive:</strong> Tight margins to win work — Higher win rate, lower
+                profit, variation reliance
+              </li>
+              <li>
+                <strong>Balanced:</strong> Fair price with reasonable margin — Sustainable
+                profitability, moderate win rate
+              </li>
+              <li>
+                <strong>Front-loaded:</strong> Higher prices in early activities — Improved cash
+                flow, scrutinised by clients
+              </li>
+              <li>
+                <strong>Value-based:</strong> Emphasis on quality and capability — Best for MEAT
+                evaluation with high quality weighting
+              </li>
+            </ul>
+            <p>
+              <strong>Building Services Example — Commercial Office Tender:</strong> An electrical
+              contractor prepares a £2.4M tender for a commercial office fit-out. The pricing
+              breakdown: Labour 35% (£840k), Materials 40% (£960k), Plant 5% (£120k), Preliminaries
+              12% (£288k), Overheads 5% (£120k), Profit 3% (£72k). The contractor front-loads
+              containment installation to improve cash flow but keeps rates within 15% of market
+              norms to avoid rejection. Risk allowance of 2% is included for design development.
+            </p>
+            <p>
               <strong>Best practice:</strong> Build the estimate from first principles, then review
               against benchmarks. Avoid copying previous tender rates without analysis.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Tender Evaluation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Tender Evaluation and Interviews
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Tender Evaluation and Interviews">
             <p>
               Tender evaluation follows a structured process to ensure fair and consistent
               assessment. Understanding evaluation methodology helps contractors optimise their
               submissions.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                MEAT Evaluation Process
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Stage 1:</strong> Compliance check - mandatory pass/fail requirements
-                </li>
-                <li className="pl-1">
-                  <strong>Stage 2:</strong> Technical/quality scoring by evaluation panel
-                </li>
-                <li className="pl-1">
-                  <strong>Stage 3:</strong> Commercial analysis and price scoring
-                </li>
-                <li className="pl-1">
-                  <strong>Stage 4:</strong> Combined weighted score calculation
-                </li>
-                <li className="pl-1">
-                  <strong>Stage 5:</strong> Moderation and consensus meeting
-                </li>
-                <li className="pl-1">
-                  <strong>Stage 6:</strong> Tender interviews (if required)
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Evaluation Criteria and Weightings
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Criterion</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Weight</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Assessment Areas
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Technical approach</td>
-                      <td className="border border-white/10 px-3 py-2">20-25%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Method statements, innovation, coordination
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Experience</td>
-                      <td className="border border-white/10 px-3 py-2">10-15%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Similar projects, sector knowledge, references
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Personnel</td>
-                      <td className="border border-white/10 px-3 py-2">10-15%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Key staff CVs, qualifications, availability
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Programme</td>
-                      <td className="border border-white/10 px-3 py-2">10-15%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Realistic sequencing, milestones, resources
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Price</td>
-                      <td className="border border-white/10 px-3 py-2">30-50%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Competitiveness, completeness, value
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Price Scoring Formula (Common Method)
-              </p>
-              <p className="font-mono text-center text-lg mb-2">
-                Price Score = (Lowest Price / Tender Price) x Maximum Points
-              </p>
-              <p className="text-xs text-white text-center">
-                Example: Lowest bid £1.8M, your bid £2.0M, max points 40. Score = (1.8/2.0) x 40 =
-                36 points
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Tender Interview Preparation
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Ensure proposed personnel attend - substitutes score poorly
-                </li>
-                <li className="pl-1">Prepare a brief presentation if permitted</li>
-                <li className="pl-1">Know the project inside out - visit the site</li>
-                <li className="pl-1">Anticipate technical questions on methodology</li>
-                <li className="pl-1">Be ready to discuss risk management approach</li>
-                <li className="pl-1">Demonstrate understanding of client priorities</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>MEAT Evaluation Process:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Stage 1:</strong> Compliance check - mandatory pass/fail requirements
+              </li>
+              <li>
+                <strong>Stage 2:</strong> Technical/quality scoring by evaluation panel
+              </li>
+              <li>
+                <strong>Stage 3:</strong> Commercial analysis and price scoring
+              </li>
+              <li>
+                <strong>Stage 4:</strong> Combined weighted score calculation
+              </li>
+              <li>
+                <strong>Stage 5:</strong> Moderation and consensus meeting
+              </li>
+              <li>
+                <strong>Stage 6:</strong> Tender interviews (if required)
+              </li>
+            </ul>
+            <p>
+              <strong>Typical Evaluation Criteria and Weightings (Criterion — Typical Weight — Assessment Areas):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Technical approach:</strong> 20-25% — Method statements, innovation,
+                coordination
+              </li>
+              <li>
+                <strong>Experience:</strong> 10-15% — Similar projects, sector knowledge, references
+              </li>
+              <li>
+                <strong>Personnel:</strong> 10-15% — Key staff CVs, qualifications, availability
+              </li>
+              <li>
+                <strong>Programme:</strong> 10-15% — Realistic sequencing, milestones, resources
+              </li>
+              <li>
+                <strong>Price:</strong> 30-50% — Competitiveness, completeness, value
+              </li>
+            </ul>
+            <p>
+              <strong>Price Scoring Formula (Common Method):</strong> Price Score = (Lowest Price /
+              Tender Price) x Maximum Points. Example: Lowest bid £1.8M, your bid £2.0M, max points
+              40. Score = (1.8/2.0) x 40 = 36 points.
+            </p>
+            <p>
+              <strong>Tender Interview Preparation:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Ensure proposed personnel attend - substitutes score poorly</li>
+              <li>Prepare a brief presentation if permitted</li>
+              <li>Know the project inside out - visit the site</li>
+              <li>Anticipate technical questions on methodology</li>
+              <li>Be ready to discuss risk management approach</li>
+              <li>Demonstrate understanding of client priorities</li>
+            </ul>
+            <p>
               <strong>Interview tip:</strong> The interview assesses the people, not the paperwork.
               Confidence, technical competence, and rapport with the client team often differentiate
               shortlisted bidders.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Negotiation and Contract Award */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Negotiation and Contract Award
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Negotiation and Contract Award">
             <p>
               Following evaluation, the preferred bidder enters post-tender negotiation before
               formal contract award. Understanding this process and the legal framework ensures
               smooth transition from tender to contract.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Post-Tender Negotiation Scope
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-green-400 mb-2">Permitted</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Clarifying scope ambiguities</li>
-                    <li>Refining programme details</li>
-                    <li>Agreeing payment terms</li>
-                    <li>Confirming key personnel</li>
-                    <li>Discussing value engineering options</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-red-400 mb-2">Not Permitted</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Fundamental scope changes</li>
-                    <li>Cherry-picking from other bids</li>
-                    <li>Price reduction without scope change</li>
-                    <li>Changing published evaluation criteria</li>
-                    <li>Reopening competition with others</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Contract Award Process</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Stage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Action</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Duration</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Award decision</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Evaluation complete, preferred bidder selected
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">-</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Standstill notification</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        All tenderers informed of decision
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Day 0</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Standstill period</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Opportunity for challenge (public sector)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">10+ calendar days</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Letter of Intent</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Authorises preliminary works if urgent
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Optional</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Contract execution</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Formal signing and exchange
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">After standstill</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Letter of Intent - Key Considerations
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">LOI is not a contract - it indicates intention to award</li>
-                <li className="pl-1">
-                  Typically caps liability to a specified sum (e.g., £50,000)
-                </li>
-                <li className="pl-1">
-                  Work under LOI is at contractor's risk if contract not concluded
-                </li>
-                <li className="pl-1">Ensure LOI specifies scope of authorised work clearly</li>
-                <li className="pl-1">Formal contract should follow within 2-4 weeks maximum</li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Example: Retail Fit-Out Award
-              </p>
-              <p className="text-sm text-white">
-                An M&E contractor wins a £1.6M retail fit-out tender. The client issues a Letter of
-                Intent capped at £75,000 to enable long-lead equipment ordering and design
-                development while the NEC4 contract is finalised. The LOI specifies: ordering of
-                distribution boards (8-week lead), detailed coordination drawings, and attendance at
-                two design meetings. The contractor mobilises but limits exposure to the LOI cap
-                until formal contract execution three weeks later.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Post-Tender Negotiation Scope — Permitted:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Clarifying scope ambiguities</li>
+              <li>Refining programme details</li>
+              <li>Agreeing payment terms</li>
+              <li>Confirming key personnel</li>
+              <li>Discussing value engineering options</li>
+            </ul>
+            <p>
+              <strong>Not Permitted:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Fundamental scope changes</li>
+              <li>Cherry-picking from other bids</li>
+              <li>Price reduction without scope change</li>
+              <li>Changing published evaluation criteria</li>
+              <li>Reopening competition with others</li>
+            </ul>
+            <p>
+              <strong>Contract Award Process (Stage — Action — Duration):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Award decision:</strong> Evaluation complete, preferred bidder selected — -
+              </li>
+              <li>
+                <strong>Standstill notification:</strong> All tenderers informed of decision — Day 0
+              </li>
+              <li>
+                <strong>Standstill period:</strong> Opportunity for challenge (public sector) — 10+
+                calendar days
+              </li>
+              <li>
+                <strong>Letter of Intent:</strong> Authorises preliminary works if urgent — Optional
+              </li>
+              <li>
+                <strong>Contract execution:</strong> Formal signing and exchange — After standstill
+              </li>
+            </ul>
+            <p>
+              <strong>Letter of Intent — Key Considerations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>LOI is not a contract - it indicates intention to award</li>
+              <li>Typically caps liability to a specified sum (e.g., £50,000)</li>
+              <li>Work under LOI is at contractor's risk if contract not concluded</li>
+              <li>Ensure LOI specifies scope of authorised work clearly</li>
+              <li>Formal contract should follow within 2-4 weeks maximum</li>
+            </ul>
+            <p>
+              <strong>Building Services Example — Retail Fit-Out Award:</strong> An M&E contractor
+              wins a £1.6M retail fit-out tender. The client issues a Letter of Intent capped at
+              £75,000 to enable long-lead equipment ordering and design development while the NEC4
+              contract is finalised. The LOI specifies: ordering of distribution boards (8-week
+              lead), detailed coordination drawings, and attendance at two design meetings. The
+              contractor mobilises but limits exposure to the LOI cap until formal contract
+              execution three weeks later.
+            </p>
+            <p>
               <strong>Legal principle:</strong> Never exceed the LOI cap value. If the contract
               fails to materialise, recovering costs beyond the cap is extremely difficult.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — MEAT Score Calculation:</strong> Calculate the total MEAT score
+              for Contractor A. Evaluation weighting: Quality 60%, Price 40%. Quality score: 72/100.
+              Tender price: £2.2M. Lowest price: £1.9M.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Quality Score = (72/100) x 60 = <strong>43.2 points</strong>
+              </li>
+              <li>
+                Price Score = (1.9M / 2.2M) x 40 = <strong>34.5 points</strong>
+              </li>
+              <li>
+                <strong>Total MEAT Score</strong> = 43.2 + 34.5 = <strong>77.7 points</strong>
+              </li>
+              <li>Compare against other bidders to determine ranking</li>
+            </ul>
+            <p>
+              <strong>Example 2 — Tender Pricing Build-Up:</strong> An electrical contractor prices
+              a data centre installation. Direct costs total £3.2M. Calculate the tender price using
+              standard mark-ups.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Direct costs: £3,200,000</li>
+              <li>Preliminaries (15%): £480,000</li>
+              <li>Subtotal: £3,680,000</li>
+              <li>Overheads (6%): £220,800</li>
+              <li>Risk allowance (3%): £110,400</li>
+              <li>Profit (4%): £147,200</li>
+              <li>
+                <strong>Tender Price: £4,158,400</strong>
+              </li>
+              <li>Margin on direct costs: 30% (competitive for specialist work)</li>
+            </ul>
+            <p>
+              <strong>Example 3 — Standstill Period Timeline:</strong> A public sector client issues
+              award notification on Monday 5th January. When is the earliest date for contract
+              signature?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Award notification: Monday 5th January (Day 0)</li>
+              <li>Standstill period: 10 calendar days minimum</li>
+              <li>Standstill ends: Thursday 15th January</li>
+              <li>
+                <strong>Earliest contract signature: Friday 16th January</strong>
+              </li>
+              <li>Note: If notification by post, extend to 15 days (20th January)</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: MEAT Score Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Calculate the total MEAT score for Contractor A.
-                Evaluation weighting: Quality 60%, Price 40%. Quality score: 72/100. Tender price:
-                £2.2M. Lowest price: £1.9M.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  Quality Score = (72/100) x 60 = <strong>43.2 points</strong>
-                </p>
-                <p className="mt-2">
-                  Price Score = (1.9M / 2.2M) x 40 = <strong>34.5 points</strong>
-                </p>
-                <p className="mt-2">
-                  Total MEAT Score = 43.2 + 34.5 = <strong>77.7 points</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Compare against other bidders to determine ranking
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Tender Pricing Build-Up
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> An electrical contractor prices a data centre
-                installation. Direct costs total £3.2M. Calculate the tender price using standard
-                mark-ups.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Direct costs: £3,200,000</p>
-                <p>Preliminaries (15%): £480,000</p>
-                <p>Subtotal: £3,680,000</p>
-                <p className="mt-2">Overheads (6%): £220,800</p>
-                <p>Risk allowance (3%): £110,400</p>
-                <p>Profit (4%): £147,200</p>
-                <p className="mt-2">
-                  Tender Price: <strong>£4,158,400</strong>
-                </p>
-                <p className="text-white mt-2">
-                  Margin on direct costs: 30% (competitive for specialist work)
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Tender submission checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Verify all mandatory documents are included</li>
+              <li>Check pricing document is complete with no blank cells</li>
+              <li>Ensure form of tender is signed by authorised person</li>
+              <li>Review submission against compliance matrix</li>
+              <li>Submit before deadline - late submissions rejected</li>
+              <li>Keep copies of all submitted documents</li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Tender validity: <strong>90-120 days</strong>
+              </li>
+              <li>
+                Standstill period: <strong>10 calendar days</strong> (public sector)
+              </li>
+              <li>
+                Typical quality:price weighting: <strong>60:40</strong>
+              </li>
+              <li>
+                M&E as percentage of building cost: <strong>30-40%</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Standstill Period Timeline
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A public sector client issues award notification on
-                Monday 5th January. When is the earliest date for contract signature?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Award notification: Monday 5th January (Day 0)</p>
-                <p>Standstill period: 10 calendar days minimum</p>
-                <p>Standstill ends: Thursday 15th January</p>
-                <p className="mt-2">
-                  Earliest contract signature: <strong>Friday 16th January</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Note: If notification by post, extend to 15 days (20th January)
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Tender Submission Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Verify all mandatory documents are included</li>
-                <li className="pl-1">Check pricing document is complete with no blank cells</li>
-                <li className="pl-1">Ensure form of tender is signed by authorised person</li>
-                <li className="pl-1">Review submission against compliance matrix</li>
-                <li className="pl-1">Submit before deadline - late submissions rejected</li>
-                <li className="pl-1">Keep copies of all submitted documents</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Tender validity: <strong>90-120 days</strong>
-                </li>
-                <li className="pl-1">
-                  Standstill period: <strong>10 calendar days</strong> (public sector)
-                </li>
-                <li className="pl-1">
-                  Typical quality:price weighting: <strong>60:40</strong>
-                </li>
-                <li className="pl-1">
-                  M&E as percentage of building cost: <strong>30-40%</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Non-compliance:</strong> Missing mandatory requirements means rejection
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Generic responses:</strong> Tailor every submission to the specific
                   project
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Pricing errors:</strong> Implement thorough checking procedures
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Late submission:</strong> Deadlines are absolute - build in contingency
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Exceeding LOI cap:</strong> Never commit beyond authorised value
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Run a compliance matrix before submission, write project-specific narrative responses, double-check pricing arithmetic, build deadline contingency into the bid plan, and respect the LOI cap until the formal contract is executed."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Bilateral negotiation challenged as anti-competitive"
+            situation={
+              <>
+                You are running a tender for a £4m hospital MEP package. After scoring, the second-placed bidder is £200k cheaper but scored lower on technical quality. The client suggests calling the second-placed bidder to "see if they can match" the technical quality. You agree and have a private call.
+              </>
+            }
+            whatToDo={
+              <>
+                Stop. Bilateral negotiation in a competitive tender, especially on public-sector work, is a serious procurement breach. If you want to renegotiate, either go back to all bidders with revised requirements (effectively re-tendering) or award against the published criteria. Document the rationale for the award using the original scoring. If you genuinely need to reopen scope, do so transparently with all bidders. Never have a private call with one bidder during evaluation.
+              </>
+            }
+            whyItMatters={
+              <>
+                Tender fairness is both legal compliance (public sector) and best practice (private sector). A challenged tender can be set aside, costing months of programme. The discipline of a clean process protects both client and bidders, and leads to award decisions you can defend at audit.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Tendering Process</p>
-                <ul className="space-y-0.5">
-                  <li>ITT issued with full documentation</li>
-                  <li>Clarification questions during tender period</li>
-                  <li>Submission by deadline (no exceptions)</li>
-                  <li>Evaluation per published criteria</li>
-                  <li>Standstill, LOI, contract award</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">MEAT Evaluation</p>
-                <ul className="space-y-0.5">
-                  <li>Quality: methodology, experience, personnel</li>
-                  <li>Price: competitiveness vs lowest bid</li>
-                  <li>Combined weighted score determines winner</li>
-                  <li>Interview may adjust final ranking</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+                    <KeyTakeaways
+            points={[
+              "Process: prequalification → ITT → clarifications → submission → evaluation → negotiation → award.",
+              "Balanced criteria: quality 60 / price 40 for complex MEP; 30/70 for commodity work.",
+              "Mid-tender Q&A issued equally to all bidders — never bilateral.",
+              "Evaluation scored against documented criteria — auditable, defensible, transparent.",
+              "Negotiation post-evaluation only, with preferred bidder, on defined matters.",
+              "Public-sector procurement is regulated by PCR 2015 — equal treatment, transparency, proportionality.",
+              "Bid review meetings document scoring rationale — important when challenged later.",
+              "Award decision recorded with full audit trail; standstill period applied where required (PCR Reg 87).",
+            ]}
+          />
+
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 2
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section2-6">
-              Next: Contract Administration
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section2-4')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Subcontract management
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section2-6')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Supply chain management
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

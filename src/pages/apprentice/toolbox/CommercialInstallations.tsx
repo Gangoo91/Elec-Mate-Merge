@@ -79,7 +79,10 @@ const renderPanel = (cardId: string) => {
 
 const CommercialInstallations = () => (
   <InstallationGuidePageShell
-    title="Commercial Installations"
+    title="Commercial installations"
+    eyebrow="Apprentice · Commercial"
+    backRoute="/apprentice/toolbox"
+    description="Offices, retail, hospitality. Three-phase distribution, emergency lighting, fire alarm interfaces, BS 7671 Section 537 isolation — what changes once you step out of housing."
     icon={Building}
     cards={cards}
     renderPanel={renderPanel}

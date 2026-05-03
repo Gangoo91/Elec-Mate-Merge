@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 7 · Section 3 · Subsection 5 — Uniformity and Quality
+ * HNC Electrical Engineering for Building Services (Power and Lighting Systems)
+ *   Uniformity ratios, diversity, cylindrical illuminance, modelling, and visual comfort per CIBSE LG7
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Uniformity and Quality - HNC Module 7 Section 3.5';
@@ -208,767 +221,285 @@ const faqs = [
 ];
 
 const HNCModule7Section3_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section3")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module7-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.3.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Uniformity and Quality
-          </h1>
-          <p className="text-white">
-            Uniformity ratios, diversity, cylindrical illuminance, modelling, and visual comfort per
-            CIBSE LG7
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 7 · Section 3 · Subsection 5"
+            title="Uniformity and Quality"
+            description="Uniformity ratios, diversity, cylindrical illuminance, modelling, and visual comfort per CIBSE LG7"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Uniformity (Uo):</strong> Emin / Eav ≥ 0.6 for task areas
-              </li>
-              <li className="pl-1">
-                <strong>Cylindrical (Ez):</strong> 150 lux for facial recognition
-              </li>
-              <li className="pl-1">
-                <strong>Modelling ratio:</strong> Ez / Eh = 0.3 to 0.6
-              </li>
-              <li className="pl-1">
-                <strong>UGR limit:</strong> ≤ 19 for office work
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Calculate and interpret uniformity and diversity ratios",
+              "Understand cylindrical illuminance and its role in visual communication",
+              "Apply modelling ratio principles for three-dimensional perception",
+              "Specify appropriate UGR limits for different task requirements",
+              "Evaluate surface reflectances and their impact on lighting quality",
+              "Use lighting quality metrics in design verification per CIBSE standards",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Uniformity Ratios">
+            <p>Uniformity describes how evenly illuminance is distributed across a surface. Good uniformity ensures comfortable visual conditions, reduces eye strain from adapting to varying light levels, and prevents safety hazards from poorly lit areas within an otherwise adequate space.</p>
+            <p><strong>Uniformity Ratio Formula</strong></p>
+            <p>Uo = Emin / Eav</p>
+            <p>Where Emin is minimum illuminance and Eav is average illuminance across the reference plane</p>
+            <p><strong>CIBSE LG7 Uniformity Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Task area:</strong> Uo ≥ 0.6 — Primary work surface</li>
+              <li><strong>Immediate surrounding:</strong> Uo ≥ 0.4 — 0.5m band around task area</li>
+              <li><strong>Background area:</strong> Uo ≥ 0.1 — Remainder of room</li>
+              <li><strong>Circulation areas:</strong> Uo ≥ 0.4 — Corridors, stairs, lobbies</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>CIBSE LG7:</strong> Office lighting standard
-              </li>
-              <li className="pl-1">
-                <strong>Surface reflectance:</strong> Ceiling 70-90%, walls 50-70%
-              </li>
-              <li className="pl-1">
-                <strong>SHR:</strong> Spacing-to-height ratio 1.0-1.5
-              </li>
-              <li className="pl-1">
-                <strong>Simulation:</strong> DIALux, Relux verification
-              </li>
+            <p><strong>Diversity ratio:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Diversity = 1 / Uo</strong> or alternatively Emax / Emin</li>
+              <li>Lower diversity (closer to 1.0) means more uniform lighting</li>
+              <li>Diversity of 2.0 means brightest point is twice the dimmest</li>
+              <li>Some standards quote diversity rather than uniformity ratios</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Design consideration:</strong> Uniformity can be improved by optimising luminaire spacing, selecting appropriate light distributions, and maximising room surface reflectances.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Calculate and interpret uniformity and diversity ratios',
-              'Understand cylindrical illuminance and its role in visual communication',
-              'Apply modelling ratio principles for three-dimensional perception',
-              'Specify appropriate UGR limits for different task requirements',
-              'Evaluate surface reflectances and their impact on lighting quality',
-              'Use lighting quality metrics in design verification per CIBSE standards',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Uniformity Ratios */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Uniformity Ratios
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Cylindrical Illuminance and Modelling">
+            <p>Cylindrical illuminance (Ez) quantifies the lighting on vertical surfaces, which is essential for recognising faces and perceiving three-dimensional form. The modelling ratio relates cylindrical to horizontal illuminance, indicating how well lighting reveals depth and texture.</p>
+            <p><strong>Cylindrical Illuminance (Ez)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Mean illuminance on vertical cylinder surface</li>
+              <li>Measured at 1.2m height (seated eye level)</li>
+              <li>Correlates with facial recognition ability</li>
+              <li>Recommended: 150 lux for offices</li>
+            </ul>
+            <p><strong>Modelling Ratio</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Formula: Ez / Eh (cylindrical / horizontal)</li>
+              <li>Recommended range: 0.3 to 0.6</li>
+              <li>&lt; 0.3: Flat, shadowless appearance</li>
+              <li>&gt; 0.6: Harsh shadows, dramatic</li>
+            </ul>
+            <p><strong>Cylindrical Illuminance Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>General office:</strong> 150 — Visual communication</li>
+              <li><strong>Reception areas:</strong> 150-200 — Welcoming atmosphere</li>
+              <li><strong>Meeting rooms:</strong> 150 — Face-to-face interaction</li>
+              <li><strong>Circulation:</strong> 75-100 — Recognition of people</li>
+            </ul>
+            <p><strong>Modelling Example</strong></p>
+            <p><strong>Scenario:</strong> Office with 500 lux horizontal and 175 lux cylindrical</p>
+            <p><strong>Calculation:</strong> Modelling ratio = 175 / 500 = 0.35</p>
+            <p><strong>Assessment:</strong> Within 0.3-0.6 range - acceptable three-dimensional perception</p>
+            <p><strong>Design tip:</strong> Purely downward lighting gives poor modelling (low Ez). Add indirect or wall-washing components to improve cylindrical illuminance without significantly increasing horizontal levels.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Visual Comfort and UGR">
+            <p>Visual comfort encompasses freedom from glare, appropriate contrast, and absence of flicker. The Unified Glare Rating (UGR) is the primary metric for discomfort glare from luminaires, with lower values indicating less glare discomfort.</p>
+            <p><strong>UGR Formula Factors</strong></p>
+            <p>UGR depends on:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Luminaire luminance (L) - higher = more glare</li>
+              <li>Background luminance (Lb) - higher = less perceived glare</li>
+              <li>Solid angle (ω) of luminaire as seen by observer</li>
+              <li>Position index (p) - related to viewing angle</li>
+            </ul>
+            <p><strong>CIBSE UGR Limits by Application</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Technical drawing:</strong> ≤ 16 — CAD workstations, drawing offices</li>
+              <li><strong>Reading, writing, VDU:</strong> ≤ 19 — General offices, classrooms</li>
+              <li><strong>Industrial work:</strong> ≤ 22 — Assembly, machine work</li>
+              <li><strong>Rough work, storage:</strong> ≤ 25 — Warehouses, plant rooms</li>
+              <li><strong>Circulation:</strong> ≤ 28 — Corridors (no prolonged viewing)</li>
+            </ul>
+            <p><strong>Types of glare:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Discomfort glare:</strong> Causes discomfort without necessarily impairing vision (assessed by UGR)</li>
+              <li><strong>Disability glare:</strong> Impairs vision by reducing contrast (e.g., oncoming headlights)</li>
+              <li><strong>Direct glare:</strong> From luminaires directly in field of view</li>
+              <li><strong>Reflected/veiling glare:</strong> Reflections from glossy surfaces reducing contrast</li>
+            </ul>
+            <p><strong>VDU considerations:</strong> For workstations with screens, luminaires should be positioned to avoid reflections. Cross-baffled or low-brightness louvred luminaires help control both direct glare and screen reflections.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Surface Reflectances and Design Integration">
+            <p>Room surface reflectances significantly influence all lighting quality metrics. High reflectance surfaces increase the inter-reflected light component, improving uniformity, modelling, and reducing contrast between luminaires and background.</p>
+            <p><strong>CIBSE Recommended Reflectances</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Ceiling:</strong> 70-90% — Improves uniformity, reduces luminaire contrast</li>
+              <li><strong>Walls:</strong> 50-70% — Enhances cylindrical illuminance</li>
+              <li><strong>Floor:</strong> 20-40% — Contributes to overall light levels</li>
+              <li><strong>Furniture:</strong> 25-45% — Avoids excessive contrast with paper</li>
+            </ul>
+            <p><strong>Spacing-to-Height Ratio (SHR)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>SHR = spacing / mounting height above WP</li>
+              <li>Typical range: 1.0 to 1.5</li>
+              <li>Manufacturer's SHRmax ensures uniformity</li>
+              <li>Lower SHR = better uniformity, more luminaires</li>
+            </ul>
+            <p><strong>Luminaire Selection Factors</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Light distribution (narrow, medium, wide)</li>
+              <li>UGR rating at specified room dimensions</li>
+              <li>Uplight/downlight ratio for modelling</li>
+              <li>Luminaire luminance (glare control)</li>
+            </ul>
+            <p><strong>Design Verification Checklist</strong></p>
+            <p><strong>Uniformity:</strong> Uo ≥ 0.6 on task area, ≥ 0.4 on surroundings</p>
+            <p><strong>Cylindrical illuminance:</strong> Ez ≥ 150 lux at 1.2m height</p>
+            <p><strong>Modelling ratio:</strong> Ez/Eh between 0.3 and 0.6</p>
+            <p><strong>UGR:</strong> Within limit for task type (typically ≤ 19 for offices)</p>
+            <p><strong>Surface reflectances:</strong> Ceiling 70-90%, walls 50-70%</p>
+            <p><strong>Spacing:</strong> Within manufacturer's SHRmax</p>
+            <p><strong>Software verification:</strong> Always use lighting calculation software (DIALux, Relux) to verify uniformity, UGR, and illuminance levels at design stage. Check critical observer positions for UGR compliance.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Uniformity describes how evenly illuminance is distributed across a surface. Good
-              uniformity ensures comfortable visual conditions, reduces eye strain from adapting to
-              varying light levels, and prevents safety hazards from poorly lit areas within an
-              otherwise adequate space.
+              <strong>Example 1: Uniformity Assessment</strong>
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Uniformity Ratio Formula</p>
-              <div className="font-mono text-lg text-white">
-                <p>Uo = Emin / Eav</p>
-              </div>
-              <p className="text-sm text-white mt-2">
-                Where Emin is minimum illuminance and Eav is average illuminance across the
-                reference plane
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CIBSE LG7 Uniformity Requirements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Area Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Uniformity (Uo)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Task area</td>
-                      <td className="border border-white/10 px-3 py-2">Uo ≥ 0.6</td>
-                      <td className="border border-white/10 px-3 py-2">Primary work surface</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Immediate surrounding</td>
-                      <td className="border border-white/10 px-3 py-2">Uo ≥ 0.4</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        0.5m band around task area
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Background area</td>
-                      <td className="border border-white/10 px-3 py-2">Uo ≥ 0.1</td>
-                      <td className="border border-white/10 px-3 py-2">Remainder of room</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Circulation areas</td>
-                      <td className="border border-white/10 px-3 py-2">Uo ≥ 0.4</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Corridors, stairs, lobbies
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Diversity ratio:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Diversity = 1 / Uo</strong> or alternatively Emax / Emin
-                </li>
-                <li className="pl-1">
-                  Lower diversity (closer to 1.0) means more uniform lighting
-                </li>
-                <li className="pl-1">
-                  Diversity of 2.0 means brightest point is twice the dimmest
-                </li>
-                <li className="pl-1">
-                  Some standards quote diversity rather than uniformity ratios
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design consideration:</strong> Uniformity can be improved by optimising
-              luminaire spacing, selecting appropriate light distributions, and maximising room
-              surface reflectances.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Cylindrical Illuminance and Modelling */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Cylindrical Illuminance and Modelling
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> An open-plan office has measured illuminances of: Emax = 650 lux, Emin = 380 lux, Eav = 520 lux</p>
+            <p>Uniformity ratio calculation:</p>
+            <p>Uo = Emin / Eav</p>
+            <p>Uo = 380 / 520</p>
+            <p>Uo = 0.73</p>
+            <p>Diversity ratio (alternative expression):</p>
+            <p>Diversity = Emax / Emin = 650 / 380 = 1.71</p>
+            <p>Result: Uo = 0.73 exceeds minimum 0.6 requirement</p>
+            <p>The lighting provides good uniformity across the task area</p>
             <p>
-              Cylindrical illuminance (Ez) quantifies the lighting on vertical surfaces, which is
-              essential for recognising faces and perceiving three-dimensional form. The modelling
-              ratio relates cylindrical to horizontal illuminance, indicating how well lighting
-              reveals depth and texture.
+              <strong>Example 2: Modelling Ratio Calculation</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Cylindrical Illuminance (Ez)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Mean illuminance on vertical cylinder surface</li>
-                  <li className="pl-1">Measured at 1.2m height (seated eye level)</li>
-                  <li className="pl-1">Correlates with facial recognition ability</li>
-                  <li className="pl-1">Recommended: 150 lux for offices</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Modelling Ratio</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Formula: Ez / Eh (cylindrical / horizontal)</li>
-                  <li className="pl-1">Recommended range: 0.3 to 0.6</li>
-                  <li className="pl-1">&lt; 0.3: Flat, shadowless appearance</li>
-                  <li className="pl-1">&gt; 0.6: Harsh shadows, dramatic</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cylindrical Illuminance Requirements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Ez (lux)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">General office</td>
-                      <td className="border border-white/10 px-3 py-2">150</td>
-                      <td className="border border-white/10 px-3 py-2">Visual communication</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Reception areas</td>
-                      <td className="border border-white/10 px-3 py-2">150-200</td>
-                      <td className="border border-white/10 px-3 py-2">Welcoming atmosphere</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Meeting rooms</td>
-                      <td className="border border-white/10 px-3 py-2">150</td>
-                      <td className="border border-white/10 px-3 py-2">Face-to-face interaction</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Circulation</td>
-                      <td className="border border-white/10 px-3 py-2">75-100</td>
-                      <td className="border border-white/10 px-3 py-2">Recognition of people</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
-              <p className="text-sm font-medium text-amber-400 mb-2">Modelling Example</p>
-              <div className="text-sm text-white space-y-1">
-                <p>
-                  <strong>Scenario:</strong> Office with 500 lux horizontal and 175 lux cylindrical
-                </p>
-                <p>
-                  <strong>Calculation:</strong> Modelling ratio = 175 / 500 = 0.35
-                </p>
-                <p>
-                  <strong>Assessment:</strong> Within 0.3-0.6 range - acceptable three-dimensional
-                  perception
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design tip:</strong> Purely downward lighting gives poor modelling (low Ez).
-              Add indirect or wall-washing components to improve cylindrical illuminance without
-              significantly increasing horizontal levels.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Visual Comfort and UGR */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Visual Comfort and UGR
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> A meeting room has Eh = 400 lux and Ez = 100 lux. Assess the modelling quality.</p>
+            <p>Modelling ratio calculation:</p>
+            <p>Modelling ratio = Ez / Eh</p>
+            <p>Modelling ratio = 100 / 400</p>
+            <p>Modelling ratio = 0.25</p>
+            <p>Result: 0.25 is below the recommended 0.3-0.6 range</p>
+            <p>Assessment: Lighting appears flat with poor 3D perception</p>
+            <p>Remedial action:</p>
+            <p>- Add wall-washing luminaires</p>
+            <p>- Include indirect lighting component</p>
+            <p>- Increase wall reflectance (light colours)</p>
             <p>
-              Visual comfort encompasses freedom from glare, appropriate contrast, and absence of
-              flicker. The Unified Glare Rating (UGR) is the primary metric for discomfort glare
-              from luminaires, with lower values indicating less glare discomfort.
+              <strong>Example 3: SHR and Layout Check</strong>
             </p>
+            <p><strong>Scenario:</strong> Recessed luminaires in a 3.0m ceiling height office, working plane at 0.75m. Luminaire SHRmax = 1.4. Proposed spacing = 3.0m.</p>
+            <p>Mounting height calculation:</p>
+            <p>Hm = Ceiling height - Working plane height</p>
+            <p>Hm = 3.0 - 0.75 = 2.25m</p>
+            <p>Actual SHR calculation:</p>
+            <p>SHR = Spacing / Hm</p>
+            <p>SHR = 3.0 / 2.25 = 1.33</p>
+            <p>Result: SHR 1.33 is within SHRmax 1.4</p>
+            <p>Layout will achieve acceptable uniformity</p>
+            <p>Note: Consider edge spacing to walls (typically 0.5 × spacing)</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">UGR Formula Factors</p>
-              <p className="text-sm text-white mb-2">UGR depends on:</p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">Luminaire luminance (L) - higher = more glare</li>
-                <li className="pl-1">Background luminance (Lb) - higher = less perceived glare</li>
-                <li className="pl-1">Solid angle (ω) of luminaire as seen by observer</li>
-                <li className="pl-1">Position index (p) - related to viewing angle</li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CIBSE UGR Limits by Application
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Activity/Area</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">UGR Limit</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Example</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Technical drawing</td>
-                      <td className="border border-white/10 px-3 py-2">≤ 16</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        CAD workstations, drawing offices
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Reading, writing, VDU</td>
-                      <td className="border border-white/10 px-3 py-2">≤ 19</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        General offices, classrooms
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Industrial work</td>
-                      <td className="border border-white/10 px-3 py-2">≤ 22</td>
-                      <td className="border border-white/10 px-3 py-2">Assembly, machine work</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Rough work, storage</td>
-                      <td className="border border-white/10 px-3 py-2">≤ 25</td>
-                      <td className="border border-white/10 px-3 py-2">Warehouses, plant rooms</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Circulation</td>
-                      <td className="border border-white/10 px-3 py-2">≤ 28</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Corridors (no prolonged viewing)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Types of glare:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Discomfort glare:</strong> Causes discomfort without necessarily impairing
-                  vision (assessed by UGR)
-                </li>
-                <li className="pl-1">
-                  <strong>Disability glare:</strong> Impairs vision by reducing contrast (e.g.,
-                  oncoming headlights)
-                </li>
-                <li className="pl-1">
-                  <strong>Direct glare:</strong> From luminaires directly in field of view
-                </li>
-                <li className="pl-1">
-                  <strong>Reflected/veiling glare:</strong> Reflections from glossy surfaces
-                  reducing contrast
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>VDU considerations:</strong> For workstations with screens, luminaires should
-              be positioned to avoid reflections. Cross-baffled or low-brightness louvred luminaires
-              help control both direct glare and screen reflections.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Surface Reflectances and Design Integration */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Surface Reflectances and Design Integration
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Room surface reflectances significantly influence all lighting quality metrics. High
-              reflectance surfaces increase the inter-reflected light component, improving
-              uniformity, modelling, and reducing contrast between luminaires and background.
+              <strong>Quality Metrics Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CIBSE Recommended Reflectances
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Surface</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Reflectance</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Benefit</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ceiling</td>
-                      <td className="border border-white/10 px-3 py-2">70-90%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Improves uniformity, reduces luminaire contrast
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Walls</td>
-                      <td className="border border-white/10 px-3 py-2">50-70%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Enhances cylindrical illuminance
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Floor</td>
-                      <td className="border border-white/10 px-3 py-2">20-40%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Contributes to overall light levels
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Furniture</td>
-                      <td className="border border-white/10 px-3 py-2">25-45%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Avoids excessive contrast with paper
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Spacing-to-Height Ratio (SHR)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">SHR = spacing / mounting height above WP</li>
-                  <li className="pl-1">Typical range: 1.0 to 1.5</li>
-                  <li className="pl-1">Manufacturer's SHRmax ensures uniformity</li>
-                  <li className="pl-1">Lower SHR = better uniformity, more luminaires</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Luminaire Selection Factors
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Light distribution (narrow, medium, wide)</li>
-                  <li className="pl-1">UGR rating at specified room dimensions</li>
-                  <li className="pl-1">Uplight/downlight ratio for modelling</li>
-                  <li className="pl-1">Luminaire luminance (glare control)</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Design Verification Checklist
-              </p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <strong>Uniformity:</strong> Uo ≥ 0.6 on task area, ≥ 0.4 on surroundings
-                </p>
-                <p>
-                  <strong>Cylindrical illuminance:</strong> Ez ≥ 150 lux at 1.2m height
-                </p>
-                <p>
-                  <strong>Modelling ratio:</strong> Ez/Eh between 0.3 and 0.6
-                </p>
-                <p>
-                  <strong>UGR:</strong> Within limit for task type (typically ≤ 19 for offices)
-                </p>
-                <p>
-                  <strong>Surface reflectances:</strong> Ceiling 70-90%, walls 50-70%
-                </p>
-                <p>
-                  <strong>Spacing:</strong> Within manufacturer's SHRmax
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Software verification:</strong> Always use lighting calculation software
-              (DIALux, Relux) to verify uniformity, UGR, and illuminance levels at design stage.
-              Check critical observer positions for UGR compliance.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Verify uniformity Uo ≥ 0.6 on task areas using calculation software</li>
+              <li>Check cylindrical illuminance Ez meets 150 lux at 1.2m height</li>
+              <li>Calculate modelling ratio and confirm within 0.3-0.6 range</li>
+              <li>Verify UGR at typical viewing positions meets task requirements</li>
+              <li>Confirm luminaire spacing within manufacturer's SHRmax</li>
+              <li>Specify surface reflectances in design documentation</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Task area uniformity: <strong>Uo ≥ 0.6</strong></li>
+              <li>Surrounding area uniformity: <strong>Uo ≥ 0.4</strong></li>
+              <li>Office cylindrical illuminance: <strong>Ez = 150 lux</strong></li>
+              <li>Modelling ratio: <strong>0.3 to 0.6</strong></li>
+              <li>Office UGR limit: <strong>≤ 19</strong></li>
+              <li>Ceiling reflectance: <strong>70-90%</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Uniformity Assessment
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> An open-plan office has measured illuminances of: Emax =
-                650 lux, Emin = 380 lux, Eav = 520 lux
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Uniformity ratio calculation:</p>
-                <p className="mt-2">Uo = Emin / Eav</p>
-                <p>Uo = 380 / 520</p>
-                <p>Uo = 0.73</p>
-                <p className="mt-2">Diversity ratio (alternative expression):</p>
-                <p>Diversity = Emax / Emin = 650 / 380 = 1.71</p>
-                <p className="mt-2 text-green-400">
-                  Result: Uo = 0.73 exceeds minimum 0.6 requirement
-                </p>
-                <p className="text-green-400">
-                  The lighting provides good uniformity across the task area
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Modelling Ratio Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A meeting room has Eh = 400 lux and Ez = 100 lux. Assess
-                the modelling quality.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Modelling ratio calculation:</p>
-                <p className="mt-2">Modelling ratio = Ez / Eh</p>
-                <p>Modelling ratio = 100 / 400</p>
-                <p>Modelling ratio = 0.25</p>
-                <p className="mt-2 text-red-400">
-                  Result: 0.25 is below the recommended 0.3-0.6 range
-                </p>
-                <p className="text-amber-400">
-                  Assessment: Lighting appears flat with poor 3D perception
-                </p>
-                <p className="mt-2">Remedial action:</p>
-                <p className="text-white">- Add wall-washing luminaires</p>
-                <p className="text-white">- Include indirect lighting component</p>
-                <p className="text-white">- Increase wall reflectance (light colours)</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: SHR and Layout Check
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Recessed luminaires in a 3.0m ceiling height office,
-                working plane at 0.75m. Luminaire SHRmax = 1.4. Proposed spacing = 3.0m.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Mounting height calculation:</p>
-                <p className="mt-2">Hm = Ceiling height - Working plane height</p>
-                <p>Hm = 3.0 - 0.75 = 2.25m</p>
-                <p className="mt-2">Actual SHR calculation:</p>
-                <p>SHR = Spacing / Hm</p>
-                <p>SHR = 3.0 / 2.25 = 1.33</p>
-                <p className="mt-2 text-green-400">Result: SHR 1.33 is within SHRmax 1.4</p>
-                <p className="text-green-400">Layout will achieve acceptable uniformity</p>
-                <p className="mt-2 text-white">
-                  Note: Consider edge spacing to walls (typically 0.5 × spacing)
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Quality Metrics Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Verify uniformity Uo ≥ 0.6 on task areas using calculation software
-                </li>
-                <li className="pl-1">
-                  Check cylindrical illuminance Ez meets 150 lux at 1.2m height
-                </li>
-                <li className="pl-1">Calculate modelling ratio and confirm within 0.3-0.6 range</li>
-                <li className="pl-1">
-                  Verify UGR at typical viewing positions meets task requirements
-                </li>
-                <li className="pl-1">Confirm luminaire spacing within manufacturer's SHRmax</li>
-                <li className="pl-1">Specify surface reflectances in design documentation</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Ignoring edge zones</strong> - luminaires too far from walls create dark perimeters</li>
+                <li><strong>Exceeding SHRmax</strong> - causes poor uniformity despite adequate average lux</li>
+                <li><strong>All-downlight schemes</strong> - poor modelling and low cylindrical illuminance</li>
+                <li><strong>Dark surfaces</strong> - low reflectances require more luminaires and create contrast issues</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Task area uniformity: <strong>Uo ≥ 0.6</strong>
-                </li>
-                <li className="pl-1">
-                  Surrounding area uniformity: <strong>Uo ≥ 0.4</strong>
-                </li>
-                <li className="pl-1">
-                  Office cylindrical illuminance: <strong>Ez = 150 lux</strong>
-                </li>
-                <li className="pl-1">
-                  Modelling ratio: <strong>0.3 to 0.6</strong>
-                </li>
-                <li className="pl-1">
-                  Office UGR limit: <strong>≤ 19</strong>
-                </li>
-                <li className="pl-1">
-                  Ceiling reflectance: <strong>70-90%</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Design Errors</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Ignoring edge zones</strong> - luminaires too far from walls create dark
-                  perimeters
-                </li>
-                <li className="pl-1">
-                  <strong>Exceeding SHRmax</strong> - causes poor uniformity despite adequate
-                  average lux
-                </li>
-                <li className="pl-1">
-                  <strong>All-downlight schemes</strong> - poor modelling and low cylindrical
-                  illuminance
-                </li>
-                <li className="pl-1">
-                  <strong>Dark surfaces</strong> - low reflectances require more luminaires and
-                  create contrast issues
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Uniformity Requirements</p>
-                <ul className="space-y-0.5">
-                  <li>Task area: Uo ≥ 0.6</li>
-                  <li>Immediate surrounding: Uo ≥ 0.4</li>
-                  <li>Background: Uo ≥ 0.1</li>
-                  <li>Circulation: Uo ≥ 0.4</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Quality Metrics</p>
-                <ul className="space-y-0.5">
-                  <li>Cylindrical Ez: 150 lux (offices)</li>
-                  <li>Modelling ratio: 0.3 to 0.6</li>
-                  <li>UGR office work: ≤ 19</li>
-                  <li>UGR technical: ≤ 16</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section3-6">
-              Next: Section 3.6
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section3-4")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Glare assessment
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section3-6")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                CIBSE standards
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

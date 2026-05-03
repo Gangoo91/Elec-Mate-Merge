@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 6 · Section 5 · Subsection 5 — Building Performance
+ * HNC Electrical Engineering for Building Services (Sustainability and Environmental Engineering)
+ *   Display Energy Certificates, operational ratings, performance gaps, benchmarking, and strategies for improving building energy performance
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Building Performance - HNC Module 6 Section 5.5';
@@ -248,914 +265,404 @@ const faqs = [
 ];
 
 const HNCModule6Section5_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section5")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module6-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.5.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Building Performance
-          </h1>
-          <p className="text-white">
-            Display Energy Certificates, operational ratings, performance gaps, benchmarking, and
-            strategies for improving building energy performance
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 6 · Section 5 · Subsection 5"
+            title="Building Performance"
+            description="Display Energy Certificates, operational ratings, performance gaps, benchmarking, and strategies for improving building energy performance"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>DEC:</strong> Operational rating based on actual metered energy
-              </li>
-              <li className="pl-1">
-                <strong>Performance gap:</strong> Actual use 2-5x design predictions
-              </li>
-              <li className="pl-1">
-                <strong>TM54:</strong> Methodology for realistic energy predictions
-              </li>
-              <li className="pl-1">
-                <strong>Benchmarks:</strong> kWh/m²/year by building type
-              </li>
+          <TLDR
+            points={[
+              "Display Energy Certificates (DECs) rate operational (in-use) energy performance for public buildings >250 m² using actual metered data — distinct from the design-based EPC.",
+              "Operational ratings benchmark a building against typical performance — Band A (lowest) to G (highest energy use); revealing the performance gap is often a precondition to closing it.",
+              "CIBSE TM22 (energy assessment and reporting) and TM61–63 (in-use performance) provide the institutional methodology — turning raw meter data into actionable performance reports.",
+            ]}
+          />
+
+          <RegsCallout
+            source="The Energy Performance of Buildings (England and Wales) Regulations 2012 + CIBSE TM22"
+            clause="A Display Energy Certificate (DEC) shall be commissioned for any building with a total useful floor area greater than 250 m² which is occupied by a public authority and frequently visited by the public. The DEC shall display the operational rating, valid for 12 months, and shall be accompanied by an Advisory Report valid for 7 years. The operational rating shall be calculated using actual metered energy consumption data for the most recent 12-month period in accordance with the Operational Rating Methodology."
+            meaning={
+              <>
+                DECs apply only to public buildings (schools, hospitals, council buildings, libraries) — not commercial offices or retail. Annual renewal exposes performance trends publicly. The Advisory Report identifies improvement actions; private-sector equivalents (CIBSE TM22 reports, TM63 in-use evaluations) are voluntary but increasingly common in net-zero strategies.
+              </>
+            }
+            cite="Source: SI 2012/3118 — legislation.gov.uk; CIBSE TM22 (2012) — cibse.org"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Explain DEC requirements, ratings, and Advisory Reports",
+              "Distinguish between asset ratings and operational ratings",
+              "Identify causes of building performance gaps",
+              "Apply CIBSE TM54 methodology for operational energy prediction",
+              "Use energy benchmarks for building performance comparison",
+              "Recommend strategies for improving operational ratings",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Display Energy Certificates (DECs)">
+            <p>Display Energy Certificates provide an operational rating based on actual measured energy consumption, showing how efficiently a building is being used in practice. Unlike EPCs which assess theoretical performance, DECs reflect real-world energy use including occupant behaviour and operating patterns.</p>
+            <p><strong>DEC Requirements:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Mandatory for:</strong> Public buildings over 250m² frequently visited by the public</li>
+              <li><strong>Display location:</strong> Prominently displayed where clearly visible to the public</li>
+              <li><strong>Renewal:</strong> Annually for buildings over 1000m², every 10 years for 250-1000m²</li>
+              <li><strong>Advisory Report:</strong> Required alongside DEC with improvement recommendations</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Public buildings:</strong> DECs required over 250m²
-              </li>
-              <li className="pl-1">
-                <strong>Rating scale:</strong> A to G, 100 = typical
-              </li>
-              <li className="pl-1">
-                <strong>Improvement focus:</strong> Controls, schedules, commissioning
-              </li>
-              <li className="pl-1">
-                <strong>Sub-metering:</strong> Essential for targeting improvements
-              </li>
+            <p><strong>DEC Rating Scale</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>A:</strong> 0-25 — Exceptional - less than 25% of typical</li>
+              <li><strong>B:</strong> 26-50 — Excellent - 26-50% of typical</li>
+              <li><strong>C:</strong> 51-75 — Good - 51-75% of typical</li>
+              <li><strong>D:</strong> 76-100 — Typical - around benchmark level</li>
+              <li><strong>E:</strong> 101-125 — Below average - up to 25% above typical</li>
+              <li><strong>F:</strong> 126-150 — Poor - 26-50% above typical</li>
+              <li><strong>G:</strong> Over 150 — Very poor - more than 50% above typical</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>DEC Calculation Components</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Electricity consumption:</strong> Metered kWh from utility bills</li>
+              <li><strong>Heating fuel:</strong> Gas, oil, or district heating in kWh</li>
+              <li><strong>Total floor area:</strong> Gross internal area (GIA) in m²</li>
+              <li><strong>Weather correction:</strong> Degree-day normalisation</li>
+              <li><strong>Benchmark:</strong> CIBSE TM46 values for building type</li>
+            </ul>
+            <p><strong>Key principle:</strong> DECs promote transparency and continuous improvement by making energy performance visible to building users and the public.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Explain DEC requirements, ratings, and Advisory Reports',
-              'Distinguish between asset ratings and operational ratings',
-              'Identify causes of building performance gaps',
-              'Apply CIBSE TM54 methodology for operational energy prediction',
-              'Use energy benchmarks for building performance comparison',
-              'Recommend strategies for improving operational ratings',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Display Energy Certificates */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Display Energy Certificates (DECs)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Asset Rating vs Operational Rating">
+            <p>Understanding the difference between asset ratings (EPCs) and operational ratings (DECs) is fundamental to building performance assessment. Each serves a different purpose and measures different aspects of energy efficiency.</p>
+            <p><strong>Asset Rating (EPC)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Based on building fabric and systems</li>
+              <li>Calculated using standard assumptions</li>
+              <li>Independent of actual occupancy</li>
+              <li>Allows building-to-building comparison</li>
+              <li>Valid for 10 years</li>
+              <li>Required for sale/let transactions</li>
+            </ul>
+            <p><strong>Operational Rating (DEC)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Based on actual metered consumption</li>
+              <li>Reflects real operating conditions</li>
+              <li>Includes occupant behaviour effects</li>
+              <li>Shows year-on-year performance trends</li>
+              <li>Updated annually (large buildings)</li>
+              <li>Required for public display</li>
+            </ul>
+            <p><strong>Rating Comparison Example - Office Building</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Operating hours:</strong> Standard: 52 hrs/week — Actual: 70 hrs/week</li>
+              <li><strong>Heating set point:</strong> Standard: 21°C — Actual: 23°C average</li>
+              <li><strong>Small power:</strong> Standard: 12 W/m² — Actual: 25 W/m²</li>
+              <li><strong>Server room:</strong> Not included — Fully included</li>
+              <li><strong>Resulting rating:</strong> B (45) — E (118)</li>
+            </ul>
+            <p><strong>Why Both Ratings Matter</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Asset rating:</strong> Identifies fabric and system improvement opportunities</li>
+              <li><strong>Operational rating:</strong> Reveals management and control improvement opportunities</li>
+              <li><strong>Large gap between ratings:</strong> Suggests operational issues rather than building deficiencies</li>
+              <li><strong>Similar ratings:</strong> Indicates the building is operating close to its theoretical potential</li>
+            </ul>
+            <p><strong>Practical insight:</strong> A building with a good EPC but poor DEC has significant operational improvement potential without capital investment.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Performance Gaps and CIBSE TM54">
+            <p>The performance gap between predicted and actual energy consumption is a critical issue in building engineering. Research consistently shows that buildings use 2-5 times more energy than design predictions suggest. CIBSE TM54 provides a methodology to address this.</p>
+            <p><strong>Causes of Performance Gaps</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Unregulated loads excluded:</strong> Compliance models ignore small power, servers, lifts, catering</li>
+              <li><strong>Unrealistic assumptions:</strong> Standard occupancy and hours rarely match actual use</li>
+              <li><strong>Poor commissioning:</strong> Systems not optimised or controls not properly set up</li>
+              <li><strong>Construction quality:</strong> Air tightness and insulation below specification</li>
+              <li><strong>Operational issues:</strong> Overridden controls, extended hours, comfort complaints</li>
+              <li><strong>Tenant fit-out:</strong> Additional loads added post-completion</li>
+            </ul>
+            <p><strong>CIBSE TM54 Methodology</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>1:</strong> Gather operational information — Actual hours, occupancy, process loads</li>
+              <li><strong>2:</strong> Identify all energy uses — Both regulated and unregulated loads</li>
+              <li><strong>3:</strong> Create energy model — Using actual operational parameters</li>
+              <li><strong>4:</strong> Separate end uses — Heating, cooling, lighting, equipment etc.</li>
+              <li><strong>5:</strong> Apply monthly profiles — Seasonal variation in loads</li>
+              <li><strong>6:</strong> Compare with benchmarks — Validate predictions against TM46</li>
+            </ul>
+            <p><strong>Regulated Loads</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Space heating</li>
+              <li>Space cooling</li>
+              <li>Ventilation fans</li>
+              <li>Fixed lighting</li>
+              <li>Hot water (pumps)</li>
+              <li>Auxiliary energy</li>
+            </ul>
+            <p><strong>Unregulated Loads</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Small power/equipment</li>
+              <li>Server rooms/IT</li>
+              <li>Lifts and escalators</li>
+              <li>Catering equipment</li>
+              <li>External lighting</li>
+              <li>Specialist equipment</li>
+            </ul>
+            <p><strong>TM54 Additions</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Actual operating hours</li>
+              <li>Real occupancy patterns</li>
+              <li>Out-of-hours loads</li>
+              <li>Tenant equipment</li>
+              <li>Management factors</li>
+              <li>Uncertainty margins</li>
+            </ul>
+            <p><strong>TM54 target:</strong> Predictions within ±20% of actual consumption, compared to typical gaps of 150-400% using compliance calculations alone.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Benchmarking and Improvement Strategies">
+            <p>Energy benchmarking enables comparison of building performance against similar buildings and identification of improvement opportunities. CIBSE TM46 provides standardised benchmarks for various building types used in DEC calculations.</p>
+            <p><strong>CIBSE TM46 Benchmarks (kWh/m²/year)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>General Office:</strong> 95 — 120 — 215</li>
+              <li><strong>Schools/Universities:</strong> 40 — 150 — 190</li>
+              <li><strong>Hospital (Clinical):</strong> 120 — 420 — 540</li>
+              <li><strong>Retail (Sales Area):</strong> 165 — 0 — 165</li>
+              <li><strong>Leisure Centre:</strong> 115 — 475 — 590</li>
+            </ul>
+            <p><strong>Strategies for Improving Operational Ratings</strong></p>
+            <p><strong>Low/No Cost Measures</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Optimise BMS schedules and setpoints</li>
+              <li>Implement systematic switch-off procedures</li>
+              <li>Reduce out-of-hours operation</li>
+              <li>Engage occupants in energy saving</li>
+              <li>Review and fix control issues</li>
+              <li>Retune heating/cooling deadbands</li>
+            </ul>
+            <p><strong>Capital Investment Measures</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>LED lighting upgrades with controls</li>
+              <li>Variable speed drives on pumps/fans</li>
+              <li>BMS upgrades and optimisation</li>
+              <li>Heat recovery systems</li>
+              <li>Improved insulation and glazing</li>
+              <li>Renewable energy installations</li>
+            </ul>
+            <p><strong>Sub-Metering Strategy</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Mains incomer:</strong> Total site consumption (required for DEC)</li>
+              <li><strong>Major plant:</strong> Chillers, boilers, AHUs, lift motors</li>
+              <li><strong>Lighting circuits:</strong> Separately metered per floor or zone</li>
+              <li><strong>Small power:</strong> Floor-by-floor or tenant sub-metering</li>
+              <li><strong>Server rooms:</strong> Critical for identifying IT energy use</li>
+              <li><strong>Catering:</strong> Separate metering for kitchens and vending</li>
+            </ul>
+            <p><strong>Soft Landings and Post-Occupancy Evaluation</strong></p>
+            <p><strong>Government Soft Landings (GSL)</strong> is a building delivery process designed to close the performance gap:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Stage 1:</strong> Define outcome-based performance requirements at briefing</li>
+              <li><strong>Stage 2:</strong> Set measurable energy targets using TM54 methodology</li>
+              <li><strong>Stage 3:</strong> Reality checking during design development</li>
+              <li><strong>Stage 4:</strong> Commissioning and pre-handover verification</li>
+              <li><strong>Stage 5:</strong> Extended aftercare period (typically 3 years)</li>
+              <li><strong>POE:</strong> Post-occupancy evaluation comparing actual vs design</li>
+            </ul>
+            <p><strong>Continuous improvement:</strong> Annual DEC renewal provides an opportunity to track progress and refine improvement strategies based on measured results.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Display Energy Certificates provide an operational rating based on actual measured
-              energy consumption, showing how efficiently a building is being used in practice.
-              Unlike EPCs which assess theoretical performance, DECs reflect real-world energy use
-              including occupant behaviour and operating patterns.
+              <strong>Example 1: DEC Rating Calculation</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">DEC Requirements:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Mandatory for:</strong> Public buildings over 250m² frequently visited by
-                  the public
-                </li>
-                <li className="pl-1">
-                  <strong>Display location:</strong> Prominently displayed where clearly visible to
-                  the public
-                </li>
-                <li className="pl-1">
-                  <strong>Renewal:</strong> Annually for buildings over 1000m², every 10 years for
-                  250-1000m²
-                </li>
-                <li className="pl-1">
-                  <strong>Advisory Report:</strong> Required alongside DEC with improvement
-                  recommendations
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">DEC Rating Scale</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Rating</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Numerical Range
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Performance</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-green-400 font-medium">
-                        A
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0-25</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Exceptional - less than 25% of typical
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-green-300 font-medium">
-                        B
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">26-50</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Excellent - 26-50% of typical
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-300 font-medium">
-                        C
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">51-75</td>
-                      <td className="border border-white/10 px-3 py-2">Good - 51-75% of typical</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-400 font-medium">
-                        D
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">76-100</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Typical - around benchmark level
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-orange-400 font-medium">
-                        E
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">101-125</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Below average - up to 25% above typical
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-orange-500 font-medium">
-                        F
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">126-150</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Poor - 26-50% above typical
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-red-500 font-medium">
-                        G
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Over 150</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Very poor - more than 50% above typical
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">DEC Calculation Components</p>
-              <div className="text-sm space-y-1">
-                <p>
-                  <span className="text-white">Electricity consumption:</span>{' '}
-                  <span className="text-white">Metered kWh from utility bills</span>
-                </p>
-                <p>
-                  <span className="text-white">Heating fuel:</span>{' '}
-                  <span className="text-white">Gas, oil, or district heating in kWh</span>
-                </p>
-                <p>
-                  <span className="text-white">Total floor area:</span>{' '}
-                  <span className="text-white">Gross internal area (GIA) in m²</span>
-                </p>
-                <p>
-                  <span className="text-white">Weather correction:</span>{' '}
-                  <span className="text-white">Degree-day normalisation</span>
-                </p>
-                <p>
-                  <span className="text-white">Benchmark:</span>{' '}
-                  <span className="text-white">CIBSE TM46 values for building type</span>
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key principle:</strong> DECs promote transparency and continuous improvement
-              by making energy performance visible to building users and the public.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Asset Rating vs Operational Rating */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Asset Rating vs Operational Rating
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Calculate the DEC rating for a 5,000m² office building.</p>
+            <p>Annual energy consumption:</p>
+            <p>Electricity: 550,000 kWh</p>
+            <p>Gas: 450,000 kWh</p>
+            <p>Floor area: 5,000 m² GIA</p>
+            <p>Energy use intensity:</p>
+            <p>Electricity: 550,000 ÷ 5,000 = 110 kWh/m²/yr</p>
+            <p>Gas: 450,000 ÷ 5,000 = 90 kWh/m²/yr</p>
+            <p>Compare to TM46 Office benchmark (95 + 120 = 215):</p>
+            <p>Actual total: 110 + 90 = 200 kWh/m²/yr</p>
+            <p>Rating: (200 ÷ 215) × 100 = 93</p>
+            <p>Result: DEC Rating D (93) - slightly better than typical</p>
             <p>
-              Understanding the difference between asset ratings (EPCs) and operational ratings
-              (DECs) is fundamental to building performance assessment. Each serves a different
-              purpose and measures different aspects of energy efficiency.
+              <strong>Example 2: Performance Gap Analysis</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Asset Rating (EPC)</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Based on building fabric and systems</li>
-                  <li className="pl-1">Calculated using standard assumptions</li>
-                  <li className="pl-1">Independent of actual occupancy</li>
-                  <li className="pl-1">Allows building-to-building comparison</li>
-                  <li className="pl-1">Valid for 10 years</li>
-                  <li className="pl-1">Required for sale/let transactions</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Operational Rating (DEC)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Based on actual metered consumption</li>
-                  <li className="pl-1">Reflects real operating conditions</li>
-                  <li className="pl-1">Includes occupant behaviour effects</li>
-                  <li className="pl-1">Shows year-on-year performance trends</li>
-                  <li className="pl-1">Updated annually (large buildings)</li>
-                  <li className="pl-1">Required for public display</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Rating Comparison Example - Office Building
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">EPC Assessment</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">DEC Assessment</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Operating hours</td>
-                      <td className="border border-white/10 px-3 py-2">Standard: 52 hrs/week</td>
-                      <td className="border border-white/10 px-3 py-2">Actual: 70 hrs/week</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Heating set point</td>
-                      <td className="border border-white/10 px-3 py-2">Standard: 21°C</td>
-                      <td className="border border-white/10 px-3 py-2">Actual: 23°C average</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Small power</td>
-                      <td className="border border-white/10 px-3 py-2">Standard: 12 W/m²</td>
-                      <td className="border border-white/10 px-3 py-2">Actual: 25 W/m²</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Server room</td>
-                      <td className="border border-white/10 px-3 py-2">Not included</td>
-                      <td className="border border-white/10 px-3 py-2">Fully included</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Resulting rating</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">B (45)</td>
-                      <td className="border border-white/10 px-3 py-2 text-orange-400">E (118)</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Why Both Ratings Matter
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Asset rating:</strong> Identifies fabric and system improvement
-                  opportunities
-                </li>
-                <li className="pl-1">
-                  <strong>Operational rating:</strong> Reveals management and control improvement
-                  opportunities
-                </li>
-                <li className="pl-1">
-                  <strong>Large gap between ratings:</strong> Suggests operational issues rather
-                  than building deficiencies
-                </li>
-                <li className="pl-1">
-                  <strong>Similar ratings:</strong> Indicates the building is operating close to its
-                  theoretical potential
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Practical insight:</strong> A building with a good EPC but poor DEC has
-              significant operational improvement potential without capital investment.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Performance Gaps and TM54 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Performance Gaps and CIBSE TM54
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Analyse the performance gap for a new school building.</p>
+            <p>Design prediction (Part L compliance):</p>
+            <p>Regulated energy: 85 kWh/m²/yr</p>
+            <p>TM54 prediction (operational):</p>
+            <p>Regulated: 85 kWh/m²/yr</p>
+            <p>Unregulated (IT, catering): 45 kWh/m²/yr</p>
+            <p>Extended hours factor: +15%</p>
+            <p>Total: (85 + 45) × 1.15 = 150 kWh/m²/yr</p>
+            <p>Actual consumption (Year 1):</p>
+            <p>Metered: 175 kWh/m²/yr</p>
+            <p>Performance gap analysis:</p>
+            <p>vs Part L: 175 ÷ 85 = 2.06× (106% gap)</p>
+            <p>vs TM54: 175 ÷ 150 = 1.17× (17% gap)</p>
+            <p>TM54 produced a more realistic prediction</p>
+            <p>Investigate remaining 17% gap: controls, behaviour</p>
             <p>
-              The performance gap between predicted and actual energy consumption is a critical
-              issue in building engineering. Research consistently shows that buildings use 2-5
-              times more energy than design predictions suggest. CIBSE TM54 provides a methodology
-              to address this.
+              <strong>Example 3: Improvement Strategy Development</strong>
             </p>
+            <p><strong>Scenario:</strong> Develop an improvement plan for a council building with DEC rating F (142).</p>
+            <p>Current performance:</p>
+            <p>DEC Rating: F (142) - 42% above typical</p>
+            <p>Consumption: 285 kWh/m²/yr</p>
+            <p>Benchmark: 200 kWh/m²/yr</p>
+            <p>Sub-metering analysis reveals:</p>
+            <p>Out-of-hours baseload: 35% of consumption</p>
+            <p>Heating running 24/7 (not required)</p>
+            <p>Lighting on timers, not occupancy</p>
+            <p>Recommended actions:</p>
+            <p>1. BMS optimisation (no cost): -15%</p>
+            <p>2. Heating schedule correction: -10%</p>
+            <p>3. Lighting controls upgrade: -8%</p>
+            <p>4. Staff engagement programme: -5%</p>
+            <p>Projected consumption: 285 × 0.62 = 177 kWh/m²/yr</p>
+            <p>Projected DEC Rating: D (88)</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Causes of Performance Gaps</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Unregulated loads excluded:</strong> Compliance models ignore small power,
-                  servers, lifts, catering
-                </li>
-                <li className="pl-1">
-                  <strong>Unrealistic assumptions:</strong> Standard occupancy and hours rarely
-                  match actual use
-                </li>
-                <li className="pl-1">
-                  <strong>Poor commissioning:</strong> Systems not optimised or controls not
-                  properly set up
-                </li>
-                <li className="pl-1">
-                  <strong>Construction quality:</strong> Air tightness and insulation below
-                  specification
-                </li>
-                <li className="pl-1">
-                  <strong>Operational issues:</strong> Overridden controls, extended hours, comfort
-                  complaints
-                </li>
-                <li className="pl-1">
-                  <strong>Tenant fit-out:</strong> Additional loads added post-completion
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">CIBSE TM54 Methodology</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Step</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Activity</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Gather operational information
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Actual hours, occupancy, process loads
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2</td>
-                      <td className="border border-white/10 px-3 py-2">Identify all energy uses</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Both regulated and unregulated loads
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3</td>
-                      <td className="border border-white/10 px-3 py-2">Create energy model</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Using actual operational parameters
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4</td>
-                      <td className="border border-white/10 px-3 py-2">Separate end uses</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heating, cooling, lighting, equipment etc.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5</td>
-                      <td className="border border-white/10 px-3 py-2">Apply monthly profiles</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Seasonal variation in loads
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6</td>
-                      <td className="border border-white/10 px-3 py-2">Compare with benchmarks</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Validate predictions against TM46
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Regulated Loads</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Space heating</li>
-                  <li className="pl-1">Space cooling</li>
-                  <li className="pl-1">Ventilation fans</li>
-                  <li className="pl-1">Fixed lighting</li>
-                  <li className="pl-1">Hot water (pumps)</li>
-                  <li className="pl-1">Auxiliary energy</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Unregulated Loads</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Small power/equipment</li>
-                  <li className="pl-1">Server rooms/IT</li>
-                  <li className="pl-1">Lifts and escalators</li>
-                  <li className="pl-1">Catering equipment</li>
-                  <li className="pl-1">External lighting</li>
-                  <li className="pl-1">Specialist equipment</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">TM54 Additions</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Actual operating hours</li>
-                  <li className="pl-1">Real occupancy patterns</li>
-                  <li className="pl-1">Out-of-hours loads</li>
-                  <li className="pl-1">Tenant equipment</li>
-                  <li className="pl-1">Management factors</li>
-                  <li className="pl-1">Uncertainty margins</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>TM54 target:</strong> Predictions within ±20% of actual consumption, compared
-              to typical gaps of 150-400% using compliance calculations alone.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Benchmarking and Improvement Strategies */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Benchmarking and Improvement Strategies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Energy benchmarking enables comparison of building performance against similar
-              buildings and identification of improvement opportunities. CIBSE TM46 provides
-              standardised benchmarks for various building types used in DEC calculations.
+              <strong>DEC Assessment Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CIBSE TM46 Benchmarks (kWh/m²/year)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Building Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Electrical</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Fossil Fuel</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Total Typical</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">General Office</td>
-                      <td className="border border-white/10 px-3 py-2">95</td>
-                      <td className="border border-white/10 px-3 py-2">120</td>
-                      <td className="border border-white/10 px-3 py-2">215</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Schools/Universities</td>
-                      <td className="border border-white/10 px-3 py-2">40</td>
-                      <td className="border border-white/10 px-3 py-2">150</td>
-                      <td className="border border-white/10 px-3 py-2">190</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hospital (Clinical)</td>
-                      <td className="border border-white/10 px-3 py-2">120</td>
-                      <td className="border border-white/10 px-3 py-2">420</td>
-                      <td className="border border-white/10 px-3 py-2">540</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Retail (Sales Area)</td>
-                      <td className="border border-white/10 px-3 py-2">165</td>
-                      <td className="border border-white/10 px-3 py-2">0</td>
-                      <td className="border border-white/10 px-3 py-2">165</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Leisure Centre</td>
-                      <td className="border border-white/10 px-3 py-2">115</td>
-                      <td className="border border-white/10 px-3 py-2">475</td>
-                      <td className="border border-white/10 px-3 py-2">590</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-2">
-                Strategies for Improving Operational Ratings
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-xs font-medium text-white mb-1">Low/No Cost Measures</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Optimise BMS schedules and setpoints</li>
-                    <li className="pl-1">Implement systematic switch-off procedures</li>
-                    <li className="pl-1">Reduce out-of-hours operation</li>
-                    <li className="pl-1">Engage occupants in energy saving</li>
-                    <li className="pl-1">Review and fix control issues</li>
-                    <li className="pl-1">Retune heating/cooling deadbands</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-xs font-medium text-white mb-1">
-                    Capital Investment Measures
-                  </p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">LED lighting upgrades with controls</li>
-                    <li className="pl-1">Variable speed drives on pumps/fans</li>
-                    <li className="pl-1">BMS upgrades and optimisation</li>
-                    <li className="pl-1">Heat recovery systems</li>
-                    <li className="pl-1">Improved insulation and glazing</li>
-                    <li className="pl-1">Renewable energy installations</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Sub-Metering Strategy</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Mains incomer:</strong> Total site consumption (required for DEC)
-                </li>
-                <li className="pl-1">
-                  <strong>Major plant:</strong> Chillers, boilers, AHUs, lift motors
-                </li>
-                <li className="pl-1">
-                  <strong>Lighting circuits:</strong> Separately metered per floor or zone
-                </li>
-                <li className="pl-1">
-                  <strong>Small power:</strong> Floor-by-floor or tenant sub-metering
-                </li>
-                <li className="pl-1">
-                  <strong>Server rooms:</strong> Critical for identifying IT energy use
-                </li>
-                <li className="pl-1">
-                  <strong>Catering:</strong> Separate metering for kitchens and vending
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Soft Landings and Post-Occupancy Evaluation
-              </p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <strong>Government Soft Landings (GSL)</strong> is a building delivery process
-                  designed to close the performance gap:
-                </p>
-                <ul className="space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Stage 1:</strong> Define outcome-based performance requirements at
-                    briefing
-                  </li>
-                  <li className="pl-1">
-                    <strong>Stage 2:</strong> Set measurable energy targets using TM54 methodology
-                  </li>
-                  <li className="pl-1">
-                    <strong>Stage 3:</strong> Reality checking during design development
-                  </li>
-                  <li className="pl-1">
-                    <strong>Stage 4:</strong> Commissioning and pre-handover verification
-                  </li>
-                  <li className="pl-1">
-                    <strong>Stage 5:</strong> Extended aftercare period (typically 3 years)
-                  </li>
-                  <li className="pl-1">
-                    <strong>POE:</strong> Post-occupancy evaluation comparing actual vs design
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Continuous improvement:</strong> Annual DEC renewal provides an opportunity to
-              track progress and refine improvement strategies based on measured results.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Gather 12 months of energy bills for all fuel types</li>
+              <li>Confirm gross internal floor area from measured drawings</li>
+              <li>Identify building category from TM46 classification</li>
+              <li>Apply weather corrections using degree-day data</li>
+              <li>Document any changes affecting consumption (occupancy, hours)</li>
+              <li>Prepare Advisory Report with prioritised recommendations</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>DEC benchmark: <strong>100 = typical</strong> for building type</li>
+              <li>Typical performance gap: <strong>2-5 times</strong> design predictions</li>
+              <li>TM54 target accuracy: <strong>±20%</strong> of actual consumption</li>
+              <li>Operational savings potential: <strong>10-20%</strong> without capital investment</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: DEC Rating Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate the DEC rating for a 5,000m² office building.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Annual energy consumption:</p>
-                <p className="ml-4">Electricity: 550,000 kWh</p>
-                <p className="ml-4">Gas: 450,000 kWh</p>
-                <p className="mt-2">Floor area: 5,000 m² GIA</p>
-                <p className="mt-2 text-white">Energy use intensity:</p>
-                <p className="ml-4">Electricity: 550,000 ÷ 5,000 = 110 kWh/m²/yr</p>
-                <p className="ml-4">Gas: 450,000 ÷ 5,000 = 90 kWh/m²/yr</p>
-                <p className="mt-2 text-white">
-                  Compare to TM46 Office benchmark (95 + 120 = 215):
-                </p>
-                <p className="ml-4">Actual total: 110 + 90 = 200 kWh/m²/yr</p>
-                <p className="ml-4">Rating: (200 ÷ 215) × 100 = 93</p>
-                <p className="mt-2 text-green-400">
-                  Result: DEC Rating D (93) - slightly better than typical
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Performance Gap Analysis
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Analyse the performance gap for a new school building.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Design prediction (Part L compliance):</p>
-                <p className="ml-4">Regulated energy: 85 kWh/m²/yr</p>
-                <p className="mt-2 text-white">TM54 prediction (operational):</p>
-                <p className="ml-4">Regulated: 85 kWh/m²/yr</p>
-                <p className="ml-4">Unregulated (IT, catering): 45 kWh/m²/yr</p>
-                <p className="ml-4">Extended hours factor: +15%</p>
-                <p className="ml-4">Total: (85 + 45) × 1.15 = 150 kWh/m²/yr</p>
-                <p className="mt-2 text-white">Actual consumption (Year 1):</p>
-                <p className="ml-4">Metered: 175 kWh/m²/yr</p>
-                <p className="mt-2 text-white">Performance gap analysis:</p>
-                <p className="ml-4">vs Part L: 175 ÷ 85 = 2.06× (106% gap)</p>
-                <p className="ml-4">vs TM54: 175 ÷ 150 = 1.17× (17% gap)</p>
-                <p className="mt-2 text-green-400">TM54 produced a more realistic prediction</p>
-                <p className="text-yellow-400">
-                  Investigate remaining 17% gap: controls, behaviour
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Improvement Strategy Development
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Develop an improvement plan for a council building with
-                DEC rating F (142).
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Current performance:</p>
-                <p className="ml-4">DEC Rating: F (142) - 42% above typical</p>
-                <p className="ml-4">Consumption: 285 kWh/m²/yr</p>
-                <p className="ml-4">Benchmark: 200 kWh/m²/yr</p>
-                <p className="mt-2 text-white">Sub-metering analysis reveals:</p>
-                <p className="ml-4">Out-of-hours baseload: 35% of consumption</p>
-                <p className="ml-4">Heating running 24/7 (not required)</p>
-                <p className="ml-4">Lighting on timers, not occupancy</p>
-                <p className="mt-2 text-white">Recommended actions:</p>
-                <p className="ml-4 text-green-400">1. BMS optimisation (no cost): -15%</p>
-                <p className="ml-4 text-green-400">2. Heating schedule correction: -10%</p>
-                <p className="ml-4 text-green-400">3. Lighting controls upgrade: -8%</p>
-                <p className="ml-4 text-green-400">4. Staff engagement programme: -5%</p>
-                <p className="mt-2">Projected consumption: 285 × 0.62 = 177 kWh/m²/yr</p>
-                <p className="text-green-400">Projected DEC Rating: D (88)</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                DEC Assessment Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Gather 12 months of energy bills for all fuel types</li>
-                <li className="pl-1">Confirm gross internal floor area from measured drawings</li>
-                <li className="pl-1">Identify building category from TM46 classification</li>
-                <li className="pl-1">Apply weather corrections using degree-day data</li>
-                <li className="pl-1">
-                  Document any changes affecting consumption (occupancy, hours)
-                </li>
-                <li className="pl-1">Prepare Advisory Report with prioritised recommendations</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Relying on EPC alone:</strong> Asset rating doesn't predict operational performance</li>
+                <li><strong>Ignoring unregulated loads:</strong> Often 30-50% of total consumption</li>
+                <li><strong>Assuming design = reality:</strong> Always verify with measured data</li>
+                <li><strong>No sub-metering:</strong> Cannot target improvements without disaggregated data</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  DEC benchmark: <strong>100 = typical</strong> for building type
-                </li>
-                <li className="pl-1">
-                  Typical performance gap: <strong>2-5 times</strong> design predictions
-                </li>
-                <li className="pl-1">
-                  TM54 target accuracy: <strong>±20%</strong> of actual consumption
-                </li>
-                <li className="pl-1">
-                  Operational savings potential: <strong>10-20%</strong> without capital investment
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Relying on EPC alone:</strong> Asset rating doesn't predict operational
-                  performance
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring unregulated loads:</strong> Often 30-50% of total consumption
-                </li>
-                <li className="pl-1">
-                  <strong>Assuming design = reality:</strong> Always verify with measured data
-                </li>
-                <li className="pl-1">
-                  <strong>No sub-metering:</strong> Cannot target improvements without disaggregated
-                  data
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="DEC band drops from D to F — political consequence"
+            situation={
+              <>
+                A local council civic building DEC drops from Band D (typical) to Band F (worst quartile) at annual renewal. The cause is a 2-year-old AHU controls failure that has been masked by spare capacity. Local press coverage follows; the council faces public criticism.
+              </>
+            }
+            whatToDo={
+              <>
+                Three-stage response: (1) immediate technical — diagnose the controls failure (typically BMS scheduling, sensor failure or commissioning drift), repair, re-commission, verify with 4-week metering; (2) update the DEC Advisory Report with the corrective action and re-issue (DEC band can be improved at re-issue if metering confirms); (3) review entire estate for similar failures — DECs catch problems that BMS alarms missed. Use the political moment to fund a wider energy-management programme.
+              </>
+            }
+            whyItMatters={
+              <>
+                DECs make operational performance visible to the public. For commercial buildings, equivalent transparency is increasingly required by ESG-conscious tenants, investors and lenders. Building performance is moving from a back-office FM concern to a front-of-house reputational issue.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">DEC Essentials</p>
-                <ul className="space-y-0.5">
-                  <li>Rating A-G, 100 = typical benchmark</li>
-                  <li>Based on actual metered consumption</li>
-                  <li>Annual renewal for buildings &gt;1000m²</li>
-                  <li>Advisory Report required with recommendations</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Performance Gap Factors</p>
-                <ul className="space-y-0.5">
-                  <li>Unregulated loads not in compliance models</li>
-                  <li>Extended operating hours</li>
-                  <li>Higher internal gains than assumed</li>
-                  <li>Poor commissioning and controls</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              "DEC = Display Energy Certificate, operational rating, mandatory for public buildings >250 m².",
+              "EPC vs DEC: EPC is design-based prediction, DEC is actual measured performance.",
+              "Operational rating: A (best) to G (worst); benchmarked against typical performance.",
+              "CIBSE TM22 = energy assessment and reporting methodology.",
+              "CIBSE TM61–63 = in-use performance evaluation.",
+              "Performance gap: design vs actual — typically 30–80% in non-dom buildings.",
+              "Public, ESG and tenant pressure increasingly making operational ratings reputationally important.",
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section5-6">
-              Next: Section 5.6
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section5-4")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                ISO 50001
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section5-6")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Energy efficiency measures
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

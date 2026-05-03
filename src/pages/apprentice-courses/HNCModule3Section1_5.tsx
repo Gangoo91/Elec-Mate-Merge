@@ -244,8 +244,8 @@ const HNCModule3Section1_5 = () => {
 
           <TLDR
             points={[
-              'You can apply Kirchhoff\u2019s Current Law (KCL: \u03a3I = 0 at a node) to balance currents at a distribution board, busbar or fault point.',
-              'You can apply Kirchhoff\u2019s Voltage Law (KVL: \u03a3V = 0 round a loop) to account for source voltage against every drop in a circuit.',
+              'You can apply Kirchhoff’s Current Law (KCL: ΣI = 0 at a node) to balance currents at a distribution board, busbar or fault point.',
+              'You can apply Kirchhoff’s Voltage Law (KVL: ΣV = 0 round a loop) to account for source voltage against every drop in a circuit.',
               'You can use both laws together to solve mesh and nodal equations for any network the simple series/parallel rules cannot handle.',
               'You can use KCL to size a neutral on a three-phase distribution board with imbalanced single-phase loads.',
               'You can use KVL to verify that supply voltage minus the sum of cable and load drops still leaves enough voltage at the most remote terminal.',
@@ -257,7 +257,7 @@ const HNCModule3Section1_5 = () => {
             clause="The cross-sectional area of every protective conductor shall be calculated to satisfy the adiabatic equation, or selected from Table 54.7. Where conductors carry harmonic currents, the neutral conductor cross-sectional area shall be considered (Section 524)."
             meaning={
               <>
-                KCL at a three-phase node says \u03a3I = 0. With balanced linear loads the
+                KCL at a three-phase node says ΣI = 0. With balanced linear loads the
                 neutral current is zero; with single-phase imbalance or triplen-harmonic
                 content (LED drivers, VFDs) the neutral can carry as much as or more than the
                 phase current. KCL is the arithmetic that proves the neutral conductor
@@ -641,16 +641,16 @@ const HNCModule3Section1_5 = () => {
             situation={
               <>
                 A three-phase 400 V distribution board feeds three single-phase lighting
-                circuits: L1 carries 18 A, L2 carries 12 A, L3 carries 22 A \u2014 all LED
+                circuits: L1 carries 18 A, L2 carries 12 A, L3 carries 22 A — all LED
                 luminaires with switched-mode drivers known to inject third-harmonic current.
-                You need to confirm the existing 16 mm\u00b2 neutral is adequate.
+                You need to confirm the existing 16 mm² neutral is adequate.
               </>
             }
             whatToDo={
               <>
                 Apply KCL at the neutral node. For balanced linear loads the neutral current
-                would be |I_L1 + I_L2 + I_L3| (vectorially) at the phase angles 0\u00b0,
-                120\u00b0, 240\u00b0 \u2014 about 8.7 A here. But with significant third-harmonic
+                would be |I_L1 + I_L2 + I_L3| (vectorially) at the phase angles 0°,
+                120°, 240° — about 8.7 A here. But with significant third-harmonic
                 content the triplen harmonics from each phase add arithmetically in the
                 neutral, so the harmonic component in the neutral can exceed the fundamental
                 phase current. Reference BS 7671 Section 524 and IEC 61000-3-2 limits, then
@@ -661,7 +661,7 @@ const HNCModule3Section1_5 = () => {
             }
             whyItMatters={
               <>
-                Kirchhoff\u2019s laws are not abstract theory \u2014 they are how you spot a
+                Kirchhoff’s laws are not abstract theory — they are how you spot a
                 neutral that is hot to the touch even though every phase MCB is well within
                 rating. Failing to apply KCL with harmonic content has caused neutral fires in
                 LED-retrofit office buildings.
@@ -677,14 +677,14 @@ const HNCModule3Section1_5 = () => {
 
           <KeyTakeaways
             points={[
-              'KCL: \u03a3I = 0 at any node \u2014 current in equals current out. The arithmetic behind every distribution board, every fault-current split and every neutral sizing.',
-              'KVL: \u03a3V = 0 round any closed loop \u2014 supply voltage equals the sum of every cable and load drop. The basis of every voltage-drop check.',
-              'The two laws together solve any linear network the simple series/parallel rules cannot \u2014 mesh analysis (KVL) and nodal analysis (KCL).',
+              'KCL: ΣI = 0 at any node — current in equals current out. The arithmetic behind every distribution board, every fault-current split and every neutral sizing.',
+              'KVL: ΣV = 0 round any closed loop — supply voltage equals the sum of every cable and load drop. The basis of every voltage-drop check.',
+              'The two laws together solve any linear network the simple series/parallel rules cannot — mesh analysis (KVL) and nodal analysis (KCL).',
               'Sign convention matters: pick a positive direction for currents and voltages and stay consistent round the loop or at the node.',
               'Three-phase balanced linear loads: phasor sum of phase currents = 0, so the neutral carries no fundamental current.',
-              'Three-phase non-linear loads (LED drivers, VFDs): triplen harmonics add arithmetically in the neutral \u2014 the neutral can exceed the phase current, driving a Section 524 sizing check.',
-              'KVL applied across a fault loop is the source of I_f = U\u2080 / Z_s \u2014 the protective device disconnection check.',
-              'Both laws are conservation laws \u2014 charge (KCL) and energy (KVL) cannot be created or destroyed. They hold for AC, DC and any waveform.',
+              'Three-phase non-linear loads (LED drivers, VFDs): triplen harmonics add arithmetically in the neutral — the neutral can exceed the phase current, driving a Section 524 sizing check.',
+              'KVL applied across a fault loop is the source of I_f = U₀ / Z_s — the protective device disconnection check.',
+              'Both laws are conservation laws — charge (KCL) and energy (KVL) cannot be created or destroyed. They hold for AC, DC and any waveform.',
             ]}
           />
 

@@ -1,8 +1,16 @@
 import { useState, useMemo } from 'react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  PageFrame,
+  PageHero,
+  itemVariants,
+} from '@/components/college/primitives';
 import {
   HelpCircle,
   Search,
@@ -97,6 +105,7 @@ function getDailyQuestion() {
 
 // ── Component ───────────────────────────────────────────
 const OnJobSupervisorKnowledge = () => {
+  const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [showQuiz, setShowQuiz] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -147,25 +156,26 @@ const OnJobSupervisorKnowledge = () => {
 
   // ── Hub view ────────────────────────────────────────────
   return (
-    <div className="bg-gradient-to-br from-background via-background/98 to-background/95 min-h-screen">
-      <div className="max-w-2xl mx-auto px-4 py-6 space-y-5 animate-fade-in pb-24 text-left">
-        {/* Header */}
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3 min-w-0">
-            <div className="p-2.5 rounded-xl bg-blue-500/10 border border-blue-500/20 flex-shrink-0">
-              <HelpCircle className="h-6 w-6 text-blue-400" />
-            </div>
-            <div className="min-w-0">
-              <h1 className="text-xl font-bold tracking-tight text-white truncate">
-                Ask a Supervisor
-              </h1>
-              <p className="text-sm text-white truncate">
-                Expert guidance for every situation on site
-              </p>
-            </div>
-          </div>
-          <SmartBackButton className="flex-shrink-0" />
-        </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice/on-job-tools')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
+
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Ask a supervisor"
+          title="Expert guidance for site"
+          description="The questions you'd ask a senior sparky if they had time. Searchable knowledge bank covering safety, technical, and the awkward 'how do I…' moments."
+          tone="yellow"
+        />
+      </motion.div>
 
         {/* Search bar */}
         <div className="relative">
@@ -490,7 +500,6 @@ const OnJobSupervisorKnowledge = () => {
             </Card>
           </>
         )}
-      </div>
 
       {/* ── Emergency FAB ──────────────────────────────── */}
       {!searchQuery && (
@@ -566,7 +575,7 @@ const OnJobSupervisorKnowledge = () => {
           </div>
         </SheetContent>
       </Sheet>
-    </div>
+    </PageFrame>
   );
 };
 

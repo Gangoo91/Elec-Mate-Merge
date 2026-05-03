@@ -403,8 +403,12 @@ export default function Sub1() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 514.13.1 (Verbatim)"
-            clause="A durable label complying with BS 951 stating 'Safety Electrical Connection — Do Not Remove' shall be permanently fixed in a visible position at or near the point of connection of every earthing conductor to an earth electrode, every bonding conductor to extraneous-conductive-parts, and at the main earthing terminal where separated from the main switchgear."
+            source="BS 7671:2018+A4:2026 — Regulation 514.13.1 (Notice — earthing and bonding connections)"
+            clause={`A warning notice clearly and durably marked with the words 'Safety Electrical Connection — Do Not Remove' shall be securely fixed in a visible position at or near:
+(a) the point of connection of every earthing conductor to an earth electrode; and
+(b) the point of connection of every bonding conductor to an extraneous-conductive-part; and
+(c) the main earthing terminal, where separate from main switchgear.
+The warning notice may be provided on the clamp according to BS 951 or on the warning label provided with it.`}
             meaning={
               <>
                 Visual inspection checks for the BS 951 label at every required location.

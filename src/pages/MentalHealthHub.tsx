@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, Flame, Lock, Phone, RefreshCw, Send } from 'lucide-react';
+import { ArrowLeft, Lock, Phone, Send } from 'lucide-react';
 
 import { useAuth } from '@/contexts/AuthContext';
 import { MentalHealthProvider } from '@/contexts/MentalHealthContext';
@@ -718,25 +718,23 @@ export default function MentalHealthHub() {
             </button>
 
             <PageHero
-              eyebrow="Wellbeing"
+              eyebrow="Apprentice · Wellbeing"
               title="Mental health"
               description="A private space — for resets, real talk, and patterns over time."
-              tone="purple"
+              tone="yellow"
               actions={
                 <>
                   {!scoreLoading && <WellbeingRing score={score} band={band} />}
                   {streak >= 2 && (
-                    <span className="inline-flex items-center gap-1.5 h-9 px-3 rounded-full bg-elec-yellow/10 border border-elec-yellow/25 text-elec-yellow text-[12px] font-semibold">
-                      <Flame className="h-3.5 w-3.5" />
+                    <span className="inline-flex items-center h-9 px-3 rounded-full bg-elec-yellow/10 border border-elec-yellow/25 text-elec-yellow text-[12px] font-semibold tabular-nums">
                       {streak}-day streak
                     </span>
                   )}
                   <button
                     onClick={() => refreshMoodData()}
-                    aria-label="Refresh"
-                    className="h-10 w-10 rounded-full bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center hover:bg-white/[0.08] transition-colors touch-manipulation"
+                    className="h-10 px-4 rounded-full bg-white/[0.04] border border-white/[0.08] text-[12px] font-medium text-white hover:bg-white/[0.08] transition-colors touch-manipulation"
                   >
-                    <RefreshCw className="h-4 w-4" />
+                    Refresh
                   </button>
                 </>
               }

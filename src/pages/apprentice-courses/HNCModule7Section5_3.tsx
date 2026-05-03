@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 7 · Section 5 · Subsection 3 — Harmonic Mitigation
+ * HNC Electrical Engineering for Building Services (Power and Lighting Systems)
+ *   Harmonic sources, effects, measurement, passive and active filters, and design considerations for building services
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Harmonic Mitigation - HNC Module 7 Section 5.3';
@@ -253,835 +266,300 @@ const faqs = [
 ];
 
 const HNCModule7Section5_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section5")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module7-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.5.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Harmonic Mitigation
-          </h1>
-          <p className="text-white">
-            Harmonic sources, effects, measurement, passive and active filters, and design
-            considerations for building services
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 7 · Section 5 · Subsection 3"
+            title="Harmonic Mitigation"
+            description="Harmonic sources, effects, measurement, passive and active filters, and design considerations for building services"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Harmonics:</strong> Multiples of 50 Hz from non-linear loads
-              </li>
-              <li className="pl-1">
-                <strong>THD limit:</strong> 8% voltage at LV per G5/5
-              </li>
-              <li className="pl-1">
-                <strong>Main sources:</strong> VSDs, LED drivers, computers
-              </li>
-              <li className="pl-1">
-                <strong>Mitigation:</strong> Filters, K-rated transformers, oversized neutrals
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Identify harmonic sources in modern electrical installations",
+              "Understand harmonic effects on cables, transformers, and equipment",
+              "Apply THD measurement techniques and interpret G5/5 limits",
+              "Design passive harmonic filter solutions for specific frequencies",
+              "Specify active filters and K-rated transformers appropriately",
+              "Develop harmonic mitigation strategies for building services projects",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Harmonic Sources in Buildings">
+            <p>Harmonics are sinusoidal components at frequencies that are integer multiples of the fundamental 50 Hz supply. They are generated by non-linear loads that draw current in pulses rather than as a continuous sine wave, distorting both current and voltage waveforms throughout the installation.</p>
+            <p><strong>Common harmonic sources in modern buildings:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Variable speed drives (VSDs):</strong> Six-pulse rectifiers produce 5th, 7th, 11th, 13th harmonics</li>
+              <li><strong>LED lighting:</strong> Switch-mode drivers generate predominantly 3rd harmonic current</li>
+              <li><strong>IT equipment:</strong> Computers, servers with switch-mode PSUs produce 3rd and 5th harmonics</li>
+              <li><strong>UPS systems:</strong> Both input rectifier and output inverter contribute harmonics</li>
+              <li><strong>Lift drives:</strong> Modern regenerative drives are significant harmonic sources</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Values</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>THD voltage:</strong> ≤8% at 400V (G5/5)
-              </li>
-              <li className="pl-1">
-                <strong>5th harmonic:</strong> ≤6% voltage limit
-              </li>
-              <li className="pl-1">
-                <strong>Neutral sizing:</strong> 200% for triplen loads
-              </li>
-              <li className="pl-1">
-                <strong>K-factor:</strong> K-13 typical for IT loads
-              </li>
+            <p><strong>Harmonic Orders and Characteristics</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>3rd (triplen):</strong> 150 — Zero sequence — Single-phase loads (LEDs, PCs)</li>
+              <li><strong>5th:</strong> 250 — Negative sequence — VSDs, rectifiers</li>
+              <li><strong>7th:</strong> 350 — Positive sequence — VSDs, rectifiers</li>
+              <li><strong>9th (triplen):</strong> 450 — Zero sequence — Single-phase loads</li>
+              <li><strong>11th, 13th:</strong> 550, 650 — Neg/Pos sequence — VSDs, 6-pulse rectifiers</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Key principle:</strong> Six-pulse converters produce harmonics at orders 6n±1 (5th, 7th, 11th, 13th...). Single-phase non-linear loads predominantly produce triplen harmonics (3rd, 9th, 15th...).</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Identify harmonic sources in modern electrical installations',
-              'Understand harmonic effects on cables, transformers, and equipment',
-              'Apply THD measurement techniques and interpret G5/5 limits',
-              'Design passive harmonic filter solutions for specific frequencies',
-              'Specify active filters and K-rated transformers appropriately',
-              'Develop harmonic mitigation strategies for building services projects',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Harmonic Sources */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Harmonic Sources in Buildings
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Effects of Harmonics on Electrical Systems">
+            <p>Harmonic distortion causes a range of problems from increased energy losses to equipment damage and nuisance tripping. Understanding these effects is essential for diagnosing problems and specifying appropriate mitigation measures.</p>
+            <p><strong>Thermal Effects</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Increased cable heating (skin effect)</li>
+              <li>Transformer overheating (eddy currents)</li>
+              <li>Neutral conductor overheating</li>
+              <li>Motor additional losses</li>
+            </ul>
+            <p><strong>Operational Effects</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Nuisance tripping of MCBs/MCCBs</li>
+              <li>Capacitor failures and resonance</li>
+              <li>Metering inaccuracies</li>
+              <li>Electronic equipment malfunction</li>
+            </ul>
+            <p><strong>Critical: Neutral Conductor Overheating</strong></p>
+            <p>In three-phase systems, triplen harmonics (3rd, 9th, 15th) are zero-sequence currents that add arithmetically in the neutral rather than cancelling. With significant single-phase non-linear loads, neutral current can exceed 170% of phase current. Standard neutral sizing (equal to phase) becomes dangerously inadequate.</p>
+            <p><strong>Equipment-Specific Effects</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Transformers:</strong> Increased eddy current and hysteresis losses — Derating required or premature failure</li>
+              <li><strong>Cables:</strong> Skin effect increases AC resistance — Additional voltage drop and heating</li>
+              <li><strong>Circuit breakers:</strong> RMS current higher than expected — Nuisance tripping, inadequate protection</li>
+              <li><strong>Motors:</strong> Negative sequence creates counter-torque — Reduced efficiency, overheating, vibration</li>
+              <li><strong>Capacitors:</strong> Harmonic current amplification — Overheating, resonance, catastrophic failure</li>
+            </ul>
+            <p><strong>Diagnostic indicator:</strong> If transformers or panels are running hot with loads below rated capacity, or breakers trip without apparent overload, suspect harmonic distortion.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="THD Measurement and G5/5 Limits">
+            <p>Total Harmonic Distortion (THD) quantifies waveform distortion as a percentage of the fundamental. UK installations must comply with Engineering Recommendation G5/5, which sets planning levels to limit harmonic voltage distortion on public supply networks.</p>
+            <p><strong>THD Calculation</strong></p>
+            <p>THD = √(V₂² + V₃² + V₄² + ... + Vₙ²) / V₁ × 100%</p>
+            <p>Where:</p>
+            <p>V₁ = Fundamental voltage (50 Hz)</p>
+            <p>Vₙ = Voltage at harmonic order n</p>
+            <p><strong>G5/5 Planning Levels at 400V (LV)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>5th:</strong> 6% — - — -</li>
+              <li><strong>7th:</strong> 5% — - — -</li>
+              <li><strong>3rd:</strong> - — 5% — -</li>
+              <li><strong>9th:</strong> - — 1.5% — -</li>
+              <li><strong>11th, 13th:</strong> 3.5% — - — -</li>
+              <li><strong>THD (total):</strong> 8%</li>
+            </ul>
+            <p><strong>Power quality measurement requirements:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Equipment:</strong> Class A power quality analyser per IEC 61000-4-30</li>
+              <li><strong>Duration:</strong> Minimum 10 minutes, preferably 24 hours or longer</li>
+              <li><strong>Conditions:</strong> Representative operating loads (typical working day)</li>
+              <li><strong>Location:</strong> Point of common coupling (PCC) and within installation</li>
+              <li><strong>Parameters:</strong> THD voltage, individual harmonic magnitudes, THD current</li>
+            </ul>
+            <p><strong>Compliance note:</strong> G5/5 limits apply at the point of common coupling. Internal installation limits may be tighter to ensure PCC compliance when supply impedance is considered.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Passive and Active Filter Solutions">
+            <p>Harmonic mitigation strategies range from source treatment (reducing harmonic generation) to system-level filtering. The optimal solution depends on harmonic spectrum, load characteristics, and economic factors.</p>
+            <p><strong>Passive Filters</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Tuned LC circuits for specific harmonics</li>
+              <li>Lower cost than active solutions</li>
+              <li>Fixed filtering characteristics</li>
+              <li>Risk of resonance with supply</li>
+              <li>Also provides reactive power compensation</li>
+            </ul>
+            <p><strong>Active Filters</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Injects compensating currents</li>
+              <li>Adapts to changing loads</li>
+              <li>Filters multiple harmonics simultaneously</li>
+              <li>Higher cost but superior performance</li>
+              <li>No resonance risk</li>
+            </ul>
+            <p><strong>Mitigation Techniques Comparison</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>12-pulse VSD:</strong> Large motor drives (&gt;100 kW) — Eliminates 5th, 7th harmonics</li>
+              <li><strong>18-pulse VSD:</strong> Critical applications — THD &lt;5% achievable</li>
+              <li><strong>DC choke:</strong> VSD input stage — 20-30% harmonic reduction</li>
+              <li><strong>AC line reactor:</strong> VSD input, general loads — 35-45% harmonic reduction</li>
+              <li><strong>Passive tuned filter:</strong> Specific harmonic orders — 80-90% of targeted harmonic</li>
+              <li><strong>Active filter (AHF):</strong> Centralised or distributed — THD &lt;5% across spectrum</li>
+              <li><strong>K-rated transformer:</strong> Non-linear load substations — Handles harmonic heating</li>
+            </ul>
+            <p><strong>K-Factor Transformer Ratings</strong></p>
+            <p><strong>K-1:</strong> Linear loads only (motors, resistive heating)</p>
+            <p><strong>K-4:</strong> Moderate non-linear loads (mixed office, some IT)</p>
+            <p><strong>K-13:</strong> Heavy non-linear loads (data centres, UPS systems)</p>
+            <p><strong>K-20:</strong> Extreme non-linear loads (mainframe computer rooms)</p>
+            <p>K-factor = Σ(Iₕ² × h²) where Iₕ = per-unit harmonic current, h = harmonic order</p>
+            <p><strong>Detuned filter design considerations:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Tuning frequency:</strong> 189 Hz (7%) or 134 Hz (14%) to avoid 3rd harmonic resonance</li>
+              <li><strong>Reactor rating:</strong> Must handle harmonic current without saturation</li>
+              <li><strong>Capacitor rating:</strong> Voltage rise from reactor must be considered</li>
+              <li><strong>Location:</strong> Install close to non-linear loads for maximum effectiveness</li>
+            </ul>
+            <p><strong>Design strategy:</strong> For new installations, specify low-harmonic equipment at source. For existing installations, centralised active filtering often provides the best cost-performance ratio.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Harmonics are sinusoidal components at frequencies that are integer multiples of the
-              fundamental 50 Hz supply. They are generated by non-linear loads that draw current in
-              pulses rather than as a continuous sine wave, distorting both current and voltage
-              waveforms throughout the installation.
+              <strong>Example 1: K-Factor Calculation</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Common harmonic sources in modern buildings:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Variable speed drives (VSDs):</strong> Six-pulse rectifiers produce 5th,
-                  7th, 11th, 13th harmonics
-                </li>
-                <li className="pl-1">
-                  <strong>LED lighting:</strong> Switch-mode drivers generate predominantly 3rd
-                  harmonic current
-                </li>
-                <li className="pl-1">
-                  <strong>IT equipment:</strong> Computers, servers with switch-mode PSUs produce
-                  3rd and 5th harmonics
-                </li>
-                <li className="pl-1">
-                  <strong>UPS systems:</strong> Both input rectifier and output inverter contribute
-                  harmonics
-                </li>
-                <li className="pl-1">
-                  <strong>Lift drives:</strong> Modern regenerative drives are significant harmonic
-                  sources
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Harmonic Orders and Characteristics
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Harmonic Order</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Frequency (Hz)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Sequence</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Primary Source</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3rd (triplen)</td>
-                      <td className="border border-white/10 px-3 py-2">150</td>
-                      <td className="border border-white/10 px-3 py-2">Zero sequence</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Single-phase loads (LEDs, PCs)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5th</td>
-                      <td className="border border-white/10 px-3 py-2">250</td>
-                      <td className="border border-white/10 px-3 py-2">Negative sequence</td>
-                      <td className="border border-white/10 px-3 py-2">VSDs, rectifiers</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">7th</td>
-                      <td className="border border-white/10 px-3 py-2">350</td>
-                      <td className="border border-white/10 px-3 py-2">Positive sequence</td>
-                      <td className="border border-white/10 px-3 py-2">VSDs, rectifiers</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">9th (triplen)</td>
-                      <td className="border border-white/10 px-3 py-2">450</td>
-                      <td className="border border-white/10 px-3 py-2">Zero sequence</td>
-                      <td className="border border-white/10 px-3 py-2">Single-phase loads</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">11th, 13th</td>
-                      <td className="border border-white/10 px-3 py-2">550, 650</td>
-                      <td className="border border-white/10 px-3 py-2">Neg/Pos sequence</td>
-                      <td className="border border-white/10 px-3 py-2">VSDs, 6-pulse rectifiers</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key principle:</strong> Six-pulse converters produce harmonics at orders 6n±1
-              (5th, 7th, 11th, 13th...). Single-phase non-linear loads predominantly produce triplen
-              harmonics (3rd, 9th, 15th...).
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Harmonic Effects */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Effects of Harmonics on Electrical Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Calculate K-factor for an IT load distribution board with measured harmonic currents.</p>
+            <p>Measured harmonic currents (per unit of fundamental):</p>
+            <p>I₁ = 1.00 (fundamental)</p>
+            <p>I₃ = 0.82 (3rd harmonic)</p>
+            <p>I₅ = 0.58 (5th harmonic)</p>
+            <p>I₇ = 0.38 (7th harmonic)</p>
+            <p>I₉ = 0.18 (9th harmonic)</p>
+            <p>K = Σ(Iₕ² × h²)</p>
+            <p>K = (1.00² × 1²) + (0.82² × 3²) + (0.58² × 5²) + (0.38² × 7²) + (0.18² × 9²)</p>
+            <p>K = 1.00 + 6.05 + 8.41 + 7.08 + 2.62</p>
+            <p>K = 25.16 → Specify K-30 transformer (or K-20 minimum with derating)</p>
             <p>
-              Harmonic distortion causes a range of problems from increased energy losses to
-              equipment damage and nuisance tripping. Understanding these effects is essential for
-              diagnosing problems and specifying appropriate mitigation measures.
+              <strong>Example 2: Neutral Conductor Sizing</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Thermal Effects</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Increased cable heating (skin effect)</li>
-                  <li className="pl-1">Transformer overheating (eddy currents)</li>
-                  <li className="pl-1">Neutral conductor overheating</li>
-                  <li className="pl-1">Motor additional losses</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Operational Effects</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Nuisance tripping of MCBs/MCCBs</li>
-                  <li className="pl-1">Capacitor failures and resonance</li>
-                  <li className="pl-1">Metering inaccuracies</li>
-                  <li className="pl-1">Electronic equipment malfunction</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Critical: Neutral Conductor Overheating
-              </p>
-              <p className="text-sm text-white">
-                In three-phase systems, triplen harmonics (3rd, 9th, 15th) are zero-sequence
-                currents that add arithmetically in the neutral rather than cancelling. With
-                significant single-phase non-linear loads, neutral current can exceed 170% of phase
-                current. Standard neutral sizing (equal to phase) becomes dangerously inadequate.
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Equipment-Specific Effects
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Equipment</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Harmonic Effect
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Consequence</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Transformers</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Increased eddy current and hysteresis losses
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Derating required or premature failure
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cables</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Skin effect increases AC resistance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Additional voltage drop and heating
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Circuit breakers</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        RMS current higher than expected
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Nuisance tripping, inadequate protection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Motors</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Negative sequence creates counter-torque
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reduced efficiency, overheating, vibration
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Capacitors</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Harmonic current amplification
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Overheating, resonance, catastrophic failure
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Diagnostic indicator:</strong> If transformers or panels are running hot with
-              loads below rated capacity, or breakers trip without apparent overload, suspect
-              harmonic distortion.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Measurement and Standards */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            THD Measurement and G5/5 Limits
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Size neutral conductor for LED lighting circuit with high 3rd harmonic content.</p>
+            <p>Given:</p>
+            <p>Phase current = 32 A per phase</p>
+            <p>3rd harmonic content = 80% of fundamental</p>
+            <p>Neutral current calculation:</p>
+            <p>Triplen harmonics add in neutral:</p>
+            <p>I₃ per phase = 0.80 × 32 A = 25.6 A</p>
+            <p>I₃ neutral = 3 × 25.6 A = 76.8 A</p>
+            <p>Total neutral current (RMS):</p>
+            <p>Includes fundamental imbalance + triplen sum</p>
+            <p>Worst case ≈ 1.73 × phase current = 55.4 A fundamental</p>
+            <p>Combined: √(55.4² + 76.8²) = 94.7 A</p>
+            <p>Size neutral for minimum 100 A (200% of balanced phase current)</p>
+            <p>Use 16 mm² minimum vs 10 mm² for phases</p>
             <p>
-              Total Harmonic Distortion (THD) quantifies waveform distortion as a percentage of the
-              fundamental. UK installations must comply with Engineering Recommendation G5/5, which
-              sets planning levels to limit harmonic voltage distortion on public supply networks.
+              <strong>Example 3: Active Filter Sizing</strong>
             </p>
+            <p><strong>Scenario:</strong> Size centralised active harmonic filter for commercial building.</p>
+            <p>Building loads:</p>
+            <p>- VSDs total: 150 kVA (THDi = 35%)</p>
+            <p>- IT loads: 80 kVA (THDi = 100%)</p>
+            <p>- LED lighting: 40 kVA (THDi = 60%)</p>
+            <p>Harmonic current estimation:</p>
+            <p>VSDs: 150 × 0.35 = 52.5 kVA harmonic</p>
+            <p>IT: 80 × 1.00 = 80 kVA harmonic</p>
+            <p>LEDs: 40 × 0.60 = 24 kVA harmonic</p>
+            <p>Diversity factor (0.7 for different harmonic spectra):</p>
+            <p>Total = (52.5 + 80 + 24) × 0.7 = 109.6 kVA</p>
+            <p>Specify 125 kVA active harmonic filter</p>
+            <p>Allow 15% margin for load growth</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">THD Calculation</p>
-              <div className="font-mono text-sm space-y-1">
-                <p>THD = √(V₂² + V₃² + V₄² + ... + Vₙ²) / V₁ × 100%</p>
-                <p className="text-white mt-2">Where:</p>
-                <p className="text-white">V₁ = Fundamental voltage (50 Hz)</p>
-                <p className="text-white">Vₙ = Voltage at harmonic order n</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                G5/5 Planning Levels at 400V (LV)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Harmonic Order</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Odd Non-Triplen
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Odd Triplen</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Even</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5th</td>
-                      <td className="border border-white/10 px-3 py-2">6%</td>
-                      <td className="border border-white/10 px-3 py-2">-</td>
-                      <td className="border border-white/10 px-3 py-2">-</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">7th</td>
-                      <td className="border border-white/10 px-3 py-2">5%</td>
-                      <td className="border border-white/10 px-3 py-2">-</td>
-                      <td className="border border-white/10 px-3 py-2">-</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3rd</td>
-                      <td className="border border-white/10 px-3 py-2">-</td>
-                      <td className="border border-white/10 px-3 py-2">5%</td>
-                      <td className="border border-white/10 px-3 py-2">-</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">9th</td>
-                      <td className="border border-white/10 px-3 py-2">-</td>
-                      <td className="border border-white/10 px-3 py-2">1.5%</td>
-                      <td className="border border-white/10 px-3 py-2">-</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">11th, 13th</td>
-                      <td className="border border-white/10 px-3 py-2">3.5%</td>
-                      <td className="border border-white/10 px-3 py-2">-</td>
-                      <td className="border border-white/10 px-3 py-2">-</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">THD (total)</td>
-                      <td className="border border-white/10 px-3 py-2" colSpan={3}>
-                        8%
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Power quality measurement requirements:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Equipment:</strong> Class A power quality analyser per IEC 61000-4-30
-                </li>
-                <li className="pl-1">
-                  <strong>Duration:</strong> Minimum 10 minutes, preferably 24 hours or longer
-                </li>
-                <li className="pl-1">
-                  <strong>Conditions:</strong> Representative operating loads (typical working day)
-                </li>
-                <li className="pl-1">
-                  <strong>Location:</strong> Point of common coupling (PCC) and within installation
-                </li>
-                <li className="pl-1">
-                  <strong>Parameters:</strong> THD voltage, individual harmonic magnitudes, THD
-                  current
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Compliance note:</strong> G5/5 limits apply at the point of common coupling.
-              Internal installation limits may be tighter to ensure PCC compliance when supply
-              impedance is considered.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Mitigation Solutions */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Passive and Active Filter Solutions
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Harmonic mitigation strategies range from source treatment (reducing harmonic
-              generation) to system-level filtering. The optimal solution depends on harmonic
-              spectrum, load characteristics, and economic factors.
+              <strong>Harmonic Assessment Checklist:</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Passive Filters</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Tuned LC circuits for specific harmonics</li>
-                  <li className="pl-1">Lower cost than active solutions</li>
-                  <li className="pl-1">Fixed filtering characteristics</li>
-                  <li className="pl-1">Risk of resonance with supply</li>
-                  <li className="pl-1">Also provides reactive power compensation</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Active Filters</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Injects compensating currents</li>
-                  <li className="pl-1">Adapts to changing loads</li>
-                  <li className="pl-1">Filters multiple harmonics simultaneously</li>
-                  <li className="pl-1">Higher cost but superior performance</li>
-                  <li className="pl-1">No resonance risk</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Mitigation Techniques Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Technique</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Effectiveness</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">12-pulse VSD</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large motor drives (&gt;100 kW)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Eliminates 5th, 7th harmonics
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">18-pulse VSD</td>
-                      <td className="border border-white/10 px-3 py-2">Critical applications</td>
-                      <td className="border border-white/10 px-3 py-2">THD &lt;5% achievable</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DC choke</td>
-                      <td className="border border-white/10 px-3 py-2">VSD input stage</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        20-30% harmonic reduction
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">AC line reactor</td>
-                      <td className="border border-white/10 px-3 py-2">VSD input, general loads</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        35-45% harmonic reduction
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Passive tuned filter</td>
-                      <td className="border border-white/10 px-3 py-2">Specific harmonic orders</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        80-90% of targeted harmonic
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Active filter (AHF)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Centralised or distributed
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        THD &lt;5% across spectrum
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">K-rated transformer</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Non-linear load substations
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Handles harmonic heating</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                K-Factor Transformer Ratings
-              </p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <strong>K-1:</strong> Linear loads only (motors, resistive heating)
-                </p>
-                <p>
-                  <strong>K-4:</strong> Moderate non-linear loads (mixed office, some IT)
-                </p>
-                <p>
-                  <strong>K-13:</strong> Heavy non-linear loads (data centres, UPS systems)
-                </p>
-                <p>
-                  <strong>K-20:</strong> Extreme non-linear loads (mainframe computer rooms)
-                </p>
-                <p className="text-white mt-2">
-                  K-factor = Σ(Iₕ² × h²) where Iₕ = per-unit harmonic current, h = harmonic order
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Detuned filter design considerations:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Tuning frequency:</strong> 189 Hz (7%) or 134 Hz (14%) to avoid 3rd
-                  harmonic resonance
-                </li>
-                <li className="pl-1">
-                  <strong>Reactor rating:</strong> Must handle harmonic current without saturation
-                </li>
-                <li className="pl-1">
-                  <strong>Capacitor rating:</strong> Voltage rise from reactor must be considered
-                </li>
-                <li className="pl-1">
-                  <strong>Location:</strong> Install close to non-linear loads for maximum
-                  effectiveness
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Design strategy:</strong> For new installations, specify low-harmonic
-              equipment at source. For existing installations, centralised active filtering often
-              provides the best cost-performance ratio.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Identify all non-linear loads and their harmonic characteristics</li>
+              <li>Measure existing THD at point of common coupling</li>
+              <li>Check neutral conductors for thermal stress</li>
+              <li>Verify transformer K-factor rating against actual load</li>
+              <li>Assess power factor correction equipment compatibility</li>
+              <li>Review circuit breaker trip history for unexplained events</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>THD voltage limit at LV: <strong>8%</strong> per G5/5</li>
+              <li>5th harmonic voltage limit: <strong>6%</strong></li>
+              <li>Neutral sizing for triplen loads: <strong>200%</strong> of phase</li>
+              <li>6-pulse VSD harmonics: <strong>6n±1</strong> (5th, 7th, 11th, 13th)</li>
+              <li>Detuning frequency: <strong>189 Hz</strong> (7%) typical</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: K-Factor Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate K-factor for an IT load distribution board with
-                measured harmonic currents.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Measured harmonic currents (per unit of fundamental):</p>
-                <p className="mt-2">I₁ = 1.00 (fundamental)</p>
-                <p>I₃ = 0.82 (3rd harmonic)</p>
-                <p>I₅ = 0.58 (5th harmonic)</p>
-                <p>I₇ = 0.38 (7th harmonic)</p>
-                <p>I₉ = 0.18 (9th harmonic)</p>
-                <p className="mt-2">K = Σ(Iₕ² × h²)</p>
-                <p>K = (1.00² × 1²) + (0.82² × 3²) + (0.58² × 5²) + (0.38² × 7²) + (0.18² × 9²)</p>
-                <p>K = 1.00 + 6.05 + 8.41 + 7.08 + 2.62</p>
-                <p className="text-green-400">
-                  K = 25.16 → Specify K-30 transformer (or K-20 minimum with derating)
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Neutral Conductor Sizing
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Size neutral conductor for LED lighting circuit with high
-                3rd harmonic content.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Given:</p>
-                <p className="ml-4">Phase current = 32 A per phase</p>
-                <p className="ml-4">3rd harmonic content = 80% of fundamental</p>
-                <p className="mt-2">Neutral current calculation:</p>
-                <p className="ml-4">Triplen harmonics add in neutral:</p>
-                <p className="ml-4">I₃ per phase = 0.80 × 32 A = 25.6 A</p>
-                <p className="ml-4">I₃ neutral = 3 × 25.6 A = 76.8 A</p>
-                <p className="mt-2">Total neutral current (RMS):</p>
-                <p className="ml-4">Includes fundamental imbalance + triplen sum</p>
-                <p className="ml-4">Worst case ≈ 1.73 × phase current = 55.4 A fundamental</p>
-                <p className="ml-4">Combined: √(55.4² + 76.8²) = 94.7 A</p>
-                <p className="mt-2 text-green-400">
-                  Size neutral for minimum 100 A (200% of balanced phase current)
-                </p>
-                <p className="text-green-400">Use 16 mm² minimum vs 10 mm² for phases</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Active Filter Sizing
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Size centralised active harmonic filter for commercial
-                building.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Building loads:</p>
-                <p className="ml-4">- VSDs total: 150 kVA (THDi = 35%)</p>
-                <p className="ml-4">- IT loads: 80 kVA (THDi = 100%)</p>
-                <p className="ml-4">- LED lighting: 40 kVA (THDi = 60%)</p>
-                <p className="mt-2">Harmonic current estimation:</p>
-                <p className="ml-4">VSDs: 150 × 0.35 = 52.5 kVA harmonic</p>
-                <p className="ml-4">IT: 80 × 1.00 = 80 kVA harmonic</p>
-                <p className="ml-4">LEDs: 40 × 0.60 = 24 kVA harmonic</p>
-                <p className="mt-2">Diversity factor (0.7 for different harmonic spectra):</p>
-                <p className="ml-4">Total = (52.5 + 80 + 24) × 0.7 = 109.6 kVA</p>
-                <p className="mt-2 text-green-400">Specify 125 kVA active harmonic filter</p>
-                <p className="text-green-400">Allow 15% margin for load growth</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Harmonic Assessment Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Identify all non-linear loads and their harmonic characteristics
-                </li>
-                <li className="pl-1">Measure existing THD at point of common coupling</li>
-                <li className="pl-1">Check neutral conductors for thermal stress</li>
-                <li className="pl-1">Verify transformer K-factor rating against actual load</li>
-                <li className="pl-1">Assess power factor correction equipment compatibility</li>
-                <li className="pl-1">Review circuit breaker trip history for unexplained events</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Installing PFC capacitors without harmonic assessment</strong> - can cause resonance and capacitor failure</li>
+                <li><strong>Using standard transformers for IT loads</strong> - causes overheating even at partial load</li>
+                <li><strong>Undersizing neutrals</strong> - triplen harmonics sum, not cancel</li>
+                <li><strong>Specifying passive filters without supply impedance analysis</strong> - resonance risk</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  THD voltage limit at LV: <strong>8%</strong> per G5/5
-                </li>
-                <li className="pl-1">
-                  5th harmonic voltage limit: <strong>6%</strong>
-                </li>
-                <li className="pl-1">
-                  Neutral sizing for triplen loads: <strong>200%</strong> of phase
-                </li>
-                <li className="pl-1">
-                  6-pulse VSD harmonics: <strong>6n±1</strong> (5th, 7th, 11th, 13th)
-                </li>
-                <li className="pl-1">
-                  Detuning frequency: <strong>189 Hz</strong> (7%) typical
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Installing PFC capacitors without harmonic assessment</strong> - can cause
-                  resonance and capacitor failure
-                </li>
-                <li className="pl-1">
-                  <strong>Using standard transformers for IT loads</strong> - causes overheating
-                  even at partial load
-                </li>
-                <li className="pl-1">
-                  <strong>Undersizing neutrals</strong> - triplen harmonics sum, not cancel
-                </li>
-                <li className="pl-1">
-                  <strong>Specifying passive filters without supply impedance analysis</strong> -
-                  resonance risk
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">G5/5 Limits (400V)</p>
-                <ul className="space-y-0.5">
-                  <li>THD voltage: 8% maximum</li>
-                  <li>5th harmonic: 6% maximum</li>
-                  <li>7th harmonic: 5% maximum</li>
-                  <li>3rd harmonic: 5% maximum</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Mitigation Selection</p>
-                <ul className="space-y-0.5">
-                  <li>VSD &gt;100 kW: 12/18-pulse or AFE</li>
-                  <li>IT loads: K-13+ transformer, oversized neutral</li>
-                  <li>Mixed loads: Centralised active filter</li>
-                  <li>PFC required: Detuned capacitors</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section5-4">
-              Next: Power Factor Correction
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section5-2")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Power factor correction
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section5-4")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Energy metering
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

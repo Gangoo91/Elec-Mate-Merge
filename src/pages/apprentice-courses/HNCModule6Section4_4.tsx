@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 6 · Section 4 · Subsection 4 — Science-Based Targets
+ * HNC Electrical Engineering for Building Services (Sustainability and Environmental Engineering)
+ *   SBTi framework, 1.5°C alignment, target setting, and progress tracking for building services sustainability
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Science-Based Targets - HNC Module 6 Section 4.4';
@@ -243,889 +260,369 @@ const faqs = [
 ];
 
 const HNCModule6Section4_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section4")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module6-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.4.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Science-Based Targets
-          </h1>
-          <p className="text-white">
-            SBTi framework, 1.5°C alignment, target setting, and progress tracking for building
-            services sustainability
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 6 · Section 4 · Subsection 4"
+            title="Science-Based Targets"
+            description="SBTi framework, 1.5°C alignment, target setting, and progress tracking for building services sustainability"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>SBTi:</strong> Science-based framework for emissions targets
-              </li>
-              <li className="pl-1">
-                <strong>1.5°C pathway:</strong> ~4.2% annual reduction required
-              </li>
-              <li className="pl-1">
-                <strong>Near-term:</strong> 5-10 year validated targets
-              </li>
-              <li className="pl-1">
-                <strong>Net-zero:</strong> 90%+ reduction plus carbon removal
-              </li>
+          <TLDR
+            points={[
+              "Science-Based Targets initiative (SBTi) certifies corporate emission reduction targets aligned with limiting warming to 1.5°C — covering Scope 1, Scope 2 and (where material) Scope 3 emissions.",
+              "For the built environment, the SBTi Buildings Sector Guidance (2024) sets pathways for new construction (operational + embodied) and existing building retrofit — the institutional reference for net-zero corporate strategy.",
+              "Targets are typically near-term (5–10 years, e.g. 50% reduction by 2030 vs base year) plus long-term net-zero (typically 2040–2050) with annual disclosure to CDP and progress validation.",
+            ]}
+          />
+
+          <RegsCallout
+            source="SBTi Corporate Net-Zero Standard Version 1.2 + SBTi Buildings Sector Guidance"
+            clause="A near-term science-based target shall reduce absolute Scope 1 and Scope 2 emissions by at least 42% by 2030 compared to a 2020 base year, and shall set a Scope 3 target where Scope 3 represents at least 40% of total emissions. The long-term target shall achieve at least a 90% reduction in absolute emissions by no later than 2050, with any residual emissions abated through carbon removals to achieve net-zero. For built-environment companies, both operational and embodied carbon shall be addressed."
+            meaning={
+              <>
+                SBTi is the strictest mainstream net-zero methodology — much tougher than vague "net-zero by 2050" pledges. The 42% by 2030 absolute reduction target effectively rules out reliance on offsetting for the bulk of decarbonisation. Built-environment targets must address embodied carbon, which is increasingly difficult to reduce by 42% without supply-chain intervention.
+              </>
+            }
+            cite="Source: SBTi Corporate Net-Zero Standard v1.2 (2023); SBTi Buildings Sector Science-Based Target Setting Guidance (2024) — sciencebasedtargets.org"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Explain the SBTi framework and validation process",
+              "Distinguish between 1.5°C and well-below 2°C pathways",
+              "Apply absolute and intensity target methodologies",
+              "Differentiate near-term targets from net-zero commitments",
+              "Describe sector pathways for buildings and construction",
+              "Implement progress tracking and annual reporting requirements",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="The SBTi Framework">
+            <p>The Science Based Targets initiative (SBTi) provides a rigorous framework for companies to set greenhouse gas emission reduction targets aligned with climate science. Established as a partnership between CDP, the UN Global Compact, World Resources Institute (WRI), and WWF, SBTi translates global climate goals into actionable corporate targets.</p>
+            <p><strong>Core principles of science-based targets:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Science-aligned:</strong> Targets consistent with keeping global warming to 1.5°C or well-below 2°C</li>
+              <li><strong>Scope coverage:</strong> Must address Scope 1, 2, and significant Scope 3 emissions</li>
+              <li><strong>Time-bound:</strong> Clear deadlines with measurable interim milestones</li>
+              <li><strong>Independently validated:</strong> Assessed by SBTi technical experts before approval</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Buildings:</strong> 40% of global energy emissions
-              </li>
-              <li className="pl-1">
-                <strong>Scope 1:</strong> Site equipment, company vehicles
-              </li>
-              <li className="pl-1">
-                <strong>Scope 2:</strong> Purchased electricity
-              </li>
-              <li className="pl-1">
-                <strong>Scope 3:</strong> Supply chain, installed systems
-              </li>
+            <p><strong>Temperature Pathway Comparison</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>1.5°C aligned:</strong> ~4.2% per year — 50% reduction from base year — Required for new submissions</li>
+              <li><strong>Well-below 2°C:</strong> ~2.5% per year — 25-30% reduction — Legacy targets only</li>
+              <li><strong>2°C aligned:</strong> ~1.5% per year — ~15% reduction — No longer accepted</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>SBTi Validation Process</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Step 1:</strong> Commit</li>
+              <li><strong>Step 2:</strong> Develop</li>
+              <li><strong>Step 3:</strong> Submit</li>
+              <li><strong>Step 4:</strong> Validate</li>
+              <li><strong>Step 5:</strong> Communicate</li>
+            </ul>
+            <p><strong>Key point:</strong> Since July 2022, SBTi only accepts 1.5°C-aligned targets for new submissions, reflecting updated climate science urgency.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Explain the SBTi framework and validation process',
-              'Distinguish between 1.5°C and well-below 2°C pathways',
-              'Apply absolute and intensity target methodologies',
-              'Differentiate near-term targets from net-zero commitments',
-              'Describe sector pathways for buildings and construction',
-              'Implement progress tracking and annual reporting requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: The SBTi Framework */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The SBTi Framework
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Target Types and Methodologies">
+            <p>SBTi offers multiple approaches to target setting, allowing companies to select methodologies appropriate to their sector, size, and emissions profile. Understanding these options is essential for developing credible, achievable targets.</p>
+            <p><strong>Absolute Targets</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Fixed reduction in total emissions</li>
+              <li>E.g., "Reduce Scope 1 & 2 by 50% by 2030"</li>
+              <li>Clear, unambiguous commitment</li>
+              <li>Challenging if business is growing</li>
+            </ul>
+            <p><strong>Intensity Targets</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Reduction relative to business metric</li>
+              <li>E.g., "30% reduction in kgCO2e/m²"</li>
+              <li>Allows for business growth</li>
+              <li>Must still drive absolute reductions</li>
+            </ul>
+            <p><strong>GHG Protocol Scopes</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Scope 1:</strong> Direct emissions from owned sources — Company vehicles, site generators, gas heating</li>
+              <li><strong>Scope 2:</strong> Indirect emissions from purchased energy — Office electricity, workshop power, site electricity</li>
+              <li><strong>Scope 3:</strong> All other indirect emissions — Materials, subcontractors, employee commuting, installed equipment operation</li>
+            </ul>
+            <p><strong>Target Setting Methods</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Absolute Contraction Approach (ACA):</strong> All companies reduce at same rate regardless of starting point</li>
+              <li><strong>Sectoral Decarbonisation Approach (SDA):</strong> Sector-specific pathways allocating remaining carbon budget</li>
+              <li><strong>Economic Intensity Approach:</strong> Reduction in emissions per value-added (less common)</li>
+              <li><strong>Physical Intensity Approach:</strong> Reduction per physical unit (m², kWh, tonne produced)</li>
+            </ul>
+            <p><strong>Scope 3 threshold:</strong> If Scope 3 emissions exceed 40% of total emissions, companies must set a separate Scope 3 target covering at least 67% of total Scope 3 emissions.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Near-Term and Net-Zero Targets">
+            <p>SBTi distinguishes between near-term science-based targets (5-10 years) and long-term net-zero targets. Both are essential: near-term targets drive immediate action while net-zero targets provide the ultimate destination aligned with climate stabilisation.</p>
+            <p><strong>Near-Term Targets (5-10 Years)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Coverage:</strong> 95%+ of emissions — 67%+ of emissions (if &gt;40%)</li>
+              <li><strong>Ambition level:</strong> 1.5°C aligned (~4.2%/year) — Well-below 2°C minimum</li>
+              <li><strong>Timeframe:</strong> 5-10 years from submission — 5-10 years from submission</li>
+              <li><strong>Offsetting:</strong> Not accepted — Not accepted</li>
+            </ul>
+            <p><strong>SBTi Net-Zero Standard Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Deep decarbonisation:</strong> Reduce all scopes by at least 90% (typically 90-95%)</li>
+              <li><strong>Neutralise residual:</strong> Address remaining 5-10% through permanent carbon removal only</li>
+              <li><strong>No conventional offsets:</strong> Avoidance credits cannot substitute for actual reductions</li>
+              <li><strong>Sector timeline:</strong> Buildings must reach net-zero by 2050 at latest</li>
+              <li><strong>Interim targets:</strong> Near-term targets required as stepping stones</li>
+            </ul>
+            <p><strong>Carbon Removal vs Offsetting</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Removal (accepted):</strong> Permanently removing CO2 from atmosphere</li>
+              <li>Examples: Direct air capture, biochar, enhanced weathering</li>
+              <li><strong>Offsetting (not accepted):</strong> Funding emission avoidance elsewhere</li>
+              <li>Examples: Avoided deforestation, renewable energy credits</li>
+            </ul>
+            <p><strong>Beyond Value Chain Mitigation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Carbon credits can fund additional climate action</li>
+              <li>Does not count towards target achievement</li>
+              <li>Demonstrates broader climate leadership</li>
+              <li>Supports transition of wider economy</li>
+            </ul>
+            <p><strong>Critical distinction:</strong> Net-zero requires actual emissions to approach zero through operational changes - it is not achieved by purchasing enough offsets to balance remaining emissions.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Buildings Sector Pathway and Reporting">
+            <p>The buildings sector has a critical role in achieving global climate goals, accounting for approximately 40% of energy-related CO2 emissions. SBTi provides sector-specific guidance through the Buildings Pathway, with intensity metrics particularly relevant to building services professionals.</p>
+            <p><strong>Buildings Sector Intensity Metrics</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>kgCO2e/m² (operational):</strong> Building portfolio performance — &lt;20 kgCO2e/m² for offices</li>
+              <li><strong>kgCO2e/kWh (energy):</strong> Energy supply decarbonisation — &lt;0.15 kgCO2e/kWh</li>
+              <li><strong>kgCO2e/£M revenue:</strong> Economic intensity — Varies by business type</li>
+            </ul>
+            <p><strong>Annual Reporting Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Emissions inventory:</strong> Complete Scope 1, 2, and relevant Scope 3 categories</li>
+              <li><strong>Progress tracking:</strong> Compare current emissions against target trajectory</li>
+              <li><strong>Methodology consistency:</strong> Use same calculation approach as base year</li>
+              <li><strong>Disclosure platform:</strong> Report through CDP or equivalent public mechanism</li>
+              <li><strong>Recalculation triggers:</strong> Document any base year adjustments</li>
+            </ul>
+            <p><strong>Building Services Contractor Scope 3 Categories</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>1. Purchased goods:</strong> Materials, equipment, consumables — Very high (30-50%)</li>
+              <li><strong>4. Upstream transport:</strong> Material delivery to sites — Medium (5-10%)</li>
+              <li><strong>6. Business travel:</strong> Flights, hotels, taxis — Low (1-3%)</li>
+              <li><strong>7. Employee commuting:</strong> Staff travel to work/sites — Medium (5-15%)</li>
+              <li><strong>11. Use of sold products:</strong> Lifetime energy of installed systems — Very high (often largest)</li>
+            </ul>
+            <p><strong>Building services insight:</strong> For contractors, Category 11 (use of sold products) often dominates Scope 3 - the lifetime operational emissions of installed HVAC, lighting, and electrical systems typically exceed all other emission sources combined.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              The Science Based Targets initiative (SBTi) provides a rigorous framework for
-              companies to set greenhouse gas emission reduction targets aligned with climate
-              science. Established as a partnership between CDP, the UN Global Compact, World
-              Resources Institute (WRI), and WWF, SBTi translates global climate goals into
-              actionable corporate targets.
+              <strong>Example 1: Setting an Absolute Near-Term Target</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Core principles of science-based targets:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Science-aligned:</strong> Targets consistent with keeping global warming
-                  to 1.5°C or well-below 2°C
-                </li>
-                <li className="pl-1">
-                  <strong>Scope coverage:</strong> Must address Scope 1, 2, and significant Scope 3
-                  emissions
-                </li>
-                <li className="pl-1">
-                  <strong>Time-bound:</strong> Clear deadlines with measurable interim milestones
-                </li>
-                <li className="pl-1">
-                  <strong>Independently validated:</strong> Assessed by SBTi technical experts
-                  before approval
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Temperature Pathway Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Pathway</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Annual Reduction
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">2030 Target</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1.5°C aligned</td>
-                      <td className="border border-white/10 px-3 py-2">~4.2% per year</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        50% reduction from base year
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">
-                        Required for new submissions
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Well-below 2°C</td>
-                      <td className="border border-white/10 px-3 py-2">~2.5% per year</td>
-                      <td className="border border-white/10 px-3 py-2">25-30% reduction</td>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-400">
-                        Legacy targets only
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2°C aligned</td>
-                      <td className="border border-white/10 px-3 py-2">~1.5% per year</td>
-                      <td className="border border-white/10 px-3 py-2">~15% reduction</td>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">
-                        No longer accepted
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">SBTi Validation Process</p>
-              <div className="text-sm space-y-1">
-                <p>
-                  <span className="text-white">Step 1:</span>{' '}
-                  <span className="text-white">Commit</span> - Sign commitment letter (24 months to
-                  submit targets)
-                </p>
-                <p>
-                  <span className="text-white">Step 2:</span>{' '}
-                  <span className="text-white">Develop</span> - Set targets using SBTi methodologies
-                  and tools
-                </p>
-                <p>
-                  <span className="text-white">Step 3:</span>{' '}
-                  <span className="text-white">Submit</span> - Complete Target Submission Form for
-                  validation
-                </p>
-                <p>
-                  <span className="text-white">Step 4:</span>{' '}
-                  <span className="text-white">Validate</span> - SBTi assesses against criteria
-                  (typically 4-6 months)
-                </p>
-                <p>
-                  <span className="text-white">Step 5:</span>{' '}
-                  <span className="text-white">Communicate</span> - Announce validated targets
-                  publicly
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Since July 2022, SBTi only accepts 1.5°C-aligned targets
-              for new submissions, reflecting updated climate science urgency.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Target Types and Methodologies */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Target Types and Methodologies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> An MEP contractor with 2020 base year emissions wants to set a 1.5°C-aligned target.</p>
+            <p>Base year (2020) emissions:</p>
+            <p>Scope 1: 850 tCO2e (vehicles, site equipment)</p>
+            <p>Scope 2: 320 tCO2e (offices, workshops)</p>
+            <p>Total Scope 1+2: 1,170 tCO2e</p>
+            <p>Target calculation (1.5°C aligned):</p>
+            <p>Required reduction: 4.2% linear annual reduction</p>
+            <p>Target year: 2030 (10 years from base)</p>
+            <p>Cumulative reduction: 42% by 2030</p>
+            <p>Target emissions: 1,170 × (1 - 0.42) = 679 tCO2e</p>
+            <p>Target: "Reduce absolute Scope 1 and 2 emissions 42% by 2030 from 2020 base year"</p>
             <p>
-              SBTi offers multiple approaches to target setting, allowing companies to select
-              methodologies appropriate to their sector, size, and emissions profile. Understanding
-              these options is essential for developing credible, achievable targets.
+              <strong>Example 2: Intensity Target for Building Portfolio</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Absolute Targets</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Fixed reduction in total emissions</li>
-                  <li className="pl-1">E.g., "Reduce Scope 1 & 2 by 50% by 2030"</li>
-                  <li className="pl-1">Clear, unambiguous commitment</li>
-                  <li className="pl-1">Challenging if business is growing</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Intensity Targets</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Reduction relative to business metric</li>
-                  <li className="pl-1">E.g., "30% reduction in kgCO2e/m²"</li>
-                  <li className="pl-1">Allows for business growth</li>
-                  <li className="pl-1">Must still drive absolute reductions</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">GHG Protocol Scopes</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Scope</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Definition</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Building Services Examples
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Scope 1</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Direct emissions from owned sources
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Company vehicles, site generators, gas heating
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Scope 2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Indirect emissions from purchased energy
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Office electricity, workshop power, site electricity
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Scope 3</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        All other indirect emissions
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Materials, subcontractors, employee commuting, installed equipment operation
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Target Setting Methods</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Absolute Contraction Approach (ACA):</strong> All companies reduce at same
-                  rate regardless of starting point
-                </li>
-                <li className="pl-1">
-                  <strong>Sectoral Decarbonisation Approach (SDA):</strong> Sector-specific pathways
-                  allocating remaining carbon budget
-                </li>
-                <li className="pl-1">
-                  <strong>Economic Intensity Approach:</strong> Reduction in emissions per
-                  value-added (less common)
-                </li>
-                <li className="pl-1">
-                  <strong>Physical Intensity Approach:</strong> Reduction per physical unit (m²,
-                  kWh, tonne produced)
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Scope 3 threshold:</strong> If Scope 3 emissions exceed 40% of total
-              emissions, companies must set a separate Scope 3 target covering at least 67% of total
-              Scope 3 emissions.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Near-Term vs Net-Zero Targets */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Near-Term and Net-Zero Targets
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> A facilities management company sets a buildings sector intensity target.</p>
+            <p>Base year portfolio performance:</p>
+            <p>Total operational emissions: 15,000 tCO2e</p>
+            <p>Managed floor area: 250,000 m²</p>
+            <p>Base intensity: 60 kgCO2e/m²</p>
+            <p>SBTi buildings pathway requirement:</p>
+            <p>2030 benchmark: ~35 kgCO2e/m² (commercial offices)</p>
+            <p>Required reduction: (60-35)/60 = 42%</p>
+            <p>Implementation approach:</p>
+            <p>LED lighting upgrades: -15 kgCO2e/m²</p>
+            <p>HVAC optimisation: -8 kgCO2e/m²</p>
+            <p>Renewable electricity: -5 kgCO2e/m²</p>
+            <p>Target: "Reduce building portfolio intensity to 35 kgCO2e/m² by 2030"</p>
             <p>
-              SBTi distinguishes between near-term science-based targets (5-10 years) and long-term
-              net-zero targets. Both are essential: near-term targets drive immediate action while
-              net-zero targets provide the ultimate destination aligned with climate stabilisation.
+              <strong>Example 3: Scope 3 Assessment for Contractor</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Near-Term Targets (5-10 Years)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Requirement</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Scope 1 & 2</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Scope 3</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Coverage</td>
-                      <td className="border border-white/10 px-3 py-2">95%+ of emissions</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        67%+ of emissions (if &gt;40%)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ambition level</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        1.5°C aligned (~4.2%/year)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Well-below 2°C minimum</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Timeframe</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        5-10 years from submission
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        5-10 years from submission
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Offsetting</td>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">
-                        Not accepted
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">
-                        Not accepted
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-2">
-                SBTi Net-Zero Standard Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Deep decarbonisation:</strong> Reduce all scopes by at least 90%
-                  (typically 90-95%)
-                </li>
-                <li className="pl-1">
-                  <strong>Neutralise residual:</strong> Address remaining 5-10% through permanent
-                  carbon removal only
-                </li>
-                <li className="pl-1">
-                  <strong>No conventional offsets:</strong> Avoidance credits cannot substitute for
-                  actual reductions
-                </li>
-                <li className="pl-1">
-                  <strong>Sector timeline:</strong> Buildings must reach net-zero by 2050 at latest
-                </li>
-                <li className="pl-1">
-                  <strong>Interim targets:</strong> Near-term targets required as stepping stones
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-white mb-2">Carbon Removal vs Offsetting</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>
-                    <strong>Removal (accepted):</strong> Permanently removing CO2 from atmosphere
-                  </li>
-                  <li>Examples: Direct air capture, biochar, enhanced weathering</li>
-                  <li>
-                    <strong>Offsetting (not accepted):</strong> Funding emission avoidance elsewhere
-                  </li>
-                  <li>Examples: Avoided deforestation, renewable energy credits</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-white mb-2">Beyond Value Chain Mitigation</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>Carbon credits can fund additional climate action</li>
-                  <li>Does not count towards target achievement</li>
-                  <li>Demonstrates broader climate leadership</li>
-                  <li>Supports transition of wider economy</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Critical distinction:</strong> Net-zero requires actual emissions to approach
-              zero through operational changes - it is not achieved by purchasing enough offsets to
-              balance remaining emissions.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Buildings Sector Pathway and Reporting */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Buildings Sector Pathway and Reporting
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Determining if Scope 3 targets are required for an electrical contractor.</p>
+            <p>Emissions screening:</p>
+            <p>Scope 1: 500 tCO2e</p>
+            <p>Scope 2: 200 tCO2e</p>
+            <p>Scope 3 (estimated): 4,800 tCO2e</p>
+            <p>- Purchased materials: 2,100 tCO2e</p>
+            <p>- Subcontractors: 1,200 tCO2e</p>
+            <p>- Employee commuting: 400 tCO2e</p>
+            <p>- Use of products (lifetime): 1,100 tCO2e</p>
+            <p>Threshold calculation:</p>
+            <p>Total: 500 + 200 + 4,800 = 5,500 tCO2e</p>
+            <p>Scope 3 percentage: 4,800/5,500 = 87%</p>
+            <p>Result: 87% &gt; 40% threshold - Scope 3 target REQUIRED</p>
+            <p>Must set target covering 67%+ of Scope 3 (3,216+ tCO2e)</p>
             <p>
-              The buildings sector has a critical role in achieving global climate goals, accounting
-              for approximately 40% of energy-related CO2 emissions. SBTi provides sector-specific
-              guidance through the Buildings Pathway, with intensity metrics particularly relevant
-              to building services professionals.
+              <strong>Example 4: Net-Zero Pathway Calculation</strong>
             </p>
+            <p><strong>Scenario:</strong> Planning a net-zero commitment for 2050.</p>
+            <p>Current emissions profile (2024):</p>
+            <p>Total all scopes: 10,000 tCO2e</p>
+            <p>Net-Zero Standard requirements:</p>
+            <p>Minimum reduction: 90%</p>
+            <p>Maximum residual: 10% = 1,000 tCO2e</p>
+            <p>Required abatement: 9,000 tCO2e through actual reductions</p>
+            <p>Pathway milestones:</p>
+            <p>2030 near-term: 5,800 tCO2e (-42%)</p>
+            <p>2040 interim: 2,500 tCO2e (-75%)</p>
+            <p>2050 net-zero: 1,000 tCO2e (-90%)</p>
+            <p>Residual emissions neutralisation:</p>
+            <p>1,000 tCO2e requires permanent carbon removal</p>
+            <p>Options: Direct air capture, biochar, enhanced weathering</p>
+            <p>Note: Conventional offsets cannot achieve net-zero status</p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Buildings Sector Intensity Metrics
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Metric</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        2030 Target Example
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">kgCO2e/m² (operational)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Building portfolio performance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        &lt;20 kgCO2e/m² for offices
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">kgCO2e/kWh (energy)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Energy supply decarbonisation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">&lt;0.15 kgCO2e/kWh</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">kgCO2e/£M revenue</td>
-                      <td className="border border-white/10 px-3 py-2">Economic intensity</td>
-                      <td className="border border-white/10 px-3 py-2">Varies by business type</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Annual Reporting Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Emissions inventory:</strong> Complete Scope 1, 2, and relevant Scope 3
-                  categories
-                </li>
-                <li className="pl-1">
-                  <strong>Progress tracking:</strong> Compare current emissions against target
-                  trajectory
-                </li>
-                <li className="pl-1">
-                  <strong>Methodology consistency:</strong> Use same calculation approach as base
-                  year
-                </li>
-                <li className="pl-1">
-                  <strong>Disclosure platform:</strong> Report through CDP or equivalent public
-                  mechanism
-                </li>
-                <li className="pl-1">
-                  <strong>Recalculation triggers:</strong> Document any base year adjustments
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Contractor Scope 3 Categories
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Category</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Significance
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1. Purchased goods</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Materials, equipment, consumables
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">
-                        Very high (30-50%)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4. Upstream transport</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Material delivery to sites
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-400">
-                        Medium (5-10%)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6. Business travel</td>
-                      <td className="border border-white/10 px-3 py-2">Flights, hotels, taxis</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">
-                        Low (1-3%)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">7. Employee commuting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Staff travel to work/sites
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-400">
-                        Medium (5-15%)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">11. Use of sold products</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lifetime energy of installed systems
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">
-                        Very high (often largest)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Building services insight:</strong> For contractors, Category 11 (use of sold
-              products) often dominates Scope 3 - the lifetime operational emissions of installed
-              HVAC, lighting, and electrical systems typically exceed all other emission sources
-              combined.
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>SBTi Implementation Checklist:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Complete comprehensive GHG inventory across all scopes</li>
+              <li>Identify base year with reliable, verified data</li>
+              <li>Screen Scope 3 categories to assess 40% threshold</li>
+              <li>Select appropriate target type (absolute vs intensity)</li>
+              <li>Use SBTi target-setting tools for pathway calculation</li>
+              <li>Document methodology and assumptions for validation</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1.5°C pathway: <strong>4.2% annual reduction</strong></li>
+              <li>Scope 3 threshold: <strong>&gt;40% of total requires target</strong></li>
+              <li>Scope 3 coverage: <strong>67% minimum for target</strong></li>
+              <li>Net-zero: <strong>90%+ reduction</strong> plus carbon removal</li>
+              <li>Commitment deadline: <strong>24 months to submit targets</strong></li>
+              <li>Buildings: <strong>40% of global energy emissions</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Setting an Absolute Near-Term Target
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> An MEP contractor with 2020 base year emissions wants to
-                set a 1.5°C-aligned target.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Base year (2020) emissions:</p>
-                <p className="ml-4">Scope 1: 850 tCO2e (vehicles, site equipment)</p>
-                <p className="ml-4">Scope 2: 320 tCO2e (offices, workshops)</p>
-                <p className="ml-4">Total Scope 1+2: 1,170 tCO2e</p>
-                <p className="mt-2 text-white">Target calculation (1.5°C aligned):</p>
-                <p className="ml-4">Required reduction: 4.2% linear annual reduction</p>
-                <p className="ml-4">Target year: 2030 (10 years from base)</p>
-                <p className="ml-4">Cumulative reduction: 42% by 2030</p>
-                <p className="ml-4">Target emissions: 1,170 × (1 - 0.42) = 679 tCO2e</p>
-                <p className="mt-2 text-green-400">
-                  Target: "Reduce absolute Scope 1 and 2 emissions 42% by 2030 from 2020 base year"
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Intensity Target for Building Portfolio
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A facilities management company sets a buildings sector
-                intensity target.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Base year portfolio performance:</p>
-                <p className="ml-4">Total operational emissions: 15,000 tCO2e</p>
-                <p className="ml-4">Managed floor area: 250,000 m²</p>
-                <p className="ml-4">Base intensity: 60 kgCO2e/m²</p>
-                <p className="mt-2 text-white">SBTi buildings pathway requirement:</p>
-                <p className="ml-4">2030 benchmark: ~35 kgCO2e/m² (commercial offices)</p>
-                <p className="ml-4">Required reduction: (60-35)/60 = 42%</p>
-                <p className="mt-2 text-white">Implementation approach:</p>
-                <p className="ml-4">LED lighting upgrades: -15 kgCO2e/m²</p>
-                <p className="ml-4">HVAC optimisation: -8 kgCO2e/m²</p>
-                <p className="ml-4">Renewable electricity: -5 kgCO2e/m²</p>
-                <p className="mt-2 text-green-400">
-                  Target: "Reduce building portfolio intensity to 35 kgCO2e/m² by 2030"
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Scope 3 Assessment for Contractor
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Determining if Scope 3 targets are required for an
-                electrical contractor.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Emissions screening:</p>
-                <p className="ml-4">Scope 1: 500 tCO2e</p>
-                <p className="ml-4">Scope 2: 200 tCO2e</p>
-                <p className="ml-4">Scope 3 (estimated): 4,800 tCO2e</p>
-                <p className="ml-8">- Purchased materials: 2,100 tCO2e</p>
-                <p className="ml-8">- Subcontractors: 1,200 tCO2e</p>
-                <p className="ml-8">- Employee commuting: 400 tCO2e</p>
-                <p className="ml-8">- Use of products (lifetime): 1,100 tCO2e</p>
-                <p className="mt-2 text-white">Threshold calculation:</p>
-                <p className="ml-4">Total: 500 + 200 + 4,800 = 5,500 tCO2e</p>
-                <p className="ml-4">Scope 3 percentage: 4,800/5,500 = 87%</p>
-                <p className="mt-2 text-red-400">
-                  Result: 87% &gt; 40% threshold - Scope 3 target REQUIRED
-                </p>
-                <p className="mt-2 text-green-400">
-                  Must set target covering 67%+ of Scope 3 (3,216+ tCO2e)
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 4: Net-Zero Pathway Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Planning a net-zero commitment for 2050.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Current emissions profile (2024):</p>
-                <p className="ml-4">Total all scopes: 10,000 tCO2e</p>
-                <p className="mt-2 text-white">Net-Zero Standard requirements:</p>
-                <p className="ml-4">Minimum reduction: 90%</p>
-                <p className="ml-4">Maximum residual: 10% = 1,000 tCO2e</p>
-                <p className="ml-4">Required abatement: 9,000 tCO2e through actual reductions</p>
-                <p className="mt-2 text-white">Pathway milestones:</p>
-                <p className="ml-4">2030 near-term: 5,800 tCO2e (-42%)</p>
-                <p className="ml-4">2040 interim: 2,500 tCO2e (-75%)</p>
-                <p className="ml-4">2050 net-zero: 1,000 tCO2e (-90%)</p>
-                <p className="mt-2 text-white">Residual emissions neutralisation:</p>
-                <p className="ml-4">1,000 tCO2e requires permanent carbon removal</p>
-                <p className="ml-4">Options: Direct air capture, biochar, enhanced weathering</p>
-                <p className="mt-2 text-yellow-400">
-                  Note: Conventional offsets cannot achieve net-zero status
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                SBTi Implementation Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Complete comprehensive GHG inventory across all scopes</li>
-                <li className="pl-1">Identify base year with reliable, verified data</li>
-                <li className="pl-1">Screen Scope 3 categories to assess 40% threshold</li>
-                <li className="pl-1">Select appropriate target type (absolute vs intensity)</li>
-                <li className="pl-1">Use SBTi target-setting tools for pathway calculation</li>
-                <li className="pl-1">Document methodology and assumptions for validation</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Relying on offsets:</strong> SBTi requires actual emissions reductions for near-term targets</li>
+                <li><strong>Ignoring Scope 3:</strong> Often the largest source, especially for contractors</li>
+                <li><strong>Inconsistent methodology:</strong> Base year and reporting must use same approach</li>
+                <li><strong>Static targets:</strong> Failing to recalculate after significant business changes</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  1.5°C pathway: <strong>4.2% annual reduction</strong>
-                </li>
-                <li className="pl-1">
-                  Scope 3 threshold: <strong>&gt;40% of total requires target</strong>
-                </li>
-                <li className="pl-1">
-                  Scope 3 coverage: <strong>67% minimum for target</strong>
-                </li>
-                <li className="pl-1">
-                  Net-zero: <strong>90%+ reduction</strong> plus carbon removal
-                </li>
-                <li className="pl-1">
-                  Commitment deadline: <strong>24 months to submit targets</strong>
-                </li>
-                <li className="pl-1">
-                  Buildings: <strong>40% of global energy emissions</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Relying on offsets:</strong> SBTi requires actual emissions reductions for
-                  near-term targets
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring Scope 3:</strong> Often the largest source, especially for
-                  contractors
-                </li>
-                <li className="pl-1">
-                  <strong>Inconsistent methodology:</strong> Base year and reporting must use same
-                  approach
-                </li>
-                <li className="pl-1">
-                  <strong>Static targets:</strong> Failing to recalculate after significant business
-                  changes
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="Client SBTi commitment forces embodied-carbon clause into JCT contract"
+            situation={
+              <>
+                A property developer signed an SBTi commitment in 2023. Their 2030 target requires Scope 3 (mostly embodied carbon in new build) to fall 30% per m² vs 2020 baseline. The current pipeline of speculative offices is on track to miss by ~15 percentage points. The client now requires every new construction contract to include an embodied carbon target with contractual penalties.
+              </>
+            }
+            whatToDo={
+              <>
+                Update procurement and contract documentation: (1) JCT 2024 with bespoke amendment clauses for embodied carbon target (kgCO₂e/m² A1–A5) with verification at handover; (2) Tender evaluation weighted on EPD-backed material specifications; (3) Pre-construction WLCA at Stage 2 with target ranges; (4) Quarterly embodied carbon reporting during construction. Brief the supply chain — most M&E subcontractors have not done this and will need EPDs from suppliers.
+              </>
+            }
+            whyItMatters={
+              <>
+                SBTi is moving from corporate disclosure into project specification. Contractors and consultants who cannot quote embodied carbon will progressively lose work as developer pipelines align to SBTi. The technical capability to measure, report and reduce embodied carbon is becoming a core M&E design competence.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">SBTi Target Requirements</p>
-                <ul className="space-y-0.5">
-                  <li>1.5°C pathway: ~4.2% annual reduction</li>
-                  <li>Scope 1+2: 95%+ coverage required</li>
-                  <li>Scope 3: Target if &gt;40% of total</li>
-                  <li>Near-term: 5-10 year timeframe</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Net-Zero Standard</p>
-                <ul className="space-y-0.5">
-                  <li>90%+ actual emission reductions</li>
-                  <li>Residual 5-10% via carbon removal</li>
-                  <li>No conventional offsetting</li>
-                  <li>Buildings: 2050 deadline</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              "SBTi = Science Based Targets initiative — most rigorous mainstream net-zero methodology.",
+              "Near-term: ≥42% reduction Scope 1+2 by 2030 vs 2020 base year.",
+              "Long-term: ≥90% reduction by 2050 with residual offsets only.",
+              "Scope 3 mandatory if ≥40% of total emissions — for property developers this means embodied carbon.",
+              "SBTi Buildings Sector Guidance (2024) is the built-environment reference.",
+              "Annual disclosure to CDP and target progress validation required.",
+              "Moving from corporate disclosure into project contracts and tender evaluation criteria.",
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section4-5">
-              Next: Carbon Reporting Frameworks
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section4-3")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Embodied carbon
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section4-5")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Carbon offsetting
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 6 · Section 3 · Subsection 1 — BREEAM Overview
+ * HNC Electrical Engineering for Building Services (Sustainability and Environmental Engineering)
+ *   Schemes, rating levels, category weightings, assessment process, and the role of the licensed assessor
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'BREEAM Overview - HNC Module 6 Section 3.1';
@@ -235,905 +252,350 @@ const faqs = [
 ];
 
 const HNCModule6Section3_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section3")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module6-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.3.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            BREEAM Overview
-          </h1>
-          <p className="text-white">
-            Schemes, rating levels, category weightings, assessment process, and the role of the
-            licensed assessor
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 6 · Section 3 · Subsection 1"
+            title="BREEAM Overview"
+            description="Schemes, rating levels, category weightings, assessment process, and the role of the licensed assessor"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>BREEAM:</strong> World's leading sustainability assessment method
-              </li>
-              <li className="pl-1">
-                <strong>Five ratings:</strong> Pass, Good, Very Good, Excellent, Outstanding
-              </li>
-              <li className="pl-1">
-                <strong>Nine categories:</strong> Energy, Water, Materials, Health, etc.
-              </li>
-              <li className="pl-1">
-                <strong>Licensed assessor:</strong> Required for all certifications
-              </li>
+          <TLDR
+            points={[
+              "BREEAM is the BRE Environmental Assessment Method — the UK's primary sustainability rating scheme, with separate schemes for New Construction, Refurbishment, In-Use and Communities, and ratings from Pass through Outstanding.",
+              "The assessment is delivered by a licensed BREEAM Assessor against weighted credits across nine categories (Management, Health, Energy, Transport, Water, Materials, Waste, Land Use, Pollution) plus Innovation.",
+              "Local plans increasingly mandate BREEAM Excellent or above — particularly in London (London Plan), Manchester, and major commercial developments, making BREEAM compliance a planning condition rather than a nice-to-have.",
+            ]}
+          />
+
+          <RegsCallout
+            source="BREEAM UK New Construction 2018 — Technical Manual"
+            clause="A BREEAM assessment shall be carried out by an Assessor licensed by BRE Global, against the credits and minimum standards defined in the relevant Technical Manual. The assessment shall comprise a Design Stage assessment (predicted rating, certified pre-construction) and a Post-Construction assessment (final rating, certified after handover) with formal evidence demonstrating each claimed credit. Minimum standards apply to certain categories (e.g. Mat 03 Responsible sourcing) and must be met regardless of the overall rating sought."
+            meaning={
+              <>
+                Two-stage assessment is mandatory: design-stage certification before construction starts, post-construction certification after handover. Skipping the design-stage assessment is the most common failure mode — credits that needed early procurement or design decisions are then lost. Minimum standards trump the overall rating; you cannot skip them by over-achieving elsewhere.
+              </>
+            }
+            cite="Source: BREEAM UK New Construction 2018 — breeam.com"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Explain the purpose and scope of BREEAM assessment methodology",
+              "Identify the main BREEAM schemes and their applications",
+              "Describe the five rating levels and their percentage thresholds",
+              "Analyse the nine assessment categories and their weightings",
+              "Outline the assessment process from pre-assessment to certification",
+              "Define the role and responsibilities of the licensed BREEAM assessor",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Introduction to BREEAM">
+            <p>BREEAM (Building Research Establishment Environmental Assessment Method) is the world's longest-established method of assessing, rating, and certifying the sustainability of buildings. Developed by BRE in 1990, it has been used to certify over 2.3 million buildings globally and remains the predominant assessment method in the UK construction industry.</p>
+            <p><strong>Key BREEAM Schemes:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>New Construction:</strong> New buildings, major extensions — Design Stage + Post-Construction certification</li>
+              <li><strong>Refurbishment & Fit-Out:</strong> Existing building upgrades — Scalable scope: Part 1 (fabric), Part 2 (core services), Part 3 (local services), Part 4 (interior design)</li>
+              <li><strong>In-Use:</strong> Operational buildings — Asset, Building Management, Occupier Management assessments</li>
+              <li><strong>Communities:</strong> Masterplanning, neighbourhood scale — Assesses wider sustainability of developments</li>
+              <li><strong>Infrastructure:</strong> Civil engineering projects — Roads, railways, utilities, bridges</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Energy credits:</strong> Highest weighting category (15-19%)
-              </li>
-              <li className="pl-1">
-                <strong>M&E impact:</strong> Affects multiple credit categories
-              </li>
-              <li className="pl-1">
-                <strong>Design integration:</strong> Early engagement critical
-              </li>
-              <li className="pl-1">
-                <strong>Evidence:</strong> Specifications, calculations, commissioning data
-              </li>
+            <p><strong>Building Type-Specific Versions</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>BREEAM Healthcare:</strong> Hospitals and clinical facilities with infection control credits</li>
+              <li><strong>BREEAM Education:</strong> Schools and universities with educational environment focus</li>
+              <li><strong>BREEAM Retail:</strong> Shops, shopping centres with customer experience criteria</li>
+              <li><strong>BREEAM Industrial:</strong> Warehouses, factories with operational flexibility</li>
+              <li><strong>BREEAM Residential:</strong> Multi-residential (for individual homes, Home Quality Mark applies)</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Industry context:</strong> BREEAM certification is often a planning requirement, client specification, or funding condition - making it a standard consideration for building services engineers.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Explain the purpose and scope of BREEAM assessment methodology',
-              'Identify the main BREEAM schemes and their applications',
-              'Describe the five rating levels and their percentage thresholds',
-              'Analyse the nine assessment categories and their weightings',
-              'Outline the assessment process from pre-assessment to certification',
-              'Define the role and responsibilities of the licensed BREEAM assessor',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Introduction to BREEAM */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Introduction to BREEAM
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Rating Levels and Scoring">
+            <p>BREEAM uses a points-based system where credits are awarded for meeting specific criteria. Credits are weighted by category importance, summed to give a percentage score, and converted to a rating level. Each rating level also requires achievement of specific mandatory credits.</p>
+            <p><strong>BREEAM Rating Levels</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Pass:</strong> ≥30% — Minimum compliance — Below market expectation</li>
+              <li><strong>Good:</strong> ≥45% — Standard commercial — Market baseline</li>
+              <li><strong>Very Good:</strong> ≥55% — Common client requirement — Above average practice</li>
+              <li><strong>Excellent:</strong> ≥70% — Government, institutional — Best practice</li>
+              <li><strong>Outstanding:</strong> ≥85% — Landmark, exemplary — Innovation leader</li>
+            </ul>
+            <p><strong>Mandatory Credits</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Required for each rating level</li>
+              <li>Cannot be traded for other credits</li>
+              <li>Failure means certification at lower level</li>
+              <li>Examples: commissioning, water consumption, construction waste</li>
+            </ul>
+            <p><strong>Innovation Credits</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Awarded for exemplary performance</li>
+              <li>Up to 10% additional score available</li>
+              <li>Can push projects into higher bands</li>
+              <li>Requires exceeding standard criteria thresholds</li>
+            </ul>
+            <p><strong>Score Calculation Example</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Energy category:</strong> 12 credits achieved × 19% weighting = 2.28% contribution</li>
+              <li><strong>Health & Wellbeing:</strong> 9 credits achieved × 14% weighting = 1.26% contribution</li>
+              <li><strong>All categories summed:</strong> = Overall percentage score</li>
+              <li><strong>Plus innovation:</strong> + Up to 10% additional</li>
+            </ul>
+            <p><strong>Target setting:</strong> Aim 5-10% above your target threshold to provide margin for credits that prove unachievable during construction.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Assessment Categories and Weightings">
+            <p>BREEAM assesses buildings across nine environmental categories, each with different weightings that reflect their relative importance. Weightings vary slightly between building types and schemes, but the categories remain consistent.</p>
+            <p><strong>Nine Assessment Categories (NC 2018 Offices)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Energy (Ene):</strong> 15-19% — Energy performance, sub-metering, external lighting, low carbon technologies</li>
+              <li><strong>Health & Wellbeing (Hea):</strong> 14% — Visual comfort, indoor air quality, thermal comfort, acoustic performance</li>
+              <li><strong>Materials (Mat):</strong> 12.5% — Responsible sourcing, environmental impact of M&E products</li>
+              <li><strong>Management (Man):</strong> 12% — Commissioning, seasonal commissioning, building user guide, aftercare</li>
+              <li><strong>Land Use & Ecology (LE):</strong> 10% — Limited M&E impact (ecological enhancement of site)</li>
+              <li><strong>Water (Wat):</strong> 6% — Water consumption, monitoring, leak detection</li>
+              <li><strong>Waste (Wst):</strong> 7.5% — Construction waste, operational waste, adaptability</li>
+              <li><strong>Pollution (Pol):</strong> 6.5% — Refrigerant GWP, NOx emissions, flood risk, surface water run-off</li>
+              <li><strong>Transport (Tra):</strong> 8% — EV charging provision, cyclist facilities</li>
+            </ul>
+            <p><strong>Example Credits - Building Services Impact</strong></p>
+            <p><strong>Ene 01 - Reduction of energy use and carbon emissions (up to 15 credits)</strong></p>
+            <p>Based on Energy Performance Ratio (EPR) comparing actual design to Part L notional building. Requires approved dynamic thermal modelling. Higher credits for better performance beyond regulation.</p>
+            <p><strong>Ene 02 - Energy monitoring (up to 2 credits)</strong></p>
+            <p>Sub-metering of major energy uses: heating, cooling, lighting, small power, renewables. Enables post-occupancy performance tracking and fault identification.</p>
+            <p><strong>Hea 01 - Visual comfort (up to 4 credits)</strong></p>
+            <p>Daylighting levels, view out, glare control, high-frequency lighting (≥3,000 Hz), colour rendering (Ra ≥80). Directly affects lighting design specifications.</p>
+            <p><strong>Pol 01 - Impact of refrigerants (up to 3 credits)</strong></p>
+            <p>Credits for low GWP refrigerants, leak detection systems, and eliminating refrigerants entirely. Affects HVAC system selection.</p>
+            <p><strong>Design influence:</strong> Building services decisions directly impact approximately 50% of available BREEAM credits across Energy, Health, Water, and Pollution categories.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Assessment Process and Assessor Role">
+            <p>BREEAM assessment follows a structured process from early design through to post-construction verification. A licensed BREEAM assessor is required throughout, acting as the independent interface between the project team and BRE.</p>
+            <p><strong>Assessment Process Stages</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Pre-Assessment:</strong> Stage 2 — Credit targeting, feasibility review, cost implications — Pre-assessment report, target rating</li>
+              <li><strong>Registration:</strong> Stage 2-3 — Project registration with BRE, fees paid — Registration confirmation, project ID</li>
+              <li><strong>Design Stage:</strong> Stage 3-4 — Evidence collection, credit assessment, QA submission — Interim Design Stage certificate</li>
+              <li><strong>Post-Construction:</strong> Stage 6 — As-built verification, commissioning evidence, final submission — Final BREEAM certificate</li>
+            </ul>
+            <p><strong>Assessor Responsibilities</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Interpret BREEAM criteria for the project</li>
+              <li>Advise on credit achievement strategies</li>
+              <li>Collect and review evidence documentation</li>
+              <li>Complete assessment tool scoring</li>
+              <li>Submit to BRE for Quality Assurance</li>
+              <li>Address QA queries and corrections</li>
+              <li>Maintain independence from design team</li>
+            </ul>
+            <p><strong>Design Team Responsibilities</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Integrate BREEAM requirements into design</li>
+              <li>Provide evidence documentation</li>
+              <li>Specifications referencing BREEAM criteria</li>
+              <li>Calculations and modelling outputs</li>
+              <li>Commissioning records and certificates</li>
+              <li>Product certifications (EPDs, FSC, etc.)</li>
+              <li>Respond to assessor queries promptly</li>
+            </ul>
+            <p><strong>Evidence Types for M&E Credits</strong></p>
+            <p><strong>Design Stage:</strong> Specifications, design drawings, energy models (IES/TAS), daylight calculations, commissioning specifications, product data sheets with environmental certifications.</p>
+            <p><strong>Post-Construction:</strong> As-built drawings, commissioning certificates, test results, sub-meter schedules, O&M manuals, building user guides, seasonal commissioning reports.</p>
+            <p><strong>Quality Assurance Process</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Submission:</strong> Assessor submits completed assessment via BREEAM Projects portal</li>
+              <li><strong>QA review:</strong> BRE auditor reviews evidence and scoring decisions</li>
+              <li><strong>Queries:</strong> Auditor raises Technical Questions (TQs) requiring clarification</li>
+              <li><strong>Response:</strong> Assessor provides additional evidence or justification</li>
+              <li><strong>Certification:</strong> Once satisfied, BRE issues the certificate</li>
+            </ul>
+            <p><strong>Timing consideration:</strong> QA review typically takes 4-6 weeks. Allow sufficient time in the programme, especially if certification is needed for practical completion or funding drawdown.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              BREEAM (Building Research Establishment Environmental Assessment Method) is the
-              world's longest-established method of assessing, rating, and certifying the
-              sustainability of buildings. Developed by BRE in 1990, it has been used to certify
-              over 2.3 million buildings globally and remains the predominant assessment method in
-              the UK construction industry.
+              <strong>Example 1: Pre-Assessment Credit Targeting</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key BREEAM Schemes:</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Scheme</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Features</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">New Construction</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        New buildings, major extensions
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Design Stage + Post-Construction certification
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Refurbishment & Fit-Out</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Existing building upgrades
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Scalable scope: Part 1 (fabric), Part 2 (core services), Part 3 (local
-                        services), Part 4 (interior design)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">In-Use</td>
-                      <td className="border border-white/10 px-3 py-2">Operational buildings</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Asset, Building Management, Occupier Management assessments
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Communities</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Masterplanning, neighbourhood scale
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Assesses wider sustainability of developments
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Infrastructure</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Civil engineering projects
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Roads, railways, utilities, bridges
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Type-Specific Versions
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>BREEAM Healthcare:</strong> Hospitals and clinical facilities with
-                  infection control credits
-                </li>
-                <li className="pl-1">
-                  <strong>BREEAM Education:</strong> Schools and universities with educational
-                  environment focus
-                </li>
-                <li className="pl-1">
-                  <strong>BREEAM Retail:</strong> Shops, shopping centres with customer experience
-                  criteria
-                </li>
-                <li className="pl-1">
-                  <strong>BREEAM Industrial:</strong> Warehouses, factories with operational
-                  flexibility
-                </li>
-                <li className="pl-1">
-                  <strong>BREEAM Residential:</strong> Multi-residential (for individual homes, Home
-                  Quality Mark applies)
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Industry context:</strong> BREEAM certification is often a planning
-              requirement, client specification, or funding condition - making it a standard
-              consideration for building services engineers.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Rating Levels and Scoring */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Rating Levels and Scoring
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> A new office building targeting BREEAM Excellent (70%). Identify key M&E credits.</p>
+            <p>Target: 70% minimum (aim for 75% to provide margin)</p>
+            <p>High-value M&E credits to target:</p>
+            <p>Ene 01: 9 credits @ 19% = ~3.4% contribution</p>
+            <p>Ene 02: 2 credits (sub-metering) = ~0.4%</p>
+            <p>Hea 01: 3 credits (lighting quality) = ~0.6%</p>
+            <p>Hea 04: 2 credits (thermal comfort) = ~0.4%</p>
+            <p>Wat 01: 3 credits (water efficiency) = ~0.3%</p>
+            <p>Pol 01: 2 credits (low GWP refrigerants) = ~0.2%</p>
+            <p>M&E contribution: ~5.3% directly influenced</p>
+            <p>Plus mandatory commissioning credits in Man category</p>
             <p>
-              BREEAM uses a points-based system where credits are awarded for meeting specific
-              criteria. Credits are weighted by category importance, summed to give a percentage
-              score, and converted to a rating level. Each rating level also requires achievement of
-              specific mandatory credits.
+              <strong>Example 2: Energy Credit Evidence Requirements</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">BREEAM Rating Levels</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Rating</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Minimum Score</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Market Position
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Pass</td>
-                      <td className="border border-white/10 px-3 py-2">≥30%</td>
-                      <td className="border border-white/10 px-3 py-2">Minimum compliance</td>
-                      <td className="border border-white/10 px-3 py-2">Below market expectation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Good</td>
-                      <td className="border border-white/10 px-3 py-2">≥45%</td>
-                      <td className="border border-white/10 px-3 py-2">Standard commercial</td>
-                      <td className="border border-white/10 px-3 py-2">Market baseline</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Very Good</td>
-                      <td className="border border-white/10 px-3 py-2">≥55%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Common client requirement
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Above average practice</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Excellent</td>
-                      <td className="border border-white/10 px-3 py-2">≥70%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Government, institutional
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Best practice</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Outstanding</td>
-                      <td className="border border-white/10 px-3 py-2">≥85%</td>
-                      <td className="border border-white/10 px-3 py-2">Landmark, exemplary</td>
-                      <td className="border border-white/10 px-3 py-2">Innovation leader</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Mandatory Credits</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Required for each rating level</li>
-                  <li className="pl-1">Cannot be traded for other credits</li>
-                  <li className="pl-1">Failure means certification at lower level</li>
-                  <li className="pl-1">
-                    Examples: commissioning, water consumption, construction waste
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Innovation Credits</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Awarded for exemplary performance</li>
-                  <li className="pl-1">Up to 10% additional score available</li>
-                  <li className="pl-1">Can push projects into higher bands</li>
-                  <li className="pl-1">Requires exceeding standard criteria thresholds</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Score Calculation Example</p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">Energy category:</span>{' '}
-                  <span className="text-white">
-                    12 credits achieved × 19% weighting = 2.28% contribution
-                  </span>
-                </p>
-                <p>
-                  <span className="text-white">Health & Wellbeing:</span>{' '}
-                  <span className="text-white">
-                    9 credits achieved × 14% weighting = 1.26% contribution
-                  </span>
-                </p>
-                <p>
-                  <span className="text-white">All categories summed:</span>{' '}
-                  <span className="text-white">= Overall percentage score</span>
-                </p>
-                <p>
-                  <span className="text-white">Plus innovation:</span>{' '}
-                  <span className="text-white">+ Up to 10% additional</span>
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Target setting:</strong> Aim 5-10% above your target threshold to provide
-              margin for credits that prove unachievable during construction.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Assessment Categories and Weightings */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Assessment Categories and Weightings
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Demonstrating compliance with Ene 01 for an Excellent rating.</p>
+            <p>Ene 01 Evidence Checklist:</p>
+            <p>Design Stage:</p>
+            <p>- Energy model (IES-VE or TAS) with BRUKL output</p>
+            <p>- EPR calculation showing improvement over Part L</p>
+            <p>- M&E specification with efficiency requirements</p>
+            <p>- Drawings showing renewable energy systems</p>
+            <p>Post-Construction:</p>
+            <p>- As-built energy model reflecting any changes</p>
+            <p>- EPC certificate</p>
+            <p>- Commissioning certificates for HVAC</p>
+            <p>- Evidence renewables installed as designed</p>
+            <p>Credits awarded: Based on actual EPR achieved</p>
             <p>
-              BREEAM assesses buildings across nine environmental categories, each with different
-              weightings that reflect their relative importance. Weightings vary slightly between
-              building types and schemes, but the categories remain consistent.
+              <strong>Example 3: Selecting the Correct BREEAM Scheme</strong>
             </p>
+            <p><strong>Scenario:</strong> Client has three projects - advise on appropriate BREEAM scheme.</p>
+            <p>Project A: New-build warehouse</p>
+            <p>→ BREEAM New Construction (Industrial)</p>
+            <p>Design Stage + Post-Construction assessment</p>
+            <p>Project B: Office fit-out in existing shell</p>
+            <p>→ BREEAM Refurbishment & Fit-Out</p>
+            <p>Part 3 (local services) + Part 4 (interior)</p>
+            <p>Project C: Improving performance of existing HQ</p>
+            <p>→ BREEAM In-Use</p>
+            <p>Asset + Building Management assessments</p>
+            <p>Annual recertification available</p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Nine Assessment Categories (NC 2018 Offices)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Category</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Weighting</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Key M&E Credits
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Energy (Ene)</td>
-                      <td className="border border-white/10 px-3 py-2">15-19%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Energy performance, sub-metering, external lighting, low carbon technologies
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Health & Wellbeing (Hea)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">14%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Visual comfort, indoor air quality, thermal comfort, acoustic performance
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Materials (Mat)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">12.5%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Responsible sourcing, environmental impact of M&E products
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Management (Man)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">12%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Commissioning, seasonal commissioning, building user guide, aftercare
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Land Use & Ecology (LE)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">10%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Limited M&E impact (ecological enhancement of site)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Water (Wat)</td>
-                      <td className="border border-white/10 px-3 py-2">6%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Water consumption, monitoring, leak detection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Waste (Wst)</td>
-                      <td className="border border-white/10 px-3 py-2">7.5%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Construction waste, operational waste, adaptability
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Pollution (Pol)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">6.5%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Refrigerant GWP, NOx emissions, flood risk, surface water run-off
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Transport (Tra)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">8%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        EV charging provision, cyclist facilities
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example Credits - Building Services Impact
-              </p>
-              <div className="space-y-3">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-1">
-                    Ene 01 - Reduction of energy use and carbon emissions (up to 15 credits)
-                  </p>
-                  <p className="text-sm text-white">
-                    Based on Energy Performance Ratio (EPR) comparing actual design to Part L
-                    notional building. Requires approved dynamic thermal modelling. Higher credits
-                    for better performance beyond regulation.
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-1">
-                    Ene 02 - Energy monitoring (up to 2 credits)
-                  </p>
-                  <p className="text-sm text-white">
-                    Sub-metering of major energy uses: heating, cooling, lighting, small power,
-                    renewables. Enables post-occupancy performance tracking and fault
-                    identification.
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-1">
-                    Hea 01 - Visual comfort (up to 4 credits)
-                  </p>
-                  <p className="text-sm text-white">
-                    Daylighting levels, view out, glare control, high-frequency lighting (≥3,000
-                    Hz), colour rendering (Ra ≥80). Directly affects lighting design specifications.
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-1">
-                    Pol 01 - Impact of refrigerants (up to 3 credits)
-                  </p>
-                  <p className="text-sm text-white">
-                    Credits for low GWP refrigerants, leak detection systems, and eliminating
-                    refrigerants entirely. Affects HVAC system selection.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design influence:</strong> Building services decisions directly impact
-              approximately 50% of available BREEAM credits across Energy, Health, Water, and
-              Pollution categories.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Assessment Process and Assessor Role */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Assessment Process and Assessor Role
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              BREEAM assessment follows a structured process from early design through to
-              post-construction verification. A licensed BREEAM assessor is required throughout,
-              acting as the independent interface between the project team and BRE.
+              <strong>Building Services Engineer's BREEAM Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Assessment Process Stages
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Stage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">RIBA Stage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Activities</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Outputs</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Pre-Assessment
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Stage 2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Credit targeting, feasibility review, cost implications
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pre-assessment report, target rating
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Registration</td>
-                      <td className="border border-white/10 px-3 py-2">Stage 2-3</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Project registration with BRE, fees paid
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Registration confirmation, project ID
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Design Stage</td>
-                      <td className="border border-white/10 px-3 py-2">Stage 3-4</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Evidence collection, credit assessment, QA submission
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Interim Design Stage certificate
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Post-Construction
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Stage 6</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        As-built verification, commissioning evidence, final submission
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Final BREEAM certificate</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Assessor Responsibilities
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Interpret BREEAM criteria for the project</li>
-                  <li className="pl-1">Advise on credit achievement strategies</li>
-                  <li className="pl-1">Collect and review evidence documentation</li>
-                  <li className="pl-1">Complete assessment tool scoring</li>
-                  <li className="pl-1">Submit to BRE for Quality Assurance</li>
-                  <li className="pl-1">Address QA queries and corrections</li>
-                  <li className="pl-1">Maintain independence from design team</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Design Team Responsibilities
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Integrate BREEAM requirements into design</li>
-                  <li className="pl-1">Provide evidence documentation</li>
-                  <li className="pl-1">Specifications referencing BREEAM criteria</li>
-                  <li className="pl-1">Calculations and modelling outputs</li>
-                  <li className="pl-1">Commissioning records and certificates</li>
-                  <li className="pl-1">Product certifications (EPDs, FSC, etc.)</li>
-                  <li className="pl-1">Respond to assessor queries promptly</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Evidence Types for M&E Credits
-              </p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <strong>Design Stage:</strong> Specifications, design drawings, energy models
-                  (IES/TAS), daylight calculations, commissioning specifications, product data
-                  sheets with environmental certifications.
-                </p>
-                <p>
-                  <strong>Post-Construction:</strong> As-built drawings, commissioning certificates,
-                  test results, sub-meter schedules, O&M manuals, building user guides, seasonal
-                  commissioning reports.
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Quality Assurance Process
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Submission:</strong> Assessor submits completed assessment via BREEAM
-                  Projects portal
-                </li>
-                <li className="pl-1">
-                  <strong>QA review:</strong> BRE auditor reviews evidence and scoring decisions
-                </li>
-                <li className="pl-1">
-                  <strong>Queries:</strong> Auditor raises Technical Questions (TQs) requiring
-                  clarification
-                </li>
-                <li className="pl-1">
-                  <strong>Response:</strong> Assessor provides additional evidence or justification
-                </li>
-                <li className="pl-1">
-                  <strong>Certification:</strong> Once satisfied, BRE issues the certificate
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Timing consideration:</strong> QA review typically takes 4-6 weeks. Allow
-              sufficient time in the programme, especially if certification is needed for practical
-              completion or funding drawdown.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Obtain target BREEAM rating and pre-assessment report early in design</li>
+              <li>Review Energy, Health & Wellbeing, Water, and Pollution categories for M&E requirements</li>
+              <li>Specify sub-metering strategy aligned with Ene 02 requirements</li>
+              <li>Include BREEAM compliance clauses in M&E specifications</li>
+              <li>Coordinate with assessor on evidence requirements at each stage</li>
+              <li>Plan commissioning to satisfy Man 01 (commissioning) and Man 04 (seasonal commissioning)</li>
+            </ul>
+            <p>
+              <strong>Key Thresholds to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Pass: <strong>≥30%</strong> | Good: <strong>≥45%</strong> | Very Good:  <strong>≥55%</strong></li>
+              <li>Excellent: <strong>≥70%</strong> | Outstanding: <strong>≥85%</strong></li>
+              <li>Innovation credits: Up to <strong>10% additional</strong></li>
+              <li>Energy category weighting: <strong>15-19%</strong> (highest)</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Pre-Assessment Credit Targeting
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A new office building targeting BREEAM Excellent (70%).
-                Identify key M&E credits.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Target: 70% minimum (aim for 75% to provide margin)</p>
-                <p className="mt-2">High-value M&E credits to target:</p>
-                <p className="ml-4">Ene 01: 9 credits @ 19% = ~3.4% contribution</p>
-                <p className="ml-4">Ene 02: 2 credits (sub-metering) = ~0.4%</p>
-                <p className="ml-4">Hea 01: 3 credits (lighting quality) = ~0.6%</p>
-                <p className="ml-4">Hea 04: 2 credits (thermal comfort) = ~0.4%</p>
-                <p className="ml-4">Wat 01: 3 credits (water efficiency) = ~0.3%</p>
-                <p className="ml-4">Pol 01: 2 credits (low GWP refrigerants) = ~0.2%</p>
-                <p className="mt-2 text-green-400">M&E contribution: ~5.3% directly influenced</p>
-                <p className="text-white mt-2">
-                  Plus mandatory commissioning credits in Man category
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Energy Credit Evidence Requirements
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Demonstrating compliance with Ene 01 for an Excellent
-                rating.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Ene 01 Evidence Checklist:</p>
-                <p className="mt-2 ml-4">Design Stage:</p>
-                <p className="ml-8">- Energy model (IES-VE or TAS) with BRUKL output</p>
-                <p className="ml-8">- EPR calculation showing improvement over Part L</p>
-                <p className="ml-8">- M&E specification with efficiency requirements</p>
-                <p className="ml-8">- Drawings showing renewable energy systems</p>
-                <p className="mt-2 ml-4">Post-Construction:</p>
-                <p className="ml-8">- As-built energy model reflecting any changes</p>
-                <p className="ml-8">- EPC certificate</p>
-                <p className="ml-8">- Commissioning certificates for HVAC</p>
-                <p className="ml-8">- Evidence renewables installed as designed</p>
-                <p className="mt-2 text-green-400">Credits awarded: Based on actual EPR achieved</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Selecting the Correct BREEAM Scheme
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Client has three projects - advise on appropriate BREEAM
-                scheme.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Project A: New-build warehouse</p>
-                <p className="ml-4 text-green-400">→ BREEAM New Construction (Industrial)</p>
-                <p className="ml-4 text-white">Design Stage + Post-Construction assessment</p>
-                <p className="mt-2">Project B: Office fit-out in existing shell</p>
-                <p className="ml-4 text-green-400">→ BREEAM Refurbishment & Fit-Out</p>
-                <p className="ml-4 text-white">Part 3 (local services) + Part 4 (interior)</p>
-                <p className="mt-2">Project C: Improving performance of existing HQ</p>
-                <p className="ml-4 text-green-400">→ BREEAM In-Use</p>
-                <p className="ml-4 text-white">Asset + Building Management assessments</p>
-                <p className="ml-4 text-white">Annual recertification available</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Engineer's BREEAM Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Obtain target BREEAM rating and pre-assessment report early in design
-                </li>
-                <li className="pl-1">
-                  Review Energy, Health & Wellbeing, Water, and Pollution categories for M&E
-                  requirements
-                </li>
-                <li className="pl-1">
-                  Specify sub-metering strategy aligned with Ene 02 requirements
-                </li>
-                <li className="pl-1">Include BREEAM compliance clauses in M&E specifications</li>
-                <li className="pl-1">
-                  Coordinate with assessor on evidence requirements at each stage
-                </li>
-                <li className="pl-1">
-                  Plan commissioning to satisfy Man 01 (commissioning) and Man 04 (seasonal
-                  commissioning)
-                </li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Late engagement:</strong> BREEAM considered after design freeze limits achievable rating</li>
+                <li><strong>Missing mandatory credits:</strong> Prevents certification regardless of overall score</li>
+                <li><strong>Specification gaps:</strong> Not including BREEAM requirements in M&E specs</li>
+                <li><strong>Evidence management:</strong> Poor documentation makes post-construction verification difficult</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Thresholds to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Pass: <strong>≥30%</strong> | Good: <strong>≥45%</strong> | Very Good:{' '}
-                  <strong>≥55%</strong>
-                </li>
-                <li className="pl-1">
-                  Excellent: <strong>≥70%</strong> | Outstanding: <strong>≥85%</strong>
-                </li>
-                <li className="pl-1">
-                  Innovation credits: Up to <strong>10% additional</strong>
-                </li>
-                <li className="pl-1">
-                  Energy category weighting: <strong>15-19%</strong> (highest)
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Late engagement:</strong> BREEAM considered after design freeze limits
-                  achievable rating
-                </li>
-                <li className="pl-1">
-                  <strong>Missing mandatory credits:</strong> Prevents certification regardless of
-                  overall score
-                </li>
-                <li className="pl-1">
-                  <strong>Specification gaps:</strong> Not including BREEAM requirements in M&E
-                  specs
-                </li>
-                <li className="pl-1">
-                  <strong>Evidence management:</strong> Poor documentation makes post-construction
-                  verification difficult
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="BREEAM Excellent target slips on Mat 03 minimum standard"
+            situation={
+              <>
+                A planning condition requires BREEAM Excellent on a 12,000 m² mixed-use scheme. Design-stage certification predicted Excellent at 71%. Post-construction, Mat 03 (Responsible Sourcing) evidence is incomplete — the steel frame package was procured without BES 6001 documentation and the contractor cannot retrospectively obtain it. Mat 03 is a minimum standard for Excellent.
+              </>
+            }
+            whatToDo={
+              <>
+                Three options: (1) accept downgrade to Very Good (planning breach risk, possibly re-application required); (2) try to secure replacement BES 6001-certified material for a portion to reach the threshold (rarely possible at handover); (3) negotiate a planning variation accepting Very Good with offsetting commitments (additional BREEAM In-Use commitment, or higher BIK on operational performance). Going forward: every package on a BREEAM Excellent project must carry the responsible sourcing requirement in the procurement specification, with evidence collected at order, not at handover.
+              </>
+            }
+            whyItMatters={
+              <>
+                Minimum standards are the silent killer of BREEAM ratings. Many credits can be earned by design tweaks at the eleventh hour; minimum standards almost always require procurement decisions that close out months earlier. The BREEAM Assessor Pre-Assessment is your one chance to map every minimum standard to a procurement clause.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">BREEAM Schemes</p>
-                <ul className="space-y-0.5">
-                  <li>New Construction - new builds and extensions</li>
-                  <li>Refurbishment & Fit-Out - existing building upgrades</li>
-                  <li>In-Use - operational buildings</li>
-                  <li>Communities - masterplanning scale</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Rating Thresholds</p>
-                <ul className="space-y-0.5">
-                  <li>Pass ≥30% | Good ≥45%</li>
-                  <li>Very Good ≥55% | Excellent ≥70%</li>
-                  <li>Outstanding ≥85%</li>
-                  <li>+ Innovation up to 10%</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              "BREEAM ratings: Pass (≥30%), Good (45%), Very Good (55%), Excellent (70%), Outstanding (85%).",
+              "Nine categories + Innovation — weighted differently per scheme.",
+              "Two-stage certification: Design Stage (pre-construction) + Post-Construction (after handover).",
+              "Minimum standards must be met regardless of overall rating — they are non-negotiable.",
+              "Licensed Assessor required; pre-assessment workshop before RIBA Stage 3 is best practice.",
+              "BREEAM Excellent / Outstanding now common as planning conditions in major UK city authorities.",
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section3-2">
-              Next: BREEAM Categories
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section3")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                BREEAM assessment
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section3-2")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Water category
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

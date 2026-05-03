@@ -760,7 +760,7 @@ export default function Sub4() {
                 circuit needs updating to match the redrafted regulation.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 643.3 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 643.3."
           />
 
           <SectionRule />

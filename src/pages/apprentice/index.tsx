@@ -1,146 +1,134 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import {
-  BookOpen,
-  Wrench,
-  FileText,
-  Users,
-  Brain,
-  TrendingUp,
-  MessageSquare,
-  HelpCircle,
-  ArrowRight,
-} from 'lucide-react';
 import OJTRatioCard from '@/components/apprentice/OJTRatioCard';
 import StudyProgressCard from '@/components/apprentice/StudyProgressCard';
 import { useApprenticeData } from '@/hooks/useApprenticeData';
+import {
+  PageFrame,
+  PageHero,
+  SectionHeader,
+  HubGrid,
+  HubCard,
+  Pill,
+  itemVariants,
+  type Tone,
+} from '@/components/college/primitives';
 
-const ApprenticeIndex = () => {
+const QUICK_ACCESS: Array<{
+  number: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  href: string;
+  tone: Tone;
+}> = [
+  {
+    number: '01',
+    eyebrow: 'AI tutor',
+    title: 'Advanced help',
+    description: 'AI-powered assistance, exam prep and on-demand expert guidance.',
+    href: '/apprentice/advanced-help',
+    tone: 'yellow',
+  },
+  {
+    number: '02',
+    eyebrow: 'Reference',
+    title: 'Professional toolbox',
+    description: 'Guides, expectations, EPA prep, rights and pay — the whole job demystified.',
+    href: '/apprentice/toolbox',
+    tone: 'blue',
+  },
+  {
+    number: '03',
+    eyebrow: 'Logbook',
+    title: 'Site diary',
+    description: 'Log daily site activities, hours and reflections towards your portfolio.',
+    href: '/apprentice/site-diary',
+    tone: 'amber',
+  },
+  {
+    number: '04',
+    eyebrow: 'Career',
+    title: 'Career development',
+    description: 'Pathways, certifications and the CPD that moves your earning ceiling.',
+    href: '/apprentice/professional-development',
+    tone: 'emerald',
+  },
+  {
+    number: '05',
+    eyebrow: 'Network',
+    title: 'Community chat',
+    description: 'Talk to other apprentices and qualified electricians in moderated channels.',
+    href: '/apprentice/chat',
+    tone: 'purple',
+  },
+  {
+    number: '06',
+    eyebrow: 'Evidence',
+    title: 'Portfolio & OJT',
+    description: 'Build your apprenticeship portfolio and track your 20% off-the-job training.',
+    href: '/apprentice/hub',
+    tone: 'cyan',
+  },
+];
+
+export default function ApprenticeIndex() {
+  const navigate = useNavigate();
   const { user, isLoading } = useApprenticeData();
-
-  const quickAccessItems = [
-    {
-      title: 'Learning Resources',
-      icon: BookOpen,
-      href: '/apprentice/learning',
-    },
-    {
-      title: 'Professional Toolbox',
-      icon: Wrench,
-      href: '/apprentice/toolbox',
-    },
-    {
-      title: 'Document Templates',
-      icon: FileText,
-      href: '/apprentice/documents',
-    },
-    {
-      title: 'Career Development',
-      icon: TrendingUp,
-      href: '/apprentice/career',
-    },
-    {
-      title: 'Community Chat',
-      icon: MessageSquare,
-      href: '/apprentice/chat',
-    },
-    {
-      title: 'Portfolio & OJT',
-      icon: Users,
-      href: '/apprentice/ojt',
-    },
-  ];
+  const greeting = isLoading ? 'Welcome to Elec-Mate' : `Welcome back, ${user.firstName}`;
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      {/* Header */}
-      <div className="text-center space-y-3 sm:space-y-4">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
-          {isLoading ? 'Welcome to Elec-Mate' : `Welcome back, ${user.firstName}`}
-        </h1>
-        <p className="text-base sm:text-lg md:text-xl text-white max-w-2xl mx-auto px-2">
-          Your comprehensive electrical apprenticeship companion - designed specifically for UK
-          electrical apprentices
-        </p>
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/dashboard')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back to Dashboard
+        </Button>
+      </motion.div>
 
-      {/* Advanced Help Box - Moved to the top */}
-      <Link to="/apprentice/advanced-help">
-        <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/20 to-orange-500/20 hover:scale-[1.02] sm:hover:scale-105 active:scale-[0.98] transition-all duration-200 cursor-pointer touch-manipulation">
-          <CardHeader className="p-4 sm:p-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <Brain className="h-7 w-7 sm:h-8 sm:w-8 text-elec-yellow shrink-0" />
-                <div>
-                  <CardTitle className="text-base sm:text-lg text-elec-yellow">
-                    Advanced Help Box
-                  </CardTitle>
-                  <p className="text-xs sm:text-sm text-white mt-1">
-                    AI-powered assistance and cutting-edge training tools
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 self-end sm:self-auto">
-                <span className="px-2 py-1 rounded-full text-xs font-semibold text-elec-yellow bg-elec-yellow/10">
-                  AI Enhanced
-                </span>
-                <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
-              </div>
-            </div>
-          </CardHeader>
-        </Card>
-      </Link>
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Welcome"
+          title={greeting}
+          description="Your apprenticeship companion — purpose-built for UK electrical apprentices. Pick a card below to start, or jump back into where you left off."
+          tone="yellow"
+        />
+      </motion.div>
 
-      {/* Study Progress & OJT Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-        <StudyProgressCard />
-        <OJTRatioCard />
-      </div>
-
-      {/* Quick Access Grid */}
-      <div>
-        <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">Quick Access</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
-          {quickAccessItems.map((item, index) => (
-            <Link key={index} to={item.href}>
-              <Card className="border-elec-yellow/20 bg-white/5 hover:bg-white/10 active:bg-white/15 active:scale-[0.98] transition-all cursor-pointer h-full touch-manipulation">
-                <CardHeader className="flex flex-col items-center justify-center text-center p-4 sm:p-6">
-                  <item.icon className="h-7 w-7 sm:h-8 sm:w-8 mb-2 text-elec-yellow" />
-                  <CardTitle className="text-base sm:text-lg md:text-xl">{item.title}</CardTitle>
-                </CardHeader>
-              </Card>
-            </Link>
-          ))}
+      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
+        <SectionHeader eyebrow="Track" title="This week" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+          <StudyProgressCard />
+          <OJTRatioCard />
         </div>
-      </div>
+      </motion.section>
 
-      {/* Help Section */}
-      <Card className="border-blue-500/20 bg-blue-500/5">
-        <CardHeader className="p-4 sm:p-6 pb-2 sm:pb-2">
-          <CardTitle className="text-blue-400 flex items-center gap-2 text-base sm:text-lg">
-            <HelpCircle className="h-5 w-5 shrink-0" />
-            Need Help Getting Started?
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="p-4 sm:p-6 pt-2 sm:pt-2">
-          <p className="text-sm sm:text-base text-white mb-4">
-            New to Elec-Mate? Check out our getting started guide or explore the Advanced Help Box
-            for AI-powered assistance.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-2">
-            <Button variant="outline" asChild className="w-full sm:w-auto h-11 touch-manipulation">
-              <Link to="/apprentice/advanced-help">Get AI Help</Link>
-            </Button>
-            <Button variant="outline" asChild className="w-full sm:w-auto h-11 touch-manipulation">
-              <Link to="/study-centre">Start Learning</Link>
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
+        <SectionHeader eyebrow="Quick access" title="Six places to go" />
+        <HubGrid columns={3}>
+          {QUICK_ACCESS.map((item) => (
+            <HubCard
+              key={item.href}
+              size="sm"
+              number={item.number}
+              eyebrow={item.eyebrow}
+              title={item.title}
+              description={item.description}
+              tone={item.tone}
+              badge={
+                item.title === 'Advanced help' ? <Pill tone="yellow">AI</Pill> : undefined
+              }
+              onClick={() => navigate(item.href)}
+            />
+          ))}
+        </HubGrid>
+      </motion.section>
+    </PageFrame>
   );
-};
-
-export default ApprenticeIndex;
+}

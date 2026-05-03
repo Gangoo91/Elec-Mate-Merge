@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 7 · Section 5 · Subsection 4 — Energy Metering
+ * HNC Electrical Engineering for Building Services (Power and Lighting Systems)
+ *   Meter types, accuracy classes, CT connections, data communications, and sub-metering strategies
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Energy Metering - HNC Module 7 Section 5.4';
@@ -223,860 +236,350 @@ const faqs = [
 ];
 
 const HNCModule7Section5_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section5")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module7-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.5.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Energy Metering
-          </h1>
-          <p className="text-white">
-            Meter types, accuracy classes, CT connections, data communications, and sub-metering
-            strategies
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 7 · Section 5 · Subsection 4"
+            title="Energy Metering"
+            description="Meter types, accuracy classes, CT connections, data communications, and sub-metering strategies"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Meter types:</strong> kWh, multi-function, maximum demand
-              </li>
-              <li className="pl-1">
-                <strong>Accuracy:</strong> IEC 62053 Class 1.0 for billing
-              </li>
-              <li className="pl-1">
-                <strong>CT selection:</strong> 50-60% loading at normal current
-              </li>
-              <li className="pl-1">
-                <strong>Communications:</strong> Modbus RTU/TCP, BACnet, pulse output
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Specify appropriate meter types for different applications",
+              "Apply IEC 62053 accuracy class requirements",
+              "Design CT installations with correct burden calculations",
+              "Configure Modbus RTU and BACnet communications",
+              "Implement AMR systems for automatic data collection",
+              "Develop sub-metering strategies per CIBSE TM39 guidance",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Meter Types and Applications">
+            <p>Energy meters range from basic kWh accumulators to sophisticated multi-function power analysers. Selecting the appropriate meter type depends on the application requirements, accuracy needs, and integration with building management systems.</p>
+            <p><strong>Common meter types:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Basic kWh meters:</strong> Cumulative energy measurement only, pulse output</li>
+              <li><strong>Multi-function meters (MFM):</strong> V, I, kW, kVA, kVAr, PF, Hz, THD, kWh</li>
+              <li><strong>Maximum demand indicators:</strong> Record peak demand for tariff management</li>
+              <li><strong>Power quality analysers:</strong> Harmonics, flicker, sags, swells, transients</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>CIBSE TM39:</strong> Sub-meter &gt;90% of consumption
-              </li>
-              <li className="pl-1">
-                <strong>AMR systems:</strong> Automatic data collection
-              </li>
-              <li className="pl-1">
-                <strong>BMS integration:</strong> Real-time monitoring
-              </li>
-              <li className="pl-1">
-                <strong>M&amp;T:</strong> Monitoring and targeting programmes
-              </li>
+            <p><strong>Meter Selection by Application</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Fiscal/billing:</strong> MID-approved kWh — Class 1.0, sealed, tamper-evident</li>
+              <li><strong>Tenant sub-metering:</strong> Multi-function with comms — kWh, Modbus/pulse, DIN rail</li>
+              <li><strong>Plant monitoring:</strong> Multi-function meter — Real-time V, I, kW, PF, harmonics</li>
+              <li><strong>Maximum demand tariff:</strong> MD indicator/recorder — Half-hourly data, peak recording</li>
+              <li><strong>Power quality analysis:</strong> Power quality analyser — EN 50160 compliance, waveform capture</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Design principle:</strong> Over-specify rather than under-specify meter capability - the cost difference is small compared to retrofit costs if additional parameters are needed later.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Specify appropriate meter types for different applications',
-              'Apply IEC 62053 accuracy class requirements',
-              'Design CT installations with correct burden calculations',
-              'Configure Modbus RTU and BACnet communications',
-              'Implement AMR systems for automatic data collection',
-              'Develop sub-metering strategies per CIBSE TM39 guidance',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Meter Types and Applications */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Meter Types and Applications
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Accuracy Classes and IEC 62053">
+            <p>Meter accuracy is governed by IEC 62053 standards, which define accuracy classes based on maximum permissible percentage errors at different load and power factor conditions. Proper accuracy specification ensures reliable energy data for billing and monitoring applications.</p>
+            <p><strong>IEC 62053-21</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Active energy (kWh)</li>
+              <li>Classes 0.5, 1, 2</li>
+              <li>Static meters</li>
+              <li>Direct or CT connected</li>
+            </ul>
+            <p><strong>IEC 62053-22</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Active energy (kWh)</li>
+              <li>Classes 0.2S, 0.5S</li>
+              <li>Revenue metering</li>
+              <li>Wide dynamic range</li>
+            </ul>
+            <p><strong>IEC 62053-23</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Reactive energy (kVArh)</li>
+              <li>Classes 2, 3</li>
+              <li>Power factor penalty</li>
+              <li>Often combined with active</li>
+            </ul>
+            <p><strong>Accuracy Class Error Limits (IEC 62053-21)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Class 0.5:</strong> ±0.5% — ±1.0% — High-value sub-metering</li>
+              <li><strong>Class 1.0:</strong> ±1.0% — ±1.5% — Commercial billing</li>
+              <li><strong>Class 2.0:</strong> ±2.0% — ±2.5% — Monitoring only</li>
+              <li><strong>Class 0.2S:</strong> ±0.2% — ±0.4% — Revenue/fiscal metering</li>
+            </ul>
+            <p><strong>MID (Measuring Instruments Directive)</strong></p>
+            <p>For billing applications in the UK and EU, meters must be MID-approved (2014/32/EU). MID requires Class B accuracy (equivalent to IEC Class 1.0) minimum for active energy meters used in direct transactions. MID approval includes factory calibration, sealing, and traceable certification.</p>
+            <p><strong>Best practice:</strong> Specify Class 1.0 or better for all billing and cost allocation applications. The marginal cost of higher accuracy is minimal compared to potential billing disputes.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="CT Connections and Installation">
+            <p>Current transformers (CTs) are essential for metering circuits carrying more than 100A direct connection capacity. Correct CT selection, installation, and wiring are critical for measurement accuracy and safety.</p>
+            <p><strong>Critical Safety Warning</strong></p>
+            <p><strong>Never open-circuit an energised CT secondary.</strong> This creates dangerous voltages (potentially thousands of volts) that can cause arcing, insulation failure, and serious injury. Always short-circuit CT secondaries before disconnecting meters, and use CT terminal blocks with shorting links for safe isolation.</p>
+            <p><strong>CT Selection Criteria</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Primary current:</strong> Select so normal load is 50-60% of rating</li>
+              <li><strong>Secondary current:</strong> 1A for long runs (&gt;15m), 5A for short distances</li>
+              <li><strong>Accuracy class:</strong> Match or exceed meter accuracy requirement</li>
+              <li><strong>VA burden:</strong> Must exceed total connected burden</li>
+              <li><strong>Window size:</strong> Must accommodate conductor or busbar</li>
+            </ul>
+            <p><strong>CT Burden Calculation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Meter current input:</strong> 0.1 - 0.5 VA — Modern electronic meters</li>
+              <li><strong>Cable (2.5mm², 10m):</strong> 0.7 VA (5A sec) — 0.03 VA for 1A secondary</li>
+              <li><strong>Connections:</strong> 0.1 - 0.2 VA — Terminal blocks, crimps</li>
+              <li><strong>Total typical:</strong> 1 - 2 VA — CT should be rated &gt;2.5 VA</li>
+            </ul>
+            <p><strong>CT Wiring Principles</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>P1 (primary) faces incoming supply; P2 faces load</li>
+              <li>S1 (secondary) connects to meter current input terminal</li>
+              <li>S2 returns to CT, often via common/star point for 3-phase</li>
+              <li>Use colour-coded or numbered conductors for each phase</li>
+              <li>Provide CT shorting links at terminal block for safe isolation</li>
+              <li>Earth the CT secondary circuit at one point only (star point)</li>
+            </ul>
+            <p><strong>Installation tip:</strong> Label all CT cables clearly at both ends. Phase identification errors cause incorrect readings and are difficult to diagnose after installation is complete.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Data Communications and Sub-Metering Strategies">
+            <p>Modern metering installations require robust data communications for integration with building management systems, energy management software, and automatic meter reading (AMR) infrastructure. CIBSE TM39 provides comprehensive guidance on sub-metering strategies.</p>
+            <p><strong>Communication Protocols Comparison</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Modbus RTU:</strong> RS-485 — 1,200m — Local meter networks</li>
+              <li><strong>Modbus TCP:</strong> Ethernet — 100m per segment — IT network integration</li>
+              <li><strong>BACnet MS/TP:</strong> RS-485 — 1,200m — BMS integration</li>
+              <li><strong>BACnet IP:</strong> Ethernet — Network dependent — Enterprise BMS</li>
+              <li><strong>Pulse output:</strong> Volt-free contact — 500m typical — Simple BMS connection</li>
+              <li><strong>M-Bus:</strong> 2-wire bus — 1,000m — Multi-utility metering</li>
+            </ul>
+            <p><strong>Modbus RTU Configuration</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Unique address (1-247) per device</li>
+              <li>Standard: 9600 baud, 8N1</li>
+              <li>RS-485 termination at both ends</li>
+              <li>Maximum 32 devices per segment</li>
+              <li>Daisy-chain topology required</li>
+            </ul>
+            <p><strong>AMR System Components</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Field devices (meters with comms)</li>
+              <li>Data concentrators/gateways</li>
+              <li>Communication networks (wired/wireless)</li>
+              <li>Head-end software (data collection)</li>
+              <li>Analysis and reporting platform</li>
+            </ul>
+            <p><strong>CIBSE TM39 Sub-Metering Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Coverage:</strong> Sub-meter at least 90% of anticipated consumption</li>
+              <li><strong>End uses:</strong> Separate HVAC, lighting, small power, lifts, specialist loads</li>
+              <li><strong>Tenants:</strong> Individual metering for each lettable area</li>
+              <li><strong>Major plant:</strong> Meter chillers, boilers, AHUs, pumps individually</li>
+              <li><strong>Verification:</strong> Sub-meter total should reconcile with fiscal meter (±5%)</li>
+            </ul>
+            <p><strong>Sub-Metering Hierarchy Example</strong></p>
+            <p><strong>Level 1: Fiscal Meter</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Main incoming supply</li>
+              <li>MID-approved, utility interface</li>
+            </ul>
+            <p><strong>Level 2: Distribution</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Main switchboard outgoings</li>
+              <li>Landlord vs tenant split</li>
+            </ul>
+            <p><strong>Level 3: End Use</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>HVAC, lighting, small power</li>
+              <li>Per floor or zone</li>
+            </ul>
+            <p><strong>Level 4: Equipment</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Individual chillers, AHUs</li>
+              <li>Server room, kitchen loads</li>
+            </ul>
+            <p><strong>Data strategy:</strong> Collect half-hourly (or finer) interval data for detailed analysis. Daily totals are insufficient for effective monitoring and targeting programmes.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Energy meters range from basic kWh accumulators to sophisticated multi-function power
-              analysers. Selecting the appropriate meter type depends on the application
-              requirements, accuracy needs, and integration with building management systems.
+              <strong>Example 1: CT Selection for Distribution Board</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Common meter types:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Basic kWh meters:</strong> Cumulative energy measurement only, pulse
-                  output
-                </li>
-                <li className="pl-1">
-                  <strong>Multi-function meters (MFM):</strong> V, I, kW, kVA, kVAr, PF, Hz, THD,
-                  kWh
-                </li>
-                <li className="pl-1">
-                  <strong>Maximum demand indicators:</strong> Record peak demand for tariff
-                  management
-                </li>
-                <li className="pl-1">
-                  <strong>Power quality analysers:</strong> Harmonics, flicker, sags, swells,
-                  transients
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Meter Selection by Application
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Meter Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Key Features Required
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fiscal/billing</td>
-                      <td className="border border-white/10 px-3 py-2">MID-approved kWh</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Class 1.0, sealed, tamper-evident
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Tenant sub-metering</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multi-function with comms
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        kWh, Modbus/pulse, DIN rail
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Plant monitoring</td>
-                      <td className="border border-white/10 px-3 py-2">Multi-function meter</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Real-time V, I, kW, PF, harmonics
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Maximum demand tariff</td>
-                      <td className="border border-white/10 px-3 py-2">MD indicator/recorder</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Half-hourly data, peak recording
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Power quality analysis</td>
-                      <td className="border border-white/10 px-3 py-2">Power quality analyser</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        EN 50160 compliance, waveform capture
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design principle:</strong> Over-specify rather than under-specify meter
-              capability - the cost difference is small compared to retrofit costs if additional
-              parameters are needed later.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Accuracy Classes and IEC 62053 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Accuracy Classes and IEC 62053
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Select CTs for metering a 400A TP+N distribution board with typical load of 280A.</p>
+            <p>Given:</p>
+            <p>Nominal load = 280A</p>
+            <p>Maximum load = 400A (circuit rating)</p>
+            <p>Meter location = 20m from board</p>
+            <p>Meter accuracy = Class 1.0</p>
+            <p>CT Selection:</p>
+            <p>Primary: 400/1A (280A = 70% loading) or 500/1A (56% loading)</p>
+            <p>Choose 400/1A for better accuracy at normal load</p>
+            <p>Secondary: 1A preferred for 20m cable run</p>
+            <p>Accuracy: Class 0.5 (exceeds meter requirement)</p>
+            <p>Burden calculation:</p>
+            <p>Meter burden: 0.2 VA</p>
+            <p>Cable (2.5mm², 40m loop): 0.3 VA at 1A</p>
+            <p>Connections: 0.1 VA</p>
+            <p>Total: 0.6 VA</p>
+            <p>Select: 400/1A, Class 0.5, 2.5VA burden rating</p>
             <p>
-              Meter accuracy is governed by IEC 62053 standards, which define accuracy classes based
-              on maximum permissible percentage errors at different load and power factor
-              conditions. Proper accuracy specification ensures reliable energy data for billing and
-              monitoring applications.
+              <strong>Example 2: Modbus Network Design</strong>
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">IEC 62053-21</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Active energy (kWh)</li>
-                  <li className="pl-1">Classes 0.5, 1, 2</li>
-                  <li className="pl-1">Static meters</li>
-                  <li className="pl-1">Direct or CT connected</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">IEC 62053-22</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Active energy (kWh)</li>
-                  <li className="pl-1">Classes 0.2S, 0.5S</li>
-                  <li className="pl-1">Revenue metering</li>
-                  <li className="pl-1">Wide dynamic range</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">IEC 62053-23</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Reactive energy (kVArh)</li>
-                  <li className="pl-1">Classes 2, 3</li>
-                  <li className="pl-1">Power factor penalty</li>
-                  <li className="pl-1">Often combined with active</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Accuracy Class Error Limits (IEC 62053-21)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Class</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Error at 100% In, PF=1
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Error at 10% In, PF=1
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Class 0.5</td>
-                      <td className="border border-white/10 px-3 py-2">±0.5%</td>
-                      <td className="border border-white/10 px-3 py-2">±1.0%</td>
-                      <td className="border border-white/10 px-3 py-2">High-value sub-metering</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Class 1.0</td>
-                      <td className="border border-white/10 px-3 py-2">±1.0%</td>
-                      <td className="border border-white/10 px-3 py-2">±1.5%</td>
-                      <td className="border border-white/10 px-3 py-2">Commercial billing</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Class 2.0</td>
-                      <td className="border border-white/10 px-3 py-2">±2.0%</td>
-                      <td className="border border-white/10 px-3 py-2">±2.5%</td>
-                      <td className="border border-white/10 px-3 py-2">Monitoring only</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Class 0.2S</td>
-                      <td className="border border-white/10 px-3 py-2">±0.2%</td>
-                      <td className="border border-white/10 px-3 py-2">±0.4%</td>
-                      <td className="border border-white/10 px-3 py-2">Revenue/fiscal metering</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                MID (Measuring Instruments Directive)
-              </p>
-              <p className="text-sm text-white">
-                For billing applications in the UK and EU, meters must be MID-approved (2014/32/EU).
-                MID requires Class B accuracy (equivalent to IEC Class 1.0) minimum for active
-                energy meters used in direct transactions. MID approval includes factory
-                calibration, sealing, and traceable certification.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> Specify Class 1.0 or better for all billing and cost
-              allocation applications. The marginal cost of higher accuracy is minimal compared to
-              potential billing disputes.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: CT Connections and Installation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            CT Connections and Installation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Design Modbus RTU network for 24 meters across a commercial building.</p>
+            <p>Requirements:</p>
+            <p>24 meters across 4 floors</p>
+            <p>Maximum cable run: 800m</p>
+            <p>Polling interval: 15 seconds per meter</p>
+            <p>Network design:</p>
+            <p>Physical layer: RS-485 (supports 1,200m)</p>
+            <p>Topology: Single daisy-chain from BMS room</p>
+            <p>Cable: CAT5 or dedicated RS-485 shielded pair</p>
+            <p>Termination: 120Ω at first and last device</p>
+            <p>Addressing:</p>
+            <p>Ground floor: Addresses 1-6</p>
+            <p>First floor: Addresses 11-16</p>
+            <p>Second floor: Addresses 21-26</p>
+            <p>Third floor: Addresses 31-36</p>
+            <p>Polling calculation:</p>
+            <p>24 meters × 15 sec = 360 seconds (6 min cycle)</p>
+            <p>Acceptable for M&T but consider faster baud for real-time</p>
+            <p>Configure: 9600 baud, 8N1, addresses spaced for expansion</p>
             <p>
-              Current transformers (CTs) are essential for metering circuits carrying more than 100A
-              direct connection capacity. Correct CT selection, installation, and wiring are
-              critical for measurement accuracy and safety.
+              <strong>Example 3: Sub-Metering Strategy per CIBSE TM39</strong>
             </p>
+            <p><strong>Scenario:</strong> Develop sub-metering schedule for a 10,000m² office building.</p>
+            <p>Building profile:</p>
+            <p>Fiscal supply: 800 kVA</p>
+            <p>5 tenants + landlord areas</p>
+            <p>Central HVAC (chillers, AHUs, pumps)</p>
+            <p>Sub-metering schedule:</p>
+            <p>Level 2 - Distribution (6 meters):</p>
+            <p>M01: Tenant A supply</p>
+            <p>M02: Tenant B supply</p>
+            <p>M03: Tenant C supply</p>
+            <p>M04: Tenant D supply</p>
+            <p>M05: Tenant E supply</p>
+            <p>M06: Landlord central plant</p>
+            <p>Level 3 - End use (10 meters):</p>
+            <p>M07: Chiller 1</p>
+            <p>M08: Chiller 2</p>
+            <p>M09: AHU supply (all AHUs)</p>
+            <p>M10: Pumps and auxiliaries</p>
+            <p>M11: Common area lighting</p>
+            <p>M12: Lifts</p>
+            <p>M13: Car park</p>
+            <p>M14: Server room</p>
+            <p>M15: Kitchen/catering</p>
+            <p>M16: External lighting</p>
+            <p>Coverage check:</p>
+            <p>Sub-metered: 780 kVA (97.5% of supply)</p>
+            <p>Meets CIBSE TM39 &gt;90% coverage requirement</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Critical Safety Warning</p>
-              <p className="text-sm text-white">
-                <strong>Never open-circuit an energised CT secondary.</strong> This creates
-                dangerous voltages (potentially thousands of volts) that can cause arcing,
-                insulation failure, and serious injury. Always short-circuit CT secondaries before
-                disconnecting meters, and use CT terminal blocks with shorting links for safe
-                isolation.
-              </p>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">CT Selection Criteria</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Primary current:</strong> Select so normal load is 50-60% of rating
-                </li>
-                <li className="pl-1">
-                  <strong>Secondary current:</strong> 1A for long runs (&gt;15m), 5A for short
-                  distances
-                </li>
-                <li className="pl-1">
-                  <strong>Accuracy class:</strong> Match or exceed meter accuracy requirement
-                </li>
-                <li className="pl-1">
-                  <strong>VA burden:</strong> Must exceed total connected burden
-                </li>
-                <li className="pl-1">
-                  <strong>Window size:</strong> Must accommodate conductor or busbar
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">CT Burden Calculation</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Component</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Burden (VA)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Meter current input</td>
-                      <td className="border border-white/10 px-3 py-2">0.1 - 0.5 VA</td>
-                      <td className="border border-white/10 px-3 py-2">Modern electronic meters</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cable (2.5mm², 10m)</td>
-                      <td className="border border-white/10 px-3 py-2">0.7 VA (5A sec)</td>
-                      <td className="border border-white/10 px-3 py-2">0.03 VA for 1A secondary</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Connections</td>
-                      <td className="border border-white/10 px-3 py-2">0.1 - 0.2 VA</td>
-                      <td className="border border-white/10 px-3 py-2">Terminal blocks, crimps</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Total typical</td>
-                      <td className="border border-white/10 px-3 py-2">1 - 2 VA</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        CT should be rated &gt;2.5 VA
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">CT Wiring Principles</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">P1 (primary) faces incoming supply; P2 faces load</li>
-                <li className="pl-1">S1 (secondary) connects to meter current input terminal</li>
-                <li className="pl-1">S2 returns to CT, often via common/star point for 3-phase</li>
-                <li className="pl-1">Use colour-coded or numbered conductors for each phase</li>
-                <li className="pl-1">
-                  Provide CT shorting links at terminal block for safe isolation
-                </li>
-                <li className="pl-1">
-                  Earth the CT secondary circuit at one point only (star point)
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Installation tip:</strong> Label all CT cables clearly at both ends. Phase
-              identification errors cause incorrect readings and are difficult to diagnose after
-              installation is complete.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Data Communications and Sub-Metering Strategies */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Data Communications and Sub-Metering Strategies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Modern metering installations require robust data communications for integration with
-              building management systems, energy management software, and automatic meter reading
-              (AMR) infrastructure. CIBSE TM39 provides comprehensive guidance on sub-metering
-              strategies.
+              <strong>Metering Installation Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Communication Protocols Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Protocol</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Physical Layer</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Max Distance</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Best Use</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Modbus RTU</td>
-                      <td className="border border-white/10 px-3 py-2">RS-485</td>
-                      <td className="border border-white/10 px-3 py-2">1,200m</td>
-                      <td className="border border-white/10 px-3 py-2">Local meter networks</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Modbus TCP</td>
-                      <td className="border border-white/10 px-3 py-2">Ethernet</td>
-                      <td className="border border-white/10 px-3 py-2">100m per segment</td>
-                      <td className="border border-white/10 px-3 py-2">IT network integration</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BACnet MS/TP</td>
-                      <td className="border border-white/10 px-3 py-2">RS-485</td>
-                      <td className="border border-white/10 px-3 py-2">1,200m</td>
-                      <td className="border border-white/10 px-3 py-2">BMS integration</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BACnet IP</td>
-                      <td className="border border-white/10 px-3 py-2">Ethernet</td>
-                      <td className="border border-white/10 px-3 py-2">Network dependent</td>
-                      <td className="border border-white/10 px-3 py-2">Enterprise BMS</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pulse output</td>
-                      <td className="border border-white/10 px-3 py-2">Volt-free contact</td>
-                      <td className="border border-white/10 px-3 py-2">500m typical</td>
-                      <td className="border border-white/10 px-3 py-2">Simple BMS connection</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">M-Bus</td>
-                      <td className="border border-white/10 px-3 py-2">2-wire bus</td>
-                      <td className="border border-white/10 px-3 py-2">1,000m</td>
-                      <td className="border border-white/10 px-3 py-2">Multi-utility metering</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Modbus RTU Configuration
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Unique address (1-247) per device</li>
-                  <li className="pl-1">Standard: 9600 baud, 8N1</li>
-                  <li className="pl-1">RS-485 termination at both ends</li>
-                  <li className="pl-1">Maximum 32 devices per segment</li>
-                  <li className="pl-1">Daisy-chain topology required</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  AMR System Components
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Field devices (meters with comms)</li>
-                  <li className="pl-1">Data concentrators/gateways</li>
-                  <li className="pl-1">Communication networks (wired/wireless)</li>
-                  <li className="pl-1">Head-end software (data collection)</li>
-                  <li className="pl-1">Analysis and reporting platform</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-2">
-                CIBSE TM39 Sub-Metering Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Coverage:</strong> Sub-meter at least 90% of anticipated consumption
-                </li>
-                <li className="pl-1">
-                  <strong>End uses:</strong> Separate HVAC, lighting, small power, lifts, specialist
-                  loads
-                </li>
-                <li className="pl-1">
-                  <strong>Tenants:</strong> Individual metering for each lettable area
-                </li>
-                <li className="pl-1">
-                  <strong>Major plant:</strong> Meter chillers, boilers, AHUs, pumps individually
-                </li>
-                <li className="pl-1">
-                  <strong>Verification:</strong> Sub-meter total should reconcile with fiscal meter
-                  (±5%)
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Sub-Metering Hierarchy Example
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Level 1: Fiscal Meter</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Main incoming supply</li>
-                    <li>MID-approved, utility interface</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Level 2: Distribution</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Main switchboard outgoings</li>
-                    <li>Landlord vs tenant split</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Level 3: End Use</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>HVAC, lighting, small power</li>
-                    <li>Per floor or zone</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Level 4: Equipment</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Individual chillers, AHUs</li>
-                    <li>Server room, kitchen loads</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Data strategy:</strong> Collect half-hourly (or finer) interval data for
-              detailed analysis. Daily totals are insufficient for effective monitoring and
-              targeting programmes.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Verify CT ratio matches meter configuration</li>
+              <li>Check CT polarity - P1 towards supply, S1 to meter input</li>
+              <li>Confirm phase sequence and CT-to-voltage phase matching</li>
+              <li>Install CT shorting links in terminal blocks</li>
+              <li>Test communications before closing panels</li>
+              <li>Record meter serial numbers and CT ratios</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>CT loading: <strong>50-60%</strong> at normal current</li>
+              <li>Billing accuracy: <strong>Class 1.0</strong> minimum (IEC 62053-21)</li>
+              <li>RS-485 maximum: <strong>1,200 metres</strong></li>
+              <li>Sub-metering coverage: <strong>&gt;90%</strong> per CIBSE TM39</li>
+              <li>CT secondary standard: <strong>1A or 5A</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: CT Selection for Distribution Board
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Select CTs for metering a 400A TP+N distribution board
-                with typical load of 280A.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Given:</p>
-                <p className="ml-4">Nominal load = 280A</p>
-                <p className="ml-4">Maximum load = 400A (circuit rating)</p>
-                <p className="ml-4">Meter location = 20m from board</p>
-                <p className="ml-4">Meter accuracy = Class 1.0</p>
-                <p className="mt-2 text-white">CT Selection:</p>
-                <p className="ml-4">Primary: 400/1A (280A = 70% loading) or 500/1A (56% loading)</p>
-                <p className="ml-4">Choose 400/1A for better accuracy at normal load</p>
-                <p className="ml-4">Secondary: 1A preferred for 20m cable run</p>
-                <p className="ml-4">Accuracy: Class 0.5 (exceeds meter requirement)</p>
-                <p className="mt-2 text-white">Burden calculation:</p>
-                <p className="ml-4">Meter burden: 0.2 VA</p>
-                <p className="ml-4">Cable (2.5mm², 40m loop): 0.3 VA at 1A</p>
-                <p className="ml-4">Connections: 0.1 VA</p>
-                <p className="ml-4">Total: 0.6 VA</p>
-                <p className="mt-2 text-green-400">
-                  Select: 400/1A, Class 0.5, 2.5VA burden rating
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Modbus Network Design
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Design Modbus RTU network for 24 meters across a
-                commercial building.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Requirements:</p>
-                <p className="ml-4">24 meters across 4 floors</p>
-                <p className="ml-4">Maximum cable run: 800m</p>
-                <p className="ml-4">Polling interval: 15 seconds per meter</p>
-                <p className="mt-2 text-white">Network design:</p>
-                <p className="ml-4">Physical layer: RS-485 (supports 1,200m)</p>
-                <p className="ml-4">Topology: Single daisy-chain from BMS room</p>
-                <p className="ml-4">Cable: CAT5 or dedicated RS-485 shielded pair</p>
-                <p className="ml-4">Termination: 120Ω at first and last device</p>
-                <p className="mt-2 text-white">Addressing:</p>
-                <p className="ml-4">Ground floor: Addresses 1-6</p>
-                <p className="ml-4">First floor: Addresses 11-16</p>
-                <p className="ml-4">Second floor: Addresses 21-26</p>
-                <p className="ml-4">Third floor: Addresses 31-36</p>
-                <p className="mt-2 text-white">Polling calculation:</p>
-                <p className="ml-4">24 meters × 15 sec = 360 seconds (6 min cycle)</p>
-                <p className="ml-4">Acceptable for M&T but consider faster baud for real-time</p>
-                <p className="mt-2 text-green-400">
-                  Configure: 9600 baud, 8N1, addresses spaced for expansion
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Sub-Metering Strategy per CIBSE TM39
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Develop sub-metering schedule for a 10,000m² office
-                building.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Building profile:</p>
-                <p className="ml-4">Fiscal supply: 800 kVA</p>
-                <p className="ml-4">5 tenants + landlord areas</p>
-                <p className="ml-4">Central HVAC (chillers, AHUs, pumps)</p>
-                <p className="mt-2 text-white">Sub-metering schedule:</p>
-                <p className="mt-2">Level 2 - Distribution (6 meters):</p>
-                <p className="ml-4">M01: Tenant A supply</p>
-                <p className="ml-4">M02: Tenant B supply</p>
-                <p className="ml-4">M03: Tenant C supply</p>
-                <p className="ml-4">M04: Tenant D supply</p>
-                <p className="ml-4">M05: Tenant E supply</p>
-                <p className="ml-4">M06: Landlord central plant</p>
-                <p className="mt-2">Level 3 - End use (10 meters):</p>
-                <p className="ml-4">M07: Chiller 1</p>
-                <p className="ml-4">M08: Chiller 2</p>
-                <p className="ml-4">M09: AHU supply (all AHUs)</p>
-                <p className="ml-4">M10: Pumps and auxiliaries</p>
-                <p className="ml-4">M11: Common area lighting</p>
-                <p className="ml-4">M12: Lifts</p>
-                <p className="ml-4">M13: Car park</p>
-                <p className="ml-4">M14: Server room</p>
-                <p className="ml-4">M15: Kitchen/catering</p>
-                <p className="ml-4">M16: External lighting</p>
-                <p className="mt-2 text-white">Coverage check:</p>
-                <p className="ml-4">Sub-metered: 780 kVA (97.5% of supply)</p>
-                <p className="mt-2 text-green-400">Meets CIBSE TM39 &gt;90% coverage requirement</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Metering Installation Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Verify CT ratio matches meter configuration</li>
-                <li className="pl-1">Check CT polarity - P1 towards supply, S1 to meter input</li>
-                <li className="pl-1">Confirm phase sequence and CT-to-voltage phase matching</li>
-                <li className="pl-1">Install CT shorting links in terminal blocks</li>
-                <li className="pl-1">Test communications before closing panels</li>
-                <li className="pl-1">Record meter serial numbers and CT ratios</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Open-circuiting energised CTs</strong> - Dangerous high voltages result</li>
+                <li><strong>Reversed CT polarity</strong> - Causes negative readings or power factor errors</li>
+                <li><strong>Phase mismatch</strong> - Voltage phase must match CT phase</li>
+                <li><strong>Exceeded CT burden</strong> - Causes measurement errors</li>
+                <li><strong>No communications verification</strong> - Difficult to access after installation</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  CT loading: <strong>50-60%</strong> at normal current
-                </li>
-                <li className="pl-1">
-                  Billing accuracy: <strong>Class 1.0</strong> minimum (IEC 62053-21)
-                </li>
-                <li className="pl-1">
-                  RS-485 maximum: <strong>1,200 metres</strong>
-                </li>
-                <li className="pl-1">
-                  Sub-metering coverage: <strong>&gt;90%</strong> per CIBSE TM39
-                </li>
-                <li className="pl-1">
-                  CT secondary standard: <strong>1A or 5A</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Open-circuiting energised CTs</strong> - Dangerous high voltages result
-                </li>
-                <li className="pl-1">
-                  <strong>Reversed CT polarity</strong> - Causes negative readings or power factor
-                  errors
-                </li>
-                <li className="pl-1">
-                  <strong>Phase mismatch</strong> - Voltage phase must match CT phase
-                </li>
-                <li className="pl-1">
-                  <strong>Exceeded CT burden</strong> - Causes measurement errors
-                </li>
-                <li className="pl-1">
-                  <strong>No communications verification</strong> - Difficult to access after
-                  installation
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Accuracy Classes (IEC 62053)</p>
-                <ul className="space-y-0.5">
-                  <li>Class 0.2S - Revenue/fiscal metering</li>
-                  <li>Class 0.5 - High-accuracy sub-metering</li>
-                  <li>Class 1.0 - Commercial billing</li>
-                  <li>Class 2.0 - Monitoring only</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Communication Protocols</p>
-                <ul className="space-y-0.5">
-                  <li>Modbus RTU - RS-485, 1,200m max</li>
-                  <li>Modbus TCP - Ethernet, network dependent</li>
-                  <li>BACnet MS/TP - RS-485 for BMS</li>
-                  <li>Pulse output - Simple, universal</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section5-5">
-              Next: Section 5.5
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section5-3")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Harmonic mitigation
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section5-5")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Demand management
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

@@ -358,7 +358,7 @@ export default function Sub3() {
                 Load-management failure-mode assessment falls under the Reg 132.3(c) requirement to record daily and yearly demand variation in the design. The design pack must record the normal-operation diversified Ib AND the failure-mode Ib (load-manager dropping out, EV charger reverting to manufacturer fall-back rate, battery charging at peak), with confirmation that the supply still survives the worst case. For our dwelling the failure-mode Ib of 141 A on a 100 A service is non-compliant — either tighten the load management to a fail-safe lower setpoint, upgrade the supply, or specify supply-protection that rides through the transient.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Part 1, Chapter 13, Regulation 132.3(c) — verbatim from published facets. See also OZEV smart charge points regulations 2018 / 2021."
+            cite="Source: BS 7671:2018+A4:2026 Part 1, Chapter 13, Regulation 132.3(c). See also OZEV smart charge points regulations 2018 / 2021."
           />
 
           <SectionRule />
@@ -610,7 +610,7 @@ export default function Sub3() {
                 against the supply ceiling.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 132.2(c)(iii) — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 132.2(c)(iii)."
           />
 
           <SectionRule />

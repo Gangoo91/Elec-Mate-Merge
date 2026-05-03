@@ -357,7 +357,7 @@ export default function Sub3() {
                 A4:2026 codifies the LED-driver / dimmer / SPD problem. If sensitive electronics are still connected, drop the IR test voltage to 250&nbsp;V DC instead of 500&nbsp;V. The reading bar is the same (1.0&nbsp;M&Omega; minimum), but you don&apos;t cook the customer&apos;s gear in the process. This is exactly the situation a fault-diagnosis sparks meets every visit.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Reg 643.3 redraft, verbatim from facet."
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 643.3 (insulation resistance, redrafted in A4:2026)."
           />
 
           <RegsCallout

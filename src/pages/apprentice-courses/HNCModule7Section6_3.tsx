@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 7 · Section 6 · Subsection 3 — Earthing Systems
+ * HNC Electrical Engineering for Building Services (Power and Lighting Systems)
+ *   TN-S, TN-C-S, TT, and IT systems, main earthing terminal, protective conductors, equipotential bonding, and earth electrode testing
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Earthing Systems - HNC Module 7 Section 6.3';
@@ -245,854 +258,319 @@ const faqs = [
 ];
 
 const HNCModule7Section6_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section6")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module7-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.6.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Earthing Systems
-          </h1>
-          <p className="text-white">
-            TN-S, TN-C-S, TT, and IT systems, main earthing terminal, protective conductors,
-            equipotential bonding, and earth electrode testing
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 7 · Section 6 · Subsection 3"
+            title="Earthing Systems"
+            description="TN-S, TN-C-S, TT, and IT systems, main earthing terminal, protective conductors, equipotential bonding, and earth electrode testing"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>TN-S:</strong> Separate earth via cable sheath, Ze ≤ 0.35Ω
-              </li>
-              <li className="pl-1">
-                <strong>TN-C-S (PME):</strong> Combined neutral/earth in supply, Ze ≤ 0.35Ω
-              </li>
-              <li className="pl-1">
-                <strong>TT:</strong> Earth electrode required, RCD protection essential
-              </li>
-              <li className="pl-1">
-                <strong>Main bonding:</strong> Min 6mm², max requirement 25mm²
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Identify and explain TN-S, TN-C-S, TT, and IT earthing systems",
+              "Understand the function of the main earthing terminal",
+              "Size circuit protective conductors using Table 54.7 and adiabatic equation",
+              "Apply main equipotential bonding requirements correctly",
+              "Determine when supplementary bonding is required",
+              "Perform and interpret earth electrode resistance tests",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Earthing System Types">
+            <p>The earthing system defines how the source (transformer) is earthed and how the exposed-conductive-parts of the installation are connected to earth. The system type affects protective device selection, earth fault loop impedance values, and additional protection requirements.</p>
+            <p><strong>System designation letters:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>First letter (relationship of supply to earth):</strong> T = direct connection to earth, I = isolated or high impedance connection</li>
+              <li><strong>Second letter (installation earthing):</strong> T = direct connection to earth, N = connection to earthed point of source (neutral)</li>
+              <li><strong>Subsequent letters:</strong> S = separate neutral and protective conductors, C = combined conductor (PEN)</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Sizing Rules</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>CPC (Table 54.7):</strong> Line ≤16mm² → cpc = line size
-              </li>
-              <li className="pl-1">
-                <strong>CPC (adiabatic):</strong> S = √(I²t)/k
-              </li>
-              <li className="pl-1">
-                <strong>Main bonding:</strong> ≥ half neutral csa, min 6mm²
-              </li>
-              <li className="pl-1">
-                <strong>Supplementary:</strong> Min 2.5mm² mech protected, 4mm² unprotected
-              </li>
+            <p><strong>UK Earthing Systems Comparison</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>TN-S:</strong> Cable sheath/armouring — ≤ 0.35Ω — Older urban supplies, industrial</li>
+              <li><strong>TN-C-S (PME):</strong> Supply neutral (PEN) — ≤ 0.35Ω — Modern domestic/commercial</li>
+              <li><strong>TT:</strong> Earth electrode — ≤ 21Ω (typically) — Rural, overhead supplies, outbuildings</li>
+              <li><strong>IT:</strong> Isolated or high impedance — Variable — Critical systems, hospitals, process plants</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>PME Precautions</strong></p>
+            <p>With TN-C-S (PME) systems, if the PEN conductor becomes open-circuit, all metalwork connected to the PME earth could rise to a dangerous potential. Special precautions apply for:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Swimming pools and hot tubs - PME earthing not permitted</li>
+              <li>Caravan parks - additional requirements apply</li>
+              <li>Construction sites - restrictions on PME use</li>
+              <li>Outbuildings - TT earthing often required</li>
+            </ul>
+            <p><strong>Key point:</strong> Always verify the earthing system type at the origin before designing or testing an installation. The system type determines Zs values, protective device selection, and additional measures required.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Identify and explain TN-S, TN-C-S, TT, and IT earthing systems',
-              'Understand the function of the main earthing terminal',
-              'Size circuit protective conductors using Table 54.7 and adiabatic equation',
-              'Apply main equipotential bonding requirements correctly',
-              'Determine when supplementary bonding is required',
-              'Perform and interpret earth electrode resistance tests',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Earthing System Types */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Earthing System Types
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Main Earthing Terminal and Protective Conductors">
+            <p>The main earthing terminal (MET) is the central point of the installation's earthing arrangement, providing a connection between the means of earthing and all protective conductors. Circuit protective conductors (cpcs) provide the fault current path from exposed-conductive-parts back to the source.</p>
+            <p><strong>Main Earthing Terminal Connections</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Earthing conductor to means of earthing</li>
+              <li>All circuit protective conductors</li>
+              <li>Main protective bonding conductors</li>
+              <li>Functional earthing (if required)</li>
+              <li>Lightning protection (if applicable)</li>
+            </ul>
+            <p><strong>MET Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Must be readily accessible</li>
+              <li>Suitable for disconnection for testing</li>
+              <li>Disconnection requires tool</li>
+              <li>Mechanically strong and reliable</li>
+              <li>Label: "Safety Electrical Connection - Do Not Remove"</li>
+            </ul>
+            <p><strong>CPC Sizing - Table 54.7 Method</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>S ≤ 16:</strong> S (same as line) — e.g., 2.5mm² line → 2.5mm² cpc</li>
+              <li><strong>16 &lt; S ≤ 35:</strong> 16 — e.g., 25mm² line → 16mm² cpc</li>
+              <li><strong>S &gt; 35:</strong> S/2 — e.g., 70mm² line → 35mm² cpc</li>
+            </ul>
+            <p><strong>Adiabatic Equation Method</strong></p>
+            <p>S = √(I²t) / k</p>
+            <p>Where:</p>
+            <p>S = minimum cpc cross-sectional area (mm²)</p>
+            <p>I = prospective fault current (A)</p>
+            <p>t = disconnection time (s)</p>
+            <p>k = factor for conductor material and insulation</p>
+            <p>Common k values (thermoplastic insulation):</p>
+            <p>Copper conductor: k = 115</p>
+            <p>Aluminium conductor: k = 76</p>
+            <p><strong>Design tip:</strong> The adiabatic equation often permits smaller cpcs than Table 54.7, reducing cable costs on larger installations. Always verify the result is practical and meets minimum requirements.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Main Equipotential Bonding">
+            <p>Main protective bonding connects extraneous-conductive-parts to the main earthing terminal, creating an equipotential zone where all metalwork is at the same potential. This limits touch voltages during earth faults and provides a path for fault current.</p>
+            <p><strong>Parts Requiring Main Bonding</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Water installation pipes:</strong> Bond at point of entry or as close as practicable</li>
+              <li><strong>Gas installation pipes:</strong> Bond within 600mm of meter outlet on consumer side</li>
+              <li><strong>Other services:</strong> Oil pipes, central heating, air conditioning</li>
+              <li><strong>Structural steel:</strong> Where it forms extraneous-conductive-part</li>
+              <li><strong>Lightning protection:</strong> Earth termination system</li>
+            </ul>
+            <p><strong>Main Bonding Conductor Sizing</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Up to 16:</strong> 10 (min 6mm²) — Small domestic (60A-80A supply)</li>
+              <li><strong>25:</strong> 16 (half of 25 = 12.5, round up) — Larger domestic (100A supply)</li>
+              <li><strong>35:</strong> 16 (half of 35 = 17.5, round down to 16) — Commercial small</li>
+              <li><strong>50 or greater:</strong> 25 (maximum requirement) — Large commercial/industrial</li>
+            </ul>
+            <p><strong>Bonding Connection Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Use appropriate clamps (BS 951)</li>
+              <li>Connect to clean, bare metal</li>
+              <li>Resistance not exceeding 0.05Ω</li>
+              <li>Label: "Safety Electrical Connection - Do Not Remove"</li>
+              <li>Accessible for inspection</li>
+            </ul>
+            <p><strong>Connection Locations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Water: after stopcock, before branch pipes</li>
+              <li>Gas: within 600mm of meter outlet</li>
+              <li>Before insulating sections</li>
+              <li>On hard pipe, not flexible connectors</li>
+              <li>Accessible for testing/maintenance</li>
+            </ul>
+            <p><strong>Important:</strong> With PME supplies, the bonding requirements are critical. Loss of the PEN conductor could result in the neutral rising to a dangerous potential, and bonding ensures all metalwork rises equally, limiting touch voltages.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Supplementary Bonding and Earth Electrode Testing">
+            <p>Supplementary equipotential bonding connects simultaneously accessible exposed-conductive-parts and extraneous-conductive-parts within specific locations to reduce touch voltages. Earth electrode testing verifies that TT installations have adequate earthing for protective device operation.</p>
+            <p><strong>Supplementary Bonding Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Two exposed-conductive-parts:</strong> 2.5mm² Cu — 4mm² Cu</li>
+              <li><strong>Exposed to extraneous:</strong> 2.5mm² Cu — 4mm² Cu</li>
+              <li><strong>Two extraneous-conductive-parts:</strong> 2.5mm² Cu — 4mm² Cu</li>
+            </ul>
+            <p><strong>When Supplementary Bonding May Be Omitted</strong></p>
+            <p>In locations such as bathrooms, supplementary bonding may be omitted where:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>All circuits are protected by 30mA RCD</li>
+              <li>All exposed and extraneous-conductive-parts are connected to main earthing</li>
+              <li>Main protective bonding complies with Regulation 411.3.1.2</li>
+            </ul>
+            <p><strong>Earth Electrode Testing</strong></p>
+            <p><strong>Fall of Potential Method</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1. Disconnect electrode from installation</li>
+              <li>2. Place current spike (C) at least 10× electrode depth away</li>
+              <li>3. Place potential spike (P) at 62% of distance to C</li>
+              <li>4. Measure resistance using dedicated tester</li>
+              <li>5. Move P spike to verify stable reading</li>
+              <li>6. Record and compare with requirements</li>
+            </ul>
+            <p><strong>Maximum Electrode Resistance</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>TT with 30mA RCD: Ra ≤ 1667Ω (50V ÷ 0.03A)</li>
+              <li>Practical target: Ra &lt; 200Ω preferred</li>
+              <li>TT with 100mA RCD: Ra ≤ 500Ω</li>
+              <li>Lower values improve fault clearance reliability</li>
+              <li>Soil conditions affect achievable values</li>
+              <li>Multiple rods may be needed for low values</li>
+            </ul>
+            <p><strong>Earth Electrode Types and Installation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Driven rod (copper-clad steel):</strong> Most common, domestic TT — 1.2m minimum, often 2.4m</li>
+              <li><strong>Earth mat/plate:</strong> Rocky ground, low depth — Varies by soil conditions</li>
+              <li><strong>Foundation electrode:</strong> New builds, commercial — Embedded in concrete</li>
+              <li><strong>Tape/strip buried:</strong> Large sites, ring electrodes — 25mm × 3mm copper tape</li>
+            </ul>
+            <p><strong>Testing note:</strong> Earth electrode resistance varies with soil moisture content. Test during dry conditions for worst-case values. Seasonal variation can be significant - document testing conditions on certificates.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              The earthing system defines how the source (transformer) is earthed and how the
-              exposed-conductive-parts of the installation are connected to earth. The system type
-              affects protective device selection, earth fault loop impedance values, and additional
-              protection requirements.
+              <strong>Example 1: CPC Sizing Using Adiabatic Equation</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">System designation letters:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>First letter (relationship of supply to earth):</strong> T = direct
-                  connection to earth, I = isolated or high impedance connection
-                </li>
-                <li className="pl-1">
-                  <strong>Second letter (installation earthing):</strong> T = direct connection to
-                  earth, N = connection to earthed point of source (neutral)
-                </li>
-                <li className="pl-1">
-                  <strong>Subsequent letters:</strong> S = separate neutral and protective
-                  conductors, C = combined conductor (PEN)
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                UK Earthing Systems Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Means of Earthing
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Ze</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Common Applications
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">TN-S</td>
-                      <td className="border border-white/10 px-3 py-2">Cable sheath/armouring</td>
-                      <td className="border border-white/10 px-3 py-2">≤ 0.35Ω</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Older urban supplies, industrial
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">TN-C-S (PME)</td>
-                      <td className="border border-white/10 px-3 py-2">Supply neutral (PEN)</td>
-                      <td className="border border-white/10 px-3 py-2">≤ 0.35Ω</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Modern domestic/commercial
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">TT</td>
-                      <td className="border border-white/10 px-3 py-2">Earth electrode</td>
-                      <td className="border border-white/10 px-3 py-2">≤ 21Ω (typically)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rural, overhead supplies, outbuildings
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">IT</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Isolated or high impedance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Variable</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Critical systems, hospitals, process plants
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">PME Precautions</p>
-              <p className="text-sm text-white">
-                With TN-C-S (PME) systems, if the PEN conductor becomes open-circuit, all metalwork
-                connected to the PME earth could rise to a dangerous potential. Special precautions
-                apply for:
-              </p>
-              <ul className="text-sm text-white mt-2 space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">Swimming pools and hot tubs - PME earthing not permitted</li>
-                <li className="pl-1">Caravan parks - additional requirements apply</li>
-                <li className="pl-1">Construction sites - restrictions on PME use</li>
-                <li className="pl-1">Outbuildings - TT earthing often required</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Always verify the earthing system type at the origin
-              before designing or testing an installation. The system type determines Zs values,
-              protective device selection, and additional measures required.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Main Earthing Terminal and Protective Conductors */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Main Earthing Terminal and Protective Conductors
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Calculate minimum cpc size for a circuit with Ipf = 2000A, disconnection time = 0.2s, thermoplastic copper (k=115).</p>
+            <p>Given: I = 2000A, t = 0.2s, k = 115</p>
+            <p>S = √(I²t) / k</p>
+            <p>S = √(2000² × 0.2) / 115</p>
+            <p>S = √(4,000,000 × 0.2) / 115</p>
+            <p>S = √800,000 / 115</p>
+            <p>S = 894.4 / 115</p>
+            <p>S = 7.78mm²</p>
+            <p>Select next standard size: 10mm² cpc</p>
+            <p>Note: If line conductor is 4mm², Table 54.7 would require 4mm² cpc</p>
+            <p>Adiabatic calculation may permit reduction if other conditions met</p>
             <p>
-              The main earthing terminal (MET) is the central point of the installation's earthing
-              arrangement, providing a connection between the means of earthing and all protective
-              conductors. Circuit protective conductors (cpcs) provide the fault current path from
-              exposed-conductive-parts back to the source.
+              <strong>Example 2: Main Bonding Conductor Selection</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Main Earthing Terminal Connections
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Earthing conductor to means of earthing</li>
-                  <li className="pl-1">All circuit protective conductors</li>
-                  <li className="pl-1">Main protective bonding conductors</li>
-                  <li className="pl-1">Functional earthing (if required)</li>
-                  <li className="pl-1">Lightning protection (if applicable)</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">MET Requirements</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Must be readily accessible</li>
-                  <li className="pl-1">Suitable for disconnection for testing</li>
-                  <li className="pl-1">Disconnection requires tool</li>
-                  <li className="pl-1">Mechanically strong and reliable</li>
-                  <li className="pl-1">Label: "Safety Electrical Connection - Do Not Remove"</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CPC Sizing - Table 54.7 Method
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Line Conductor (mm²)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Minimum CPC Size (mm²)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">S ≤ 16</td>
-                      <td className="border border-white/10 px-3 py-2">S (same as line)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        e.g., 2.5mm² line → 2.5mm² cpc
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">16 &lt; S ≤ 35</td>
-                      <td className="border border-white/10 px-3 py-2">16</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        e.g., 25mm² line → 16mm² cpc
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">S &gt; 35</td>
-                      <td className="border border-white/10 px-3 py-2">S/2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        e.g., 70mm² line → 35mm² cpc
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Adiabatic Equation Method</p>
-              <div className="font-mono text-sm space-y-2">
-                <p className="text-white">S = √(I²t) / k</p>
-                <p className="text-white">Where:</p>
-                <p className="text-white ml-4">S = minimum cpc cross-sectional area (mm²)</p>
-                <p className="text-white ml-4">I = prospective fault current (A)</p>
-                <p className="text-white ml-4">t = disconnection time (s)</p>
-                <p className="text-white ml-4">
-                  k = factor for conductor material and insulation
-                </p>
-                <p className="text-white mt-2">Common k values (thermoplastic insulation):</p>
-                <p className="text-white ml-4">Copper conductor: k = 115</p>
-                <p className="text-white ml-4">Aluminium conductor: k = 76</p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design tip:</strong> The adiabatic equation often permits smaller cpcs than
-              Table 54.7, reducing cable costs on larger installations. Always verify the result is
-              practical and meets minimum requirements.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Main Equipotential Bonding */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Main Equipotential Bonding
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Determine main bonding conductor size for a commercial installation with 35mm² supply neutral.</p>
+            <p>Supply neutral: 35mm²</p>
+            <p>Main bonding requirement: not less than half neutral csa</p>
+            <p>Calculation:</p>
+            <p>35 ÷ 2 = 17.5mm²</p>
+            <p>Minimum requirement: 6mm² (always applies)</p>
+            <p>Maximum requirement: 25mm² (cap for main bonding)</p>
+            <p>Select: 16mm² main bonding conductor</p>
+            <p>(17.5mm² rounds to 16mm² as nearest standard below,</p>
+            <p>but some specify 25mm² for additional margin)</p>
             <p>
-              Main protective bonding connects extraneous-conductive-parts to the main earthing
-              terminal, creating an equipotential zone where all metalwork is at the same potential.
-              This limits touch voltages during earth faults and provides a path for fault current.
+              <strong>Example 3: TT System Earth Electrode Requirements</strong>
             </p>
+            <p><strong>Scenario:</strong> Determine maximum earth electrode resistance for a TT installation protected by a 30mA RCD.</p>
+            <p>RCD rating: IΔn = 30mA = 0.03A</p>
+            <p>Maximum touch voltage limit: 50V</p>
+            <p>Formula: Ra × IΔn ≤ 50V</p>
+            <p>Ra ≤ 50 / IΔn</p>
+            <p>Ra ≤ 50 / 0.03</p>
+            <p>Ra ≤ 1666.7Ω</p>
+            <p>Maximum theoretical: 1667Ω</p>
+            <p>Practical recommendation: Aim for Ra &lt; 200Ω</p>
+            <p>This provides margin for seasonal variation and reliable RCD operation</p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Parts Requiring Main Bonding
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Water installation pipes:</strong> Bond at point of entry or as close as
-                  practicable
-                </li>
-                <li className="pl-1">
-                  <strong>Gas installation pipes:</strong> Bond within 600mm of meter outlet on
-                  consumer side
-                </li>
-                <li className="pl-1">
-                  <strong>Other services:</strong> Oil pipes, central heating, air conditioning
-                </li>
-                <li className="pl-1">
-                  <strong>Structural steel:</strong> Where it forms extraneous-conductive-part
-                </li>
-                <li className="pl-1">
-                  <strong>Lightning protection:</strong> Earth termination system
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Main Bonding Conductor Sizing
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Supply Neutral (mm²)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Min Main Bonding (mm²)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Up to 16</td>
-                      <td className="border border-white/10 px-3 py-2">10 (min 6mm²)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Small domestic (60A-80A supply)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">25</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        16 (half of 25 = 12.5, round up)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Larger domestic (100A supply)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">35</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        16 (half of 35 = 17.5, round down to 16)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Commercial small</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">50 or greater</td>
-                      <td className="border border-white/10 px-3 py-2">25 (maximum requirement)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large commercial/industrial
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Bonding Connection Requirements
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Use appropriate clamps (BS 951)</li>
-                  <li className="pl-1">Connect to clean, bare metal</li>
-                  <li className="pl-1">Resistance not exceeding 0.05Ω</li>
-                  <li className="pl-1">Label: "Safety Electrical Connection - Do Not Remove"</li>
-                  <li className="pl-1">Accessible for inspection</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Connection Locations</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Water: after stopcock, before branch pipes</li>
-                  <li className="pl-1">Gas: within 600mm of meter outlet</li>
-                  <li className="pl-1">Before insulating sections</li>
-                  <li className="pl-1">On hard pipe, not flexible connectors</li>
-                  <li className="pl-1">Accessible for testing/maintenance</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Important:</strong> With PME supplies, the bonding requirements are critical.
-              Loss of the PEN conductor could result in the neutral rising to a dangerous potential,
-              and bonding ensures all metalwork rises equally, limiting touch voltages.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Supplementary Bonding and Earth Electrode Testing */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Supplementary Bonding and Earth Electrode Testing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Supplementary equipotential bonding connects simultaneously accessible
-              exposed-conductive-parts and extraneous-conductive-parts within specific locations to
-              reduce touch voltages. Earth electrode testing verifies that TT installations have
-              adequate earthing for protective device operation.
+              <strong>Site Assessment Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Supplementary Bonding Requirements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Connection Type
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Min Size (Protected)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Min Size (Unprotected)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Two exposed-conductive-parts
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">2.5mm² Cu</td>
-                      <td className="border border-white/10 px-3 py-2">4mm² Cu</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Exposed to extraneous</td>
-                      <td className="border border-white/10 px-3 py-2">2.5mm² Cu</td>
-                      <td className="border border-white/10 px-3 py-2">4mm² Cu</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Two extraneous-conductive-parts
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">2.5mm² Cu</td>
-                      <td className="border border-white/10 px-3 py-2">4mm² Cu</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-2">
-                When Supplementary Bonding May Be Omitted
-              </p>
-              <p className="text-sm text-white mb-2">
-                In locations such as bathrooms, supplementary bonding may be omitted where:
-              </p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">All circuits are protected by 30mA RCD</li>
-                <li className="pl-1">
-                  All exposed and extraneous-conductive-parts are connected to main earthing
-                </li>
-                <li className="pl-1">Main protective bonding complies with Regulation 411.3.1.2</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Earth Electrode Testing
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Fall of Potential Method</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>1. Disconnect electrode from installation</li>
-                    <li>2. Place current spike (C) at least 10× electrode depth away</li>
-                    <li>3. Place potential spike (P) at 62% of distance to C</li>
-                    <li>4. Measure resistance using dedicated tester</li>
-                    <li>5. Move P spike to verify stable reading</li>
-                    <li>6. Record and compare with requirements</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Maximum Electrode Resistance</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>TT with 30mA RCD: Ra ≤ 1667Ω (50V ÷ 0.03A)</li>
-                    <li>Practical target: Ra &lt; 200Ω preferred</li>
-                    <li>TT with 100mA RCD: Ra ≤ 500Ω</li>
-                    <li>Lower values improve fault clearance reliability</li>
-                    <li>Soil conditions affect achievable values</li>
-                    <li>Multiple rods may be needed for low values</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Earth Electrode Types and Installation
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Electrode Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Minimum Size</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Driven rod (copper-clad steel)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Most common, domestic TT</td>
-                      <td className="border border-white/10 px-3 py-2">1.2m minimum, often 2.4m</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Earth mat/plate</td>
-                      <td className="border border-white/10 px-3 py-2">Rocky ground, low depth</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Varies by soil conditions
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Foundation electrode</td>
-                      <td className="border border-white/10 px-3 py-2">New builds, commercial</td>
-                      <td className="border border-white/10 px-3 py-2">Embedded in concrete</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Tape/strip buried</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large sites, ring electrodes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">25mm × 3mm copper tape</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Testing note:</strong> Earth electrode resistance varies with soil moisture
-              content. Test during dry conditions for worst-case values. Seasonal variation can be
-              significant - document testing conditions on certificates.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Identify earthing system type from DNO documentation or visual inspection</li>
+              <li>Measure Ze at origin to confirm system type and values</li>
+              <li>Identify all extraneous-conductive-parts requiring main bonding</li>
+              <li>Verify supply neutral size for bonding conductor sizing</li>
+              <li>Check for PME restrictions in the installation location</li>
+              <li>Document earthing arrangement on installation certificate</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>TN-S typical Ze: <strong>0.35Ω maximum</strong></li>
+              <li>TN-C-S typical Ze: <strong>0.35Ω maximum</strong></li>
+              <li>Main bonding minimum: <strong>6mm² copper</strong></li>
+              <li>Main bonding maximum: <strong>25mm² copper</strong></li>
+              <li>Bonding connection resistance: <strong>≤ 0.05Ω</strong></li>
+              <li>Gas bonding: <strong>Within 600mm of meter</strong></li>
+              <li>Thermoplastic copper k value: <strong>115</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: CPC Sizing Using Adiabatic Equation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate minimum cpc size for a circuit with Ipf =
-                2000A, disconnection time = 0.2s, thermoplastic copper (k=115).
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Given: I = 2000A, t = 0.2s, k = 115</p>
-                <p className="mt-2">S = √(I²t) / k</p>
-                <p>S = √(2000² × 0.2) / 115</p>
-                <p>S = √(4,000,000 × 0.2) / 115</p>
-                <p>S = √800,000 / 115</p>
-                <p>S = 894.4 / 115</p>
-                <p>S = 7.78mm²</p>
-                <p className="mt-2 text-green-400">Select next standard size: 10mm² cpc</p>
-                <p className="text-white">
-                  Note: If line conductor is 4mm², Table 54.7 would require 4mm² cpc
-                </p>
-                <p className="text-white">
-                  Adiabatic calculation may permit reduction if other conditions met
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Main Bonding Conductor Selection
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Determine main bonding conductor size for a commercial
-                installation with 35mm² supply neutral.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Supply neutral: 35mm²</p>
-                <p>Main bonding requirement: not less than half neutral csa</p>
-                <p className="mt-2">Calculation:</p>
-                <p>35 ÷ 2 = 17.5mm²</p>
-                <p className="mt-2">Minimum requirement: 6mm² (always applies)</p>
-                <p>Maximum requirement: 25mm² (cap for main bonding)</p>
-                <p className="mt-2 text-green-400">Select: 16mm² main bonding conductor</p>
-                <p className="text-white">(17.5mm² rounds to 16mm² as nearest standard below,</p>
-                <p className="text-white">but some specify 25mm² for additional margin)</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: TT System Earth Electrode Requirements
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Determine maximum earth electrode resistance for a TT
-                installation protected by a 30mA RCD.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>RCD rating: IΔn = 30mA = 0.03A</p>
-                <p>Maximum touch voltage limit: 50V</p>
-                <p className="mt-2">Formula: Ra × IΔn ≤ 50V</p>
-                <p>Ra ≤ 50 / IΔn</p>
-                <p>Ra ≤ 50 / 0.03</p>
-                <p>Ra ≤ 1666.7Ω</p>
-                <p className="mt-2 text-green-400">Maximum theoretical: 1667Ω</p>
-                <p className="text-white">Practical recommendation: Aim for Ra &lt; 200Ω</p>
-                <p className="text-white">
-                  This provides margin for seasonal variation and reliable RCD operation
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Site Assessment Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Identify earthing system type from DNO documentation or visual inspection
-                </li>
-                <li className="pl-1">Measure Ze at origin to confirm system type and values</li>
-                <li className="pl-1">
-                  Identify all extraneous-conductive-parts requiring main bonding
-                </li>
-                <li className="pl-1">Verify supply neutral size for bonding conductor sizing</li>
-                <li className="pl-1">Check for PME restrictions in the installation location</li>
-                <li className="pl-1">Document earthing arrangement on installation certificate</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Assuming earthing type:</strong> Always verify with measurement and documentation</li>
+                <li><strong>Undersized bonding:</strong> Calculate from supply neutral, not guesswork</li>
+                <li><strong>Gas bonding position:</strong> Must be within 600mm of meter, on hard pipe</li>
+                <li><strong>PME to outbuildings:</strong> Consider TT earthing for separate structures</li>
+                <li><strong>Missing labels:</strong> All bonding connections require safety labels</li>
+                <li><strong>Electrode testing:</strong> Test in dry conditions for reliable values</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  TN-S typical Ze: <strong>0.35Ω maximum</strong>
-                </li>
-                <li className="pl-1">
-                  TN-C-S typical Ze: <strong>0.35Ω maximum</strong>
-                </li>
-                <li className="pl-1">
-                  Main bonding minimum: <strong>6mm² copper</strong>
-                </li>
-                <li className="pl-1">
-                  Main bonding maximum: <strong>25mm² copper</strong>
-                </li>
-                <li className="pl-1">
-                  Bonding connection resistance: <strong>≤ 0.05Ω</strong>
-                </li>
-                <li className="pl-1">
-                  Gas bonding: <strong>Within 600mm of meter</strong>
-                </li>
-                <li className="pl-1">
-                  Thermoplastic copper k value: <strong>115</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Assuming earthing type:</strong> Always verify with measurement and
-                  documentation
-                </li>
-                <li className="pl-1">
-                  <strong>Undersized bonding:</strong> Calculate from supply neutral, not guesswork
-                </li>
-                <li className="pl-1">
-                  <strong>Gas bonding position:</strong> Must be within 600mm of meter, on hard pipe
-                </li>
-                <li className="pl-1">
-                  <strong>PME to outbuildings:</strong> Consider TT earthing for separate structures
-                </li>
-                <li className="pl-1">
-                  <strong>Missing labels:</strong> All bonding connections require safety labels
-                </li>
-                <li className="pl-1">
-                  <strong>Electrode testing:</strong> Test in dry conditions for reliable values
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Earthing System Types</p>
-                <ul className="space-y-0.5">
-                  <li>TN-S: Separate earth (cable sheath)</li>
-                  <li>TN-C-S: PME (PEN conductor)</li>
-                  <li>TT: Earth electrode required</li>
-                  <li>IT: Isolated source (special applications)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Conductor Sizing Summary</p>
-                <ul className="space-y-0.5">
-                  <li>CPC: Table 54.7 or S = √(I²t)/k</li>
-                  <li>Main bonding: ≥ half neutral, min 6mm²</li>
-                  <li>Supplementary: min 2.5mm² (protected)</li>
-                  <li>Earth electrode conductor: min 16mm² Cu</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section6-4">
-              Next: Protection Against Electric Shock
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section6-2")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Circuit protection
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section6-4")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Coordination studies
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

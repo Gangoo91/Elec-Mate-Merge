@@ -876,11 +876,47 @@ serve(async (req) => {
         updateData.onboarding_completed = true;
       }
 
-      // Set business_ai_enabled based on tier (triggers agent provisioning/deprovisioning)
-      if (tier && subscribed) {
-        updateData.business_ai_enabled = BUSINESS_AI_TIERS.has(tier);
-      } else if (!subscribed) {
-        updateData.business_ai_enabled = false;
+      // Set business_ai_enabled by querying Stripe for ALL of the customer's
+      // active subs — NOT based on the single event firing. This is critical
+      // because users often have multiple subs (e.g. Founder £3.99 + Mate £29.99),
+      // and a renewal/update event for the non-Mate sub used to overwrite the
+      // flag to false even though they still had an active Mate sub. Same fix
+      // covers the cancel-and-rejoin path: when their old Mate sub gets a
+      // cancellation event, we re-check what's still active before deciding.
+      try {
+        const allSubs = await stripe.subscriptions.list({
+          customer: customerId,
+          status: 'all',
+          limit: 50,
+        });
+        const activeOrTrialing = allSubs.data.filter(
+          (s) => s.status === 'active' || s.status === 'trialing'
+        );
+        const hasActiveMateSub = activeOrTrialing.some((s) => {
+          const priceId = s.items.data[0]?.price?.id;
+          if (!priceId) return false;
+          const subTier = PRICE_TO_TIER[priceId];
+          return subTier ? BUSINESS_AI_TIERS.has(subTier) : false;
+        });
+        updateData.business_ai_enabled = hasActiveMateSub;
+        logger.info('Mate access decision (from full sub list)', {
+          userId,
+          customerId,
+          activeOrTrialingCount: activeOrTrialing.length,
+          hasActiveMateSub,
+        });
+      } catch (stripeErr) {
+        // Fall back to event-based logic if the Stripe API call fails — same
+        // as the old behaviour, just isolated to the failure case.
+        logger.warn('Failed to list customer subs — falling back to event tier', {
+          userId,
+          error: (stripeErr as Error).message,
+        });
+        if (tier && subscribed) {
+          updateData.business_ai_enabled = BUSINESS_AI_TIERS.has(tier);
+        } else if (!subscribed) {
+          updateData.business_ai_enabled = false;
+        }
       }
 
       const { error } = await supabase.from('profiles').update(updateData).eq('id', userId);

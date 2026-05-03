@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 7 · Section 5 · Subsection 1 — LED Technology
+ * HNC Electrical Engineering for Building Services (Power and Lighting Systems)
+ *   LED fundamentals, driver types, thermal management, lifetime prediction, and specification considerations
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'LED Technology - HNC Module 7 Section 5.1';
@@ -236,965 +249,350 @@ const faqs = [
 ];
 
 const HNCModule7Section5_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section5")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module7-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.5.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            LED Technology
-          </h1>
-          <p className="text-white">
-            LED fundamentals, driver types, thermal management, lifetime prediction, and
-            specification considerations
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 7 · Section 5 · Subsection 1"
+            title="LED Technology"
+            description="LED fundamentals, driver types, thermal management, lifetime prediction, and specification considerations"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>LED:</strong> Semiconductor emitting light via electroluminescence
-              </li>
-              <li className="pl-1">
-                <strong>Drivers:</strong> Constant current (most luminaires) or constant voltage
-                (tape)
-              </li>
-              <li className="pl-1">
-                <strong>Lifetime:</strong> L70 = 70% lumen maintenance, typically 50,000+ hours
-              </li>
-              <li className="pl-1">
-                <strong>Efficacy:</strong> Modern LEDs achieve 130-200 lm/W
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Explain LED operating principles and light generation",
+              "Compare constant current and constant voltage driver types",
+              "Analyse thermal management requirements for LED systems",
+              "Interpret L70/L80/L90 lifetime ratings and B-values",
+              "Calculate luminous efficacy and energy performance",
+              "Specify LED luminaires considering all relevant parameters",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="LED Fundamentals">
+            <p>Light Emitting Diodes (LEDs) are semiconductor devices that produce light through electroluminescence. When forward-biased, electrons cross the p-n junction and recombine with holes, releasing energy as photons. The wavelength (colour) depends on the semiconductor bandgap energy.</p>
+            <p><strong>LED chip technologies:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Blue LED + phosphor:</strong> Most common white LED technology - blue chip with yellow phosphor coating</li>
+              <li><strong>RGB mixing:</strong> Separate red, green, blue chips - tuneable colour but complex control</li>
+              <li><strong>Phosphor-converted:</strong> Various phosphor blends for warm white, high CRI applications</li>
+              <li><strong>Violet pump:</strong> Uses violet/UV LED with RGB phosphors - emerging high-CRI technology</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Energy:</strong> 80%+ reduction vs incandescent
-              </li>
-              <li className="pl-1">
-                <strong>Thermal:</strong> Critical for performance and longevity
-              </li>
-              <li className="pl-1">
-                <strong>Controls:</strong> DALI, 1-10V, phase dimming, Bluetooth
-              </li>
-              <li className="pl-1">
-                <strong>Standards:</strong> BS EN 62031, IEC 62384, TM-30-18
-              </li>
+            <p><strong>LED Package Types</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>SMD (Surface Mount):</strong> Individual LEDs in small packages (e.g., 2835, 5050) — LED tape, panels, linear luminaires</li>
+              <li><strong>COB (Chip on Board):</strong> Multiple dies on single substrate under one phosphor — Downlights, spotlights, high-bay</li>
+              <li><strong>CSP (Chip Scale Package):</strong> Minimal packaging - die is the package — Compact high-density arrays</li>
+              <li><strong>Mid-power:</strong> 0.2-0.5W per LED, good efficacy — Troffers, general area lighting</li>
+              <li><strong>High-power:</strong> 1-5W+ per LED, requires heat management — Outdoor, industrial, spotlights</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>LED Electrical Characteristics</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Forward voltage (Vf):</strong> 2.8V - 3.5V typical for white LED</li>
+              <li><strong>Drive current:</strong> 350mA (1W), 700mA (3W), 1050mA (5W) typical</li>
+              <li><strong>Vf temperature coefficient:</strong> -2mV/°C (decreases with temperature)</li>
+              <li><strong>Junction temperature max:</strong> 125°C typical, optimal &lt;85°C</li>
+            </ul>
+            <p><strong>Key principle:</strong> LED light output is proportional to current, but forward voltage changes with temperature - this is why current control is essential.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Explain LED operating principles and light generation',
-              'Compare constant current and constant voltage driver types',
-              'Analyse thermal management requirements for LED systems',
-              'Interpret L70/L80/L90 lifetime ratings and B-values',
-              'Calculate luminous efficacy and energy performance',
-              'Specify LED luminaires considering all relevant parameters',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: LED Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            LED Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="LED Driver Types">
+            <p>LED drivers convert mains AC to the DC required by LEDs. The driver type significantly affects performance, efficiency, dimming capability, and compatibility with control systems. Correct driver selection is critical for reliable LED installations.</p>
+            <p><strong>Constant Current (CC) Drivers</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Output: Fixed mA (e.g., 350mA, 700mA)</li>
+              <li>Voltage adjusts to LED string length</li>
+              <li>Prevents thermal runaway</li>
+              <li>Used for: Most luminaires, downlights</li>
+              <li>Typical spec: 350mA, 20-42V output range</li>
+            </ul>
+            <p><strong>Constant Voltage (CV) Drivers</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Output: Fixed V (e.g., 12V, 24V, 48V DC)</li>
+              <li>Current depends on connected load</li>
+              <li>LEDs need integral current limiting</li>
+              <li>Used for: LED tape, signage, flexible strips</li>
+              <li>Typical spec: 24V DC, 100W max load</li>
+            </ul>
+            <p><strong>Driver Dimming Types</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>DALI / DALI-2:</strong> Digital signal on dedicated pair, addressable — Commercial buildings, scene control, monitoring</li>
+              <li><strong>1-10V:</strong> Analogue DC voltage controls output level — Warehouse, industrial, simple zone dimming</li>
+              <li><strong>Phase-cut (leading edge):</strong> Triac chops AC waveform - traditional dimmer — Domestic retrofit where existing dimmers</li>
+              <li><strong>Phase-cut (trailing edge):</strong> MOSFET dims from end of cycle - smoother — Better LED compatibility, less flicker</li>
+              <li><strong>PWM (Pulse Width):</strong> High-frequency on/off switching — RGB control, theatrical, architectural</li>
+              <li><strong>Wireless (Bluetooth/Zigbee):</strong> Smart protocol in driver, no control wiring — Retrofit, smart buildings, IoT integration</li>
+            </ul>
+            <p><strong>In-Rush Current Considerations</strong></p>
+            <p>LED drivers contain capacitors that cause high in-rush current at switch-on:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>In-rush can be 20-100× steady-state current for &lt;1ms</li>
+              <li>Multiple drivers on one circuit = cumulative in-rush</li>
+              <li>Use Type C MCBs (5-10× trip) or Type D (10-20×) for LED circuits</li>
+              <li>Check manufacturer's data: in-rush current and duration (I²t)</li>
+              <li>Consider in-rush limiting devices for large LED installations</li>
+            </ul>
+            <p><strong>Specification tip:</strong> Always verify driver-luminaire compatibility, especially for dimming. A driver rated for DALI may not perform well with phase-cut dimmers, and vice versa.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Thermal Management">
+            <p>Unlike incandescent lamps that radiate heat forward with light, LEDs generate heat at the junction which must be conducted away through the rear. Proper thermal design is essential - excessive junction temperature reduces output, shifts colour, accelerates degradation, and can cause catastrophic failure.</p>
+            <p><strong>Thermal pathway components:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Junction (Tj):</strong> Where heat is generated - target &lt;85°C for long life</li>
+              <li><strong>Solder point (Tsp):</strong> Where LED attaches to PCB/substrate</li>
+              <li><strong>PCB/MCPCB:</strong> Metal-core PCB spreads heat laterally</li>
+              <li><strong>Thermal interface:</strong> TIM (paste/pad) between PCB and heatsink</li>
+              <li><strong>Heatsink:</strong> Dissipates heat to ambient via convection/radiation</li>
+            </ul>
+            <p><strong>Temperature Effects on LED Performance</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Light output:</strong> Decreases (reversible if within limits) — -0.3% to -0.5% per °C rise</li>
+              <li><strong>Forward voltage:</strong> Decreases — -2mV per °C rise</li>
+              <li><strong>Colour temperature:</strong> Shifts warmer (lower CCT) — -2K to -5K per °C rise</li>
+              <li><strong>Lifetime:</strong> Exponentially reduces — Halves for every 10°C above optimal</li>
+              <li><strong>Phosphor efficiency:</strong> Decreases, colour shifts — Accelerated degradation above 100°C</li>
+            </ul>
+            <p><strong>Thermal Calculation Example</strong></p>
+            <p><span>Given:</span></p>
+            <p>LED power: 10W (30% converted to light, 70% = 7W heat)</p>
+            <p>Thermal resistance junction-to-case (Rjc): 2°C/W</p>
+            <p>Thermal resistance case-to-heatsink: 0.5°C/W</p>
+            <p>Thermal resistance heatsink-to-ambient: 5°C/W</p>
+            <p>Ambient temperature: 25°C</p>
+            <p><span>Junction temperature calculation:</span></p>
+            <p>Total Rth = 2 + 0.5 + 5 = 7.5°C/W</p>
+            <p>Temperature rise = 7W × 7.5°C/W = 52.5°C</p>
+            <p>Tj = 25°C + 52.5°C = 77.5°C (acceptable)</p>
+            <p><strong>Installation Derating Factors</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Recessed mounting:</strong> Reduced airflow - verify IC (Insulation Contact) rating and Ta rating</li>
+              <li><strong>Insulated ceilings:</strong> Additional derating may be needed if insulation contacts luminaire</li>
+              <li><strong>High ambient:</strong> Derate or specify higher Ta-rated luminaires for plant rooms, atriums</li>
+              <li><strong>Ganged mounting:</strong> Multiple luminaires in proximity reduce cooling effectiveness</li>
+            </ul>
+            <p><strong>Specification note:</strong> Always check the luminaire's rated ambient temperature (Ta). A luminaire rated at Ta 25°C will have reduced life in a ceiling void at 35°C.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Lifetime and Specification Considerations">
+            <p>LED lifetime is characterised by gradual lumen depreciation rather than sudden failure. Understanding the metrics - Lx, By, and Cy values - is essential for specifying luminaires that will meet maintained illuminance requirements throughout their service life.</p>
+            <p><strong>LED Lifetime Metrics Explained</strong></p>
+            <p><strong>Lx (Lumen Maintenance):</strong> Percentage of initial lumens remaining</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>L70 = 70% of initial lumens (30% depreciation)</li>
+              <li>L80 = 80% of initial lumens (20% depreciation)</li>
+              <li>L90 = 90% of initial lumens (10% depreciation)</li>
+            </ul>
+            <p><strong>By (Failure Rate):</strong> Percentage of complete failures by stated hours</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>B10 = 10% of sample failed</li>
+              <li>B50 = 50% of sample failed (median life)</li>
+            </ul>
+            <p><strong>Cy (Catastrophic + Gradual):</strong> Combined failure metric</p>
+            <p>Example: L70B10 at 60,000 hours means after 60,000 hours, the surviving luminaires (90%) will still produce at least 70% of initial lumens.</p>
+            <p><strong>Key Specification Parameters</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Luminous flux:</strong> Total light output in lumens — Varies - state initial lumens</li>
+              <li><strong>Luminous efficacy:</strong> Light output per watt (lm/W) — 100-200 lm/W (higher = better)</li>
+              <li><strong>CCT (Colour temp):</strong> Warmth/coolness in Kelvin — 2700K warm to 6500K daylight</li>
+              <li><strong>CRI / Ra:</strong> Colour Rendering Index (0-100) — &gt;80 general, &gt;90 retail/healthcare</li>
+              <li><strong>TM-30 Rf:</strong> Fidelity Index (0-100) — &gt;85 good, &gt;90 excellent</li>
+              <li><strong>UGR:</strong> Unified Glare Rating — &lt;19 office, &lt;22 industrial</li>
+              <li><strong>MacAdam ellipse:</strong> Colour consistency (SDCM) — ≤3 step (imperceptible variation)</li>
+              <li><strong>Flicker / SVM:</strong> Temporal light artefacts — &lt;3% flicker, SVM &lt;0.4</li>
+            </ul>
+            <p><strong>Maintenance Factor Calculation</strong></p>
+            <p>MF = LLMF × LSF × LMF × RMF</p>
+            <p>Where:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>LLMF: Lamp lumen maintenance (from L-value)</li>
+              <li>LSF: Lamp survival factor (from B-value)</li>
+              <li>LMF: Luminaire maintenance factor</li>
+              <li>RMF: Room surface maintenance factor</li>
+            </ul>
+            <p><strong>Typical Efficacy Ranges (2024)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Linear LED (troffers): 130-160 lm/W</li>
+              <li>Downlights: 100-140 lm/W</li>
+              <li>High-bay: 140-180 lm/W</li>
+              <li>Streetlighting: 150-200 lm/W</li>
+              <li>LED tape: 80-120 lm/W</li>
+            </ul>
+            <p><strong>Common Specification Pitfalls</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Comparing luminaires at different test conditions (Ta 25°C vs Ta 35°C)</li>
+              <li>Using initial lumens without applying maintenance factor</li>
+              <li>Ignoring dimmer compatibility - test before full procurement</li>
+              <li>Specifying CRI alone - TM-30 Rf and Rg give fuller picture</li>
+              <li>Not verifying in-rush current against circuit protection</li>
+            </ul>
+            <p><strong>Industry guidance:</strong> SLL LG14 (Control of Electric Lighting) and CIBSE LG7 (Offices) provide detailed guidance on LED specification for UK building services applications.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Light Emitting Diodes (LEDs) are semiconductor devices that produce light through
-              electroluminescence. When forward-biased, electrons cross the p-n junction and
-              recombine with holes, releasing energy as photons. The wavelength (colour) depends on
-              the semiconductor bandgap energy.
+              <strong>Example 1: Driver Selection for LED Panel</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">LED chip technologies:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Blue LED + phosphor:</strong> Most common white LED technology - blue chip
-                  with yellow phosphor coating
-                </li>
-                <li className="pl-1">
-                  <strong>RGB mixing:</strong> Separate red, green, blue chips - tuneable colour but
-                  complex control
-                </li>
-                <li className="pl-1">
-                  <strong>Phosphor-converted:</strong> Various phosphor blends for warm white, high
-                  CRI applications
-                </li>
-                <li className="pl-1">
-                  <strong>Violet pump:</strong> Uses violet/UV LED with RGB phosphors - emerging
-                  high-CRI technology
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">LED Package Types</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">SMD (Surface Mount)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Individual LEDs in small packages (e.g., 2835, 5050)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        LED tape, panels, linear luminaires
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">COB (Chip on Board)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multiple dies on single substrate under one phosphor
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Downlights, spotlights, high-bay
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CSP (Chip Scale Package)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Minimal packaging - die is the package
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Compact high-density arrays
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mid-power</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        0.2-0.5W per LED, good efficacy
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Troffers, general area lighting
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">High-power</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        1-5W+ per LED, requires heat management
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Outdoor, industrial, spotlights
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                LED Electrical Characteristics
-              </p>
-              <div className="text-sm space-y-1">
-                <p>
-                  <span className="text-white">Forward voltage (Vf):</span>{' '}
-                  <span className="text-white">2.8V - 3.5V typical for white LED</span>
-                </p>
-                <p>
-                  <span className="text-white">Drive current:</span>{' '}
-                  <span className="text-white">350mA (1W), 700mA (3W), 1050mA (5W) typical</span>
-                </p>
-                <p>
-                  <span className="text-white">Vf temperature coefficient:</span>{' '}
-                  <span className="text-white">-2mV/°C (decreases with temperature)</span>
-                </p>
-                <p>
-                  <span className="text-white">Junction temperature max:</span>{' '}
-                  <span className="text-white">125°C typical, optimal &lt;85°C</span>
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key principle:</strong> LED light output is proportional to current, but
-              forward voltage changes with temperature - this is why current control is essential.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Driver Types */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            LED Driver Types
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Specify driver for a 36W LED panel requiring DALI dimming in an office.</p>
+            <p>Requirements:</p>
+            <p>Panel power: 36W</p>
+            <p>LED string: 60V nominal, 600mA</p>
+            <p>Control: DALI-2 addressable</p>
+            <p>Dimming range: 1-100%</p>
+            <p>Driver specification:</p>
+            <p>Output: Constant current 600mA</p>
+            <p>Output voltage range: 45-75V DC</p>
+            <p>Input: 220-240V AC 50Hz</p>
+            <p>DALI-2 certified, Part 209 (energy reporting)</p>
+            <p>Efficiency: &gt;90%</p>
+            <p>Flicker: &lt;3% at all dim levels</p>
+            <p>Driver power = 36W ÷ 0.90 = 40VA (for circuit sizing)</p>
             <p>
-              LED drivers convert mains AC to the DC required by LEDs. The driver type significantly
-              affects performance, efficiency, dimming capability, and compatibility with control
-              systems. Correct driver selection is critical for reliable LED installations.
+              <strong>Example 2: Circuit Design for LED Lighting</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Constant Current (CC) Drivers
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Output: Fixed mA (e.g., 350mA, 700mA)</li>
-                  <li className="pl-1">Voltage adjusts to LED string length</li>
-                  <li className="pl-1">Prevents thermal runaway</li>
-                  <li className="pl-1">Used for: Most luminaires, downlights</li>
-                  <li className="pl-1">Typical spec: 350mA, 20-42V output range</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Constant Voltage (CV) Drivers
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Output: Fixed V (e.g., 12V, 24V, 48V DC)</li>
-                  <li className="pl-1">Current depends on connected load</li>
-                  <li className="pl-1">LEDs need integral current limiting</li>
-                  <li className="pl-1">Used for: LED tape, signage, flexible strips</li>
-                  <li className="pl-1">Typical spec: 24V DC, 100W max load</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Driver Dimming Types</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Dimming Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">How It Works</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Best For</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DALI / DALI-2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Digital signal on dedicated pair, addressable
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Commercial buildings, scene control, monitoring
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1-10V</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Analogue DC voltage controls output level
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Warehouse, industrial, simple zone dimming
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Phase-cut (leading edge)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Triac chops AC waveform - traditional dimmer
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Domestic retrofit where existing dimmers
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Phase-cut (trailing edge)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        MOSFET dims from end of cycle - smoother
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Better LED compatibility, less flicker
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PWM (Pulse Width)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High-frequency on/off switching
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        RGB control, theatrical, architectural
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Wireless (Bluetooth/Zigbee)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Smart protocol in driver, no control wiring
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Retrofit, smart buildings, IoT integration
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                In-Rush Current Considerations
-              </p>
-              <div className="text-sm text-white space-y-1">
-                <p>LED drivers contain capacitors that cause high in-rush current at switch-on:</p>
-                <ul className="list-disc list-outside ml-5 mt-2 space-y-1">
-                  <li className="pl-1">In-rush can be 20-100× steady-state current for &lt;1ms</li>
-                  <li className="pl-1">Multiple drivers on one circuit = cumulative in-rush</li>
-                  <li className="pl-1">
-                    Use Type C MCBs (5-10× trip) or Type D (10-20×) for LED circuits
-                  </li>
-                  <li className="pl-1">
-                    Check manufacturer's data: in-rush current and duration (I²t)
-                  </li>
-                  <li className="pl-1">
-                    Consider in-rush limiting devices for large LED installations
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Specification tip:</strong> Always verify driver-luminaire compatibility,
-              especially for dimming. A driver rated for DALI may not perform well with phase-cut
-              dimmers, and vice versa.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Thermal Management */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Thermal Management
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Calculate MCB rating for a circuit supplying 20 LED downlights.</p>
+            <p>Given data:</p>
+            <p>Each downlight: 12W, PF 0.9</p>
+            <p>Driver in-rush: 25A for 0.5ms, I²t = 0.3A²s</p>
+            <p>Supply: 230V single phase</p>
+            <p>Running current calculation:</p>
+            <p>Per luminaire: 12W ÷ (230V × 0.9) = 0.058A</p>
+            <p>Total running: 20 × 0.058A = 1.16A</p>
+            <p>In-rush consideration:</p>
+            <p>Total I²t = 20 × 0.3 = 6A²s</p>
+            <p>Peak in-rush ≈ 20 × 25A × (diversity factor 0.8) = 400A</p>
+            <p>MCB selection:</p>
+            <p>Running current: 1.16A → 6A MCB would suffice</p>
+            <p>But in-rush: 400A ÷ 6A = 67× rating</p>
+            <p>Type B (3-5×) would trip - unsuitable</p>
+            <p>Type C (5-10×) would trip - unsuitable</p>
+            <p>Type C 16A: 400A ÷ 16A = 25× → marginal</p>
+            <p>Type D 10A: 400A ÷ 10A = 40× → Type D trips at 10-20×</p>
+            <p>Specify: 16A Type C or 10A Type D MCB</p>
             <p>
-              Unlike incandescent lamps that radiate heat forward with light, LEDs generate heat at
-              the junction which must be conducted away through the rear. Proper thermal design is
-              essential - excessive junction temperature reduces output, shifts colour, accelerates
-              degradation, and can cause catastrophic failure.
+              <strong>Example 3: Maintenance Factor Calculation</strong>
             </p>
+            <p><strong>Scenario:</strong> Calculate maintenance factor for LED luminaires in an office with 3-year cleaning cycle.</p>
+            <p>Given data:</p>
+            <p>Luminaire: L80B10 at 50,000 hours</p>
+            <p>Operating hours: 2,500 hrs/year × 3 years = 7,500 hours</p>
+            <p>Room: Clean office environment</p>
+            <p>Factor calculations:</p>
+            <p>LLMF: At 7,500hrs, interpolate from L80 curve</p>
+            <p>At L80 (50,000 hrs), depreciation is 20%</p>
+            <p>At 7,500 hrs ≈ 15% of rated life → LLMF ≈ 0.97</p>
+            <p>LSF (survival): B10 at end life, at 15% life → 0.99</p>
+            <p>LMF (luminaire): Recessed, sealed optic → 0.95</p>
+            <p>RMF (room): Clean office, 3-year cycle → 0.95</p>
+            <p>Overall maintenance factor:</p>
+            <p>MF = 0.97 × 0.99 × 0.95 × 0.95 = 0.87</p>
+            <p>Design illuminance = Maintained lux ÷ MF</p>
+            <p>For 500 lux maintained: 500 ÷ 0.87 = 575 lux initial</p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Thermal pathway components:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Junction (Tj):</strong> Where heat is generated - target &lt;85°C for long
-                  life
-                </li>
-                <li className="pl-1">
-                  <strong>Solder point (Tsp):</strong> Where LED attaches to PCB/substrate
-                </li>
-                <li className="pl-1">
-                  <strong>PCB/MCPCB:</strong> Metal-core PCB spreads heat laterally
-                </li>
-                <li className="pl-1">
-                  <strong>Thermal interface:</strong> TIM (paste/pad) between PCB and heatsink
-                </li>
-                <li className="pl-1">
-                  <strong>Heatsink:</strong> Dissipates heat to ambient via convection/radiation
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Temperature Effects on LED Performance
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Parameter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Effect of Increased Temperature
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Impact</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Light output</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Decreases (reversible if within limits)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        -0.3% to -0.5% per °C rise
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Forward voltage</td>
-                      <td className="border border-white/10 px-3 py-2">Decreases</td>
-                      <td className="border border-white/10 px-3 py-2">-2mV per °C rise</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Colour temperature</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Shifts warmer (lower CCT)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">-2K to -5K per °C rise</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lifetime</td>
-                      <td className="border border-white/10 px-3 py-2">Exponentially reduces</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Halves for every 10°C above optimal
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Phosphor efficiency</td>
-                      <td className="border border-white/10 px-3 py-2">Decreases, colour shifts</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Accelerated degradation above 100°C
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Thermal Calculation Example</p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">Given:</span>
-                </p>
-                <p className="ml-4">LED power: 10W (30% converted to light, 70% = 7W heat)</p>
-                <p className="ml-4">Thermal resistance junction-to-case (Rjc): 2°C/W</p>
-                <p className="ml-4">Thermal resistance case-to-heatsink: 0.5°C/W</p>
-                <p className="ml-4">Thermal resistance heatsink-to-ambient: 5°C/W</p>
-                <p className="ml-4">Ambient temperature: 25°C</p>
-                <p className="mt-2">
-                  <span className="text-white">Junction temperature calculation:</span>
-                </p>
-                <p className="ml-4">Total Rth = 2 + 0.5 + 5 = 7.5°C/W</p>
-                <p className="ml-4">Temperature rise = 7W × 7.5°C/W = 52.5°C</p>
-                <p className="ml-4 text-green-400">Tj = 25°C + 52.5°C = 77.5°C (acceptable)</p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Installation Derating Factors
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Recessed mounting:</strong> Reduced airflow - verify IC (Insulation
-                  Contact) rating and Ta rating
-                </li>
-                <li className="pl-1">
-                  <strong>Insulated ceilings:</strong> Additional derating may be needed if
-                  insulation contacts luminaire
-                </li>
-                <li className="pl-1">
-                  <strong>High ambient:</strong> Derate or specify higher Ta-rated luminaires for
-                  plant rooms, atriums
-                </li>
-                <li className="pl-1">
-                  <strong>Ganged mounting:</strong> Multiple luminaires in proximity reduce cooling
-                  effectiveness
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Specification note:</strong> Always check the luminaire's rated ambient
-              temperature (Ta). A luminaire rated at Ta 25°C will have reduced life in a ceiling
-              void at 35°C.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Lifetime and Specification */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Lifetime and Specification Considerations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              LED lifetime is characterised by gradual lumen depreciation rather than sudden
-              failure. Understanding the metrics - Lx, By, and Cy values - is essential for
-              specifying luminaires that will meet maintained illuminance requirements throughout
-              their service life.
+              <strong>LED Specification Checklist:</strong>
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                LED Lifetime Metrics Explained
-              </p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <strong>Lx (Lumen Maintenance):</strong> Percentage of initial lumens remaining
-                </p>
-                <ul className="list-disc list-outside ml-5 space-y-1 mt-1">
-                  <li className="pl-1">L70 = 70% of initial lumens (30% depreciation)</li>
-                  <li className="pl-1">L80 = 80% of initial lumens (20% depreciation)</li>
-                  <li className="pl-1">L90 = 90% of initial lumens (10% depreciation)</li>
-                </ul>
-                <p className="mt-2">
-                  <strong>By (Failure Rate):</strong> Percentage of complete failures by stated
-                  hours
-                </p>
-                <ul className="list-disc list-outside ml-5 space-y-1 mt-1">
-                  <li className="pl-1">B10 = 10% of sample failed</li>
-                  <li className="pl-1">B50 = 50% of sample failed (median life)</li>
-                </ul>
-                <p className="mt-2">
-                  <strong>Cy (Catastrophic + Gradual):</strong> Combined failure metric
-                </p>
-                <p className="mt-2 text-white">
-                  Example: L70B10 at 60,000 hours means after 60,000 hours, the surviving luminaires
-                  (90%) will still produce at least 70% of initial lumens.
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Specification Parameters
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Parameter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Values</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Luminous flux</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Total light output in lumens
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Varies - state initial lumens
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Luminous efficacy</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Light output per watt (lm/W)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        100-200 lm/W (higher = better)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CCT (Colour temp)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Warmth/coolness in Kelvin
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        2700K warm to 6500K daylight
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CRI / Ra</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Colour Rendering Index (0-100)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        &gt;80 general, &gt;90 retail/healthcare
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">TM-30 Rf</td>
-                      <td className="border border-white/10 px-3 py-2">Fidelity Index (0-100)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        &gt;85 good, &gt;90 excellent
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">UGR</td>
-                      <td className="border border-white/10 px-3 py-2">Unified Glare Rating</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        &lt;19 office, &lt;22 industrial
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MacAdam ellipse</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Colour consistency (SDCM)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        ≤3 step (imperceptible variation)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Flicker / SVM</td>
-                      <td className="border border-white/10 px-3 py-2">Temporal light artefacts</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        &lt;3% flicker, SVM &lt;0.4
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Maintenance Factor Calculation
-                </p>
-                <div className="text-sm space-y-1">
-                  <p>MF = LLMF × LSF × LMF × RMF</p>
-                  <p className="text-white mt-2">Where:</p>
-                  <ul className="list-disc list-outside ml-5 space-y-1">
-                    <li className="pl-1">LLMF: Lamp lumen maintenance (from L-value)</li>
-                    <li className="pl-1">LSF: Lamp survival factor (from B-value)</li>
-                    <li className="pl-1">LMF: Luminaire maintenance factor</li>
-                    <li className="pl-1">RMF: Room surface maintenance factor</li>
-                  </ul>
-                </div>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Typical Efficacy Ranges (2024)
-                </p>
-                <div className="text-sm space-y-1">
-                  <ul className="list-disc list-outside ml-5 space-y-1">
-                    <li className="pl-1">Linear LED (troffers): 130-160 lm/W</li>
-                    <li className="pl-1">Downlights: 100-140 lm/W</li>
-                    <li className="pl-1">High-bay: 140-180 lm/W</li>
-                    <li className="pl-1">Streetlighting: 150-200 lm/W</li>
-                    <li className="pl-1">LED tape: 80-120 lm/W</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Common Specification Pitfalls
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Comparing luminaires at different test conditions (Ta 25°C vs Ta 35°C)
-                </li>
-                <li className="pl-1">Using initial lumens without applying maintenance factor</li>
-                <li className="pl-1">
-                  Ignoring dimmer compatibility - test before full procurement
-                </li>
-                <li className="pl-1">Specifying CRI alone - TM-30 Rf and Rg give fuller picture</li>
-                <li className="pl-1">Not verifying in-rush current against circuit protection</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Industry guidance:</strong> SLL LG14 (Control of Electric Lighting) and CIBSE
-              LG7 (Offices) provide detailed guidance on LED specification for UK building services
-              applications.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Verify luminous flux meets lighting design requirements (with MF applied)</li>
+              <li>Check efficacy meets project energy targets (typically &gt;100 lm/W)</li>
+              <li>Confirm CCT and CRI/TM-30 suit application</li>
+              <li>Ensure driver type matches control system (DALI, 1-10V, etc.)</li>
+              <li>Verify Ta rating suits installation environment</li>
+              <li>Check in-rush current against circuit protection</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>LED forward voltage: <strong>2.8-3.5V</strong> per white LED</li>
+              <li>Modern efficacy: <strong>130-200 lm/W</strong></li>
+              <li>L70 typical rated life: <strong>50,000+ hours</strong></li>
+              <li>Optimal junction temperature: <strong>&lt;85°C</strong></li>
+              <li>Office CCT: <strong>4000K</strong> neutral white</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Driver Selection for LED Panel
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Specify driver for a 36W LED panel requiring DALI dimming
-                in an office.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Requirements:</p>
-                <p className="ml-4">Panel power: 36W</p>
-                <p className="ml-4">LED string: 60V nominal, 600mA</p>
-                <p className="ml-4">Control: DALI-2 addressable</p>
-                <p className="ml-4">Dimming range: 1-100%</p>
-                <p className="mt-2">Driver specification:</p>
-                <p className="ml-4">Output: Constant current 600mA</p>
-                <p className="ml-4">Output voltage range: 45-75V DC</p>
-                <p className="ml-4">Input: 220-240V AC 50Hz</p>
-                <p className="ml-4">DALI-2 certified, Part 209 (energy reporting)</p>
-                <p className="ml-4">Efficiency: &gt;90%</p>
-                <p className="ml-4">Flicker: &lt;3% at all dim levels</p>
-                <p className="mt-2 text-green-400">
-                  Driver power = 36W ÷ 0.90 = 40VA (for circuit sizing)
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Circuit Design for LED Lighting
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate MCB rating for a circuit supplying 20 LED
-                downlights.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Given data:</p>
-                <p className="ml-4">Each downlight: 12W, PF 0.9</p>
-                <p className="ml-4">Driver in-rush: 25A for 0.5ms, I²t = 0.3A²s</p>
-                <p className="ml-4">Supply: 230V single phase</p>
-                <p className="mt-2">Running current calculation:</p>
-                <p className="ml-4">Per luminaire: 12W ÷ (230V × 0.9) = 0.058A</p>
-                <p className="ml-4">Total running: 20 × 0.058A = 1.16A</p>
-                <p className="mt-2">In-rush consideration:</p>
-                <p className="ml-4">Total I²t = 20 × 0.3 = 6A²s</p>
-                <p className="ml-4">Peak in-rush ≈ 20 × 25A × (diversity factor 0.8) = 400A</p>
-                <p className="mt-2">MCB selection:</p>
-                <p className="ml-4">Running current: 1.16A → 6A MCB would suffice</p>
-                <p className="ml-4">But in-rush: 400A ÷ 6A = 67× rating</p>
-                <p className="ml-4 text-red-400">Type B (3-5×) would trip - unsuitable</p>
-                <p className="ml-4 text-red-400">Type C (5-10×) would trip - unsuitable</p>
-                <p className="ml-4 text-green-400">Type C 16A: 400A ÷ 16A = 25× → marginal</p>
-                <p className="ml-4 text-green-400">
-                  Type D 10A: 400A ÷ 10A = 40× → Type D trips at 10-20×
-                </p>
-                <p className="mt-2 text-green-400">Specify: 16A Type C or 10A Type D MCB</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Maintenance Factor Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate maintenance factor for LED luminaires in an
-                office with 3-year cleaning cycle.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Given data:</p>
-                <p className="ml-4">Luminaire: L80B10 at 50,000 hours</p>
-                <p className="ml-4">Operating hours: 2,500 hrs/year × 3 years = 7,500 hours</p>
-                <p className="ml-4">Room: Clean office environment</p>
-                <p className="mt-2">Factor calculations:</p>
-                <p className="ml-4">LLMF: At 7,500hrs, interpolate from L80 curve</p>
-                <p className="ml-4">At L80 (50,000 hrs), depreciation is 20%</p>
-                <p className="ml-4">At 7,500 hrs ≈ 15% of rated life → LLMF ≈ 0.97</p>
-                <p className="ml-4">LSF (survival): B10 at end life, at 15% life → 0.99</p>
-                <p className="ml-4">LMF (luminaire): Recessed, sealed optic → 0.95</p>
-                <p className="ml-4">RMF (room): Clean office, 3-year cycle → 0.95</p>
-                <p className="mt-2">Overall maintenance factor:</p>
-                <p className="ml-4 text-green-400">MF = 0.97 × 0.99 × 0.95 × 0.95 = 0.87</p>
-                <p className="mt-2 text-white">Design illuminance = Maintained lux ÷ MF</p>
-                <p className="ml-4">For 500 lux maintained: 500 ÷ 0.87 = 575 lux initial</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                LED Specification Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Verify luminous flux meets lighting design requirements (with MF applied)
-                </li>
-                <li className="pl-1">
-                  Check efficacy meets project energy targets (typically &gt;100 lm/W)
-                </li>
-                <li className="pl-1">Confirm CCT and CRI/TM-30 suit application</li>
-                <li className="pl-1">
-                  Ensure driver type matches control system (DALI, 1-10V, etc.)
-                </li>
-                <li className="pl-1">Verify Ta rating suits installation environment</li>
-                <li className="pl-1">Check in-rush current against circuit protection</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Using constant voltage drivers for discrete LED luminaires</strong> - causes thermal runaway</li>
+                <li><strong>Ignoring in-rush current</strong> - leads to nuisance tripping or contact welding</li>
+                <li><strong>Installing non-IC rated luminaires in insulated ceilings</strong> - fire risk and accelerated failure</li>
+                <li><strong>Mixing incompatible dimmers and drivers</strong> - causes flicker, buzz, and failure</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  LED forward voltage: <strong>2.8-3.5V</strong> per white LED
-                </li>
-                <li className="pl-1">
-                  Modern efficacy: <strong>130-200 lm/W</strong>
-                </li>
-                <li className="pl-1">
-                  L70 typical rated life: <strong>50,000+ hours</strong>
-                </li>
-                <li className="pl-1">
-                  Optimal junction temperature: <strong>&lt;85°C</strong>
-                </li>
-                <li className="pl-1">
-                  Office CCT: <strong>4000K</strong> neutral white
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Using constant voltage drivers for discrete LED luminaires</strong> -
-                  causes thermal runaway
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring in-rush current</strong> - leads to nuisance tripping or contact
-                  welding
-                </li>
-                <li className="pl-1">
-                  <strong>Installing non-IC rated luminaires in insulated ceilings</strong> - fire
-                  risk and accelerated failure
-                </li>
-                <li className="pl-1">
-                  <strong>Mixing incompatible dimmers and drivers</strong> - causes flicker, buzz,
-                  and failure
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">LED Specifications</p>
-                <ul className="space-y-0.5">
-                  <li>Forward voltage: 2.8-3.5V (white)</li>
-                  <li>Drive current: 350mA, 700mA, 1050mA typical</li>
-                  <li>Efficacy: 130-200 lm/W (modern LEDs)</li>
-                  <li>Junction temp max: 125°C, optimal &lt;85°C</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Lifetime Metrics</p>
-                <ul className="space-y-0.5">
-                  <li>L70 = 70% lumen maintenance</li>
-                  <li>L80 = 80% lumen maintenance</li>
-                  <li>B10 = 10% catastrophic failure rate</li>
-                  <li>Typical rated life: 50,000-100,000 hours</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section5-2">
-              Next: Lighting Controls
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section5")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Energy efficient solutions
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section5-2")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Power factor correction
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

@@ -1,35 +1,37 @@
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
-import { CheckCircle, Shield, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  PageFrame,
+  PageHero,
+  itemVariants,
+} from '@/components/college/primitives';
 
 const RightsPage = () => {
+  const navigate = useNavigate();
   return (
-    <div className="animate-fade-in max-w-2xl mx-auto px-4 pb-20 space-y-6 text-left">
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <SmartBackButton />
-        <h1 className="text-2xl font-bold tracking-tight text-white">
-          Your Rights
-        </h1>
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice/rights-and-pay')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
 
-      {/* Intro */}
-      <Card className="border-blue-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
-          <div className="flex items-center gap-2">
-            <Shield className="h-5 w-5 text-blue-400" />
-            <h2 className="text-lg font-semibold text-white">
-              Your Legal Rights as an Apprentice
-            </h2>
-          </div>
-          <p className="text-white text-sm leading-relaxed">
-            As an apprentice, you have the same employment rights as any other employee,
-            plus additional protections. Your apprenticeship agreement is a legal contract.
-            Understanding your rights helps you get the most from your training and protects
-            you from unfair treatment.
-          </p>
-        </CardContent>
-      </Card>
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Rights"
+          title="Your rights"
+          description="You have the same employment rights as any employee, plus extras. Your apprenticeship agreement is a legal contract — knowing what's in it protects you from unfair treatment and gets you the most from your training."
+          tone="yellow"
+        />
+      </motion.div>
 
       {/* Employment Rights */}
       <Card className="border-green-500/20 bg-white/5">
@@ -161,7 +163,7 @@ const RightsPage = () => {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </PageFrame>
   );
 };
 

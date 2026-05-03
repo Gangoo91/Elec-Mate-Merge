@@ -1,25 +1,21 @@
-import React, { useState } from 'react';
-import {
-  ArrowLeft,
-  Snowflake,
-  CheckCircle,
-  Droplets,
-  ThermometerSnowflake,
-  Gauge,
-  ChevronDown,
-  Target,
-  RotateCcw,
-  XCircle,
-} from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 8 · Section 3 · Subsection 3 — Chilled Water Systems
+ * HNC Electrical Engineering for Building Services (HVAC Systems)
+ *   Chillers, cooling towers, pumping arrangements and system hydraulics for commercial cooling
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Chilled Water Systems - HNC Module 8 Section 3.3';
@@ -284,1132 +280,300 @@ const faqs = [
   },
 ];
 
-// QuizSection Component
-interface QuizQuestion {
-  id: number;
-  question: string;
-  options: string[];
-  correctAnswer: number;
-  explanation?: string;
-}
-
-interface QuizSectionProps {
-  title: string;
-  questions: QuizQuestion[];
-}
-
-const QuizSection: React.FC<QuizSectionProps> = ({ title, questions }) => {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
-  const [showResult, setShowResult] = useState(false);
-  const [quizCompleted, setQuizCompleted] = useState(false);
-
-  const handleAnswerSelect = (answerIndex: number) => {
-    const newAnswers = [...selectedAnswers];
-    newAnswers[currentQuestion] = answerIndex;
-    setSelectedAnswers(newAnswers);
-  };
-
-  const handleNext = () => {
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
-      setShowResult(false);
-    } else {
-      setQuizCompleted(true);
-    }
-  };
-
-  const handlePrevious = () => {
-    if (currentQuestion > 0) {
-      setCurrentQuestion(currentQuestion - 1);
-      setShowResult(false);
-    }
-  };
-
-  const handleSubmitAnswer = () => {
-    setShowResult(true);
-  };
-
-  const restartQuiz = () => {
-    setCurrentQuestion(0);
-    setSelectedAnswers([]);
-    setShowResult(false);
-    setQuizCompleted(false);
-  };
-
-  const getScore = () => {
-    let correct = 0;
-    selectedAnswers.forEach((answer, index) => {
-      if (answer === questions[index].correctAnswer) {
-        correct++;
-      }
-    });
-    return correct;
-  };
-
-  const getScorePercentage = () => {
-    return Math.round((getScore() / questions.length) * 100);
-  };
-
-  const currentQ = questions[currentQuestion];
-  const isAnswered = selectedAnswers[currentQuestion] !== undefined;
-  const isCorrect = selectedAnswers[currentQuestion] === currentQ?.correctAnswer;
-
-  if (quizCompleted) {
-    const score = getScore();
-    const percentage = getScorePercentage();
-    const passed = percentage >= 70;
-
-    return (
-      <div className="py-8">
-        <div className="flex items-center gap-2 text-elec-yellow mb-6">
-          <Target className="h-5 w-5" />
-          <h2 className="text-xl font-semibold">Quiz Complete!</h2>
-        </div>
-
-        <div className="text-center space-y-6">
-          <div className={`text-6xl font-bold ${passed ? 'text-green-400' : 'text-red-400'}`}>
-            {percentage}%
-          </div>
-          <div>
-            <p className="text-lg text-white mb-3">
-              You scored {score} out of {questions.length} questions correctly
-            </p>
-            <div
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${
-                passed
-                  ? 'bg-green-500/20 border border-green-400/30 text-green-300'
-                  : 'bg-red-500/20 border border-red-400/30 text-red-300'
-              }`}
-            >
-              {passed ? (
-                <>
-                  <CheckCircle className="h-5 w-5" />
-                  <span className="font-medium">Passed!</span>
-                </>
-              ) : (
-                <>
-                  <XCircle className="h-5 w-5" />
-                  <span className="font-medium">Review Required</span>
-                </>
-              )}
-            </div>
-          </div>
-          <Button
-            onClick={restartQuiz}
-            variant="outline"
-            className="border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow hover:text-[#1a1a1a]"
-          >
-            <RotateCcw className="h-4 w-4 mr-2" />
-            Retake Quiz
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="py-6 sm:py-8">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
-        <div className="flex items-center gap-2 text-elec-yellow">
-          <Target className="h-5 w-5 sm:h-6 sm:w-6" />
-          <h2 className="text-lg sm:text-xl font-semibold">{title}</h2>
-        </div>
-        <div className="flex items-center justify-between sm:justify-end gap-3">
-          <span className="text-sm text-white">
-            Question {currentQuestion + 1} of {questions.length}
-          </span>
-          <div className="flex gap-1.5 items-center">
-            {questions.map((_, index) => (
-              <div
-                key={index}
-                className={`w-2.5 h-2.5 sm:w-2 sm:h-2 rounded-full flex-shrink-0 transition-colors ${
-                  index < currentQuestion
-                    ? 'bg-green-400'
-                    : index === currentQuestion
-                      ? 'bg-elec-yellow'
-                      : 'bg-white/20'
-                }`}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div className="space-y-5 sm:space-y-6">
-        <h3 className="text-base sm:text-lg font-medium text-white leading-relaxed">
-          {currentQ?.question}
-        </h3>
-
-        <div className="space-y-3">
-          {currentQ?.options.map((option, index) => (
-            <button
-              key={index}
-              onClick={() => handleAnswerSelect(index)}
-              disabled={showResult}
-              className={`w-full min-h-[52px] p-4 text-left rounded-xl border-2 transition-all duration-200 active:scale-[0.98] touch-manipulation ${
-                selectedAnswers[currentQuestion] === index
-                  ? showResult
-                    ? index === currentQ.correctAnswer
-                      ? 'bg-green-500/20 border-green-400/50 text-green-300'
-                      : 'bg-red-500/20 border-red-400/50 text-red-300'
-                    : 'bg-elec-yellow/20 border-elec-yellow/50 text-elec-yellow'
-                  : showResult && index === currentQ.correctAnswer
-                    ? 'bg-green-500/20 border-green-400/50 text-green-300'
-                    : 'border-white/10 hover:border-elec-yellow/30 active:bg-white/5 text-white'
-              }`}
-            >
-              <div className="flex items-center gap-3 sm:gap-4">
-                <div
-                  className={`w-7 h-7 sm:w-6 sm:h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                    selectedAnswers[currentQuestion] === index
-                      ? showResult
-                        ? index === currentQ.correctAnswer
-                          ? 'border-green-400 bg-green-400'
-                          : 'border-red-400 bg-red-400'
-                        : 'border-elec-yellow bg-elec-yellow'
-                      : showResult && index === currentQ.correctAnswer
-                        ? 'border-green-400 bg-green-400'
-                        : 'border-white/40 bg-transparent'
-                  }`}
-                >
-                  {selectedAnswers[currentQuestion] === index && !showResult && (
-                    <div className="w-3 h-3 rounded-full bg-[#1a1a1a]"></div>
-                  )}
-                  {showResult && (
-                    <>
-                      {index === currentQ.correctAnswer ? (
-                        <CheckCircle className="h-4 w-4 text-white" />
-                      ) : selectedAnswers[currentQuestion] === index ? (
-                        <XCircle className="h-4 w-4 text-white" />
-                      ) : null}
-                    </>
-                  )}
-                </div>
-                <span className="flex-1 text-sm sm:text-base leading-snug">{option}</span>
-              </div>
-            </button>
-          ))}
-        </div>
-
-        {showResult && currentQ?.explanation && (
-          <div
-            className={`p-4 rounded-xl border ${
-              isCorrect
-                ? 'bg-green-500/10 border-green-400/30 text-green-300'
-                : 'bg-elec-yellow/10 border-elec-yellow/30 text-white'
-            }`}
-          >
-            <p className="font-medium mb-2">{isCorrect ? 'Correct!' : 'Explanation:'}</p>
-            <p className="text-sm leading-relaxed">{currentQ.explanation}</p>
-          </div>
-        )}
-
-        <div className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-4">
-          <Button
-            onClick={handlePrevious}
-            disabled={currentQuestion === 0}
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-elec-yellow disabled:opacity-50 touch-manipulation"
-          >
-            Previous
-          </Button>
-
-          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-            {!showResult && isAnswered && (
-              <Button
-                onClick={handleSubmitAnswer}
-                size="lg"
-                className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-              >
-                Submit Answer
-              </Button>
-            )}
-
-            {showResult && (
-              <Button
-                onClick={handleNext}
-                size="lg"
-                className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-              >
-                {currentQuestion === questions.length - 1 ? 'Complete Quiz' : 'Next Question'}
-              </Button>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// FAQAccordion Component
-interface FAQ {
-  question: string;
-  answer: string;
-}
-
-interface FAQAccordionProps {
-  faqs: FAQ[];
-}
-
-const FAQAccordion: React.FC<FAQAccordionProps> = ({ faqs }) => {
-  return (
-    <Accordion type="single" collapsible className="w-full space-y-2">
-      {faqs.map((faq, index) => (
-        <AccordionItem
-          key={index}
-          value={`faq-${index}`}
-          className="border border-white/10 rounded-xl px-4 bg-white/5"
-        >
-          <AccordionTrigger className="text-left text-white hover:text-elec-yellow hover:no-underline py-4">
-            <span className="text-sm sm:text-base font-medium pr-4">{faq.question}</span>
-          </AccordionTrigger>
-          <AccordionContent className="text-white text-sm leading-relaxed pb-4">
-            {faq.answer}
-          </AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
-  );
-};
-
 const HNCModule8Section3_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section3")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module8-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
+
+          <PageHero
+            eyebrow="Module 8 · Section 3 · Subsection 3"
+            title="Chilled Water Systems"
+            description="Chillers, cooling towers, pumping arrangements and system hydraulics for commercial cooling"
+            tone="purple"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Understand air-cooled versus water-cooled chiller operation and selection",
+              "Explain cooling tower operation including range and approach",
+              "Design primary-secondary and variable primary pumping systems",
+              "Size chilled water pipework using pressure drop and velocity criteria",
+              "Apply system hydraulics principles for balancing and control",
+              "Implement free cooling strategies to reduce energy consumption",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Chillers - Air-Cooled and Water-Cooled">
+            <p>Chillers are the heart of any chilled water system, producing cold water typically at 6°C for distribution to air handling units, fan coil units and other terminal equipment. The choice between air-cooled and water-cooled chillers significantly impacts system efficiency, capital cost and operational complexity.</p>
+            <p><strong>Air-Cooled Chillers</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Reject heat directly to outdoor air via finned coils and fans</li>
+              <li>Typical COP of 2.5-4.0 depending on ambient conditions</li>
+              <li>Performance degrades significantly above 35°C ambient</li>
+              <li>No water consumption or cooling tower maintenance required</li>
+              <li>Simpler installation but require adequate outdoor space for airflow</li>
+              <li>Generally suited for loads up to approximately 500kW</li>
+            </ul>
+            <p><strong>Water-Cooled Chillers</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Reject heat via condenser water circuit to cooling towers</li>
+              <li>Higher COP of 5.0-7.0 due to lower condensing temperatures</li>
+              <li>More stable performance regardless of ambient dry bulb temperature</li>
+              <li>Require cooling towers, condenser pumps and water treatment</li>
+              <li>Typical for larger installations &gt;500kW where efficiency savings justify complexity</li>
+              <li>Compressor types include scroll, screw and centrifugal</li>
+            </ul>
+            <p><strong>Chiller Comparison</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Typical COP:</strong> 2.5-4.0 — 5.0-7.0</li>
+              <li><strong>Capital cost:</strong> Lower (chiller only) — Higher (+ towers, pumps)</li>
+              <li><strong>Water consumption:</strong> None — Significant (evaporation)</li>
+              <li><strong>Maintenance:</strong> Simpler — Complex (water treatment)</li>
+              <li><strong>Space requirement:</strong> Large outdoor area — Roof/external for towers</li>
+              <li><strong>Noise:</strong> Condenser fans — Tower fans (lower)</li>
+            </ul>
+            <p><strong>Design tip:</strong> For UK climates, water-cooled chillers typically offer 20-40% energy savings over air-cooled units, often paying back the additional capital cost within 3-5 years for systems operating &gt;2000 hours annually.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Cooling Towers">
+            <p>Cooling towers reject heat from the condenser water circuit to atmosphere through evaporative cooling. As water cascades through the tower, a portion evaporates, removing heat from the remaining water. This allows condenser water temperatures to approach the ambient wet bulb temperature rather than the higher dry bulb temperature.</p>
+            <p><strong>Key Cooling Tower Terms</strong></p>
+            <p>Range</p>
+            <p>Temperature difference between entering and leaving water. Typically 5-6K for HVAC applications.</p>
+            <p>Approach</p>
+            <p>Difference between leaving water and ambient wet bulb. Typically 3-5K - lower approach = larger tower.</p>
+            <p><strong>Cooling tower types:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Induced draught:</strong> Fan at top draws air through fill - most common for HVAC</li>
+              <li><strong>Forced draught:</strong> Fan at bottom pushes air through - good where height is limited</li>
+              <li><strong>Crossflow:</strong> Air flows horizontally through falling water - easier maintenance access</li>
+              <li><strong>Counterflow:</strong> Air flows upward against falling water - more compact, higher efficiency</li>
+            </ul>
+            <p><strong>Typical Condenser Water Temperatures</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Design (UK summer):</strong> 27-30°C — 32-35°C</li>
+              <li><strong>Part load (spring/autumn):</strong> 20-25°C — 25-30°C</li>
+              <li><strong>Free cooling potential:</strong> &lt;15°C — &lt;20°C</li>
+            </ul>
+            <p><strong>Legionella Risk Management</strong></p>
+            <p>Cooling towers create ideal conditions for Legionella growth (warm, aerated water with nutrients from airborne contamination). Compliance with L8 ACOP and HSG274 Part 1 is mandatory, requiring written risk assessments, competent water treatment, regular monitoring (including quarterly Legionella testing) and comprehensive records.</p>
+            <p><strong>Remember:</strong> Cooling tower performance is limited by wet bulb temperature, not dry bulb. A tower cannot cool water below the wet bulb temperature. UK design wet bulb is typically 20°C, allowing condenser water as low as 23-25°C.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Primary-Secondary and Variable Primary Pumping">
+            <p>Pumping arrangement determines how water flows through the chiller plant and distribution system. The two main approaches - primary-secondary and variable primary flow - offer different trade-offs between complexity, capital cost and energy efficiency.</p>
+            <p><strong>Primary-Secondary Pumping</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Primary pumps maintain constant flow through chillers (one pump per chiller)</li>
+              <li>Secondary pumps distribute variable flow to building loads</li>
+              <li>Bypass pipe (decoupler) connects the two circuits hydraulically</li>
+              <li>When secondary flow &lt; primary, excess water bypasses back to return</li>
+              <li>When secondary flow &gt; primary, warm return mixes with supply (avoid this)</li>
+              <li>Simple, proven approach suitable for most applications</li>
+            </ul>
+            <p><strong>Primary-Secondary System Rules</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Bypass pipe should be short with minimal fittings (&lt;0.5m head loss)</li>
+              <li>Size bypass for full primary flow at &lt;1.5 m/s velocity</li>
+              <li>Locate DP sensor at hydraulically most remote circuit</li>
+              <li>Primary flow must always exceed or equal secondary flow</li>
+              <li>Stage chillers based on return water temperature or load</li>
+            </ul>
+            <p><strong>Variable Primary Flow (VPF)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Eliminates secondary pumps entirely - single set of variable speed pumps</li>
+              <li>Water flows directly from chillers to loads and back</li>
+              <li>Requires chillers rated for variable flow operation (minimum 30-50%)</li>
+              <li>Bypass valve maintains minimum flow when load is very low</li>
+              <li>25-35% pump energy savings compared to primary-secondary</li>
+              <li>More sophisticated controls required for chiller staging</li>
+            </ul>
+            <p><strong>System Comparison</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Capital cost:</strong> Higher (more pumps) — Lower</li>
+              <li><strong>Pump energy:</strong> Higher — 25-35% lower</li>
+              <li><strong>Control complexity:</strong> Simpler — More complex</li>
+              <li><strong>Chiller requirements:</strong> Any chiller — Variable flow rated</li>
+              <li><strong>Plant room space:</strong> Larger — Smaller</li>
+            </ul>
+            <p><strong>Design consideration:</strong> Low delta T syndrome reduces system capacity regardless of pumping arrangement. Ensure control valves are correctly sized (50-70% open at design), coils are clean and properly selected, and system is correctly balanced.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Pipe Sizing and System Hydraulics">
+            <p>Correct pipe sizing balances capital cost against pump energy consumption. Undersized pipes increase pressure drop and pump energy; oversized pipes waste material and increase capital cost. CIBSE Guide C provides comprehensive guidance for pipe sizing in building services.</p>
+            <p><strong>Pipe Sizing Criteria</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Pressure drop:</strong> 150-300 Pa/m for preliminary sizing</li>
+              <li><strong>Maximum velocity:</strong> 3.0 m/s in mains, 1.5 m/s near occupied spaces</li>
+              <li><strong>Minimum velocity:</strong> 0.5 m/s to avoid air accumulation</li>
+              <li><strong>Noise:</strong> Reduce velocity to 1.0-1.5 m/s for risers and branches</li>
+            </ul>
+            <p><strong>Flow Rate Calculation</strong></p>
+            <p>Q = Cooling Load / (4.2 x ΔT x 1000)</p>
+            <p>Where Q is flow rate in l/s, cooling load in kW, ΔT in K (typically 6K)</p>
+            <p>Example: 500kW cooling load</p>
+            <p>Q = 500 / (4.2 x 6 x 1000) = 500 / 25,200 = 0.0198 m³/s</p>
+            <p>Q = 19.8 l/s or 71.4 m³/h</p>
+            <p><strong>Recommended Pipe Sizes (Steel)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>DN50:</strong> 2.0 l/s — 1.0 m/s — 50</li>
+              <li><strong>DN80:</strong> 5.5 l/s — 1.2 m/s — 140</li>
+              <li><strong>DN100:</strong> 10 l/s — 1.4 m/s — 250</li>
+              <li><strong>DN150:</strong> 25 l/s — 1.6 m/s — 630</li>
+              <li><strong>DN200:</strong> 50 l/s — 1.8 m/s — 1260</li>
+            </ul>
+            <p><strong>System Hydraulics</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Index circuit:</strong> The circuit with highest pressure drop - determines pump head</li>
+              <li><strong>Balancing:</strong> Adjust regulating valves to achieve design flow in all circuits</li>
+              <li><strong>Fittings allowance:</strong> Add 30-50% to straight pipe losses for fittings</li>
+              <li><strong>Control valve authority:</strong> Valve ΔP should be &gt;50% of circuit ΔP</li>
+              <li><strong>PICV:</strong> Pressure independent control valves combine balancing and control</li>
+            </ul>
+            <p><strong>Free Cooling Integration</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Waterside free cooling uses plate heat exchanger between condenser and chilled water</li>
+              <li>Available when wet bulb temperature drops below approximately 10°C</li>
+              <li>Full free cooling (chillers off) possible when wet bulb &lt;5°C</li>
+              <li>Partial free cooling pre-cools return water, reducing chiller load</li>
+              <li>Can reduce annual chiller energy by 30-50% in UK climates</li>
+              <li>Requires controls to switch between modes and manage transitions</li>
+            </ul>
+            <p><strong>Commissioning note:</strong> All chilled water systems must be flushed, cleaned and chemically treated before commissioning. System balancing should achieve design flow rates ±10%. Document all commissioning results for O&amp;M manual.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1: Chiller Selection</strong>
+            </p>
+            <p><strong>Question:</strong> A building has a design cooling load of 800kW. Compare the annual energy consumption of air-cooled (COP 3.0) vs water-cooled (COP 6.0) chillers operating 2500 equivalent full load hours.</p>
+            <p>Air-cooled annual energy:</p>
+            <p>E = Load / COP x Hours = 800 / 3.0 x 2500 = 666,667 kWh</p>
+            <p>Water-cooled annual energy:</p>
+            <p>E = 800 / 6.0 x 2500 = 333,333 kWh</p>
+            <p>Annual saving = 333,334 kWh</p>
+            <p>At £0.15/kWh = <strong>£50,000 annual saving</strong></p>
+            <p>
+              <strong>Example 2: Chilled Water Flow Rate</strong>
+            </p>
+            <p><strong>Question:</strong> Calculate the chilled water flow rate for a 350kW AHU coil with 6/12°C chilled water.</p>
+            <p>Q = Cooling Load / (cp x ΔT x ρ)</p>
+            <p>Q = 350 / (4.2 x 6 x 1000)</p>
+            <p>Q = 350 / 25,200 = <strong>0.0139 m³/s = 13.9 l/s</strong></p>
+            <p>Or: Q = 50 m³/h</p>
+            <p>→ Select DN80 pipe (capacity ~14 l/s at 200 Pa/m)</p>
+            <p>
+              <strong>Example 3: Pump Head Calculation</strong>
+            </p>
+            <p><strong>Question:</strong> The index circuit has 150m equivalent pipe length at 250 Pa/m, plus chiller (45 kPa), AHU coil (25 kPa) and control valve (15 kPa). Calculate pump head.</p>
+            <p>Pipe losses = 150m x 250 Pa/m = 37,500 Pa = 37.5 kPa</p>
+            <p>Equipment losses = 45 + 25 + 15 = 85 kPa</p>
+            <p>Total = 37.5 + 85 = 122.5 kPa</p>
+            <p>Head in metres = 122.5 / 9.81 = <strong>12.5 m</strong></p>
+            <p>→ Select pump for 13.9 l/s at 12.5 m head + margin</p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Essential Formulas:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Flow rate:</strong> Q = kW / (4.2 x ΔT x 1000) in m³/s</li>
+              <li><strong>COP:</strong> Cooling output / Electrical input</li>
+              <li><strong>Pump power:</strong> P = Q x ΔP / η (flow x pressure / efficiency)</li>
+              <li><strong>Cooling tower range:</strong> Entering - Leaving water temp</li>
+              <li><strong>Cooling tower approach:</strong> Leaving water - Wet bulb temp</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Chilled water: <strong>6/12°C</strong> (6K delta T)</li>
+              <li>Condenser water: <strong>27/32°C</strong> typical design</li>
+              <li>Max pipe velocity: <strong>3.0 m/s</strong> mains, <strong>1.5 m/s</strong>  branches</li>
+              <li>Pressure drop target: <strong>150-300 Pa/m</strong></li>
+              <li>Minimum chiller flow: <strong>30-50%</strong> of design</li>
+            </ul>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Ignoring glycol:</strong> If used, recalculate flow rates (lower specific heat)</li>
+                <li><strong>Oversizing control valves:</strong> Results in hunting and poor control</li>
+                <li><strong>Neglecting minimum flow:</strong> Chillers can freeze if flow too low</li>
+                <li><strong>Wrong DP sensor location:</strong> Must be at index circuit, not plantroom</li>
+                <li><strong>Ignoring water treatment:</strong> Leads to corrosion, fouling and Legionella risk</li>
+              </ul>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
+
+          <SectionRule />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section3-2")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                DX systems
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section3-4")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Terminal units
+              </div>
+            </button>
+          </div>
+        </PageFrame>
       </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Snowflake className="h-4 w-4" />
-            <span>Module 8.3.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Chilled Water Systems
-          </h1>
-          <p className="text-white">
-            Chillers, cooling towers, pumping arrangements and system hydraulics for commercial
-            cooling
-          </p>
-        </header>
-
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Chillers:</strong> Air-cooled (COP 2.5-4) or water-cooled (COP 5-7)
-              </li>
-              <li className="pl-1">
-                <strong>CHW temps:</strong> Typically 6°C flow, 12°C return (6K delta T)
-              </li>
-              <li className="pl-1">
-                <strong>Pumping:</strong> Primary-secondary or variable primary flow
-              </li>
-              <li className="pl-1">
-                <strong>Free cooling:</strong> Available when wet bulb &lt;10°C
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Design Parameters</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Pipe velocity:</strong> 1.5-3.0 m/s maximum
-              </li>
-              <li className="pl-1">
-                <strong>Pressure drop:</strong> 150-300 Pa/m for sizing
-              </li>
-              <li className="pl-1">
-                <strong>Minimum flow:</strong> 30-50% through chillers
-              </li>
-              <li className="pl-1">
-                <strong>Cooling tower approach:</strong> 3-5K typical
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Understand air-cooled versus water-cooled chiller operation and selection',
-              'Explain cooling tower operation including range and approach',
-              'Design primary-secondary and variable primary pumping systems',
-              'Size chilled water pipework using pressure drop and velocity criteria',
-              'Apply system hydraulics principles for balancing and control',
-              'Implement free cooling strategies to reduce energy consumption',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
-
-        {/* Section 1: Chillers */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Chillers - Air-Cooled and Water-Cooled
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Chillers are the heart of any chilled water system, producing cold water typically at
-              6°C for distribution to air handling units, fan coil units and other terminal
-              equipment. The choice between air-cooled and water-cooled chillers significantly
-              impacts system efficiency, capital cost and operational complexity.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Air-Cooled Chillers</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Reject heat directly to outdoor air via finned coils and fans
-                </li>
-                <li className="pl-1">Typical COP of 2.5-4.0 depending on ambient conditions</li>
-                <li className="pl-1">Performance degrades significantly above 35°C ambient</li>
-                <li className="pl-1">No water consumption or cooling tower maintenance required</li>
-                <li className="pl-1">
-                  Simpler installation but require adequate outdoor space for airflow
-                </li>
-                <li className="pl-1">Generally suited for loads up to approximately 500kW</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Water-Cooled Chillers</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Reject heat via condenser water circuit to cooling towers</li>
-                <li className="pl-1">Higher COP of 5.0-7.0 due to lower condensing temperatures</li>
-                <li className="pl-1">
-                  More stable performance regardless of ambient dry bulb temperature
-                </li>
-                <li className="pl-1">
-                  Require cooling towers, condenser pumps and water treatment
-                </li>
-                <li className="pl-1">
-                  Typical for larger installations &gt;500kW where efficiency savings justify
-                  complexity
-                </li>
-                <li className="pl-1">Compressor types include scroll, screw and centrifugal</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Chiller Comparison</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Parameter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Air-Cooled</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Water-Cooled</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Typical COP</td>
-                      <td className="border border-white/10 px-3 py-2">2.5-4.0</td>
-                      <td className="border border-white/10 px-3 py-2">5.0-7.0</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Capital cost</td>
-                      <td className="border border-white/10 px-3 py-2">Lower (chiller only)</td>
-                      <td className="border border-white/10 px-3 py-2">Higher (+ towers, pumps)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Water consumption</td>
-                      <td className="border border-white/10 px-3 py-2">None</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Significant (evaporation)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Maintenance</td>
-                      <td className="border border-white/10 px-3 py-2">Simpler</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Complex (water treatment)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Space requirement</td>
-                      <td className="border border-white/10 px-3 py-2">Large outdoor area</td>
-                      <td className="border border-white/10 px-3 py-2">Roof/external for towers</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Noise</td>
-                      <td className="border border-white/10 px-3 py-2">Condenser fans</td>
-                      <td className="border border-white/10 px-3 py-2">Tower fans (lower)</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design tip:</strong> For UK climates, water-cooled chillers typically offer
-              20-40% energy savings over air-cooled units, often paying back the additional capital
-              cost within 3-5 years for systems operating &gt;2000 hours annually.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Cooling Towers */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Cooling Towers
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Cooling towers reject heat from the condenser water circuit to atmosphere through
-              evaporative cooling. As water cascades through the tower, a portion evaporates,
-              removing heat from the remaining water. This allows condenser water temperatures to
-              approach the ambient wet bulb temperature rather than the higher dry bulb temperature.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Cooling Tower Terms
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-semibold text-elec-yellow mb-1">Range</p>
-                  <p className="text-sm text-white">
-                    Temperature difference between entering and leaving water. Typically 5-6K for
-                    HVAC applications.
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-semibold text-elec-yellow mb-1">Approach</p>
-                  <p className="text-sm text-white">
-                    Difference between leaving water and ambient wet bulb. Typically 3-5K - lower
-                    approach = larger tower.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Cooling tower types:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Induced draught:</strong> Fan at top draws air through fill - most common
-                  for HVAC
-                </li>
-                <li className="pl-1">
-                  <strong>Forced draught:</strong> Fan at bottom pushes air through - good where
-                  height is limited
-                </li>
-                <li className="pl-1">
-                  <strong>Crossflow:</strong> Air flows horizontally through falling water - easier
-                  maintenance access
-                </li>
-                <li className="pl-1">
-                  <strong>Counterflow:</strong> Air flows upward against falling water - more
-                  compact, higher efficiency
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Condenser Water Temperatures
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Condition</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Flow (to chiller)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Return (from chiller)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Design (UK summer)</td>
-                      <td className="border border-white/10 px-3 py-2">27-30°C</td>
-                      <td className="border border-white/10 px-3 py-2">32-35°C</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Part load (spring/autumn)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">20-25°C</td>
-                      <td className="border border-white/10 px-3 py-2">25-30°C</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Free cooling potential</td>
-                      <td className="border border-white/10 px-3 py-2">&lt;15°C</td>
-                      <td className="border border-white/10 px-3 py-2">&lt;20°C</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-400/30">
-              <p className="text-sm font-medium text-red-300 mb-2">Legionella Risk Management</p>
-              <p className="text-sm text-white">
-                Cooling towers create ideal conditions for Legionella growth (warm, aerated water
-                with nutrients from airborne contamination). Compliance with L8 ACOP and HSG274 Part
-                1 is mandatory, requiring written risk assessments, competent water treatment,
-                regular monitoring (including quarterly Legionella testing) and comprehensive
-                records.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> Cooling tower performance is limited by wet bulb
-              temperature, not dry bulb. A tower cannot cool water below the wet bulb temperature.
-              UK design wet bulb is typically 20°C, allowing condenser water as low as 23-25°C.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Pumping Arrangements */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Primary-Secondary and Variable Primary Pumping
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Pumping arrangement determines how water flows through the chiller plant and
-              distribution system. The two main approaches - primary-secondary and variable primary
-              flow - offer different trade-offs between complexity, capital cost and energy
-              efficiency.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Primary-Secondary Pumping
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Primary pumps maintain constant flow through chillers (one pump per chiller)
-                </li>
-                <li className="pl-1">Secondary pumps distribute variable flow to building loads</li>
-                <li className="pl-1">
-                  Bypass pipe (decoupler) connects the two circuits hydraulically
-                </li>
-                <li className="pl-1">
-                  When secondary flow &lt; primary, excess water bypasses back to return
-                </li>
-                <li className="pl-1">
-                  When secondary flow &gt; primary, warm return mixes with supply (avoid this)
-                </li>
-                <li className="pl-1">Simple, proven approach suitable for most applications</li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Primary-Secondary System Rules
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Bypass pipe should be short with minimal fittings (&lt;0.5m head loss)
-                </li>
-                <li className="pl-1">Size bypass for full primary flow at &lt;1.5 m/s velocity</li>
-                <li className="pl-1">Locate DP sensor at hydraulically most remote circuit</li>
-                <li className="pl-1">Primary flow must always exceed or equal secondary flow</li>
-                <li className="pl-1">Stage chillers based on return water temperature or load</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Variable Primary Flow (VPF)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Eliminates secondary pumps entirely - single set of variable speed pumps
-                </li>
-                <li className="pl-1">Water flows directly from chillers to loads and back</li>
-                <li className="pl-1">
-                  Requires chillers rated for variable flow operation (minimum 30-50%)
-                </li>
-                <li className="pl-1">Bypass valve maintains minimum flow when load is very low</li>
-                <li className="pl-1">25-35% pump energy savings compared to primary-secondary</li>
-                <li className="pl-1">More sophisticated controls required for chiller staging</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">System Comparison</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Primary-Secondary
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Variable Primary
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Capital cost</td>
-                      <td className="border border-white/10 px-3 py-2">Higher (more pumps)</td>
-                      <td className="border border-white/10 px-3 py-2">Lower</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pump energy</td>
-                      <td className="border border-white/10 px-3 py-2">Higher</td>
-                      <td className="border border-white/10 px-3 py-2">25-35% lower</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Control complexity</td>
-                      <td className="border border-white/10 px-3 py-2">Simpler</td>
-                      <td className="border border-white/10 px-3 py-2">More complex</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Chiller requirements</td>
-                      <td className="border border-white/10 px-3 py-2">Any chiller</td>
-                      <td className="border border-white/10 px-3 py-2">Variable flow rated</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Plant room space</td>
-                      <td className="border border-white/10 px-3 py-2">Larger</td>
-                      <td className="border border-white/10 px-3 py-2">Smaller</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design consideration:</strong> Low delta T syndrome reduces system capacity
-              regardless of pumping arrangement. Ensure control valves are correctly sized (50-70%
-              open at design), coils are clean and properly selected, and system is correctly
-              balanced.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Pipe Sizing and System Hydraulics */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Pipe Sizing and System Hydraulics
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Correct pipe sizing balances capital cost against pump energy consumption. Undersized
-              pipes increase pressure drop and pump energy; oversized pipes waste material and
-              increase capital cost. CIBSE Guide C provides comprehensive guidance for pipe sizing
-              in building services.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Pipe Sizing Criteria</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Pressure drop:</strong> 150-300 Pa/m for preliminary sizing
-                </li>
-                <li className="pl-1">
-                  <strong>Maximum velocity:</strong> 3.0 m/s in mains, 1.5 m/s near occupied spaces
-                </li>
-                <li className="pl-1">
-                  <strong>Minimum velocity:</strong> 0.5 m/s to avoid air accumulation
-                </li>
-                <li className="pl-1">
-                  <strong>Noise:</strong> Reduce velocity to 1.0-1.5 m/s for risers and branches
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Flow Rate Calculation</p>
-              <p className="font-mono text-center text-lg mb-2 text-white">
-                Q = Cooling Load / (4.2 x ΔT x 1000)
-              </p>
-              <p className="text-xs text-white text-center">
-                Where Q is flow rate in l/s, cooling load in kW, ΔT in K (typically 6K)
-              </p>
-              <div className="mt-4 bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Example: 500kW cooling load</p>
-                <p>Q = 500 / (4.2 x 6 x 1000) = 500 / 25,200 = 0.0198 m³/s</p>
-                <p>Q = 19.8 l/s or 71.4 m³/h</p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Recommended Pipe Sizes (Steel)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Nominal Size</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Flow at 200 Pa/m
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Velocity at 200 Pa/m
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Approx. Capacity (kW)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DN50</td>
-                      <td className="border border-white/10 px-3 py-2">2.0 l/s</td>
-                      <td className="border border-white/10 px-3 py-2">1.0 m/s</td>
-                      <td className="border border-white/10 px-3 py-2">50</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DN80</td>
-                      <td className="border border-white/10 px-3 py-2">5.5 l/s</td>
-                      <td className="border border-white/10 px-3 py-2">1.2 m/s</td>
-                      <td className="border border-white/10 px-3 py-2">140</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DN100</td>
-                      <td className="border border-white/10 px-3 py-2">10 l/s</td>
-                      <td className="border border-white/10 px-3 py-2">1.4 m/s</td>
-                      <td className="border border-white/10 px-3 py-2">250</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DN150</td>
-                      <td className="border border-white/10 px-3 py-2">25 l/s</td>
-                      <td className="border border-white/10 px-3 py-2">1.6 m/s</td>
-                      <td className="border border-white/10 px-3 py-2">630</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DN200</td>
-                      <td className="border border-white/10 px-3 py-2">50 l/s</td>
-                      <td className="border border-white/10 px-3 py-2">1.8 m/s</td>
-                      <td className="border border-white/10 px-3 py-2">1260</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">System Hydraulics</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Index circuit:</strong> The circuit with highest pressure drop -
-                  determines pump head
-                </li>
-                <li className="pl-1">
-                  <strong>Balancing:</strong> Adjust regulating valves to achieve design flow in all
-                  circuits
-                </li>
-                <li className="pl-1">
-                  <strong>Fittings allowance:</strong> Add 30-50% to straight pipe losses for
-                  fittings
-                </li>
-                <li className="pl-1">
-                  <strong>Control valve authority:</strong> Valve ΔP should be &gt;50% of circuit ΔP
-                </li>
-                <li className="pl-1">
-                  <strong>PICV:</strong> Pressure independent control valves combine balancing and
-                  control
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Free Cooling Integration
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Waterside free cooling uses plate heat exchanger between condenser and chilled
-                  water
-                </li>
-                <li className="pl-1">
-                  Available when wet bulb temperature drops below approximately 10°C
-                </li>
-                <li className="pl-1">
-                  Full free cooling (chillers off) possible when wet bulb &lt;5°C
-                </li>
-                <li className="pl-1">
-                  Partial free cooling pre-cools return water, reducing chiller load
-                </li>
-                <li className="pl-1">Can reduce annual chiller energy by 30-50% in UK climates</li>
-                <li className="pl-1">
-                  Requires controls to switch between modes and manage transitions
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Commissioning note:</strong> All chilled water systems must be flushed,
-              cleaned and chemically treated before commissioning. System balancing should achieve
-              design flow rates ±10%. Document all commissioning results for O&amp;M manual.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Chiller Selection
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A building has a design cooling load of 800kW. Compare
-                the annual energy consumption of air-cooled (COP 3.0) vs water-cooled (COP 6.0)
-                chillers operating 2500 equivalent full load hours.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Air-cooled annual energy:</p>
-                <p>E = Load / COP x Hours = 800 / 3.0 x 2500 = 666,667 kWh</p>
-                <p className="mt-2">Water-cooled annual energy:</p>
-                <p>E = 800 / 6.0 x 2500 = 333,333 kWh</p>
-                <p className="mt-2">Annual saving = 333,334 kWh</p>
-                <p>
-                  At £0.15/kWh = <strong>£50,000 annual saving</strong>
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Chilled Water Flow Rate
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Calculate the chilled water flow rate for a 350kW AHU
-                coil with 6/12°C chilled water.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Q = Cooling Load / (cp x ΔT x ρ)</p>
-                <p>Q = 350 / (4.2 x 6 x 1000)</p>
-                <p>
-                  Q = 350 / 25,200 = <strong>0.0139 m³/s = 13.9 l/s</strong>
-                </p>
-                <p className="mt-2">Or: Q = 50 m³/h</p>
-                <p className="mt-2 text-white">
-                  → Select DN80 pipe (capacity ~14 l/s at 200 Pa/m)
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Pump Head Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> The index circuit has 150m equivalent pipe length at 250
-                Pa/m, plus chiller (45 kPa), AHU coil (25 kPa) and control valve (15 kPa). Calculate
-                pump head.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Pipe losses = 150m x 250 Pa/m = 37,500 Pa = 37.5 kPa</p>
-                <p>Equipment losses = 45 + 25 + 15 = 85 kPa</p>
-                <p className="mt-2">Total = 37.5 + 85 = 122.5 kPa</p>
-                <p className="mt-2">
-                  Head in metres = 122.5 / 9.81 = <strong>12.5 m</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  → Select pump for 13.9 l/s at 12.5 m head + margin
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Formulas</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Flow rate:</strong> Q = kW / (4.2 x ΔT x 1000) in m³/s
-                </li>
-                <li className="pl-1">
-                  <strong>COP:</strong> Cooling output / Electrical input
-                </li>
-                <li className="pl-1">
-                  <strong>Pump power:</strong> P = Q x ΔP / η (flow x pressure / efficiency)
-                </li>
-                <li className="pl-1">
-                  <strong>Cooling tower range:</strong> Entering - Leaving water temp
-                </li>
-                <li className="pl-1">
-                  <strong>Cooling tower approach:</strong> Leaving water - Wet bulb temp
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Chilled water: <strong>6/12°C</strong> (6K delta T)
-                </li>
-                <li className="pl-1">
-                  Condenser water: <strong>27/32°C</strong> typical design
-                </li>
-                <li className="pl-1">
-                  Max pipe velocity: <strong>3.0 m/s</strong> mains, <strong>1.5 m/s</strong>{' '}
-                  branches
-                </li>
-                <li className="pl-1">
-                  Pressure drop target: <strong>150-300 Pa/m</strong>
-                </li>
-                <li className="pl-1">
-                  Minimum chiller flow: <strong>30-50%</strong> of design
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Ignoring glycol:</strong> If used, recalculate flow rates (lower specific
-                  heat)
-                </li>
-                <li className="pl-1">
-                  <strong>Oversizing control valves:</strong> Results in hunting and poor control
-                </li>
-                <li className="pl-1">
-                  <strong>Neglecting minimum flow:</strong> Chillers can freeze if flow too low
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong DP sensor location:</strong> Must be at index circuit, not plantroom
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring water treatment:</strong> Leads to corrosion, fouling and
-                  Legionella risk
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Frequently Asked Questions</h2>
-          <FAQAccordion faqs={faqs} />
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Chiller Types</p>
-                <ul className="space-y-0.5">
-                  <li>Air-cooled: COP 2.5-4.0, simpler</li>
-                  <li>Water-cooled: COP 5.0-7.0, efficient</li>
-                  <li>Scroll: up to 500kW</li>
-                  <li>Screw: 200-2000kW</li>
-                  <li>Centrifugal: &gt;500kW</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Design Temperatures</p>
-                <ul className="space-y-0.5">
-                  <li>CHW flow: 6°C</li>
-                  <li>CHW return: 12°C</li>
-                  <li>CDW flow: 27-30°C</li>
-                  <li>CDW return: 32-35°C</li>
-                  <li>Free cooling: WB &lt;10°C</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <QuizSection title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module8-section3-4">
-              Next: Terminal Units
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
     </div>
   );
 };

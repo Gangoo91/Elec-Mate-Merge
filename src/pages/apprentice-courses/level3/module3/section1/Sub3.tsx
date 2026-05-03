@@ -247,7 +247,7 @@ export default function Sub3() {
 
           <ConceptBlock
             title="Force is what changes a body's motion"
-            plainEnglish={"A force is a push or a pull. SI unit: newton (N). 1 newton accelerates 1 kilogram at 1 m/s\u00b2. Pushing a 1 kg drill harder doesn't make it heavier; it accelerates faster."}
+            plainEnglish={"A force is a push or a pull. SI unit: newton (N). 1 newton accelerates 1 kilogram at 1 m/s². Pushing a 1 kg drill harder doesn't make it heavier; it accelerates faster."}
           >
             <p>
               The everyday forces you'll meet at L3:
@@ -286,7 +286,7 @@ export default function Sub3() {
           <ConceptBlock
             title="Power — work done per unit time"
             plainEnglish="Power is the rate at which energy is transferred. The same lift done in 1 second needs more power than the same lift done in 10 seconds. SI unit of power: watt (W) = joule per second."
-            onSite={"Motor plates rate output power in kW (or HP on older plates). The motor's electrical input is always more \u2014 efficiency \u00d7 input = output."}
+            onSite={"Motor plates rate output power in kW (or HP on older plates). The motor's electrical input is always more — efficiency × input = output."}
           >
             <p>
               <strong>P = W / t = F × d / t = F × v</strong>

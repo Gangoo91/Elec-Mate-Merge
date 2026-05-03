@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 7 · Section 6 · Subsection 1 — Distribution Board Design
+ * HNC Electrical Engineering for Building Services (Power and Lighting Systems)
+ *   Board layouts, circuit groupings, labelling, IP ratings, and installation considerations for electrical distribution
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Distribution Board Design - HNC Module 7 Section 6.1';
@@ -252,853 +265,306 @@ const faqs = [
 ];
 
 const HNCModule7Section6_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section6")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module7-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.6.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Distribution Board Design
-          </h1>
-          <p className="text-white">
-            Board layouts, circuit groupings, labelling, IP ratings, and installation considerations
-            for electrical distribution
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 7 · Section 6 · Subsection 1"
+            title="Distribution Board Design"
+            description="Board layouts, circuit groupings, labelling, IP ratings, and installation considerations for electrical distribution"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Type A/B:</strong> Skilled vs ordinary person operation
-              </li>
-              <li className="pl-1">
-                <strong>IP ratings:</strong> Protection against ingress (IP20 to IP66)
-              </li>
-              <li className="pl-1">
-                <strong>Circuit grouping:</strong> Function, location, and RCD allocation
-              </li>
-              <li className="pl-1">
-                <strong>Spare capacity:</strong> Minimum 20% for future expansion
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Select appropriate distribution board types per BS EN 61439-3",
+              "Apply IP rating requirements for different environments",
+              "Design circuit groupings compliant with BS 7671",
+              "Specify labelling and documentation requirements",
+              "Plan cable entry, exit, and termination arrangements",
+              "Determine spare capacity and future expansion provisions",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Board Types and Designations">
+            <p>Distribution boards are classified according to BS EN 61439-3, which defines requirements for low-voltage switchgear and controlgear assemblies. Understanding board designations is essential for specifying appropriate equipment for each installation environment.</p>
+            <p><strong>Key board type classifications:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>DBO (Type B):</strong> Distribution boards for operation by ordinary persons - live parts inaccessible</li>
+              <li><strong>DBO-A (Type A):</strong> For skilled persons only - live parts may be accessible during normal use</li>
+              <li><strong>Consumer unit:</strong> Specific type of DBO for domestic installations with integral main switch</li>
+              <li><strong>Sub-distribution board:</strong> Fed from main board, distributing to local final circuits</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Standards</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>BS EN 61439-3:</strong> Low-voltage switchgear assemblies
-              </li>
-              <li className="pl-1">
-                <strong>BS 7671:</strong> Regulations 132.12, 314.1, 514.9
-              </li>
-              <li className="pl-1">
-                <strong>BS EN 60529:</strong> IP rating classification
-              </li>
-              <li className="pl-1">
-                <strong>Forms 1-4:</strong> Internal separation requirements
-              </li>
+            <p><strong>Board Type Selection Guide</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Domestic:</strong> Consumer unit (Type B) — Non-combustible enclosure, integral main switch</li>
+              <li><strong>Commercial office:</strong> DBO-B — Tool-only access to live parts, IP2X minimum</li>
+              <li><strong>Industrial:</strong> DBO-A or DBO-B — Form of separation, higher IP rating</li>
+              <li><strong>Plant room:</strong> DBO-A (restricted access) — Higher forms of separation, dust/moisture protection</li>
+              <li><strong>External:</strong> DBO-B with IP65+ — Weather protection, UV-resistant materials</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Design principle:</strong> Always specify Type B (DBO-B) boards unless the installation is in a restricted access area operated exclusively by skilled persons.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Select appropriate distribution board types per BS EN 61439-3',
-              'Apply IP rating requirements for different environments',
-              'Design circuit groupings compliant with BS 7671',
-              'Specify labelling and documentation requirements',
-              'Plan cable entry, exit, and termination arrangements',
-              'Determine spare capacity and future expansion provisions',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Board Types and Designations */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Board Types and Designations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="IP Ratings and Environmental Protection">
+            <p>IP (Ingress Protection) ratings defined by BS EN 60529 specify the level of protection provided by enclosures against solid objects and moisture. Correct IP rating selection ensures distribution board reliability and safety throughout its service life.</p>
+            <p><strong>First Digit - Solid Objects</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>0:</strong> No protection</li>
+              <li><strong>1:</strong> Objects &gt;50mm (hand)</li>
+              <li><strong>2:</strong> Objects &gt;12.5mm (finger)</li>
+              <li><strong>3:</strong> Objects &gt;2.5mm (tools)</li>
+              <li><strong>4:</strong> Objects &gt;1mm (wires)</li>
+              <li><strong>5:</strong> Dust protected</li>
+              <li><strong>6:</strong> Dust tight</li>
+            </ul>
+            <p><strong>Second Digit - Moisture</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>0:</strong> No protection</li>
+              <li><strong>1:</strong> Vertical dripping water</li>
+              <li><strong>2:</strong> Dripping water (15° tilt)</li>
+              <li><strong>3:</strong> Spraying water (60°)</li>
+              <li><strong>4:</strong> Splashing water</li>
+              <li><strong>5:</strong> Water jets</li>
+              <li><strong>6:</strong> Powerful water jets</li>
+            </ul>
+            <p><strong>IP Rating Selection by Location</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Indoor dry (office, home):</strong> IP2X — IP20 or IP30</li>
+              <li><strong>Kitchen/utility:</strong> IP2X — IP40 or IP41</li>
+              <li><strong>Bathroom (outside zones):</strong> IP44 — IP44</li>
+              <li><strong>External sheltered:</strong> IP44 — IP55</li>
+              <li><strong>External exposed:</strong> IP55 — IP65 or IP66</li>
+              <li><strong>Industrial dusty:</strong> IP5X — IP54 or IP55</li>
+              <li><strong>Wash-down areas:</strong> IP65 — IP66 or IP67</li>
+            </ul>
+            <p><strong>Important:</strong> IP ratings apply with the enclosure closed. Cable entries must be properly sealed with appropriate glands to maintain the rated protection level.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Circuit Groupings and Layout Design">
+            <p>Effective circuit grouping within distribution boards is governed by BS 7671 Regulation 314.1, which requires installations to be divided into circuits to avoid danger and minimise inconvenience in the event of a fault, while facilitating safe operation, inspection, and maintenance.</p>
+            <p><strong>BS 7671 Circuit Division Requirements (Reg 314.1)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>- Separate circuits for different parts of the installation</li>
+              <li>- Avoid danger from failure of a single circuit</li>
+              <li>- Minimise possibility of unwanted tripping of RCDs</li>
+              <li>- Reduce effects of electromagnetic interference</li>
+              <li>- Consider load characteristics (harmonics, starting currents)</li>
+            </ul>
+            <p><strong>Recommended Circuit Groupings</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Lighting circuits:</strong> Separate from socket circuits; consider emergency lighting on dedicated supply</li>
+              <li><strong>Socket outlets:</strong> Ring finals or radials grouped by area or floor</li>
+              <li><strong>Fixed equipment:</strong> Individual circuits for large loads (cookers, showers, immersion heaters)</li>
+              <li><strong>Safety circuits:</strong> Fire alarm, emergency lighting, security on separate RCDs or non-RCD protected</li>
+              <li><strong>SELV/PELV:</strong> Must be segregated from higher voltage circuits per Regulation 528.1</li>
+            </ul>
+            <p><strong>RCD Allocation Strategy</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Socket outlets up to 32A:</strong> 30mA RCD required — Distribute across multiple RCDs</li>
+              <li><strong>Lighting circuits:</strong> 30mA RCD (most cases) — Separate RCD from sockets where possible</li>
+              <li><strong>Outdoor circuits:</strong> 30mA RCD required — Dedicated RCD recommended</li>
+              <li><strong>Freezers/fridges:</strong> RCD protected — Separate RCD to avoid food spoilage</li>
+              <li><strong>Fire alarm:</strong> May be non-RCD — Risk assessment required per Reg 411.3.3</li>
+            </ul>
+            <p><strong>Design tip:</strong> Use dual RCD consumer units or split-load boards to distribute circuits across two RCDs, ensuring loss of one RCD does not cause total loss of lighting or power.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Labelling, Documentation, and Installation">
+            <p>BS 7671 Regulation 514.9.1 mandates comprehensive labelling and documentation for distribution boards. Proper identification enables safe operation, efficient fault diagnosis, and compliant periodic inspection throughout the installation's lifetime.</p>
+            <p><strong>Required Circuit Chart Information (Reg 514.9.1)</strong></p>
+            <p><strong>Mandatory Elements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>- Circuit number/reference</li>
+              <li>- Type of protective device (MCB, RCBO, etc.)</li>
+              <li>- Nominal current rating (In)</li>
+              <li>- Circuit designation/description</li>
+              <li>- Points served or area covered</li>
+              <li>- Number of points (where applicable)</li>
+            </ul>
+            <p><strong>Additional Best Practice</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>- Cable type and size</li>
+              <li>- RCD rating if applicable</li>
+              <li>- Test results summary</li>
+              <li>- Date of installation/last test</li>
+              <li>- Reference to full test certificates</li>
+              <li>- Installer identification</li>
+            </ul>
+            <p><strong>Warning Labels Required by BS 7671</strong></p>
+            <p><strong>RCD Test Notice (Reg 514.12.2):</strong> "This installation, or part of it, is protected by a device which automatically switches off the supply if an earth fault develops. Test quarterly by pressing the button marked 'T' or 'Test'. The device should switch off the supply and should then be switched on to restore the supply. If the device does not switch off the supply when the button is pressed, seek expert advice."</p>
+            <p><strong>Dual Supply Warning:</strong> Required where more than one source of supply exists</p>
+            <p><strong>Voltage Warning:</strong> Where nominal voltage exceeds 230V between conductors</p>
+            <p><strong>Main Switch Identification:</strong> Clear identification of the means of isolation</p>
+            <p><strong>Installation Considerations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Accessibility:</strong> Reg 132.12 — Adequate space for operation and maintenance</li>
+              <li><strong>Mounting height:</strong> Best practice — Main switch 1.2-1.8m above floor level</li>
+              <li><strong>Cable entry:</strong> IP maintenance — Suitable glands, maintain bending radii</li>
+              <li><strong>Ventilation:</strong> Heat dissipation — Adequate clearance around enclosure</li>
+              <li><strong>Spare capacity:</strong> Future expansion — Minimum 20% spare ways recommended</li>
+              <li><strong>Earthing:</strong> Reg 542 — Adequate earth bar capacity, MET connection</li>
+            </ul>
+            <p><strong>Compliance note:</strong> Circuit charts must be accurate and updated following any modification. Inaccurate documentation creates safety risks during maintenance and emergency situations.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Distribution boards are classified according to BS EN 61439-3, which defines
-              requirements for low-voltage switchgear and controlgear assemblies. Understanding
-              board designations is essential for specifying appropriate equipment for each
-              installation environment.
+              <strong>Example 1: Domestic Consumer Unit Selection</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key board type classifications:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>DBO (Type B):</strong> Distribution boards for operation by ordinary
-                  persons - live parts inaccessible
-                </li>
-                <li className="pl-1">
-                  <strong>DBO-A (Type A):</strong> For skilled persons only - live parts may be
-                  accessible during normal use
-                </li>
-                <li className="pl-1">
-                  <strong>Consumer unit:</strong> Specific type of DBO for domestic installations
-                  with integral main switch
-                </li>
-                <li className="pl-1">
-                  <strong>Sub-distribution board:</strong> Fed from main board, distributing to
-                  local final circuits
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Board Type Selection Guide
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Installation Type
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Board Designation
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Key Requirements
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Domestic</td>
-                      <td className="border border-white/10 px-3 py-2">Consumer unit (Type B)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Non-combustible enclosure, integral main switch
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Commercial office</td>
-                      <td className="border border-white/10 px-3 py-2">DBO-B</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Tool-only access to live parts, IP2X minimum
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Industrial</td>
-                      <td className="border border-white/10 px-3 py-2">DBO-A or DBO-B</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Form of separation, higher IP rating
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Plant room</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        DBO-A (restricted access)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher forms of separation, dust/moisture protection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">External</td>
-                      <td className="border border-white/10 px-3 py-2">DBO-B with IP65+</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Weather protection, UV-resistant materials
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design principle:</strong> Always specify Type B (DBO-B) boards unless the
-              installation is in a restricted access area operated exclusively by skilled persons.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: IP Ratings and Environmental Protection */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            IP Ratings and Environmental Protection
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Specify a consumer unit for a 3-bedroom house with 12 circuits including lighting, sockets, cooker, shower, and outdoor supplies.</p>
+            <p>Requirements Analysis:</p>
+            <p>Circuits required: 12</p>
+            <p>Spare capacity (20%): 12 × 0.2 = 2.4 ≈ 3 spare ways</p>
+            <p>Total ways needed: 12 + 3 = 15 ways minimum</p>
+            <p>RCD allocation:</p>
+            <p>- RCD 1: Upstairs lighting, downstairs lighting, smoke alarms</p>
+            <p>- RCD 2: Ring main (ground), ring main (first), kitchen sockets</p>
+            <p>- Non-RCD or separate RCD: Cooker, shower, immersion</p>
+            <p>Specification:</p>
+            <p>- 18-way dual RCD consumer unit (or RCBO board)</p>
+            <p>- 100A main switch</p>
+            <p>- Type B (domestic, ordinary persons)</p>
+            <p>- IP20 (indoor dry location)</p>
+            <p>- Non-combustible enclosure (Amendment 3 requirement)</p>
             <p>
-              IP (Ingress Protection) ratings defined by BS EN 60529 specify the level of protection
-              provided by enclosures against solid objects and moisture. Correct IP rating selection
-              ensures distribution board reliability and safety throughout its service life.
+              <strong>Example 2: IP Rating Selection for External Board</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  First Digit - Solid Objects
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>0:</strong> No protection
-                  </li>
-                  <li className="pl-1">
-                    <strong>1:</strong> Objects &gt;50mm (hand)
-                  </li>
-                  <li className="pl-1">
-                    <strong>2:</strong> Objects &gt;12.5mm (finger)
-                  </li>
-                  <li className="pl-1">
-                    <strong>3:</strong> Objects &gt;2.5mm (tools)
-                  </li>
-                  <li className="pl-1">
-                    <strong>4:</strong> Objects &gt;1mm (wires)
-                  </li>
-                  <li className="pl-1">
-                    <strong>5:</strong> Dust protected
-                  </li>
-                  <li className="pl-1">
-                    <strong>6:</strong> Dust tight
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Second Digit - Moisture
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>0:</strong> No protection
-                  </li>
-                  <li className="pl-1">
-                    <strong>1:</strong> Vertical dripping water
-                  </li>
-                  <li className="pl-1">
-                    <strong>2:</strong> Dripping water (15° tilt)
-                  </li>
-                  <li className="pl-1">
-                    <strong>3:</strong> Spraying water (60°)
-                  </li>
-                  <li className="pl-1">
-                    <strong>4:</strong> Splashing water
-                  </li>
-                  <li className="pl-1">
-                    <strong>5:</strong> Water jets
-                  </li>
-                  <li className="pl-1">
-                    <strong>6:</strong> Powerful water jets
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                IP Rating Selection by Location
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Location</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Minimum IP</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Recommended IP</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Indoor dry (office, home)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">IP2X</td>
-                      <td className="border border-white/10 px-3 py-2">IP20 or IP30</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Kitchen/utility</td>
-                      <td className="border border-white/10 px-3 py-2">IP2X</td>
-                      <td className="border border-white/10 px-3 py-2">IP40 or IP41</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Bathroom (outside zones)</td>
-                      <td className="border border-white/10 px-3 py-2">IP44</td>
-                      <td className="border border-white/10 px-3 py-2">IP44</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">External sheltered</td>
-                      <td className="border border-white/10 px-3 py-2">IP44</td>
-                      <td className="border border-white/10 px-3 py-2">IP55</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">External exposed</td>
-                      <td className="border border-white/10 px-3 py-2">IP55</td>
-                      <td className="border border-white/10 px-3 py-2">IP65 or IP66</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Industrial dusty</td>
-                      <td className="border border-white/10 px-3 py-2">IP5X</td>
-                      <td className="border border-white/10 px-3 py-2">IP54 or IP55</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Wash-down areas</td>
-                      <td className="border border-white/10 px-3 py-2">IP65</td>
-                      <td className="border border-white/10 px-3 py-2">IP66 or IP67</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Important:</strong> IP ratings apply with the enclosure closed. Cable entries
-              must be properly sealed with appropriate glands to maintain the rated protection
-              level.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Circuit Groupings and Layout Design */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Circuit Groupings and Layout Design
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Select appropriate IP rating for a distribution board in an exposed car park location.</p>
+            <p>Environmental Assessment:</p>
+            <p>Location: External car park, no shelter</p>
+            <p>Exposure: Direct rain, wind-driven spray</p>
+            <p>Dust/debris: Moderate (vehicle movements)</p>
+            <p>IP Rating Analysis:</p>
+            <p>First digit: 5 or 6 (dust protected/tight)</p>
+            <p>Second digit: 5 or 6 (water jets/powerful jets)</p>
+            <p>Selection: IP65 minimum</p>
+            <p>- IP66 preferred for durability</p>
+            <p>Additional requirements:</p>
+            <p>- UV-resistant enclosure material</p>
+            <p>- Cable glands rated to match IP65/66</p>
+            <p>- Drainage provision (weep holes at lowest point)</p>
+            <p>- Anti-condensation heater if in humid climate</p>
             <p>
-              Effective circuit grouping within distribution boards is governed by BS 7671
-              Regulation 314.1, which requires installations to be divided into circuits to avoid
-              danger and minimise inconvenience in the event of a fault, while facilitating safe
-              operation, inspection, and maintenance.
+              <strong>Example 3: Three-Phase Board Layout</strong>
             </p>
+            <p><strong>Scenario:</strong> Design circuit allocation for a small commercial three-phase distribution board.</p>
+            <p>Load Schedule:</p>
+            <p>Single-phase loads:</p>
+            <p>- Lighting: 3 × 10A circuits (3.6kW each max)</p>
+            <p>- Socket circuits: 6 × 32A ring finals</p>
+            <p>- Fixed equipment: 3 × 20A (water heaters, etc.)</p>
+            <p>Three-phase loads:</p>
+            <p>- HVAC unit: 3P 32A</p>
+            <p>- Lift motor: 3P 40A</p>
+            <p>Phase Balancing:</p>
+            <p>L1: Light 1, Ring 1, Ring 4, WH 1 = ~22kW</p>
+            <p>L2: Light 2, Ring 2, Ring 5, WH 2 = ~22kW</p>
+            <p>L3: Light 3, Ring 3, Ring 6, WH 3 = ~22kW</p>
+            <p>Result: Balanced single-phase loading across phases</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                BS 7671 Circuit Division Requirements (Reg 314.1)
-              </p>
-              <ul className="text-sm space-y-1">
-                <li>- Separate circuits for different parts of the installation</li>
-                <li>- Avoid danger from failure of a single circuit</li>
-                <li>- Minimise possibility of unwanted tripping of RCDs</li>
-                <li>- Reduce effects of electromagnetic interference</li>
-                <li>- Consider load characteristics (harmonics, starting currents)</li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Recommended Circuit Groupings
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Lighting circuits:</strong> Separate from socket circuits; consider
-                  emergency lighting on dedicated supply
-                </li>
-                <li className="pl-1">
-                  <strong>Socket outlets:</strong> Ring finals or radials grouped by area or floor
-                </li>
-                <li className="pl-1">
-                  <strong>Fixed equipment:</strong> Individual circuits for large loads (cookers,
-                  showers, immersion heaters)
-                </li>
-                <li className="pl-1">
-                  <strong>Safety circuits:</strong> Fire alarm, emergency lighting, security on
-                  separate RCDs or non-RCD protected
-                </li>
-                <li className="pl-1">
-                  <strong>SELV/PELV:</strong> Must be segregated from higher voltage circuits per
-                  Regulation 528.1
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                RCD Allocation Strategy
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Circuit Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        RCD Requirement
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Allocation Guidance
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Socket outlets up to 32A</td>
-                      <td className="border border-white/10 px-3 py-2">30mA RCD required</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Distribute across multiple RCDs
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lighting circuits</td>
-                      <td className="border border-white/10 px-3 py-2">30mA RCD (most cases)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Separate RCD from sockets where possible
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Outdoor circuits</td>
-                      <td className="border border-white/10 px-3 py-2">30mA RCD required</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dedicated RCD recommended
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Freezers/fridges</td>
-                      <td className="border border-white/10 px-3 py-2">RCD protected</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Separate RCD to avoid food spoilage
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fire alarm</td>
-                      <td className="border border-white/10 px-3 py-2">May be non-RCD</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Risk assessment required per Reg 411.3.3
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Design tip:</strong> Use dual RCD consumer units or split-load boards to
-              distribute circuits across two RCDs, ensuring loss of one RCD does not cause total
-              loss of lighting or power.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Labelling, Documentation, and Installation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Labelling, Documentation, and Installation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              BS 7671 Regulation 514.9.1 mandates comprehensive labelling and documentation for
-              distribution boards. Proper identification enables safe operation, efficient fault
-              diagnosis, and compliant periodic inspection throughout the installation's lifetime.
+              <strong>Distribution Board Design Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Required Circuit Chart Information (Reg 514.9.1)
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Mandatory Elements</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>- Circuit number/reference</li>
-                    <li>- Type of protective device (MCB, RCBO, etc.)</li>
-                    <li>- Nominal current rating (In)</li>
-                    <li>- Circuit designation/description</li>
-                    <li>- Points served or area covered</li>
-                    <li>- Number of points (where applicable)</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Additional Best Practice</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>- Cable type and size</li>
-                    <li>- RCD rating if applicable</li>
-                    <li>- Test results summary</li>
-                    <li>- Date of installation/last test</li>
-                    <li>- Reference to full test certificates</li>
-                    <li>- Installer identification</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Warning Labels Required by BS 7671
-              </p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <strong>RCD Test Notice (Reg 514.12.2):</strong> "This installation, or part of
-                  it, is protected by a device which automatically switches off the supply if an
-                  earth fault develops. Test quarterly by pressing the button marked 'T' or 'Test'.
-                  The device should switch off the supply and should then be switched on to restore
-                  the supply. If the device does not switch off the supply when the button is
-                  pressed, seek expert advice."
-                </p>
-                <p>
-                  <strong>Dual Supply Warning:</strong> Required where more than one source of
-                  supply exists
-                </p>
-                <p>
-                  <strong>Voltage Warning:</strong> Where nominal voltage exceeds 230V between
-                  conductors
-                </p>
-                <p>
-                  <strong>Main Switch Identification:</strong> Clear identification of the means of
-                  isolation
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Installation Considerations
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Consideration</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Requirement</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Guidance</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Accessibility</td>
-                      <td className="border border-white/10 px-3 py-2">Reg 132.12</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Adequate space for operation and maintenance
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mounting height</td>
-                      <td className="border border-white/10 px-3 py-2">Best practice</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Main switch 1.2-1.8m above floor level
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cable entry</td>
-                      <td className="border border-white/10 px-3 py-2">IP maintenance</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Suitable glands, maintain bending radii
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ventilation</td>
-                      <td className="border border-white/10 px-3 py-2">Heat dissipation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Adequate clearance around enclosure
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Spare capacity</td>
-                      <td className="border border-white/10 px-3 py-2">Future expansion</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Minimum 20% spare ways recommended
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Earthing</td>
-                      <td className="border border-white/10 px-3 py-2">Reg 542</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Adequate earth bar capacity, MET connection
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Compliance note:</strong> Circuit charts must be accurate and updated
-              following any modification. Inaccurate documentation creates safety risks during
-              maintenance and emergency situations.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Determine total number of circuits required plus 20% spare capacity</li>
+              <li>Select board type (A or B) based on user access requirements</li>
+              <li>Specify IP rating appropriate to installation environment</li>
+              <li>Plan RCD allocation to minimise inconvenience from tripping</li>
+              <li>Group circuits logically by function and location</li>
+              <li>Verify prospective fault current is within board rating</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Spare capacity: <strong>Minimum 20%</strong> of total ways</li>
+              <li>DBO maximum rating: <strong>250A</strong> per BS EN 61439-3</li>
+              <li>Internal dry location: <strong>IP2X or IP20</strong> minimum</li>
+              <li>External exposed: <strong>IP65</strong> minimum recommended</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Domestic Consumer Unit Selection
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Specify a consumer unit for a 3-bedroom house with 12
-                circuits including lighting, sockets, cooker, shower, and outdoor supplies.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Requirements Analysis:</p>
-                <p className="mt-2">Circuits required: 12</p>
-                <p>Spare capacity (20%): 12 × 0.2 = 2.4 ≈ 3 spare ways</p>
-                <p>Total ways needed: 12 + 3 = 15 ways minimum</p>
-                <p className="mt-2">RCD allocation:</p>
-                <p className="ml-4">
-                  - RCD 1: Upstairs lighting, downstairs lighting, smoke alarms
-                </p>
-                <p className="ml-4">
-                  - RCD 2: Ring main (ground), ring main (first), kitchen sockets
-                </p>
-                <p className="ml-4">- Non-RCD or separate RCD: Cooker, shower, immersion</p>
-                <p className="mt-2">Specification:</p>
-                <p className="ml-4">- 18-way dual RCD consumer unit (or RCBO board)</p>
-                <p className="ml-4">- 100A main switch</p>
-                <p className="ml-4">- Type B (domestic, ordinary persons)</p>
-                <p className="ml-4">- IP20 (indoor dry location)</p>
-                <p className="ml-4 text-green-400">
-                  - Non-combustible enclosure (Amendment 3 requirement)
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: IP Rating Selection for External Board
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Select appropriate IP rating for a distribution board in
-                an exposed car park location.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Environmental Assessment:</p>
-                <p className="mt-2">Location: External car park, no shelter</p>
-                <p>Exposure: Direct rain, wind-driven spray</p>
-                <p>Dust/debris: Moderate (vehicle movements)</p>
-                <p className="mt-2">IP Rating Analysis:</p>
-                <p className="ml-4">First digit: 5 or 6 (dust protected/tight)</p>
-                <p className="ml-4">Second digit: 5 or 6 (water jets/powerful jets)</p>
-                <p className="mt-2">Selection: IP65 minimum</p>
-                <p className="ml-4">- IP66 preferred for durability</p>
-                <p className="mt-2">Additional requirements:</p>
-                <p className="ml-4">- UV-resistant enclosure material</p>
-                <p className="ml-4">- Cable glands rated to match IP65/66</p>
-                <p className="ml-4">- Drainage provision (weep holes at lowest point)</p>
-                <p className="ml-4 text-green-400">
-                  - Anti-condensation heater if in humid climate
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Three-Phase Board Layout
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Design circuit allocation for a small commercial
-                three-phase distribution board.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Load Schedule:</p>
-                <p className="mt-2">Single-phase loads:</p>
-                <p className="ml-4">- Lighting: 3 × 10A circuits (3.6kW each max)</p>
-                <p className="ml-4">- Socket circuits: 6 × 32A ring finals</p>
-                <p className="ml-4">- Fixed equipment: 3 × 20A (water heaters, etc.)</p>
-                <p className="mt-2">Three-phase loads:</p>
-                <p className="ml-4">- HVAC unit: 3P 32A</p>
-                <p className="ml-4">- Lift motor: 3P 40A</p>
-                <p className="mt-2">Phase Balancing:</p>
-                <p className="ml-4">L1: Light 1, Ring 1, Ring 4, WH 1 = ~22kW</p>
-                <p className="ml-4">L2: Light 2, Ring 2, Ring 5, WH 2 = ~22kW</p>
-                <p className="ml-4">L3: Light 3, Ring 3, Ring 6, WH 3 = ~22kW</p>
-                <p className="ml-4 text-green-400">
-                  Result: Balanced single-phase loading across phases
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Distribution Board Design Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Determine total number of circuits required plus 20% spare capacity
-                </li>
-                <li className="pl-1">
-                  Select board type (A or B) based on user access requirements
-                </li>
-                <li className="pl-1">Specify IP rating appropriate to installation environment</li>
-                <li className="pl-1">
-                  Plan RCD allocation to minimise inconvenience from tripping
-                </li>
-                <li className="pl-1">Group circuits logically by function and location</li>
-                <li className="pl-1">Verify prospective fault current is within board rating</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Insufficient spare capacity</strong> - leads to costly board replacement</li>
+                <li><strong>All circuits on one RCD</strong> - total loss of supply on single fault</li>
+                <li><strong>Incorrect IP rating</strong> - premature failure in hostile environments</li>
+                <li><strong>Missing or inaccurate circuit charts</strong> - safety risk during maintenance</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Spare capacity: <strong>Minimum 20%</strong> of total ways
-                </li>
-                <li className="pl-1">
-                  DBO maximum rating: <strong>250A</strong> per BS EN 61439-3
-                </li>
-                <li className="pl-1">
-                  Internal dry location: <strong>IP2X or IP20</strong> minimum
-                </li>
-                <li className="pl-1">
-                  External exposed: <strong>IP65</strong> minimum recommended
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Insufficient spare capacity</strong> - leads to costly board replacement
-                </li>
-                <li className="pl-1">
-                  <strong>All circuits on one RCD</strong> - total loss of supply on single fault
-                </li>
-                <li className="pl-1">
-                  <strong>Incorrect IP rating</strong> - premature failure in hostile environments
-                </li>
-                <li className="pl-1">
-                  <strong>Missing or inaccurate circuit charts</strong> - safety risk during
-                  maintenance
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Board Type Selection</p>
-                <ul className="space-y-0.5">
-                  <li>Type B (DBO-B): Ordinary persons - standard choice</li>
-                  <li>Type A (DBO-A): Skilled persons only</li>
-                  <li>Consumer unit: Domestic with integral main switch</li>
-                  <li>Forms 1-4: Increasing internal segregation</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">IP Rating Summary</p>
-                <ul className="space-y-0.5">
-                  <li>IP20/IP2X: Indoor dry locations</li>
-                  <li>IP44: Wet indoor or sheltered outdoor</li>
-                  <li>IP55: Light industrial, external protected</li>
-                  <li>IP65/66: External exposed, wash-down areas</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section6-2">
-              Next: Cable Selection and Sizing
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section6")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                System integration
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section6-2")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Circuit protection
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

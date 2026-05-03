@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 5 · Section 5 · Subsection 3 — Mechanical Commissioning
+ * HNC Electrical Engineering for Building Services (Project Management — Pearson U4004 + BSE PM context)
+ *   CIBSE Codes A, W and R — air systems, water systems and refrigeration commissioning. Pre-commissioning cleaning, balancing, performance testing.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Mechanical Commissioning - HNC Module 5 Section 5.3';
@@ -219,840 +236,558 @@ const faqs = [
 ];
 
 const HNCModule5Section5_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section5')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module5-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 5.5.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Mechanical Commissioning
-          </h1>
-          <p className="text-white">
-            CIBSE codes A, W and R, system balancing, flow measurement, pressure testing and
-            performance verification
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 5 · Section 5 · Subsection 3"
+            title="Mechanical Commissioning"
+            description="CIBSE codes A, W and R, system balancing, flow measurement, pressure testing and performance verification."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>CIBSE Code A:</strong> Air distribution systems
-              </li>
-              <li className="pl-1">
-                <strong>CIBSE Code W:</strong> Water distribution systems
-              </li>
-              <li className="pl-1">
-                <strong>CIBSE Code R:</strong> Refrigeration systems
-              </li>
-              <li className="pl-1">
-                <strong>Key tolerance:</strong> +/- 10% for air and water flows
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Proportional balancing:</strong> Relative flow adjustment
-              </li>
-              <li className="pl-1">
-                <strong>Pressure testing:</strong> 1.5x working pressure
-              </li>
-              <li className="pl-1">
-                <strong>Pre-commissioning:</strong> Flushing per BSRIA BG 29
-              </li>
-              <li className="pl-1">
-                <strong>Documentation:</strong> Records, O&M, as-builts
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              "Mechanical commissioning sequence: pre-commissioning cleaning → static testing → dynamic testing → balancing → performance testing → witness.",
+              "CIBSE Code A: air systems (pressure testing, flow measurement, balancing to ±10%). Code W: water systems (cleaning to BSRIA BG 29). Code R: refrigeration.",
+              "Pre-commissioning cleaning is non-negotiable — BSRIA BG 29 for water, ductwork cleaning for air. Skipped cleaning = system fouling within months.",
+              "Balancing: proportional balance to within ±10% of design flow; commissioning data recorded for handover.",
+              "Performance testing: system meets design intent under operating conditions, not just design conditions.",
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="CIBSE Commissioning Code A: Air Distribution Systems"
+            clause="CIBSE Code A provides recommendations for the commissioning of air distribution systems including pressure testing, leakage testing, fan performance, system regulation and balancing of supply, extract and recirculation air systems."
+            meaning={
+              <>
+                Code A is the technical reference for air system commissioning. Specifications increasingly require Code A compliance with documented results — flow rates, balance, leakage, fan curves. A system commissioned outside Code A is a system that will be retro-commissioned within 12 months at owner cost.
+              </>
+            }
+            cite="Source: CIBSE Commissioning Code A (refer to CIBSE published text for verbatim clauses)."
+          />
+
+
+          <LearningOutcomes
+            outcomes={[
               'Understand CIBSE Commissioning Codes A, W and R',
               'Apply proportional balancing techniques to water systems',
               'Commission air distribution systems to design parameters',
               'Perform pressure testing on hydronic and refrigeration systems',
               'Verify system performance against design criteria',
               'Prepare comprehensive commissioning documentation',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: CIBSE Commissioning Codes */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            CIBSE Commissioning Codes
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="CIBSE Commissioning Codes">
             <p>
               The Chartered Institution of Building Services Engineers (CIBSE) publishes
               commissioning codes that define standard procedures and acceptable performance
               criteria for building services systems. These codes are referenced in specifications
               and form the basis for commissioning contracts.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key CIBSE Commissioning Codes:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Code A:</strong> Air distribution systems (ductwork, AHUs, terminals)
-                </li>
-                <li className="pl-1">
-                  <strong>Code W:</strong> Water distribution systems (LTHW, CHW, condenser water)
-                </li>
-                <li className="pl-1">
-                  <strong>Code R:</strong> Refrigeration systems (chillers, VRF, DX equipment)
-                </li>
-                <li className="pl-1">
-                  <strong>Code C:</strong> Automatic controls (BMS, DDC systems)
-                </li>
-                <li className="pl-1">
-                  <strong>Code B:</strong> Boiler plant (now largely superseded)
-                </li>
-                <li className="pl-1">
-                  <strong>Code L:</strong> Lighting systems
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">CIBSE Code Overview</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Code</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">System Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Key Measurements
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Tolerance</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Code A</td>
-                      <td className="border border-white/10 px-3 py-2">Air distribution</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Air flow (l/s), pressure (Pa)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">+/- 10% terminals</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Code W</td>
-                      <td className="border border-white/10 px-3 py-2">Water distribution</td>
-                      <td className="border border-white/10 px-3 py-2">Flow (l/s), dT (K)</td>
-                      <td className="border border-white/10 px-3 py-2">+/- 10% circuits</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Code R</td>
-                      <td className="border border-white/10 px-3 py-2">Refrigeration</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Superheat (K), subcooling (K)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Per manufacturer</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Real-World Example: Office Building HVAC
-              </p>
-              <p className="text-sm text-white">
-                A new 10-storey office block requires commissioning of: 4 AHUs (Code A), LTHW
-                heating circuit with 200 FCUs (Code W), CHW cooling circuit (Code W), 2 air-cooled
-                chillers (Code R), and BMS integration (Code C). The commissioning engineer must
-                coordinate all trades, ensure pre-requisites are met, and demonstrate integrated
-                system performance before handover.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Key CIBSE commissioning codes:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Code A:</strong> Air distribution systems (ductwork, AHUs, terminals)
+              </li>
+              <li>
+                <strong>Code W:</strong> Water distribution systems (LTHW, CHW, condenser water)
+              </li>
+              <li>
+                <strong>Code R:</strong> Refrigeration systems (chillers, VRF, DX equipment)
+              </li>
+              <li>
+                <strong>Code C:</strong> Automatic controls (BMS, DDC systems)
+              </li>
+              <li>
+                <strong>Code B:</strong> Boiler plant (now largely superseded)
+              </li>
+              <li>
+                <strong>Code L:</strong> Lighting systems
+              </li>
+            </ul>
+            <p>
+              <strong>CIBSE code overview:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Code A — Air distribution:</strong> Air flow (l/s), pressure (Pa) — +/- 10%
+                terminals
+              </li>
+              <li>
+                <strong>Code W — Water distribution:</strong> Flow (l/s), dT (K) — +/- 10% circuits
+              </li>
+              <li>
+                <strong>Code R — Refrigeration:</strong> Superheat (K), subcooling (K) — Per
+                manufacturer
+              </li>
+            </ul>
+            <p>
+              <strong>Real-world example — office building HVAC:</strong> A new 10-storey office
+              block requires commissioning of: 4 AHUs (Code A), LTHW heating circuit with 200 FCUs
+              (Code W), CHW cooling circuit (Code W), 2 air-cooled chillers (Code R), and BMS
+              integration (Code C). The commissioning engineer must coordinate all trades, ensure
+              pre-requisites are met, and demonstrate integrated system performance before handover.
+            </p>
+            <p>
               <strong>Design principle:</strong> CIBSE codes provide a common language between
               designers, installers, and commissioning engineers - ensuring consistent quality
               standards.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Water System Balancing */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Water System Balancing (CIBSE Code W)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Water System Balancing (CIBSE Code W)">
             <p>
               Water system balancing ensures that each terminal unit receives its design flow rate.
               Without balancing, circuits closest to the pump receive excessive flow whilst remote
               circuits are starved, resulting in poor temperature control and wasted pump energy.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Proportional Balancing Method
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Identify index circuit (greatest resistance)</li>
-                  <li className="pl-1">Set index regulating valve fully open</li>
-                  <li className="pl-1">Measure flow at all circuits</li>
-                  <li className="pl-1">Calculate flow ratios vs design</li>
-                  <li className="pl-1">Adjust valves to achieve proportional balance</li>
-                  <li className="pl-1">Re-measure and fine-tune</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Pre-commissioning Requirements
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">System flushed per BSRIA BG 29</li>
-                  <li className="pl-1">Strainers cleaned and baskets fitted</li>
-                  <li className="pl-1">Pumps proven and running correctly</li>
-                  <li className="pl-1">All air vented from system</li>
-                  <li className="pl-1">Expansion vessel charged correctly</li>
-                  <li className="pl-1">All isolation valves fully open</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Flow Measurement Methods
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Equipment</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Accuracy</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Double regulating valve</td>
-                      <td className="border border-white/10 px-3 py-2">Manometer + valve Kv</td>
-                      <td className="border border-white/10 px-3 py-2">+/- 5%</td>
-                      <td className="border border-white/10 px-3 py-2">Branch circuits</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Orifice plate</td>
-                      <td className="border border-white/10 px-3 py-2">Differential pressure</td>
-                      <td className="border border-white/10 px-3 py-2">+/- 2%</td>
-                      <td className="border border-white/10 px-3 py-2">Main pipework</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ultrasonic clamp-on</td>
-                      <td className="border border-white/10 px-3 py-2">Transit time meter</td>
-                      <td className="border border-white/10 px-3 py-2">+/- 1-3%</td>
-                      <td className="border border-white/10 px-3 py-2">Non-invasive checks</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Electromagnetic</td>
-                      <td className="border border-white/10 px-3 py-2">Mag flow meter</td>
-                      <td className="border border-white/10 px-3 py-2">+/- 0.5%</td>
-                      <td className="border border-white/10 px-3 py-2">Permanent metering</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Calculating Flow from Differential Pressure
-              </p>
-              <p className="font-mono text-center text-lg mb-2">Q = Kv x sqrt(dP)</p>
-              <p className="text-xs text-white text-center mb-3">
-                Where Q = flow (m³/h), Kv = valve coefficient, dP = differential pressure (bar)
-              </p>
-              <p className="text-sm text-white">
+            <p>
+              <strong>Proportional balancing method:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Identify index circuit (greatest resistance)</li>
+              <li>Set index regulating valve fully open</li>
+              <li>Measure flow at all circuits</li>
+              <li>Calculate flow ratios vs design</li>
+              <li>Adjust valves to achieve proportional balance</li>
+              <li>Re-measure and fine-tune</li>
+            </ul>
+            <p>
+              <strong>Pre-commissioning requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>System flushed per BSRIA BG 29</li>
+              <li>Strainers cleaned and baskets fitted</li>
+              <li>Pumps proven and running correctly</li>
+              <li>All air vented from system</li>
+              <li>Expansion vessel charged correctly</li>
+              <li>All isolation valves fully open</li>
+            </ul>
+            <p>
+              <strong>Flow measurement methods:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Double regulating valve:</strong> Manometer + valve Kv — +/- 5% — Branch
+                circuits
+              </li>
+              <li>
+                <strong>Orifice plate:</strong> Differential pressure — +/- 2% — Main pipework
+              </li>
+              <li>
+                <strong>Ultrasonic clamp-on:</strong> Transit time meter — +/- 1-3% — Non-invasive
+                checks
+              </li>
+              <li>
+                <strong>Electromagnetic:</strong> Mag flow meter — +/- 0.5% — Permanent metering
+              </li>
+            </ul>
+            <p>
+              <strong>Calculating flow from differential pressure:</strong> Q = Kv x sqrt(dP)
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Where Q = flow (m³/h), Kv = valve coefficient, dP = differential pressure (bar)</li>
+              <li>
                 Example: A regulating valve with Kv = 2.5 shows dP = 0.16 bar. Flow = 2.5 x
                 sqrt(0.16) = 2.5 x 0.4 = 1.0 m³/h (0.28 l/s)
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+              </li>
+            </ul>
+            <p>
               <strong>Best practice:</strong> Balance in sequence from index circuit outward, not
               randomly. This minimises iterations and ensures stable final settings.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Air System Commissioning */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Air System Commissioning (CIBSE Code A)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Air System Commissioning (CIBSE Code A)">
             <p>
               Air system commissioning verifies that ductwork, air handling units, and terminal
               devices deliver the specified air quantities to each space. This affects indoor air
               quality, thermal comfort, and energy efficiency.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Pre-commissioning Checklist</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Ductwork pressure tested and sealed to specified leakage class
-                </li>
-                <li className="pl-1">
-                  Clean filters installed (commissioning set, not operating filters)
-                </li>
-                <li className="pl-1">Fan belts tensioned and guards fitted</li>
-                <li className="pl-1">Fire dampers released and access doors closed</li>
-                <li className="pl-1">All flexible connections intact and not kinked</li>
-                <li className="pl-1">Volume control dampers accessible and labelled</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Air Flow Measurement Techniques
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">At Terminals</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Balometer (capture hood) - direct reading</li>
-                    <li>Rotating vane anemometer with cone</li>
-                    <li>Hot wire anemometer for low velocities</li>
-                    <li>Calculate from face velocity x area</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">In Ductwork</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Pitot-static traverse (log-Tchebycheff)</li>
-                    <li>Minimum 5D upstream, 2D downstream</li>
-                    <li>Thermal anemometer traverse</li>
-                    <li>Orifice plate with manometer</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                System Type Considerations
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Commissioning Approach
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Checks</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Constant Volume (CAV)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Set dampers for design flow at each terminal
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Total flow, individual terminals
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Variable Air Volume (VAV)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Test at max and min positions
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Box response, leakage at min
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fan Coil Units</td>
-                      <td className="border border-white/10 px-3 py-2">Check each speed setting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fan currents, filter dP, noise
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Extract/LEV</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Verify capture velocities
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Face velocity, containment
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Real-World Example: VAV System
-              </p>
-              <p className="text-sm text-white">
-                A 50-box VAV system serving open-plan offices. Commissioning sequence: (1) Set AHU
-                to 100% supply, (2) Drive all boxes to maximum, (3) Measure and record each box
-                flow, (4) Adjust main dampers for +/- 10%, (5) Test box minimum positions for
-                ventilation compliance, (6) Verify pressure-independent operation by changing system
-                pressure, (7) Commission reheat coils if fitted.
-              </p>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Pre-commissioning checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Ductwork pressure tested and sealed to specified leakage class</li>
+              <li>Clean filters installed (commissioning set, not operating filters)</li>
+              <li>Fan belts tensioned and guards fitted</li>
+              <li>Fire dampers released and access doors closed</li>
+              <li>All flexible connections intact and not kinked</li>
+              <li>Volume control dampers accessible and labelled</li>
+            </ul>
+            <p>
+              <strong>Air flow measurement at terminals:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Balometer (capture hood) - direct reading</li>
+              <li>Rotating vane anemometer with cone</li>
+              <li>Hot wire anemometer for low velocities</li>
+              <li>Calculate from face velocity x area</li>
+            </ul>
+            <p>
+              <strong>Air flow measurement in ductwork:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Pitot-static traverse (log-Tchebycheff)</li>
+              <li>Minimum 5D upstream, 2D downstream</li>
+              <li>Thermal anemometer traverse</li>
+              <li>Orifice plate with manometer</li>
+            </ul>
+            <p>
+              <strong>System type considerations:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Constant Volume (CAV):</strong> Set dampers for design flow at each terminal
+                — Total flow, individual terminals
+              </li>
+              <li>
+                <strong>Variable Air Volume (VAV):</strong> Test at max and min positions — Box
+                response, leakage at min
+              </li>
+              <li>
+                <strong>Fan Coil Units:</strong> Check each speed setting — Fan currents, filter dP,
+                noise
+              </li>
+              <li>
+                <strong>Extract/LEV:</strong> Verify capture velocities — Face velocity, containment
+              </li>
+            </ul>
+            <p>
+              <strong>Real-world example — VAV system:</strong> A 50-box VAV system serving
+              open-plan offices. Commissioning sequence: (1) Set AHU to 100% supply, (2) Drive all
+              boxes to maximum, (3) Measure and record each box flow, (4) Adjust main dampers for
+              +/- 10%, (5) Test box minimum positions for ventilation compliance, (6) Verify
+              pressure-independent operation by changing system pressure, (7) Commission reheat
+              coils if fitted.
+            </p>
+            <p>
               <strong>Site tip:</strong> Always balance supply and extract systems together.
               Unbalanced pressures cause door opening issues, noise, and uncontrolled infiltration.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Pressure Testing and Performance Verification */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Pressure Testing and Performance Verification
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Pressure Testing and Performance Verification">
             <p>
               Pressure testing verifies system integrity before commissioning begins. Performance
               verification confirms that the complete, integrated system delivers the specified
               conditions under representative load conditions.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Hydronic System Pressure Testing
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Test pressure:</strong> 1.5 x maximum working pressure (typically 4.5 bar
-                  for 3 bar systems)
-                </li>
-                <li className="pl-1">
-                  <strong>Duration:</strong> Minimum 2 hours, preferably overnight
-                </li>
-                <li className="pl-1">
-                  <strong>Acceptance:</strong> No visible leaks, pressure drop less than 0.1 bar
-                  after temperature stabilisation
-                </li>
-                <li className="pl-1">
-                  <strong>Documentation:</strong> Record initial pressure, temperature, time, and
-                  final readings
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Refrigeration System Testing
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Test</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Criteria</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Strength test</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        OFN at 1.1x design pressure
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Hold for 10 minutes</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Leak test</td>
-                      <td className="border border-white/10 px-3 py-2">OFN at design pressure</td>
-                      <td className="border border-white/10 px-3 py-2">24 hours, no drop</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Evacuation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Vacuum pump to less than 500 microns
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rise test - max 200 microns/hour
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Charge verification</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Superheat/subcooling measurement
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Per manufacturer specs</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Performance Verification Tests
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Full load capacity test</li>
-                  <li className="pl-1">Part load efficiency check</li>
-                  <li className="pl-1">Setpoint response verification</li>
-                  <li className="pl-1">Safety interlock testing</li>
-                  <li className="pl-1">BMS point verification</li>
-                  <li className="pl-1">Alarm and trend logging</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Acceptance Tolerances
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Room temperature: +/- 1K</li>
-                  <li className="pl-1">Supply air temperature: +/- 2K</li>
-                  <li className="pl-1">Relative humidity: +/- 5%</li>
-                  <li className="pl-1">Flow rates: +/- 10%</li>
-                  <li className="pl-1">Noise levels: NC/NR as specified</li>
-                  <li className="pl-1">Energy consumption: within design</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Documentation Requirements
-              </p>
-              <p className="text-sm text-white mb-2">
-                Complete commissioning handover includes:
-              </p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Commissioning records:</strong> All test sheets with measured values,
-                  design values, and deviations
-                </li>
-                <li className="pl-1">
-                  <strong>Setting schedules:</strong> Final valve positions, damper settings, BMS
-                  setpoints
-                </li>
-                <li className="pl-1">
-                  <strong>O&M manuals:</strong> Equipment data, maintenance procedures, spare parts
-                </li>
-                <li className="pl-1">
-                  <strong>As-built drawings:</strong> Reflecting actual installation
-                </li>
-                <li className="pl-1">
-                  <strong>Training records:</strong> Evidence of operator training
-                </li>
-                <li className="pl-1">
-                  <strong>Warranties:</strong> Equipment warranties and maintenance contracts
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Hydronic system pressure testing:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Test pressure:</strong> 1.5 x maximum working pressure (typically 4.5 bar
+                for 3 bar systems)
+              </li>
+              <li>
+                <strong>Duration:</strong> Minimum 2 hours, preferably overnight
+              </li>
+              <li>
+                <strong>Acceptance:</strong> No visible leaks, pressure drop less than 0.1 bar after
+                temperature stabilisation
+              </li>
+              <li>
+                <strong>Documentation:</strong> Record initial pressure, temperature, time, and
+                final readings
+              </li>
+            </ul>
+            <p>
+              <strong>Refrigeration system testing:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Strength test:</strong> OFN at 1.1x design pressure — Hold for 10 minutes
+              </li>
+              <li>
+                <strong>Leak test:</strong> OFN at design pressure — 24 hours, no drop
+              </li>
+              <li>
+                <strong>Evacuation:</strong> Vacuum pump to less than 500 microns — Rise test - max
+                200 microns/hour
+              </li>
+              <li>
+                <strong>Charge verification:</strong> Superheat/subcooling measurement — Per
+                manufacturer specs
+              </li>
+            </ul>
+            <p>
+              <strong>Performance verification tests:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Full load capacity test</li>
+              <li>Part load efficiency check</li>
+              <li>Setpoint response verification</li>
+              <li>Safety interlock testing</li>
+              <li>BMS point verification</li>
+              <li>Alarm and trend logging</li>
+            </ul>
+            <p>
+              <strong>Acceptance tolerances:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Room temperature: +/- 1K</li>
+              <li>Supply air temperature: +/- 2K</li>
+              <li>Relative humidity: +/- 5%</li>
+              <li>Flow rates: +/- 10%</li>
+              <li>Noise levels: NC/NR as specified</li>
+              <li>Energy consumption: within design</li>
+            </ul>
+            <p>
+              <strong>Documentation requirements — complete commissioning handover includes:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Commissioning records:</strong> All test sheets with measured values, design
+                values, and deviations
+              </li>
+              <li>
+                <strong>Setting schedules:</strong> Final valve positions, damper settings, BMS
+                setpoints
+              </li>
+              <li>
+                <strong>O&M manuals:</strong> Equipment data, maintenance procedures, spare parts
+              </li>
+              <li>
+                <strong>As-built drawings:</strong> Reflecting actual installation
+              </li>
+              <li>
+                <strong>Training records:</strong> Evidence of operator training
+              </li>
+              <li>
+                <strong>Warranties:</strong> Equipment warranties and maintenance contracts
+              </li>
+            </ul>
+            <p>
               <strong>Lead times:</strong> Allow adequate time for performance verification - summer
               testing of heating or winter testing of cooling may require seasonal witnessing.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — Water flow calculation:</strong> A double regulating valve has Kv
+              = 4.0. The manometer reads 25 kPa differential pressure. What is the flow rate?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Convert pressure: 25 kPa = 0.25 bar</li>
+              <li>Q = Kv x sqrt(dP)</li>
+              <li>
+                Q = 4.0 x sqrt(0.25) = 4.0 x 0.5 = <strong>2.0 m³/h</strong>
+              </li>
+              <li>
+                Convert to l/s: 2.0 / 3.6 = <strong>0.56 l/s</strong>
+              </li>
+            </ul>
+            <p>
+              <strong>Example 2 — Air flow deviation:</strong> A supply grille has design flow of
+              120 l/s. Measured flow with balometer is 108 l/s. Is this acceptable?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Deviation = ((Measured - Design) / Design) x 100%</li>
+              <li>
+                Deviation = ((108 - 120) / 120) x 100% = <strong>-10%</strong>
+              </li>
+              <li>CIBSE Code A tolerance: +/- 10%</li>
+              <li>
+                <strong>Result:</strong> Acceptable (just within tolerance)
+              </li>
+            </ul>
+            <p>
+              <strong>Example 3 — Proportional balancing:</strong> Three circuits have design flows
+              of 1.0, 0.8, and 0.6 l/s. Measured flows with index valve (Circuit 1) fully open are:
+              1.2, 1.1, and 0.9 l/s. Calculate required flow ratios.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Design ratios (relative to index): 1.0/1.0=1.0, 0.8/1.0=0.8, 0.6/1.0=0.6</li>
+              <li>Current ratios: 1.2/1.2=1.0, 1.1/1.2=0.92, 0.9/1.2=0.75</li>
+              <li>Circuit 2: 0.8/0.92 = 0.87 (close valve to reduce flow)</li>
+              <li>Circuit 3: 0.6/0.75 = 0.80 (close valve to reduce flow)</li>
+              <li>Adjust valves, re-measure, iterate until all within tolerance</li>
+            </ul>
+            <p>
+              <strong>Example 4 — Refrigerant superheat check:</strong> R410A system shows suction
+              pressure of 10 bar (saturation temp 5°C) and suction line temperature of 12°C. What is
+              the superheat?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Superheat = Actual temperature - Saturation temperature</li>
+              <li>
+                Superheat = 12°C - 5°C = <strong>7K</strong>
+              </li>
+              <li>Normal range: 5-8K</li>
+              <li>
+                <strong>Result:</strong> Correct charge, system operating normally
+              </li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Water Flow Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A double regulating valve has Kv = 4.0. The manometer
-                reads 25 kPa differential pressure. What is the flow rate?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Convert pressure: 25 kPa = 0.25 bar</p>
-                <p className="mt-2">Q = Kv x sqrt(dP)</p>
-                <p>
-                  Q = 4.0 x sqrt(0.25) = 4.0 x 0.5 = <strong>2.0 m³/h</strong>
-                </p>
-                <p className="mt-2">
-                  Convert to l/s: 2.0 / 3.6 = <strong>0.56 l/s</strong>
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Air Flow Deviation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A supply grille has design flow of 120 l/s. Measured flow
-                with balometer is 108 l/s. Is this acceptable?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Deviation = ((Measured - Design) / Design) x 100%</p>
-                <p>
-                  Deviation = ((108 - 120) / 120) x 100% = <strong>-10%</strong>
-                </p>
-                <p className="mt-2">CIBSE Code A tolerance: +/- 10%</p>
-                <p className="mt-2 text-green-400">Result: Acceptable (just within tolerance)</p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Commissioning sequence checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Verify all pre-commissioning activities complete (cleaning, testing)</li>
+              <li>Obtain design data, drawings, and equipment schedules</li>
+              <li>Check instruments calibrated within date</li>
+              <li>Commission central plant before distribution</li>
+              <li>Balance primary circuits before secondary</li>
+              <li>Record all measurements systematically</li>
+              <li>Identify and resolve defects before sign-off</li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Air/water flow tolerance: <strong>+/- 10%</strong>
+              </li>
+              <li>
+                Room temperature tolerance: <strong>+/- 1K</strong>
+              </li>
+              <li>
+                Hydronic test pressure: <strong>1.5 x working pressure</strong>
+              </li>
+              <li>
+                Superheat target: <strong>5-8K</strong>
+              </li>
+              <li>
+                Duct main velocity: <strong>4-6 m/s</strong>
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Proportional Balancing
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Three circuits have design flows of 1.0, 0.8, and 0.6
-                l/s. Measured flows with index valve (Circuit 1) fully open are: 1.2, 1.1, and 0.9
-                l/s. Calculate required flow ratios.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Design ratios (relative to index): 1.0/1.0=1.0, 0.8/1.0=0.8, 0.6/1.0=0.6</p>
-                <p className="mt-2">Current ratios: 1.2/1.2=1.0, 1.1/1.2=0.92, 0.9/1.2=0.75</p>
-                <p className="mt-2">Required adjustment:</p>
-                <p>Circuit 2: 0.8/0.92 = 0.87 (close valve to reduce flow)</p>
-                <p>Circuit 3: 0.6/0.75 = 0.80 (close valve to reduce flow)</p>
-                <p className="mt-2 text-white">
-                  Adjust valves, re-measure, iterate until all within tolerance
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 4: Refrigerant Superheat Check
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> R410A system shows suction pressure of 10 bar (saturation
-                temp 5°C) and suction line temperature of 12°C. What is the superheat?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Superheat = Actual temperature - Saturation temperature</p>
-                <p>
-                  Superheat = 12°C - 5°C = <strong>7K</strong>
-                </p>
-                <p className="mt-2">Normal range: 5-8K</p>
-                <p className="mt-2 text-green-400">
-                  Result: Correct charge, system operating normally
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Commissioning Sequence Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Verify all pre-commissioning activities complete (cleaning, testing)
-                </li>
-                <li className="pl-1">Obtain design data, drawings, and equipment schedules</li>
-                <li className="pl-1">Check instruments calibrated within date</li>
-                <li className="pl-1">Commission central plant before distribution</li>
-                <li className="pl-1">Balance primary circuits before secondary</li>
-                <li className="pl-1">Record all measurements systematically</li>
-                <li className="pl-1">Identify and resolve defects before sign-off</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Air/water flow tolerance: <strong>+/- 10%</strong>
-                </li>
-                <li className="pl-1">
-                  Room temperature tolerance: <strong>+/- 1K</strong>
-                </li>
-                <li className="pl-1">
-                  Hydronic test pressure: <strong>1.5 x working pressure</strong>
-                </li>
-                <li className="pl-1">
-                  Superheat target: <strong>5-8K</strong>
-                </li>
-                <li className="pl-1">
-                  Duct main velocity: <strong>4-6 m/s</strong>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Commissioning dirty systems</strong> - debris damages pumps and valves
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Balancing without design data</strong> - no target means no compliance
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Ignoring temperature effects</strong> - pressure tests vary with
                   temperature
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Insufficient documentation</strong> - unmeasured terminals cause future
                   disputes
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Using air for refrigeration testing</strong> - moisture causes corrosion
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Flush systems per BSRIA BG 29 before commissioning, work to documented design flows, allow temperature to stabilise during pressure tests, record every terminal measurement, and only ever use OFN on refrigeration pipework."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Skipped pre-commissioning cleaning — system failure within six months"
+            situation={
+              <>
+                To save programme time, the mechanical sub skips BSRIA BG 29 chemical cleaning of the chilled water system. The system is filled and commissioned. Within six months the building reports comfort cooling failures; investigation finds the AHU coils fouled with construction debris and biofilm. Cost of remedial cleaning, flushing and coil replacement: £180k. The contractor and design team dispute responsibility; the warranty will not cover it.
+              </>
+            }
+            whatToDo={
+              <>
+                Pre-commissioning cleaning is non-negotiable on any closed water system. Make it a hold point on the ITP: chemical clean to BG 29, flush, side-stream filtration, water quality test (TVCs, conductivity, pH) signed off before final fill. Witness the process if the contractor proposes shortcuts. The cost of cleaning is a fraction of the cost of contamination.
+              </>
+            }
+            whyItMatters={
+              <>
+                Skipped pre-commissioning is a hidden defect that surfaces after the contractor leaves site. The owner pays; the warranty is contested; the project's reputation suffers. Discipline on cleaning protects everyone.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">CIBSE Commissioning Codes</p>
-                <ul className="space-y-0.5">
-                  <li>Code A - Air distribution systems</li>
-                  <li>Code W - Water distribution systems</li>
-                  <li>Code R - Refrigeration systems</li>
-                  <li>Code C - Automatic controls</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Performance Tolerances</p>
-                <ul className="space-y-0.5">
-                  <li>Air/water flows: +/- 10%</li>
-                  <li>Room temperature: +/- 1K</li>
-                  <li>Supply air temp: +/- 2K</li>
-                  <li>Relative humidity: +/- 5%</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+                    <KeyTakeaways
+            points={[
+              "Sequence: pre-comm cleaning → static → dynamic → balance → performance → witness.",
+              "CIBSE Code A: air. Code W: water. Code R: refrigeration.",
+              "Pre-commissioning cleaning to BSRIA BG 29 (water) — non-negotiable.",
+              "Balancing to ±10% of design flow; commissioning data recorded.",
+              "Performance testing under operating conditions, not just design conditions.",
+              "Independent commissioning specialist (CSA, BSRIA) for complex systems.",
+              "Skipped pre-comm = system fouling within months at owner cost.",
+              "Witness testing with documentation supports warranty and acceptance.",
+            ]}
+          />
+
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Commissioning & Handover
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section5-4">
-              Next: Electrical Commissioning
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section5')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Commissioning and handover
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section5-4')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                BMS commissioning
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

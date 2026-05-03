@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 6 · Section 5 · Subsection 2 — Metering Strategies
+ * HNC Electrical Engineering for Building Services (Sustainability and Environmental Engineering)
+ *   Main metering, sub-metering, automatic meter reading, data loggers, and metering hierarchies for building energy management
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Metering Strategies - HNC Module 6 Section 5.2';
@@ -226,946 +243,406 @@ const faqs = [
 ];
 
 const HNCModule6Section5_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section5")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module6-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.5.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Metering Strategies
-          </h1>
-          <p className="text-white">
-            Main metering, sub-metering, automatic meter reading, data loggers, and metering
-            hierarchies for building energy management
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 6 · Section 5 · Subsection 2"
+            title="Metering Strategies"
+            description="Main metering, sub-metering, automatic meter reading, data loggers, and metering hierarchies for building energy management"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Metering hierarchy:</strong> Structured levels from main to sub-circuits
-              </li>
-              <li className="pl-1">
-                <strong>Sub-metering:</strong> Enables cost apportionment and consumption analysis
-              </li>
-              <li className="pl-1">
-                <strong>AMR:</strong> Automatic remote data collection from meters
-              </li>
-              <li className="pl-1">
-                <strong>CIBSE TM39:</strong> Target 90% of consumption metered
-              </li>
+          <TLDR
+            points={[
+              "Building metering is structured hierarchically — main incoming meter (utility billed), then sub-meters by floor / tenancy / system (HVAC, lighting, small power, IT), each with class-1 or class-2 accuracy and BMS connection for 30-minute or finer interval data.",
+              "Part L mandates sub-metering for end-uses >250 m² floor area or >10% of total demand on non-domestic buildings — the legal floor; CIBSE TM39 sets the practical metering strategy guidance.",
+              "Automatic Meter Reading (AMR) and BMS integration are the basis of monitoring & targeting — without interval data, energy management is reactive and savings are unverifiable.",
+            ]}
+          />
+
+          <RegsCallout
+            source="Approved Document L Volume 2 + CIBSE TM39 (Building Energy Metering) + The Smart Meter Implementation Programme"
+            clause="In a building with a total useful floor area greater than 1000 m², separate metering shall be provided for each fuel and for each end-use category exceeding 250 m² floor area or 10% of the building's total energy demand. Metering shall enable at least 90% of the estimated annual energy consumption of each fuel to be assigned to the various end-use categories. Each meter shall be readable both manually and remotely, and shall comply with the appropriate accuracy class for revenue or sub-billing purposes."
+            meaning={
+              <>
+                Part L 2021 metering provisions are stricter than 2013. Every meaningful end-use needs a sub-meter; the 90% allocation rule means no large unmetered loads. Smart Meter (SMETS2) requirement for utility-billed meters separately mandates remote reading. CIBSE TM39 is the practical reference for designing the metering strategy.
+              </>
+            }
+            cite="Source: Approved Document L Volume 2: 2021 — gov.uk; CIBSE TM39 (2021) Building Energy Metering — cibse.org"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Design metering hierarchies per CIBSE TM39 guidance",
+              "Specify main metering and sub-metering arrangements",
+              "Select appropriate meter accuracy classes and CT ratings",
+              "Implement automatic meter reading (AMR) systems",
+              "Configure data loggers and logging intervals",
+              "Integrate metering with BMS and energy monitoring systems",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Metering Hierarchy and Strategy">
+            <p>A well-designed metering hierarchy enables effective energy management by providing visibility of consumption at multiple levels throughout a building. CIBSE TM39 provides comprehensive guidance on metering strategy development, recommending that at least 90% of total building energy consumption should be captured by sub-metering.</p>
+            <p><strong>Metering hierarchy levels:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Level 1 (Fiscal):</strong> Main utility meters at building intake - used for billing</li>
+              <li><strong>Level 2 (Sub-main):</strong> Distribution board level meters - major systems or zones</li>
+              <li><strong>Level 3 (Circuit):</strong> Individual circuit or load meters - specific equipment</li>
+              <li><strong>Level 4 (Equipment):</strong> Individual plant items - chillers, AHUs, lifts</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>CT metering:</strong> Required above 100A circuits
-              </li>
-              <li className="pl-1">
-                <strong>Class 1 accuracy:</strong> ±1.0% for commercial metering
-              </li>
-              <li className="pl-1">
-                <strong>Modbus:</strong> Common protocol for BMS integration
-              </li>
-              <li className="pl-1">
-                <strong>MID approval:</strong> Required for tenant recharging
-              </li>
+            <p><strong>Typical Metering Hierarchy Structure</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Level 1:</strong> Main intake room — Utility billing — Fiscal CT meter (Class 0.5)</li>
+              <li><strong>Level 2:</strong> MSB outgoing ways — System/zone allocation — CT meter (Class 1.0)</li>
+              <li><strong>Level 3:</strong> Floor/tenant DBs — Tenant recharging — MID approved meter</li>
+              <li><strong>Level 4:</strong> Plant equipment — Equipment monitoring — Direct connect/CT meter</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>CIBSE TM39 Metering Guidance</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Target metering coverage: <strong>≥90%</strong> of total consumption</li>
+              <li>• Separate metering recommended for: HVAC, lighting, small power, lifts, catering</li>
+              <li>• Tenant areas: Individual metering essential for recharging</li>
+              <li>• Central plant: Each major item (chillers, boilers, pumps) separately metered</li>
+            </ul>
+            <p><strong>Design principle:</strong> The metering strategy should align with the building's energy management objectives, lease structure, and reporting requirements.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Design metering hierarchies per CIBSE TM39 guidance',
-              'Specify main metering and sub-metering arrangements',
-              'Select appropriate meter accuracy classes and CT ratings',
-              'Implement automatic meter reading (AMR) systems',
-              'Configure data loggers and logging intervals',
-              'Integrate metering with BMS and energy monitoring systems',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Metering Hierarchy and Strategy */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Metering Hierarchy and Strategy
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Main Metering and Sub-Metering">
+            <p>Main metering (fiscal metering) provides the billing interface with the utility supplier, whilst sub-metering enables internal energy management, cost allocation, and consumption analysis. The choice of metering arrangement depends on building use, tenancy structure, and management objectives.</p>
+            <p><strong>Main (Fiscal) Metering</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Utility-owned and maintained</li>
+              <li>MID approved, Class 0.5 minimum</li>
+              <li>CT metering above 100A</li>
+              <li>Half-hourly data for large sites</li>
+              <li>Sealed and tamper-evident</li>
+            </ul>
+            <p><strong>Sub-Metering</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Building owner installed</li>
+              <li>Class 1.0 typical (Class 0.5 for recharging)</li>
+              <li>Direct connect up to 100A</li>
+              <li>Logging intervals as required</li>
+              <li>BMS/monitoring system integration</li>
+            </ul>
+            <p><strong>Sub-Metering Strategies</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>By tenant:</strong> Multi-tenant buildings — Fair cost allocation — MID approval for recharging</li>
+              <li><strong>By system:</strong> Single occupancy — Identifies energy use by end use — Requires careful categorisation</li>
+              <li><strong>By zone/floor:</strong> Large floor plate buildings — Location-based analysis — May not align with systems</li>
+              <li><strong>Hybrid:</strong> Complex buildings — Flexible analysis options — More meters, higher cost</li>
+            </ul>
+            <p><strong>CIBSE TM39 Recommended Sub-Metering Categories</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>HVAC:</strong> Chillers, boilers, pumps, fans, FCUs, splits (separately where practical)</li>
+              <li><strong>Lighting:</strong> General lighting, emergency lighting, external lighting</li>
+              <li><strong>Small power:</strong> General socket outlets, IT equipment, printers</li>
+              <li><strong>Specialist:</strong> Lifts, catering, server rooms, process loads</li>
+              <li><strong>Renewables:</strong> PV generation, battery storage (import/export)</li>
+            </ul>
+            <p><strong>Best practice:</strong> Install metering at design stage - retrofitting is significantly more expensive and disruptive.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Automatic Meter Reading and Data Loggers">
+            <p>Automatic Meter Reading (AMR) eliminates manual meter reading, enables frequent data collection, and supports real-time energy monitoring. Data loggers store consumption profiles for analysis and can integrate with building management systems for comprehensive energy management.</p>
+            <p><strong>AMR System Components</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Meters:</strong> Energy meters with communication interfaces</li>
+              <li><strong>Communications:</strong> Modbus, M-Bus, BACnet, pulse outputs</li>
+              <li><strong>Data concentrator:</strong> Collects data from multiple meters</li>
+              <li><strong>Software:</strong> Energy monitoring and analysis platform</li>
+              <li><strong>Network:</strong> Wired (RS485, Ethernet) or wireless (LoRa, GSM)</li>
+            </ul>
+            <p><strong>Communication Protocols</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Modbus RTU:</strong> RS485 (2-wire) — Industrial metering — 1200m</li>
+              <li><strong>Modbus TCP:</strong> Ethernet — BMS integration — 100m per segment</li>
+              <li><strong>M-Bus:</strong> 2-wire bus — Utility metering — 1000m</li>
+              <li><strong>BACnet MS/TP:</strong> RS485 — BMS integration — 1200m</li>
+              <li><strong>Pulse output:</strong> Volt-free contact — Simple counting — Application dependent</li>
+            </ul>
+            <p><strong>Pulse Counting</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Standard: 1 pulse = 1 kWh</li>
+              <li>High resolution: 10-1000 pulses/kWh</li>
+              <li>Pulse width typically 100ms</li>
+              <li>Requires pulse counter/logger</li>
+              <li>Simple, reliable, low cost</li>
+            </ul>
+            <p><strong>Data Logging Intervals</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>1 minute: Power quality, demand spikes</li>
+              <li>15 minutes: Standard energy analysis</li>
+              <li>30 minutes: Half-hourly settlement</li>
+              <li>1 hour: General monitoring</li>
+              <li>Daily: Simple trend analysis</li>
+            </ul>
+            <p><strong>Data Logger Functions</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Interval recording:</strong> Store readings at defined intervals (typically 15-30 minutes)</li>
+              <li><strong>Maximum demand:</strong> Record peak demand in each interval for tariff analysis</li>
+              <li><strong>Time-of-use:</strong> Separate registers for peak/off-peak periods</li>
+              <li><strong>Power quality:</strong> Voltage, current, power factor, harmonics logging</li>
+              <li><strong>Alarm logging:</strong> Record over/under voltage, power factor trips, demand limits</li>
+            </ul>
+            <p><strong>Integration tip:</strong> Ensure sufficient data storage capacity - 15-minute logging generates 35,000+ readings per meter per year.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="CT Metering and Accuracy Classes">
+            <p>Current Transformer (CT) metering is required when circuit currents exceed the direct connection capability of meters, typically above 100A. Correct CT selection and installation is critical for metering accuracy - errors in CT ratio, burden, or class directly affect energy measurement.</p>
+            <p><strong>CT Selection Criteria</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Primary current:</strong> 125% of design current — 400A circuit → 500/5 CT</li>
+              <li><strong>Secondary current:</strong> 5A standard, 1A for long runs — 5A typical, 1A if &gt;30m cable</li>
+              <li><strong>Accuracy class:</strong> Match meter requirements — Class 0.5 for fiscal, Class 1 for sub</li>
+              <li><strong>Burden (VA):</strong> Meter VA + cable losses — 5VA meter + 2VA cable = 7.5VA CT</li>
+              <li><strong>Window size:</strong> Accommodate conductor/busbar — Split-core for retrofit</li>
+            </ul>
+            <p><strong>Meter Accuracy Classes (IEC 62053)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Class 0.2S:</strong> ±0.2% — Revenue metering, high-value loads</li>
+              <li><strong>Class 0.5S:</strong> ±0.5% — Fiscal metering, check metering</li>
+              <li><strong>Class 1:</strong> ±1.0% — Commercial sub-metering</li>
+              <li><strong>Class 2:</strong> ±2.0% — Domestic, monitoring only</li>
+            </ul>
+            <p><strong>CT Installation Best Practice</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Orientation:</strong> Install CTs with correct polarity (P1/K marking towards supply)</li>
+              <li><strong>Conductor position:</strong> Centre conductor in CT window for accuracy</li>
+              <li><strong>Secondary wiring:</strong> Never open-circuit secondary when primary is energised</li>
+              <li><strong>Cable size:</strong> Calculate secondary cable to limit voltage drop (typically &lt;1V)</li>
+              <li><strong>Phase identification:</strong> Ensure CTs match meter phase inputs (L1-L1, L2-L2, L3-L3)</li>
+            </ul>
+            <p><strong>Multi-Function Meter Parameters</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Active energy (kWh import/export)</li>
+              <li>Reactive energy (kVArh)</li>
+              <li>Apparent energy (kVAh)</li>
+              <li>Maximum demand (kW, kVA)</li>
+              <li>Power factor (per phase, total)</li>
+              <li>Voltage, current, frequency</li>
+              <li>THD (Total Harmonic Distortion)</li>
+            </ul>
+            <p><strong>BMS Integration Points</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Real-time power monitoring</li>
+              <li>Energy totalisation</li>
+              <li>Demand limiting/load shedding</li>
+              <li>Power factor correction control</li>
+              <li>Alarm generation (thresholds)</li>
+              <li>Trend logging and analysis</li>
+              <li>Report generation</li>
+            </ul>
+            <p><strong>Commissioning requirement:</strong> Verify CT ratios are correctly programmed in meters - incorrect ratios are a common cause of metering errors.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              A well-designed metering hierarchy enables effective energy management by providing
-              visibility of consumption at multiple levels throughout a building. CIBSE TM39
-              provides comprehensive guidance on metering strategy development, recommending that at
-              least 90% of total building energy consumption should be captured by sub-metering.
+              <strong>Example 1: Metering Hierarchy Design</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Metering hierarchy levels:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Level 1 (Fiscal):</strong> Main utility meters at building intake - used
-                  for billing
-                </li>
-                <li className="pl-1">
-                  <strong>Level 2 (Sub-main):</strong> Distribution board level meters - major
-                  systems or zones
-                </li>
-                <li className="pl-1">
-                  <strong>Level 3 (Circuit):</strong> Individual circuit or load meters - specific
-                  equipment
-                </li>
-                <li className="pl-1">
-                  <strong>Level 4 (Equipment):</strong> Individual plant items - chillers, AHUs,
-                  lifts
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Metering Hierarchy Structure
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Level</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Location
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Meter Type</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Level 1</td>
-                      <td className="border border-white/10 px-3 py-2">Main intake room</td>
-                      <td className="border border-white/10 px-3 py-2">Utility billing</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fiscal CT meter (Class 0.5)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Level 2</td>
-                      <td className="border border-white/10 px-3 py-2">MSB outgoing ways</td>
-                      <td className="border border-white/10 px-3 py-2">System/zone allocation</td>
-                      <td className="border border-white/10 px-3 py-2">CT meter (Class 1.0)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Level 3</td>
-                      <td className="border border-white/10 px-3 py-2">Floor/tenant DBs</td>
-                      <td className="border border-white/10 px-3 py-2">Tenant recharging</td>
-                      <td className="border border-white/10 px-3 py-2">MID approved meter</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Level 4</td>
-                      <td className="border border-white/10 px-3 py-2">Plant equipment</td>
-                      <td className="border border-white/10 px-3 py-2">Equipment monitoring</td>
-                      <td className="border border-white/10 px-3 py-2">Direct connect/CT meter</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">CIBSE TM39 Metering Guidance</p>
-              <ul className="text-sm text-white space-y-1">
-                <li>
-                  • Target metering coverage: <strong>≥90%</strong> of total consumption
-                </li>
-                <li>
-                  • Separate metering recommended for: HVAC, lighting, small power, lifts, catering
-                </li>
-                <li>• Tenant areas: Individual metering essential for recharging</li>
-                <li>
-                  • Central plant: Each major item (chillers, boilers, pumps) separately metered
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design principle:</strong> The metering strategy should align with the
-              building's energy management objectives, lease structure, and reporting requirements.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Main Metering and Sub-Metering */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Main Metering and Sub-Metering
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Design metering hierarchy for a 6-storey office building with ground floor retail and basement car park.</p>
+            <p>Level 1 - Fiscal Meters:</p>
+            <p>M1: Main building intake (1000A CT meter)</p>
+            <p>Level 2 - Sub-Main Meters:</p>
+            <p>M2.1: Landlord common areas</p>
+            <p>M2.2: Retail tenant supply</p>
+            <p>M2.3: Office floors (Levels 1-6)</p>
+            <p>M2.4: Central plant (basement)</p>
+            <p>M2.5: Car park</p>
+            <p>Level 3 - Floor/Tenant Meters:</p>
+            <p>M3.1-M3.6: Individual floor tenant meters</p>
+            <p>M3.7: Retail lighting</p>
+            <p>M3.8: Retail power</p>
+            <p>Level 4 - Equipment Meters:</p>
+            <p>M4.1: Chiller 1</p>
+            <p>M4.2: Chiller 2</p>
+            <p>M4.3: Lifts</p>
+            <p>M4.4: AHU-1</p>
+            <p>Coverage check: Sum of L2 meters should equal L1 ±5%</p>
             <p>
-              Main metering (fiscal metering) provides the billing interface with the utility
-              supplier, whilst sub-metering enables internal energy management, cost allocation, and
-              consumption analysis. The choice of metering arrangement depends on building use,
-              tenancy structure, and management objectives.
+              <strong>Example 2: CT Selection Calculation</strong>
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Main (Fiscal) Metering
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Utility-owned and maintained</li>
-                  <li className="pl-1">MID approved, Class 0.5 minimum</li>
-                  <li className="pl-1">CT metering above 100A</li>
-                  <li className="pl-1">Half-hourly data for large sites</li>
-                  <li className="pl-1">Sealed and tamper-evident</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Sub-Metering</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Building owner installed</li>
-                  <li className="pl-1">Class 1.0 typical (Class 0.5 for recharging)</li>
-                  <li className="pl-1">Direct connect up to 100A</li>
-                  <li className="pl-1">Logging intervals as required</li>
-                  <li className="pl-1">BMS/monitoring system integration</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Sub-Metering Strategies
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Strategy</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Advantages</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Considerations</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">By tenant</td>
-                      <td className="border border-white/10 px-3 py-2">Multi-tenant buildings</td>
-                      <td className="border border-white/10 px-3 py-2">Fair cost allocation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        MID approval for recharging
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">By system</td>
-                      <td className="border border-white/10 px-3 py-2">Single occupancy</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Identifies energy use by end use
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Requires careful categorisation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">By zone/floor</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large floor plate buildings
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Location-based analysis</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        May not align with systems
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hybrid</td>
-                      <td className="border border-white/10 px-3 py-2">Complex buildings</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Flexible analysis options
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">More meters, higher cost</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CIBSE TM39 Recommended Sub-Metering Categories
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>HVAC:</strong> Chillers, boilers, pumps, fans, FCUs, splits (separately
-                  where practical)
-                </li>
-                <li className="pl-1">
-                  <strong>Lighting:</strong> General lighting, emergency lighting, external lighting
-                </li>
-                <li className="pl-1">
-                  <strong>Small power:</strong> General socket outlets, IT equipment, printers
-                </li>
-                <li className="pl-1">
-                  <strong>Specialist:</strong> Lifts, catering, server rooms, process loads
-                </li>
-                <li className="pl-1">
-                  <strong>Renewables:</strong> PV generation, battery storage (import/export)
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> Install metering at design stage - retrofitting is
-              significantly more expensive and disruptive.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Automatic Meter Reading and Data Loggers */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Automatic Meter Reading and Data Loggers
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Select CTs for a 630A submain feeding a distribution board 25m from the meter location.</p>
+            <p>Given:</p>
+            <p>Circuit design current: 630A</p>
+            <p>Cable run to meter: 25m</p>
+            <p>Meter burden: 3VA per phase</p>
+            <p>Required accuracy: Class 1.0</p>
+            <p>CT Primary Selection:</p>
+            <p>Minimum CT rating: 630A × 1.25 = 787.5A</p>
+            <p>Select standard size: <span>800/5 CT</span></p>
+            <p>Secondary Cable Calculation (2.5mm² twin):</p>
+            <p>Resistance: 7.41 mΩ/m × 25m × 2 = 0.37Ω</p>
+            <p>Power loss at 5A: I²R = 25 × 0.37 = 9.25W =  <span>9.25VA</span></p>
+            <p>Total Burden Required:</p>
+            <p>Meter: 3VA</p>
+            <p>Cables: 9.25VA</p>
+            <p>Total: 12.25VA</p>
+            <p>Select CT burden: <span>15VA Class 1.0</span></p>
+            <p>Specification: 800/5, 15VA, Class 1.0 ring-type CT × 3</p>
             <p>
-              Automatic Meter Reading (AMR) eliminates manual meter reading, enables frequent data
-              collection, and supports real-time energy monitoring. Data loggers store consumption
-              profiles for analysis and can integrate with building management systems for
-              comprehensive energy management.
+              <strong>Example 3: AMR System Specification</strong>
             </p>
+            <p><strong>Scenario:</strong> Specify AMR system for 20 sub-meters with BMS integration.</p>
+            <p>System Requirements:</p>
+            <p>• 20 × energy meters (various ratings)</p>
+            <p>• 15-minute logging interval</p>
+            <p>• BMS integration via Modbus TCP</p>
+            <p>• Maximum cable run: 150m</p>
+            <p>Communication Architecture:</p>
+            <p>Meters → Modbus RTU (RS485) → Data Gateway → Modbus TCP → BMS</p>
+            <p>Specification:</p>
+            <p>• Meters: Multi-function with Modbus RTU interface</p>
+            <p>• Bus: RS485, daisy-chain topology, 9600 baud</p>
+            <p>• Gateway: 32-device capacity, internal data logger</p>
+            <p>• Storage: Minimum 90 days at 15-min intervals</p>
+            <p>• Integration: Modbus TCP/IP to BMS IP network</p>
+            <p>Data points per meter (typical):</p>
+            <p>• kWh import, kWh export, kVArh</p>
+            <p>• kW demand, kVA demand</p>
+            <p>• Power factor (3-phase average)</p>
+            <p>• V, A per phase (instantaneous)</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">AMR System Components</p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">Meters:</span>{' '}
-                  <span className="text-white">Energy meters with communication interfaces</span>
-                </p>
-                <p>
-                  <span className="text-white">Communications:</span>{' '}
-                  <span className="text-white">Modbus, M-Bus, BACnet, pulse outputs</span>
-                </p>
-                <p>
-                  <span className="text-white">Data concentrator:</span>{' '}
-                  <span className="text-white">Collects data from multiple meters</span>
-                </p>
-                <p>
-                  <span className="text-white">Software:</span>{' '}
-                  <span className="text-white">Energy monitoring and analysis platform</span>
-                </p>
-                <p>
-                  <span className="text-white">Network:</span>{' '}
-                  <span className="text-white">
-                    Wired (RS485, Ethernet) or wireless (LoRa, GSM)
-                  </span>
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Communication Protocols
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Protocol</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Physical Layer</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Use</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Max Distance</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Modbus RTU</td>
-                      <td className="border border-white/10 px-3 py-2">RS485 (2-wire)</td>
-                      <td className="border border-white/10 px-3 py-2">Industrial metering</td>
-                      <td className="border border-white/10 px-3 py-2">1200m</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Modbus TCP</td>
-                      <td className="border border-white/10 px-3 py-2">Ethernet</td>
-                      <td className="border border-white/10 px-3 py-2">BMS integration</td>
-                      <td className="border border-white/10 px-3 py-2">100m per segment</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">M-Bus</td>
-                      <td className="border border-white/10 px-3 py-2">2-wire bus</td>
-                      <td className="border border-white/10 px-3 py-2">Utility metering</td>
-                      <td className="border border-white/10 px-3 py-2">1000m</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BACnet MS/TP</td>
-                      <td className="border border-white/10 px-3 py-2">RS485</td>
-                      <td className="border border-white/10 px-3 py-2">BMS integration</td>
-                      <td className="border border-white/10 px-3 py-2">1200m</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pulse output</td>
-                      <td className="border border-white/10 px-3 py-2">Volt-free contact</td>
-                      <td className="border border-white/10 px-3 py-2">Simple counting</td>
-                      <td className="border border-white/10 px-3 py-2">Application dependent</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Pulse Counting</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Standard: 1 pulse = 1 kWh</li>
-                  <li className="pl-1">High resolution: 10-1000 pulses/kWh</li>
-                  <li className="pl-1">Pulse width typically 100ms</li>
-                  <li className="pl-1">Requires pulse counter/logger</li>
-                  <li className="pl-1">Simple, reliable, low cost</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Data Logging Intervals
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">1 minute: Power quality, demand spikes</li>
-                  <li className="pl-1">15 minutes: Standard energy analysis</li>
-                  <li className="pl-1">30 minutes: Half-hourly settlement</li>
-                  <li className="pl-1">1 hour: General monitoring</li>
-                  <li className="pl-1">Daily: Simple trend analysis</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Data Logger Functions</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Interval recording:</strong> Store readings at defined intervals
-                  (typically 15-30 minutes)
-                </li>
-                <li className="pl-1">
-                  <strong>Maximum demand:</strong> Record peak demand in each interval for tariff
-                  analysis
-                </li>
-                <li className="pl-1">
-                  <strong>Time-of-use:</strong> Separate registers for peak/off-peak periods
-                </li>
-                <li className="pl-1">
-                  <strong>Power quality:</strong> Voltage, current, power factor, harmonics logging
-                </li>
-                <li className="pl-1">
-                  <strong>Alarm logging:</strong> Record over/under voltage, power factor trips,
-                  demand limits
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Integration tip:</strong> Ensure sufficient data storage capacity - 15-minute
-              logging generates 35,000+ readings per meter per year.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: CT Metering and Accuracy Classes */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            CT Metering and Accuracy Classes
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Current Transformer (CT) metering is required when circuit currents exceed the direct
-              connection capability of meters, typically above 100A. Correct CT selection and
-              installation is critical for metering accuracy - errors in CT ratio, burden, or class
-              directly affect energy measurement.
+              <strong>Metering Design Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">CT Selection Criteria</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Parameter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Guidance</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Example</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Primary current</td>
-                      <td className="border border-white/10 px-3 py-2">125% of design current</td>
-                      <td className="border border-white/10 px-3 py-2">400A circuit → 500/5 CT</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Secondary current</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        5A standard, 1A for long runs
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        5A typical, 1A if &gt;30m cable
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Accuracy class</td>
-                      <td className="border border-white/10 px-3 py-2">Match meter requirements</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Class 0.5 for fiscal, Class 1 for sub
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Burden (VA)</td>
-                      <td className="border border-white/10 px-3 py-2">Meter VA + cable losses</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        5VA meter + 2VA cable = 7.5VA CT
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Window size</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Accommodate conductor/busbar
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Split-core for retrofit</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Meter Accuracy Classes (IEC 62053)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Class</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Accuracy</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Class 0.2S</td>
-                      <td className="border border-white/10 px-3 py-2">±0.2%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Revenue metering, high-value loads
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Class 0.5S</td>
-                      <td className="border border-white/10 px-3 py-2">±0.5%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fiscal metering, check metering
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Class 1</td>
-                      <td className="border border-white/10 px-3 py-2">±1.0%</td>
-                      <td className="border border-white/10 px-3 py-2">Commercial sub-metering</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Class 2</td>
-                      <td className="border border-white/10 px-3 py-2">±2.0%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Domestic, monitoring only
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CT Installation Best Practice
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Orientation:</strong> Install CTs with correct polarity (P1/K marking
-                  towards supply)
-                </li>
-                <li className="pl-1">
-                  <strong>Conductor position:</strong> Centre conductor in CT window for accuracy
-                </li>
-                <li className="pl-1">
-                  <strong>Secondary wiring:</strong> Never open-circuit secondary when primary is
-                  energised
-                </li>
-                <li className="pl-1">
-                  <strong>Cable size:</strong> Calculate secondary cable to limit voltage drop
-                  (typically &lt;1V)
-                </li>
-                <li className="pl-1">
-                  <strong>Phase identification:</strong> Ensure CTs match meter phase inputs (L1-L1,
-                  L2-L2, L3-L3)
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Multi-Function Meter Parameters
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Active energy (kWh import/export)</li>
-                  <li className="pl-1">Reactive energy (kVArh)</li>
-                  <li className="pl-1">Apparent energy (kVAh)</li>
-                  <li className="pl-1">Maximum demand (kW, kVA)</li>
-                  <li className="pl-1">Power factor (per phase, total)</li>
-                  <li className="pl-1">Voltage, current, frequency</li>
-                  <li className="pl-1">THD (Total Harmonic Distortion)</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  BMS Integration Points
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Real-time power monitoring</li>
-                  <li className="pl-1">Energy totalisation</li>
-                  <li className="pl-1">Demand limiting/load shedding</li>
-                  <li className="pl-1">Power factor correction control</li>
-                  <li className="pl-1">Alarm generation (thresholds)</li>
-                  <li className="pl-1">Trend logging and analysis</li>
-                  <li className="pl-1">Report generation</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Commissioning requirement:</strong> Verify CT ratios are correctly programmed
-              in meters - incorrect ratios are a common cause of metering errors.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Define energy management objectives and reporting requirements</li>
+              <li>Identify all major loads and tenant/zone boundaries</li>
+              <li>Design hierarchy to capture ≥90% of total consumption</li>
+              <li>Select meter accuracy class appropriate to application</li>
+              <li>Size CTs for expected maximum load plus growth allowance</li>
+              <li>Specify communication protocol compatible with BMS/monitoring system</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Sub-metering coverage target: <strong>≥90%</strong> (CIBSE TM39)</li>
+              <li>CT sizing: <strong>125%</strong> of design current</li>
+              <li>Standard secondary current: <strong>5A</strong></li>
+              <li>Class 1 accuracy: <strong>±1.0%</strong></li>
+              <li>Standard pulse output: <strong>1 pulse/kWh</strong></li>
+              <li>15-minute logging: <strong>96 readings/day</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Metering Hierarchy Design
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Design metering hierarchy for a 6-storey office building
-                with ground floor retail and basement car park.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Level 1 - Fiscal Meters:</p>
-                <p className="ml-4">M1: Main building intake (1000A CT meter)</p>
-                <p className="mt-2 text-white">Level 2 - Sub-Main Meters:</p>
-                <p className="ml-4">M2.1: Landlord common areas</p>
-                <p className="ml-4">M2.2: Retail tenant supply</p>
-                <p className="ml-4">M2.3: Office floors (Levels 1-6)</p>
-                <p className="ml-4">M2.4: Central plant (basement)</p>
-                <p className="ml-4">M2.5: Car park</p>
-                <p className="mt-2 text-white">Level 3 - Floor/Tenant Meters:</p>
-                <p className="ml-4">M3.1-M3.6: Individual floor tenant meters</p>
-                <p className="ml-4">M3.7: Retail lighting</p>
-                <p className="ml-4">M3.8: Retail power</p>
-                <p className="mt-2 text-white">Level 4 - Equipment Meters:</p>
-                <p className="ml-4">M4.1: Chiller 1</p>
-                <p className="ml-4">M4.2: Chiller 2</p>
-                <p className="ml-4">M4.3: Lifts</p>
-                <p className="ml-4">M4.4: AHU-1</p>
-                <p className="mt-2 text-green-400">
-                  Coverage check: Sum of L2 meters should equal L1 ±5%
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: CT Selection Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Select CTs for a 630A submain feeding a distribution
-                board 25m from the meter location.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Given:</p>
-                <p className="ml-4">Circuit design current: 630A</p>
-                <p className="ml-4">Cable run to meter: 25m</p>
-                <p className="ml-4">Meter burden: 3VA per phase</p>
-                <p className="ml-4">Required accuracy: Class 1.0</p>
-                <p className="mt-2">CT Primary Selection:</p>
-                <p className="ml-4">Minimum CT rating: 630A × 1.25 = 787.5A</p>
-                <p className="ml-4">
-                  Select standard size: <span className="text-green-400">800/5 CT</span>
-                </p>
-                <p className="mt-2">Secondary Cable Calculation (2.5mm² twin):</p>
-                <p className="ml-4">Resistance: 7.41 mΩ/m × 25m × 2 = 0.37Ω</p>
-                <p className="ml-4">
-                  Power loss at 5A: I²R = 25 × 0.37 = 9.25W ={' '}
-                  <span className="text-green-400">9.25VA</span>
-                </p>
-                <p className="mt-2">Total Burden Required:</p>
-                <p className="ml-4">Meter: 3VA</p>
-                <p className="ml-4">Cables: 9.25VA</p>
-                <p className="ml-4">Total: 12.25VA</p>
-                <p className="ml-4">
-                  Select CT burden: <span className="text-green-400">15VA Class 1.0</span>
-                </p>
-                <p className="mt-2 text-green-400">
-                  Specification: 800/5, 15VA, Class 1.0 ring-type CT × 3
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: AMR System Specification
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Specify AMR system for 20 sub-meters with BMS
-                integration.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>System Requirements:</p>
-                <p className="ml-4">• 20 × energy meters (various ratings)</p>
-                <p className="ml-4">• 15-minute logging interval</p>
-                <p className="ml-4">• BMS integration via Modbus TCP</p>
-                <p className="ml-4">• Maximum cable run: 150m</p>
-                <p className="mt-2">Communication Architecture:</p>
-                <p className="ml-4">
-                  Meters → Modbus RTU (RS485) → Data Gateway → Modbus TCP → BMS
-                </p>
-                <p className="mt-2">Specification:</p>
-                <p className="ml-4 text-green-400">
-                  • Meters: Multi-function with Modbus RTU interface
-                </p>
-                <p className="ml-4 text-green-400">• Bus: RS485, daisy-chain topology, 9600 baud</p>
-                <p className="ml-4 text-green-400">
-                  • Gateway: 32-device capacity, internal data logger
-                </p>
-                <p className="ml-4 text-green-400">
-                  • Storage: Minimum 90 days at 15-min intervals
-                </p>
-                <p className="ml-4 text-green-400">
-                  • Integration: Modbus TCP/IP to BMS IP network
-                </p>
-                <p className="mt-2">Data points per meter (typical):</p>
-                <p className="ml-4">• kWh import, kWh export, kVArh</p>
-                <p className="ml-4">• kW demand, kVA demand</p>
-                <p className="ml-4">• Power factor (3-phase average)</p>
-                <p className="ml-4">• V, A per phase (instantaneous)</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Metering Design Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Define energy management objectives and reporting requirements
-                </li>
-                <li className="pl-1">Identify all major loads and tenant/zone boundaries</li>
-                <li className="pl-1">Design hierarchy to capture ≥90% of total consumption</li>
-                <li className="pl-1">Select meter accuracy class appropriate to application</li>
-                <li className="pl-1">Size CTs for expected maximum load plus growth allowance</li>
-                <li className="pl-1">
-                  Specify communication protocol compatible with BMS/monitoring system
-                </li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Undersized CTs:</strong> Circuit upgrades exceed CT rating, requiring replacement</li>
+                <li><strong>Wrong CT ratio in meter:</strong> Readings incorrect by factor of CT ratio error</li>
+                <li><strong>Phase mismatch:</strong> CTs and voltage references on different phases</li>
+                <li><strong>Insufficient sub-metering:</strong> Cannot identify consumption patterns or apportion costs</li>
+                <li><strong>No reconciliation:</strong> Sub-meter totals not verified against main meter</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Sub-metering coverage target: <strong>≥90%</strong> (CIBSE TM39)
-                </li>
-                <li className="pl-1">
-                  CT sizing: <strong>125%</strong> of design current
-                </li>
-                <li className="pl-1">
-                  Standard secondary current: <strong>5A</strong>
-                </li>
-                <li className="pl-1">
-                  Class 1 accuracy: <strong>±1.0%</strong>
-                </li>
-                <li className="pl-1">
-                  Standard pulse output: <strong>1 pulse/kWh</strong>
-                </li>
-                <li className="pl-1">
-                  15-minute logging: <strong>96 readings/day</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Undersized CTs:</strong> Circuit upgrades exceed CT rating, requiring
-                  replacement
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong CT ratio in meter:</strong> Readings incorrect by factor of CT ratio
-                  error
-                </li>
-                <li className="pl-1">
-                  <strong>Phase mismatch:</strong> CTs and voltage references on different phases
-                </li>
-                <li className="pl-1">
-                  <strong>Insufficient sub-metering:</strong> Cannot identify consumption patterns
-                  or apportion costs
-                </li>
-                <li className="pl-1">
-                  <strong>No reconciliation:</strong> Sub-meter totals not verified against main
-                  meter
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="Tenant billing dispute exposes incomplete sub-metering"
+            situation={
+              <>
+                A multi-tenanted office building bills electricity by floor based on a single sub-meter per floor. A tenant on the second floor disputes a £45k annual bill, claiming their actual occupancy is 30% lower than the previous tenant. There is no sub-metering by tenancy within the floor — billing is allocated by lettable area.
+              </>
+            }
+            whatToDo={
+              <>
+                Three-stage response: (1) immediately install temporary sub-metering at the tenant's distribution boards to measure actual consumption — this resolves the dispute; (2) plan permanent retrofit of tenant-level sub-metering, ideally with auto-billing software (e.g. NES, Coherent Research); (3) update the lease for new tenants to require tenant-level sub-metering and pay-as-used billing rather than apportioned. Long-term, this is also a Heat Network (Metering and Billing) Regulations 2014 issue if heat is included — separate metering may be a legal requirement, not a commercial choice.
+              </>
+            }
+            whyItMatters={
+              <>
+                Sub-metering pays for itself the moment a tenant challenges a bill — and it pays again every time the FM team can identify a high-consumption tenant or end-use. Underspecification at design stage forces disruptive retrofit. The metering strategy is more important than most M&E equipment choices because it determines what you can manage in operation.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Metering Hierarchy (CIBSE TM39)</p>
-                <ul className="space-y-0.5">
-                  <li>Level 1: Fiscal (main intake)</li>
-                  <li>Level 2: Sub-main (systems/zones)</li>
-                  <li>Level 3: Circuit (tenants/floors)</li>
-                  <li>Level 4: Equipment (individual plant)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Accuracy Classes</p>
-                <ul className="space-y-0.5">
-                  <li>Class 0.2S: ±0.2% (revenue metering)</li>
-                  <li>Class 0.5S: ±0.5% (fiscal metering)</li>
-                  <li>Class 1: ±1.0% (sub-metering)</li>
-                  <li>Class 2: ±2.0% (monitoring only)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              "Hierarchy: main meter → fuel sub-meters → end-use sub-meters → equipment-level meters.",
+              "Part L 2021: separate metering for end-uses >250 m² floor area or >10% of total demand.",
+              "CIBSE TM39 is the UK metering strategy reference.",
+              "30-minute or finer interval data essential for monitoring & targeting.",
+              "Class 1 accuracy for revenue billing; Class 2 acceptable for sub-billing.",
+              "AMR + BMS integration for automated data collection.",
+              "Heat Network (Metering and Billing) Regulations 2014: per-customer metering on heat networks.",
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section5-3">
-              Next: Energy Monitoring Systems
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section5-1")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Energy auditing
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section5-3")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Monitoring and targeting
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

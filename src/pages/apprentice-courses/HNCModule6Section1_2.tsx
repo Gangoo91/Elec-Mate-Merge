@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 6 · Section 1 · Subsection 2 — SBEM Calculations
+ * HNC Electrical Engineering for Building Services (Sustainability and Environmental Engineering)
+ *   Simplified Building Energy Model, NCM methodology, inputs and outputs, and Part L compliance demonstration
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'SBEM Calculations - HNC Module 6 Section 1.2';
@@ -249,866 +266,368 @@ const faqs = [
 ];
 
 const HNCModule6Section1_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section1")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module6-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.1.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            SBEM Calculations
-          </h1>
-          <p className="text-white">
-            Simplified Building Energy Model, NCM methodology, inputs and outputs, and Part L
-            compliance demonstration
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 6 · Section 1 · Subsection 2"
+            title="SBEM Calculations"
+            description="Simplified Building Energy Model, NCM methodology, inputs and outputs, and Part L compliance demonstration"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>SBEM:</strong> Government-approved energy calculation tool
-              </li>
-              <li className="pl-1">
-                <strong>Purpose:</strong> Demonstrate Part L compliance for non-domestic buildings
-              </li>
-              <li className="pl-1">
-                <strong>Key output:</strong> BER must be ≤ TER for compliance
-              </li>
-              <li className="pl-1">
-                <strong>Produces:</strong> EPC rating and compliance certificate
-              </li>
+          <TLDR
+            points={[
+              "SBEM (Simplified Building Energy Model) is the National Calculation Methodology tool used to demonstrate Part L compliance for non-domestic buildings — comparing your actual BER and BPER against the notional TER and TPER.",
+              "Inputs cover geometry, fabric U-values, HVAC efficiencies, lighting LENI, controls and renewables; outputs feed the EPC, the as-built compliance pack and the building log book.",
+              "Dynamic Simulation Modelling (DSM) such as IES VE or TAS is an approved alternative for complex or naturally ventilated buildings where SBEM zoning rules become limiting.",
+            ]}
+          />
+
+          <RegsCallout
+            source="Approved Document L Volume 2 (Non-domestic buildings) — National Calculation Methodology"
+            clause="The Building Emission Rate (BER) and Building Primary Energy Rate (BPER) of the actual building must be calculated using approved software implementing the National Calculation Methodology (SBEM or an approved Dynamic Simulation Model), and must be no greater than the Target Emission Rate (TER) and Target Primary Energy Rate (TPER) for the notional building of the same geometry, orientation and activity."
+            meaning={
+              <>
+                The NCM is the sole approved route. Hand calculations or spreadsheet shortcuts are not accepted by Building Control. The accredited assessor must use approved software (iSBEM, EDSL TAS, IES VE etc.) and submit the design-stage and as-built outputs as part of the Part L evidence pack.
+              </>
+            }
+            cite="Source: Approved Document L Volume 2: 2021 edition incorporating 2023 amendments — gov.uk"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Explain the purpose of SBEM and NCM methodology",
+              "Identify required inputs for SBEM calculations",
+              "Understand BER, TER and compliance margin concepts",
+              "Describe building geometry and fabric inputs",
+              "Specify HVAC and lighting inputs correctly",
+              "Calculate renewable energy contributions to BER",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="SBEM Fundamentals and NCM Methodology">
+            <p>The Simplified Building Energy Model (SBEM) is the government-approved software tool for calculating the energy performance of non-domestic buildings and demonstrating compliance with Part L of the Building Regulations. It implements the National Calculation Methodology (NCM) to produce standardised energy assessments.</p>
+            <p><strong>Key SBEM concepts:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>NCM:</strong> National Calculation Methodology - the approved calculation framework</li>
+              <li><strong>BER:</strong> Building Emission Rate - calculated CO₂ emissions for the actual building</li>
+              <li><strong>TER:</strong> Target Emission Rate - benchmark from the notional building</li>
+              <li><strong>Notional building:</strong> Reference building with standardised specifications</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>HVAC inputs:</strong> System type, efficiency, controls
-              </li>
-              <li className="pl-1">
-                <strong>Lighting:</strong> Power density, controls, daylight linking
-              </li>
-              <li className="pl-1">
-                <strong>Renewables:</strong> PV, solar thermal reduce BER
-              </li>
-              <li className="pl-1">
-                <strong>Submissions:</strong> Design stage and as-built
-              </li>
+            <p><strong>SBEM Calculation Process</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>1. Geometry Input:</strong> Define zones, areas, orientations — Building thermal model</li>
+              <li><strong>2. Fabric Specification:</strong> Enter U-values, thermal mass, air tightness — Heat loss calculations</li>
+              <li><strong>3. Services Input:</strong> Define HVAC, lighting, hot water systems — System energy demands</li>
+              <li><strong>4. Renewables:</strong> Add PV, solar thermal, other renewables — Energy offset calculation</li>
+              <li><strong>5. Compliance Check:</strong> Compare BER against TER — Pass/fail and EPC rating</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Compliance requirement:</strong> BER ≤ TER - the actual building's emissions must equal or be less than the notional building target.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Explain the purpose of SBEM and NCM methodology',
-              'Identify required inputs for SBEM calculations',
-              'Understand BER, TER and compliance margin concepts',
-              'Describe building geometry and fabric inputs',
-              'Specify HVAC and lighting inputs correctly',
-              'Calculate renewable energy contributions to BER',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: SBEM Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            SBEM Fundamentals and NCM Methodology
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Building Geometry and Fabric Inputs">
+            <p>Accurate geometric and fabric data forms the foundation of SBEM calculations. The building is divided into thermal zones, each with defined areas, construction types, and environmental control requirements.</p>
+            <p><strong>Geometric Inputs</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Zone floor areas (m²)</li>
+              <li>Zone heights</li>
+              <li>External wall areas</li>
+              <li>Window areas and orientation</li>
+              <li>Roof and floor exposures</li>
+            </ul>
+            <p><strong>Fabric U-values</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>External walls (W/m²K)</li>
+              <li>Roof construction</li>
+              <li>Ground floor</li>
+              <li>Windows and doors</li>
+              <li>Thermal bridging (psi values)</li>
+            </ul>
+            <p><strong>Air Tightness</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Design air permeability</li>
+              <li>Measured @ 50Pa</li>
+              <li>Units: m³/h/m²</li>
+              <li>Maximum: 10 m³/h/m²</li>
+              <li>Best practice: 3-5 m³/h/m²</li>
+            </ul>
+            <p><strong>Part L 2021 Fabric Standards</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>External wall:</strong> 0.35 W/m²K — 0.26 W/m²K — 0.15-0.20 W/m²K</li>
+              <li><strong>Flat roof:</strong> 0.25 W/m²K — 0.18 W/m²K — 0.10-0.15 W/m²K</li>
+              <li><strong>Ground floor:</strong> 0.25 W/m²K — 0.18 W/m²K — 0.10-0.15 W/m²K</li>
+              <li><strong>Windows:</strong> 1.60 W/m²K — 1.40 W/m²K — 0.80-1.20 W/m²K</li>
+              <li><strong>Air permeability:</strong> 10 m³/h/m² — 5 m³/h/m² — 3 m³/h/m²</li>
+            </ul>
+            <p><strong>Zoning principle:</strong> Divide the building into zones with similar activity type, HVAC system, and solar exposure for accurate modelling.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Building Services Inputs">
+            <p>Building services typically account for 60-80% of regulated energy use in non-domestic buildings. Accurate specification of HVAC, lighting, and hot water systems is critical to achieving realistic BER calculations and optimising compliance strategies.</p>
+            <p><strong>HVAC System Inputs</strong></p>
+            <p><span>System type:</span> Boiler, heat pump, VRF, chiller, etc.</p>
+            <p><span>Heating efficiency:</span> Seasonal efficiency (%) or SCOP</p>
+            <p><span>Cooling efficiency:</span> Seasonal EER or SEER</p>
+            <p><span>Fuel type:</span> Natural gas, electricity, oil, biomass</p>
+            <p><span>Distribution:</span> Pipework/ductwork losses, pump/fan powers</p>
+            <p><span>Controls:</span> Weather compensation, optimum start, zoning</p>
+            <p><strong>Lighting Inputs</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Lighting Power Density (LPD):</strong> Installed watts per m² floor area</li>
+              <li><strong>Lamp type:</strong> LED, T5 fluorescent, metal halide, etc.</li>
+              <li><strong>Luminaire efficacy:</strong> Lumens per watt output</li>
+              <li><strong>Controls:</strong> Manual, occupancy sensing, daylight dimming, time scheduling</li>
+              <li><strong>Display lighting:</strong> Separate category for retail/exhibition</li>
+            </ul>
+            <p><strong>Typical Lighting Power Densities</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Office - general:</strong> 12 W/m² — 8-10 W/m² — 6-8 W/m²</li>
+              <li><strong>Classroom:</strong> 14 W/m² — 10-12 W/m² — 8-10 W/m²</li>
+              <li><strong>Retail - general:</strong> 18 W/m² — 12-15 W/m² — 10-12 W/m²</li>
+              <li><strong>Circulation:</strong> 8 W/m² — 5-6 W/m² — 3-5 W/m²</li>
+              <li><strong>Warehouse:</strong> 6 W/m² — 4-5 W/m² — 2-4 W/m²</li>
+            </ul>
+            <p><strong>HVAC Efficiency Standards</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Gas boiler:</strong> 91% gross — 95%+ condensing</li>
+              <li><strong>Air source heat pump:</strong> SCOP 2.8 — SCOP 3.5-4.0</li>
+              <li><strong>Ground source heat pump:</strong> SCOP 3.5 — SCOP 4.0-4.5</li>
+              <li><strong>Air-cooled chiller:</strong> SEER 3.0 — SEER 4.0+</li>
+              <li><strong>VRF system:</strong> SCOP 3.2 / SEER 4.5 — SCOP 4.0 / SEER 6.0</li>
+            </ul>
+            <p><strong>Services impact:</strong> In offices, HVAC and lighting typically account for 60-70% of regulated emissions - these are priority areas for BER reduction.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="BER, TER and Compliance Demonstration">
+            <p>Part L compliance is demonstrated by comparing the Building Emission Rate (BER) against the Target Emission Rate (TER). The TER is derived from a notional building - a reference design with the same geometry but standardised fabric and services specifications.</p>
+            <p><strong>Compliance Calculation</strong></p>
+            <p><strong>Target Emission Rate (TER)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Same geometry as actual building</li>
+              <li>Standardised U-values (notional)</li>
+              <li>Standardised services efficiencies</li>
+              <li>No renewables contribution</li>
+              <li>Sets the compliance benchmark</li>
+            </ul>
+            <p><strong>Building Emission Rate (BER)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Actual proposed building design</li>
+              <li>Specified U-values</li>
+              <li>Specified services efficiencies</li>
+              <li>Includes renewable contribution</li>
+              <li>Must be ≤ TER for compliance</li>
+            </ul>
+            <p><strong>Compliance Margin Calculation</strong></p>
+            <p>Compliance Margin (%) = (TER - BER) / TER × 100</p>
+            <p>Example:</p>
+            <p>TER = 25.5 kgCO₂/m²/year</p>
+            <p>BER = 22.3 kgCO₂/m²/year</p>
+            <p>Margin = (25.5 - 22.3) / 25.5 × 100 =  <span>12.5% improvement</span></p>
+            <p><strong>Renewable Energy Contributions</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Roof-mounted PV:</strong> kWp, orientation, tilt, shading — 5-15% BER reduction</li>
+              <li><strong>Solar thermal (DHW):</strong> Collector area, storage volume — 2-5% BER reduction</li>
+              <li><strong>Biomass boiler:</strong> Low carbon factor for fuel — 30-50% BER reduction</li>
+              <li><strong>Wind turbine:</strong> Rated output, hub height — Variable by location</li>
+              <li><strong>CHP (Combined Heat and Power):</strong> Electrical/thermal efficiency — 10-25% BER reduction</li>
+            </ul>
+            <p><strong>SBEM Output Documents</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>BRUKL document:</strong> Building Regulations UK Part L - detailed compliance report</li>
+              <li><strong>EPC:</strong> Energy Performance Certificate with A-G rating</li>
+              <li><strong>Recommendations report:</strong> Improvement measures for building occupants</li>
+              <li><strong>Input summary:</strong> Complete record of all calculation inputs</li>
+            </ul>
+            <p><strong>Design stage vs as-built:</strong> Initial calculations use design specifications; as-built calculations must reflect actual installed equipment and measured air tightness test results.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              The Simplified Building Energy Model (SBEM) is the government-approved software tool
-              for calculating the energy performance of non-domestic buildings and demonstrating
-              compliance with Part L of the Building Regulations. It implements the National
-              Calculation Methodology (NCM) to produce standardised energy assessments.
+              <strong>Example 1: Office Building SBEM Input Summary</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key SBEM concepts:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>NCM:</strong> National Calculation Methodology - the approved calculation
-                  framework
-                </li>
-                <li className="pl-1">
-                  <strong>BER:</strong> Building Emission Rate - calculated CO₂ emissions for the
-                  actual building
-                </li>
-                <li className="pl-1">
-                  <strong>TER:</strong> Target Emission Rate - benchmark from the notional building
-                </li>
-                <li className="pl-1">
-                  <strong>Notional building:</strong> Reference building with standardised
-                  specifications
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                SBEM Calculation Process
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Stage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Process</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Output</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1. Geometry Input</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Define zones, areas, orientations
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Building thermal model</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2. Fabric Specification</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Enter U-values, thermal mass, air tightness
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Heat loss calculations</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3. Services Input</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Define HVAC, lighting, hot water systems
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">System energy demands</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4. Renewables</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Add PV, solar thermal, other renewables
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Energy offset calculation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5. Compliance Check</td>
-                      <td className="border border-white/10 px-3 py-2">Compare BER against TER</td>
-                      <td className="border border-white/10 px-3 py-2">Pass/fail and EPC rating</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Compliance requirement:</strong> BER ≤ TER - the actual building's emissions
-              must equal or be less than the notional building target.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Building Geometry and Fabric Inputs */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Building Geometry and Fabric Inputs
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> 2,500m² open plan office, 3 storeys, gas heating with VRF cooling.</p>
+            <p>Building Geometry:</p>
+            <p>Total floor area: 2,500 m²</p>
+            <p>External wall area: 1,200 m²</p>
+            <p>Glazing ratio: 40% (480 m² windows)</p>
+            <p>Roof area: 833 m² (flat)</p>
+            <p>Fabric U-values:</p>
+            <p>Walls: 0.22 W/m²K (below notional 0.26)</p>
+            <p>Roof: 0.15 W/m²K (below notional 0.18)</p>
+            <p>Windows: 1.2 W/m²K (below notional 1.4)</p>
+            <p>Air permeability: 4 m³/h/m² @ 50Pa</p>
+            <p>Services:</p>
+            <p>Heating: Condensing gas boilers, 95% efficiency</p>
+            <p>Cooling: VRF system, SEER 5.5</p>
+            <p>Lighting: LED throughout, 8 W/m² average LPD</p>
+            <p>Controls: BEMS with weather compensation</p>
+            <p>Result: TER 28.2, BER 23.5 = 16.7% compliance margin</p>
             <p>
-              Accurate geometric and fabric data forms the foundation of SBEM calculations. The
-              building is divided into thermal zones, each with defined areas, construction types,
-              and environmental control requirements.
+              <strong>Example 2: PV Contribution Calculation</strong>
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Geometric Inputs</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Zone floor areas (m²)</li>
-                  <li className="pl-1">Zone heights</li>
-                  <li className="pl-1">External wall areas</li>
-                  <li className="pl-1">Window areas and orientation</li>
-                  <li className="pl-1">Roof and floor exposures</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Fabric U-values</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">External walls (W/m²K)</li>
-                  <li className="pl-1">Roof construction</li>
-                  <li className="pl-1">Ground floor</li>
-                  <li className="pl-1">Windows and doors</li>
-                  <li className="pl-1">Thermal bridging (psi values)</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Air Tightness</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Design air permeability</li>
-                  <li className="pl-1">Measured @ 50Pa</li>
-                  <li className="pl-1">Units: m³/h/m²</li>
-                  <li className="pl-1">Maximum: 10 m³/h/m²</li>
-                  <li className="pl-1">Best practice: 3-5 m³/h/m²</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Part L 2021 Fabric Standards
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Element</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Limiting U-value
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Notional Building
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Best Practice</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">External wall</td>
-                      <td className="border border-white/10 px-3 py-2">0.35 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">0.26 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">0.15-0.20 W/m²K</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Flat roof</td>
-                      <td className="border border-white/10 px-3 py-2">0.25 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">0.18 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">0.10-0.15 W/m²K</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ground floor</td>
-                      <td className="border border-white/10 px-3 py-2">0.25 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">0.18 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">0.10-0.15 W/m²K</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Windows</td>
-                      <td className="border border-white/10 px-3 py-2">1.60 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">1.40 W/m²K</td>
-                      <td className="border border-white/10 px-3 py-2">0.80-1.20 W/m²K</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Air permeability</td>
-                      <td className="border border-white/10 px-3 py-2">10 m³/h/m²</td>
-                      <td className="border border-white/10 px-3 py-2">5 m³/h/m²</td>
-                      <td className="border border-white/10 px-3 py-2">3 m³/h/m²</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Zoning principle:</strong> Divide the building into zones with similar
-              activity type, HVAC system, and solar exposure for accurate modelling.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Building Services Inputs */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Building Services Inputs
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Calculate PV system size needed to achieve 10% BER reduction.</p>
+            <p>Given data:</p>
+            <p>Building floor area: 2,500 m²</p>
+            <p>Baseline BER: 26.0 kgCO₂/m²/year</p>
+            <p>Target BER reduction: 10%</p>
+            <p>Grid electricity factor: 0.136 kgCO₂/kWh</p>
+            <p>PV yield (south, 30° tilt): 950 kWh/kWp/year</p>
+            <p>Calculation:</p>
+            <p>Required CO₂ offset = 26.0 × 0.10 = 2.6 kgCO₂/m²/year</p>
+            <p>Total offset = 2.6 × 2,500 = 6,500 kgCO₂/year</p>
+            <p>Electricity equivalent = 6,500 / 0.136 = 47,794 kWh/year</p>
+            <p>PV capacity = 47,794 / 950 =  <span>50.3 kWp required</span></p>
+            <p>Roof check:</p>
+            <p>Approx. 6 m²/kWp → 302 m² roof area needed</p>
+            <p>833 m² available - feasible installation</p>
             <p>
-              Building services typically account for 60-80% of regulated energy use in non-domestic
-              buildings. Accurate specification of HVAC, lighting, and hot water systems is critical
-              to achieving realistic BER calculations and optimising compliance strategies.
+              <strong>Example 3: Lighting Impact Assessment</strong>
             </p>
+            <p><strong>Scenario:</strong> Compare BER impact of fluorescent vs LED lighting in retail unit.</p>
+            <p>Retail unit: 1,000 m², 3,000 operating hours/year</p>
+            <p>Option A - T5 Fluorescent:</p>
+            <p>LPD: 16 W/m²</p>
+            <p>Annual energy: 16 × 1,000 × 3,000 = 48,000 kWh</p>
+            <p>CO₂: 48,000 × 0.136 = 6,528 kgCO₂</p>
+            <p>Per m²: 6.53 kgCO₂/m²/year</p>
+            <p>Option B - LED with Controls:</p>
+            <p>LPD: 10 W/m²</p>
+            <p>Daylight dimming saving: 15%</p>
+            <p>Effective hours: 3,000 × 0.85 = 2,550 hours</p>
+            <p>Annual energy: 10 × 1,000 × 2,550 = 25,500 kWh</p>
+            <p>CO₂: 25,500 × 0.136 = 3,468 kgCO₂</p>
+            <p>Per m²: 3.47 kgCO₂/m²/year</p>
+            <p>LED saving: 3.06 kgCO₂/m²/year (47% reduction)</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">HVAC System Inputs</p>
-              <div className="text-sm space-y-1 text-white">
-                <p>
-                  <span className="text-white">System type:</span> Boiler, heat pump, VRF,
-                  chiller, etc.
-                </p>
-                <p>
-                  <span className="text-white">Heating efficiency:</span> Seasonal efficiency (%)
-                  or SCOP
-                </p>
-                <p>
-                  <span className="text-white">Cooling efficiency:</span> Seasonal EER or SEER
-                </p>
-                <p>
-                  <span className="text-white">Fuel type:</span> Natural gas, electricity, oil,
-                  biomass
-                </p>
-                <p>
-                  <span className="text-white">Distribution:</span> Pipework/ductwork losses,
-                  pump/fan powers
-                </p>
-                <p>
-                  <span className="text-white">Controls:</span> Weather compensation, optimum
-                  start, zoning
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Lighting Inputs</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Lighting Power Density (LPD):</strong> Installed watts per m² floor area
-                </li>
-                <li className="pl-1">
-                  <strong>Lamp type:</strong> LED, T5 fluorescent, metal halide, etc.
-                </li>
-                <li className="pl-1">
-                  <strong>Luminaire efficacy:</strong> Lumens per watt output
-                </li>
-                <li className="pl-1">
-                  <strong>Controls:</strong> Manual, occupancy sensing, daylight dimming, time
-                  scheduling
-                </li>
-                <li className="pl-1">
-                  <strong>Display lighting:</strong> Separate category for retail/exhibition
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Lighting Power Densities
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Space Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notional LPD</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Good Practice LED
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Best Practice</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Office - general</td>
-                      <td className="border border-white/10 px-3 py-2">12 W/m²</td>
-                      <td className="border border-white/10 px-3 py-2">8-10 W/m²</td>
-                      <td className="border border-white/10 px-3 py-2">6-8 W/m²</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Classroom</td>
-                      <td className="border border-white/10 px-3 py-2">14 W/m²</td>
-                      <td className="border border-white/10 px-3 py-2">10-12 W/m²</td>
-                      <td className="border border-white/10 px-3 py-2">8-10 W/m²</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Retail - general</td>
-                      <td className="border border-white/10 px-3 py-2">18 W/m²</td>
-                      <td className="border border-white/10 px-3 py-2">12-15 W/m²</td>
-                      <td className="border border-white/10 px-3 py-2">10-12 W/m²</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Circulation</td>
-                      <td className="border border-white/10 px-3 py-2">8 W/m²</td>
-                      <td className="border border-white/10 px-3 py-2">5-6 W/m²</td>
-                      <td className="border border-white/10 px-3 py-2">3-5 W/m²</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Warehouse</td>
-                      <td className="border border-white/10 px-3 py-2">6 W/m²</td>
-                      <td className="border border-white/10 px-3 py-2">4-5 W/m²</td>
-                      <td className="border border-white/10 px-3 py-2">2-4 W/m²</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                HVAC Efficiency Standards
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Minimum Efficiency
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Good Practice</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Gas boiler</td>
-                      <td className="border border-white/10 px-3 py-2">91% gross</td>
-                      <td className="border border-white/10 px-3 py-2">95%+ condensing</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Air source heat pump</td>
-                      <td className="border border-white/10 px-3 py-2">SCOP 2.8</td>
-                      <td className="border border-white/10 px-3 py-2">SCOP 3.5-4.0</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ground source heat pump</td>
-                      <td className="border border-white/10 px-3 py-2">SCOP 3.5</td>
-                      <td className="border border-white/10 px-3 py-2">SCOP 4.0-4.5</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Air-cooled chiller</td>
-                      <td className="border border-white/10 px-3 py-2">SEER 3.0</td>
-                      <td className="border border-white/10 px-3 py-2">SEER 4.0+</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">VRF system</td>
-                      <td className="border border-white/10 px-3 py-2">SCOP 3.2 / SEER 4.5</td>
-                      <td className="border border-white/10 px-3 py-2">SCOP 4.0 / SEER 6.0</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Services impact:</strong> In offices, HVAC and lighting typically account for
-              60-70% of regulated emissions - these are priority areas for BER reduction.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: BER, TER and Compliance Demonstration */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            BER, TER and Compliance Demonstration
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Part L compliance is demonstrated by comparing the Building Emission Rate (BER)
-              against the Target Emission Rate (TER). The TER is derived from a notional building -
-              a reference design with the same geometry but standardised fabric and services
-              specifications.
+              <strong>SBEM Submission Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Compliance Calculation</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Target Emission Rate (TER)</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Same geometry as actual building</li>
-                    <li>Standardised U-values (notional)</li>
-                    <li>Standardised services efficiencies</li>
-                    <li>No renewables contribution</li>
-                    <li>Sets the compliance benchmark</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Building Emission Rate (BER)</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Actual proposed building design</li>
-                    <li>Specified U-values</li>
-                    <li>Specified services efficiencies</li>
-                    <li>Includes renewable contribution</li>
-                    <li>Must be ≤ TER for compliance</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-2">
-                Compliance Margin Calculation
-              </p>
-              <div className="font-mono text-sm space-y-1 text-white">
-                <p>Compliance Margin (%) = (TER - BER) / TER × 100</p>
-                <p className="mt-2 text-white">Example:</p>
-                <p>TER = 25.5 kgCO₂/m²/year</p>
-                <p>BER = 22.3 kgCO₂/m²/year</p>
-                <p>
-                  Margin = (25.5 - 22.3) / 25.5 × 100 ={' '}
-                  <span className="text-green-400">12.5% improvement</span>
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Renewable Energy Contributions
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Technology</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">SBEM Treatment</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Contribution
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Roof-mounted PV</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        kWp, orientation, tilt, shading
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">5-15% BER reduction</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Solar thermal (DHW)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Collector area, storage volume
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">2-5% BER reduction</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Biomass boiler</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Low carbon factor for fuel
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">30-50% BER reduction</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Wind turbine</td>
-                      <td className="border border-white/10 px-3 py-2">Rated output, hub height</td>
-                      <td className="border border-white/10 px-3 py-2">Variable by location</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        CHP (Combined Heat and Power)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Electrical/thermal efficiency
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">10-25% BER reduction</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">SBEM Output Documents</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>BRUKL document:</strong> Building Regulations UK Part L - detailed
-                  compliance report
-                </li>
-                <li className="pl-1">
-                  <strong>EPC:</strong> Energy Performance Certificate with A-G rating
-                </li>
-                <li className="pl-1">
-                  <strong>Recommendations report:</strong> Improvement measures for building
-                  occupants
-                </li>
-                <li className="pl-1">
-                  <strong>Input summary:</strong> Complete record of all calculation inputs
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Design stage vs as-built:</strong> Initial calculations use design
-              specifications; as-built calculations must reflect actual installed equipment and
-              measured air tightness test results.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Complete floor plans with zone boundaries marked</li>
+              <li>U-value calculations or manufacturer data for all elements</li>
+              <li>HVAC schematic with equipment specifications</li>
+              <li>Lighting layout with luminaire schedule and LPD calculation</li>
+              <li>Renewable system specifications and layouts</li>
+              <li>Air tightness test results (as-built stage)</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Air permeability maximum: <strong>10 m³/h/m² @ 50Pa</strong></li>
+              <li>Office lighting LPD benchmark: <strong>8-12 W/m²</strong></li>
+              <li>Good heat pump SCOP: <strong>3.5-4.0</strong></li>
+              <li>Grid electricity CO₂ factor: <strong>0.136 kgCO₂/kWh</strong> (2024)</li>
+            </ul>
+            <p>
+              <strong>Common SBEM Errors to Avoid:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Incorrect zoning</strong> - zones must match activity type and HVAC systems</li>
+              <li><strong>Missing thermal bridges</strong> - psi values significantly affect heat loss</li>
+              <li><strong>Wrong activity database</strong> - use correct NCM activity for each zone</li>
+              <li><strong>Optimistic air tightness</strong> - specify achievable values, not aspirational</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <Scenario
+            title="SBEM zoning fails on an open-plan retail unit"
+            situation={
+              <>
+                You are running the design-stage SBEM for a 4,800 m² retail unit. The architect is using one large open-plan zone but SBEM activity templates require separate zones for sales, back-of-house, and refrigerated areas. Your first pass shows BER comfortably under TER — but when you re-zone correctly, the refrigerated zone pulls the actual building into non-compliance.
+              </>
+            }
+            whatToDo={
+              <>
+                Re-run with correct zoning per the NCM activity template (e.g. retail sales floor + cold storage + ancillary). If non-compliant, the design team must respond with reduced cooling demand (better envelope at the cold zone, door curtains, automatic closers) or upgraded refrigeration controls. Where SBEM zoning is genuinely too coarse for the design, switch to DSM (IES VE) which models air movement between zones rather than treating each as isolated.
+              </>
+            }
+            whyItMatters={
+              <>
+                Wrong zoning is the most common SBEM error — and it nearly always makes the building look more compliant than it is. The design-stage SBEM goes to Building Control with the planning submission; getting it wrong means re-design, re-tender and programme slip when as-built reveals the gap.
+              </>
+            }
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <FAQ items={faqs} />
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Office Building SBEM Input Summary
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> 2,500m² open plan office, 3 storeys, gas heating with VRF
-                cooling.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Building Geometry:</p>
-                <p className="ml-4">Total floor area: 2,500 m²</p>
-                <p className="ml-4">External wall area: 1,200 m²</p>
-                <p className="ml-4">Glazing ratio: 40% (480 m² windows)</p>
-                <p className="ml-4">Roof area: 833 m² (flat)</p>
-                <p className="mt-2 text-white">Fabric U-values:</p>
-                <p className="ml-4">Walls: 0.22 W/m²K (below notional 0.26)</p>
-                <p className="ml-4">Roof: 0.15 W/m²K (below notional 0.18)</p>
-                <p className="ml-4">Windows: 1.2 W/m²K (below notional 1.4)</p>
-                <p className="ml-4">Air permeability: 4 m³/h/m² @ 50Pa</p>
-                <p className="mt-2 text-white">Services:</p>
-                <p className="ml-4">Heating: Condensing gas boilers, 95% efficiency</p>
-                <p className="ml-4">Cooling: VRF system, SEER 5.5</p>
-                <p className="ml-4">Lighting: LED throughout, 8 W/m² average LPD</p>
-                <p className="ml-4">Controls: BEMS with weather compensation</p>
-                <p className="mt-2 text-green-400">
-                  Result: TER 28.2, BER 23.5 = 16.7% compliance margin
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: PV Contribution Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate PV system size needed to achieve 10% BER
-                reduction.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Given data:</p>
-                <p className="ml-4">Building floor area: 2,500 m²</p>
-                <p className="ml-4">Baseline BER: 26.0 kgCO₂/m²/year</p>
-                <p className="ml-4">Target BER reduction: 10%</p>
-                <p className="ml-4">Grid electricity factor: 0.136 kgCO₂/kWh</p>
-                <p className="ml-4">PV yield (south, 30° tilt): 950 kWh/kWp/year</p>
-                <p className="mt-2 text-white">Calculation:</p>
-                <p className="ml-4">Required CO₂ offset = 26.0 × 0.10 = 2.6 kgCO₂/m²/year</p>
-                <p className="ml-4">Total offset = 2.6 × 2,500 = 6,500 kgCO₂/year</p>
-                <p className="ml-4">Electricity equivalent = 6,500 / 0.136 = 47,794 kWh/year</p>
-                <p className="ml-4">
-                  PV capacity = 47,794 / 950 ={' '}
-                  <span className="text-green-400">50.3 kWp required</span>
-                </p>
-                <p className="mt-2 text-white">Roof check:</p>
-                <p className="ml-4">Approx. 6 m²/kWp → 302 m² roof area needed</p>
-                <p className="ml-4 text-green-400">833 m² available - feasible installation</p>
-              </div>
-            </div>
+          <KeyTakeaways
+            points={[
+              "SBEM = simplified non-domestic energy model under the National Calculation Methodology (NCM).",
+              "Outputs: BER, BPER, EPC band, building log book content, lighting LENI, HVAC SFP performance.",
+              "Activity templates drive zoning — get them wrong and the result is meaningless.",
+              "Approved software only: iSBEM (free), EDSL TAS, IES VE (DSM alternative).",
+              "Design-stage SBEM goes with planning; as-built SBEM and EPC needed for Building Control completion.",
+              "DSM is required for atria, naturally ventilated spaces, mixed-mode HVAC and complex geometry.",
+            ]}
+          />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Lighting Impact Assessment
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Compare BER impact of fluorescent vs LED lighting in
-                retail unit.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Retail unit: 1,000 m², 3,000 operating hours/year</p>
-                <p className="mt-2 text-white">Option A - T5 Fluorescent:</p>
-                <p className="ml-4">LPD: 16 W/m²</p>
-                <p className="ml-4">Annual energy: 16 × 1,000 × 3,000 = 48,000 kWh</p>
-                <p className="ml-4">CO₂: 48,000 × 0.136 = 6,528 kgCO₂</p>
-                <p className="ml-4">Per m²: 6.53 kgCO₂/m²/year</p>
-                <p className="mt-2 text-white">Option B - LED with Controls:</p>
-                <p className="ml-4">LPD: 10 W/m²</p>
-                <p className="ml-4">Daylight dimming saving: 15%</p>
-                <p className="ml-4">Effective hours: 3,000 × 0.85 = 2,550 hours</p>
-                <p className="ml-4">Annual energy: 10 × 1,000 × 2,550 = 25,500 kWh</p>
-                <p className="ml-4">CO₂: 25,500 × 0.136 = 3,468 kgCO₂</p>
-                <p className="ml-4">Per m²: 3.47 kgCO₂/m²/year</p>
-                <p className="mt-2 text-green-400">
-                  LED saving: 3.06 kgCO₂/m²/year (47% reduction)
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                SBEM Submission Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Complete floor plans with zone boundaries marked</li>
-                <li className="pl-1">U-value calculations or manufacturer data for all elements</li>
-                <li className="pl-1">HVAC schematic with equipment specifications</li>
-                <li className="pl-1">
-                  Lighting layout with luminaire schedule and LPD calculation
-                </li>
-                <li className="pl-1">Renewable system specifications and layouts</li>
-                <li className="pl-1">Air tightness test results (as-built stage)</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Air permeability maximum: <strong>10 m³/h/m² @ 50Pa</strong>
-                </li>
-                <li className="pl-1">
-                  Office lighting LPD benchmark: <strong>8-12 W/m²</strong>
-                </li>
-                <li className="pl-1">
-                  Good heat pump SCOP: <strong>3.5-4.0</strong>
-                </li>
-                <li className="pl-1">
-                  Grid electricity CO₂ factor: <strong>0.136 kgCO₂/kWh</strong> (2024)
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">
-                Common SBEM Errors to Avoid
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Incorrect zoning</strong> - zones must match activity type and HVAC
-                  systems
-                </li>
-                <li className="pl-1">
-                  <strong>Missing thermal bridges</strong> - psi values significantly affect heat
-                  loss
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong activity database</strong> - use correct NCM activity for each zone
-                </li>
-                <li className="pl-1">
-                  <strong>Optimistic air tightness</strong> - specify achievable values, not
-                  aspirational
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">SBEM Key Concepts</p>
-                <ul className="space-y-0.5">
-                  <li>NCM - National Calculation Methodology</li>
-                  <li>BER - Building Emission Rate (actual)</li>
-                  <li>TER - Target Emission Rate (notional)</li>
-                  <li>Compliance: BER ≤ TER</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Input Categories</p>
-                <ul className="space-y-0.5">
-                  <li>Geometry - zones, areas, orientations</li>
-                  <li>Fabric - U-values, thermal bridges</li>
-                  <li>Services - HVAC, lighting, DHW</li>
-                  <li>Renewables - PV, solar thermal, etc.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section1-3">
-              Next: Building Fabric Assessment
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section1-1")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Introduction to Part L
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section1-3")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Fabric performance
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

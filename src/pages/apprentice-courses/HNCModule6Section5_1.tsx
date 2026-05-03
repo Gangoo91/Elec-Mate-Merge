@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 6 · Section 5 · Subsection 1 — Energy Auditing
+ * HNC Electrical Engineering for Building Services (Sustainability and Environmental Engineering)
+ *   Audit types, data collection, site surveys, measurement protocols and EN 16247 reporting standards
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Energy Auditing - HNC Module 6 Section 5.1';
@@ -237,942 +254,334 @@ const faqs = [
 ];
 
 const HNCModule6Section5_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section5")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module6-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.5.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Energy Auditing
-          </h1>
-          <p className="text-white">
-            Audit types, data collection, site surveys, measurement protocols and EN 16247 reporting
-            standards
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 6 · Section 5 · Subsection 1"
+            title="Energy Auditing"
+            description="Audit types, data collection, site surveys, measurement protocols and EN 16247 reporting standards"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Purpose:</strong> Systematic analysis to identify energy savings
-              </li>
-              <li className="pl-1">
-                <strong>ESOS:</strong> 4-year cycle, covers 90% of consumption
-              </li>
-              <li className="pl-1">
-                <strong>Audit levels:</strong> Walk-through, survey, investment-grade
-              </li>
-              <li className="pl-1">
-                <strong>Standard:</strong> EN 16247 defines methodology
-              </li>
+          <TLDR
+            points={[
+              "Energy audits identify and quantify energy use across a building or organisation — driven by ESOS (Energy Savings Opportunity Scheme) compliance for large UK undertakings every 4 years, plus voluntary audits feeding ISO 50001 or sustainability programmes.",
+              "EN 16247 is the European audit methodology standard — Parts 1 (general requirements), 2 (buildings), 3 (processes), 4 (transport), 5 (auditor competence). ESOS compliance defaults to EN 16247 plus ESOS Specific Methodologies.",
+              "Audit outputs are graded as Type 1 (walk-through), Type 2 (general energy audit), Type 3 (investment-grade audit) — the depth determines the granularity of recommendations and the confidence in payback calculations.",
+            ]}
+          />
+
+          <RegsCallout
+            source="Energy Savings Opportunity Scheme (ESOS) Phase 3 Regulations + EN 16247-1:2022"
+            clause="A relevant undertaking shall ensure that energy audits in respect of its energy consumption are carried out at least every four years, in accordance with the regulations and either the EN 16247 methodology or an equivalent ISO 50001 energy management system, covering at least 95% of the total energy consumption. The audit shall identify cost-effective energy savings opportunities and shall be conducted by, or under the direction of, a Lead Assessor registered with an approved register."
+            meaning={
+              <>
+                ESOS Phase 3 (compliance deadline 5 December 2023, with subsequent phases every 4 years) is mandatory for large UK organisations (&gt;250 employees or &gt;£44m turnover and &gt;£38m balance sheet). The audit must use EN 16247 methodology and be signed off by an ESOS Lead Assessor. Phase 3 added a public action plan requirement — committing to identified savings.
+              </>
+            }
+            cite="Source: SI 2014/1643 The Energy Savings Opportunity Scheme Regulations + 2023 amendments — legislation.gov.uk"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Explain ESOS requirements and compliance obligations",
+              "Differentiate between walk-through, survey, and investment-grade audits",
+              "Apply systematic data collection and utility bill analysis",
+              "Conduct site surveys using appropriate measurement equipment",
+              "Analyse energy data using degree days and benchmarking",
+              "Prepare EN 16247 compliant audit reports with recommendations",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="ESOS and Regulatory Framework">
+            <p>The Energy Savings Opportunity Scheme (ESOS) is the UK's implementation of Article 8 of the EU Energy Efficiency Directive. It mandates energy audits for large organisations to identify cost-effective energy saving opportunities and drive improved energy performance.</p>
+            <p><strong>ESOS Qualification Criteria:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Employee threshold:</strong> 250 or more employees in the UK</li>
+              <li><strong>Financial threshold:</strong> Annual turnover exceeding £44 million AND balance sheet exceeding £38 million</li>
+              <li><strong>Group test:</strong> Applies if any UK group company meets criteria</li>
+              <li><strong>Qualification date:</strong> Assessment on 31 December of each compliance period</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>HVAC:</strong> Typically 40-60% of building energy
-              </li>
-              <li className="pl-1">
-                <strong>Lighting:</strong> 15-25% of commercial consumption
-              </li>
-              <li className="pl-1">
-                <strong>Half-hourly data:</strong> Essential for detailed analysis
-              </li>
-              <li className="pl-1">
-                <strong>Benchmarking:</strong> kWh/m² enables comparison
-              </li>
+            <p><strong>ESOS Compliance Timeline</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Phase 1:</strong> 31 December 2014 — 5 December 2015</li>
+              <li><strong>Phase 2:</strong> 31 December 2018 — 5 December 2019</li>
+              <li><strong>Phase 3:</strong> 31 December 2022 — 5 December 2023</li>
+              <li><strong>Phase 4:</strong> 31 December 2026 — 5 December 2027</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>ESOS Coverage Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Audits must cover <strong>at least 90%</strong> of total energy consumption</li>
+              <li>• Includes buildings, industrial processes, and transport</li>
+              <li>• De minimis threshold allows exclusion of small consumption areas</li>
+              <li>• Alternative compliance routes: ISO 50001 certification, DECs, GDAs</li>
+            </ul>
+            <p><strong>Compliance note:</strong> Non-compliance can result in penalties up to £90,000 plus £500 per day for continued breach. The Environment Agency publishes non-compliant organisations.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Explain ESOS requirements and compliance obligations',
-              'Differentiate between walk-through, survey, and investment-grade audits',
-              'Apply systematic data collection and utility bill analysis',
-              'Conduct site surveys using appropriate measurement equipment',
-              'Analyse energy data using degree days and benchmarking',
-              'Prepare EN 16247 compliant audit reports with recommendations',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: ESOS and Regulatory Framework */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            ESOS and Regulatory Framework
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Audit Types and Methodology">
+            <p>Energy audits range from brief walk-through assessments to comprehensive investment-grade analyses. The ASHRAE classification provides a widely-adopted framework defining three distinct audit levels, each with specific purposes and deliverables.</p>
+            <p><strong>Level I: Walk-Through</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Brief site assessment</li>
+              <li>Utility bill analysis</li>
+              <li>Identify obvious issues</li>
+              <li>Low/no-cost measures</li>
+              <li>Duration: 1-2 days</li>
+            </ul>
+            <p><strong>Level II: Energy Survey</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Detailed site survey</li>
+              <li>End-use breakdown</li>
+              <li>Engineering calculations</li>
+              <li>Capital measures costed</li>
+              <li>Duration: 1-4 weeks</li>
+            </ul>
+            <p><strong>Level III: Investment-Grade</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Sub-metering installed</li>
+              <li>Dynamic simulation</li>
+              <li>Life cycle costing</li>
+              <li>Finance-ready analysis</li>
+              <li>Duration: 4-12 weeks</li>
+            </ul>
+            <p><strong>Audit Methodology (EN 16247)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>1. Preliminary Contact:</strong> Define scope, boundaries, objectives — Audit agreement, data request</li>
+              <li><strong>2. Start-up Meeting:</strong> Review data, discuss operations — Understanding of site/process</li>
+              <li><strong>3. Data Collection:</strong> Gather bills, drawings, schedules — Baseline consumption data</li>
+              <li><strong>4. Field Work:</strong> Site survey, measurements, interviews — Equipment inventory, readings</li>
+              <li><strong>5. Analysis:</strong> Energy balance, benchmarking, ECMs — Identified opportunities</li>
+              <li><strong>6. Reporting:</strong> Document findings, recommendations — Audit report</li>
+            </ul>
+            <p><strong>Best practice:</strong> Match audit level to decision requirements - a walk-through for initial assessment, investment-grade for major capital projects requiring board approval.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Data Collection and Analysis">
+            <p>Robust data collection forms the foundation of meaningful energy analysis. The quality of audit recommendations depends directly on the completeness and accuracy of baseline data and operational information gathered during the audit process.</p>
+            <p><strong>Essential Data Requirements</strong></p>
+            <p><strong>Utility Data</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• 12-36 months electricity bills</li>
+              <li>• Gas/oil consumption records</li>
+              <li>• Half-hourly metering data</li>
+              <li>• Tariff structures and rates</li>
+              <li>• Maximum demand readings</li>
+            </ul>
+            <p><strong>Building Information</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Floor areas (GIA/NIA)</li>
+              <li>• Occupancy schedules</li>
+              <li>• Operating hours</li>
+              <li>• Equipment schedules</li>
+              <li>• Building drawings/BIM</li>
+            </ul>
+            <p><strong>Utility Bill Analysis Techniques</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Base load identification:</strong> Minimum consumption during unoccupied periods indicates continuous loads</li>
+              <li><strong>Degree day correlation:</strong> Plot consumption against heating/cooling degree days to assess weather sensitivity</li>
+              <li><strong>CUSUM analysis:</strong> Cumulative sum charts identify step changes in consumption patterns</li>
+              <li><strong>Regression analysis:</strong> Statistical relationship between consumption and driving variables</li>
+            </ul>
+            <p><strong>Energy Performance Metrics</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Energy Use Intensity (EUI):</strong> kWh/m²/year — 150-400 kWh/m²</li>
+              <li><strong>Electrical EUI:</strong> Electricity kWh/m² — 80-200 kWh/m²</li>
+              <li><strong>Fossil thermal EUI:</strong> Gas/oil kWh/m² — 70-200 kWh/m²</li>
+              <li><strong>Carbon intensity:</strong> kgCO₂/m²/year — 30-100 kgCO₂/m²</li>
+              <li><strong>Cost intensity:</strong> £/m²/year — £15-50/m²</li>
+            </ul>
+            <p><strong>Half-Hourly Data Analysis</strong></p>
+            <p><strong>Base load:</strong> Minimum overnight/weekend consumption - identify equipment running unnecessarily</p>
+            <p><strong>Peak demand:</strong> Maximum kW - opportunity for demand management and tariff optimisation</p>
+            <p><strong>Load profile shape:</strong> Sharp rise at start-up suggests simultaneous equipment start - implement soft starts</p>
+            <p><strong>Out-of-hours consumption:</strong> Energy used outside operating hours as percentage of total</p>
+            <p><strong>Analysis tip:</strong> Out-of-hours consumption often represents 30-50% of total electricity use in commercial buildings - a key focus area for quick wins.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Site Surveys and Measurement">
+            <p>The site survey validates desktop analysis, captures equipment data, and identifies operational practices affecting energy use. Systematic measurement using calibrated instruments provides the evidence base for energy saving calculations.</p>
+            <p><strong>Site Survey Checklist</strong></p>
+            <p><strong>Building Fabric</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Glazing type and condition</li>
+              <li>• Insulation levels (if accessible)</li>
+              <li>• Air tightness observations</li>
+              <li>• Solar shading provision</li>
+              <li>• Thermal bridges/cold spots</li>
+            </ul>
+            <p><strong>HVAC Systems</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Plant nameplates and ratings</li>
+              <li>• Operating schedules</li>
+              <li>• Set points and controls</li>
+              <li>• Distribution system condition</li>
+              <li>• Maintenance history</li>
+            </ul>
+            <p><strong>Measurement Equipment</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Power analyser:</strong> Electrical systems — kW, kVA, PF, kWh, harmonics</li>
+              <li><strong>Clamp meter:</strong> Circuit loading — Amps, voltage, power</li>
+              <li><strong>Thermal camera:</strong> Building fabric, electrical — Surface temperature, heat loss</li>
+              <li><strong>Lux meter:</strong> Lighting assessment — Illuminance levels (lux)</li>
+              <li><strong>Data logger:</strong> Long-term monitoring — Temperature, humidity, CO₂</li>
+              <li><strong>Flue gas analyser:</strong> Boiler efficiency — O₂, CO₂, CO, efficiency %</li>
+              <li><strong>Anemometer:</strong> Ventilation assessment — Air velocity, flow rate</li>
+              <li><strong>Ultrasonic flow meter:</strong> Water/heating systems — Flow rate, heat transfer</li>
+            </ul>
+            <p><strong>Measurement Protocols</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Calibration:</strong> Ensure all instruments are within calibration date and accuracy specifications</li>
+              <li><strong>Representative conditions:</strong> Measure during typical operating conditions, not during maintenance or unusual loads</li>
+              <li><strong>Duration:</strong> Spot measurements suit stable systems; logging required for varying loads</li>
+              <li><strong>Documentation:</strong> Record location, date, time, conditions, and any abnormalities</li>
+            </ul>
+            <p><strong>Survey tip:</strong> Interview facilities staff and building users - operational practices often explain unexpected consumption patterns that measurements alone cannot reveal.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              The Energy Savings Opportunity Scheme (ESOS) is the UK's implementation of Article 8
-              of the EU Energy Efficiency Directive. It mandates energy audits for large
-              organisations to identify cost-effective energy saving opportunities and drive
-              improved energy performance.
+              <strong>Example 1: Energy Use Intensity Calculation</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">ESOS Qualification Criteria:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Employee threshold:</strong> 250 or more employees in the UK
-                </li>
-                <li className="pl-1">
-                  <strong>Financial threshold:</strong> Annual turnover exceeding £44 million AND
-                  balance sheet exceeding £38 million
-                </li>
-                <li className="pl-1">
-                  <strong>Group test:</strong> Applies if any UK group company meets criteria
-                </li>
-                <li className="pl-1">
-                  <strong>Qualification date:</strong> Assessment on 31 December of each compliance
-                  period
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                ESOS Compliance Timeline
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Phase</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Qualification Date
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Compliance Deadline
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Phase 1</td>
-                      <td className="border border-white/10 px-3 py-2">31 December 2014</td>
-                      <td className="border border-white/10 px-3 py-2">5 December 2015</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Phase 2</td>
-                      <td className="border border-white/10 px-3 py-2">31 December 2018</td>
-                      <td className="border border-white/10 px-3 py-2">5 December 2019</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Phase 3</td>
-                      <td className="border border-white/10 px-3 py-2">31 December 2022</td>
-                      <td className="border border-white/10 px-3 py-2">5 December 2023</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Phase 4</td>
-                      <td className="border border-white/10 px-3 py-2">31 December 2026</td>
-                      <td className="border border-white/10 px-3 py-2">5 December 2027</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">ESOS Coverage Requirements</p>
-              <ul className="text-sm text-white space-y-1">
-                <li>
-                  • Audits must cover <strong>at least 90%</strong> of total energy consumption
-                </li>
-                <li>• Includes buildings, industrial processes, and transport</li>
-                <li>• De minimis threshold allows exclusion of small consumption areas</li>
-                <li>• Alternative compliance routes: ISO 50001 certification, DECs, GDAs</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Compliance note:</strong> Non-compliance can result in penalties up to £90,000
-              plus £500 per day for continued breach. The Environment Agency publishes non-compliant
-              organisations.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Audit Types and Methodology */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Audit Types and Methodology
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Calculate EUI for a 5,000m² office building consuming 850,000 kWh electricity and 450,000 kWh gas annually.</p>
+            <p>Given:</p>
+            <p>Floor area = 5,000 m² (GIA)</p>
+            <p>Electricity = 850,000 kWh/year</p>
+            <p>Gas = 450,000 kWh/year</p>
+            <p>Calculations:</p>
+            <p>Electrical EUI = 850,000 ÷ 5,000 = 170 kWh/m²/year</p>
+            <p>Fossil EUI = 450,000 ÷ 5,000 = 90 kWh/m²/year</p>
+            <p>Total EUI = 170 + 90 = 260 kWh/m²/year</p>
+            <p>Benchmark: CIBSE TM46 typical office = 120 electricity + 120 gas = 240 kWh/m²</p>
+            <p>Assessment: Electrical consumption above benchmark - investigate lighting and cooling</p>
             <p>
-              Energy audits range from brief walk-through assessments to comprehensive
-              investment-grade analyses. The ASHRAE classification provides a widely-adopted
-              framework defining three distinct audit levels, each with specific purposes and
-              deliverables.
+              <strong>Example 2: Simple Payback Calculation</strong>
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Level I: Walk-Through
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Brief site assessment</li>
-                  <li className="pl-1">Utility bill analysis</li>
-                  <li className="pl-1">Identify obvious issues</li>
-                  <li className="pl-1">Low/no-cost measures</li>
-                  <li className="pl-1">Duration: 1-2 days</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Level II: Energy Survey
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Detailed site survey</li>
-                  <li className="pl-1">End-use breakdown</li>
-                  <li className="pl-1">Engineering calculations</li>
-                  <li className="pl-1">Capital measures costed</li>
-                  <li className="pl-1">Duration: 1-4 weeks</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Level III: Investment-Grade
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Sub-metering installed</li>
-                  <li className="pl-1">Dynamic simulation</li>
-                  <li className="pl-1">Life cycle costing</li>
-                  <li className="pl-1">Finance-ready analysis</li>
-                  <li className="pl-1">Duration: 4-12 weeks</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Audit Methodology (EN 16247)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Stage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Activities</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Outputs</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1. Preliminary Contact</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Define scope, boundaries, objectives
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Audit agreement, data request
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2. Start-up Meeting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Review data, discuss operations
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Understanding of site/process
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3. Data Collection</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Gather bills, drawings, schedules
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Baseline consumption data
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4. Field Work</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Site survey, measurements, interviews
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Equipment inventory, readings
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5. Analysis</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Energy balance, benchmarking, ECMs
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Identified opportunities</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6. Reporting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Document findings, recommendations
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Audit report</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> Match audit level to decision requirements - a
-              walk-through for initial assessment, investment-grade for major capital projects
-              requiring board approval.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Data Collection and Analysis */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Data Collection and Analysis
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> LED lighting retrofit for an office floor - assess financial viability.</p>
+            <p>Current situation:</p>
+            <p>100 x 58W T8 fluorescent fittings</p>
+            <p>Operating hours: 2,500 hours/year</p>
+            <p>Current consumption: 100 × 58W × 2,500h = 14,500 kWh/year</p>
+            <p>Proposed LED:</p>
+            <p>100 x 25W LED panels</p>
+            <p>LED consumption: 100 × 25W × 2,500h = 6,250 kWh/year</p>
+            <p>Savings calculation:</p>
+            <p>Energy saved: 14,500 - 6,250 = 8,250 kWh/year</p>
+            <p>At £0.28/kWh: 8,250 × £0.28 = £2,310/year</p>
+            <p>Investment:</p>
+            <p>Supply and install: £12,000</p>
+            <p>Simple payback = £12,000 ÷ £2,310 = 5.2 years</p>
             <p>
-              Robust data collection forms the foundation of meaningful energy analysis. The quality
-              of audit recommendations depends directly on the completeness and accuracy of baseline
-              data and operational information gathered during the audit process.
+              <strong>Example 3: Degree Day Normalisation</strong>
             </p>
+            <p><strong>Scenario:</strong> Compare heating consumption between a mild year and a cold year.</p>
+            <p>Year 1 (mild): Gas = 400,000 kWh, Degree days = 1,800</p>
+            <p>Year 2 (cold): Gas = 520,000 kWh, Degree days = 2,400</p>
+            <p>Normalised comparison (to 20-year average of 2,100 DD):</p>
+            <p>Year 1 normalised = 400,000 × (2,100/1,800) = 466,667 kWh</p>
+            <p>Year 2 normalised = 520,000 × (2,100/2,400) = 455,000 kWh</p>
+            <p>Conclusion: Year 2 actually more efficient when weather-adjusted</p>
+            <p>Without normalisation, Year 2 appears 30% worse</p>
+            <p>After normalisation, Year 2 is 2.5% better</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Essential Data Requirements</p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="font-medium text-white mb-1">Utility Data</p>
-                  <ul className="text-white space-y-0.5">
-                    <li>• 12-36 months electricity bills</li>
-                    <li>• Gas/oil consumption records</li>
-                    <li>• Half-hourly metering data</li>
-                    <li>• Tariff structures and rates</li>
-                    <li>• Maximum demand readings</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium text-white mb-1">Building Information</p>
-                  <ul className="text-white space-y-0.5">
-                    <li>• Floor areas (GIA/NIA)</li>
-                    <li>• Occupancy schedules</li>
-                    <li>• Operating hours</li>
-                    <li>• Equipment schedules</li>
-                    <li>• Building drawings/BIM</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Utility Bill Analysis Techniques
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Base load identification:</strong> Minimum consumption during unoccupied
-                  periods indicates continuous loads
-                </li>
-                <li className="pl-1">
-                  <strong>Degree day correlation:</strong> Plot consumption against heating/cooling
-                  degree days to assess weather sensitivity
-                </li>
-                <li className="pl-1">
-                  <strong>CUSUM analysis:</strong> Cumulative sum charts identify step changes in
-                  consumption patterns
-                </li>
-                <li className="pl-1">
-                  <strong>Regression analysis:</strong> Statistical relationship between consumption
-                  and driving variables
-                </li>
-              </ul>
-            </div>
+          <Scenario
+            title="ESOS audit reveals 12% saving but client refuses to act"
+            situation={
+              <>
+                An ESOS Phase 3 audit on a 28-site retail estate identifies a portfolio of energy conservation measures totalling £840k investment with 4.2-year payback — a 12% reduction in total electricity use. The client uses the audit for ESOS compliance but does not implement any of the measures. Phase 3 introduced an action plan disclosure requirement.
+              </>
+            }
+            whatToDo={
+              <>
+                Two distinct issues: (1) ESOS compliance — audit and action plan must be filed; the regulation does not mandate implementation; (2) commercial / reputational — non-implementation of identified savings is increasingly questioned by investors, by shareholder activists, and (post 2024) by the public action plan disclosure. Recommendation: Lead Assessor structures the action plan as a phased programme over the next 4-year cycle, with priority on quick-payback measures (lighting controls, BMS optimisation) — making partial implementation more achievable than the full £840k headline figure.
+              </>
+            }
+            whyItMatters={
+              <>
+                ESOS audits regularly identify 5–15% savings that go unimplemented because the regulation has no implementation mandate. Phase 3's action plan disclosure is the first lever forcing this; future phases may go further. The auditor's value is no longer just identifying the savings — it is designing an implementation roadmap the client will actually follow.
+              </>
+            }
+          />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Energy Performance Metrics
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Metric</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Calculation</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Office</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Energy Use Intensity (EUI)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">kWh/m²/year</td>
-                      <td className="border border-white/10 px-3 py-2">150-400 kWh/m²</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Electrical EUI</td>
-                      <td className="border border-white/10 px-3 py-2">Electricity kWh/m²</td>
-                      <td className="border border-white/10 px-3 py-2">80-200 kWh/m²</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fossil thermal EUI</td>
-                      <td className="border border-white/10 px-3 py-2">Gas/oil kWh/m²</td>
-                      <td className="border border-white/10 px-3 py-2">70-200 kWh/m²</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Carbon intensity</td>
-                      <td className="border border-white/10 px-3 py-2">kgCO₂/m²/year</td>
-                      <td className="border border-white/10 px-3 py-2">30-100 kgCO₂/m²</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cost intensity</td>
-                      <td className="border border-white/10 px-3 py-2">£/m²/year</td>
-                      <td className="border border-white/10 px-3 py-2">£15-50/m²</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Half-Hourly Data Analysis
-              </p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <strong>Base load:</strong> Minimum overnight/weekend consumption - identify
-                  equipment running unnecessarily
-                </p>
-                <p>
-                  <strong>Peak demand:</strong> Maximum kW - opportunity for demand management and
-                  tariff optimisation
-                </p>
-                <p>
-                  <strong>Load profile shape:</strong> Sharp rise at start-up suggests simultaneous
-                  equipment start - implement soft starts
-                </p>
-                <p>
-                  <strong>Out-of-hours consumption:</strong> Energy used outside operating hours as
-                  percentage of total
-                </p>
-              </div>
-            </div>
+          <FAQ items={faqs} />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Analysis tip:</strong> Out-of-hours consumption often represents 30-50% of
-              total electricity use in commercial buildings - a key focus area for quick wins.
-            </p>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <KeyTakeaways
+            points={[
+              "ESOS = mandatory 4-yearly audit for large UK undertakings (>250 employees or >£44m turnover).",
+              "EN 16247 = European audit methodology standard (parts for buildings, processes, transport).",
+              "Audit Types: 1 walk-through, 2 general, 3 investment-grade.",
+              "Lead Assessor must be on an approved register and sign off the audit.",
+              "Phase 3 added public action plan disclosure — implementation accountability.",
+              "ISO 50001 EnMS exempts the organisation from the EN 16247 audit requirement.",
+              "Audit must cover ≥95% of total energy consumption (buildings, transport, industrial processes).",
+            ]}
+          />
 
-        {/* Section 4: Site Surveys and Measurement */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Site Surveys and Measurement
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              The site survey validates desktop analysis, captures equipment data, and identifies
-              operational practices affecting energy use. Systematic measurement using calibrated
-              instruments provides the evidence base for energy saving calculations.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Site Survey Checklist</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Building Fabric</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>• Glazing type and condition</li>
-                    <li>• Insulation levels (if accessible)</li>
-                    <li>• Air tightness observations</li>
-                    <li>• Solar shading provision</li>
-                    <li>• Thermal bridges/cold spots</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">HVAC Systems</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>• Plant nameplates and ratings</li>
-                    <li>• Operating schedules</li>
-                    <li>• Set points and controls</li>
-                    <li>• Distribution system condition</li>
-                    <li>• Maintenance history</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Measurement Equipment</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Instrument</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Key Measurements
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Power analyser</td>
-                      <td className="border border-white/10 px-3 py-2">Electrical systems</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        kW, kVA, PF, kWh, harmonics
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Clamp meter</td>
-                      <td className="border border-white/10 px-3 py-2">Circuit loading</td>
-                      <td className="border border-white/10 px-3 py-2">Amps, voltage, power</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Thermal camera</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Building fabric, electrical
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Surface temperature, heat loss
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lux meter</td>
-                      <td className="border border-white/10 px-3 py-2">Lighting assessment</td>
-                      <td className="border border-white/10 px-3 py-2">Illuminance levels (lux)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Data logger</td>
-                      <td className="border border-white/10 px-3 py-2">Long-term monitoring</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Temperature, humidity, CO₂
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Flue gas analyser</td>
-                      <td className="border border-white/10 px-3 py-2">Boiler efficiency</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        O₂, CO₂, CO, efficiency %
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Anemometer</td>
-                      <td className="border border-white/10 px-3 py-2">Ventilation assessment</td>
-                      <td className="border border-white/10 px-3 py-2">Air velocity, flow rate</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ultrasonic flow meter</td>
-                      <td className="border border-white/10 px-3 py-2">Water/heating systems</td>
-                      <td className="border border-white/10 px-3 py-2">Flow rate, heat transfer</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Measurement Protocols</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Calibration:</strong> Ensure all instruments are within calibration date
-                  and accuracy specifications
-                </li>
-                <li className="pl-1">
-                  <strong>Representative conditions:</strong> Measure during typical operating
-                  conditions, not during maintenance or unusual loads
-                </li>
-                <li className="pl-1">
-                  <strong>Duration:</strong> Spot measurements suit stable systems; logging required
-                  for varying loads
-                </li>
-                <li className="pl-1">
-                  <strong>Documentation:</strong> Record location, date, time, conditions, and any
-                  abnormalities
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Survey tip:</strong> Interview facilities staff and building users -
-              operational practices often explain unexpected consumption patterns that measurements
-              alone cannot reveal.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Energy Use Intensity Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate EUI for a 5,000m² office building consuming
-                850,000 kWh electricity and 450,000 kWh gas annually.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Given:</p>
-                <p className="ml-4">Floor area = 5,000 m² (GIA)</p>
-                <p className="ml-4">Electricity = 850,000 kWh/year</p>
-                <p className="ml-4">Gas = 450,000 kWh/year</p>
-                <p className="mt-2">Calculations:</p>
-                <p className="ml-4">Electrical EUI = 850,000 ÷ 5,000 = 170 kWh/m²/year</p>
-                <p className="ml-4">Fossil EUI = 450,000 ÷ 5,000 = 90 kWh/m²/year</p>
-                <p className="ml-4">Total EUI = 170 + 90 = 260 kWh/m²/year</p>
-                <p className="mt-2 text-green-400">
-                  Benchmark: CIBSE TM46 typical office = 120 electricity + 120 gas = 240 kWh/m²
-                </p>
-                <p className="text-yellow-400">
-                  Assessment: Electrical consumption above benchmark - investigate lighting and
-                  cooling
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Simple Payback Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> LED lighting retrofit for an office floor - assess
-                financial viability.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Current situation:</p>
-                <p className="ml-4">100 x 58W T8 fluorescent fittings</p>
-                <p className="ml-4">Operating hours: 2,500 hours/year</p>
-                <p className="ml-4">Current consumption: 100 × 58W × 2,500h = 14,500 kWh/year</p>
-                <p className="mt-2">Proposed LED:</p>
-                <p className="ml-4">100 x 25W LED panels</p>
-                <p className="ml-4">LED consumption: 100 × 25W × 2,500h = 6,250 kWh/year</p>
-                <p className="mt-2">Savings calculation:</p>
-                <p className="ml-4">Energy saved: 14,500 - 6,250 = 8,250 kWh/year</p>
-                <p className="ml-4">At £0.28/kWh: 8,250 × £0.28 = £2,310/year</p>
-                <p className="mt-2">Investment:</p>
-                <p className="ml-4">Supply and install: £12,000</p>
-                <p className="mt-2 text-green-400">Simple payback = £12,000 ÷ £2,310 = 5.2 years</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Degree Day Normalisation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Compare heating consumption between a mild year and a
-                cold year.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Year 1 (mild): Gas = 400,000 kWh, Degree days = 1,800</p>
-                <p>Year 2 (cold): Gas = 520,000 kWh, Degree days = 2,400</p>
-                <p className="mt-2">Normalised comparison (to 20-year average of 2,100 DD):</p>
-                <p className="ml-4">Year 1 normalised = 400,000 × (2,100/1,800) = 466,667 kWh</p>
-                <p className="ml-4">Year 2 normalised = 520,000 × (2,100/2,400) = 455,000 kWh</p>
-                <p className="mt-2 text-green-400">
-                  Conclusion: Year 2 actually more efficient when weather-adjusted
-                </p>
-                <p className="text-white">Without normalisation, Year 2 appears 30% worse</p>
-                <p className="text-white">After normalisation, Year 2 is 2.5% better</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Reporting Standards */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">EN 16247 Reporting Standards</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                EN 16247 Series Structure
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>EN 16247-1:</strong> General requirements - methodology applicable to all
-                  audits
-                </li>
-                <li className="pl-1">
-                  <strong>EN 16247-2:</strong> Buildings - specific requirements for building energy
-                  audits
-                </li>
-                <li className="pl-1">
-                  <strong>EN 16247-3:</strong> Processes - industrial process audit requirements
-                </li>
-                <li className="pl-1">
-                  <strong>EN 16247-4:</strong> Transport - fleet and logistics audits
-                </li>
-                <li className="pl-1">
-                  <strong>EN 16247-5:</strong> Competence of energy auditors
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Audit Report Contents (EN 16247-1)
-              </h3>
-              <div className="p-4 rounded-lg bg-white/5">
-                <ul className="text-sm text-white space-y-2">
-                  <li>
-                    <strong>1. Executive summary:</strong> Key findings, recommendations, estimated
-                    savings
-                  </li>
-                  <li>
-                    <strong>2. Background:</strong> Audit scope, objectives, boundaries, limitations
-                  </li>
-                  <li>
-                    <strong>3. Description of audited object:</strong> Building/process
-                    characteristics, operations
-                  </li>
-                  <li>
-                    <strong>4. Data collection:</strong> Sources, methodology, measurement details
-                  </li>
-                  <li>
-                    <strong>5. Energy analysis:</strong> Consumption breakdown, benchmarking, trends
-                  </li>
-                  <li>
-                    <strong>6. Opportunities identified:</strong> Full list of potential measures
-                  </li>
-                  <li>
-                    <strong>7. Recommended measures:</strong> Prioritised actions with costs,
-                    savings, payback
-                  </li>
-                  <li>
-                    <strong>8. Implementation plan:</strong> Timescales, responsibilities, M&V
-                    approach
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Energy Conservation Measure (ECM) Documentation
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Required Element
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Measure description</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Technical description of proposed intervention
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Energy savings</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        kWh/year by fuel type with calculation basis
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Carbon savings</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        tCO₂/year using current emission factors
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cost savings</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        £/year at current tariff rates
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Implementation cost</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Capital and installation costs
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Simple payback</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Years to recover investment
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Implementation time</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Duration and any operational impacts
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Risks and barriers</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Technical, financial, operational considerations
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">
-                Common Audit Pitfalls to Avoid
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Insufficient baseline data:</strong> Basing savings on estimates rather
-                  than measured consumption
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring interactions:</strong> Not accounting for heating/cooling
-                  interactions when replacing lighting
-                </li>
-                <li className="pl-1">
-                  <strong>Over-optimistic savings:</strong> Using manufacturer claims without
-                  operational derating
-                </li>
-                <li className="pl-1">
-                  <strong>Missing operational hours:</strong> Assuming design schedules when actual
-                  operation differs
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">ESOS Requirements</p>
-                <ul className="space-y-0.5">
-                  <li>4-year compliance cycle</li>
-                  <li>Cover 90% of energy consumption</li>
-                  <li>Lead Assessor sign-off required</li>
-                  <li>Notify Environment Agency by deadline</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Audit Levels</p>
-                <ul className="space-y-0.5">
-                  <li>Level I: Walk-through (quick wins)</li>
-                  <li>Level II: Energy survey (planning)</li>
-                  <li>Level III: Investment-grade (financing)</li>
-                  <li>EN 16247: European standard series</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section5-2">
-              Next: Energy Management Systems
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section5")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Energy management
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section5-2")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Metering strategies
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

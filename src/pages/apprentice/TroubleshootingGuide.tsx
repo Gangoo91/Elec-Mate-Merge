@@ -1,10 +1,18 @@
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { AlertTriangle, Zap, Lightbulb, Settings, CheckCircle } from 'lucide-react';
+import { ArrowLeft, AlertTriangle, Zap, Lightbulb, Settings, CheckCircle } from 'lucide-react';
+import {
+  PageFrame,
+  PageHero,
+  itemVariants,
+} from '@/components/college/primitives';
 
 const TroubleshootingGuide = () => {
+  const navigate = useNavigate();
   const commonProblems = [
     {
       problem: 'No Power to Circuit',
@@ -116,15 +124,26 @@ const TroubleshootingGuide = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
-      <div className="flex flex-col items-center justify-center mb-6">
-        <h1 className="text-3xl font-bold tracking-tight mb-4">Electrical Troubleshooting Guide</h1>
-        <p className="text-white text-center max-w-2xl mb-4">
-          Common electrical problems, their causes, and systematic approaches to diagnosis and
-          resolution
-        </p>
-        <SmartBackButton />
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate(-1)}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
+
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Troubleshooting"
+          title="Fault finding"
+          description="Common electrical problems, their causes, and the systematic approach that gets you to the answer faster than guessing. Safety first, every time."
+          tone="yellow"
+        />
+      </motion.div>
 
       <Card className="border-red-500/50 bg-card">
         <CardHeader>
@@ -249,7 +268,7 @@ const TroubleshootingGuide = () => {
           ))}
         </TabsContent>
       </Tabs>
-    </div>
+    </PageFrame>
   );
 };
 

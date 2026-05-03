@@ -1,9 +1,16 @@
 import { useState } from 'react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { ArrowLeft } from 'lucide-react';
+import {
+  PageFrame,
+  PageHero,
+  itemVariants,
+} from '@/components/college/primitives';
 import {
   Wrench,
   Zap,
@@ -31,6 +38,7 @@ import {
 } from 'lucide-react';
 
 const BasicToolsMaterialsGuide = () => {
+  const navigate = useNavigate();
   const [currentQuiz, setCurrentQuiz] = useState(0);
   const [quizScore, setQuizScore] = useState(0);
   const [showQuizResult, setShowQuizResult] = useState(false);
@@ -508,17 +516,26 @@ const BasicToolsMaterialsGuide = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
-      <div className="text-center mb-6 sm:mb-8 px-2">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-3 sm:mb-4 text-elec-yellow">
-          Basic Tools & Materials Guide
-        </h1>
-        <p className="text-sm sm:text-base md:text-lg text-white max-w-4xl mx-auto mb-4 sm:mb-6">
-          Complete guide to electrical tools, materials, and equipment for UK apprentices. Learn
-          what you need, when you need it, and where to get the best deals.
-        </p>
-        <SmartBackButton />
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate(-1)}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
+
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Tools & materials"
+          title="Tools & materials"
+          description="What you need, when you need it, and where to get the best deals. UK supplier picks, JIB-grade requirements, and the kit that earns its keep on day one."
+          tone="yellow"
+        />
+      </motion.div>
 
       {/* Interactive Cable Quiz - Enhanced */}
       <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 via-elec-yellow/5 to-elec-yellow/10">
@@ -1105,7 +1122,7 @@ const BasicToolsMaterialsGuide = () => {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </PageFrame>
   );
 };
 

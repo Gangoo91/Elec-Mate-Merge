@@ -867,7 +867,7 @@ export default function Sub4() {
                 Section 514 illustrations should now point at Appendix 11.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Section 514 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Section 514."
           />
 
           <SectionRule />

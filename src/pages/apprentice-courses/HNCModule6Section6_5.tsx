@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 6 · Section 6 · Subsection 5 — Circular Economy Principles
+ * HNC Electrical Engineering for Building Services (Sustainability and Environmental Engineering)
+ *   Design for disassembly, material passports, reuse strategies, and waste elimination in building services
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Circular Economy Principles - HNC Module 6 Section 6.5';
@@ -258,934 +275,394 @@ const faqs = [
 ];
 
 const HNCModule6Section6_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section6")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module6-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.6.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Circular Economy Principles
-          </h1>
-          <p className="text-white">
-            Design for disassembly, material passports, reuse strategies, and waste elimination in
-            building services
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 6 · Section 6 · Subsection 5"
+            title="Circular Economy Principles"
+            description="Design for disassembly, material passports, reuse strategies, and waste elimination in building services"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Circular economy:</strong> Eliminate waste through continuous material reuse
-              </li>
-              <li className="pl-1">
-                <strong>Design for disassembly:</strong> Enable component recovery at end of life
-              </li>
-              <li className="pl-1">
-                <strong>Material passports:</strong> Document composition for future reuse
-              </li>
-              <li className="pl-1">
-                <strong>Service models:</strong> Lease products, retain ownership for recovery
-              </li>
+          <TLDR
+            points={[
+              "Circular economy designs out waste — products, components and materials are kept at their highest value through reuse, refurbishment, remanufacture, recycling, and (last resort) recovery.",
+              "For buildings, this means design for disassembly, material passports tracking what is in the building and where, modular and demountable construction, and product-as-service models for major plant (lighting-as-service, lifts-as-service).",
+              "BS 8895 (Designing out Waste in Buildings) and the GLA Circular Economy Statement (London Plan major schemes) are the UK institutional drivers.",
+            ]}
+          />
+
+          <RegsCallout
+            source="GLA Circular Economy Statement Guidance + BS 8895 Designing out Waste in Buildings"
+            clause="A Circular Economy Statement shall be required for all referable applications and shall demonstrate how the proposal will: retain existing buildings and infrastructure where feasible; design new buildings for adaptability, longevity, deconstruction and disassembly; specify materials with high recycled content and from responsible sources; minimise construction waste with a target of at least 95% diversion from landfill; and include a strategy for material reuse and recycling at end-of-life."
+            meaning={
+              <>
+                GLA Circular Economy Statements are mandatory for London major referable schemes. The 95% landfill diversion target exceeds typical SWMP performance. End-of-life strategy (deconstruction plan, material passport) is increasingly required at planning stage. BS 8895 provides the methodology — design for disassembly, modularity, and reuse from concept stage.
+              </>
+            }
+            cite="Source: GLA London Plan 2021 Policy SI7 + Circular Economy Statement Guidance (2022) — london.gov.uk; BS 8895 (2015) — bsigroup.com"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Apply circular economy principles to building services design",
+              "Implement design for disassembly strategies in electrical installations",
+              "Create and use material passports for component tracking",
+              "Evaluate modular design approaches for MEP systems",
+              "Compare lease versus purchase models for building services",
+              "Develop end-of-life planning strategies for electrical installations",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Circular Economy Fundamentals">
+            <p>The circular economy represents a fundamental shift from the traditional linear model of take-make-dispose to a regenerative system where materials and products remain in use for as long as possible. For building services, this means designing installations that can be maintained, upgraded, recovered, and reused rather than demolished and landfilled.</p>
+            <p><strong>Core circular economy principles:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Design out waste:</strong> Eliminate waste and pollution from the outset</li>
+              <li><strong>Keep products in use:</strong> Maximise lifespan through maintenance, repair, and reuse</li>
+              <li><strong>Regenerate natural systems:</strong> Return biological materials safely to the earth</li>
+              <li><strong>Preserve embedded value:</strong> Retain the energy and resources invested in products</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Modular systems:</strong> Standardised, replaceable components
-              </li>
-              <li className="pl-1">
-                <strong>Accessible fixings:</strong> Mechanical connections for recovery
-              </li>
-              <li className="pl-1">
-                <strong>BIM integration:</strong> Digital tracking of material data
-              </li>
-              <li className="pl-1">
-                <strong>Whole-life value:</strong> Recovery reduces total cost of ownership
-              </li>
+            <p><strong>Linear vs Circular Economy Comparison</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Resource flow:</strong> Take → Make → Dispose — Reduce → Reuse → Recycle → Recover</li>
+              <li><strong>Design focus:</strong> Minimum initial cost — Whole-life value and recovery</li>
+              <li><strong>End of life:</strong> Demolition and landfill — Disassembly and reuse</li>
+              <li><strong>Ownership model:</strong> Purchase and own — Service and lease options</li>
+              <li><strong>Material value:</strong> Lost at disposal — Recovered and retained</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>UK Construction Waste Statistics</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Construction, demolition and excavation waste: approximately 62% of UK total waste</li>
+              <li>• Estimated &gt;90% could be reused or recycled with circular design</li>
+              <li>• Building services typically 15-20% of construction material by value</li>
+              <li>• Electrical and mechanical systems have significant reuse potential</li>
+            </ul>
+            <p><strong>Design principle:</strong> Consider the entire lifecycle from extraction through manufacture, installation, operation, maintenance, and end-of-life when specifying building services.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Apply circular economy principles to building services design',
-              'Implement design for disassembly strategies in electrical installations',
-              'Create and use material passports for component tracking',
-              'Evaluate modular design approaches for MEP systems',
-              'Compare lease versus purchase models for building services',
-              'Develop end-of-life planning strategies for electrical installations',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Circular Economy Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Circular Economy Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Design for Disassembly">
+            <p>Design for disassembly (DfD) ensures building components can be separated and recovered at end of life without destruction. For electrical installations, this means specifying connection methods, containment systems, and equipment that facilitate non-destructive removal and reuse.</p>
+            <p><strong>Connection Strategies</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Mechanical fixings over adhesives</li>
+              <li>Bolted joints over welded</li>
+              <li>Plug-in connections where possible</li>
+              <li>Accessible fasteners</li>
+            </ul>
+            <p><strong>Containment Design</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Surface-mounted trunking</li>
+              <li>Removable covers and lids</li>
+              <li>Channel systems with clips</li>
+              <li>Avoid embedded conduit</li>
+            </ul>
+            <p><strong>Equipment Selection</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Modular switchgear</li>
+              <li>Plug-in busbar systems</li>
+              <li>Track-mounted luminaires</li>
+              <li>Standardised components</li>
+            </ul>
+            <p><strong>DfD Strategies for Electrical Installations</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Cable containment:</strong> Cast into screed, clipped direct — Surface trunking, accessible trays</li>
+              <li><strong>Distribution boards:</strong> Flush-mounted, plastered around — Surface-mounted, bolted fixings</li>
+              <li><strong>Lighting:</strong> Recessed with fixed connections — Track or plug-in systems</li>
+              <li><strong>Final circuits:</strong> Hard-wired throughout — Prefabricated wiring, connectors</li>
+              <li><strong>Busbar systems:</strong> Custom fabricated, bolted — Plug-in modular systems</li>
+            </ul>
+            <p><strong>DfD Design Checklist</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>✓ Can each component be removed independently without damaging others?</li>
+              <li>✓ Are fixings accessible and of standard sizes?</li>
+              <li>✓ Is disassembly sequence logical and documented?</li>
+              <li>✓ Are materials compatible for recycling (no composite materials where possible)?</li>
+              <li>✓ Are hazardous materials clearly identified and separable?</li>
+            </ul>
+            <p><strong>Best practice:</strong> Document disassembly sequences and special tool requirements as part of O&M handover to enable future recovery.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Material Passports and Documentation">
+            <p>Material passports provide comprehensive documentation of building component composition, enabling informed decisions about reuse, recycling, and disposal. They go beyond traditional O&M manuals to include data essential for circular economy implementation.</p>
+            <p><strong>Material Passport Contents</strong></p>
+            <p><strong>Product Information</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Manufacturer and model details</li>
+              <li>• Date of manufacture</li>
+              <li>• Serial/batch numbers</li>
+              <li>• Expected service life</li>
+              <li>• Warranty information</li>
+            </ul>
+            <p><strong>Material Composition</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>• Material types and quantities</li>
+              <li>• Hazardous substance content</li>
+              <li>• Recyclability ratings</li>
+              <li>• Embodied carbon data</li>
+              <li>• Source/origin information</li>
+            </ul>
+            <p><strong>Material Passport Data Structure</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Identity:</strong> Unique ID, location, installation date — Tracking and inventory</li>
+              <li><strong>Composition:</strong> Materials, weights, certifications — Recycling decisions</li>
+              <li><strong>Environmental:</strong> Embodied carbon, EPD data — Sustainability reporting</li>
+              <li><strong>Maintenance:</strong> Service history, condition, remaining life — Reuse assessment</li>
+              <li><strong>End of life:</strong> Disassembly instructions, disposal guidance — Recovery planning</li>
+            </ul>
+            <p><strong>BIM Integration for Material Passports</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Object properties:</strong> Material data attached to BIM objects</li>
+              <li><strong>Asset tagging:</strong> QR codes linking physical items to digital records</li>
+              <li><strong>Lifecycle tracking:</strong> Maintenance events recorded against components</li>
+              <li><strong>Quantity extraction:</strong> Automated material schedules for recovery planning</li>
+              <li><strong>Interoperability:</strong> Data exchange with circular economy platforms</li>
+            </ul>
+            <p><strong>Example: Distribution Board Material Passport Entry</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Asset ID:</strong> DB-L2-01</li>
+              <li><strong>Manufacturer:</strong> Schneider Electric</li>
+              <li><strong>Model:</strong> Prisma Plus P 400A</li>
+              <li><strong>Install date:</strong> 2024-03-15</li>
+              <li><strong>Expected life:</strong> 25 years</li>
+              <li><strong>Steel content:</strong> 45kg (recyclable)</li>
+              <li><strong>Copper content:</strong> 12kg (recyclable)</li>
+              <li><strong>Plastic content:</strong> 8kg (PP - recyclable)</li>
+              <li><strong>Disassembly:</strong> See procedure DIS-DB-001</li>
+            </ul>
+            <p><strong>Integration tip:</strong> Link material passport data to building management systems to track component age, condition, and trigger end-of-life planning automatically.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Circular Business Models and End-of-Life Planning">
+            <p>Circular economy implementation requires new business models that incentivise longevity, repairability, and material recovery. Product-as-a-service models shift equipment ownership to providers who benefit from designing for durability and end-of-life value.</p>
+            <p><strong>Business Model Comparison</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Traditional purchase:</strong> Client owns — Low initial cost — Client disposal responsibility</li>
+              <li><strong>Lease/rental:</strong> Provider owns — Provider maintains asset value — Provider recovery</li>
+              <li><strong>Product-as-a-service:</strong> Provider owns — Performance and longevity — Provider reuse/recycle</li>
+              <li><strong>Take-back schemes:</strong> Client owns — Recovery discount — Manufacturer recovery</li>
+            </ul>
+            <p><strong>Lighting-as-a-Service Benefits</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>No capital expenditure required</li>
+              <li>Guaranteed light levels maintained</li>
+              <li>Technology upgrades included</li>
+              <li>Provider optimises for efficiency</li>
+              <li>End-of-life recovery assured</li>
+            </ul>
+            <p><strong>End-of-Life Planning Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Component inventory and conditions</li>
+              <li>Disassembly sequence documentation</li>
+              <li>Reuse market identification</li>
+              <li>Recycling routes for materials</li>
+              <li>Hazardous material handling</li>
+            </ul>
+            <p><strong>Waste Hierarchy Application</strong></p>
+            <p><strong>1. Prevention:</strong> Design for longevity, avoid over-specification</p>
+            <p><strong>2. Reuse:</strong> Recover whole components for use elsewhere</p>
+            <p><strong>3. Recycling:</strong> Separate materials for reprocessing</p>
+            <p><strong>4. Recovery:</strong> Extract energy from materials that cannot be recycled</p>
+            <p><strong>5. Disposal:</strong> Landfill only as absolute last resort</p>
+            <p><strong>Component Reuse Potential</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Cable tray/trunking:</strong> High — Inspect for damage, clean</li>
+              <li><strong>Luminaire housings:</strong> Medium-High — Replace lamps/drivers, test</li>
+              <li><strong>Switchgear enclosures:</strong> Medium — Refurbishment required</li>
+              <li><strong>Cables:</strong> Low-Medium — Insulation testing, length limits</li>
+              <li><strong>Protective devices:</strong> Low — Standards compliance critical</li>
+            </ul>
+            <p><strong>Regulatory note:</strong> Reused components must comply with current standards. WEEE regulations apply to electrical equipment disposal, requiring proper handling of hazardous materials.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              The circular economy represents a fundamental shift from the traditional linear model
-              of take-make-dispose to a regenerative system where materials and products remain in
-              use for as long as possible. For building services, this means designing installations
-              that can be maintained, upgraded, recovered, and reused rather than demolished and
-              landfilled.
+              <strong>Example 1: Office Refurbishment Circular Design</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Core circular economy principles:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Design out waste:</strong> Eliminate waste and pollution from the outset
-                </li>
-                <li className="pl-1">
-                  <strong>Keep products in use:</strong> Maximise lifespan through maintenance,
-                  repair, and reuse
-                </li>
-                <li className="pl-1">
-                  <strong>Regenerate natural systems:</strong> Return biological materials safely to
-                  the earth
-                </li>
-                <li className="pl-1">
-                  <strong>Preserve embedded value:</strong> Retain the energy and resources invested
-                  in products
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Linear vs Circular Economy Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Linear Economy</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Circular Economy
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Resource flow</td>
-                      <td className="border border-white/10 px-3 py-2">Take → Make → Dispose</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reduce → Reuse → Recycle → Recover
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Design focus</td>
-                      <td className="border border-white/10 px-3 py-2">Minimum initial cost</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Whole-life value and recovery
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">End of life</td>
-                      <td className="border border-white/10 px-3 py-2">Demolition and landfill</td>
-                      <td className="border border-white/10 px-3 py-2">Disassembly and reuse</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ownership model</td>
-                      <td className="border border-white/10 px-3 py-2">Purchase and own</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Service and lease options
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Material value</td>
-                      <td className="border border-white/10 px-3 py-2">Lost at disposal</td>
-                      <td className="border border-white/10 px-3 py-2">Recovered and retained</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                UK Construction Waste Statistics
-              </p>
-              <ul className="text-sm text-white space-y-1">
-                <li>
-                  • Construction, demolition and excavation waste: approximately 62% of UK total
-                  waste
-                </li>
-                <li>• Estimated &gt;90% could be reused or recycled with circular design</li>
-                <li>• Building services typically 15-20% of construction material by value</li>
-                <li>• Electrical and mechanical systems have significant reuse potential</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design principle:</strong> Consider the entire lifecycle from extraction
-              through manufacture, installation, operation, maintenance, and end-of-life when
-              specifying building services.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Design for Disassembly */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Design for Disassembly
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Design electrical installation for a 10,000m² office refurbishment with circular economy principles.</p>
+            <p>Circular design strategies applied:</p>
+            <p>Containment system:</p>
+            <p>- Surface-mounted perimeter trunking (recoverable)</p>
+            <p>- Raised floor distribution boxes (accessible)</p>
+            <p>- Mechanical fixings throughout (no adhesives)</p>
+            <p>Lighting system:</p>
+            <p>- Track-mounted LED luminaires</p>
+            <p>- Lighting-as-a-service contract (5-year)</p>
+            <p>- Provider responsible for upgrades and recovery</p>
+            <p>Power distribution:</p>
+            <p>- Plug-in busbar risers</p>
+            <p>- Modular floor boxes with RJ45 power</p>
+            <p>- Surface DB installation with bolted fixings</p>
+            <p>Estimated 85% material recovery potential at end of life</p>
             <p>
-              Design for disassembly (DfD) ensures building components can be separated and
-              recovered at end of life without destruction. For electrical installations, this means
-              specifying connection methods, containment systems, and equipment that facilitate
-              non-destructive removal and reuse.
+              <strong>Example 2: Material Passport Implementation</strong>
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Connection Strategies
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Mechanical fixings over adhesives</li>
-                  <li className="pl-1">Bolted joints over welded</li>
-                  <li className="pl-1">Plug-in connections where possible</li>
-                  <li className="pl-1">Accessible fasteners</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Containment Design</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Surface-mounted trunking</li>
-                  <li className="pl-1">Removable covers and lids</li>
-                  <li className="pl-1">Channel systems with clips</li>
-                  <li className="pl-1">Avoid embedded conduit</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Equipment Selection</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Modular switchgear</li>
-                  <li className="pl-1">Plug-in busbar systems</li>
-                  <li className="pl-1">Track-mounted luminaires</li>
-                  <li className="pl-1">Standardised components</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                DfD Strategies for Electrical Installations
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Element</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Linear Approach
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Circular/DfD Approach
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cable containment</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cast into screed, clipped direct
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Surface trunking, accessible trays
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Distribution boards</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Flush-mounted, plastered around
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Surface-mounted, bolted fixings
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lighting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Recessed with fixed connections
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Track or plug-in systems</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Final circuits</td>
-                      <td className="border border-white/10 px-3 py-2">Hard-wired throughout</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Prefabricated wiring, connectors
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Busbar systems</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Custom fabricated, bolted
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Plug-in modular systems</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-2">DfD Design Checklist</p>
-              <ul className="text-sm text-white space-y-1">
-                <li>✓ Can each component be removed independently without damaging others?</li>
-                <li>✓ Are fixings accessible and of standard sizes?</li>
-                <li>✓ Is disassembly sequence logical and documented?</li>
-                <li>
-                  ✓ Are materials compatible for recycling (no composite materials where possible)?
-                </li>
-                <li>✓ Are hazardous materials clearly identified and separable?</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> Document disassembly sequences and special tool
-              requirements as part of O&M handover to enable future recovery.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Material Passports and Documentation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Material Passports and Documentation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Create material passport system for new commercial building services.</p>
+            <p>Implementation steps:</p>
+            <p>1. BIM model setup:</p>
+            <p>- Add material passport properties to object templates</p>
+            <p>- Create custom parameters for circular data</p>
+            <p>2. Data collection:</p>
+            <p>- Request EPDs from manufacturers</p>
+            <p>- Obtain material composition declarations</p>
+            <p>- Document disassembly procedures</p>
+            <p>3. Physical tagging:</p>
+            <p>- QR codes on major components</p>
+            <p>- Links to digital records</p>
+            <p>4. Handover:</p>
+            <p>- Export material schedules</p>
+            <p>- Integrate with FM system</p>
+            <p>- Train facilities team</p>
             <p>
-              Material passports provide comprehensive documentation of building component
-              composition, enabling informed decisions about reuse, recycling, and disposal. They go
-              beyond traditional O&M manuals to include data essential for circular economy
-              implementation.
+              <strong>Example 3: End-of-Life Value Calculation</strong>
             </p>
+            <p><strong>Scenario:</strong> Estimate recovery value for electrical installation in building due for demolition.</p>
+            <p>Component inventory and values:</p>
+            <p>Cable tray (galvanised steel): 2,500kg</p>
+            <p>- Condition: Good, reusable</p>
+            <p>- Reuse value: £3,500</p>
+            <p>- Scrap value: £1,250</p>
+            <p>Copper cables: 1,800kg</p>
+            <p>- Recycling value: £9,000 (at £5/kg)</p>
+            <p>LED luminaires (500 units):</p>
+            <p>- Condition: Functional, 4 years old</p>
+            <p>- Reuse value: £25,000</p>
+            <p>- Recycling value: £2,500</p>
+            <p>Total potential recovery:</p>
+            <p>Optimised (DfD): £37,500</p>
+            <p>Demolition (linear): £12,750</p>
+            <p>Circular approach benefit: £24,750</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Material Passport Contents</p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="font-medium text-white mb-1">Product Information</p>
-                  <ul className="text-white space-y-0.5">
-                    <li>• Manufacturer and model details</li>
-                    <li>• Date of manufacture</li>
-                    <li>• Serial/batch numbers</li>
-                    <li>• Expected service life</li>
-                    <li>• Warranty information</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium text-white mb-1">Material Composition</p>
-                  <ul className="text-white space-y-0.5">
-                    <li>• Material types and quantities</li>
-                    <li>• Hazardous substance content</li>
-                    <li>• Recyclability ratings</li>
-                    <li>• Embodied carbon data</li>
-                    <li>• Source/origin information</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Material Passport Data Structure
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Category</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Data Elements</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Identity</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Unique ID, location, installation date
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Tracking and inventory</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Composition</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Materials, weights, certifications
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Recycling decisions</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Environmental</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Embodied carbon, EPD data
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Sustainability reporting</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Maintenance</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Service history, condition, remaining life
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Reuse assessment</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">End of life</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Disassembly instructions, disposal guidance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Recovery planning</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BIM Integration for Material Passports
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Object properties:</strong> Material data attached to BIM objects
-                </li>
-                <li className="pl-1">
-                  <strong>Asset tagging:</strong> QR codes linking physical items to digital records
-                </li>
-                <li className="pl-1">
-                  <strong>Lifecycle tracking:</strong> Maintenance events recorded against
-                  components
-                </li>
-                <li className="pl-1">
-                  <strong>Quantity extraction:</strong> Automated material schedules for recovery
-                  planning
-                </li>
-                <li className="pl-1">
-                  <strong>Interoperability:</strong> Data exchange with circular economy platforms
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example: Distribution Board Material Passport Entry
-              </p>
-              <div className="text-sm space-y-1 font-mono">
-                <p>
-                  <span className="text-white">Asset ID:</span>{' '}
-                  <span className="text-white">DB-L2-01</span>
-                </p>
-                <p>
-                  <span className="text-white">Manufacturer:</span>{' '}
-                  <span className="text-white">Schneider Electric</span>
-                </p>
-                <p>
-                  <span className="text-white">Model:</span>{' '}
-                  <span className="text-white">Prisma Plus P 400A</span>
-                </p>
-                <p>
-                  <span className="text-white">Install date:</span>{' '}
-                  <span className="text-white">2024-03-15</span>
-                </p>
-                <p>
-                  <span className="text-white">Expected life:</span>{' '}
-                  <span className="text-white">25 years</span>
-                </p>
-                <p>
-                  <span className="text-white">Steel content:</span>{' '}
-                  <span className="text-white">45kg (recyclable)</span>
-                </p>
-                <p>
-                  <span className="text-white">Copper content:</span>{' '}
-                  <span className="text-white">12kg (recyclable)</span>
-                </p>
-                <p>
-                  <span className="text-white">Plastic content:</span>{' '}
-                  <span className="text-white">8kg (PP - recyclable)</span>
-                </p>
-                <p>
-                  <span className="text-white">Disassembly:</span>{' '}
-                  <span className="text-white">See procedure DIS-DB-001</span>
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Integration tip:</strong> Link material passport data to building management
-              systems to track component age, condition, and trigger end-of-life planning
-              automatically.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Circular Business Models and End-of-Life Planning */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Circular Business Models and End-of-Life Planning
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Circular economy implementation requires new business models that incentivise
-              longevity, repairability, and material recovery. Product-as-a-service models shift
-              equipment ownership to providers who benefit from designing for durability and
-              end-of-life value.
+              <strong>Circular Design Specification Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Business Model Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Model</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Ownership</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Incentives</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">End of Life</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Traditional purchase</td>
-                      <td className="border border-white/10 px-3 py-2">Client owns</td>
-                      <td className="border border-white/10 px-3 py-2">Low initial cost</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Client disposal responsibility
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lease/rental</td>
-                      <td className="border border-white/10 px-3 py-2">Provider owns</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Provider maintains asset value
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Provider recovery</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Product-as-a-service</td>
-                      <td className="border border-white/10 px-3 py-2">Provider owns</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Performance and longevity
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Provider reuse/recycle</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Take-back schemes</td>
-                      <td className="border border-white/10 px-3 py-2">Client owns</td>
-                      <td className="border border-white/10 px-3 py-2">Recovery discount</td>
-                      <td className="border border-white/10 px-3 py-2">Manufacturer recovery</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Lighting-as-a-Service Benefits
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">No capital expenditure required</li>
-                  <li className="pl-1">Guaranteed light levels maintained</li>
-                  <li className="pl-1">Technology upgrades included</li>
-                  <li className="pl-1">Provider optimises for efficiency</li>
-                  <li className="pl-1">End-of-life recovery assured</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  End-of-Life Planning Requirements
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Component inventory and conditions</li>
-                  <li className="pl-1">Disassembly sequence documentation</li>
-                  <li className="pl-1">Reuse market identification</li>
-                  <li className="pl-1">Recycling routes for materials</li>
-                  <li className="pl-1">Hazardous material handling</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm font-medium text-green-400 mb-2">Waste Hierarchy Application</p>
-              <div className="text-sm text-white space-y-2">
-                <p>
-                  <strong>1. Prevention:</strong> Design for longevity, avoid over-specification
-                </p>
-                <p>
-                  <strong>2. Reuse:</strong> Recover whole components for use elsewhere
-                </p>
-                <p>
-                  <strong>3. Recycling:</strong> Separate materials for reprocessing
-                </p>
-                <p>
-                  <strong>4. Recovery:</strong> Extract energy from materials that cannot be
-                  recycled
-                </p>
-                <p>
-                  <strong>5. Disposal:</strong> Landfill only as absolute last resort
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Component Reuse Potential
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Component</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Reuse Potential
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Considerations</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cable tray/trunking</td>
-                      <td className="border border-white/10 px-3 py-2">High</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Inspect for damage, clean
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Luminaire housings</td>
-                      <td className="border border-white/10 px-3 py-2">Medium-High</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Replace lamps/drivers, test
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Switchgear enclosures</td>
-                      <td className="border border-white/10 px-3 py-2">Medium</td>
-                      <td className="border border-white/10 px-3 py-2">Refurbishment required</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cables</td>
-                      <td className="border border-white/10 px-3 py-2">Low-Medium</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Insulation testing, length limits
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Protective devices</td>
-                      <td className="border border-white/10 px-3 py-2">Low</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Standards compliance critical
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Regulatory note:</strong> Reused components must comply with current
-              standards. WEEE regulations apply to electrical equipment disposal, requiring proper
-              handling of hazardous materials.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Specify mechanical fixings over adhesives and welding where practical</li>
+              <li>Require accessible containment systems with removable covers</li>
+              <li>Include material passport data requirements in specifications</li>
+              <li>Consider product-as-a-service options for suitable systems</li>
+              <li>Request manufacturer take-back commitments</li>
+              <li>Document disassembly procedures in O&M manuals</li>
+            </ul>
+            <p>
+              <strong>Key Circular Economy Metrics:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Material recovery rate: <strong>&gt;90% target</strong></li>
+              <li>Recycled content: Track percentage by value and weight</li>
+              <li>Disassembly time: Measure vs traditional demolition</li>
+              <li>Reuse value: Calculate potential end-of-life recovery</li>
+            </ul>
+            <p>
+              <strong>Common Barriers to Address:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Initial cost focus:</strong> Present whole-life cost case including recovery value</li>
+              <li><strong>Standards compliance:</strong> Ensure reclaimed items meet current regulations</li>
+              <li><strong>Supply chain:</strong> Develop relationships with recovery and reuse providers</li>
+              <li><strong>Warranties:</strong> Negotiate appropriate terms for circular products</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <Scenario
+            title="Refurbishment switchgear destined for landfill diverted to reuse market"
+            situation={
+              <>
+                A 1990s office is being refurbished. The design team had specified disposal of all existing electrical switchgear (3 × 1,250 A LV panels, 12 distribution boards) as waste, replacing with new. The Circular Economy Statement requires material reuse strategy. Initial estimate: 8 tonnes of electrical equipment to landfill.
+              </>
+            }
+            whatToDo={
+              <>
+                Engage a switchgear refurbishment specialist (e.g. Spark Switchgear, Henley Electrical) for technical assessment. Most LV panels of this age are refurbishable to current BS EN 61439 standards: replace ACBs with current types, refurbish busbars, re-test, re-certify. Cost typically 30–50% of new with 60–80% embodied carbon saving. Where panels cannot be refurbished, donate to circular-economy marketplaces (e.g. Globechain, Construction Reuse Network) for use in lower-tier applications. Document for the CE Statement.
+              </>
+            }
+            whyItMatters={
+              <>
+                Construction waste is 60% of total UK waste by mass. M&E equipment is high-value, high-embodied-carbon — the highest-priority candidate for reuse. The barrier is rarely technical (refurbishment standards exist) but commercial (warranty, liability, supply chain). Circular Economy Statements force the conversation; the technical and commercial frameworks are catching up.
+              </>
+            }
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <FAQ items={faqs} />
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Office Refurbishment Circular Design
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Design electrical installation for a 10,000m² office
-                refurbishment with circular economy principles.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Circular design strategies applied:</p>
-                <p className="mt-2">Containment system:</p>
-                <p className="ml-4">- Surface-mounted perimeter trunking (recoverable)</p>
-                <p className="ml-4">- Raised floor distribution boxes (accessible)</p>
-                <p className="ml-4">- Mechanical fixings throughout (no adhesives)</p>
-                <p className="mt-2">Lighting system:</p>
-                <p className="ml-4">- Track-mounted LED luminaires</p>
-                <p className="ml-4">- Lighting-as-a-service contract (5-year)</p>
-                <p className="ml-4">- Provider responsible for upgrades and recovery</p>
-                <p className="mt-2">Power distribution:</p>
-                <p className="ml-4">- Plug-in busbar risers</p>
-                <p className="ml-4">- Modular floor boxes with RJ45 power</p>
-                <p className="ml-4">- Surface DB installation with bolted fixings</p>
-                <p className="mt-2 text-green-400">
-                  Estimated 85% material recovery potential at end of life
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Material Passport Implementation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Create material passport system for new commercial
-                building services.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Implementation steps:</p>
-                <p className="mt-2">1. BIM model setup:</p>
-                <p className="ml-4">- Add material passport properties to object templates</p>
-                <p className="ml-4">- Create custom parameters for circular data</p>
-                <p className="mt-2">2. Data collection:</p>
-                <p className="ml-4">- Request EPDs from manufacturers</p>
-                <p className="ml-4">- Obtain material composition declarations</p>
-                <p className="ml-4">- Document disassembly procedures</p>
-                <p className="mt-2">3. Physical tagging:</p>
-                <p className="ml-4">- QR codes on major components</p>
-                <p className="ml-4">- Links to digital records</p>
-                <p className="mt-2">4. Handover:</p>
-                <p className="ml-4">- Export material schedules</p>
-                <p className="ml-4">- Integrate with FM system</p>
-                <p className="ml-4">- Train facilities team</p>
-              </div>
-            </div>
+          <KeyTakeaways
+            points={[
+              "Circular hierarchy: reuse > refurbish > remanufacture > recycle > recover > dispose.",
+              "BS 8895 = designing out waste in buildings (UK standard).",
+              "GLA Circular Economy Statements mandatory for London major referable schemes.",
+              "Material passports track what is in the building and where.",
+              "Design for disassembly = mechanical fixings, modular components, accessible joints.",
+              "Product-as-service = lighting, lifts, HVAC supplied as service not product.",
+              "M&E equipment is high-priority for reuse — high value, high embodied carbon.",
+            ]}
+          />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: End-of-Life Value Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Estimate recovery value for electrical installation in
-                building due for demolition.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Component inventory and values:</p>
-                <p className="mt-2">Cable tray (galvanised steel): 2,500kg</p>
-                <p className="ml-4">- Condition: Good, reusable</p>
-                <p className="ml-4">- Reuse value: £3,500</p>
-                <p className="ml-4">- Scrap value: £1,250</p>
-                <p className="mt-2">Copper cables: 1,800kg</p>
-                <p className="ml-4">- Recycling value: £9,000 (at £5/kg)</p>
-                <p className="mt-2">LED luminaires (500 units):</p>
-                <p className="ml-4">- Condition: Functional, 4 years old</p>
-                <p className="ml-4">- Reuse value: £25,000</p>
-                <p className="ml-4">- Recycling value: £2,500</p>
-                <p className="mt-2 border-t border-white/20 pt-2">Total potential recovery:</p>
-                <p className="ml-4 text-green-400">Optimised (DfD): £37,500</p>
-                <p className="ml-4 text-red-400">Demolition (linear): £12,750</p>
-                <p className="mt-2 text-green-400">Circular approach benefit: £24,750</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Circular Design Specification Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Specify mechanical fixings over adhesives and welding where practical
-                </li>
-                <li className="pl-1">
-                  Require accessible containment systems with removable covers
-                </li>
-                <li className="pl-1">
-                  Include material passport data requirements in specifications
-                </li>
-                <li className="pl-1">Consider product-as-a-service options for suitable systems</li>
-                <li className="pl-1">Request manufacturer take-back commitments</li>
-                <li className="pl-1">Document disassembly procedures in O&M manuals</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Circular Economy Metrics
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Material recovery rate: <strong>&gt;90% target</strong>
-                </li>
-                <li className="pl-1">Recycled content: Track percentage by value and weight</li>
-                <li className="pl-1">Disassembly time: Measure vs traditional demolition</li>
-                <li className="pl-1">Reuse value: Calculate potential end-of-life recovery</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">
-                Common Barriers to Address
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Initial cost focus:</strong> Present whole-life cost case including
-                  recovery value
-                </li>
-                <li className="pl-1">
-                  <strong>Standards compliance:</strong> Ensure reclaimed items meet current
-                  regulations
-                </li>
-                <li className="pl-1">
-                  <strong>Supply chain:</strong> Develop relationships with recovery and reuse
-                  providers
-                </li>
-                <li className="pl-1">
-                  <strong>Warranties:</strong> Negotiate appropriate terms for circular products
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Circular Economy Principles</p>
-                <ul className="space-y-0.5">
-                  <li>Design out waste and pollution</li>
-                  <li>Keep products and materials in use</li>
-                  <li>Regenerate natural systems</li>
-                  <li>Preserve embedded value</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">DfD Strategies</p>
-                <ul className="space-y-0.5">
-                  <li>Mechanical fixings over adhesives</li>
-                  <li>Accessible containment systems</li>
-                  <li>Modular, standardised components</li>
-                  <li>Documented disassembly sequences</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section6-6">
-              Next: Section 6.6
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section6-4")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Whole life carbon assessment
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section6-6")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Post-occupancy evaluation
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

@@ -485,7 +485,7 @@ export default function Sub1() {
                 device specs, and operating notes that make the EIC properly traceable.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 132.1 framework — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 132.1 framework."
           />
 
           <InlineCheck
@@ -691,7 +691,7 @@ export default function Sub1() {
                 calls remain with the named competent person on the certificate.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 132.1 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 132.1."
           />
 
           <SectionRule />

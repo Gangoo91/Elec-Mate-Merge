@@ -1,170 +1,134 @@
 import { useNavigate } from 'react-router-dom';
-import { Card, CardContent } from '@/components/ui/card';
-import { CheckCircle, ChevronRight } from 'lucide-react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { motion } from 'framer-motion';
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  PageFrame,
+  PageHero,
+  SectionHeader,
+  HubGrid,
+  HubCard,
+  itemVariants,
+  type Tone,
+} from '@/components/college/primitives';
 
 interface Section {
+  number: string;
+  eyebrow: string;
   title: string;
   slug: string;
-  icon: string;
-  colour: string;
-  border: string;
-  readTime: string;
+  description: string;
+  meta: string;
+  tone: Tone;
 }
 
-const sections: Section[] = [
+const SECTIONS: Section[] = [
   {
-    title: 'Time Fundamentals',
+    number: '01',
+    eyebrow: 'Foundations',
+    title: 'Time fundamentals',
     slug: 'fundamentals',
-    icon: '⏰',
-    colour: 'text-blue-400',
-    border: 'border-blue-500/30',
-    readTime: '7 min read',
+    description:
+      'Where the time goes — site, study, college, life. A real picture of a 168-hour week and where the slack actually lives.',
+    meta: '7 min read',
+    tone: 'blue',
   },
   {
-    title: 'Schedule Planning',
+    number: '02',
+    eyebrow: 'Plan',
+    title: 'Schedule planning',
     slug: 'scheduling',
-    icon: '📅',
-    colour: 'text-green-400',
-    border: 'border-green-500/30',
-    readTime: '7 min read',
+    description:
+      'Weekly + monthly planning that survives a real apprenticeship. Calendars, reminders, the day you reset everything that drifted.',
+    meta: '7 min read',
+    tone: 'emerald',
   },
   {
-    title: 'Stress & Wellbeing',
+    number: '03',
+    eyebrow: 'Pressure',
+    title: 'Stress & wellbeing',
     slug: 'stress',
-    icon: '💚',
-    colour: 'text-orange-400',
-    border: 'border-orange-500/30',
-    readTime: '8 min read',
+    description:
+      'Spotting overload before it tips into burnout. Practical techniques that work on site, not just in mindfulness apps.',
+    meta: '8 min read',
+    tone: 'amber',
   },
   {
-    title: 'Work-Life Balance',
+    number: '04',
+    eyebrow: 'Life',
+    title: 'Work-life balance',
     slug: 'balance',
-    icon: '⚖️',
-    colour: 'text-purple-400',
-    border: 'border-purple-500/30',
-    readTime: '6 min read',
+    description:
+      'Family, partners, mates, hobbies — keeping the rest of your life going while doing a 4-year apprenticeship.',
+    meta: '6 min read',
+    tone: 'purple',
   },
   {
-    title: 'Productivity Tools',
+    number: '05',
+    eyebrow: 'Output',
+    title: 'Productivity tools',
     slug: 'productivity',
-    icon: '🔧',
-    colour: 'text-amber-400',
-    border: 'border-amber-500/30',
-    readTime: '6 min read',
+    description:
+      'Apps, methods, paper systems — what actually helps and what just makes you feel like you\'re working without doing the work.',
+    meta: '6 min read',
+    tone: 'orange',
   },
   {
-    title: 'Interactive Tools',
+    number: '06',
+    eyebrow: 'Try it',
+    title: 'Interactive tools',
     slug: 'interactive',
-    icon: '📊',
-    colour: 'text-red-400',
-    border: 'border-red-500/30',
-    readTime: '5 min read',
+    description:
+      'Built-in tools — workload calculator, study planner, energy audit — to help you map your actual week against the time you\'ve got.',
+    meta: '5 min read',
+    tone: 'cyan',
   },
 ];
 
 const TimeManagement = () => {
   const navigate = useNavigate();
-
   return (
-    <div className="animate-fade-in max-w-2xl mx-auto px-4 pb-20 space-y-6 text-left">
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <SmartBackButton />
-        <h1 className="text-2xl font-bold tracking-tight text-white">
-          Time Management
-        </h1>
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice/toolbox')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
 
-      {/* Intro Card */}
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
-          <h2 className="text-lg font-semibold text-white">
-            Work Smarter, Not Harder
-          </h2>
-          <p className="text-white text-sm leading-relaxed">
-            Balancing a 4-year apprenticeship with study, travel, and personal
-            life is a real challenge. Good time management is not about cramming
-            more in — it is about making space for{' '}
-            <span className="font-bold text-elec-yellow">what matters</span>.
-            These skills will serve you throughout your entire career.
-          </p>
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Balance"
+          title="There are 168 hours in a week"
+          description="40 on site. 8 of OJT. Some study. Some sleep. Some life. The maths only works if you're honest about where the time actually goes — and ruthless about what you protect."
+          tone="yellow"
+        />
+      </motion.div>
 
-          <div className="bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg p-4">
-            <h3 className="text-elec-yellow font-semibold text-sm mb-3">
-              Quick Facts
-            </h3>
-            <ul className="space-y-2">
-              {[
-                '20% of your time must be off-the-job training',
-                '40+ hours per week between work and college',
-                'Planning weekly saves hours of wasted time',
-                'Rest and recovery are essential, not optional',
-                'These skills are valued by every employer',
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="flex items-center gap-2 text-sm text-white"
-                >
-                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Section Header */}
-      <div className="flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full bg-elec-yellow" />
-        <h2 className="text-base font-semibold text-white">Explore Sections</h2>
-      </div>
-
-      {/* Section Cards */}
-      <div className="space-y-2">
-        {sections.map((section) => (
-          <button
-            key={section.slug}
-            onClick={() =>
-              navigate(
-                `/apprentice/toolbox/time-management/${section.slug}`
-              )
-            }
-            className={`w-full flex items-center gap-3 p-4 rounded-lg bg-white/5 ${section.border} border
-              touch-manipulation active:scale-[0.98] transition-transform min-h-[44px] text-left`}
-          >
-            <span className="text-xl flex-shrink-0">{section.icon}</span>
-            <div className="flex-1 min-w-0">
-              <span className={`font-medium text-sm ${section.colour}`}>
-                {section.title}
-              </span>
-              <p className="text-white text-xs mt-0.5">{section.readTime}</p>
-            </div>
-            <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
-          </button>
-        ))}
-      </div>
-
-      {/* Footer */}
-      <Card className="border-white/10 bg-white/5">
-        <CardContent className="p-4 space-y-3">
-          <p className="text-white text-xs leading-relaxed">
-            Effective time management is a life skill that goes far beyond your
-            apprenticeship. The habits you build now will benefit you throughout
-            your career and personal life.
-          </p>
-          <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3">
-            <p className="text-white text-xs">
-              <strong className="text-purple-400">Need support?</strong> If you
-              are struggling with workload or stress, talk to your training
-              provider or visit our Mental Health section for professional
-              support options. Asking for help is a sign of strength.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
+        <SectionHeader eyebrow="Sections" title="Six chapters" />
+        <HubGrid columns={3}>
+          {SECTIONS.map((s) => (
+            <HubCard
+              key={s.slug}
+              number={s.number}
+              eyebrow={s.eyebrow}
+              title={s.title}
+              description={s.description}
+              meta={s.meta}
+              tone={s.tone}
+              onClick={() =>
+                navigate(`/apprentice/toolbox/time-management/${s.slug}`)
+              }
+            />
+          ))}
+        </HubGrid>
+      </motion.section>
+    </PageFrame>
   );
 };
 

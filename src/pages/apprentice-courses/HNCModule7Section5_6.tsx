@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 7 · Section 5 · Subsection 6 — Efficiency Retrofits
+ * HNC Electrical Engineering for Building Services (Power and Lighting Systems)
+ *   Assessment methodology, business case development, implementation planning, and verification of savings
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Efficiency Retrofits - HNC Module 7 Section 5.6';
@@ -252,899 +265,337 @@ const faqs = [
 ];
 
 const HNCModule7Section5_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section5")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module7-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.5.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Efficiency Retrofits
-          </h1>
-          <p className="text-white">
-            Assessment methodology, business case development, implementation planning, and
-            verification of savings
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 7 · Section 5 · Subsection 6"
+            title="Efficiency Retrofits"
+            description="Assessment methodology, business case development, implementation planning, and verification of savings"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Energy audit:</strong> Systematic assessment of saving opportunities
-              </li>
-              <li className="pl-1">
-                <strong>Business case:</strong> Payback, NPV, and ROI analysis
-              </li>
-              <li className="pl-1">
-                <strong>Implementation:</strong> Phased approach with minimal disruption
-              </li>
-              <li className="pl-1">
-                <strong>IPMVP:</strong> Standardised verification of achieved savings
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Conduct systematic energy audits at appropriate levels",
+              "Develop compelling business cases with financial analysis",
+              "Plan and specify LED retrofit projects safely",
+              "Apply IPMVP methodology for savings verification",
+              "Commission retrofit installations effectively",
+              "Implement post-retrofit monitoring and reporting",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Assessment Methodology and Energy Audits">
+            <p>Effective retrofit planning begins with systematic energy assessment. Energy audits identify opportunities, quantify potential savings, and provide the data foundation for business case development and project specification.</p>
+            <p><strong>Energy Audit Levels (ASHRAE Standard):</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Level 1 - Walk-through audit:</strong> Visual inspection, utility bill analysis, identifies obvious opportunities</li>
+              <li><strong>Level 2 - General audit:</strong> Detailed analysis, equipment inventory, calculated savings estimates</li>
+              <li><strong>Level 3 - Investment-grade audit:</strong> Engineering analysis, monitoring data, life-cycle costing for capital decisions</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>LED retrofits:</strong> 50-70% lighting energy reduction typical
-              </li>
-              <li className="pl-1">
-                <strong>Controls upgrade:</strong> Additional 20-40% savings potential
-              </li>
-              <li className="pl-1">
-                <strong>Payback target:</strong> 2-5 years for commercial projects
-              </li>
-              <li className="pl-1">
-                <strong>M&amp;V period:</strong> Minimum 12 months post-retrofit
-              </li>
+            <p><strong>Audit Level Selection Guide</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Level 1:</strong> 1-2 days — Visual, utility bills — Initial screening, small buildings</li>
+              <li><strong>Level 2:</strong> 1-2 weeks — Inventory, spot measurements — Standard commercial projects</li>
+              <li><strong>Level 3:</strong> 4-8 weeks — Extended monitoring, modelling — Major investments, complex buildings</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Lighting Survey Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Equipment inventory:</strong> Lamp types, wattages, quantities, control gear</li>
+              <li><strong>Operating hours:</strong> Actual usage patterns, not assumptions</li>
+              <li><strong>Illuminance levels:</strong> Measured lux at task plane</li>
+              <li><strong>Control systems:</strong> Existing sensors, switches, scheduling</li>
+              <li><strong>Condition assessment:</strong> Fitting age, maintenance state, failures</li>
+            </ul>
+            <p><strong>Best practice:</strong> Use data loggers to capture actual operating hours rather than relying on stated schedules - real usage often differs significantly from design assumptions.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Conduct systematic energy audits at appropriate levels',
-              'Develop compelling business cases with financial analysis',
-              'Plan and specify LED retrofit projects safely',
-              'Apply IPMVP methodology for savings verification',
-              'Commission retrofit installations effectively',
-              'Implement post-retrofit monitoring and reporting',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Assessment Methodology */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Assessment Methodology and Energy Audits
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Business Case Development">
+            <p>A compelling business case translates technical savings into financial terms that stakeholders understand. Effective business cases address investment requirements, returns, risks, and non-financial benefits.</p>
+            <p><strong>Capital Costs</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Equipment procurement</li>
+              <li>Installation labour</li>
+              <li>Control system upgrades</li>
+              <li>Professional fees</li>
+              <li>Disposal costs</li>
+            </ul>
+            <p><strong>Revenue Benefits</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Energy cost savings</li>
+              <li>Maintenance reduction</li>
+              <li>Carbon credit value</li>
+              <li>Enhanced Capital Allowances</li>
+              <li>Avoided replacement costs</li>
+            </ul>
+            <p><strong>Non-Financial Benefits</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Improved light quality</li>
+              <li>Reduced maintenance disruption</li>
+              <li>Corporate sustainability</li>
+              <li>Regulatory compliance</li>
+              <li>Occupant satisfaction</li>
+            </ul>
+            <p><strong>Financial Analysis Methods</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Simple Payback:</strong> Capital Cost ÷ Annual Savings — &lt; 5 years</li>
+              <li><strong>Net Present Value (NPV):</strong> ∑ Discounted Cash Flows - Initial Investment — &gt; £0 (positive)</li>
+              <li><strong>Internal Rate of Return (IRR):</strong> Discount rate where NPV = 0 — &gt; 15% typically</li>
+              <li><strong>Return on Investment (ROI):</strong> (Net Benefit ÷ Cost) × 100% — &gt; 20% annually</li>
+            </ul>
+            <p><strong>Sample Payback Calculation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Project:</strong> Office LED Retrofit - 500 fittings</li>
+              <li><strong>Capital cost:</strong> £45,000 (equipment + installation)</li>
+              <li><strong>Energy saving:</strong> 75,000 kWh/year @ £0.30/kWh = £22,500/year</li>
+              <li><strong>Maintenance saving:</strong> £3,500/year</li>
+              <li><strong>Total annual saving:</strong> £26,000</li>
+            </ul>
+            <p>Simple payback: £45,000 ÷ £26,000 = 1.7 years</p>
+            <p><strong>Stakeholder tip:</strong> Present payback for finance teams, NPV for senior management, and carbon savings for sustainability officers - tailor metrics to audience.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="LED Retrofit Considerations and Implementation">
+            <p>LED retrofits offer substantial energy savings but require careful specification and installation. Understanding retrofit options, compatibility requirements, and installation safety is essential for successful projects.</p>
+            <p><strong>LED Retrofit Tube Types</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Type A:</strong> Works with existing ballast — Simple lamp swap — Ballast compatibility critical</li>
+              <li><strong>Type B:</strong> Ballast bypass required — Rewiring needed — Mains voltage at lamp holder</li>
+              <li><strong>Type C:</strong> External LED driver — Driver installation — Correct driver matching</li>
+              <li><strong>Type A+B (Hybrid):</strong> Either mode — Flexible installation — Clear labelling essential</li>
+            </ul>
+            <p><strong>Critical Safety Warning - Type B Installation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Type B tubes have mains voltage directly at lamp pins</li>
+              <li>Fitting must be permanently modified and labelled for LED only</li>
+              <li>Installation by competent persons under BS 7671 only</li>
+              <li>Clear warning labels must prevent fluorescent tube reinsertion</li>
+              <li>Single-ended connection (live + neutral one end) preferred for safety</li>
+            </ul>
+            <p><strong>Implementation Planning Checklist</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Site survey:</strong> Confirm fitting types, access requirements, electrical infrastructure</li>
+              <li><strong>Specification:</strong> Lumen output, colour temperature, CRI, beam angle, dimming compatibility</li>
+              <li><strong>Phasing:</strong> Plan installation by zones to maintain building operation</li>
+              <li><strong>Access equipment:</strong> Scaffold, MEWP, or tower requirements</li>
+              <li><strong>Disposal:</strong> WEEE compliant removal of fluorescent lamps and control gear</li>
+              <li><strong>Documentation:</strong> Updated drawings, O&amp;M manuals, test certificates</li>
+            </ul>
+            <p><strong>Control System Upgrades</strong></p>
+            <p><strong>Occupancy Sensing</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>PIR or microwave detection</li>
+              <li>Presence/absence modes</li>
+              <li>Typical saving: 20-30%</li>
+              <li>Best for: toilets, corridors, meeting rooms</li>
+            </ul>
+            <p><strong>Daylight Dimming</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Photocell control</li>
+              <li>Maintains target lux level</li>
+              <li>Typical saving: 15-25%</li>
+              <li>Best for: perimeter zones, atria</li>
+            </ul>
+            <p><strong>Specification tip:</strong> Always specify colour temperature consistently (e.g., 4000K throughout) - mixing creates visual discomfort and complaints.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="IPMVP Verification and Post-Retrofit Commissioning">
+            <p>The International Performance Measurement and Verification Protocol (IPMVP) provides standardised methods for quantifying energy savings. Proper verification demonstrates project success and supports warranty claims, incentive applications, and future projects.</p>
+            <p><strong>IPMVP Option Selection</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Option A:</strong> Retrofit isolation: key parameter measurement — Single isolated measures, lighting retrofits</li>
+              <li><strong>Option B:</strong> Retrofit isolation: all parameter measurement — Variable loads, motors, chillers</li>
+              <li><strong>Option C:</strong> Whole facility: utility metering — Multiple measures, whole building approach</li>
+              <li><strong>Option D:</strong> Calibrated simulation — Complex buildings, new construction</li>
+            </ul>
+            <p><strong>IPMVP Savings Equation</strong></p>
+            <p>Energy Savings = (Baseline Energy - Reporting Period Energy) ± Adjustments</p>
+            <p>Where adjustments account for:</p>
+            <p>• Changes in weather (degree days)</p>
+            <p>• Changes in occupancy</p>
+            <p>• Changes in operating hours</p>
+            <p>• Changes in production (if applicable)</p>
+            <p><strong>Post-Retrofit Commissioning Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Illuminance verification:</strong> Measure lux levels at task plane against design specification</li>
+              <li><strong>Power measurement:</strong> Confirm actual wattage matches specification</li>
+              <li><strong>Control functionality:</strong> Test all sensors, dimmers, scheduling, and override functions</li>
+              <li><strong>Emergency lighting:</strong> Full duration test of maintained and non-maintained fittings</li>
+              <li><strong>Documentation:</strong> As-built drawings, test certificates, programming records</li>
+            </ul>
+            <p><strong>M&amp;V Reporting Timeline</strong></p>
+            <p><strong>Short-term (0-3 months)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Commissioning completion report</li>
+              <li>Initial power measurements</li>
+              <li>Control system verification</li>
+              <li>Snagging resolution</li>
+            </ul>
+            <p><strong>Long-term (12+ months)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Full year energy comparison</li>
+              <li>Regression-adjusted baseline</li>
+              <li>Verified savings calculation</li>
+              <li>Performance guarantee assessment</li>
+            </ul>
+            <p><strong>Verification principle:</strong> Savings cannot be directly measured - they represent the absence of energy use. IPMVP provides the methodology to calculate what would have been consumed without the retrofit.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Effective retrofit planning begins with systematic energy assessment. Energy audits
-              identify opportunities, quantify potential savings, and provide the data foundation
-              for business case development and project specification.
+              <strong>Example 1: LED Retrofit Savings Calculation</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Energy Audit Levels (ASHRAE Standard):
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Level 1 - Walk-through audit:</strong> Visual inspection, utility bill
-                  analysis, identifies obvious opportunities
-                </li>
-                <li className="pl-1">
-                  <strong>Level 2 - General audit:</strong> Detailed analysis, equipment inventory,
-                  calculated savings estimates
-                </li>
-                <li className="pl-1">
-                  <strong>Level 3 - Investment-grade audit:</strong> Engineering analysis,
-                  monitoring data, life-cycle costing for capital decisions
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Audit Level Selection Guide
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Audit Level</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Duration
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Data Collection
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Best Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Level 1</td>
-                      <td className="border border-white/10 px-3 py-2">1-2 days</td>
-                      <td className="border border-white/10 px-3 py-2">Visual, utility bills</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Initial screening, small buildings
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Level 2</td>
-                      <td className="border border-white/10 px-3 py-2">1-2 weeks</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Inventory, spot measurements
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Standard commercial projects
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Level 3</td>
-                      <td className="border border-white/10 px-3 py-2">4-8 weeks</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Extended monitoring, modelling
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Major investments, complex buildings
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Lighting Survey Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Equipment inventory:</strong> Lamp types, wattages, quantities, control
-                  gear
-                </li>
-                <li className="pl-1">
-                  <strong>Operating hours:</strong> Actual usage patterns, not assumptions
-                </li>
-                <li className="pl-1">
-                  <strong>Illuminance levels:</strong> Measured lux at task plane
-                </li>
-                <li className="pl-1">
-                  <strong>Control systems:</strong> Existing sensors, switches, scheduling
-                </li>
-                <li className="pl-1">
-                  <strong>Condition assessment:</strong> Fitting age, maintenance state, failures
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> Use data loggers to capture actual operating hours
-              rather than relying on stated schedules - real usage often differs significantly from
-              design assumptions.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Business Case Development */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Business Case Development
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Calculate annual savings for an office lighting retrofit.</p>
+            <p>Existing system:</p>
+            <p>100 × T8 fluorescent fittings, 2 × 58W lamps + HF ballast</p>
+            <p>Total load: 100 × 116W = 11.6 kW</p>
+            <p>Operating hours: 2,500 hours/year</p>
+            <p>Annual consumption: 11.6 × 2,500 = 29,000 kWh</p>
+            <p>Proposed LED system:</p>
+            <p>100 × LED panels, 40W each = 4.0 kW</p>
+            <p>Annual consumption: 4.0 × 2,500 = 10,000 kWh</p>
+            <p>Savings calculation:</p>
+            <p>Energy saved: 29,000 - 10,000 = 19,000 kWh/year</p>
+            <p>At £0.30/kWh: 19,000 × 0.30 = £5,700/year</p>
+            <p>With occupancy controls (+25%): £5,700 × 1.25 = £7,125/year</p>
+            <p>Total annual saving: £7,125 (75% reduction)</p>
             <p>
-              A compelling business case translates technical savings into financial terms that
-              stakeholders understand. Effective business cases address investment requirements,
-              returns, risks, and non-financial benefits.
+              <strong>Example 2: NPV Analysis for Retrofit Investment</strong>
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Capital Costs</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Equipment procurement</li>
-                  <li className="pl-1">Installation labour</li>
-                  <li className="pl-1">Control system upgrades</li>
-                  <li className="pl-1">Professional fees</li>
-                  <li className="pl-1">Disposal costs</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Revenue Benefits</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Energy cost savings</li>
-                  <li className="pl-1">Maintenance reduction</li>
-                  <li className="pl-1">Carbon credit value</li>
-                  <li className="pl-1">Enhanced Capital Allowances</li>
-                  <li className="pl-1">Avoided replacement costs</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Non-Financial Benefits
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Improved light quality</li>
-                  <li className="pl-1">Reduced maintenance disruption</li>
-                  <li className="pl-1">Corporate sustainability</li>
-                  <li className="pl-1">Regulatory compliance</li>
-                  <li className="pl-1">Occupant satisfaction</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Financial Analysis Methods
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Metric</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Calculation</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Target</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Simple Payback</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Capital Cost ÷ Annual Savings
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">&lt; 5 years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Net Present Value (NPV)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        ∑ Discounted Cash Flows - Initial Investment
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">&gt; £0 (positive)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Internal Rate of Return (IRR)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Discount rate where NPV = 0
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">&gt; 15% typically</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Return on Investment (ROI)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        (Net Benefit ÷ Cost) × 100%
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">&gt; 20% annually</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Sample Payback Calculation</p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">Project:</span>{' '}
-                  <span className="text-white">Office LED Retrofit - 500 fittings</span>
-                </p>
-                <p>
-                  <span className="text-white">Capital cost:</span>{' '}
-                  <span className="text-white">£45,000 (equipment + installation)</span>
-                </p>
-                <p>
-                  <span className="text-white">Energy saving:</span>{' '}
-                  <span className="text-white">75,000 kWh/year @ £0.30/kWh = £22,500/year</span>
-                </p>
-                <p>
-                  <span className="text-white">Maintenance saving:</span>{' '}
-                  <span className="text-white">£3,500/year</span>
-                </p>
-                <p>
-                  <span className="text-white">Total annual saving:</span>{' '}
-                  <span className="text-white">£26,000</span>
-                </p>
-                <p className="mt-2 text-green-400">Simple payback: £45,000 ÷ £26,000 = 1.7 years</p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Stakeholder tip:</strong> Present payback for finance teams, NPV for senior
-              management, and carbon savings for sustainability officers - tailor metrics to
-              audience.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: LED Retrofit Considerations */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            LED Retrofit Considerations and Implementation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Evaluate a £50,000 retrofit with £15,000 annual savings over 10 years.</p>
+            <p>Parameters:</p>
+            <p>Initial investment: £50,000</p>
+            <p>Annual savings: £15,000</p>
+            <p>Project life: 10 years</p>
+            <p>Discount rate: 8%</p>
+            <p>NPV calculation:</p>
+            <p>Present value of annuity factor (8%, 10 years): 6.71</p>
+            <p>PV of savings: £15,000 × 6.71 = £100,650</p>
+            <p>NPV: £100,650 - £50,000 = £50,650</p>
+            <p>Simple payback: £50,000 ÷ £15,000 = 3.3 years</p>
+            <p>Decision: Positive NPV = proceed with investment</p>
             <p>
-              LED retrofits offer substantial energy savings but require careful specification and
-              installation. Understanding retrofit options, compatibility requirements, and
-              installation safety is essential for successful projects.
+              <strong>Example 3: Baseline Adjustment Using Regression</strong>
             </p>
+            <p><strong>Scenario:</strong> Adjust baseline consumption for weather changes using IPMVP Option C.</p>
+            <p>Baseline period (pre-retrofit):</p>
+            <p>Annual consumption: 450,000 kWh</p>
+            <p>Heating degree days (HDD): 2,200</p>
+            <p>Cooling degree days (CDD): 150</p>
+            <p>Regression model: kWh = 180,000 + (100 × HDD) + (200 × CDD)</p>
+            <p>Reporting period (post-retrofit):</p>
+            <p>Actual consumption: 320,000 kWh</p>
+            <p>HDD: 2,400 (colder year)</p>
+            <p>CDD: 180 (warmer summer)</p>
+            <p>Adjusted baseline:</p>
+            <p>180,000 + (100 × 2,400) + (200 × 180) = 456,000 kWh</p>
+            <p>Verified savings: 456,000 - 320,000 = 136,000 kWh (30%)</p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                LED Retrofit Tube Types
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Ballast Requirement
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Installation Complexity
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Safety Consideration
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Type A</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Works with existing ballast
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Simple lamp swap</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ballast compatibility critical
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Type B</td>
-                      <td className="border border-white/10 px-3 py-2">Ballast bypass required</td>
-                      <td className="border border-white/10 px-3 py-2">Rewiring needed</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Mains voltage at lamp holder
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Type C</td>
-                      <td className="border border-white/10 px-3 py-2">External LED driver</td>
-                      <td className="border border-white/10 px-3 py-2">Driver installation</td>
-                      <td className="border border-white/10 px-3 py-2">Correct driver matching</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Type A+B (Hybrid)</td>
-                      <td className="border border-white/10 px-3 py-2">Either mode</td>
-                      <td className="border border-white/10 px-3 py-2">Flexible installation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Clear labelling essential
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Critical Safety Warning - Type B Installation
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Type B tubes have mains voltage directly at lamp pins</li>
-                <li className="pl-1">
-                  Fitting must be permanently modified and labelled for LED only
-                </li>
-                <li className="pl-1">Installation by competent persons under BS 7671 only</li>
-                <li className="pl-1">
-                  Clear warning labels must prevent fluorescent tube reinsertion
-                </li>
-                <li className="pl-1">
-                  Single-ended connection (live + neutral one end) preferred for safety
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Implementation Planning Checklist
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Site survey:</strong> Confirm fitting types, access requirements,
-                  electrical infrastructure
-                </li>
-                <li className="pl-1">
-                  <strong>Specification:</strong> Lumen output, colour temperature, CRI, beam angle,
-                  dimming compatibility
-                </li>
-                <li className="pl-1">
-                  <strong>Phasing:</strong> Plan installation by zones to maintain building
-                  operation
-                </li>
-                <li className="pl-1">
-                  <strong>Access equipment:</strong> Scaffold, MEWP, or tower requirements
-                </li>
-                <li className="pl-1">
-                  <strong>Disposal:</strong> WEEE compliant removal of fluorescent lamps and control
-                  gear
-                </li>
-                <li className="pl-1">
-                  <strong>Documentation:</strong> Updated drawings, O&amp;M manuals, test
-                  certificates
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Control System Upgrades
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">Occupancy Sensing</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>PIR or microwave detection</li>
-                    <li>Presence/absence modes</li>
-                    <li>Typical saving: 20-30%</li>
-                    <li>Best for: toilets, corridors, meeting rooms</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">Daylight Dimming</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Photocell control</li>
-                    <li>Maintains target lux level</li>
-                    <li>Typical saving: 15-25%</li>
-                    <li>Best for: perimeter zones, atria</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Specification tip:</strong> Always specify colour temperature consistently
-              (e.g., 4000K throughout) - mixing creates visual discomfort and complaints.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: IPMVP Verification */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            IPMVP Verification and Post-Retrofit Commissioning
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              The International Performance Measurement and Verification Protocol (IPMVP) provides
-              standardised methods for quantifying energy savings. Proper verification demonstrates
-              project success and supports warranty claims, incentive applications, and future
-              projects.
+              <strong>Retrofit Project Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">IPMVP Option Selection</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Option</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Best Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Option A</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Retrofit isolation: key parameter measurement
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Single isolated measures, lighting retrofits
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Option B</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Retrofit isolation: all parameter measurement
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Variable loads, motors, chillers
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Option C</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Whole facility: utility metering
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multiple measures, whole building approach
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Option D</td>
-                      <td className="border border-white/10 px-3 py-2">Calibrated simulation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Complex buildings, new construction
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">IPMVP Savings Equation</p>
-              <div className="font-mono text-sm space-y-1">
-                <p className="text-white">
-                  Energy Savings = (Baseline Energy - Reporting Period Energy) ± Adjustments
-                </p>
-                <p className="mt-2 text-white">Where adjustments account for:</p>
-                <p className="ml-4 text-white">• Changes in weather (degree days)</p>
-                <p className="ml-4 text-white">• Changes in occupancy</p>
-                <p className="ml-4 text-white">• Changes in operating hours</p>
-                <p className="ml-4 text-white">• Changes in production (if applicable)</p>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Post-Retrofit Commissioning Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Illuminance verification:</strong> Measure lux levels at task plane
-                  against design specification
-                </li>
-                <li className="pl-1">
-                  <strong>Power measurement:</strong> Confirm actual wattage matches specification
-                </li>
-                <li className="pl-1">
-                  <strong>Control functionality:</strong> Test all sensors, dimmers, scheduling, and
-                  override functions
-                </li>
-                <li className="pl-1">
-                  <strong>Emergency lighting:</strong> Full duration test of maintained and
-                  non-maintained fittings
-                </li>
-                <li className="pl-1">
-                  <strong>Documentation:</strong> As-built drawings, test certificates, programming
-                  records
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                M&amp;V Reporting Timeline
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">Short-term (0-3 months)</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Commissioning completion report</li>
-                    <li>Initial power measurements</li>
-                    <li>Control system verification</li>
-                    <li>Snagging resolution</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-2">Long-term (12+ months)</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Full year energy comparison</li>
-                    <li>Regression-adjusted baseline</li>
-                    <li>Verified savings calculation</li>
-                    <li>Performance guarantee assessment</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Verification principle:</strong> Savings cannot be directly measured - they
-              represent the absence of energy use. IPMVP provides the methodology to calculate what
-              would have been consumed without the retrofit.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Complete energy audit at appropriate level (1, 2, or 3)</li>
+              <li>Establish 12-month baseline with metering and weather data</li>
+              <li>Develop business case with payback, NPV, and non-financial benefits</li>
+              <li>Specify retrofit approach (lamp replacement vs complete fitting)</li>
+              <li>Plan installation phasing to minimise operational disruption</li>
+              <li>Commission and verify against design specification</li>
+              <li>Implement ongoing M&amp;V programme per IPMVP</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Typical LED retrofit savings: <strong>50-70%</strong> energy reduction</li>
+              <li>Control system additions: <strong>20-40%</strong> additional savings</li>
+              <li>Target payback period: <strong>2-5 years</strong> for commercial</li>
+              <li>Baseline period: <strong>12 months</strong> minimum for M&amp;V</li>
+              <li>LED lamp life: <strong>50,000+ hours</strong> (L70 rating)</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: LED Retrofit Savings Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate annual savings for an office lighting retrofit.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Existing system:</p>
-                <p className="ml-4">100 × T8 fluorescent fittings, 2 × 58W lamps + HF ballast</p>
-                <p className="ml-4">Total load: 100 × 116W = 11.6 kW</p>
-                <p className="ml-4">Operating hours: 2,500 hours/year</p>
-                <p className="ml-4">Annual consumption: 11.6 × 2,500 = 29,000 kWh</p>
-                <p className="mt-2 text-white">Proposed LED system:</p>
-                <p className="ml-4">100 × LED panels, 40W each = 4.0 kW</p>
-                <p className="ml-4">Annual consumption: 4.0 × 2,500 = 10,000 kWh</p>
-                <p className="mt-2 text-white">Savings calculation:</p>
-                <p className="ml-4">Energy saved: 29,000 - 10,000 = 19,000 kWh/year</p>
-                <p className="ml-4">At £0.30/kWh: 19,000 × 0.30 = £5,700/year</p>
-                <p className="ml-4">With occupancy controls (+25%): £5,700 × 1.25 = £7,125/year</p>
-                <p className="mt-2 text-green-400">Total annual saving: £7,125 (75% reduction)</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: NPV Analysis for Retrofit Investment
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Evaluate a £50,000 retrofit with £15,000 annual savings
-                over 10 years.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Parameters:</p>
-                <p className="ml-4">Initial investment: £50,000</p>
-                <p className="ml-4">Annual savings: £15,000</p>
-                <p className="ml-4">Project life: 10 years</p>
-                <p className="ml-4">Discount rate: 8%</p>
-                <p className="mt-2 text-white">NPV calculation:</p>
-                <p className="ml-4">Present value of annuity factor (8%, 10 years): 6.71</p>
-                <p className="ml-4">PV of savings: £15,000 × 6.71 = £100,650</p>
-                <p className="ml-4">NPV: £100,650 - £50,000 = £50,650</p>
-                <p className="mt-2 text-white">Simple payback: £50,000 ÷ £15,000 = 3.3 years</p>
-                <p className="mt-2 text-green-400">
-                  Decision: Positive NPV = proceed with investment
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Baseline Adjustment Using Regression
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Adjust baseline consumption for weather changes using
-                IPMVP Option C.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Baseline period (pre-retrofit):</p>
-                <p className="ml-4">Annual consumption: 450,000 kWh</p>
-                <p className="ml-4">Heating degree days (HDD): 2,200</p>
-                <p className="ml-4">Cooling degree days (CDD): 150</p>
-                <p className="mt-2 text-white">
-                  Regression model: kWh = 180,000 + (100 × HDD) + (200 × CDD)
-                </p>
-                <p className="mt-2 text-white">Reporting period (post-retrofit):</p>
-                <p className="ml-4">Actual consumption: 320,000 kWh</p>
-                <p className="ml-4">HDD: 2,400 (colder year)</p>
-                <p className="ml-4">CDD: 180 (warmer summer)</p>
-                <p className="mt-2 text-white">Adjusted baseline:</p>
-                <p className="ml-4">180,000 + (100 × 2,400) + (200 × 180) = 456,000 kWh</p>
-                <p className="mt-2 text-green-400">
-                  Verified savings: 456,000 - 320,000 = 136,000 kWh (30%)
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Retrofit Project Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Complete energy audit at appropriate level (1, 2, or 3)</li>
-                <li className="pl-1">Establish 12-month baseline with metering and weather data</li>
-                <li className="pl-1">
-                  Develop business case with payback, NPV, and non-financial benefits
-                </li>
-                <li className="pl-1">
-                  Specify retrofit approach (lamp replacement vs complete fitting)
-                </li>
-                <li className="pl-1">
-                  Plan installation phasing to minimise operational disruption
-                </li>
-                <li className="pl-1">Commission and verify against design specification</li>
-                <li className="pl-1">Implement ongoing M&amp;V programme per IPMVP</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Over-estimating savings</strong> - Use measured data, not manufacturer claims</li>
+                <li><strong>Ignoring interactive effects</strong> - Less heat from LEDs affects HVAC loads</li>
+                <li><strong>Wrong tube type selection</strong> - Type B in Type A fitting causes safety risk</li>
+                <li><strong>Insufficient baseline</strong> - Short periods miss seasonal variations</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Typical LED retrofit savings: <strong>50-70%</strong> energy reduction
-                </li>
-                <li className="pl-1">
-                  Control system additions: <strong>20-40%</strong> additional savings
-                </li>
-                <li className="pl-1">
-                  Target payback period: <strong>2-5 years</strong> for commercial
-                </li>
-                <li className="pl-1">
-                  Baseline period: <strong>12 months</strong> minimum for M&amp;V
-                </li>
-                <li className="pl-1">
-                  LED lamp life: <strong>50,000+ hours</strong> (L70 rating)
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Over-estimating savings</strong> - Use measured data, not manufacturer
-                  claims
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring interactive effects</strong> - Less heat from LEDs affects HVAC
-                  loads
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong tube type selection</strong> - Type B in Type A fitting causes
-                  safety risk
-                </li>
-                <li className="pl-1">
-                  <strong>Insufficient baseline</strong> - Short periods miss seasonal variations
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Audit Levels</p>
-                <ul className="space-y-0.5">
-                  <li>Level 1: Walk-through (1-2 days)</li>
-                  <li>Level 2: General (1-2 weeks)</li>
-                  <li>Level 3: Investment-grade (4-8 weeks)</li>
-                  <li>Selection based on project value and complexity</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">IPMVP Options</p>
-                <ul className="space-y-0.5">
-                  <li>Option A: Retrofit isolation, key parameters</li>
-                  <li>Option B: Retrofit isolation, all parameters</li>
-                  <li>Option C: Whole facility metering</li>
-                  <li>Option D: Calibrated simulation</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section6-1">
-              Next: Section 6.1
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section5-5")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Demand management
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section6")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                System integration
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

@@ -1,7 +1,14 @@
 import React from 'react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
-import { HardHat, AlertTriangle, Flame, Target } from 'lucide-react';
+import { ArrowLeft, HardHat, AlertTriangle, Flame, Target } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  PageFrame,
+  PageHero,
+  itemVariants,
+} from '@/components/college/primitives';
 import ScenarioCard from '@/components/apprentice/safety-cases/ScenarioCard';
 import ScenarioDetail from '@/components/apprentice/safety-cases/ScenarioDetail';
 import QuickReferenceSection from '@/components/apprentice/safety-cases/QuickReferenceSection';
@@ -11,6 +18,7 @@ import { useScenarios, DifficultyFilter } from '@/components/apprentice/safety-c
 const difficultyOptions: DifficultyFilter[] = ['All', 'Beginner', 'Intermediate', 'Advanced'];
 
 const OnJobSafetyCases = () => {
+  const navigate = useNavigate();
   const {
     scenarios,
     categories,
@@ -39,18 +47,26 @@ const OnJobSafetyCases = () => {
 
   return (
     <SafetyCasesErrorBoundary pageName="Safety Scenarios">
-      <div className="bg-gradient-to-br from-elec-dark via-elec-dark/98 to-elec-dark/95 min-h-screen">
-        <div className="max-w-2xl mx-auto px-4 py-6 space-y-5 animate-fade-in">
-          {/* Header */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-red-500/10 border border-red-500/20">
-                <HardHat className="h-5 w-5 text-red-400" />
-              </div>
-              <h1 className="text-xl font-bold text-white">Safety Scenarios</h1>
-            </div>
-            <SmartBackButton />
-          </div>
+      <PageFrame className="px-4 sm:px-6 lg:px-8">
+        <motion.div variants={itemVariants}>
+          <Button
+            variant="ghost"
+            onClick={() => navigate('/apprentice/on-job-tools')}
+            className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+          >
+            <ArrowLeft className="mr-2 h-5 w-5" />
+            Back
+          </Button>
+        </motion.div>
+
+        <motion.div variants={itemVariants}>
+          <PageHero
+            eyebrow="Apprentice · Safety scenarios"
+            title="Real incidents, real decisions"
+            description="Step through anonymised real-world electrical incidents. Make the call, see the consequence, learn the pattern. Better here than on site."
+            tone="yellow"
+          />
+        </motion.div>
 
           {/* Progress strip */}
           <div className="flex items-center gap-4 p-3 rounded-xl bg-white/5 border border-white/10">
@@ -172,8 +188,7 @@ const OnJobSafetyCases = () => {
               </Card>
             </>
           )}
-        </div>
-      </div>
+      </PageFrame>
     </SafetyCasesErrorBoundary>
   );
 };

@@ -1,150 +1,162 @@
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
-import { CheckCircle, ChevronRight, Heart } from 'lucide-react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { ArrowLeft, CheckCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  PageFrame,
+  PageHero,
+  SectionHeader,
+  HubGrid,
+  HubCard,
+  itemVariants,
+  type Tone,
+} from '@/components/college/primitives';
 
 interface Section {
+  number: string;
+  eyebrow: string;
   title: string;
   slug: string;
-  icon: string;
-  colour: string;
-  border: string;
-  readTime: string;
+  description: string;
+  meta: string;
+  tone: Tone;
 }
 
-const sections: Section[] = [
+const SECTIONS: Section[] = [
   {
-    title: 'Wages & Pay',
+    number: '01',
+    eyebrow: 'Pay',
+    title: 'Wages & pay',
     slug: 'wages',
-    icon: '💷',
-    colour: 'text-green-400',
-    border: 'border-green-500/30',
-    readTime: '8 min read',
+    description:
+      "Apprentice rate, JIB rates by stage, what you should be paid for, the red flags that mean something's wrong.",
+    meta: '8 min read',
+    tone: 'emerald',
   },
   {
-    title: 'Your Rights',
+    number: '02',
+    eyebrow: 'Rights',
+    title: 'Your rights',
     slug: 'your-rights',
-    icon: '🛡',
-    colour: 'text-blue-400',
-    border: 'border-blue-500/30',
-    readTime: '7 min read',
+    description:
+      'Core employment rights, training rights, additional protections if under 18, and what to do when they\'re not being met.',
+    meta: '7 min read',
+    tone: 'blue',
   },
   {
-    title: 'Support & Helplines',
+    number: '03',
+    eyebrow: 'Help',
+    title: 'Support & helplines',
     slug: 'support',
-    icon: '📞',
-    colour: 'text-orange-400',
-    border: 'border-orange-500/30',
-    readTime: '6 min read',
+    description:
+      'Free, confidential numbers — ACAS, National Apprenticeship Helpline, Citizens Advice, HSE, mental health support.',
+    meta: '6 min read',
+    tone: 'orange',
   },
   {
-    title: 'Tools & Templates',
+    number: '04',
+    eyebrow: 'Templates',
+    title: 'Tools & templates',
     slug: 'tools',
-    icon: '🧮',
-    colour: 'text-purple-400',
-    border: 'border-purple-500/30',
-    readTime: '5 min read',
+    description:
+      'Practical checklists for pay, training and progress, plus letter templates for raising issues formally.',
+    meta: '5 min read',
+    tone: 'purple',
   },
 ];
 
-const RightsAndPay = () => {
+const KEY_FACTS = [
+  'You should never pay for your apprenticeship training',
+  'Apprentice NMW: £8.00/hr (April 2026 onwards)',
+  '28 days paid holiday per year, including bank holidays',
+  'Free training, materials and End Point Assessment',
+  'Free, confidential support is always available',
+];
+
+export default function RightsAndPay() {
   const navigate = useNavigate();
-
   return (
-    <div className="animate-fade-in max-w-2xl mx-auto px-4 pb-20 space-y-6 text-left">
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <SmartBackButton />
-        <h1 className="text-2xl font-bold tracking-tight text-white">
-          Apprenticeship Rights & Pay
-        </h1>
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
 
-      {/* Intro Card */}
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
-          <h2 className="text-lg font-semibold text-white">Know Your Rights</h2>
-          <p className="text-white text-sm leading-relaxed">
-            Your apprenticeship should be a positive learning experience. Understanding your
-            legal rights, wage entitlements, and where to get help ensures you are treated
-            fairly throughout your{' '}
-            <span className="font-bold text-elec-yellow">entire apprenticeship</span>.
-          </p>
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Rights & Pay"
+          title="Know your rights"
+          description="Your apprenticeship should be a positive learning experience. Understanding your legal rights, wage entitlements and where to get help keeps you treated fairly across all four years."
+          tone="yellow"
+        />
+      </motion.div>
 
-          <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
-            <h3 className="text-green-400 font-semibold text-sm mb-3">Key Facts</h3>
-            <ul className="space-y-2">
-              {[
-                'You should NEVER pay for your apprenticeship training',
-                'Minimum wage: £7.55/hr (2025/26), rising to £8.00 from April 2026',
-                '28 days paid holiday per year (including bank holidays)',
-                'Free training, materials, and End Point Assessment',
-                'Free, confidential support is always available',
-              ].map((item) => (
+      <motion.div variants={itemVariants}>
+        <Card className="border-emerald-500/20 bg-emerald-500/[0.04]">
+          <CardContent className="p-5 space-y-3">
+            <div className="flex items-baseline gap-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-emerald-300/85">
+                Key facts
+              </span>
+            </div>
+            <ul className="space-y-2.5">
+              {KEY_FACTS.map((item) => (
                 <li
                   key={item}
-                  className="flex items-center gap-2 text-sm text-white"
+                  className="flex items-start gap-2.5 text-[13px] text-white/85 leading-relaxed"
                 >
-                  <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-emerald-400 flex-shrink-0 mt-0.5" />
                   {item}
                 </li>
               ))}
             </ul>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </motion.div>
 
-      {/* Section Header */}
-      <div className="flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full bg-elec-yellow" />
-        <h2 className="text-base font-semibold text-white">Explore Sections</h2>
-      </div>
+      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
+        <SectionHeader eyebrow="Sections" title="Four chapters" />
+        <HubGrid columns={2}>
+          {SECTIONS.map((s) => (
+            <HubCard
+              key={s.slug}
+              number={s.number}
+              eyebrow={s.eyebrow}
+              title={s.title}
+              description={s.description}
+              meta={s.meta}
+              tone={s.tone}
+              onClick={() => navigate(`/apprentice/rights-and-pay/${s.slug}`)}
+            />
+          ))}
+        </HubGrid>
+      </motion.section>
 
-      {/* Section Cards */}
-      <div className="space-y-2">
-        {sections.map((section) => (
-          <button
-            key={section.slug}
-            onClick={() =>
-              navigate(`/apprentice/rights-and-pay/${section.slug}`)
-            }
-            className={`w-full flex items-center gap-3 p-4 rounded-lg bg-white/5 ${section.border} border
-              touch-manipulation active:scale-[0.98] transition-transform min-h-[44px] text-left`}
-          >
-            <span className="text-xl flex-shrink-0">{section.icon}</span>
-            <div className="flex-1 min-w-0">
-              <span className={`font-medium text-sm ${section.colour}`}>
-                {section.title}
-              </span>
-              <p className="text-white text-xs mt-0.5">{section.readTime}</p>
-            </div>
-            <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
-          </button>
-        ))}
-      </div>
-
-      {/* Footer */}
-      <Card className="border-white/10 bg-white/5">
-        <CardContent className="p-4 space-y-3">
-          <div className="flex items-center gap-2 mb-2">
-            <Heart className="h-4 w-4 text-green-400" />
-            <h3 className="text-sm font-semibold text-green-400">Remember</h3>
-          </div>
-          <p className="text-white text-xs leading-relaxed">
-            Your apprenticeship should be a positive learning experience. While challenges are
-            normal, exploitation, unsafe conditions, or unfair treatment are not. Do not suffer
-            in silence — help is available and using it shows strength, not weakness.
-          </p>
-          <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
-            <p className="text-white text-xs">
-              <strong className="text-red-400">In immediate danger?</strong> Call 999. For
-              non-emergency support, call ACAS on 0300 123 1100 (free, confidential).
-            </p>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+      <motion.div
+        variants={itemVariants}
+        className="rounded-2xl border border-red-500/20 bg-red-500/[0.04] px-5 py-4 sm:px-6 sm:py-5"
+      >
+        <div className="flex items-baseline gap-2 mb-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300/85">
+            Emergency
+          </span>
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            · Immediate help
+          </span>
+        </div>
+        <p className="text-[13px] leading-relaxed text-white/80 max-w-3xl">
+          In immediate danger? Call 999. For non-emergency workplace issues, ACAS is free and
+          confidential on 0300 123 1100. Exploitation, unsafe conditions and unfair treatment
+          aren't normal — using support shows strength, not weakness.
+        </p>
+      </motion.div>
+    </PageFrame>
   );
-};
-
-export default RightsAndPay;
+}

@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 6 · Section 4 · Subsection 1 — Carbon Fundamentals
+ * HNC Electrical Engineering for Building Services (Sustainability and Environmental Engineering)
+ *   Carbon accounting, GHG Protocol, Scope 1/2/3 emissions, emission factors, and reporting frameworks for building services
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Carbon Fundamentals - HNC Module 6 Section 4.1';
@@ -237,913 +254,367 @@ const faqs = [
 ];
 
 const HNCModule6Section4_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section4")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module6-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.4.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Carbon Fundamentals
-          </h1>
-          <p className="text-white">
-            Carbon accounting, GHG Protocol, Scope 1/2/3 emissions, emission factors, and reporting
-            frameworks for building services
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 6 · Section 4 · Subsection 1"
+            title="Carbon Fundamentals"
+            description="Carbon accounting, GHG Protocol, Scope 1/2/3 emissions, emission factors, and reporting frameworks for building services"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>GHG Protocol:</strong> International standard for carbon accounting
-              </li>
-              <li className="pl-1">
-                <strong>Three scopes:</strong> Direct (1), energy (2), value chain (3)
-              </li>
-              <li className="pl-1">
-                <strong>CO2e:</strong> Common unit for all greenhouse gases
-              </li>
-              <li className="pl-1">
-                <strong>Emission factors:</strong> Convert energy to carbon (kgCO2e/kWh)
-              </li>
+          <TLDR
+            points={[
+              "Carbon accounting follows the GHG Protocol — Scope 1 (direct emissions, e.g. site gas burnt), Scope 2 (purchased electricity), Scope 3 (value chain — embodied materials, waste, business travel, downstream use of products).",
+              "CO₂e (carbon dioxide equivalent) aggregates the seven Kyoto greenhouse gases by their 100-year Global Warming Potential — methane × 28, N₂O × 273, HFCs from refrigerants × 1,000–14,000+.",
+              "UK government emission factors (BEIS / DESNZ) are updated annually — use the conversion factors for the relevant reporting year, not historic averages.",
+            ]}
+          />
+
+          <RegsCallout
+            source="UK Greenhouse Gas Emissions Trading Scheme + Streamlined Energy and Carbon Reporting (SECR)"
+            clause="A quoted company shall report the total greenhouse gas emissions (in tonnes of CO2e) within Scope 1 and Scope 2 of the GHG Protocol. A large unquoted company or LLP meeting the size thresholds shall report the same plus an intensity ratio and energy efficiency actions taken in the financial year. Reporting shall use the conversion factors published annually by the Department for Energy Security and Net Zero (DESNZ) for the relevant reporting period."
+            meaning={
+              <>
+                SECR is mandatory annual disclosure for ~12,000 large UK organisations. The methodology mirrors the GHG Protocol Corporate Standard. For building services projects, this means project carbon emissions feed the client's SECR return — accurate Scope 1/2 data and supporting documentation must be supplied at handover.
+              </>
+            }
+            cite="Source: SI 2018/1155 The Companies (Directors' Report) and Limited Liability Partnerships (Energy and Carbon Report) Regulations — legislation.gov.uk"
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Apply the GHG Protocol framework to building carbon accounting",
+              "Distinguish between Scope 1, 2, and 3 emissions with examples",
+              "Calculate building carbon emissions using emission factors",
+              "Understand CO2e and global warming potential concepts",
+              "Navigate UK reporting requirements (SECR, TCFD)",
+              "Analyse grid carbon intensity and its implications for design",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="GHG Protocol and Carbon Accounting">
+            <p>The Greenhouse Gas Protocol provides the world's most widely used standards for measuring and reporting greenhouse gas emissions. Developed by the World Resources Institute and World Business Council for Sustainable Development, it forms the foundation of corporate carbon accounting and most regulatory frameworks.</p>
+            <p><strong>Key GHG Protocol Principles:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Relevance:</strong> Information must serve decision-making needs of users</li>
+              <li><strong>Completeness:</strong> Account for all emission sources within the boundary</li>
+              <li><strong>Consistency:</strong> Use consistent methodologies for meaningful comparison</li>
+              <li><strong>Transparency:</strong> Disclose assumptions, methods, and data sources</li>
+              <li><strong>Accuracy:</strong> Reduce uncertainties as far as practicable</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Scope 2:</strong> Usually largest for buildings (electricity)
-              </li>
-              <li className="pl-1">
-                <strong>UK grid factor:</strong> ~0.207 kgCO2e/kWh (2023)
-              </li>
-              <li className="pl-1">
-                <strong>SECR:</strong> Mandatory reporting for large companies
-              </li>
-              <li className="pl-1">
-                <strong>Embodied carbon:</strong> Materials and equipment
-              </li>
+            <p><strong>The Three Emission Scopes</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Scope 1:</strong> Direct emissions from owned/controlled sources — Gas boilers, backup generators, company vehicles, refrigerant leaks</li>
+              <li><strong>Scope 2:</strong> Indirect emissions from purchased energy — Grid electricity, purchased heat/steam, district cooling</li>
+              <li><strong>Scope 3:</strong> All other indirect emissions in value chain — Materials, construction, waste, commuting, water supply</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Key insight:</strong> For most commercial buildings, Scope 2 (electricity) represents 60-80% of operational emissions, making electrical efficiency a primary decarbonisation lever.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Apply the GHG Protocol framework to building carbon accounting',
-              'Distinguish between Scope 1, 2, and 3 emissions with examples',
-              'Calculate building carbon emissions using emission factors',
-              'Understand CO2e and global warming potential concepts',
-              'Navigate UK reporting requirements (SECR, TCFD)',
-              'Analyse grid carbon intensity and its implications for design',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: GHG Protocol and Carbon Accounting */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            GHG Protocol and Carbon Accounting
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Scope Emissions in Detail">
+            <p>Understanding the boundaries and calculation methods for each scope is essential for accurate carbon accounting. Each scope requires different data sources, emission factors, and reporting approaches.</p>
+            <p><strong>Scope 1 Sources</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Natural gas combustion</li>
+              <li>Oil/diesel combustion</li>
+              <li>Company vehicle fleet</li>
+              <li>Refrigerant losses (F-gases)</li>
+              <li>Backup generator fuel</li>
+            </ul>
+            <p><strong>Scope 2 Sources</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Grid electricity</li>
+              <li>Purchased heat</li>
+              <li>Purchased steam</li>
+              <li>District cooling</li>
+              <li>Two methods: location/market</li>
+            </ul>
+            <p><strong>Scope 3 Categories</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Purchased goods/services</li>
+              <li>Business travel</li>
+              <li>Employee commuting</li>
+              <li>Waste disposal</li>
+              <li>Upstream/downstream transport</li>
+            </ul>
+            <p><strong>Scope 2 Accounting Methods</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Location-based:</strong> Grid average for location — Reflects actual grid emissions; required for regulatory reporting</li>
+              <li><strong>Market-based:</strong> Supplier-specific or contractual — Reflects purchasing decisions; allows renewable tariff claims</li>
+            </ul>
+            <p><strong>Scope 3 Categories (GHG Protocol)</strong></p>
+            <p><strong>Upstream:</strong> 1. Purchased goods/services, 2. Capital goods, 3. Fuel/energy activities, 4. Transport (upstream), 5. Waste, 6. Business travel, 7. Commuting, 8. Leased assets (upstream)</p>
+            <p><strong>Downstream:</strong> 9. Transport (downstream), 10. Processing, 11. Product use, 12. End-of-life, 13. Leased assets (downstream), 14. Franchises, 15. Investments</p>
+            <p><strong>Reporting requirement:</strong> The GHG Protocol requires dual reporting of both location-based and market-based Scope 2 emissions for transparency.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="CO2e and Emission Factors">
+            <p>Carbon dioxide equivalent (CO2e) is the universal metric for comparing different greenhouse gases. Emission factors convert activity data (energy consumption, fuel use) into carbon emissions, enabling organisations to calculate their carbon footprint.</p>
+            <p><strong>Global Warming Potential (GWP-100)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Carbon dioxide:</strong> CO2 — 1 — Combustion, grid electricity</li>
+              <li><strong>Methane:</strong> CH4 — 28 — Gas leaks, incomplete combustion</li>
+              <li><strong>Nitrous oxide:</strong> N2O — 265 — Combustion byproduct</li>
+              <li><strong>HFCs (refrigerants):</strong> Various — 140-11,700 — HVAC refrigerant leaks</li>
+              <li><strong>SF6:</strong> SF6 — 23,500 — HV switchgear insulation</li>
+            </ul>
+            <p><strong>UK Government Conversion Factors (2023)</strong></p>
+            <p><strong>Electricity</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Grid electricity: <strong>0.207 kgCO2e/kWh</strong></li>
+              <li>Transmission losses: 0.018 kgCO2e/kWh</li>
+              <li>Well-to-tank: 0.024 kgCO2e/kWh</li>
+            </ul>
+            <p><strong>Fuels</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Natural gas: <strong>0.183 kgCO2e/kWh</strong></li>
+              <li>Gas oil (diesel): 0.256 kgCO2e/kWh</li>
+              <li>LPG: 0.214 kgCO2e/kWh</li>
+            </ul>
+            <p><strong>Carbon Calculation Formula</strong></p>
+            <p>Carbon Emissions = Activity Data × Emission Factor</p>
+            <p>Where:</p>
+            <p>- Activity data = energy consumption (kWh), fuel use (litres), etc.</p>
+            <p>- Emission factor = kgCO2e per unit of activity</p>
+            <p>Example:</p>
+            <p>1,000,000 kWh electricity × 0.207 kgCO2e/kWh = 207,000 kgCO2e =  <strong>207 tCO2e</strong></p>
+            <p><strong>Important:</strong> UK Government conversion factors are published annually by DESNZ (formerly BEIS) and should be used for the reporting year in question. Historical comparisons should use year-appropriate factors.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Grid Carbon Intensity and Reporting Frameworks">
+            <p>Grid carbon intensity varies by time and location, reflecting the generation mix. Understanding these variations enables optimised building operation and accurate carbon reporting under various regulatory frameworks.</p>
+            <p><strong>UK Grid Carbon Intensity Trends</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>2010:</strong> 0.500 — Coal-dominated generation</li>
+              <li><strong>2015:</strong> 0.412 — Gas replacing coal</li>
+              <li><strong>2020:</strong> 0.233 — Renewable growth, coal phase-out</li>
+              <li><strong>2023:</strong> 0.207 — Offshore wind expansion</li>
+              <li><strong>2035 (target):</strong> ~0.050 — Decarbonised grid target</li>
+            </ul>
+            <p><strong>Real-Time Carbon Intensity</strong></p>
+            <p>Grid carbon intensity varies throughout the day, typically:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Lowest:</strong> Sunny/windy afternoons (solar + wind peak) - can drop below 0.100 kgCO2e/kWh</li>
+              <li><strong>Highest:</strong> Winter evening peaks (5-7pm) when gas plants run - can exceed 0.300 kgCO2e/kWh</li>
+              <li><strong>Implication:</strong> Shifting flexible loads (EV charging, thermal storage) to low-carbon periods reduces emissions</li>
+            </ul>
+            <p><strong>UK Carbon Reporting Frameworks</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>SECR:</strong> Large UK companies/LLPs — Energy use, emissions, intensity ratio in annual report</li>
+              <li><strong>TCFD:</strong> Listed companies, large asset owners — Climate risk disclosure, scenario analysis</li>
+              <li><strong>ESOS:</strong> Large undertakings (250+ employees) — Energy audits every 4 years</li>
+              <li><strong>ISO 14064:</strong> Voluntary — GHG inventory, verification, project accounting</li>
+              <li><strong>SBTi:</strong> Voluntary commitment — Science-based reduction targets (1.5°C pathway)</li>
+            </ul>
+            <p><strong>SECR Reporting Requirements</strong></p>
+            <p><strong>Applies to:</strong> UK companies meeting 2 of 3 criteria: turnover &gt;£36m, balance sheet &gt;£18m, &gt;250 employees</p>
+            <p><strong>Must disclose:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>UK energy use (electricity, gas, transport fuel) in kWh</li>
+              <li>Associated GHG emissions (Scope 1 and 2 minimum) in tCO2e</li>
+              <li>At least one intensity ratio (e.g., kgCO2e/m², tCO2e/£m turnover)</li>
+              <li>Methodology used and previous year comparison</li>
+              <li>Energy efficiency actions taken</li>
+            </ul>
+            <p><strong>Design implication:</strong> As the grid decarbonises, electrification of heating (heat pumps) becomes increasingly favourable compared to gas. A heat pump with COP of 3.0 using grid electricity already has lower carbon than a 90% efficient gas boiler at current grid factors.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              The Greenhouse Gas Protocol provides the world's most widely used standards for
-              measuring and reporting greenhouse gas emissions. Developed by the World Resources
-              Institute and World Business Council for Sustainable Development, it forms the
-              foundation of corporate carbon accounting and most regulatory frameworks.
+              <strong>Example 1: Office Building Annual Carbon Footprint</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key GHG Protocol Principles:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Relevance:</strong> Information must serve decision-making needs of users
-                </li>
-                <li className="pl-1">
-                  <strong>Completeness:</strong> Account for all emission sources within the
-                  boundary
-                </li>
-                <li className="pl-1">
-                  <strong>Consistency:</strong> Use consistent methodologies for meaningful
-                  comparison
-                </li>
-                <li className="pl-1">
-                  <strong>Transparency:</strong> Disclose assumptions, methods, and data sources
-                </li>
-                <li className="pl-1">
-                  <strong>Accuracy:</strong> Reduce uncertainties as far as practicable
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Three Emission Scopes
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Scope</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Definition</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Building Examples
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Scope 1</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Direct emissions from owned/controlled sources
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Gas boilers, backup generators, company vehicles, refrigerant leaks
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Scope 2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Indirect emissions from purchased energy
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Grid electricity, purchased heat/steam, district cooling
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Scope 3</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        All other indirect emissions in value chain
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Materials, construction, waste, commuting, water supply
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key insight:</strong> For most commercial buildings, Scope 2 (electricity)
-              represents 60-80% of operational emissions, making electrical efficiency a primary
-              decarbonisation lever.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Scope Emissions in Detail */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Scope Emissions in Detail
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Calculate Scope 1 and 2 emissions for a 5,000 m² office building.</p>
+            <p>Given data:</p>
+            <p>Annual electricity consumption: 450,000 kWh</p>
+            <p>Annual gas consumption: 200,000 kWh</p>
+            <p>Emission factors (2023):</p>
+            <p>Electricity: 0.207 kgCO2e/kWh</p>
+            <p>Natural gas: 0.183 kgCO2e/kWh</p>
+            <p>Calculations:</p>
+            <p><strong>Scope 1 (gas):</strong></p>
+            <p>200,000 kWh × 0.183 kgCO2e/kWh = 36,600 kgCO2e =  <span>36.6 tCO2e</span></p>
+            <p><strong>Scope 2 (electricity):</strong></p>
+            <p>450,000 kWh × 0.207 kgCO2e/kWh = 93,150 kgCO2e =  <span>93.2 tCO2e</span></p>
+            <p><strong>Total operational carbon:</strong>  <span>129.8 tCO2e/year</span></p>
+            <p><strong>Carbon intensity:</strong> 129,750 kgCO2e ÷ 5,000 m² =  <span>25.95 kgCO2e/m²/year</span></p>
             <p>
-              Understanding the boundaries and calculation methods for each scope is essential for
-              accurate carbon accounting. Each scope requires different data sources, emission
-              factors, and reporting approaches.
+              <strong>Example 2: Impact of Renewable Electricity Tariff</strong>
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Scope 1 Sources</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Natural gas combustion</li>
-                  <li className="pl-1">Oil/diesel combustion</li>
-                  <li className="pl-1">Company vehicle fleet</li>
-                  <li className="pl-1">Refrigerant losses (F-gases)</li>
-                  <li className="pl-1">Backup generator fuel</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Scope 2 Sources</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Grid electricity</li>
-                  <li className="pl-1">Purchased heat</li>
-                  <li className="pl-1">Purchased steam</li>
-                  <li className="pl-1">District cooling</li>
-                  <li className="pl-1">Two methods: location/market</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Scope 3 Categories</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Purchased goods/services</li>
-                  <li className="pl-1">Business travel</li>
-                  <li className="pl-1">Employee commuting</li>
-                  <li className="pl-1">Waste disposal</li>
-                  <li className="pl-1">Upstream/downstream transport</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Scope 2 Accounting Methods
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Emission Factor Used
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">When to Use</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Location-based</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Grid average for location
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reflects actual grid emissions; required for regulatory reporting
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Market-based</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Supplier-specific or contractual
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reflects purchasing decisions; allows renewable tariff claims
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Scope 3 Categories (GHG Protocol)
-              </p>
-              <div className="text-sm space-y-1">
-                <p>
-                  <strong>Upstream:</strong> 1. Purchased goods/services, 2. Capital goods, 3.
-                  Fuel/energy activities, 4. Transport (upstream), 5. Waste, 6. Business travel, 7.
-                  Commuting, 8. Leased assets (upstream)
-                </p>
-                <p>
-                  <strong>Downstream:</strong> 9. Transport (downstream), 10. Processing, 11.
-                  Product use, 12. End-of-life, 13. Leased assets (downstream), 14. Franchises, 15.
-                  Investments
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Reporting requirement:</strong> The GHG Protocol requires dual reporting of
-              both location-based and market-based Scope 2 emissions for transparency.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: CO2e and Emission Factors */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            CO2e and Emission Factors
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Compare location-based vs market-based Scope 2 reporting.</p>
+            <p>Building electricity: 450,000 kWh/year</p>
+            <p>Tariff: 100% REGO-backed renewable electricity</p>
+            <p><strong>Location-based Scope 2:</strong></p>
+            <p>450,000 × 0.207 = 93,150 kgCO2e =  <span>93.2 tCO2e</span></p>
+            <p>(Uses grid average - reflects actual grid emissions)</p>
+            <p><strong>Market-based Scope 2:</strong></p>
+            <p>450,000 × 0.000 = 0 kgCO2e = <span>0 tCO2e</span></p>
+            <p>(REGO-backed renewable tariff - zero emission factor)</p>
+            <p>Note: Both figures must be reported under GHG Protocol</p>
             <p>
-              Carbon dioxide equivalent (CO2e) is the universal metric for comparing different
-              greenhouse gases. Emission factors convert activity data (energy consumption, fuel
-              use) into carbon emissions, enabling organisations to calculate their carbon
-              footprint.
+              <strong>Example 3: Heat Pump vs Gas Boiler Carbon Comparison</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Global Warming Potential (GWP-100)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Gas</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Formula</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">GWP-100</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Building Services Source
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Carbon dioxide</td>
-                      <td className="border border-white/10 px-3 py-2">CO2</td>
-                      <td className="border border-white/10 px-3 py-2">1</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Combustion, grid electricity
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Methane</td>
-                      <td className="border border-white/10 px-3 py-2">CH4</td>
-                      <td className="border border-white/10 px-3 py-2">28</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Gas leaks, incomplete combustion
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Nitrous oxide</td>
-                      <td className="border border-white/10 px-3 py-2">N2O</td>
-                      <td className="border border-white/10 px-3 py-2">265</td>
-                      <td className="border border-white/10 px-3 py-2">Combustion byproduct</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">HFCs (refrigerants)</td>
-                      <td className="border border-white/10 px-3 py-2">Various</td>
-                      <td className="border border-white/10 px-3 py-2">140-11,700</td>
-                      <td className="border border-white/10 px-3 py-2">HVAC refrigerant leaks</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">SF6</td>
-                      <td className="border border-white/10 px-3 py-2">SF6</td>
-                      <td className="border border-white/10 px-3 py-2">23,500</td>
-                      <td className="border border-white/10 px-3 py-2">HV switchgear insulation</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                UK Government Conversion Factors (2023)
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="font-medium text-white mb-1">Electricity</p>
-                  <ul className="text-white space-y-0.5">
-                    <li>
-                      Grid electricity: <strong>0.207 kgCO2e/kWh</strong>
-                    </li>
-                    <li>Transmission losses: 0.018 kgCO2e/kWh</li>
-                    <li>Well-to-tank: 0.024 kgCO2e/kWh</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium text-white mb-1">Fuels</p>
-                  <ul className="text-white space-y-0.5">
-                    <li>
-                      Natural gas: <strong>0.183 kgCO2e/kWh</strong>
-                    </li>
-                    <li>Gas oil (diesel): 0.256 kgCO2e/kWh</li>
-                    <li>LPG: 0.214 kgCO2e/kWh</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Carbon Calculation Formula
-              </p>
-              <div className="bg-black/30 p-4 rounded font-mono text-sm">
-                <p className="text-green-400">Carbon Emissions = Activity Data × Emission Factor</p>
-                <p className="mt-2 text-white">Where:</p>
-                <p className="text-white">
-                  - Activity data = energy consumption (kWh), fuel use (litres), etc.
-                </p>
-                <p className="text-white">- Emission factor = kgCO2e per unit of activity</p>
-                <p className="mt-2 text-white">Example:</p>
-                <p className="text-white">
-                  1,000,000 kWh electricity × 0.207 kgCO2e/kWh = 207,000 kgCO2e ={' '}
-                  <strong>207 tCO2e</strong>
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Important:</strong> UK Government conversion factors are published annually by
-              DESNZ (formerly BEIS) and should be used for the reporting year in question.
-              Historical comparisons should use year-appropriate factors.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Grid Carbon Intensity and Reporting */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Grid Carbon Intensity and Reporting Frameworks
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Compare carbon emissions for 100,000 kWh heating demand.</p>
+            <p>Heating demand: 100,000 kWh/year</p>
+            <p><strong>Option A: Gas boiler (92% efficient)</strong></p>
+            <p>Gas input: 100,000 ÷ 0.92 = 108,696 kWh</p>
+            <p>Emissions: 108,696 × 0.183 = 19,891 kgCO2e =  <span>19.9 tCO2e</span></p>
+            <p><strong>Option B: Air source heat pump (COP 3.0)</strong></p>
+            <p>Electricity input: 100,000 ÷ 3.0 = 33,333 kWh</p>
+            <p>Emissions: 33,333 × 0.207 = 6,900 kgCO2e =  <span>6.9 tCO2e</span></p>
+            <p>Heat pump saves: 65% carbon reduction</p>
+            <p>As grid decarbonises, this advantage increases further</p>
             <p>
-              Grid carbon intensity varies by time and location, reflecting the generation mix.
-              Understanding these variations enables optimised building operation and accurate
-              carbon reporting under various regulatory frameworks.
+              <strong>Example 4: Refrigerant Leak Emissions</strong>
             </p>
+            <p><strong>Scenario:</strong> Calculate Scope 1 emissions from HVAC refrigerant loss.</p>
+            <p>Chiller system refrigerant: R-410A</p>
+            <p>System charge: 50 kg</p>
+            <p>Annual leakage rate: 5% (typical)</p>
+            <p>R-410A GWP: 2,088</p>
+            <p><strong>Calculation:</strong></p>
+            <p>Annual leakage: 50 kg × 5% = 2.5 kg</p>
+            <p>CO2e emissions: 2.5 kg × 2,088 = 5,220 kgCO2e =  <span>5.2 tCO2e</span></p>
+            <p>This is often overlooked but can be significant!</p>
+            <p>Low-GWP alternatives (R-32, R-290) reduce this substantially</p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                UK Grid Carbon Intensity Trends
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Year</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Grid Factor (kgCO2e/kWh)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Driver</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2010</td>
-                      <td className="border border-white/10 px-3 py-2">0.500</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Coal-dominated generation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2015</td>
-                      <td className="border border-white/10 px-3 py-2">0.412</td>
-                      <td className="border border-white/10 px-3 py-2">Gas replacing coal</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2020</td>
-                      <td className="border border-white/10 px-3 py-2">0.233</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Renewable growth, coal phase-out
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2023</td>
-                      <td className="border border-white/10 px-3 py-2">0.207</td>
-                      <td className="border border-white/10 px-3 py-2">Offshore wind expansion</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2035 (target)</td>
-                      <td className="border border-white/10 px-3 py-2">~0.050</td>
-                      <td className="border border-white/10 px-3 py-2">Decarbonised grid target</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Real-Time Carbon Intensity</p>
-              <p className="text-sm text-white mb-2">
-                Grid carbon intensity varies throughout the day, typically:
-              </p>
-              <ul className="text-sm text-white space-y-1">
-                <li>
-                  <strong>Lowest:</strong> Sunny/windy afternoons (solar + wind peak) - can drop
-                  below 0.100 kgCO2e/kWh
-                </li>
-                <li>
-                  <strong>Highest:</strong> Winter evening peaks (5-7pm) when gas plants run - can
-                  exceed 0.300 kgCO2e/kWh
-                </li>
-                <li>
-                  <strong>Implication:</strong> Shifting flexible loads (EV charging, thermal
-                  storage) to low-carbon periods reduces emissions
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                UK Carbon Reporting Frameworks
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Framework</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Applicability</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Key Requirements
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">SECR</td>
-                      <td className="border border-white/10 px-3 py-2">Large UK companies/LLPs</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Energy use, emissions, intensity ratio in annual report
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">TCFD</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Listed companies, large asset owners
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Climate risk disclosure, scenario analysis
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">ESOS</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large undertakings (250+ employees)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Energy audits every 4 years
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">ISO 14064</td>
-                      <td className="border border-white/10 px-3 py-2">Voluntary</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        GHG inventory, verification, project accounting
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">SBTi</td>
-                      <td className="border border-white/10 px-3 py-2">Voluntary commitment</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Science-based reduction targets (1.5°C pathway)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                SECR Reporting Requirements
-              </p>
-              <div className="text-sm space-y-2">
-                <p>
-                  <strong>Applies to:</strong> UK companies meeting 2 of 3 criteria: turnover
-                  &gt;£36m, balance sheet &gt;£18m, &gt;250 employees
-                </p>
-                <p>
-                  <strong>Must disclose:</strong>
-                </p>
-                <ul className="list-disc list-outside ml-5 space-y-1 text-white">
-                  <li>UK energy use (electricity, gas, transport fuel) in kWh</li>
-                  <li>Associated GHG emissions (Scope 1 and 2 minimum) in tCO2e</li>
-                  <li>At least one intensity ratio (e.g., kgCO2e/m², tCO2e/£m turnover)</li>
-                  <li>Methodology used and previous year comparison</li>
-                  <li>Energy efficiency actions taken</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Design implication:</strong> As the grid decarbonises, electrification of
-              heating (heat pumps) becomes increasingly favourable compared to gas. A heat pump with
-              COP of 3.0 using grid electricity already has lower carbon than a 90% efficient gas
-              boiler at current grid factors.
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Building Carbon Accounting Checklist:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Collect 12 months of energy bills (electricity, gas, other fuels)</li>
+              <li>Identify any on-site combustion sources (boilers, generators, vehicles)</li>
+              <li>Record refrigerant types and any top-up quantities</li>
+              <li>Obtain current year UK Government conversion factors</li>
+              <li>Calculate Scope 1 (direct) and Scope 2 (electricity) separately</li>
+              <li>Calculate both location-based and market-based Scope 2</li>
+            </ul>
+            <p>
+              <strong>Key Emission Factors to Remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>UK grid electricity: <strong>~0.207 kgCO2e/kWh</strong> (2023)</li>
+              <li>Natural gas: <strong>~0.183 kgCO2e/kWh</strong></li>
+              <li>Grid electricity transmission losses: <strong>~0.018 kgCO2e/kWh</strong></li>
+              <li>Methane GWP: <strong>28</strong> (100-year)</li>
+              <li>Common refrigerant R-410A GWP: <strong>2,088</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Office Building Annual Carbon Footprint
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate Scope 1 and 2 emissions for a 5,000 m² office
-                building.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Given data:</p>
-                <p>Annual electricity consumption: 450,000 kWh</p>
-                <p>Annual gas consumption: 200,000 kWh</p>
-                <p className="mt-2 text-white">Emission factors (2023):</p>
-                <p>Electricity: 0.207 kgCO2e/kWh</p>
-                <p>Natural gas: 0.183 kgCO2e/kWh</p>
-                <p className="mt-2 text-white">Calculations:</p>
-                <p>
-                  <strong>Scope 1 (gas):</strong>
-                </p>
-                <p>
-                  200,000 kWh × 0.183 kgCO2e/kWh = 36,600 kgCO2e ={' '}
-                  <span className="text-green-400">36.6 tCO2e</span>
-                </p>
-                <p className="mt-2">
-                  <strong>Scope 2 (electricity):</strong>
-                </p>
-                <p>
-                  450,000 kWh × 0.207 kgCO2e/kWh = 93,150 kgCO2e ={' '}
-                  <span className="text-green-400">93.2 tCO2e</span>
-                </p>
-                <p className="mt-2">
-                  <strong>Total operational carbon:</strong>{' '}
-                  <span className="text-green-400">129.8 tCO2e/year</span>
-                </p>
-                <p className="mt-2">
-                  <strong>Carbon intensity:</strong> 129,750 kgCO2e ÷ 5,000 m² ={' '}
-                  <span className="text-green-400">25.95 kgCO2e/m²/year</span>
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Impact of Renewable Electricity Tariff
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Compare location-based vs market-based Scope 2 reporting.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Building electricity: 450,000 kWh/year</p>
-                <p className="text-white">Tariff: 100% REGO-backed renewable electricity</p>
-                <p className="mt-2">
-                  <strong>Location-based Scope 2:</strong>
-                </p>
-                <p>
-                  450,000 × 0.207 = 93,150 kgCO2e ={' '}
-                  <span className="text-blue-400">93.2 tCO2e</span>
-                </p>
-                <p className="text-white">
-                  (Uses grid average - reflects actual grid emissions)
-                </p>
-                <p className="mt-2">
-                  <strong>Market-based Scope 2:</strong>
-                </p>
-                <p>
-                  450,000 × 0.000 = 0 kgCO2e = <span className="text-green-400">0 tCO2e</span>
-                </p>
-                <p className="text-white">
-                  (REGO-backed renewable tariff - zero emission factor)
-                </p>
-                <p className="mt-2 text-yellow-400">
-                  Note: Both figures must be reported under GHG Protocol
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: Heat Pump vs Gas Boiler Carbon Comparison
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Compare carbon emissions for 100,000 kWh heating demand.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Heating demand: 100,000 kWh/year</p>
-                <p className="mt-2">
-                  <strong>Option A: Gas boiler (92% efficient)</strong>
-                </p>
-                <p>Gas input: 100,000 ÷ 0.92 = 108,696 kWh</p>
-                <p>
-                  Emissions: 108,696 × 0.183 = 19,891 kgCO2e ={' '}
-                  <span className="text-red-400">19.9 tCO2e</span>
-                </p>
-                <p className="mt-2">
-                  <strong>Option B: Air source heat pump (COP 3.0)</strong>
-                </p>
-                <p>Electricity input: 100,000 ÷ 3.0 = 33,333 kWh</p>
-                <p>
-                  Emissions: 33,333 × 0.207 = 6,900 kgCO2e ={' '}
-                  <span className="text-green-400">6.9 tCO2e</span>
-                </p>
-                <p className="mt-2 text-green-400">Heat pump saves: 65% carbon reduction</p>
-                <p className="text-white mt-1">
-                  As grid decarbonises, this advantage increases further
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 4: Refrigerant Leak Emissions
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Calculate Scope 1 emissions from HVAC refrigerant loss.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Chiller system refrigerant: R-410A</p>
-                <p className="text-white">System charge: 50 kg</p>
-                <p className="text-white">Annual leakage rate: 5% (typical)</p>
-                <p className="text-white">R-410A GWP: 2,088</p>
-                <p className="mt-2">
-                  <strong>Calculation:</strong>
-                </p>
-                <p>Annual leakage: 50 kg × 5% = 2.5 kg</p>
-                <p>
-                  CO2e emissions: 2.5 kg × 2,088 = 5,220 kgCO2e ={' '}
-                  <span className="text-orange-400">5.2 tCO2e</span>
-                </p>
-                <p className="mt-2 text-white">
-                  This is often overlooked but can be significant!
-                </p>
-                <p className="text-white">
-                  Low-GWP alternatives (R-32, R-290) reduce this substantially
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Carbon Accounting Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Collect 12 months of energy bills (electricity, gas, other fuels)
-                </li>
-                <li className="pl-1">
-                  Identify any on-site combustion sources (boilers, generators, vehicles)
-                </li>
-                <li className="pl-1">Record refrigerant types and any top-up quantities</li>
-                <li className="pl-1">Obtain current year UK Government conversion factors</li>
-                <li className="pl-1">
-                  Calculate Scope 1 (direct) and Scope 2 (electricity) separately
-                </li>
-                <li className="pl-1">Calculate both location-based and market-based Scope 2</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Using wrong year factors</strong> - always use factors for the reporting year</li>
+                <li><strong>Forgetting transmission losses</strong> - add these to electricity figures for full Scope 2</li>
+                <li><strong>Ignoring refrigerant leaks</strong> - high-GWP refrigerants can be a major Scope 1 source</li>
+                <li><strong>Mixing units</strong> - ensure kWh for energy, kgCO2e for emissions, convert to tonnes where appropriate</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Emission Factors to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  UK grid electricity: <strong>~0.207 kgCO2e/kWh</strong> (2023)
-                </li>
-                <li className="pl-1">
-                  Natural gas: <strong>~0.183 kgCO2e/kWh</strong>
-                </li>
-                <li className="pl-1">
-                  Grid electricity transmission losses: <strong>~0.018 kgCO2e/kWh</strong>
-                </li>
-                <li className="pl-1">
-                  Methane GWP: <strong>28</strong> (100-year)
-                </li>
-                <li className="pl-1">
-                  Common refrigerant R-410A GWP: <strong>2,088</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Using wrong year factors</strong> - always use factors for the reporting
-                  year
-                </li>
-                <li className="pl-1">
-                  <strong>Forgetting transmission losses</strong> - add these to electricity figures
-                  for full Scope 2
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring refrigerant leaks</strong> - high-GWP refrigerants can be a major
-                  Scope 1 source
-                </li>
-                <li className="pl-1">
-                  <strong>Mixing units</strong> - ensure kWh for energy, kgCO2e for emissions,
-                  convert to tonnes where appropriate
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <Scenario
+            title="Refrigerant leak destroys a year of operational savings"
+            situation={
+              <>
+                A 200 kW VRF system uses R410A refrigerant (GWP 2,088). After 3 years of operation, an annual F-Gas inspection finds a 12 kg leak — equivalent to 25 tonnes CO₂e (12 × 2.088). The client's SECR report shows a year-on-year emissions increase, partially wiping out the savings from a heat-pump space heating retrofit.
+              </>
+            }
+            whatToDo={
+              <>
+                Immediate F-Gas remediation — locate, repair, leak test, recharge with reclaimed refrigerant where possible. Update the maintenance regime: F-Gas inspection frequency rises with system charge size (&gt;5 tCO₂e annual; &gt;50 tCO₂e quarterly with leak detection). Consider transition to lower-GWP refrigerant (R32 = 675, R454B = 467, R290 propane = 3) at next major service or replacement. Report the leak in SECR with the F-Gas remediation actions.
+              </>
+            }
+            whyItMatters={
+              <>
+                Refrigerant leakage is the most under-reported source of building-services emissions. A 1% per-year leakage rate on a high-GWP system can match the operational electricity emissions of the same system — so the GWP and leak rate determine real-world climate impact as much as the COP does. The F-Gas Regulation 517/2014 phase-down is forcing the industry to lower-GWP refrigerants by 2030.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Scope Definitions</p>
-                <ul className="space-y-0.5">
-                  <li>Scope 1: Direct emissions (combustion, vehicles)</li>
-                  <li>Scope 2: Purchased energy (electricity, heat)</li>
-                  <li>Scope 3: Value chain (materials, travel, waste)</li>
-                  <li>CO2e: Universal metric using GWP values</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">UK Emission Factors (2023)</p>
-                <ul className="space-y-0.5">
-                  <li>Grid electricity: 0.207 kgCO2e/kWh</li>
-                  <li>Natural gas: 0.183 kgCO2e/kWh</li>
-                  <li>Diesel/gas oil: 0.256 kgCO2e/kWh</li>
-                  <li>LPG: 0.214 kgCO2e/kWh</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <KeyTakeaways
+            points={[
+              "Scope 1 = direct (gas burnt on site, refrigerant leaks, fleet diesel).",
+              "Scope 2 = purchased electricity (location-based or market-based methodology).",
+              "Scope 3 = value chain — typically the largest scope, includes embodied carbon.",
+              "CO₂e aggregates GHGs by GWP100 — methane ×28, refrigerants 1,000–14,000+.",
+              "DESNZ (formerly BEIS) publishes UK emission factors annually — use the right year.",
+              "SECR is mandatory for ~12,000 UK companies — annual Scope 1/2 disclosure.",
+              "F-Gas Regulation drives refrigerant phase-down — high-GWP refrigerants becoming uneconomic.",
+            ]}
+          />
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module6-section4-2">
-              Next: Carbon Reduction Strategies
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section4")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Carbon reduction strategies
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section4-2")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Operational carbon
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

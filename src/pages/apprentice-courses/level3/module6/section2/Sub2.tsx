@@ -190,7 +190,7 @@ const faqs = [
   {
     question: 'How do I get hold of the current OSG Table A1?',
     answer:
-      "The IET On-Site Guide is published as a printed pocket book and as an e-book / digital subscription. The current edition aligns with BS 7671:2018+A4:2026. Table A1 is in the appendices at the back. For design work you typically have a printed copy on the desk and the digital copy searchable on a phone or tablet. The IET also publishes the Electrician\u2019s Guide to the Building Regulations as a companion. Avoid using older editions for current design work — diversity numbers do shift across editions.",
+      "The IET On-Site Guide is published as a printed pocket book and as an e-book / digital subscription. The current edition aligns with BS 7671:2018+A4:2026. Table A1 is in the appendices at the back. For design work you typically have a printed copy on the desk and the digital copy searchable on a phone or tablet. The IET also publishes the Electrician’s Guide to the Building Regulations as a companion. Avoid using older editions for current design work — diversity numbers do shift across editions.",
   },
   {
     question: 'Where is the GN1 Section 7 commercial diversity table?',
@@ -200,7 +200,7 @@ const faqs = [
   {
     question: 'How do I handle electric vehicle diversity on a multi-dwelling sub-main?',
     answer:
-      "Multi-dwelling EV charging is one of the hardest diversity calls in modern apartment-block design. Options: (1) fixed allocation per dwelling (each dwelling gets an EV-ready CU way and a managed share of the building supply); (2) site-wide load management where the building energy management system (EMS) throttles all chargers to keep within the building supply rating; (3) DNO-managed connection where the DNO contractually limits the building supply during peak times. The IET\u2019s Code of Practice for EV Charging Equipment Installation (current edition) covers these options. Apartment blocks designed for EVs without site-wide load management often run into supply-rating problems within 3-5 years of occupation as EV penetration grows.",
+      "Multi-dwelling EV charging is one of the hardest diversity calls in modern apartment-block design. Options: (1) fixed allocation per dwelling (each dwelling gets an EV-ready CU way and a managed share of the building supply); (2) site-wide load management where the building energy management system (EMS) throttles all chargers to keep within the building supply rating; (3) DNO-managed connection where the DNO contractually limits the building supply during peak times. The IET’s Code of Practice for EV Charging Equipment Installation (current edition) covers these options. Apartment blocks designed for EVs without site-wide load management often run into supply-rating problems within 3-5 years of occupation as EV penetration grows.",
   },
   {
     question: 'Can I apply diversity to motor circuits in industrial design?',
@@ -599,7 +599,7 @@ export default function Sub2() {
                 into the customer file.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 132.2(c)(iii) — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 132.2(c)(iii)."
           />
 
           <SectionRule />

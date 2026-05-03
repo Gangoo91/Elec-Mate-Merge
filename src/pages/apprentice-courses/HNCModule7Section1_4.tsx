@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 7 · Section 1 · Subsection 4 — Discrimination Studies
+ * HNC Electrical Engineering for Building Services (Power and Lighting Systems)
+ *   Time-current curves, discrimination margins, cascading, backup protection, and coordination software for protective device selectivity
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Discrimination Studies - HNC Module 7 Section 1.4';
@@ -256,1056 +269,335 @@ const faqs = [
 ];
 
 const HNCModule7Section1_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section1")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module7-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.1.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Discrimination Studies
-          </h1>
-          <p className="text-white">
-            Time-current curves, discrimination margins, cascading, backup protection, and
-            coordination software for protective device selectivity
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 7 · Section 1 · Subsection 4"
+            title="Discrimination Studies"
+            description="Time-current curves, discrimination margins, cascading, backup protection, and coordination software for protective device selectivity"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Discrimination:</strong> Nearest device to fault operates first
-              </li>
-              <li className="pl-1">
-                <strong>Time-current curves:</strong> Plot operating characteristics
-              </li>
-              <li className="pl-1">
-                <strong>Total vs partial:</strong> Complete or limited selectivity range
-              </li>
-              <li className="pl-1">
-                <strong>Cascading:</strong> Upstream enhances downstream capacity
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Interpret and analyse time-current characteristic curves",
+              "Calculate discrimination margins and verify selectivity",
+              "Distinguish between total and partial discrimination",
+              "Apply cascading and backup protection principles",
+              "Use coordination software for protection studies",
+              "Comply with BS 7671 requirements for protective coordination",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Fundamentals of Discrimination">
+            <p>Discrimination (also called selectivity) is the coordination of protective devices to ensure that only the device nearest to a fault operates to clear it, whilst all upstream devices remain closed. This fundamental principle minimises the impact of faults on the wider installation.</p>
+            <p><strong>Key discrimination principles:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Fault isolation:</strong> Only the device nearest to the fault should operate</li>
+              <li><strong>Supply continuity:</strong> Healthy circuits remain energised</li>
+              <li><strong>Time grading:</strong> Downstream devices operate faster than upstream</li>
+              <li><strong>Current grading:</strong> Different pickup settings create selectivity zones</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Standards</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>BS 7671:</strong> Regulation 536 - Coordination
-              </li>
-              <li className="pl-1">
-                <strong>BS EN 60947-2:</strong> MCCB coordination testing
-              </li>
-              <li className="pl-1">
-                <strong>BS EN 60898:</strong> MCB characteristics
-              </li>
-              <li className="pl-1">
-                <strong>BS 88:</strong> HRC fuse standards
-              </li>
+            <p><strong>Types of Discrimination</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Total Discrimination:</strong> Selectivity achieved for all fault currents up to the maximum prospective fault current — Critical installations, hospitals, data centres</li>
+              <li><strong>Partial Discrimination:</strong> Selectivity achieved only up to a defined discrimination limit (I_s) — General commercial and industrial where occasional simultaneous operation is acceptable</li>
+              <li><strong>No Discrimination:</strong> Both devices may operate for any fault - no coordination — Not recommended - indicates poor design</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>BS 7671 Requirement</strong></p>
+            <p>Regulation 536.4 states that where backup protection is used, the characteristics of the devices shall be coordinated such that the energy let-through of the upstream device does not exceed that which the downstream device and protected conductors can withstand.</p>
+            <p><strong>Design principle:</strong> Discrimination should be verified at the design stage using manufacturer data and coordination studies, not assumed based on ratings alone.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Interpret and analyse time-current characteristic curves',
-              'Calculate discrimination margins and verify selectivity',
-              'Distinguish between total and partial discrimination',
-              'Apply cascading and backup protection principles',
-              'Use coordination software for protection studies',
-              'Comply with BS 7671 requirements for protective coordination',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Fundamentals of Discrimination */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Fundamentals of Discrimination
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Time-Current Characteristic Curves">
+            <p>Time-current curves are the fundamental tool for analysing protective device coordination. They display the relationship between prospective fault current and the operating time of protective devices, enabling engineers to verify discrimination visually and analytically.</p>
+            <p><strong>Curve Components</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>X-axis: Current (A or xIn)</li>
+              <li>Y-axis: Time (seconds)</li>
+              <li>Both axes logarithmic</li>
+              <li>Tolerance bands shown</li>
+            </ul>
+            <p><strong>MCB Regions</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Thermal region (overload)</li>
+              <li>Magnetic region (short-circuit)</li>
+              <li>Type B: 3-5 x In magnetic</li>
+              <li>Type C: 5-10 x In magnetic</li>
+            </ul>
+            <p><strong>HRC Fuse Curves</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Pre-arcing time (minimum)</li>
+              <li>Total operating time (max)</li>
+              <li>Current-limiting action</li>
+              <li>Steep curve at high I</li>
+            </ul>
+            <p><strong>Reading Time-Current Curves</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Curve position (left/right):</strong> Current at which device operates — Downstream should be left of upstream</li>
+              <li><strong>Curve position (up/down):</strong> Operating time for given current — Downstream should be below upstream</li>
+              <li><strong>Band width (tolerance):</strong> Manufacturing variation range — Bands must not overlap for discrimination</li>
+              <li><strong>Curve intersection point:</strong> Discrimination limit (I_s) — Above this current, both may operate</li>
+              <li><strong>Vertical region (magnetic):</strong> Instantaneous trip zone — Most difficult region for discrimination</li>
+            </ul>
+            <p><strong>Example: MCB Discrimination Analysis</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Upstream:</strong> 63A Type C MCB (magnetic trip 5-10 x In = 315-630A)</li>
+              <li><strong>Downstream:</strong> 32A Type B MCB (magnetic trip 3-5 x In = 96-160A)</li>
+            </ul>
+            <p><span>Analysis:</span></p>
+            <p>Thermal region: 32A curve is left of 63A - OK</p>
+            <p>Magnetic region: 32A trips at 96-160A; 63A trips at 315-630A</p>
+            <p>Result: Discrimination achieved up to ~315A (I_s)</p>
+            <p>Above 315A: Potential simultaneous operation</p>
+            <p><strong>Best practice:</strong> Always use the maximum tolerance (worst case) curves when verifying discrimination - minimum time for downstream, maximum time for upstream.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Discrimination Margins and Calculations">
+            <p>Achieving reliable discrimination requires adequate margins between device characteristics. These margins account for manufacturing tolerances, temperature variations, and the physics of fault current interruption.</p>
+            <p><strong>Discrimination Ratios (Typical Guidelines)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>HRC Fuses (gG):</strong> Ratio &gt; 1.6:1 (upstream:downstream rating)</li>
+              <li><strong>MCBs same type:</strong> Ratio &gt; 2:1 often needed for thermal region</li>
+              <li><strong>MCCB to MCB:</strong> Use manufacturer coordination tables</li>
+              <li><strong>Time delay relays:</strong> Minimum 0.3-0.4s grading margin</li>
+            </ul>
+            <p>Note: Always verify with manufacturer data - these are indicative only</p>
+            <p><strong>I²t Energy Coordination</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>I²t let-through:</strong> Energy passed during fault clearance (A²s)</li>
+              <li><strong>Pre-arcing I²t:</strong> Energy to initiate arc in fuse element</li>
+              <li><strong>Total I²t:</strong> Pre-arcing plus arcing energy</li>
+              <li><strong>Rule:</strong> Upstream total I²t &gt; Downstream pre-arcing I²t for discrimination</li>
+            </ul>
+            <p><strong>Time Grading Margins</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Electromechanical relays:</strong> 0.4 - 0.5 seconds — Accounts for overshoot and reset time</li>
+              <li><strong>Digital/numerical relays:</strong> 0.2 - 0.3 seconds — Faster operation, less overshoot</li>
+              <li><strong>MCCBs with time delay:</strong> 0.1 - 0.2 seconds — Manufacturer specific - verify data</li>
+              <li><strong>Fuses only:</strong> Use I²t analysis — Time comparison less reliable for fuses</li>
+            </ul>
+            <p><strong>Calculation Example: Fuse Discrimination</strong></p>
+            <p>Given:</p>
+            <p><span> Upstream: 100A gG fuse, I²t let-through = 15,000 A²s at 10kA </span></p>
+            <p><span> Downstream: 63A gG fuse, Pre-arcing I²t = 8,000 A²s at 10kA </span></p>
+            <p>Verification:</p>
+            <p><span> Upstream total I²t (15,000) &gt; Downstream pre-arcing I²t (8,000) </span></p>
+            <p>Result: Discrimination achieved at 10kA fault level</p>
+            <p>Rating ratio: 100/63 = 1.59:1 (close to 1.6:1 guideline)</p>
+            <p><strong>Critical note:</strong> I²t values vary with prospective fault current. Always check discrimination at the actual fault current levels expected in the installation.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Cascading and Backup Protection">
+            <p>Cascading (backup protection) is a coordination technique where an upstream device with high breaking capacity supplements a downstream device with lower breaking capacity. This allows use of smaller, more economical devices where prospective fault currents are high.</p>
+            <p><strong>Cascading principles:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Current limitation:</strong> Upstream device limits fault current before downstream reaches breaking capacity</li>
+              <li><strong>Energy limitation:</strong> I²t let-through kept within downstream device withstand</li>
+              <li><strong>Tested combinations:</strong> Only manufacturer-verified pairings are valid</li>
+              <li><strong>Enhanced rating:</strong> Combination achieves higher breaking capacity than individual devices</li>
+            </ul>
+            <p><strong>Cascading Requirements (BS 7671 / BS EN 60947-2)</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Type-tested combination:</strong> Devices must be tested together per standards — Manufacturer coordination tables</li>
+              <li><strong>Stated enhanced Ics:</strong> Combined service breaking capacity documented — Technical datasheets, software</li>
+              <li><strong>Same manufacturer:</strong> Generally required for cascading validity — Manufacturer confirmation</li>
+              <li><strong>Cable protection maintained:</strong> I²t let-through &lt; cable k²S² — Adiabatic calculation</li>
+            </ul>
+            <p><strong>Advantages of Cascading</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Lower cost downstream devices</li>
+              <li>Reduced panel space</li>
+              <li>Smaller cable requirements upstream</li>
+              <li>System standardisation possible</li>
+            </ul>
+            <p><strong>Limitations and Risks</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Both devices may operate (nuisance trip)</li>
+              <li>Limited to specific combinations</li>
+              <li>Documentation essential</li>
+              <li>Replacement must match exactly</li>
+            </ul>
+            <p><strong>Important Warning</strong></p>
+            <p>Cascading is NOT discrimination. In a cascading arrangement, both devices typically operate during a high-level fault. The purpose is breaking capacity enhancement, not selectivity. Discrimination and cascading are different coordination objectives that may conflict.</p>
+            <p><strong>Cascading Example</strong></p>
+            <p>Installation conditions:</p>
+            <p><span> Prospective fault current at distribution board: 25kA </span></p>
+            <p>Without cascading:</p>
+            <p><span> MCB required breaking capacity: ≥25kA (expensive, limited options) </span></p>
+            <p>With cascading (manufacturer-verified):</p>
+            <p><span> MCCB upstream: 50kA breaking capacity (current limiting) </span></p>
+            <p><span>MCB downstream: 10kA individual rating</span></p>
+            <p><span> Combined enhanced rating: 25kA (from coordination tables) </span></p>
+            <p>Result: Compliant and more economical solution</p>
+            <p><strong>Design decision:</strong> When specifying cascading, consider whether discrimination is also required. If both upstream and downstream devices operate, supply to all downstream circuits is lost - this may or may not be acceptable.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              Discrimination (also called selectivity) is the coordination of protective devices to
-              ensure that only the device nearest to a fault operates to clear it, whilst all
-              upstream devices remain closed. This fundamental principle minimises the impact of
-              faults on the wider installation.
+              <strong>Example 1: MCB Discrimination Analysis</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key discrimination principles:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Fault isolation:</strong> Only the device nearest to the fault should
-                  operate
-                </li>
-                <li className="pl-1">
-                  <strong>Supply continuity:</strong> Healthy circuits remain energised
-                </li>
-                <li className="pl-1">
-                  <strong>Time grading:</strong> Downstream devices operate faster than upstream
-                </li>
-                <li className="pl-1">
-                  <strong>Current grading:</strong> Different pickup settings create selectivity
-                  zones
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Types of Discrimination
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Definition</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Total Discrimination</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Selectivity achieved for all fault currents up to the maximum prospective
-                        fault current
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Critical installations, hospitals, data centres
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Partial Discrimination</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Selectivity achieved only up to a defined discrimination limit (I_s)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        General commercial and industrial where occasional simultaneous operation is
-                        acceptable
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">No Discrimination</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Both devices may operate for any fault - no coordination
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Not recommended - indicates poor design
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">BS 7671 Requirement</p>
-              <p className="text-sm text-white">
-                Regulation 536.4 states that where backup protection is used, the characteristics of
-                the devices shall be coordinated such that the energy let-through of the upstream
-                device does not exceed that which the downstream device and protected conductors can
-                withstand.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Design principle:</strong> Discrimination should be verified at the design
-              stage using manufacturer data and coordination studies, not assumed based on ratings
-              alone.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Time-Current Characteristics */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Time-Current Characteristic Curves
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Verify discrimination between 100A Type C MCB (upstream) and 32A Type B MCB (downstream).</p>
+            <p>Device characteristics:</p>
+            <p>Upstream: 100A Type C</p>
+            <p>- Thermal trip: Per BS EN 60898 (inverse time)</p>
+            <p>- Magnetic trip: 5-10 x In = 500-1000A</p>
+            <p>Downstream: 32A Type B</p>
+            <p>- Thermal trip: Per BS EN 60898 (inverse time)</p>
+            <p>- Magnetic trip: 3-5 x In = 96-160A</p>
+            <p>Analysis at different fault levels:</p>
+            <p>At 96A (1 x upstream magnetic threshold minimum):</p>
+            <p>Downstream trips (magnetic), upstream not activated</p>
+            <p>At 200A:</p>
+            <p>Downstream trips, upstream in thermal region only</p>
+            <p>At 500A (upstream magnetic region begins):</p>
+            <p>Both in magnetic region - potential simultaneous trip</p>
+            <p>Result:</p>
+            <p>Discrimination limit (I_s) ≈ 500A</p>
+            <p>Partial discrimination - acceptable if Ipf &lt; 500A at downstream</p>
             <p>
-              Time-current curves are the fundamental tool for analysing protective device
-              coordination. They display the relationship between prospective fault current and the
-              operating time of protective devices, enabling engineers to verify discrimination
-              visually and analytically.
+              <strong>Example 2: Fuse-to-Fuse Discrimination</strong>
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Curve Components</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">X-axis: Current (A or xIn)</li>
-                  <li className="pl-1">Y-axis: Time (seconds)</li>
-                  <li className="pl-1">Both axes logarithmic</li>
-                  <li className="pl-1">Tolerance bands shown</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">MCB Regions</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Thermal region (overload)</li>
-                  <li className="pl-1">Magnetic region (short-circuit)</li>
-                  <li className="pl-1">Type B: 3-5 x In magnetic</li>
-                  <li className="pl-1">Type C: 5-10 x In magnetic</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">HRC Fuse Curves</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Pre-arcing time (minimum)</li>
-                  <li className="pl-1">Total operating time (max)</li>
-                  <li className="pl-1">Current-limiting action</li>
-                  <li className="pl-1">Steep curve at high I</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Reading Time-Current Curves
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Indicates</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Discrimination Implication
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Curve position (left/right)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Current at which device operates
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Downstream should be left of upstream
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Curve position (up/down)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Operating time for given current
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Downstream should be below upstream
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Band width (tolerance)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Manufacturing variation range
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Bands must not overlap for discrimination
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Curve intersection point</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Discrimination limit (I_s)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Above this current, both may operate
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Vertical region (magnetic)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Instantaneous trip zone</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Most difficult region for discrimination
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example: MCB Discrimination Analysis
-              </p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">Upstream:</span>{' '}
-                  <span className="text-white">
-                    63A Type C MCB (magnetic trip 5-10 x In = 315-630A)
-                  </span>
-                </p>
-                <p>
-                  <span className="text-white">Downstream:</span>{' '}
-                  <span className="text-white">
-                    32A Type B MCB (magnetic trip 3-5 x In = 96-160A)
-                  </span>
-                </p>
-                <p className="mt-2">
-                  <span className="text-white">Analysis:</span>
-                </p>
-                <p className="text-white">Thermal region: 32A curve is left of 63A - OK</p>
-                <p className="text-white">
-                  Magnetic region: 32A trips at 96-160A; 63A trips at 315-630A
-                </p>
-                <p className="text-green-400">Result: Discrimination achieved up to ~315A (I_s)</p>
-                <p className="text-orange-400">Above 315A: Potential simultaneous operation</p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> Always use the maximum tolerance (worst case) curves
-              when verifying discrimination - minimum time for downstream, maximum time for
-              upstream.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: Discrimination Margins and Calculations */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Discrimination Margins and Calculations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Verify discrimination between 160A and 100A gG HRC fuses at 20kA fault level.</p>
+            <p>Given data (from manufacturer curves at 20kA):</p>
+            <p>160A fuse: Pre-arcing I²t = 65,000 A²s</p>
+            <p>160A fuse: Total operating I²t = 120,000 A²s</p>
+            <p>100A fuse: Pre-arcing I²t = 22,000 A²s</p>
+            <p>100A fuse: Total operating I²t = 48,000 A²s</p>
+            <p>Discrimination check:</p>
+            <p>Upstream total I²t (160A): 120,000 A²s</p>
+            <p>Downstream pre-arcing I²t (100A): 22,000 A²s</p>
+            <p>120,000 &gt; 22,000 ✓</p>
+            <p>Result: Full discrimination achieved at 20kA</p>
+            <p>Rating ratio: 160/100 = 1.6:1 (meets guideline)</p>
+            <p>Also check at other fault current levels</p>
             <p>
-              Achieving reliable discrimination requires adequate margins between device
-              characteristics. These margins account for manufacturing tolerances, temperature
-              variations, and the physics of fault current interruption.
+              <strong>Example 3: MCCB Time Grading</strong>
             </p>
+            <p><strong>Scenario:</strong> Set time delays for 400A and 250A MCCBs to achieve discrimination.</p>
+            <p>System requirements:</p>
+            <p>Maximum Ipf at downstream MCCB: 15kA</p>
+            <p>Downstream 250A MCCB clearing time at 15kA: 50ms (instantaneous)</p>
+            <p>Grading margin calculation:</p>
+            <p>Minimum grading margin for MCCBs: 100ms (manufacturer recommendation)</p>
+            <p>Upstream 400A MCCB time delay required:</p>
+            <p>= Downstream time + Grading margin + Safety factor</p>
+            <p>= 50ms + 100ms + 50ms = 200ms</p>
+            <p>Settings:</p>
+            <p>Downstream 250A: Instantaneous (no intentional delay)</p>
+            <p>Upstream 400A: Short-time delay = 200ms at Isd</p>
+            <p>Result: Time-graded discrimination achieved</p>
+            <p>Note: Increased fault duration - check cable withstand</p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">
-                Discrimination Ratios (Typical Guidelines)
-              </p>
-              <div className="font-mono text-sm space-y-1">
-                <p>
-                  <span className="text-white">HRC Fuses (gG):</span>{' '}
-                  <span className="text-white">Ratio &gt; 1.6:1 (upstream:downstream rating)</span>
-                </p>
-                <p>
-                  <span className="text-white">MCBs same type:</span>{' '}
-                  <span className="text-white">Ratio &gt; 2:1 often needed for thermal region</span>
-                </p>
-                <p>
-                  <span className="text-white">MCCB to MCB:</span>{' '}
-                  <span className="text-white">Use manufacturer coordination tables</span>
-                </p>
-                <p>
-                  <span className="text-white">Time delay relays:</span>{' '}
-                  <span className="text-white">Minimum 0.3-0.4s grading margin</span>
-                </p>
-                <p className="mt-2 text-white text-xs">
-                  Note: Always verify with manufacturer data - these are indicative only
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                I²t Energy Coordination
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>I²t let-through:</strong> Energy passed during fault clearance (A²s)
-                </li>
-                <li className="pl-1">
-                  <strong>Pre-arcing I²t:</strong> Energy to initiate arc in fuse element
-                </li>
-                <li className="pl-1">
-                  <strong>Total I²t:</strong> Pre-arcing plus arcing energy
-                </li>
-                <li className="pl-1">
-                  <strong>Rule:</strong> Upstream total I²t &gt; Downstream pre-arcing I²t for
-                  discrimination
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Time Grading Margins</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Device Combination
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Minimum Time Margin
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Electromechanical relays</td>
-                      <td className="border border-white/10 px-3 py-2">0.4 - 0.5 seconds</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Accounts for overshoot and reset time
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Digital/numerical relays</td>
-                      <td className="border border-white/10 px-3 py-2">0.2 - 0.3 seconds</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Faster operation, less overshoot
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MCCBs with time delay</td>
-                      <td className="border border-white/10 px-3 py-2">0.1 - 0.2 seconds</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Manufacturer specific - verify data
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fuses only</td>
-                      <td className="border border-white/10 px-3 py-2">Use I²t analysis</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Time comparison less reliable for fuses
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Calculation Example: Fuse Discrimination
-              </p>
-              <div className="font-mono text-sm space-y-1">
-                <p className="text-white">Given:</p>
-                <p>
-                  <span className="text-white">
-                    Upstream: 100A gG fuse, I²t let-through = 15,000 A²s at 10kA
-                  </span>
-                </p>
-                <p>
-                  <span className="text-white">
-                    Downstream: 63A gG fuse, Pre-arcing I²t = 8,000 A²s at 10kA
-                  </span>
-                </p>
-                <p className="mt-2 text-white">Verification:</p>
-                <p>
-                  <span className="text-white">
-                    Upstream total I²t (15,000) &gt; Downstream pre-arcing I²t (8,000)
-                  </span>
-                </p>
-                <p className="text-green-400 mt-1">
-                  Result: Discrimination achieved at 10kA fault level
-                </p>
-                <p className="text-white mt-2">
-                  Rating ratio: 100/63 = 1.59:1 (close to 1.6:1 guideline)
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Critical note:</strong> I²t values vary with prospective fault current. Always
-              check discrimination at the actual fault current levels expected in the installation.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Cascading and Backup Protection */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Cascading and Backup Protection
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              Cascading (backup protection) is a coordination technique where an upstream device
-              with high breaking capacity supplements a downstream device with lower breaking
-              capacity. This allows use of smaller, more economical devices where prospective fault
-              currents are high.
+              <strong>Discrimination Study Checklist:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Cascading principles:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Current limitation:</strong> Upstream device limits fault current before
-                  downstream reaches breaking capacity
-                </li>
-                <li className="pl-1">
-                  <strong>Energy limitation:</strong> I²t let-through kept within downstream device
-                  withstand
-                </li>
-                <li className="pl-1">
-                  <strong>Tested combinations:</strong> Only manufacturer-verified pairings are
-                  valid
-                </li>
-                <li className="pl-1">
-                  <strong>Enhanced rating:</strong> Combination achieves higher breaking capacity
-                  than individual devices
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cascading Requirements (BS 7671 / BS EN 60947-2)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Requirement</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Verification</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Type-tested combination</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Devices must be tested together per standards
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Manufacturer coordination tables
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Stated enhanced Ics</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Combined service breaking capacity documented
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Technical datasheets, software
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Same manufacturer</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Generally required for cascading validity
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Manufacturer confirmation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable protection maintained
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        I²t let-through &lt; cable k²S²
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Adiabatic calculation</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Advantages of Cascading
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Lower cost downstream devices</li>
-                  <li className="pl-1">Reduced panel space</li>
-                  <li className="pl-1">Smaller cable requirements upstream</li>
-                  <li className="pl-1">System standardisation possible</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Limitations and Risks
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Both devices may operate (nuisance trip)</li>
-                  <li className="pl-1">Limited to specific combinations</li>
-                  <li className="pl-1">Documentation essential</li>
-                  <li className="pl-1">Replacement must match exactly</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Important Warning</p>
-              <p className="text-sm text-white">
-                Cascading is NOT discrimination. In a cascading arrangement, both devices typically
-                operate during a high-level fault. The purpose is breaking capacity enhancement, not
-                selectivity. Discrimination and cascading are different coordination objectives that
-                may conflict.
-              </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cascading Example</p>
-              <div className="font-mono text-sm space-y-1">
-                <p className="text-white">Installation conditions:</p>
-                <p>
-                  <span className="text-white">
-                    Prospective fault current at distribution board: 25kA
-                  </span>
-                </p>
-                <p className="mt-2 text-white">Without cascading:</p>
-                <p>
-                  <span className="text-white">
-                    MCB required breaking capacity: ≥25kA (expensive, limited options)
-                  </span>
-                </p>
-                <p className="mt-2 text-white">With cascading (manufacturer-verified):</p>
-                <p>
-                  <span className="text-white">
-                    MCCB upstream: 50kA breaking capacity (current limiting)
-                  </span>
-                </p>
-                <p>
-                  <span className="text-white">MCB downstream: 10kA individual rating</span>
-                </p>
-                <p>
-                  <span className="text-green-400">
-                    Combined enhanced rating: 25kA (from coordination tables)
-                  </span>
-                </p>
-                <p className="text-white mt-2">Result: Compliant and more economical solution</p>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Design decision:</strong> When specifying cascading, consider whether
-              discrimination is also required. If both upstream and downstream devices operate,
-              supply to all downstream circuits is lost - this may or may not be acceptable.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Obtain fault level data from supply authority (Ipf at intake)</li>
+              <li>Calculate prospective fault current at each distribution point</li>
+              <li>Select protective devices considering discrimination requirements</li>
+              <li>Obtain time-current curves from manufacturers</li>
+              <li>Plot overlaid curves and identify discrimination limits</li>
+              <li>Verify cascading combinations if used</li>
+              <li>Document coordination study in design records</li>
+            </ul>
+            <p>
+              <strong>Key Values to Remember:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>HRC fuse discrimination ratio: <strong>≥1.6:1</strong> (gG type)</li>
+              <li>MCB discrimination: Often requires <strong>≥2:1</strong> ratio</li>
+              <li>Electromechanical relay grading: <strong>0.4-0.5s</strong> margin</li>
+              <li>Digital relay grading: <strong>0.2-0.3s</strong> margin</li>
+              <li>Type B MCB magnetic: <strong>3-5 x In</strong></li>
+              <li>Type C MCB magnetic: <strong>5-10 x In</strong></li>
+              <li>Type D MCB magnetic: <strong>10-20 x In</strong></li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Coordination Software and Studies */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">
-            Coordination Software and Protection Studies
-          </h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Available Coordination Software Tools
-              </h3>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
-                <div>
-                  <p className="font-medium mb-1">Manufacturer-Specific</p>
-                  <ul className="space-y-0.5 text-white">
-                    <li>ABB DOC (Coordination software)</li>
-                    <li>Schneider Electric Ecodial</li>
-                    <li>Siemens SIMARIS design</li>
-                    <li>Eaton xPole Selector</li>
-                    <li>Hager Selectivity tools</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium mb-1">Independent/Multi-vendor</p>
-                  <ul className="space-y-0.5 text-white">
-                    <li>ETAP (Enterprise power analysis)</li>
-                    <li>SKM PowerTools</li>
-                    <li>EasyPower</li>
-                    <li>DIgSILENT PowerFactory</li>
-                    <li>CYME (Distribution analysis)</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Coordination Study Process
-              </h3>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Step 1: System modelling</p>
-                <p className="ml-4">- Import single-line diagram</p>
-                <p className="ml-4">- Define transformer impedances</p>
-                <p className="ml-4">- Enter cable data (length, CSA, material)</p>
-                <p className="ml-4">- Configure source fault level</p>
-                <p className="mt-2 text-white">Step 2: Fault calculations</p>
-                <p className="ml-4">- Calculate Ipf at each protection point</p>
-                <p className="ml-4">- Determine minimum and maximum fault currents</p>
-                <p className="ml-4">- Consider motor contribution where applicable</p>
-                <p className="mt-2 text-white">Step 3: Device selection</p>
-                <p className="ml-4">- Select protective devices from libraries</p>
-                <p className="ml-4">- Configure settings (Ir, Im, time delays)</p>
-                <p className="ml-4">- Import time-current characteristics</p>
-                <p className="mt-2 text-white">Step 4: Coordination analysis</p>
-                <p className="ml-4">- Plot overlaid time-current curves</p>
-                <p className="ml-4">- Identify discrimination limits (I_s)</p>
-                <p className="ml-4">- Check for curve crossings</p>
-                <p className="ml-4">- Verify cascading combinations</p>
-                <p className="mt-2 text-white">Step 5: Documentation</p>
-                <p className="ml-4">- Generate coordination reports</p>
-                <p className="ml-4">- Export settings schedules</p>
-                <p className="ml-4">- Archive for design verification</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Required Input Data for Studies
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Data Category</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Specific Requirements
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Supply authority</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fault level at intake, X/R ratio, supply voltage
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Transformers</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rating, impedance (%), connection type, tap settings
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cables</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Length, CSA, conductor material, installation method
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Protective devices</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Type, rating, settings, manufacturer and model
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Motors</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rating, starting current, contribution to faults
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: MCB Discrimination Analysis
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Verify discrimination between 100A Type C MCB (upstream)
-                and 32A Type B MCB (downstream).
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Device characteristics:</p>
-                <p>Upstream: 100A Type C</p>
-                <p className="ml-4">- Thermal trip: Per BS EN 60898 (inverse time)</p>
-                <p className="ml-4">- Magnetic trip: 5-10 x In = 500-1000A</p>
-                <p className="mt-2">Downstream: 32A Type B</p>
-                <p className="ml-4">- Thermal trip: Per BS EN 60898 (inverse time)</p>
-                <p className="ml-4">- Magnetic trip: 3-5 x In = 96-160A</p>
-                <p className="mt-2 text-white">Analysis at different fault levels:</p>
-                <p className="mt-1">At 96A (1 x upstream magnetic threshold minimum):</p>
-                <p className="ml-4 text-green-400">
-                  Downstream trips (magnetic), upstream not activated
-                </p>
-                <p className="mt-1">At 200A:</p>
-                <p className="ml-4 text-green-400">
-                  Downstream trips, upstream in thermal region only
-                </p>
-                <p className="mt-1">At 500A (upstream magnetic region begins):</p>
-                <p className="ml-4 text-orange-400">
-                  Both in magnetic region - potential simultaneous trip
-                </p>
-                <p className="mt-2 text-white">Result:</p>
-                <p className="text-green-400">Discrimination limit (I_s) ≈ 500A</p>
-                <p>Partial discrimination - acceptable if Ipf &lt; 500A at downstream</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Fuse-to-Fuse Discrimination
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Verify discrimination between 160A and 100A gG HRC fuses
-                at 20kA fault level.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Given data (from manufacturer curves at 20kA):</p>
-                <p>160A fuse: Pre-arcing I²t = 65,000 A²s</p>
-                <p>160A fuse: Total operating I²t = 120,000 A²s</p>
-                <p>100A fuse: Pre-arcing I²t = 22,000 A²s</p>
-                <p>100A fuse: Total operating I²t = 48,000 A²s</p>
-                <p className="mt-2 text-white">Discrimination check:</p>
-                <p>Upstream total I²t (160A): 120,000 A²s</p>
-                <p>Downstream pre-arcing I²t (100A): 22,000 A²s</p>
-                <p className="mt-1">120,000 &gt; 22,000 ✓</p>
-                <p className="mt-2 text-green-400">Result: Full discrimination achieved at 20kA</p>
-                <p className="text-white mt-2">
-                  Rating ratio: 160/100 = 1.6:1 (meets guideline)
-                </p>
-                <p className="text-white">Also check at other fault current levels</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: MCCB Time Grading
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Set time delays for 400A and 250A MCCBs to achieve
-                discrimination.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">System requirements:</p>
-                <p>Maximum Ipf at downstream MCCB: 15kA</p>
-                <p>Downstream 250A MCCB clearing time at 15kA: 50ms (instantaneous)</p>
-                <p className="mt-2 text-white">Grading margin calculation:</p>
-                <p>Minimum grading margin for MCCBs: 100ms (manufacturer recommendation)</p>
-                <p className="mt-1">Upstream 400A MCCB time delay required:</p>
-                <p>= Downstream time + Grading margin + Safety factor</p>
-                <p>= 50ms + 100ms + 50ms = 200ms</p>
-                <p className="mt-2 text-white">Settings:</p>
-                <p>Downstream 250A: Instantaneous (no intentional delay)</p>
-                <p>Upstream 400A: Short-time delay = 200ms at Isd</p>
-                <p className="mt-2 text-green-400">Result: Time-graded discrimination achieved</p>
-                <p className="text-orange-400 mt-1">
-                  Note: Increased fault duration - check cable withstand
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Discrimination Study Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Obtain fault level data from supply authority (Ipf at intake)
-                </li>
-                <li className="pl-1">
-                  Calculate prospective fault current at each distribution point
-                </li>
-                <li className="pl-1">
-                  Select protective devices considering discrimination requirements
-                </li>
-                <li className="pl-1">Obtain time-current curves from manufacturers</li>
-                <li className="pl-1">Plot overlaid curves and identify discrimination limits</li>
-                <li className="pl-1">Verify cascading combinations if used</li>
-                <li className="pl-1">Document coordination study in design records</li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Assuming discrimination from ratings:</strong> Always verify with curves/data</li>
+                <li><strong>Ignoring tolerance bands:</strong> Use worst-case manufacturer data</li>
+                <li><strong>Mixing cascading and discrimination:</strong> These are different objectives</li>
+                <li><strong>Not documenting coordination:</strong> Required for design verification</li>
+                <li><strong>Ignoring motor contribution:</strong> Motors add to fault current initially</li>
+                <li><strong>Using untested cascading combinations:</strong> Only verified pairs are valid</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  HRC fuse discrimination ratio: <strong>≥1.6:1</strong> (gG type)
-                </li>
-                <li className="pl-1">
-                  MCB discrimination: Often requires <strong>≥2:1</strong> ratio
-                </li>
-                <li className="pl-1">
-                  Electromechanical relay grading: <strong>0.4-0.5s</strong> margin
-                </li>
-                <li className="pl-1">
-                  Digital relay grading: <strong>0.2-0.3s</strong> margin
-                </li>
-                <li className="pl-1">
-                  Type B MCB magnetic: <strong>3-5 x In</strong>
-                </li>
-                <li className="pl-1">
-                  Type C MCB magnetic: <strong>5-10 x In</strong>
-                </li>
-                <li className="pl-1">
-                  Type D MCB magnetic: <strong>10-20 x In</strong>
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Assuming discrimination from ratings:</strong> Always verify with
-                  curves/data
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring tolerance bands:</strong> Use worst-case manufacturer data
-                </li>
-                <li className="pl-1">
-                  <strong>Mixing cascading and discrimination:</strong> These are different
-                  objectives
-                </li>
-                <li className="pl-1">
-                  <strong>Not documenting coordination:</strong> Required for design verification
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring motor contribution:</strong> Motors add to fault current
-                  initially
-                </li>
-                <li className="pl-1">
-                  <strong>Using untested cascading combinations:</strong> Only verified pairs are
-                  valid
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Discrimination Types</p>
-                <ul className="space-y-0.5">
-                  <li>Total: Selectivity at all fault levels</li>
-                  <li>Partial: Selectivity up to I_s limit</li>
-                  <li>Time grading: Delayed upstream operation</li>
-                  <li>Current grading: Higher pickup upstream</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">BS 7671 Requirements</p>
-                <ul className="space-y-0.5">
-                  <li>Reg 536.4: Backup protection coordination</li>
-                  <li>Characteristics must be matched</li>
-                  <li>Combination verified suitable</li>
-                  <li>Cable protection maintained</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section1-5">
-              Next: Section 1.5
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section1-3")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Cable sizing calculations
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section1-5")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Power quality
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

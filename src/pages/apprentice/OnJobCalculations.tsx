@@ -1,8 +1,14 @@
-import { Loader2 } from 'lucide-react';
-import { useLocation } from 'react-router-dom';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { ArrowLeft, Loader2 } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useState, lazy, Suspense } from 'react';
+import { Button } from '@/components/ui/button';
 import CalculatorSelector from '@/components/apprentice/calculators/CalculatorSelector';
+import {
+  PageFrame,
+  PageHero,
+  itemVariants,
+} from '@/components/college/primitives';
 
 // Lazy load all calculators for better performance
 const CableSizingCalculator = lazy(
@@ -207,6 +213,7 @@ const CalculatorLoader = () => (
 );
 
 const OnJobCalculations = () => {
+  const navigate = useNavigate();
   const [calculatorType, setCalculatorType] = useState<string>('ohms-law');
   const location = useLocation();
 
@@ -360,21 +367,33 @@ const OnJobCalculations = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 animate-fade-in">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">{pageTitle}</h1>
-          <p className="text-sm sm:text-base text-white">{pageDescription}</p>
-        </div>
-        <SmartBackButton />
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate(-1)}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
+
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Calculations"
+          title={pageTitle}
+          description={pageDescription}
+          tone="yellow"
+        />
+      </motion.div>
 
       {/* Calculator Selector */}
       <CalculatorSelector calculatorType={calculatorType} setCalculatorType={setCalculatorType} />
 
       {/* Dynamic Calculator with Suspense */}
       <Suspense fallback={<CalculatorLoader />}>{renderCalculator()}</Suspense>
-    </div>
+    </PageFrame>
   );
 };
 

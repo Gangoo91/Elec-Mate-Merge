@@ -319,18 +319,24 @@ export default function Sub5() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 722.411.4 (PEN fault protection on PME)"
-            clause="Where the PME conditions of supply are met, the protective conductor of the EV charging equipment shall be referenced to earth either by means of an additional earth electrode or by means of a device which disconnects the supply where the voltage between the protective conductor and earth exceeds a stated limit (typically a device that operates between 70 V and 250 V depending on type)."
+            source="BS 7671:2018+A4:2026 — Regulation 722.411.4 (TN system) and 722.411.4.1 (PME on EV charging points)"
+            clause={`A PME earthing facility shall not be used as the means of earthing for the protective conductor contact of a charging point located outdoors or that might reasonably be expected to be used to charge a vehicle outdoors unless one of the following methods is used:
+(a) Deleted by BS 7671:2018+A2:2022.
+(b) The main earthing terminal of the installation is connected to an installation earth electrode by a protective conductor complying with Regulation 544.1.1. The resistance of the earth electrode to Earth shall be such that the maximum voltage between the main earthing terminal of the installation and Earth in the event of an open-circuit fault in the PEN conductor of the low voltage network supplying the installation does not exceed 70 V RMS.
+(c) Protection against electric shock is provided by a device which electrically disconnects the vehicle from the live conductors of the supply and from protective earth in accordance with Regulation 543.3.3.101(b) within 5 s in the event of the voltage between the circuit protective conductor and Earth exceeding 70 V RMS due to an open-circuit fault in the PEN conductor of the low voltage network. The device need not operate if the voltage exceeds 70 V RMS for less than 4 s.`}
             meaning={
               <>
-                On a PME supply, a PEN failure can put diverted neutral current on the vehicle
-                chassis. Section 722.411.4 requires either a TT earth electrode dedicated to the
-                EVSE (decoupling from PME) OR a PEN-fault detection device (commonly an
-                open-PEN or O-PEN device) that disconnects the supply. Visual inspection
-                confirms which method is in use and that it matches the design.
+                The 70 V RMS / 5 s threshold is the prescriptive figure — NOT a "70 V to 250 V"
+                range. On a PME supply a PEN failure can put diverted neutral current onto the
+                vehicle chassis; the regulation forbids using PME as the EVSE earth unless either
+                method (b) — a dedicated earth electrode sized so PEN-fault voltage stays under
+                70 V RMS — or method (c) — an O-PEN protection device that disconnects within 5 s
+                if the CPC-to-Earth voltage exceeds 70 V RMS — is used. Method (a) was deleted by
+                A2:2022. Visual inspection confirms which method is in use and that it matches
+                the design.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Part 7, Section 722, Regulation 722.411.4."
+            cite="Source: BS 7671:2018+A4:2026 Part 7, Section 722, Regulations 722.411.4 and 722.411.4.1."
           />
 
           <SectionRule />
@@ -744,7 +750,7 @@ export default function Sub5() {
                 relied on has been deleted.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 722.411.4.1 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 722.411.4.1."
           />
 
           <SectionRule />

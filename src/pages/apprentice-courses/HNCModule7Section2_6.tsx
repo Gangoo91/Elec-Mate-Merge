@@ -1,8 +1,21 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 7 · Section 2 · Subsection 6 — Testing and Compliance
+ * HNC Electrical Engineering for Building Services (Power and Lighting Systems)
+ *   Periodic testing schedules, documentation requirements, fire risk assessment coordination, and regulatory compliance
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  ConceptBlock,
+  CommonMistake,
+  LearningOutcomes,
+  FAQ,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Testing and Compliance - HNC Module 7 Section 2.6';
@@ -239,842 +252,309 @@ const faqs = [
 ];
 
 const HNCModule7Section2_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section2")}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module7-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.2.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Testing and Compliance
-          </h1>
-          <p className="text-white">
-            Periodic testing schedules, documentation requirements, fire risk assessment
-            coordination, and regulatory compliance
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 7 · Section 2 · Subsection 6"
+            title="Testing and Compliance"
+            description="Periodic testing schedules, documentation requirements, fire risk assessment coordination, and regulatory compliance"
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Emergency lighting:</strong> Monthly functional test, annual duration test
-              </li>
-              <li className="pl-1">
-                <strong>Fire alarms:</strong> Weekly user test, six-monthly service
-              </li>
-              <li className="pl-1">
-                <strong>Documentation:</strong> Log books mandatory for both systems
-              </li>
-              <li className="pl-1">
-                <strong>RRO 2005:</strong> Legal framework for fire safety compliance
-              </li>
+          <LearningOutcomes
+            outcomes={[
+              "Apply BS 5266-1 testing schedules for emergency lighting systems",
+              "Implement BS 5839-1 testing and maintenance requirements for fire alarms",
+              "Maintain compliant documentation and log books for emergency systems",
+              "Coordinate testing programmes with fire risk assessments",
+              "Understand duties under the Regulatory Reform (Fire Safety) Order 2005",
+              "Specify competency requirements for testing personnel",
+            ]}
+          />
+
+          <SectionRule />
+
+          <ConceptBlock title="Emergency Lighting Testing (BS 5266)">
+            <p>BS 5266-1 specifies mandatory testing schedules to ensure emergency lighting systems remain functional throughout their installed life. These tests verify that luminaires will illuminate escape routes when the normal supply fails.</p>
+            <p><strong>Testing Schedule Summary</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Daily visual check:</strong> Every occupied day — Brief observation — Building staff</li>
+              <li><strong>Monthly functional test:</strong> Not exceeding 1 month — Brief (sufficient to verify operation) — Trained staff</li>
+              <li><strong>Annual duration test:</strong> Not exceeding 12 months — Full rated duration (typically 3 hours) — Competent person</li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Standards</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>BS 5266-1:</strong> Emergency lighting testing
-              </li>
-              <li className="pl-1">
-                <strong>BS 5839-1:</strong> Fire detection and alarm testing
-              </li>
-              <li className="pl-1">
-                <strong>RRO 2005:</strong> Regulatory Reform (Fire Safety) Order
-              </li>
-              <li className="pl-1">
-                <strong>PAS 79:</strong> Fire risk assessment guidance
-              </li>
+            <p><strong>Monthly functional test procedure:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Simulate mains failure at each final circuit or use test facility</li>
+              <li>Verify each luminaire illuminates within 5 seconds</li>
+              <li>Check indicator lamps showing charging status</li>
+              <li>Restore supply before batteries become fully discharged</li>
+              <li>Record results and any defects in the log book</li>
             </ul>
-          </div>
-        </div>
+            <p><strong>Annual duration test procedure:</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Conduct at low-occupancy period (night or weekend)</li>
+              <li>Disconnect normal supply to initiate emergency mode</li>
+              <li>Monitor luminaires throughout rated duration</li>
+              <li>Measure illumination levels at end of test period</li>
+              <li>Allow 24 hours recharge before next test or after genuine emergency</li>
+            </ul>
+            <p><strong>Automatic test systems:</strong> Where ATS is installed, it can replace manual monthly tests but annual verification by a competent person remains mandatory.</p>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Apply BS 5266-1 testing schedules for emergency lighting systems',
-              'Implement BS 5839-1 testing and maintenance requirements for fire alarms',
-              'Maintain compliant documentation and log books for emergency systems',
-              'Coordinate testing programmes with fire risk assessments',
-              'Understand duties under the Regulatory Reform (Fire Safety) Order 2005',
-              'Specify competency requirements for testing personnel',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Emergency Lighting Testing (BS 5266) */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Emergency Lighting Testing (BS 5266)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Fire Alarm Testing (BS 5839)">
+            <p>BS 5839-1 establishes comprehensive testing and maintenance requirements for fire detection and alarm systems. Regular testing ensures systems will detect fires and alert occupants when required.</p>
+            <p><strong>Testing and Servicing Schedule</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Weekly test:</strong> Not exceeding 7 days — User (trained staff)</li>
+              <li><strong>Monthly checks:</strong> Monthly — User (trained staff)</li>
+              <li><strong>Quarterly inspection:</strong> Not exceeding 3 months — Competent person</li>
+              <li><strong>Six-monthly service:</strong> Not exceeding 6 months — Competent person</li>
+              <li><strong>Annual inspection:</strong> Not exceeding 12 months — Competent person</li>
+            </ul>
+            <p><strong>Weekly Test Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Test different call point each week</li>
+              <li>Complete all call points in 13 weeks</li>
+              <li>Verify sounders operate in test zone</li>
+              <li>Check panel indicates alarm correctly</li>
+              <li>Record results in log book</li>
+            </ul>
+            <p><strong>Six-Monthly Service Includes</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Test all detectors using suitable test equipment</li>
+              <li>Check standby battery condition</li>
+              <li>Verify all connections are secure</li>
+              <li>Check cause and effect operation</li>
+              <li>Issue service report</li>
+            </ul>
+            <p><strong>Detector Testing Methods</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Smoke detectors:</strong> Use approved aerosol smoke simulant or functional test equipment</li>
+              <li><strong>Heat detectors:</strong> Apply controlled heat source within response parameters</li>
+              <li><strong>Beam detectors:</strong> Use test card or functional test mode</li>
+              <li><strong>Aspirating systems:</strong> Introduce test smoke at sampling points</li>
+            </ul>
+            <p><strong>False alarm management:</strong> Test procedures must minimise false alarms - always notify the alarm receiving centre and building occupants before testing.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Documentation Requirements">
+            <p>Comprehensive documentation demonstrates compliance, supports maintenance planning, and provides essential evidence following incidents. Both BS 5266 and BS 5839 mandate specific documentation throughout the system lifecycle.</p>
+            <p><strong>Emergency Lighting Documentation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Installation certificate:</strong> Compliance statement, system details, designer sign-off — Life of installation</li>
+              <li><strong>As-installed drawings:</strong> Luminaire locations, circuit details, device types — Life of installation</li>
+              <li><strong>Log book:</strong> All tests, defects, repairs, alterations — Ongoing (min 3 years available)</li>
+              <li><strong>Photometric evidence:</strong> Design calculations, illumination levels achieved — Life of installation</li>
+            </ul>
+            <p><strong>Fire Alarm Documentation</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Design certificate:</strong> System category, coverage, standards compliance — Life of installation</li>
+              <li><strong>Installation certificate:</strong> Compliance with design, workmanship standards — Life of installation</li>
+              <li><strong>Commissioning certificate:</strong> Test results, cause and effect verification — Life of installation</li>
+              <li><strong>Cause and effect matrix:</strong> System responses to each trigger condition — Life of installation</li>
+              <li><strong>Log book:</strong> Tests, false alarms, faults, maintenance, alterations — Ongoing (min 3 years available)</li>
+            </ul>
+            <p><strong>Log Book Best Practice</strong></p>
+            <p>The log book should be:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Kept at or near the main control panel</li>
+              <li>Accessible to maintenance personnel and inspectors</li>
+              <li>Completed in ink (not pencil) for permanence</li>
+              <li>Signed by the person conducting each test</li>
+              <li>Reviewed regularly by the responsible person</li>
+            </ul>
+            <p><strong>Digital log books:</strong> Electronic recording systems are acceptable provided they maintain audit trails, prevent unauthorised modification, and can be printed on demand.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Regulatory Compliance and FRA Coordination">
+            <p>The Regulatory Reform (Fire Safety) Order 2005 provides the legal framework for fire safety in non-domestic premises. Understanding its requirements and coordinating emergency system testing with fire risk assessments is essential for compliance.</p>
+            <p><strong>Key RRO 2005 Requirements</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Fire risk assessment:</strong> Must be carried out and kept under review</li>
+              <li><strong>Fire safety measures:</strong> Must be implemented and maintained</li>
+              <li><strong>Emergency routes and exits:</strong> Must be kept clear and functional</li>
+              <li><strong>Detection and warning:</strong> Systems must be installed and maintained</li>
+              <li><strong>Emergency lighting:</strong> Required where people could be trapped</li>
+              <li><strong>Maintenance:</strong> All fire safety equipment must be kept in efficient working order</li>
+            </ul>
+            <p><strong>Responsible Person Duties</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Conduct fire risk assessment</li>
+              <li>Implement preventive measures</li>
+              <li>Provide fire safety information</li>
+              <li>Ensure staff training</li>
+              <li>Maintain fire safety equipment</li>
+            </ul>
+            <p><strong>Enforcement Options</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Informal advice:</strong> Recommendations for improvement</li>
+              <li><strong>Enforcement notice:</strong> Requires action within timeframe</li>
+              <li><strong>Prohibition notice:</strong> Prevents use of premises</li>
+              <li><strong>Prosecution:</strong> Unlimited fines, imprisonment</li>
+            </ul>
+            <p><strong>FRA and Testing Coordination</strong></p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Higher risk identified:</strong> May require more frequent testing — Review and enhance test schedule</li>
+              <li><strong>Building layout changed:</strong> Verify system coverage remains adequate — Full system test and re-certification</li>
+              <li><strong>Occupancy type changed:</strong> System category may need upgrading — Design review and modification</li>
+              <li><strong>Test failures recorded:</strong> FRA should reflect system reliability issues — Repair and update FRA</li>
+            </ul>
+            <p><strong>Critical Compliance Point</strong></p>
+            <p>The fire risk assessment must be reviewed whenever there is reason to suspect it is no longer valid, or there has been a significant change to the premises. Emergency system modifications, test failures, or changes in testing arrangements are all triggers for FRA review.</p>
+            <p><strong>PAS 79-1:2020:</strong> Provides guidance on fire risk assessment methodology and should be followed when conducting or reviewing assessments for non-residential premises.</p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ConceptBlock title="Worked Examples">
             <p>
-              BS 5266-1 specifies mandatory testing schedules to ensure emergency lighting systems
-              remain functional throughout their installed life. These tests verify that luminaires
-              will illuminate escape routes when the normal supply fails.
+              <strong>Example 1: Annual Testing Schedule for Office Building</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Testing Schedule Summary
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Test Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Frequency</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Duration</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">By Whom</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Daily visual check</td>
-                      <td className="border border-white/10 px-3 py-2">Every occupied day</td>
-                      <td className="border border-white/10 px-3 py-2">Brief observation</td>
-                      <td className="border border-white/10 px-3 py-2">Building staff</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Monthly functional test</td>
-                      <td className="border border-white/10 px-3 py-2">Not exceeding 1 month</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Brief (sufficient to verify operation)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Trained staff</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Annual duration test</td>
-                      <td className="border border-white/10 px-3 py-2">Not exceeding 12 months</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full rated duration (typically 3 hours)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Competent person</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Monthly functional test procedure:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Simulate mains failure at each final circuit or use test facility
-                </li>
-                <li className="pl-1">Verify each luminaire illuminates within 5 seconds</li>
-                <li className="pl-1">Check indicator lamps showing charging status</li>
-                <li className="pl-1">Restore supply before batteries become fully discharged</li>
-                <li className="pl-1">Record results and any defects in the log book</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Annual duration test procedure:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Conduct at low-occupancy period (night or weekend)</li>
-                <li className="pl-1">Disconnect normal supply to initiate emergency mode</li>
-                <li className="pl-1">Monitor luminaires throughout rated duration</li>
-                <li className="pl-1">Measure illumination levels at end of test period</li>
-                <li className="pl-1">
-                  Allow 24 hours recharge before next test or after genuine emergency
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Automatic test systems:</strong> Where ATS is installed, it can replace manual
-              monthly tests but annual verification by a competent person remains mandatory.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Fire Alarm Testing (BS 5839) */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Fire Alarm Testing (BS 5839)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> Develop an annual testing schedule for a 4-storey office building with emergency lighting and Category L3 fire alarm system.</p>
+            <p>Emergency Lighting (BS 5266-1):</p>
+            <p>Daily: Visual check of indicator lamps</p>
+            <p>Monthly: Functional test (simulate mains failure)</p>
+            <p>Annually: Full 3-hour duration test (January - low occupancy)</p>
+            <p>Fire Alarm (BS 5839-1):</p>
+            <p>Weekly: Different call point each Monday at 10:00</p>
+            <p>Monthly: Check panel indicators, battery voltages</p>
+            <p>Six-monthly: Full service (June and December)</p>
+            <p>Annually: Comprehensive inspection (December service)</p>
+            <p>Log book entries required for all activities</p>
             <p>
-              BS 5839-1 establishes comprehensive testing and maintenance requirements for fire
-              detection and alarm systems. Regular testing ensures systems will detect fires and
-              alert occupants when required.
+              <strong>Example 2: Responding to Failed Duration Test</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Testing and Servicing Schedule
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Activity</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Frequency</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Responsibility</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Weekly test</td>
-                      <td className="border border-white/10 px-3 py-2">Not exceeding 7 days</td>
-                      <td className="border border-white/10 px-3 py-2">User (trained staff)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Monthly checks</td>
-                      <td className="border border-white/10 px-3 py-2">Monthly</td>
-                      <td className="border border-white/10 px-3 py-2">User (trained staff)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Quarterly inspection</td>
-                      <td className="border border-white/10 px-3 py-2">Not exceeding 3 months</td>
-                      <td className="border border-white/10 px-3 py-2">Competent person</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Six-monthly service</td>
-                      <td className="border border-white/10 px-3 py-2">Not exceeding 6 months</td>
-                      <td className="border border-white/10 px-3 py-2">Competent person</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Annual inspection</td>
-                      <td className="border border-white/10 px-3 py-2">Not exceeding 12 months</td>
-                      <td className="border border-white/10 px-3 py-2">Competent person</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Weekly Test Requirements
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Test different call point each week</li>
-                  <li className="pl-1">Complete all call points in 13 weeks</li>
-                  <li className="pl-1">Verify sounders operate in test zone</li>
-                  <li className="pl-1">Check panel indicates alarm correctly</li>
-                  <li className="pl-1">Record results in log book</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Six-Monthly Service Includes
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Test all detectors using suitable test equipment</li>
-                  <li className="pl-1">Check standby battery condition</li>
-                  <li className="pl-1">Verify all connections are secure</li>
-                  <li className="pl-1">Check cause and effect operation</li>
-                  <li className="pl-1">Issue service report</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Detector Testing Methods
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Smoke detectors:</strong> Use approved aerosol smoke simulant or
-                  functional test equipment
-                </li>
-                <li className="pl-1">
-                  <strong>Heat detectors:</strong> Apply controlled heat source within response
-                  parameters
-                </li>
-                <li className="pl-1">
-                  <strong>Beam detectors:</strong> Use test card or functional test mode
-                </li>
-                <li className="pl-1">
-                  <strong>Aspirating systems:</strong> Introduce test smoke at sampling points
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>False alarm management:</strong> Test procedures must minimise false alarms -
-              always notify the alarm receiving centre and building occupants before testing.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Documentation Requirements */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Documentation Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+            <p><strong>Scenario:</strong> During the annual duration test, 8 of 45 emergency luminaires fail before reaching the 3-hour duration.</p>
+            <p>Immediate actions:</p>
+            <p>1. Record all failures in log book with locations</p>
+            <p>2. Assess if affected areas have adequate coverage</p>
+            <p>3. Implement temporary measures if required</p>
+            <p>Investigation:</p>
+            <p>- Check battery age (typically 4-year life)</p>
+            <p>- Verify charging circuits functioning</p>
+            <p>- Assess if failures indicate batch problem</p>
+            <p>Rectification:</p>
+            <p>- Replace failed batteries or luminaires</p>
+            <p>- Re-test replaced units</p>
+            <p>- Update FRA if system reliability is concern</p>
+            <p>Document all actions and notify responsible person</p>
             <p>
-              Comprehensive documentation demonstrates compliance, supports maintenance planning,
-              and provides essential evidence following incidents. Both BS 5266 and BS 5839 mandate
-              specific documentation throughout the system lifecycle.
+              <strong>Example 3: FRA Review Following System Modification</strong>
             </p>
+            <p><strong>Scenario:</strong> A new server room has been added to a commercial building, requiring fire alarm system extension.</p>
+            <p>System changes:</p>
+            <p>- Additional aspirating detection system installed</p>
+            <p>- Gas suppression system integrated</p>
+            <p>- Cause and effect matrix updated</p>
+            <p>FRA review considerations:</p>
+            <p>- New fire risk from electrical equipment</p>
+            <p>- Detection coverage for server room</p>
+            <p>- Emergency procedures for gas discharge</p>
+            <p>- Staff training requirements</p>
+            <p>Documentation updates:</p>
+            <p>- As-installed drawings revised</p>
+            <p>- Cause and effect documentation updated</p>
+            <p>- FRA updated with new risks and controls</p>
+            <p>- Log book notes system extension</p>
+            <p>Full commissioning test before system goes live</p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Emergency Lighting Documentation
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Document</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Content</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Retention</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Installation certificate</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Compliance statement, system details, designer sign-off
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Life of installation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">As-installed drawings</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Luminaire locations, circuit details, device types
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Life of installation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Log book</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        All tests, defects, repairs, alterations
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ongoing (min 3 years available)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Photometric evidence</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Design calculations, illumination levels achieved
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Life of installation</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Fire Alarm Documentation
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Document</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Content</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Retention</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Design certificate</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        System category, coverage, standards compliance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Life of installation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Installation certificate</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Compliance with design, workmanship standards
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Life of installation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Commissioning certificate
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Test results, cause and effect verification
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Life of installation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cause and effect matrix</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        System responses to each trigger condition
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Life of installation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Log book</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Tests, false alarms, faults, maintenance, alterations
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ongoing (min 3 years available)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm font-medium text-blue-400 mb-2">Log Book Best Practice</p>
-              <div className="text-sm text-white space-y-2">
-                <p>The log book should be:</p>
-                <ul className="list-disc list-outside ml-5 space-y-1">
-                  <li>Kept at or near the main control panel</li>
-                  <li>Accessible to maintenance personnel and inspectors</li>
-                  <li>Completed in ink (not pencil) for permanence</li>
-                  <li>Signed by the person conducting each test</li>
-                  <li>Reviewed regularly by the responsible person</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Digital log books:</strong> Electronic recording systems are acceptable
-              provided they maintain audit trails, prevent unauthorised modification, and can be
-              printed on demand.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 4: Regulatory Compliance and FRA Coordination */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Regulatory Compliance and FRA Coordination
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical guidance">
             <p>
-              The Regulatory Reform (Fire Safety) Order 2005 provides the legal framework for fire
-              safety in non-domestic premises. Understanding its requirements and coordinating
-              emergency system testing with fire risk assessments is essential for compliance.
+              <strong>Testing Schedule Quick Reference:</strong>
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key RRO 2005 Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Fire risk assessment:</strong> Must be carried out and kept under review
-                </li>
-                <li className="pl-1">
-                  <strong>Fire safety measures:</strong> Must be implemented and maintained
-                </li>
-                <li className="pl-1">
-                  <strong>Emergency routes and exits:</strong> Must be kept clear and functional
-                </li>
-                <li className="pl-1">
-                  <strong>Detection and warning:</strong> Systems must be installed and maintained
-                </li>
-                <li className="pl-1">
-                  <strong>Emergency lighting:</strong> Required where people could be trapped
-                </li>
-                <li className="pl-1">
-                  <strong>Maintenance:</strong> All fire safety equipment must be kept in efficient
-                  working order
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Responsible Person Duties
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Conduct fire risk assessment</li>
-                  <li className="pl-1">Implement preventive measures</li>
-                  <li className="pl-1">Provide fire safety information</li>
-                  <li className="pl-1">Ensure staff training</li>
-                  <li className="pl-1">Maintain fire safety equipment</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Enforcement Options</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Informal advice:</strong> Recommendations for improvement
-                  </li>
-                  <li className="pl-1">
-                    <strong>Enforcement notice:</strong> Requires action within timeframe
-                  </li>
-                  <li className="pl-1">
-                    <strong>Prohibition notice:</strong> Prevents use of premises
-                  </li>
-                  <li className="pl-1">
-                    <strong>Prosecution:</strong> Unlimited fines, imprisonment
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                FRA and Testing Coordination
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">FRA Finding</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Testing Implication
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Action Required
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Higher risk identified</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        May require more frequent testing
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Review and enhance test schedule
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Building layout changed</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Verify system coverage remains adequate
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full system test and re-certification
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Occupancy type changed</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        System category may need upgrading
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Design review and modification
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Test failures recorded</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        FRA should reflect system reliability issues
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Repair and update FRA</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Critical Compliance Point</p>
-              <p className="text-sm text-white">
-                The fire risk assessment must be reviewed whenever there is reason to suspect it is
-                no longer valid, or there has been a significant change to the premises. Emergency
-                system modifications, test failures, or changes in testing arrangements are all
-                triggers for FRA review.
-              </p>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>PAS 79-1:2020:</strong> Provides guidance on fire risk assessment methodology
-              and should be followed when conducting or reviewing assessments for non-residential
-              premises.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>Emergency lighting monthly:</strong> Brief functional test, record in log book</li>
+              <li><strong>Emergency lighting annual:</strong> Full rated duration test by competent person</li>
+              <li><strong>Fire alarm weekly:</strong> Different call point each week, complete cycle in 13 weeks</li>
+              <li><strong>Fire alarm six-monthly:</strong> Full service including all detectors</li>
+            </ul>
+            <p>
+              <strong>Key Compliance Points:</strong>
             </p>
-          </div>
-        </section>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Log books are mandatory and must be maintained throughout system life</li>
+              <li>The responsible person under RRO must ensure systems are maintained</li>
+              <li>FRA must be reviewed when systems change or tests reveal issues</li>
+              <li>Competent persons must conduct annual and six-monthly inspections</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
-
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Annual Testing Schedule for Office Building
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Develop an annual testing schedule for a 4-storey office
-                building with emergency lighting and Category L3 fire alarm system.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Emergency Lighting (BS 5266-1):</p>
-                <p className="ml-4">Daily: Visual check of indicator lamps</p>
-                <p className="ml-4">Monthly: Functional test (simulate mains failure)</p>
-                <p className="ml-4">
-                  Annually: Full 3-hour duration test (January - low occupancy)
-                </p>
-                <p className="mt-2 text-white">Fire Alarm (BS 5839-1):</p>
-                <p className="ml-4">Weekly: Different call point each Monday at 10:00</p>
-                <p className="ml-4">Monthly: Check panel indicators, battery voltages</p>
-                <p className="ml-4">Six-monthly: Full service (June and December)</p>
-                <p className="ml-4">Annually: Comprehensive inspection (December service)</p>
-                <p className="mt-2 text-green-400">Log book entries required for all activities</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Responding to Failed Duration Test
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> During the annual duration test, 8 of 45 emergency
-                luminaires fail before reaching the 3-hour duration.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">Immediate actions:</p>
-                <p className="ml-4">1. Record all failures in log book with locations</p>
-                <p className="ml-4">2. Assess if affected areas have adequate coverage</p>
-                <p className="ml-4">3. Implement temporary measures if required</p>
-                <p className="mt-2 text-white">Investigation:</p>
-                <p className="ml-4">- Check battery age (typically 4-year life)</p>
-                <p className="ml-4">- Verify charging circuits functioning</p>
-                <p className="ml-4">- Assess if failures indicate batch problem</p>
-                <p className="mt-2 text-white">Rectification:</p>
-                <p className="ml-4">- Replace failed batteries or luminaires</p>
-                <p className="ml-4">- Re-test replaced units</p>
-                <p className="ml-4">- Update FRA if system reliability is concern</p>
-                <p className="mt-2 text-green-400">
-                  Document all actions and notify responsible person
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: FRA Review Following System Modification
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A new server room has been added to a commercial
-                building, requiring fire alarm system extension.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p className="text-white">System changes:</p>
-                <p className="ml-4">- Additional aspirating detection system installed</p>
-                <p className="ml-4">- Gas suppression system integrated</p>
-                <p className="ml-4">- Cause and effect matrix updated</p>
-                <p className="mt-2 text-white">FRA review considerations:</p>
-                <p className="ml-4">- New fire risk from electrical equipment</p>
-                <p className="ml-4">- Detection coverage for server room</p>
-                <p className="ml-4">- Emergency procedures for gas discharge</p>
-                <p className="ml-4">- Staff training requirements</p>
-                <p className="mt-2 text-white">Documentation updates:</p>
-                <p className="ml-4">- As-installed drawings revised</p>
-                <p className="ml-4">- Cause and effect documentation updated</p>
-                <p className="ml-4">- FRA updated with new risks and controls</p>
-                <p className="ml-4">- Log book notes system extension</p>
-                <p className="mt-2 text-green-400">
-                  Full commissioning test before system goes live
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Testing Schedule Quick Reference
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Emergency lighting monthly:</strong> Brief functional test, record in log
-                  book
-                </li>
-                <li className="pl-1">
-                  <strong>Emergency lighting annual:</strong> Full rated duration test by competent
-                  person
-                </li>
-                <li className="pl-1">
-                  <strong>Fire alarm weekly:</strong> Different call point each week, complete cycle
-                  in 13 weeks
-                </li>
-                <li className="pl-1">
-                  <strong>Fire alarm six-monthly:</strong> Full service including all detectors
-                </li>
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li><strong>Missing log book entries:</strong> Every test must be recorded</li>
+                <li><strong>Expired service intervals:</strong> Six-monthly services must not be exceeded</li>
+                <li><strong>Unaddressed defects:</strong> Faults must be rectified promptly</li>
+                <li><strong>Outdated FRA:</strong> Must be reviewed annually and after changes</li>
               </ul>
-            </div>
+            }
+            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+          />
 
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Compliance Points
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Log books are mandatory and must be maintained throughout system life
-                </li>
-                <li className="pl-1">
-                  The responsible person under RRO must ensure systems are maintained
-                </li>
-                <li className="pl-1">
-                  FRA must be reviewed when systems change or tests reveal issues
-                </li>
-                <li className="pl-1">
-                  Competent persons must conduct annual and six-monthly inspections
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">
-                Common Compliance Failures
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Missing log book entries:</strong> Every test must be recorded
-                </li>
-                <li className="pl-1">
-                  <strong>Expired service intervals:</strong> Six-monthly services must not be
-                  exceeded
-                </li>
-                <li className="pl-1">
-                  <strong>Unaddressed defects:</strong> Faults must be rectified promptly
-                </li>
-                <li className="pl-1">
-                  <strong>Outdated FRA:</strong> Must be reviewed annually and after changes
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">BS 5266-1 Testing</p>
-                <ul className="space-y-0.5">
-                  <li>Daily visual check (occupied days)</li>
-                  <li>Monthly functional test (max interval)</li>
-                  <li>Annual full duration test (3 hours typical)</li>
-                  <li>24 hours recharge after duration test</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">BS 5839-1 Testing</p>
-                <ul className="space-y-0.5">
-                  <li>Weekly user test (different call point)</li>
-                  <li>13-week cycle for all call points</li>
-                  <li>Six-monthly service (maximum interval)</li>
-                  <li>All detectors tested at each service</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module7-section3-1">
-              Next: Integration Principles
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section2-5")}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                UPS systems
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section3")}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Lighting design calculations
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

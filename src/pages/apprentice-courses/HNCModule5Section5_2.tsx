@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 5 · Section 5 · Subsection 2 — Electrical Commissioning
+ * HNC Electrical Engineering for Building Services (Project Management — Pearson U4004 + BSE PM context)
+ *   BS 7671 verification, switchgear energisation, functional performance and certification — proving the electrical installation works safely and as designed.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Electrical Commissioning - HNC Module 5 Section 5.2';
@@ -244,825 +261,551 @@ const faqs = [
 ];
 
 const HNCModule5Section5_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section5')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module5-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 5.5.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Electrical Commissioning
-          </h1>
-          <p className="text-white">
-            Testing procedures, verification requirements and certification for building services
-            electrical systems
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 5 · Section 5 · Subsection 2"
+            title="Electrical Commissioning"
+            description="Testing procedures, verification requirements and certification for building services electrical systems."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Initial verification:</strong> Required before energisation
-              </li>
-              <li className="pl-1">
-                <strong>Test sequence:</strong> Dead tests before live tests
-              </li>
-              <li className="pl-1">
-                <strong>EIC:</strong> Certifies new installation compliance
-              </li>
-              <li className="pl-1">
-                <strong>BS 7671 Part 6:</strong> Inspection and testing requirements
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>LV switchgear:</strong> Protection verification critical
-              </li>
-              <li className="pl-1">
-                <strong>Distribution boards:</strong> Full circuit testing
-              </li>
-              <li className="pl-1">
-                <strong>Submains:</strong> Impedance and PSCC checks
-              </li>
-              <li className="pl-1">
-                <strong>Final circuits:</strong> RCD and loop impedance
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              "Electrical commissioning = BS 7671 initial verification + functional testing + integration with BMS/fire/lighting controls.",
+              "BS 7671 Part 6 sequence: inspection, testing (continuity → IR → polarity → Zs → RCD → functional), certification (EIC).",
+              "Energisation procedures: lock-off → witness → progressive energisation → load test → handover — not flick-and-hope.",
+              "Functional testing verifies system behaviour: lighting controls switch as designed, fire alarm causes isolations, PFI captures harmonics.",
+              "Documentation: EIC + Schedule of Inspections + Schedule of Test Results — these are the legal record of compliance.",
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Regulation 644.1 (Certification — General)"
+            clause="Upon completion of the verification of a new installation, or changes to an existing installation, an Electrical Installation Certificate, together with a Schedule of Inspections and a Schedule of Test Results, shall be given to the person ordering the work."
+            meaning={
+              <>
+                The EIC + Schedules are the formal, legal record that the installation has been verified and meets BS 7671. They are signed by the designer, constructor and verifier (often the same person on small jobs). Issuing without proper verification is a regulatory breach and a criminal exposure under EAWR. Treat certification as the closure of commissioning, not a paperwork chore.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 644.1."
+          />
+
+
+          <LearningOutcomes
+            outcomes={[
               'Apply BS 7671 verification requirements to building services installations',
               'Execute the correct sequence of initial verification tests',
               'Complete Electrical Installation Certificates accurately',
               'Commission LV switchgear and distribution systems',
               'Implement safe energisation procedures',
               'Document test results and certification requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: BS 7671 Verification Requirements */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            BS 7671 Verification Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="BS 7671 Verification Requirements">
             <p>
               BS 7671 Part 6 establishes the mandatory requirements for inspection and testing of
               electrical installations. Initial verification must be carried out on every new
               installation, addition or alteration before the installation is put into service.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Key Regulatory Requirements</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Regulation 610.1:</strong> Every installation shall be inspected and
-                  tested during erection and on completion
-                </li>
-                <li className="pl-1">
-                  <strong>Regulation 610.2:</strong> Precautions shall be taken to avoid danger to
-                  persons and damage to property
-                </li>
-                <li className="pl-1">
-                  <strong>Regulation 631.1:</strong> Certification shall be provided confirming
-                  compliance with BS 7671
-                </li>
-                <li className="pl-1">
-                  <strong>Regulation 632.1:</strong> Schedule of test results shall accompany
-                  certification
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Inspection Requirements (Chapter 61)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Inspection Item
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Verification Method
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Connection of conductors</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Visual inspection for security and correctness
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Identification of conductors
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Colour coding per Table 51
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Routing of cables</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Compliance with prescribed zones
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Protective devices</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Correct type and rating for circuit
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Enclosures and barriers</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        IP rating suitable for environment
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Labelling and notices</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Warning signs, circuit identification
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Key regulatory requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Regulation 610.1:</strong> Every installation shall be inspected and tested
+                during erection and on completion
+              </li>
+              <li>
+                <strong>Regulation 610.2:</strong> Precautions shall be taken to avoid danger to
+                persons and damage to property
+              </li>
+              <li>
+                <strong>Regulation 631.1:</strong> Certification shall be provided confirming
+                compliance with BS 7671
+              </li>
+              <li>
+                <strong>Regulation 632.1:</strong> Schedule of test results shall accompany
+                certification
+              </li>
+            </ul>
+            <p>
+              <strong>Inspection requirements (Chapter 61):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Connection of conductors:</strong> Visual inspection for security and
+                correctness
+              </li>
+              <li>
+                <strong>Identification of conductors:</strong> Colour coding per Table 51
+              </li>
+              <li>
+                <strong>Routing of cables:</strong> Compliance with prescribed zones
+              </li>
+              <li>
+                <strong>Protective devices:</strong> Correct type and rating for circuit
+              </li>
+              <li>
+                <strong>Enclosures and barriers:</strong> IP rating suitable for environment
+              </li>
+              <li>
+                <strong>Labelling and notices:</strong> Warning signs, circuit identification
+              </li>
+            </ul>
+            <p>
               <strong>Key principle:</strong> Inspection shall precede testing. Many tests rely on
               visual confirmation that the installation is correctly assembled.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Test Sequences and Procedures */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Test Sequences and Procedures
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Test Sequences and Procedures">
             <p>
               The sequence of testing is critical - each test validates the safety of subsequent
               tests and confirms results of previous tests. Dead tests must always precede live
               tests.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Mandatory Test Sequence
-              </p>
-              <div className="space-y-3">
-                <div className="p-3 rounded bg-white/5 border-l-2 border-blue-400">
-                  <p className="text-sm font-medium text-blue-300">Dead Tests (Supply Isolated)</p>
-                  <ol className="text-sm text-white mt-2 space-y-1 list-decimal list-inside">
-                    <li>
-                      Continuity of protective conductors (including main and supplementary bonding)
-                    </li>
-                    <li>Continuity of ring final circuit conductors</li>
-                    <li>Insulation resistance</li>
-                    <li>Polarity (initial check)</li>
-                    <li>Earth electrode resistance (TT systems)</li>
-                  </ol>
-                </div>
-                <div className="p-3 rounded bg-white/5 border-l-2 border-green-400">
-                  <p className="text-sm font-medium text-green-300">
-                    Live Tests (Supply Energised)
-                  </p>
-                  <ol
-                    className="text-sm text-white mt-2 space-y-1 list-decimal list-inside"
-                    start={6}
-                  >
-                    <li>Polarity verification (live confirmation)</li>
-                    <li>Earth fault loop impedance (Zs)</li>
-                    <li>Prospective fault current (PSCC)</li>
-                    <li>RCD operation</li>
-                    <li>Functional testing</li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Test Parameters</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Test</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Test Voltage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Minimum Acceptable
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Continuity (R1+R2)</td>
-                      <td className="border border-white/10 px-3 py-2">Low resistance ohmmeter</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Compare with calculated values
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Insulation resistance</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        500V DC (for 230V circuits)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">1.0 megohm minimum</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Earth electrode (TT)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        AC earth electrode tester
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        RA x Idn not greater than 50V
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Loop impedance (Zs)</td>
-                      <td className="border border-white/10 px-3 py-2">Live at 230V</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Not greater than tabulated maximum
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">RCD (30mA)</td>
-                      <td className="border border-white/10 px-3 py-2">Live at 230V</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        ≤300ms at IΔn (BS 7671:2018+A4:2026 Reg 643.3 — single AC test, all RCD Types)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Ring Final Circuit Testing
-              </p>
-              <p className="text-sm text-white mb-2">
-                The three-step ring test confirms continuity and identifies interconnections:
-              </p>
-              <ol className="text-sm text-white space-y-1 list-decimal list-inside">
-                <li>
-                  <strong>Step 1:</strong> Measure end-to-end resistance of line conductors (r1)
-                </li>
-                <li>
-                  <strong>Step 2:</strong> Measure end-to-end resistance of cpc conductors (r2)
-                </li>
-                <li>
-                  <strong>Step 3:</strong> Cross-connect L1 to L2 and cpc1 to cpc2, measure at each
-                  socket
-                </li>
-              </ol>
-              <p className="text-sm text-white mt-2">
+            <p>
+              <strong>Dead Tests (Supply Isolated):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Continuity of protective conductors (including main and supplementary bonding)
+              </li>
+              <li>Continuity of ring final circuit conductors</li>
+              <li>Insulation resistance</li>
+              <li>Polarity (initial check)</li>
+              <li>Earth electrode resistance (TT systems)</li>
+            </ul>
+            <p>
+              <strong>Live Tests (Supply Energised):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Polarity verification (live confirmation)</li>
+              <li>Earth fault loop impedance (Zs)</li>
+              <li>Prospective fault current (PSCC)</li>
+              <li>RCD operation</li>
+              <li>Functional testing</li>
+            </ul>
+            <p>
+              <strong>Key test parameters:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Continuity (R1+R2):</strong> Low resistance ohmmeter — Compare with
+                calculated values
+              </li>
+              <li>
+                <strong>Insulation resistance:</strong> 500V DC (for 230V circuits) — 1.0 megohm
+                minimum
+              </li>
+              <li>
+                <strong>Earth electrode (TT):</strong> AC earth electrode tester — RA x Idn not
+                greater than 50V
+              </li>
+              <li>
+                <strong>Loop impedance (Zs):</strong> Live at 230V — Not greater than tabulated
+                maximum
+              </li>
+              <li>
+                <strong>RCD (30mA):</strong> Live at 230V — ≤300ms at IΔn (BS 7671:2018+A4:2026 Reg
+                643.3 — single AC test, all RCD Types)
+              </li>
+            </ul>
+            <p>
+              <strong>Ring final circuit testing — three-step ring test confirms continuity and
+              identifies interconnections:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Step 1:</strong> Measure end-to-end resistance of line conductors (r1)
+              </li>
+              <li>
+                <strong>Step 2:</strong> Measure end-to-end resistance of cpc conductors (r2)
+              </li>
+              <li>
+                <strong>Step 3:</strong> Cross-connect L1 to L2 and cpc1 to cpc2, measure at each
+                socket
+              </li>
+              <li>
                 Readings at each socket should be substantially equal and approximately (r1+r2)/4
-              </p>
-            </div>
-
-            <p className="text-sm text-white italic">
+              </li>
+            </ul>
+            <p>
               <strong>Building services note:</strong> Large installations require systematic
               testing by distribution board, with clear marking of tested circuits.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Certification and Documentation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Certification and Documentation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Certification and Documentation">
             <p>
               Proper certification is a legal requirement under BS 7671 and the Building
               Regulations. The type of certificate depends on the nature of the work undertaken.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Electrical Installation Certificate (EIC)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">New installations</li>
-                  <li className="pl-1">Additions to existing installations</li>
-                  <li className="pl-1">Alterations to existing installations</li>
-                  <li className="pl-1">Three schedules: design, construction, inspection</li>
-                  <li className="pl-1">Must include test results schedule</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  EICR (Condition Report)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Periodic inspection of existing installations</li>
-                  <li className="pl-1">Reports condition, not compliance</li>
-                  <li className="pl-1">Classification codes (C1, C2, C3, FI)</li>
-                  <li className="pl-1">Recommends next inspection interval</li>
-                  <li className="pl-1">Limitations of inspection recorded</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                EIC Schedule Requirements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Schedule</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Signed By</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Confirms</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Schedule 1 - Design</td>
-                      <td className="border border-white/10 px-3 py-2">Designer</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Design complies with BS 7671
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Schedule 2 - Construction
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Constructor/Installer</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Work constructed to design and BS 7671
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Schedule 3 - Inspection</td>
-                      <td className="border border-white/10 px-3 py-2">Inspector</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Inspected and tested, complies with BS 7671
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Test Results Schedule</td>
-                      <td className="border border-white/10 px-3 py-2">Tester</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Individual circuit test values
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Building Services Certification
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Large installations:</strong> Multiple EICs may be issued for phased
-                  completion
-                </li>
-                <li className="pl-1">
-                  <strong>Part P notification:</strong> Required for notifiable domestic work
-                </li>
-                <li className="pl-1">
-                  <strong>Building control:</strong> EIC forms part of completion evidence
-                </li>
-                <li className="pl-1">
-                  <strong>O&M manuals:</strong> Include copies of all certification
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Electrical Installation Certificate (EIC):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>New installations</li>
+              <li>Additions to existing installations</li>
+              <li>Alterations to existing installations</li>
+              <li>Three schedules: design, construction, inspection</li>
+              <li>Must include test results schedule</li>
+            </ul>
+            <p>
+              <strong>EICR (Condition Report):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Periodic inspection of existing installations</li>
+              <li>Reports condition, not compliance</li>
+              <li>Classification codes (C1, C2, C3, FI)</li>
+              <li>Recommends next inspection interval</li>
+              <li>Limitations of inspection recorded</li>
+            </ul>
+            <p>
+              <strong>EIC schedule requirements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Schedule 1 - Design:</strong> Signed by Designer — Confirms design complies
+                with BS 7671
+              </li>
+              <li>
+                <strong>Schedule 2 - Construction:</strong> Signed by Constructor/Installer —
+                Confirms work constructed to design and BS 7671
+              </li>
+              <li>
+                <strong>Schedule 3 - Inspection:</strong> Signed by Inspector — Confirms inspected
+                and tested, complies with BS 7671
+              </li>
+              <li>
+                <strong>Test Results Schedule:</strong> Signed by Tester — Individual circuit test
+                values
+              </li>
+            </ul>
+            <p>
+              <strong>Building services certification:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Large installations:</strong> Multiple EICs may be issued for phased
+                completion
+              </li>
+              <li>
+                <strong>Part P notification:</strong> Required for notifiable domestic work
+              </li>
+              <li>
+                <strong>Building control:</strong> EIC forms part of completion evidence
+              </li>
+              <li>
+                <strong>O&M manuals:</strong> Include copies of all certification
+              </li>
+            </ul>
+            <p>
               <strong>Professional duty:</strong> Certification is a declaration of compliance. Sign
               only work you are responsible for and have verified.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 4: Switchgear Commissioning and Energisation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Switchgear Commissioning and Energisation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Switchgear Commissioning and Energisation">
             <p>
               LV switchgear commissioning requires systematic verification of protection settings,
               mechanical operation and control circuits. Energisation procedures must ensure safety
               and allow fault identification.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                LV Switchboard Commissioning Checklist
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Pre-Energisation Checks</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Visual inspection complete</li>
-                    <li className="pl-1">Busbar torque settings verified</li>
-                    <li className="pl-1">Insulation resistance tested</li>
-                    <li className="pl-1">Protection relay settings confirmed</li>
-                    <li className="pl-1">CT/VT polarity checked</li>
-                    <li className="pl-1">Mechanical interlocks tested</li>
-                    <li className="pl-1">Earthing connections secure</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Functional Testing</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Circuit breaker operation (manual)</li>
-                    <li className="pl-1">Protection relay trip testing</li>
-                    <li className="pl-1">Indication and metering circuits</li>
-                    <li className="pl-1">Remote control operation</li>
-                    <li className="pl-1">Auto-changeover systems</li>
-                    <li className="pl-1">Alarm and fault indication</li>
-                    <li className="pl-1">Key interlock systems</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Safe Energisation Procedure
-              </p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-inside">
-                <li>
-                  <strong>Preparation:</strong> Confirm all dead tests complete, area secured,
-                  personnel briefed
-                </li>
-                <li>
-                  <strong>DNO liaison:</strong> Confirm supply availability, agree energisation time
-                </li>
-                <li>
-                  <strong>Initial energisation:</strong> Energise incomer only, verify voltage and
-                  phase rotation
-                </li>
-                <li>
-                  <strong>Sectional energisation:</strong> Close outgoing circuits systematically,
-                  verify loads
-                </li>
-                <li>
-                  <strong>Load proving:</strong> Gradually apply load, monitor for abnormal
-                  conditions
-                </li>
-                <li>
-                  <strong>Live testing:</strong> Complete Zs, PSCC and RCD tests as circuits are
-                  energised
-                </li>
-              </ol>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Protection Coordination Verification
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Device Level</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Verification Required
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Main incomer</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        PSCC within device rating, coordination with DNO fuse
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Submain protection</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Discrimination with upstream, let-through energy
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Distribution board MCBs</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Correct type and rating for cable/load
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Final circuit devices</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Zs within limits, RCD protection where required
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Energisation Safety Precautions
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">All personnel clear of switchgear during energisation</li>
-                <li className="pl-1">Appropriate PPE worn (arc flash rated where required)</li>
-                <li className="pl-1">Rescue equipment and trained first aider available</li>
-                <li className="pl-1">Communications established with control room/DNO</li>
-                <li className="pl-1">Permit to work system in place for HV systems</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
+            <p>
+              <strong>Pre-energisation checks:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Visual inspection complete</li>
+              <li>Busbar torque settings verified</li>
+              <li>Insulation resistance tested</li>
+              <li>Protection relay settings confirmed</li>
+              <li>CT/VT polarity checked</li>
+              <li>Mechanical interlocks tested</li>
+              <li>Earthing connections secure</li>
+            </ul>
+            <p>
+              <strong>Functional testing:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Circuit breaker operation (manual)</li>
+              <li>Protection relay trip testing</li>
+              <li>Indication and metering circuits</li>
+              <li>Remote control operation</li>
+              <li>Auto-changeover systems</li>
+              <li>Alarm and fault indication</li>
+              <li>Key interlock systems</li>
+            </ul>
+            <p>
+              <strong>Safe energisation procedure:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Preparation:</strong> Confirm all dead tests complete, area secured,
+                personnel briefed
+              </li>
+              <li>
+                <strong>DNO liaison:</strong> Confirm supply availability, agree energisation time
+              </li>
+              <li>
+                <strong>Initial energisation:</strong> Energise incomer only, verify voltage and
+                phase rotation
+              </li>
+              <li>
+                <strong>Sectional energisation:</strong> Close outgoing circuits systematically,
+                verify loads
+              </li>
+              <li>
+                <strong>Load proving:</strong> Gradually apply load, monitor for abnormal conditions
+              </li>
+              <li>
+                <strong>Live testing:</strong> Complete Zs, PSCC and RCD tests as circuits are
+                energised
+              </li>
+            </ul>
+            <p>
+              <strong>Protection coordination verification:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Main incomer:</strong> PSCC within device rating, coordination with DNO fuse
+              </li>
+              <li>
+                <strong>Submain protection:</strong> Discrimination with upstream, let-through
+                energy
+              </li>
+              <li>
+                <strong>Distribution board MCBs:</strong> Correct type and rating for cable/load
+              </li>
+              <li>
+                <strong>Final circuit devices:</strong> Zs within limits, RCD protection where
+                required
+              </li>
+            </ul>
+            <p>
+              <strong>Energisation safety precautions:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>All personnel clear of switchgear during energisation</li>
+              <li>Appropriate PPE worn (arc flash rated where required)</li>
+              <li>Rescue equipment and trained first aider available</li>
+              <li>Communications established with control room/DNO</li>
+              <li>Permit to work system in place for HV systems</li>
+            </ul>
+            <p>
               <strong>Real-world example:</strong> A new commercial office block with 1000A main
               switchboard requires phased energisation - main incomer first, then floor distribution
               boards sequentially, with load proving at each stage.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — Insulation resistance testing:</strong> A distribution board with
+              12 circuits requires insulation resistance testing. Three circuits have electronic
+              dimmers.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Step 1: Isolate supply to distribution board</li>
+              <li>Step 2: Disconnect electronic dimmers from L and N</li>
+              <li>Step 3: Link all L and N conductors together at DB</li>
+              <li>Step 4: Test between linked L-N and Earth</li>
+              <li>Reading: 85 megohms</li>
+              <li>
+                <strong>Result:</strong> Pass (minimum 1.0 megohm required)
+              </li>
+              <li>Reconnect dimmers after testing complete</li>
+            </ul>
+            <p>
+              <strong>Example 2 — Loop impedance verification:</strong> Verify a socket circuit
+              protected by 32A Type B MCB meets disconnection requirements.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>From BS 7671:2018+A4:2026 Table 41.3:</li>
+              <li>Maximum Zs for 32A Type B = 1.37 ohms (Cmin = 0.95 applied)</li>
+              <li>Applying 0.8 correction for ambient testing:</li>
+              <li>Field test maximum = 1.37 × 0.8 = 1.10 ohms</li>
+              <li>Measured Zs at furthest socket: 0.92 ohms</li>
+              <li>
+                <strong>Result:</strong> Pass (0.92 &lt; 1.10 ohms)
+              </li>
+            </ul>
+            <p>
+              <strong>Example 3 — RCD testing requirements:</strong> A 30mA RCD protecting socket
+              circuits requires full commissioning tests.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Required tests for 30mA Type A RCD:</li>
+              <li>
+                <strong>1. Test at rated residual current (30mA):</strong> Maximum trip time: 300ms
+                — Measured: 28ms
+              </li>
+              <li>
+                <strong>2. Test at 5× rated current (150mA):</strong> Maximum trip time: 40ms —
+                Measured: 12ms
+              </li>
+              <li>
+                <strong>3. Test button operation:</strong> Trips correctly
+              </li>
+              <li>Record all values on test results schedule</li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: Insulation Resistance Testing
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A distribution board with 12 circuits requires insulation
-                resistance testing. Three circuits have electronic dimmers.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Step 1: Isolate supply to distribution board</p>
-                <p>Step 2: Disconnect electronic dimmers from L and N</p>
-                <p>Step 3: Link all L and N conductors together at DB</p>
-                <p>Step 4: Test between linked L-N and Earth</p>
-                <p className="mt-2">Reading: 85 megohms</p>
-                <p className="text-green-400">→ Pass (minimum 1.0 megohm required)</p>
-                <p className="mt-2 text-white">Reconnect dimmers after testing complete</p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: Loop Impedance Verification
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> Verify a socket circuit protected by 32A Type B MCB meets
-                disconnection requirements.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>From BS 7671:2018+A4:2026 Table 41.3:</p>
-                <p>Maximum Zs for 32A Type B = 1.37 ohms (Cmin = 0.95 applied)</p>
-                <p className="mt-2">Applying 0.8 correction for ambient testing:</p>
-                <p>Field test maximum = 1.37 × 0.8 = 1.10 ohms</p>
-                <p className="mt-2">Measured Zs at furthest socket: 0.92 ohms</p>
-                <p className="text-green-400">→ Pass (0.92 &lt; 1.10 ohms)</p>
-              </div>
-            </div>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Commissioning checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Verify all visual inspection items before testing</li>
+              <li>Follow mandatory test sequence - dead tests first</li>
+              <li>Disconnect sensitive equipment before insulation testing</li>
+              <li>Record all test values accurately</li>
+              <li>Compare measured values with calculated/design values</li>
+              <li>Complete certification before handover</li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Minimum insulation resistance: <strong>1.0 megohm</strong> at 500V DC
+              </li>
+              <li>
+                30mA RCD at IΔn (BS 7671:2018+A4:2026 Reg 643.3, single AC test):{' '}
+                <strong>≤300ms</strong> maximum
+              </li>
+              <li>
+                Temperature correction factor: <strong>0.8</strong> (Zs field testing)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: RCD Testing Requirements
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Scenario:</strong> A 30mA RCD protecting socket circuits requires full
-                commissioning tests.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>Required tests for 30mA Type A RCD:</p>
-                <p className="mt-2">1. Test at rated residual current (30mA):</p>
-                <p> Maximum trip time: 300ms</p>
-                <p>
-                  {' '}
-                  Measured: 28ms <span className="text-green-400">✓</span>
-                </p>
-                <p className="mt-2">2. Test at 5× rated current (150mA):</p>
-                <p> Maximum trip time: 40ms</p>
-                <p>
-                  {' '}
-                  Measured: 12ms <span className="text-green-400">✓</span>
-                </p>
-                <p className="mt-2">
-                  3. Test button operation: Trips correctly{' '}
-                  <span className="text-green-400">✓</span>
-                </p>
-                <p className="mt-2 text-white">Record all values on test results schedule</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Commissioning Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Verify all visual inspection items before testing</li>
-                <li className="pl-1">Follow mandatory test sequence - dead tests first</li>
-                <li className="pl-1">Disconnect sensitive equipment before insulation testing</li>
-                <li className="pl-1">Record all test values accurately</li>
-                <li className="pl-1">Compare measured values with calculated/design values</li>
-                <li className="pl-1">Complete certification before handover</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Minimum insulation resistance: <strong>1.0 megohm</strong> at 500V DC
-                </li>
-                <li className="pl-1">
-                  30mA RCD at IΔn (BS 7671:2018+A4:2026 Reg 643.3, single AC test): <strong>≤300ms</strong> maximum
-                </li>
-                <li className="pl-1">
-                  Temperature correction factor: <strong>0.8</strong> (Zs field testing)
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
                   <strong>Testing out of sequence</strong> — live testing before dead tests verified
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Damaging equipment</strong> — insulation testing with electronics
                   connected
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Incorrect Zs comparison</strong> — using tabulated values without 0.8
                   factor
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Incomplete certification</strong> — missing schedules or signatures
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Always run dead tests first, disconnect electronics before insulation testing, apply the 0.8 correction factor when comparing field-measured Zs to tabulated maxima, and complete all three EIC schedules with test results schedule attached."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Switchboard energisation without proper procedure"
+            situation={
+              <>
+                A new 1600A LV switchboard is to be energised. The DNO transformer is live to the cable head. The electrical sub turns up on a Saturday with no method statement, no isolation procedure documented, no witness, and no schedule of test results. They energise the board cold; the upstream protection trips on a fault on a connected sub-main. The investigation is delayed because there are no contemporaneous records.
+              </>
+            }
+            whatToDo={
+              <>
+                Stop. Energisation of LV switchgear is a high-risk activity requiring a documented procedure: confirm IR test passed and recorded, polarity verified, all downstream circuits isolated, witness present, energisation sequence (transformer secondary → busbar → outgoing breakers in turn), test under no-load then progressive load. Document each step. Re-brief the team on energisation discipline as an EAWR Reg 4 / BS 7671 requirement.
+              </>
+            }
+            whyItMatters={
+              <>
+                Energisation is the moment when years of installation become live. Defects buried in cable, switchgear or terminations become safety hazards when energised. Discipline at this stage protects life, equipment and project — and creates the audit trail that supports the EIC.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Test Sequence</p>
-                <ul className="space-y-0.5">
-                  <li>1. Continuity of protective conductors</li>
-                  <li>2. Ring circuit continuity</li>
-                  <li>3. Insulation resistance (500V DC)</li>
-                  <li>4. Polarity</li>
-                  <li>5. Earth electrode (TT systems)</li>
-                  <li>6. Earth fault loop impedance</li>
-                  <li>7. RCD operation</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Certification</p>
-                <ul className="space-y-0.5">
-                  <li>EIC - New installations/additions</li>
-                  <li>EICR - Existing installation condition</li>
-                  <li>Schedule 1 - Designer signs</li>
-                  <li>Schedule 2 - Constructor signs</li>
-                  <li>Schedule 3 - Inspector signs</li>
-                  <li>Test results schedule required</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+                    <KeyTakeaways
+            points={[
+              "Electrical commissioning = BS 7671 verification + functional + integration testing.",
+              "BS 7671 Part 6 sequence: inspect, test, certify.",
+              "Energisation procedure documented: lock-off, witness, progressive, load test.",
+              "Functional testing of controls, lighting, BMS interfaces, fire isolations.",
+              "Documentation: EIC + Schedule of Inspections + Schedule of Test Results = legal record.",
+              "Test instruments calibrated UKAS-traceable; calibration certificates retained.",
+              "Reg 644.1 makes EIC issue mandatory — issuing without verification is a regulatory breach.",
+              "Hand over the EIC, schedules and test instruments calibration with the O&M.",
+            ]}
+          />
+
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section5-3">
-              Next: Mechanical Commissioning
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section5')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Back to section
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Commissioning and handover
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section5-3')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Mechanical commissioning
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

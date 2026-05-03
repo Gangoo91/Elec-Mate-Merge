@@ -1,6 +1,13 @@
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
-import { Phone, ExternalLink } from 'lucide-react';
+import { ArrowLeft, Phone, ExternalLink } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  PageFrame,
+  PageHero,
+  itemVariants,
+} from '@/components/college/primitives';
 
 interface Helpline {
   name: string;
@@ -90,33 +97,28 @@ const mentalHealthLines: Helpline[] = [
 ];
 
 const SupportPage = () => {
+  const navigate = useNavigate();
   return (
-    <div className="animate-fade-in max-w-2xl mx-auto px-4 pb-20 space-y-6 text-left">
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <SmartBackButton />
-        <h1 className="text-2xl font-bold tracking-tight text-white">
-          Support & Helplines
-        </h1>
-      </div>
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/apprentice/rights-and-pay')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back
+        </Button>
+      </motion.div>
 
-      {/* Intro */}
-      <Card className="border-orange-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
-          <div className="flex items-center gap-2">
-            <Phone className="h-5 w-5 text-orange-400" />
-            <h2 className="text-lg font-semibold text-white">
-              Free, Confidential Help
-            </h2>
-          </div>
-          <p className="text-white text-sm leading-relaxed">
-            All of these services are free and confidential. Your employer will not
-            be told you have called. Seeking help is a sign of strength, not weakness.
-            Save these numbers in your phone — you never know when you or a colleague
-            might need them.
-          </p>
-        </CardContent>
-      </Card>
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Support"
+          title="Support & helplines"
+          description="Free, confidential help — your employer is never told you've called. Save these numbers now. You'll never know when you or a colleague needs them."
+          tone="yellow"
+        />
+      </motion.div>
 
       {/* Workplace & Rights Helplines */}
       <div className="space-y-2">
@@ -195,7 +197,7 @@ const SupportPage = () => {
           </p>
         </CardContent>
       </Card>
-    </div>
+    </PageFrame>
   );
 };
 

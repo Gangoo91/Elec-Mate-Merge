@@ -780,7 +780,7 @@ export default function Sub4() {
                 with the rest of the protective scheme.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Appendix 16 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Appendix 16."
           />
 
           <SectionRule />

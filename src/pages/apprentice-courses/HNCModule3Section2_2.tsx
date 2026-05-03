@@ -32,34 +32,34 @@ const quickCheckQuestions = [
   {
     id: 'inductive-reactance',
     question: 'What is the inductive reactance of a 50mH inductor at 50Hz?',
-    options: ['7.85\u03a9', '15.7\u03a9', '31.4\u03a9', '157\u03a9'],
+    options: ['7.85Ω', '15.7Ω', '31.4Ω', '157Ω'],
     correctIndex: 1,
     explanation:
-      'X\u2097 = 2\u03c0fL = 2\u03c0 \u00d7 50 \u00d7 0.050 = 15.7\u03a9. Remember to convert mH to H (50mH = 0.050H) before calculating.',
+      'Xₗ = 2πfL = 2π × 50 × 0.050 = 15.7Ω. Remember to convert mH to H (50mH = 0.050H) before calculating.',
   },
   {
     id: 'capacitive-reactance',
-    question: 'A 100\u00b5F capacitor has what reactance at 50Hz?',
-    options: ['15.9\u03a9', '31.8\u03a9', '63.7\u03a9', '318\u03a9'],
+    question: 'A 100µF capacitor has what reactance at 50Hz?',
+    options: ['15.9Ω', '31.8Ω', '63.7Ω', '318Ω'],
     correctIndex: 1,
     explanation:
-      'X\u1d04 = 1/(2\u03c0fC) = 1/(2\u03c0 \u00d7 50 \u00d7 0.0001) = 31.8\u03a9. Note X\u1d04 decreases as capacitance increases.',
+      'Xᴄ = 1/(2πfC) = 1/(2π × 50 × 0.0001) = 31.8Ω. Note Xᴄ decreases as capacitance increases.',
   },
   {
     id: 'impedance-magnitude',
-    question: 'A circuit has R = 30\u03a9 and X\u2097 = 40\u03a9. What is the impedance magnitude?',
-    options: ['10\u03a9', '35\u03a9', '50\u03a9', '70\u03a9'],
+    question: 'A circuit has R = 30Ω and Xₗ = 40Ω. What is the impedance magnitude?',
+    options: ['10Ω', '35Ω', '50Ω', '70Ω'],
     correctIndex: 2,
     explanation:
-      '|Z| = \u221a(R\u00b2 + X\u00b2) = \u221a(30\u00b2 + 40\u00b2) = \u221a(900 + 1600) = \u221a2500 = 50\u03a9. This is a classic 3-4-5 Pythagorean triangle.',
+      '|Z| = √(R² + X²) = √(30² + 40²) = √(900 + 1600) = √2500 = 50Ω. This is a classic 3-4-5 Pythagorean triangle.',
   },
   {
     id: 'phase-angle',
-    question: 'For R = 100\u03a9 and X\u2097 = 100\u03a9, what is the phase angle?',
-    options: ['30\u00b0', '45\u00b0', '60\u00b0', '90\u00b0'],
+    question: 'For R = 100Ω and Xₗ = 100Ω, what is the phase angle?',
+    options: ['30°', '45°', '60°', '90°'],
     correctIndex: 1,
     explanation:
-      '\u03b8 = arctan(X/R) = arctan(100/100) = arctan(1) = 45\u00b0. When X = R, the phase angle is always 45\u00b0.',
+      'θ = arctan(X/R) = arctan(100/100) = arctan(1) = 45°. When X = R, the phase angle is always 45°.',
   },
 ];
 
@@ -88,14 +88,14 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'X\u2097 = 2\u03c0fL shows that inductive reactance is directly proportional to frequency. Doubling the frequency doubles the reactance. This is why inductors block high frequencies.',
+      'Xₗ = 2πfL shows that inductive reactance is directly proportional to frequency. Doubling the frequency doubles the reactance. This is why inductors block high frequencies.',
   },
   {
     id: 3,
     question: 'A motor winding has L = 0.1H. What is its reactance at 50Hz?',
-    options: ['15.7\u03a9', '31.4\u03a9', '50\u03a9', '314\u03a9'],
+    options: ['15.7Ω', '31.4Ω', '50Ω', '314Ω'],
     correctAnswer: 1,
-    explanation: 'X\u2097 = 2\u03c0fL = 2\u03c0 \u00d7 50 \u00d7 0.1 = 31.4\u03a9',
+    explanation: 'Xₗ = 2πfL = 2π × 50 × 0.1 = 31.4Ω',
   },
   {
     id: 4,
@@ -108,7 +108,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'X\u1d04 = 1/(2\u03c0fC) shows that capacitive reactance is inversely proportional to frequency. Higher frequencies encounter less opposition, which is why capacitors pass high frequencies.',
+      'Xᴄ = 1/(2πfC) shows that capacitive reactance is inversely proportional to frequency. Higher frequencies encounter less opposition, which is why capacitors pass high frequencies.',
   },
   {
     id: 5,
@@ -116,44 +116,44 @@ const quizQuestions = [
     options: ['Henrys', 'Farads', 'Ohms', 'Siemens'],
     correctAnswer: 2,
     explanation:
-      'Impedance, like resistance and reactance, is measured in Ohms (\u03a9). It represents the total opposition to AC current flow.',
+      'Impedance, like resistance and reactance, is measured in Ohms (Ω). It represents the total opposition to AC current flow.',
   },
   {
     id: 6,
     question: "In the complex impedance Z = R + jX, what does 'j' represent?",
     options: [
       'Current density',
-      'The imaginary unit (\u221a-1), indicating 90\u00b0 phase shift',
+      'The imaginary unit (√-1), indicating 90° phase shift',
       'Joule heating factor',
       'Junction temperature',
     ],
     correctAnswer: 1,
     explanation:
-      'In electrical engineering, j represents \u221a-1 (called i in pure mathematics). It indicates that the reactive component is 90\u00b0 out of phase with the resistive component.',
+      'In electrical engineering, j represents √-1 (called i in pure mathematics). It indicates that the reactive component is 90° out of phase with the resistive component.',
   },
   {
     id: 7,
-    question: 'A circuit has Z = 40 + j30 \u03a9. What is the impedance magnitude?',
-    options: ['10\u03a9', '35\u03a9', '50\u03a9', '70\u03a9'],
+    question: 'A circuit has Z = 40 + j30 Ω. What is the impedance magnitude?',
+    options: ['10Ω', '35Ω', '50Ω', '70Ω'],
     correctAnswer: 2,
     explanation:
-      '|Z| = \u221a(R\u00b2 + X\u00b2) = \u221a(40\u00b2 + 30\u00b2) = \u221a(1600 + 900) = \u221a2500 = 50\u03a9',
+      '|Z| = √(R² + X²) = √(40² + 30²) = √(1600 + 900) = √2500 = 50Ω',
   },
   {
     id: 8,
     question:
-      'Two impedances of 10\u03a9 each are connected in series. What is the total impedance?',
-    options: ['5\u03a9', '10\u03a9', '20\u03a9', '100\u03a9'],
+      'Two impedances of 10Ω each are connected in series. What is the total impedance?',
+    options: ['5Ω', '10Ω', '20Ω', '100Ω'],
     correctAnswer: 2,
     explanation:
-      'In series, impedances add directly: Z\u209c = Z\u2081 + Z\u2082 = 10 + 10 = 20\u03a9. This is the same rule as for resistances in series.',
+      'In series, impedances add directly: Zₜ = Z₁ + Z₂ = 10 + 10 = 20Ω. This is the same rule as for resistances in series.',
   },
   {
     id: 9,
-    question: 'What is the phase angle of an impedance Z = 50 + j50\u221a3 \u03a9?',
-    options: ['30\u00b0', '45\u00b0', '60\u00b0', '90\u00b0'],
+    question: 'What is the phase angle of an impedance Z = 50 + j50√3 Ω?',
+    options: ['30°', '45°', '60°', '90°'],
     correctAnswer: 2,
-    explanation: '\u03b8 = arctan(X/R) = arctan(50\u221a3/50) = arctan(\u221a3) = 60\u00b0',
+    explanation: 'θ = arctan(X/R) = arctan(50√3/50) = arctan(√3) = 60°',
   },
   {
     id: 10,
@@ -166,23 +166,23 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'Motors have inductive reactance (+jX\u2097). Adding capacitance (-jX\u1d04) reduces the net reactance. Since |Z| = \u221a(R\u00b2 + X\u2099\u2091\u209c\u00b2), reducing X\u2099\u2091\u209c reduces impedance magnitude.',
+      'Motors have inductive reactance (+jXₗ). Adding capacitance (-jXᴄ) reduces the net reactance. Since |Z| = √(R² + Xₙₑₜ²), reducing Xₙₑₜ reduces impedance magnitude.',
   },
   {
     id: 11,
-    question: 'At what frequency does a 10mH inductor have X\u2097 = 100\u03a9?',
+    question: 'At what frequency does a 10mH inductor have Xₗ = 100Ω?',
     options: ['159Hz', '318Hz', '500Hz', '1.59kHz'],
     correctAnswer: 3,
     explanation:
-      'Rearranging X\u2097 = 2\u03c0fL: f = X\u2097/(2\u03c0L) = 100/(2\u03c0 \u00d7 0.01) = 100/0.0628 = 1592Hz \u2248 1.59kHz',
+      'Rearranging Xₗ = 2πfL: f = Xₗ/(2πL) = 100/(2π × 0.01) = 100/0.0628 = 1592Hz ≈ 1.59kHz',
   },
   {
     id: 12,
-    question: 'Two 20\u03a9 impedances in parallel give what total impedance?',
-    options: ['10\u03a9', '20\u03a9', '40\u03a9', '400\u03a9'],
+    question: 'Two 20Ω impedances in parallel give what total impedance?',
+    options: ['10Ω', '20Ω', '40Ω', '400Ω'],
     correctAnswer: 0,
     explanation:
-      'For equal impedances in parallel: Z\u209c = Z/n = 20/2 = 10\u03a9. Alternatively: 1/Z\u209c = 1/20 + 1/20 = 2/20, so Z\u209c = 10\u03a9',
+      'For equal impedances in parallel: Zₜ = Z/n = 20/2 = 10Ω. Alternatively: 1/Zₜ = 1/20 + 1/20 = 2/20, so Zₜ = 10Ω',
   },
 ];
 
@@ -190,17 +190,17 @@ const faqs = [
   {
     question: 'What is the difference between reactance and impedance?',
     answer:
-      'Reactance (X) is the opposition to AC current caused only by inductors or capacitors - it involves energy storage, not dissipation. Impedance (Z) is the total opposition to AC current, combining both resistance (R) and reactance (X). Impedance is expressed as Z = R + jX in complex form, or |Z| = \u221a(R\u00b2 + X\u00b2) as a magnitude.',
+      'Reactance (X) is the opposition to AC current caused only by inductors or capacitors - it involves energy storage, not dissipation. Impedance (Z) is the total opposition to AC current, combining both resistance (R) and reactance (X). Impedance is expressed as Z = R + jX in complex form, or |Z| = √(R² + X²) as a magnitude.',
   },
   {
     question: "Why do we use 'j' instead of 'i' for the imaginary unit in electrical engineering?",
     answer:
-      "Electrical engineers use 'j' because 'i' is already the standard symbol for current. Using j = \u221a-1 avoids confusion in circuit equations. The j operator indicates a 90\u00b0 phase shift: +j for inductive reactance (current lags voltage) and -j for capacitive reactance (current leads voltage).",
+      "Electrical engineers use 'j' because 'i' is already the standard symbol for current. Using j = √-1 avoids confusion in circuit equations. The j operator indicates a 90° phase shift: +j for inductive reactance (current lags voltage) and -j for capacitive reactance (current leads voltage).",
   },
   {
     question: 'How does cable impedance affect building electrical systems?',
     answer:
-      'Cable impedance (Z = R + jX) affects voltage drop, fault current levels, and system losses. The reactive component (mainly inductive for larger cables) becomes significant for long cable runs. BS 7671 provides cable impedance values (mV/A/m and m\u03a9/m) for voltage drop and fault loop calculations. Higher frequencies increase cable impedance due to skin effect.',
+      'Cable impedance (Z = R + jX) affects voltage drop, fault current levels, and system losses. The reactive component (mainly inductive for larger cables) becomes significant for long cable runs. BS 7671 provides cable impedance values (mV/A/m and mΩ/m) for voltage drop and fault loop calculations. Higher frequencies increase cable impedance due to skin effect.',
   },
   {
     question: 'Why is motor impedance important for building services?',
@@ -215,7 +215,7 @@ const faqs = [
   {
     question: 'What happens to circuit impedance at resonance?',
     answer:
-      'At resonance, inductive and capacitive reactances are equal and cancel out (X\u2097 = X\u1d04). In a series RLC circuit, this minimises impedance to just R, maximising current. In a parallel RLC circuit, impedance becomes maximum. Resonance is used in filters and can cause problems if harmonics excite resonant frequencies in building systems.',
+      'At resonance, inductive and capacitive reactances are equal and cancel out (Xₗ = Xᴄ). In a series RLC circuit, this minimises impedance to just R, maximising current. In a parallel RLC circuit, impedance becomes maximum. Resonance is used in filters and can cause problems if harmonics excite resonant frequencies in building systems.',
   },
 ];
 
@@ -243,22 +243,22 @@ const HNCModule3Section2_2 = () => {
 
           <TLDR
             points={[
-              'You can compute X_L and X_C at 50 Hz and combine them with R to get impedance Z = \u221a(R\u00b2 + (X_L \u2212 X_C)\u00b2) for a series RLC circuit.',
-              'You can find the phase angle \u03c6 = tan\u207b\u00b9((X_L \u2212 X_C)/R) and explain whether the load is resistive, inductive or capacitive.',
-              'You can apply Z to motor circuit analysis \u2014 starting current, running impedance and the difference between blocked-rotor and full-load.',
-              'You can use Z in earth-fault-loop calculations \u2014 Z_s is impedance, not resistance, on AC circuits with measurable inductance.',
+              'You can compute X_L and X_C at 50 Hz and combine them with R to get impedance Z = √(R² + (X_L − X_C)²) for a series RLC circuit.',
+              'You can find the phase angle φ = tan⁻¹((X_L − X_C)/R) and explain whether the load is resistive, inductive or capacitive.',
+              'You can apply Z to motor circuit analysis — starting current, running impedance and the difference between blocked-rotor and full-load.',
+              'You can use Z in earth-fault-loop calculations — Z_s is impedance, not resistance, on AC circuits with measurable inductance.',
               'You can spot why long cable runs at 50 Hz add reactance as well as resistance and why it matters for fault studies and voltage drop.',
             ]}
           />
 
           <RegsCallout
             source="BS 7671 — Section 411 (Protection by automatic disconnection of supply)"
-            clause="The earth fault loop impedance Z_s at any point of the installation shall satisfy: Z_s \u00d7 I_a \u2264 U\u2080, where U\u2080 is the nominal a.c. voltage to earth and I_a is the current causing the protective device to operate within the time stated in Table 41.1."
+            clause="The earth fault loop impedance Z_s at any point of the installation shall satisfy: Z_s × I_a ≤ U₀, where U₀ is the nominal a.c. voltage to earth and I_a is the current causing the protective device to operate within the time stated in Table 41.1."
             meaning={
               <>
-                Z_s is impedance, not pure resistance \u2014 on three-phase circuits and long
+                Z_s is impedance, not pure resistance — on three-phase circuits and long
                 runs the inductive component matters and the calculated Z is bigger than the
-                R\u2081 + R\u2082 you measured at DC. Always derive disconnection times from the
+                R₁ + R₂ you measured at DC. Always derive disconnection times from the
                 impedance value, not from a continuity-only ohms reading.
               </>
             }
@@ -267,8 +267,8 @@ const HNCModule3Section2_2 = () => {
 
           <LearningOutcomes
             outcomes={[
-              'Calculate inductive reactance using X\u2097 = 2\u03c0fL',
-              'Calculate capacitive reactance using X\u1d04 = 1/(2\u03c0fC)',
+              'Calculate inductive reactance using Xₗ = 2πfL',
+              'Calculate capacitive reactance using Xᴄ = 1/(2πfC)',
               'Understand how frequency affects reactance values',
               'Express impedance in complex form Z = R + jX',
               'Calculate impedance magnitude and phase angle',
@@ -653,7 +653,7 @@ const HNCModule3Section2_2 = () => {
             situation={
               <>
                 A 15 kW three-phase induction motor on the supply-air AHU has a measured
-                running impedance of (3 + j5) \u03a9 per phase. The blocked-rotor (locked-rotor)
+                running impedance of (3 + j5) Ω per phase. The blocked-rotor (locked-rotor)
                 impedance is roughly one sixth of running impedance because rotor reactance
                 drops at standstill. You need to estimate Direct-On-Line starting current to
                 size cable, MCCB and feeder transformer.
@@ -661,20 +661,20 @@ const HNCModule3Section2_2 = () => {
             }
             whatToDo={
               <>
-                Compute running impedance: |Z_run| = \u221a(3\u00b2 + 5\u00b2) = \u221a34 \u2248
-                5.83 \u03a9, giving full-load line current of 230 / 5.83 \u2248 39 A. Estimate
-                blocked-rotor impedance |Z_start| \u2248 5.83 / 6 \u2248 0.97 \u03a9, giving
-                DOL starting current \u2248 230 / 0.97 \u2248 237 A \u2014 about 6 \u00d7 FLC,
+                Compute running impedance: |Z_run| = √(3² + 5²) = √34 ≈
+                5.83 Ω, giving full-load line current of 230 / 5.83 ≈ 39 A. Estimate
+                blocked-rotor impedance |Z_start| ≈ 5.83 / 6 ≈ 0.97 Ω, giving
+                DOL starting current ≈ 230 / 0.97 ≈ 237 A — about 6 × FLC,
                 consistent with NEMA Code F. Pick a Type C or D MCB sized for the running
                 load but rated to ride through the start, and confirm the upstream
                 transformer can deliver 237 A for several seconds without excessive voltage
-                dip (\u2264 5 % is the usual target).
+                dip (≤ 5 % is the usual target).
               </>
             }
             whyItMatters={
               <>
                 Impedance is the only correct model for AC starting current. Treating the
-                motor as a pure resistance under-estimates inrush by a factor of six \u2014 the
+                motor as a pure resistance under-estimates inrush by a factor of six — the
                 upstream MCB nuisance-trips on every start, the cable cooks under repeated
                 inrush, and the feeder transformer dips voltage on neighbouring circuits.
                 Soft-start or VFD systems exist precisely because of this DOL starting
@@ -691,14 +691,14 @@ const HNCModule3Section2_2 = () => {
 
           <KeyTakeaways
             points={[
-              'Impedance Z (\u03a9) is the AC analogue of resistance \u2014 the total opposition to current including both R and X.',
-              'Series RLC: Z = \u221a(R\u00b2 + (X_L \u2212 X_C)\u00b2). Phase angle \u03c6 = tan\u207b\u00b9((X_L \u2212 X_C)/R).',
-              'Inductive reactance X_L = 2\u03c0fL = 314L at 50 Hz \u2014 rises with frequency, the source of inrush and back-EMF.',
-              'Capacitive reactance X_C = 1/(2\u03c0fC) = 1/(314C) at 50 Hz \u2014 falls with frequency, used for PFC and harmonic-filter tuning.',
-              'Pure R: V and I in phase, PF = 1. Pure L: V leads I by 90\u00b0. Pure C: I leads V by 90\u00b0. Real loads sit somewhere in between.',
-              'Motor running impedance is much higher than blocked-rotor impedance \u2014 DOL starting current is typically 5\u20137 \u00d7 full-load current.',
-              'Z_s on AC circuits is impedance, not just resistance \u2014 inductive component matters on long runs and three-phase circuits.',
-              'Cable mV/A/m tables in BS 7671 Appendix 4 already include the inductive reactance contribution at 50 Hz \u2014 use them, do not redo the maths.',
+              'Impedance Z (Ω) is the AC analogue of resistance — the total opposition to current including both R and X.',
+              'Series RLC: Z = √(R² + (X_L − X_C)²). Phase angle φ = tan⁻¹((X_L − X_C)/R).',
+              'Inductive reactance X_L = 2πfL = 314L at 50 Hz — rises with frequency, the source of inrush and back-EMF.',
+              'Capacitive reactance X_C = 1/(2πfC) = 1/(314C) at 50 Hz — falls with frequency, used for PFC and harmonic-filter tuning.',
+              'Pure R: V and I in phase, PF = 1. Pure L: V leads I by 90°. Pure C: I leads V by 90°. Real loads sit somewhere in between.',
+              'Motor running impedance is much higher than blocked-rotor impedance — DOL starting current is typically 5–7 × full-load current.',
+              'Z_s on AC circuits is impedance, not just resistance — inductive component matters on long runs and three-phase circuits.',
+              'Cable mV/A/m tables in BS 7671 Appendix 4 already include the inductive reactance contribution at 50 Hz — use them, do not redo the maths.',
             ]}
           />
 

@@ -210,8 +210,8 @@ const HNCModule3Section1_2 = () => {
               'You can rearrange V = IR three ways and use it to size a cable, calculate a fault current or pick a current-limiting resistor for an indicator LED.',
               'You can tell ohmic from non-ohmic devices and recognise that LEDs, NTC thermistors and lamp filaments need different treatment.',
               'You can run a voltage-drop check using cable mO/m values, the go-and-return rule and the BS 7671 limits (3 % lighting, 5 % power).',
-              'You can compute prospective fault current at a point from I_f = U\u2080 / Z_s and judge whether the upstream device disconnects in time.',
-              'You can apply the temperature correction (\u22480.4 % per \u00b0C, factor \u22481.2 at 70 \u00b0C) when working from a measured 20 \u00b0C resistance.',
+              'You can compute prospective fault current at a point from I_f = U₀ / Z_s and judge whether the upstream device disconnects in time.',
+              'You can apply the temperature correction (≈0.4 % per °C, factor ≈1.2 at 70 °C) when working from a measured 20 °C resistance.',
             ]}
           />
 
@@ -220,8 +220,8 @@ const HNCModule3Section1_2 = () => {
             clause="The voltage at the terminals of any current-using equipment shall be greater than the lower limit corresponding to the relevant standard. Where the public supply is used, voltage drop within the consumer's installation should not exceed 3 % for lighting and 5 % for other uses of the nominal voltage."
             meaning={
               <>
-                Voltage drop is the headline application of Ohm\u2019s law in BS 7671. Use cable
-                mV/A/m tables (or the underlying mO/m \u00d7 length \u00d7 2 calculation) and
+                Voltage drop is the headline application of Ohm’s law in BS 7671. Use cable
+                mV/A/m tables (or the underlying mO/m × length × 2 calculation) and
                 check against 6.9 V (lighting) or 11.5 V (power) at 230 V nominal.
               </>
             }
@@ -512,26 +512,26 @@ const HNCModule3Section1_2 = () => {
               <>
                 You have just installed a new 32 A radial circuit in a basement plant room
                 feeding a control-panel power supply 28 m from the distribution board on
-                4 mm\u00b2 thermoplastic. The Zs measured at the furthest socket reads 1.10 \u03a9.
+                4 mm² thermoplastic. The Zs measured at the furthest socket reads 1.10 Ω.
                 The protective device is a 32 A Type B MCB.
               </>
             }
             whatToDo={
               <>
-                Apply Ohm\u2019s law to the loop: I_f = U\u2080 / Z_s = 230 / 1.10 \u2248 209 A.
-                A Type B MCB needs 5 \u00d7 I_n = 160 A to disconnect within 0.1 s, so 209 A
+                Apply Ohm’s law to the loop: I_f = U₀ / Z_s = 230 / 1.10 ≈ 209 A.
+                A Type B MCB needs 5 × I_n = 160 A to disconnect within 0.1 s, so 209 A
                 clears the requirement comfortably. Cross-check Z_s against BS 7671 Table 41.3
-                (or the 80 % rule of thumb on the manufacturer\u2019s figure) before signing the
+                (or the 80 % rule of thumb on the manufacturer’s figure) before signing the
                 certificate. Record the measured value, the calculated I_f and the disconnection
                 time on the schedule of test results.
               </>
             }
             whyItMatters={
               <>
-                Ohm\u2019s law is the single calculation that decides whether a fault is cleared
+                Ohm’s law is the single calculation that decides whether a fault is cleared
                 fast enough to be safe. A circuit that meets voltage drop but fails on Z_s is
                 non-compliant and unsafe to energise. As the engineer of record, your name is
-                on the certificate \u2014 the math has to be defendable.
+                on the certificate — the math has to be defendable.
               </>
             }
           />
@@ -544,14 +544,14 @@ const HNCModule3Section1_2 = () => {
 
           <KeyTakeaways
             points={[
-              'V = IR \u2014 the master equation. Three rearrangements (V = IR, I = V/R, R = V/I) cover most building services calculations.',
+              'V = IR — the master equation. Three rearrangements (V = IR, I = V/R, R = V/I) cover most building services calculations.',
               'Ohmic devices (fixed resistors, copper conductors at constant temperature, heating elements) plot a straight line on V vs I.',
-              'Non-ohmic devices (LEDs, NTC thermistors, diodes, lamp filaments) need a current-limiting resistor or a lookup table \u2014 not a single R value.',
-              'Voltage drop V_d = I \u00d7 R \u00d7 2 for single-phase \u2014 the \u00d72 is the go-and-return path.',
+              'Non-ohmic devices (LEDs, NTC thermistors, diodes, lamp filaments) need a current-limiting resistor or a lookup table — not a single R value.',
+              'Voltage drop V_d = I × R × 2 for single-phase — the ×2 is the go-and-return path.',
               'BS 7671 Appendix 12 limits: 3 % for lighting (6.9 V at 230 V), 5 % for power (11.5 V at 230 V).',
-              'Fault current I_f = U\u2080 / Z_s \u2014 the basis for confirming protective device disconnection times to BS 7671 Table 41.3.',
-              'Copper resistance rises \u22480.4 % per \u00b0C \u2014 cable at 70 \u00b0C is \u224820 % more resistive than at 20 \u00b0C. Apply the 1.2 factor when starting from a 20 \u00b0C R\u2081 measurement.',
-              'Convert units before substituting: 7.41 m\u03a9/m = 0.00741 \u03a9/m. Mixing m\u03a9 and \u03a9 is the most common source of order-of-magnitude errors.',
+              'Fault current I_f = U₀ / Z_s — the basis for confirming protective device disconnection times to BS 7671 Table 41.3.',
+              'Copper resistance rises ≈0.4 % per °C — cable at 70 °C is ≈20 % more resistive than at 20 °C. Apply the 1.2 factor when starting from a 20 °C R₁ measurement.',
+              'Convert units before substituting: 7.41 mΩ/m = 0.00741 Ω/m. Mixing mΩ and Ω is the most common source of order-of-magnitude errors.',
             ]}
           />
 

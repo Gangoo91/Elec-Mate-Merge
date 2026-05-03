@@ -1,8 +1,25 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+/**
+ * Module 5 · Section 3 · Subsection 3 — Cost Control
+ * HNC Electrical Engineering for Building Services (Project Management — Pearson U4004 + BSE PM context)
+ *   Cost monitoring, progress reporting, forecasting and earned value analysis — the daily and monthly disciplines that prevent project loss.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  CommonMistake,
+  ConceptBlock,
+  FAQ,
+  KeyTakeaways,
+  LearningOutcomes,
+  RegsCallout,
+  Scenario,
+  SectionRule,
+  TLDR,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Cost Control - HNC Module 5 Section 3.3';
@@ -236,843 +253,531 @@ const faqs = [
 ];
 
 const HNCModule5Section3_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section3')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="../h-n-c-module5-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 5.3.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Cost Control
-          </h1>
-          <p className="text-white">
-            Cost monitoring, progress reporting, forecasting techniques, cost value reconciliation
-            and earned value analysis
-          </p>
-        </header>
+          <PageHero
+            eyebrow="Module 5 · Section 3 · Subsection 3"
+            title="Cost Control"
+            description="Cost monitoring, progress reporting, forecasting techniques, cost value reconciliation and earned value analysis."
+            tone="purple"
+          />
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>CVR:</strong> Comparing costs against value of work done
-              </li>
-              <li className="pl-1">
-                <strong>CPI/SPI:</strong> Cost and schedule performance indices
-              </li>
-              <li className="pl-1">
-                <strong>EAC:</strong> Forecast total cost at completion
-              </li>
-              <li className="pl-1">
-                <strong>Variance analysis:</strong> Investigating differences from plan
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
-              Building Services Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Labour:</strong> Typically 40-50% of M&E costs
-              </li>
-              <li className="pl-1">
-                <strong>Materials:</strong> Price volatility impacts forecasts
-              </li>
-              <li className="pl-1">
-                <strong>Subcontracts:</strong> Track separately from own work
-              </li>
-              <li className="pl-1">
-                <strong>Reporting:</strong> Monthly cycle standard practice
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              "Cost control = comparing actual + committed against budget, forecasting cost-to-complete, taking corrective action.",
+              "Earned Value Management (EVM): plan value (PV), earned value (EV), actual cost (AC) — give cost/schedule variance and forecast at completion.",
+              "Cost-Value Reconciliation (CVR) is the UK construction industry’s monthly discipline — every project, every month, no excuses.",
+              "Forecast Final Cost (FFC) updated monthly and signed off by the project manager — divergence from budget triggers action.",
+              "Early warning of cost overrun is half the battle — projects rarely recover when overruns are reported late.",
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <RegsCallout
+            source="NEC4 ECC — Clause 50.4 (Assessment of the amount due)"
+            clause="The Project Manager makes assessments of the amount due in accordance with the Schedule of Cost Components or, where the Project Manager and the Contractor have agreed, the Shorter Schedule of Cost Components. The amount due includes the Price for Work Done to Date and other amounts to be paid to or retained from the Contractor."
+            meaning={
+              <>
+                Under NEC, payment is based on actual progress (PWDD). Robust cost control with monthly EVM and CVR is the basis of accurate interim payment, accurate cost reporting and accurate compensation event assessment. Without it, you cannot answer the PM's questions at the monthly meeting.
+              </>
+            }
+            cite="Source: NEC4 Engineering and Construction Contract — Clause 50 (refer to NEC4 published text for verbatim use)."
+          />
+
+
+          <LearningOutcomes
+            outcomes={[
               'Implement cost monitoring systems on building services projects',
               'Prepare monthly cost reports with variance analysis',
               'Apply cost value reconciliation (CVR) techniques',
               'Calculate and interpret CPI, SPI and other EVM metrics',
               'Forecast costs at completion using different methods',
               'Take corrective action when projects deviate from budget',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <SectionRule />
 
-        {/* Section 1: Cost Monitoring Fundamentals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Cost Monitoring Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Cost Monitoring Fundamentals">
             <p>
               Effective cost control requires systematic monitoring throughout the project
               lifecycle. For building services installations, this means tracking labour, materials,
               plant, and subcontract costs against the budget and work completed.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Key cost monitoring elements:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Actual costs:</strong> What has been spent to date (invoiced and paid)
-                </li>
-                <li className="pl-1">
-                  <strong>Committed costs:</strong> Orders placed but not yet invoiced
-                </li>
-                <li className="pl-1">
-                  <strong>Accruals:</strong> Work done but not yet invoiced (estimated)
-                </li>
-                <li className="pl-1">
-                  <strong>Cost to complete:</strong> Forecast cost for remaining work
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cost Categories for M&E Projects
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Category</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical %</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Monitoring Method
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Labour (own)</td>
-                      <td className="border border-white/10 px-3 py-2">25-35%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Timesheets, allocation codes
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Materials</td>
-                      <td className="border border-white/10 px-3 py-2">30-40%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Purchase orders, goods received
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Subcontractors</td>
-                      <td className="border border-white/10 px-3 py-2">15-25%</td>
-                      <td className="border border-white/10 px-3 py-2">Applications, valuations</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Plant & equipment</td>
-                      <td className="border border-white/10 px-3 py-2">3-8%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Hire records, off-hire dates
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Preliminaries</td>
-                      <td className="border border-white/10 px-3 py-2">8-15%</td>
-                      <td className="border border-white/10 px-3 py-2">Time-based allocation</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Example: Hospital M&E Package
-              </p>
-              <p className="text-sm text-white mb-2">
-                A £2.5M mechanical installation on a hospital project requires robust cost
-                monitoring:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Weekly labour allocation by zone (theatres, wards, plant rooms)
-                </li>
-                <li className="pl-1">Material deliveries tracked against procurement schedule</li>
-                <li className="pl-1">
-                  Specialist subcontracts (controls, insulation) valued monthly
-                </li>
-                <li className="pl-1">Variations logged and costed within 7 days</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Key cost monitoring elements:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Actual costs:</strong> What has been spent to date (invoiced and paid)
+              </li>
+              <li>
+                <strong>Committed costs:</strong> Orders placed but not yet invoiced
+              </li>
+              <li>
+                <strong>Accruals:</strong> Work done but not yet invoiced (estimated)
+              </li>
+              <li>
+                <strong>Cost to complete:</strong> Forecast cost for remaining work
+              </li>
+            </ul>
+            <p>
+              <strong>Cost Categories for M&E Projects (Category — Typical % — Monitoring):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Labour (own):</strong> 25-35% — Timesheets, allocation codes
+              </li>
+              <li>
+                <strong>Materials:</strong> 30-40% — Purchase orders, goods received
+              </li>
+              <li>
+                <strong>Subcontractors:</strong> 15-25% — Applications, valuations
+              </li>
+              <li>
+                <strong>Plant & equipment:</strong> 3-8% — Hire records, off-hire dates
+              </li>
+              <li>
+                <strong>Preliminaries:</strong> 8-15% — Time-based allocation
+              </li>
+            </ul>
+            <p>
+              <strong>Building Services Example — Hospital M&E Package:</strong> A £2.5M mechanical
+              installation on a hospital project requires robust cost monitoring:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Weekly labour allocation by zone (theatres, wards, plant rooms)</li>
+              <li>Material deliveries tracked against procurement schedule</li>
+              <li>Specialist subcontracts (controls, insulation) valued monthly</li>
+              <li>Variations logged and costed within 7 days</li>
+            </ul>
+            <p>
               <strong>Best practice:</strong> Capture costs at the lowest practical level - this
               enables meaningful variance analysis and identifies problems early.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Cost Value Reconciliation (CVR) */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Cost Value Reconciliation (CVR)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Cost Value Reconciliation (CVR)">
             <p>
               Cost Value Reconciliation is the UK construction industry's standard method for
               tracking project financial performance. It compares the value of work completed
               against the costs incurred to determine whether the project is making or losing money.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">CVR Basic Formula</p>
-              <p className="font-mono text-center text-lg mb-2">Margin = Value - Cost</p>
-              <p className="text-xs text-white text-center">
-                Where Value = certified work + variations + dayworks - retentions
-              </p>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Value Side</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Work certified to date</li>
-                  <li className="pl-1">Approved variations</li>
-                  <li className="pl-1">Pending variations (risk-adjusted)</li>
-                  <li className="pl-1">Materials on site</li>
-                  <li className="pl-1">Less: retention held</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cost Side</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Labour costs to date</li>
-                  <li className="pl-1">Materials purchased</li>
-                  <li className="pl-1">Subcontract costs</li>
-                  <li className="pl-1">Plant and equipment</li>
-                  <li className="pl-1">Plus: accruals and commitments</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Monthly CVR Report Structure
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Item</th>
-                      <th className="border border-white/10 px-3 py-2 text-right">This Month</th>
-                      <th className="border border-white/10 px-3 py-2 text-right">Cumulative</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Contract Value</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">-</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">£850,000</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Variations (approved)</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">£12,000</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">£45,000</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Value Certified</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">£95,000</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">£480,000</td>
-                    </tr>
-                    <tr className="bg-white/5">
-                      <td className="border border-white/10 px-3 py-2 font-medium">Total Costs</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">£88,000</td>
-                      <td className="border border-white/10 px-3 py-2 text-right">£445,000</td>
-                    </tr>
-                    <tr className="bg-green-500/10">
-                      <td className="border border-white/10 px-3 py-2 font-medium">Margin</td>
-                      <td className="border border-white/10 px-3 py-2 text-right text-green-400">
-                        £7,000
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-right text-green-400">
-                        £35,000
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>CVR Basic Formula:</strong> Margin = Value - Cost. Where Value = certified
+              work + variations + dayworks - retentions.
+            </p>
+            <p>
+              <strong>Value Side:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Work certified to date</li>
+              <li>Approved variations</li>
+              <li>Pending variations (risk-adjusted)</li>
+              <li>Materials on site</li>
+              <li>Less: retention held</li>
+            </ul>
+            <p>
+              <strong>Cost Side:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Labour costs to date</li>
+              <li>Materials purchased</li>
+              <li>Subcontract costs</li>
+              <li>Plant and equipment</li>
+              <li>Plus: accruals and commitments</li>
+            </ul>
+            <p>
+              <strong>Monthly CVR Report Structure (Item — This Month — Cumulative):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Contract Value:</strong> - — £850,000
+              </li>
+              <li>
+                <strong>Variations (approved):</strong> £12,000 — £45,000
+              </li>
+              <li>
+                <strong>Value Certified:</strong> £95,000 — £480,000
+              </li>
+              <li>
+                <strong>Total Costs:</strong> £88,000 — £445,000
+              </li>
+              <li>
+                <strong>Margin:</strong> £7,000 — £35,000
+              </li>
+            </ul>
+            <p>
               <strong>Key principle:</strong> CVR must capture all costs including accruals and
-              commitments - not just what has been paid. Incomplete cost capture gives false
+              commitments — not just what has been paid. Incomplete cost capture gives false
               confidence.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 3: Earned Value Management */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Earned Value Management (EVM)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Earned Value Management (EVM)">
             <p>
               Earned Value Management is a project management technique that integrates scope,
               schedule, and cost data to provide objective measures of project performance and
               forecasts of final outcome.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Core EVM Terminology</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>PV (Planned Value):</strong> Budgeted cost of work scheduled - what you
-                  planned to spend by now
-                </li>
-                <li className="pl-1">
-                  <strong>EV (Earned Value):</strong> Budgeted cost of work performed - what you've
-                  actually achieved
-                </li>
-                <li className="pl-1">
-                  <strong>AC (Actual Cost):</strong> Actual cost of work performed - what you've
-                  actually spent
-                </li>
-                <li className="pl-1">
-                  <strong>BAC (Budget at Completion):</strong> Total project budget
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Performance Indices</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Cost Performance Index (CPI)</p>
-                  <p className="font-mono text-lg text-center mb-2">CPI = EV / AC</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>CPI = 1.0: On budget</li>
-                    <li>CPI &gt; 1.0: Under budget</li>
-                    <li>CPI &lt; 1.0: Over budget</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Schedule Performance Index (SPI)</p>
-                  <p className="font-mono text-lg text-center mb-2">SPI = EV / PV</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>SPI = 1.0: On schedule</li>
-                    <li>SPI &gt; 1.0: Ahead of schedule</li>
-                    <li>SPI &lt; 1.0: Behind schedule</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Variance Calculations</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Metric</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Formula</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Interpretation</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cost Variance (CV)</td>
-                      <td className="border border-white/10 px-3 py-2 font-mono">EV - AC</td>
-                      <td className="border border-white/10 px-3 py-2">Positive = under budget</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Schedule Variance (SV)</td>
-                      <td className="border border-white/10 px-3 py-2 font-mono">EV - PV</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Positive = ahead of schedule
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Variance at Completion (VAC)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 font-mono">BAC - EAC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Positive = forecast under budget
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Services Example: Office Electrical Installation
-              </p>
-              <p className="text-sm text-white mb-2">
-                Month 4 of a £600,000 electrical installation:
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>BAC = £600,000 (total budget)</p>
-                <p>PV = £240,000 (planned progress by month 4)</p>
-                <p>EV = £210,000 (actual work completed, at budget rates)</p>
-                <p>AC = £230,000 (actual cost spent)</p>
-                <p className="mt-2">
-                  CPI = £210,000 / £230,000 = <strong>0.91</strong> (9% over budget)
-                </p>
-                <p>
-                  SPI = £210,000 / £240,000 = <strong>0.88</strong> (12% behind schedule)
-                </p>
-                <p className="mt-2 text-orange-400">
-                  Warning: Project is over budget AND behind schedule
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>Core EVM Terminology:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>PV (Planned Value):</strong> Budgeted cost of work scheduled - what you
+                planned to spend by now
+              </li>
+              <li>
+                <strong>EV (Earned Value):</strong> Budgeted cost of work performed - what you've
+                actually achieved
+              </li>
+              <li>
+                <strong>AC (Actual Cost):</strong> Actual cost of work performed - what you've
+                actually spent
+              </li>
+              <li>
+                <strong>BAC (Budget at Completion):</strong> Total project budget
+              </li>
+            </ul>
+            <p>
+              <strong>Performance Indices — Cost Performance Index (CPI):</strong> CPI = EV / AC.
+              CPI = 1.0: On budget; CPI &gt; 1.0: Under budget; CPI &lt; 1.0: Over budget.
+            </p>
+            <p>
+              <strong>Schedule Performance Index (SPI):</strong> SPI = EV / PV. SPI = 1.0: On
+              schedule; SPI &gt; 1.0: Ahead of schedule; SPI &lt; 1.0: Behind schedule.
+            </p>
+            <p>
+              <strong>Variance Calculations (Metric — Formula — Interpretation):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cost Variance (CV):</strong> EV - AC — Positive = under budget
+              </li>
+              <li>
+                <strong>Schedule Variance (SV):</strong> EV - PV — Positive = ahead of schedule
+              </li>
+              <li>
+                <strong>Variance at Completion (VAC):</strong> BAC - EAC — Positive = forecast
+                under budget
+              </li>
+            </ul>
+            <p>
+              <strong>Building Services Example — Office Electrical Installation:</strong> Month 4
+              of a £600,000 electrical installation:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>BAC = £600,000 (total budget)</li>
+              <li>PV = £240,000 (planned progress by month 4)</li>
+              <li>EV = £210,000 (actual work completed, at budget rates)</li>
+              <li>AC = £230,000 (actual cost spent)</li>
+              <li>
+                CPI = £210,000 / £230,000 = <strong>0.91</strong> (9% over budget)
+              </li>
+              <li>
+                SPI = £210,000 / £240,000 = <strong>0.88</strong> (12% behind schedule)
+              </li>
+              <li>
+                <strong>Warning:</strong> Project is over budget AND behind schedule.
+              </li>
+            </ul>
+            <p>
               <strong>Trend analysis:</strong> Track CPI and SPI monthly. A declining trend requires
               immediate investigation, even if still above 1.0.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 4: Forecasting and Progress Reporting */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Forecasting and Progress Reporting
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ConceptBlock title="Forecasting and Progress Reporting">
             <p>
               Forecasting the final project cost is essential for commercial management. Several
               methods exist, each with different assumptions about future performance.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Estimate at Completion (EAC) Methods
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Formula</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">When to Use</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Budget rate</td>
-                      <td className="border border-white/10 px-3 py-2 font-mono">
-                        AC + (BAC - EV)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Expect original estimates for remaining work
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CPI trend</td>
-                      <td className="border border-white/10 px-3 py-2 font-mono">BAC / CPI</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Current performance will continue
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Combined</td>
-                      <td className="border border-white/10 px-3 py-2 font-mono">
-                        AC + (BAC-EV)/(CPI×SPI)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Both cost and schedule affect remaining work
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Bottom-up</td>
-                      <td className="border border-white/10 px-3 py-2">AC + Re-estimate</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Major scope changes, fresh estimate needed
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                To Complete Performance Index (TCPI)
-              </p>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="font-mono text-center text-lg mb-2">TCPI = (BAC - EV) / (BAC - AC)</p>
-                <p className="text-xs text-white text-center mb-3">
-                  Required future efficiency to meet budget
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    TCPI = 1.0: Must maintain current efficiency to meet budget
-                  </li>
-                  <li className="pl-1">TCPI &gt; 1.0: Must improve efficiency to meet budget</li>
-                  <li className="pl-1">TCPI &gt; 1.2: Meeting budget is very unlikely</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Monthly Cost Report Contents
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Executive Summary</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Current position vs budget</li>
-                    <li>Key variances and causes</li>
-                    <li>Forecast final cost</li>
-                    <li>Risks and opportunities</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="font-medium text-white mb-2">Detailed Analysis</p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Cost breakdown by category</li>
-                    <li>Variance analysis by element</li>
-                    <li>Cash flow forecast</li>
-                    <li>Corrective actions</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Variance Analysis: Common Causes on M&E Projects
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Variance Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Common Causes</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Corrective Action
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Labour overspend</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Low productivity, rework, overtime
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Method review, resource change
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Material overspend</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Price increases, waste, theft
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Procurement review, site control
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Schedule delay</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Access issues, design changes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Acceleration, re-sequence
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Subcontract overrun</td>
-                      <td className="border border-white/10 px-3 py-2">Scope creep, claims</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Contract review, negotiation
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Reporting tip:</strong> Present trends graphically - an S-curve showing
+            <p>
+              <strong>Estimate at Completion (EAC) Methods (Method — Formula — When to Use):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Budget rate:</strong> AC + (BAC - EV) — Expect original estimates for
+                remaining work
+              </li>
+              <li>
+                <strong>CPI trend:</strong> BAC / CPI — Current performance will continue
+              </li>
+              <li>
+                <strong>Combined:</strong> AC + (BAC-EV)/(CPI×SPI) — Both cost and schedule affect
+                remaining work
+              </li>
+              <li>
+                <strong>Bottom-up:</strong> AC + Re-estimate — Major scope changes, fresh estimate
+                needed
+              </li>
+            </ul>
+            <p>
+              <strong>To Complete Performance Index (TCPI):</strong> TCPI = (BAC - EV) / (BAC - AC).
+              Required future efficiency to meet budget.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>TCPI = 1.0: Must maintain current efficiency to meet budget</li>
+              <li>TCPI &gt; 1.0: Must improve efficiency to meet budget</li>
+              <li>TCPI &gt; 1.2: Meeting budget is very unlikely</li>
+            </ul>
+            <p>
+              <strong>Monthly Cost Report Contents — Executive Summary:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Current position vs budget</li>
+              <li>Key variances and causes</li>
+              <li>Forecast final cost</li>
+              <li>Risks and opportunities</li>
+            </ul>
+            <p>
+              <strong>Detailed Analysis:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Cost breakdown by category</li>
+              <li>Variance analysis by element</li>
+              <li>Cash flow forecast</li>
+              <li>Corrective actions</li>
+            </ul>
+            <p>
+              <strong>Variance Analysis — Common Causes on M&E Projects (Type — Causes — Action):</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Labour overspend:</strong> Low productivity, rework, overtime — Method
+                review, resource change
+              </li>
+              <li>
+                <strong>Material overspend:</strong> Price increases, waste, theft — Procurement
+                review, site control
+              </li>
+              <li>
+                <strong>Schedule delay:</strong> Access issues, design changes — Acceleration,
+                re-sequence
+              </li>
+              <li>
+                <strong>Subcontract overrun:</strong> Scope creep, claims — Contract review,
+                negotiation
+              </li>
+            </ul>
+            <p>
+              <strong>Reporting tip:</strong> Present trends graphically — an S-curve showing
               planned vs actual progress, or a chart of CPI/SPI over time, communicates status
               faster than tables alone.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Worked Examples */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <ConceptBlock title="Worked Examples">
+            <p>
+              <strong>Example 1 — CVR Calculation:</strong> An electrical package has Contract sum
+              £450,000, variations approved £32,000, work certified £280,000. Costs to date: labour
+              £95,000, materials £120,000, subcontractors £45,000, plant £8,000. Calculate margin to
+              date.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Value to date = Work certified = <strong>£280,000</strong>
+              </li>
+              <li>Labour: £95,000</li>
+              <li>Materials: £120,000</li>
+              <li>Subcontractors: £45,000</li>
+              <li>Plant: £8,000</li>
+              <li>
+                Total costs = £95,000 + £120,000 + £45,000 + £8,000 = <strong>£268,000</strong>
+              </li>
+              <li>
+                Margin = Value - Cost = £280,000 - £268,000 = <strong>£12,000 profit</strong>
+              </li>
+              <li>
+                Margin % = £12,000 / £280,000 = <strong>4.3%</strong>
+              </li>
+            </ul>
+            <p>
+              <strong>Example 2 — EVM Performance Analysis:</strong> A mechanical installation has
+              BAC = £800,000, PV = £400,000, EV = £350,000, AC = £380,000. Calculate CPI, SPI, and
+              EAC.
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                CPI = EV / AC = £350,000 / £380,000 = <strong>0.92</strong>
+              </li>
+              <li>
+                SPI = EV / PV = £350,000 / £400,000 = <strong>0.88</strong>
+              </li>
+              <li>EAC (using CPI trend) = BAC / CPI</li>
+              <li>
+                EAC = £800,000 / 0.92 = <strong>£869,565</strong>
+              </li>
+              <li>
+                <strong>Forecast overrun</strong> = £869,565 - £800,000 = £69,565 (8.7%)
+              </li>
+            </ul>
+            <p>
+              <strong>Example 3 — TCPI Calculation:</strong> Using the same project: BAC =
+              £800,000, EV = £350,000, AC = £380,000. What efficiency is needed for remaining work
+              to meet budget?
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>TCPI = (BAC - EV) / (BAC - AC)</li>
+              <li>TCPI = (£800,000 - £350,000) / (£800,000 - £380,000)</li>
+              <li>
+                TCPI = £450,000 / £420,000 = <strong>1.07</strong>
+              </li>
+              <li>Remaining work must be completed at 107% efficiency</li>
+              <li>
+                <strong>This is achievable with corrective action</strong> — CPI must improve from
+                0.92 to 1.07.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 1: CVR Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> An electrical package has: Contract sum £450,000,
-                variations approved £32,000, work certified £280,000. Costs to date: labour £95,000,
-                materials £120,000, subcontractors £45,000, plant £8,000. Calculate margin to date.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  Value to date = Work certified = <strong>£280,000</strong>
-                </p>
-                <p className="mt-2">Costs to date:</p>
-                <p>Labour: £95,000</p>
-                <p>Materials: £120,000</p>
-                <p>Subcontractors: £45,000</p>
-                <p>Plant: £8,000</p>
-                <p>
-                  Total costs = £95,000 + £120,000 + £45,000 + £8,000 = <strong>£268,000</strong>
-                </p>
-                <p className="mt-2">
-                  Margin = Value - Cost = £280,000 - £268,000 = <strong>£12,000 profit</strong>
-                </p>
-                <p>
-                  Margin % = £12,000 / £280,000 = <strong>4.3%</strong>
-                </p>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 2: EVM Performance Analysis
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> A mechanical installation has BAC = £800,000, PV =
-                £400,000, EV = £350,000, AC = £380,000. Calculate CPI, SPI, and EAC.
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>
-                  CPI = EV / AC = £350,000 / £380,000 = <strong>0.92</strong>
-                </p>
-                <p>
-                  SPI = EV / PV = £350,000 / £400,000 = <strong>0.88</strong>
-                </p>
-                <p className="mt-2">EAC (using CPI trend) = BAC / CPI</p>
-                <p>
-                  EAC = £800,000 / 0.92 = <strong>£869,565</strong>
-                </p>
-                <p className="mt-2 text-orange-400">
-                  Forecast overrun = £869,565 - £800,000 = £69,565 (8.7%)
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example 3: TCPI Calculation
-              </h3>
-              <p className="text-sm text-white mb-2">
-                <strong>Question:</strong> Using the same project: BAC = £800,000, EV = £350,000, AC
-                = £380,000. What efficiency is needed for remaining work to meet budget?
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
-                <p>TCPI = (BAC - EV) / (BAC - AC)</p>
-                <p>TCPI = (£800,000 - £350,000) / (£800,000 - £380,000)</p>
-                <p>
-                  TCPI = £450,000 / £420,000 = <strong>1.07</strong>
-                </p>
-                <p className="mt-2 text-white">
-                  Remaining work must be completed at 107% efficiency
-                </p>
-                <p className="mt-2 text-green-400">
-                  This is achievable with corrective action - CPI must improve from 0.92 to 1.07
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Practical guidance">
+            <p>
+              <strong>Cost control checklist:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Establish cost codes aligned with tender breakdown</li>
+              <li>Capture all costs including accruals and commitments</li>
+              <li>Reconcile costs to value monthly (minimum)</li>
+              <li>Investigate variances greater than 5% immediately</li>
+              <li>Update forecast monthly based on current performance</li>
+              <li>Document assumptions behind cost to complete</li>
+            </ul>
+            <p>
+              <strong>Key values to remember:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>CPI = 1.0: On budget; SPI = 1.0: On schedule</li>
+              <li>TCPI &gt; 1.2: Budget recovery unlikely</li>
+              <li>EAC = BAC / CPI: Most common forecast method</li>
+              <li>Labour typically 40-50% of M&E costs</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cost Control Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Establish cost codes aligned with tender breakdown</li>
-                <li className="pl-1">Capture all costs including accruals and commitments</li>
-                <li className="pl-1">Reconcile costs to value monthly (minimum)</li>
-                <li className="pl-1">Investigate variances greater than 5% immediately</li>
-                <li className="pl-1">Update forecast monthly based on current performance</li>
-                <li className="pl-1">Document assumptions behind cost to complete</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Values to Remember
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">CPI = 1.0: On budget; SPI = 1.0: On schedule</li>
-                <li className="pl-1">TCPI &gt; 1.2: Budget recovery unlikely</li>
-                <li className="pl-1">EAC = BAC / CPI: Most common forecast method</li>
-                <li className="pl-1">Labour typically 40-50% of M&E costs</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Incomplete cost capture</strong> - Missing commitments gives false
+          <CommonMistake
+            title="Common mistakes to avoid"
+            whatHappens={
+              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+                <li>
+                  <strong>Incomplete cost capture</strong> — Missing commitments gives false
                   confidence
                 </li>
-                <li className="pl-1">
-                  <strong>Optimistic forecasts</strong> - Using budget rates when CPI shows
+                <li>
+                  <strong>Optimistic forecasts</strong> — Using budget rates when CPI shows
                   underperformance
                 </li>
-                <li className="pl-1">
-                  <strong>Late reporting</strong> - Monthly reports more than 2 weeks after period
+                <li>
+                  <strong>Late reporting</strong> — Monthly reports more than 2 weeks after period
                   end lose value
                 </li>
-                <li className="pl-1">
-                  <strong>No variance analysis</strong> - Numbers without explanation don't drive
+                <li>
+                  <strong>No variance analysis</strong> — Numbers without explanation don't drive
                   improvement
                 </li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead="Capture every committed cost and accrual, base forecasts on the CPI trend rather than budget rates when CPI is below 1, publish reports within two weeks of period end, and explain every material variance with a corrective action."
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="Surprise loss declared at month nine"
+            situation={
+              <>
+                Your monthly CVR has shown the project at "on budget" for eight months. At month nine, the QS reports a £220k loss after recalculating against actuals — two subcontractors' costs were under-accrued, and a programme slip has not been reflected in the FFC. Your director is furious; the client is suspicious.
+              </>
+            }
+            whatToDo={
+              <>
+                Audit the CVR methodology immediately — actuals must include accruals (work done, not yet invoiced), committed costs (purchase orders), and labour booked but not yet paid. Re-baseline the FFC honestly. From now on, CVR is reviewed monthly by the QS with the project manager, signed off in writing, and challenged by the commercial director — no rubber-stamping. Implement EVM if not already in use to give an early warning of variance.
+              </>
+            }
+            whyItMatters={
+              <>
+                Cost control discipline catches problems early. A £220k loss at month nine has time to recover; a £220k loss at month nineteen does not. The monthly CVR is the project's health check — skip it and you skip the diagnosis.
+              </>
+            }
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">EVM Formulae</p>
-                <ul className="space-y-0.5">
-                  <li>CPI = EV / AC (cost efficiency)</li>
-                  <li>SPI = EV / PV (schedule efficiency)</li>
-                  <li>CV = EV - AC (cost variance)</li>
-                  <li>SV = EV - PV (schedule variance)</li>
-                  <li>EAC = BAC / CPI (forecast at completion)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Performance Thresholds</p>
-                <ul className="space-y-0.5">
-                  <li>CPI/SPI = 1.0: On target</li>
-                  <li>CPI/SPI 0.95-1.0: Minor variance</li>
-                  <li>CPI/SPI &lt; 0.95: Action required</li>
-                  <li>TCPI &gt; 1.2: Recovery unlikely</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+                    <KeyTakeaways
+            points={[
+              "Cost control = actual + committed vs budget; forecast CTC; corrective action.",
+              "EVM: PV, EV, AC; CV = EV–AC; SV = EV–PV; CPI = EV/AC; SPI = EV/PV.",
+              "Forecast at Completion (EAC) = AC + (BAC – EV)/CPI for typical performance.",
+              "CVR monthly: every project, every month — no exceptions.",
+              "Forecast Final Cost signed off monthly by project manager — divergence triggers action.",
+              "Accruals (work done not invoiced) and commitments (POs raised) included in actual cost.",
+              "Early warning of cost overrun gives time to recover; late warning does not.",
+              "Under NEC, robust cost control is the basis of PWDD interim payment — Clause 50.",
+            ]}
+          />
+
+
           <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../h-n-c-module5-section3-4">
-              Next: Financial Reporting
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section3-2')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Budget development
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section3-4')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Variations and claims
+              </div>
+            </button>
+          </div>
+        </PageFrame>
+      </div>
     </div>
   );
 };

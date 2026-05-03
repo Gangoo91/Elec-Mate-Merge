@@ -282,10 +282,10 @@ export default function Sub4() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Reg 411.4.5 (Additional protection)"
-            clause={<>"In each AC system, additional protection by means of a residual current device (RCD) in accordance with Regulation 415.1 shall be provided for socket outlets with a rated current not exceeding 32 A."</>}
-            meaning={<>The 30 mA RCD requirement on socket outlets is the safety-case driver for the trip threshold. A4:2026 strengthened this with broader application (Reg 411.4.4 + 411.4.5) and reinforced AFDD requirements (Reg 421.1.7).</>}
-            cite="Source: BS 7671:2018 incorporating Amendment 2:2022, Reg 411.4.5."
+            source="BS 7671:2018+A4:2026 — Regulation 411.3.3 (Additional protection — socket-outlets and mobile equipment)"
+            clause={<>"In AC systems, additional protection by means of an RCD with a rated residual operating current not exceeding 30 mA shall be provided for socket-outlets with a rated current not exceeding 32 A in locations specified by Section 411.3.3."</>}
+            meaning={<>The 30 mA RCD requirement on socket-outlets is the safety-case driver for the trip threshold. A4:2026 strengthened this with broader application across socket-outlets and mobile equipment, and reinforced AFDD requirements (Reg 421.1.7).</>}
+            cite="Source: BS 7671:2018+A4:2026 Part 4, Chapter 41, Regulation 411.3.3."
           />
 
           <InlineCheck {...checks[0]} />
@@ -369,7 +369,7 @@ export default function Sub4() {
                 A4:2026 split AFDDs into mandatory categories (HRRBs, HMOs, PBSA, care homes) and recommended-elsewhere. When you&apos;re diagnosing an AFDD nuisance trip on, say, a private dwelling, you can&apos;t simply remove the AFDD and revert to a normal RCBO &mdash; that loses functionality the customer paid for, and on a mandatory-category property it would be a Code 2 non-compliance.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Reg 421.1.7 redraft, verbatim from facet."
+            cite="Source: BS 7671:2018+A4:2026 — Reg 421.1.7 (AFDD redraft)."
           />
 
           <RegsCallout
@@ -384,7 +384,7 @@ export default function Sub4() {
                 When an RCD is nuisance-tripping but appears to operate at I&Delta;n on the MFT, that single AC test at rated I&Delta;n is now the only required verification (5&times;I&Delta;n is gone in A4:2026). If the device passes the AC test but trips intermittently in service, the diagnosis points to cumulative leakage on the load side, not a faulty RCD.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Reg 643.3 (RCD testing redraft), verbatim from facet."
+            cite="Source: BS 7671:2018+A4:2026 — Reg 643.3 (RCD testing redraft)."
           />
 
           <SectionRule />
