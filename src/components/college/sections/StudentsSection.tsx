@@ -18,6 +18,7 @@ import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
 import { StudentCardSkeletonList } from '@/components/college/ui/StudentCardSkeleton';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { CollegeStudent } from '@/contexts/CollegeSupabaseContext';
+import { useCollegeSettings } from '@/hooks/college/useCollegeSettings';
 import { getInitials, formatUKDateShort } from '@/utils/collegeHelpers';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -33,6 +34,9 @@ import {
 
 export function StudentsSection() {
   const { students, cohorts, attendance, isLoading, updateStudent } = useCollegeSupabase();
+  const { settings } = useCollegeSettings();
+  const lowAttendance = settings.low_attendance_threshold_percent;
+  const highAttendance = settings.high_attendance_threshold_percent;
   const { toast } = useToast();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
@@ -253,9 +257,9 @@ export function StudentsSection() {
                   const isSelected = selectedIds.has(student.id);
 
                   const attendanceTone =
-                    attendanceRate < 80
+                    attendanceRate < lowAttendance
                       ? 'text-red-400'
-                      : attendanceRate < 90
+                      : attendanceRate < highAttendance
                         ? 'text-amber-400'
                         : 'text-emerald-400';
 

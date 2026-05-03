@@ -100,6 +100,7 @@ export default function TutorQuizDetailPage() {
   const [reviewAttemptId, setReviewAttemptId] = useState<string | null>(null);
   const [reviewStudentName, setReviewStudentName] = useState<string | undefined>();
   const [busy, setBusy] = useState<'publish' | 'regrade' | null>(null);
+  const [visibleAttempts, setVisibleAttempts] = useState(50);
 
   const load = useCallback(async () => {
     if (!id) return;
@@ -414,12 +415,45 @@ export default function TutorQuizDetailPage() {
     setBusy('regrade');
     try {
       const targets = attempts.filter((a) => a.completed_at).map((a) => a.id);
-      await Promise.all(
+      // allSettled so a single attempt's invocation failure doesn't drop
+      // every other attempt's grade. We collect failures and surface a
+      // honest mixed result so the tutor knows how many actually re-ran.
+      const results = await Promise.allSettled(
         targets.map((aid) =>
-          supabase.functions.invoke('ai-grade-free-response', { body: { attempt_id: aid } })
+          supabase.functions
+            .invoke('ai-grade-free-response', { body: { attempt_id: aid } })
+            .then((res) => {
+              if (res.error) throw res.error;
+              return res;
+            })
         )
       );
-      toast({ title: 'Regraded', description: `Reran AI grading on ${targets.length} attempts.` });
+      const failed = results.filter((r) => r.status === 'rejected') as PromiseRejectedResult[];
+      const okCount = targets.length - failed.length;
+
+      if (failed.length === 0) {
+        toast({
+          title: 'Regraded',
+          description: `Reran AI grading on ${targets.length} attempts.`,
+        });
+      } else if (okCount === 0) {
+        toast({
+          title: 'Could not regrade',
+          description:
+            (failed[0]?.reason as Error | undefined)?.message ??
+            'AI grading failed for all attempts.',
+          variant: 'destructive',
+        });
+      } else {
+        toast({
+          title: 'Regraded with errors',
+          description: `${okCount}/${targets.length} reran successfully — ${failed.length} failed. Try again to retry the failures.`,
+          variant: 'destructive',
+        });
+        for (const f of failed) {
+          console.error('ai-grade-free-response failed:', f.reason);
+        }
+      }
       await load();
     } catch (e) {
       toast({
@@ -774,26 +808,42 @@ export default function TutorQuizDetailPage() {
             </p>
           </div>
         ) : (
-          <ul className="space-y-2">
-            {attempts.map((a) => (
-              <li key={a.id}>
+          <>
+            <ul className="space-y-2">
+              {attempts.slice(0, visibleAttempts).map((a) => (
+                <li key={a.id}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setReviewAttemptId(a.id);
+                      setReviewStudentName(a.student_name);
+                    }}
+                    className="w-full text-left bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-4 py-3 hover:bg-white/[0.02] hover:border-white/[0.10] transition-colors touch-manipulation"
+                  >
+                    <AttemptListRow
+                      a={a}
+                      quiz={quiz}
+                      pendingCount={pendingByAttempt[a.id] ?? 0}
+                    />
+                  </button>
+                </li>
+              ))}
+            </ul>
+            {attempts.length > visibleAttempts && (
+              <div className="mt-4 flex items-center justify-between gap-3">
+                <p className="text-[11.5px] text-white/60 tabular-nums">
+                  Showing {Math.min(visibleAttempts, attempts.length)} of {attempts.length}
+                </p>
                 <button
                   type="button"
-                  onClick={() => {
-                    setReviewAttemptId(a.id);
-                    setReviewStudentName(a.student_name);
-                  }}
-                  className="w-full text-left bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-4 py-3 hover:bg-white/[0.02] hover:border-white/[0.10] transition-colors touch-manipulation"
+                  onClick={() => setVisibleAttempts((n) => n + 50)}
+                  className="h-11 px-4 text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
                 >
-                  <AttemptListRow
-                    a={a}
-                    quiz={quiz}
-                    pendingCount={pendingByAttempt[a.id] ?? 0}
-                  />
+                  Load more →
                 </button>
-              </li>
-            ))}
-          </ul>
+              </div>
+            )}
+          </>
         )}
       </div>
 

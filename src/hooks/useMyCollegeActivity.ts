@@ -352,6 +352,29 @@ export function useMyCollegeActivity(): MyCollegeActivityHook {
     };
   }, [collegeStudentId, fetch]);
 
+  // Observations realtime keyed off college_students.id — when an assessor
+  // logs / signs / amends an observation, the apprentice sees it within ~1s.
+  // (The fetch path already pulls observations; this just keeps it live.)
+  useEffect(() => {
+    if (!collegeStudentId) return;
+    const channel = supabase
+      .channel(`my_college_activity_observations:${collegeStudentId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'college_observations',
+          filter: `student_id=eq.${collegeStudentId}`,
+        },
+        () => fetch()
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [collegeStudentId, fetch]);
+
   const unread_count = useMemo(
     () => items.filter((i) => i.is_unread).length,
     [items]

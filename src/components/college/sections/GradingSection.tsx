@@ -114,23 +114,20 @@ export function GradingSection() {
   const getAssessorName = (assessorId: string | null) =>
     !assessorId ? 'Unassigned' : staff.find((s) => s.id === assessorId)?.name || 'Unknown';
 
-  const handleRequestResubmission = (gradeId: string) => {
-    updateGrade.mutate(
-      { id: gradeId, updates: { status: 'Resubmission' } },
-      {
-        onSuccess: () =>
-          toast({
-            title: 'Resubmission requested',
-            description: 'The student has been notified to resubmit.',
-          }),
-        onError: () =>
-          toast({
-            title: 'Error',
-            description: 'Failed to request resubmission.',
-            variant: 'destructive',
-          }),
-      }
-    );
+  const handleRequestResubmission = async (gradeId: string) => {
+    try {
+      await updateGrade.mutateAsync({ id: gradeId, updates: { status: 'Resubmission' } });
+      toast({
+        title: 'Resubmission requested',
+        description: 'The student has been notified to resubmit.',
+      });
+    } catch (e) {
+      toast({
+        title: 'Could not request resubmission',
+        description: (e as Error).message ?? 'Failed to request resubmission.',
+        variant: 'destructive',
+      });
+    }
   };
 
   return (

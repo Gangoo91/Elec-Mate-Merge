@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { useCollege } from '@/contexts/CollegeContext';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,59 +19,172 @@ import {
   toneDot,
   type Tone,
 } from '@/components/college/primitives';
+import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
+import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import {
+  useCollegeResources,
+  type CollegeResource,
+  type ResourceKind,
+} from '@/hooks/useCollegeResources';
+import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 
-const mockFolders: { id: string; name: string; itemCount: number; tone: Tone }[] = [
-  { id: 'folder-1', name: 'Course Materials', itemCount: 24, tone: 'blue' },
-  { id: 'folder-2', name: 'Assessment Templates', itemCount: 12, tone: 'amber' },
-  { id: 'folder-3', name: 'Student Resources', itemCount: 18, tone: 'yellow' },
-  { id: 'folder-4', name: 'Staff Documents', itemCount: 8, tone: 'cyan' },
-  { id: 'folder-5', name: 'Policies & Procedures', itemCount: 15, tone: 'purple' },
-];
+/* ==========================================================================
+   DocumentLibrarySection — read-focused browser of the same `college_resources`
+   that TeachingResourcesSection manages. Was 100% mock (mockFolders +
+   useCollege() returning hardcoded arrays); now wired to the real hook.
 
-const typeTone = (type: string): Tone =>
-  type === 'document'
-    ? 'blue'
-    : type === 'video'
-      ? 'red'
-      : type === 'image'
-        ? 'green'
-        : type === 'presentation'
-          ? 'orange'
-          : type === 'spreadsheet'
-            ? 'emerald'
-            : type === 'link'
-              ? 'purple'
-              : 'yellow';
+   "Folders" are derived from `kind` (Documents, Videos, Images, Links, Notes)
+   so the taxonomy is honest — no fake counts. Upload routes to the
+   TeachingResources section to avoid duplicating the upload flow.
+   ========================================================================== */
 
-export function DocumentLibrarySection() {
-  const { teachingResources, staff } = useCollege();
+interface DocumentLibrarySectionProps {
+  onNavigate?: (section: CollegeSection) => void;
+}
+
+const KIND_LABEL: Record<ResourceKind, string> = {
+  pdf: 'Documents',
+  doc: 'Documents',
+  slides: 'Slides',
+  image: 'Images',
+  video: 'Videos',
+  audio: 'Audio',
+  link: 'Links',
+  note: 'Notes',
+  other: 'Other',
+};
+
+const KIND_TONE: Record<ResourceKind, Tone> = {
+  pdf: 'blue',
+  doc: 'blue',
+  slides: 'orange',
+  image: 'emerald',
+  video: 'red',
+  audio: 'amber',
+  link: 'purple',
+  note: 'yellow',
+  other: 'cyan',
+};
+
+// Folder definitions — derived dynamically from the resources we have.
+interface DerivedFolder {
+  id: string;
+  label: string;
+  kinds: ResourceKind[];
+  count: number;
+  tone: Tone;
+}
+
+function buildFolders(resources: CollegeResource[]): DerivedFolder[] {
+  // Group by display label so pdf+doc both fall under "Documents"
+  const counts = new Map<string, { kinds: Set<ResourceKind>; count: number }>();
+  for (const r of resources) {
+    const label = KIND_LABEL[r.kind];
+    const entry = counts.get(label) ?? { kinds: new Set(), count: 0 };
+    entry.kinds.add(r.kind);
+    entry.count += 1;
+    counts.set(label, entry);
+  }
+  return Array.from(counts.entries())
+    .filter(([, e]) => e.count > 0)
+    .sort((a, b) => b[1].count - a[1].count)
+    .map(([label, e]) => {
+      const firstKind = Array.from(e.kinds)[0];
+      return {
+        id: label.toLowerCase(),
+        label,
+        kinds: Array.from(e.kinds),
+        count: e.count,
+        tone: KIND_TONE[firstKind],
+      };
+    });
+}
+
+const STORAGE_QUOTA_BYTES = 5 * 1024 * 1024 * 1024;
+
+function formatFileSize(bytes?: number | null): string {
+  if (!bytes) return '—';
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  if (bytes < 1024 * 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
+}
+
+export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionProps) {
+  const { resources, loading, error, deleteResource, signedUrl, refresh } = useCollegeResources();
+  const { toast } = useToast();
+
   const [searchQuery, setSearchQuery] = useState('');
-  const [filterType, setFilterType] = useState<string>('all');
+  const [filterFolder, setFilterFolder] = useState<string>('all');
+  const [filterKind, setFilterKind] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [deleting, setDeleting] = useState<CollegeResource | null>(null);
+  const [opening, setOpening] = useState<string | null>(null);
 
-  const filteredResources = teachingResources.filter((resource) => {
-    const matchesSearch =
-      resource.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      resource.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      resource.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-    const matchesType = filterType === 'all' || resource.type === filterType;
-    return matchesSearch && matchesType;
-  });
+  const folders = useMemo(() => buildFolders(resources), [resources]);
 
-  const formatFileSize = (bytes?: number) => {
-    if (!bytes) return 'N/A';
-    if (bytes < 1024) return bytes + ' B';
-    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  const filtered = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    return resources.filter((r) => {
+      const haystack = `${r.title} ${r.description ?? ''} ${(r.tags ?? []).join(' ')}`.toLowerCase();
+      const matchesSearch = !q || haystack.includes(q);
+      const matchesKind = filterKind === 'all' || r.kind === filterKind;
+      const folder = folders.find((f) => f.id === filterFolder);
+      const matchesFolder = filterFolder === 'all' || (folder && folder.kinds.includes(r.kind));
+      return matchesSearch && matchesKind && matchesFolder;
+    });
+  }, [resources, searchQuery, filterKind, filterFolder, folders]);
+
+  const usedStorage = useMemo(
+    () => resources.reduce((sum, r) => sum + (r.size_bytes ?? 0), 0),
+    [resources]
+  );
+  const storagePercent = Math.min(Math.round((usedStorage / STORAGE_QUOTA_BYTES) * 100), 100);
+
+  const openResource = async (resource: CollegeResource) => {
+    setOpening(resource.id);
+    try {
+      if (resource.external_url) {
+        window.open(resource.external_url, '_blank', 'noopener,noreferrer');
+        return;
+      }
+      if (resource.file_path) {
+        const url = await signedUrl(resource.file_path);
+        window.open(url, '_blank', 'noopener,noreferrer');
+        return;
+      }
+      toast({
+        title: 'Nothing to open',
+        description: 'This resource has no file or URL attached.',
+        variant: 'destructive',
+      });
+    } catch (e) {
+      toast({
+        title: 'Could not open',
+        description: (e as Error).message,
+        variant: 'destructive',
+      });
+    } finally {
+      setOpening(null);
+    }
   };
 
-  const getUploaderName = (uploadedBy: string) =>
-    staff.find((s) => s.id === uploadedBy)?.name || 'Unknown';
-
-  const totalStorage = 5 * 1024 * 1024 * 1024;
-  const usedStorage = teachingResources.reduce((sum, r) => sum + (r.fileSize || 0), 0);
-  const storagePercent = Math.min(Math.round((usedStorage / totalStorage) * 100), 100);
+  const confirmDelete = async () => {
+    if (!deleting) return;
+    const target = deleting;
+    try {
+      await deleteResource(target.id);
+      toast({ title: 'Resource deleted', description: target.title });
+      setDeleting(null);
+    } catch (e) {
+      toast({
+        title: 'Could not delete',
+        description: (e as Error).message,
+        variant: 'destructive',
+      });
+    }
+  };
 
   return (
     <PageFrame>
@@ -80,21 +192,28 @@ export function DocumentLibrarySection() {
         <PageHero
           eyebrow="Curriculum · Document Library"
           title="Shared documents"
-          description={`${teachingResources.length} document${teachingResources.length === 1 ? '' : 's'} · ${formatFileSize(usedStorage)} used.`}
+          description={
+            loading
+              ? 'Loading documents…'
+              : `${resources.length} document${resources.length === 1 ? '' : 's'} · ${formatFileSize(usedStorage)} used.`
+          }
           tone="purple"
           actions={
-            <button className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap">
+            <button
+              onClick={() => onNavigate?.('teachingresources')}
+              className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
+            >
               Upload →
             </button>
           }
         />
       </motion.div>
 
-      {/* Storage */}
+      {/* Storage bar — real bytes from real resources. */}
       <motion.div variants={itemVariants}>
         <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
           <div className="flex items-baseline justify-between">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/60">
               Storage
             </div>
             <div className="text-[12px] tabular-nums text-white">
@@ -117,49 +236,81 @@ export function DocumentLibrarySection() {
         </div>
       </motion.div>
 
-      {/* Folders */}
-      <motion.section variants={itemVariants} className="space-y-5">
-        <SectionHeader eyebrow="Folders" title="Browse by folder" />
-        <HubGrid columns={4}>
-          {mockFolders.map((folder, i) => (
+      {/* Folders — derived from real kinds, no fake counts. */}
+      {folders.length > 0 && (
+        <motion.section variants={itemVariants} className="space-y-5">
+          <SectionHeader eyebrow="Folders" title="Browse by type" />
+          <HubGrid columns={4}>
             <button
-              key={folder.id}
-              className="group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 text-left touch-manipulation flex flex-col min-h-[140px]"
+              onClick={() => setFilterFolder('all')}
+              className={cn(
+                'group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 text-left touch-manipulation flex flex-col min-h-[140px] rounded-2xl border',
+                filterFolder === 'all'
+                  ? 'border-elec-yellow/60'
+                  : 'border-white/[0.06]'
+              )}
             >
               <div
-                className={cn(
-                  'absolute inset-x-0 top-0 h-px opacity-70 group-hover:opacity-100 transition-opacity',
-                  toneDot[folder.tone]
-                )}
+                aria-hidden
+                className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/80 via-amber-400/70 to-orange-400/70 opacity-70 group-hover:opacity-100 transition-opacity"
               />
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                {String(i + 1).padStart(2, '0')} · Folder
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/60">
+                All
               </div>
               <h3 className="mt-3 text-base font-semibold text-white tracking-tight">
-                {folder.name}
+                Everything
               </h3>
               <div className="flex-grow" />
-              <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11.5px] text-white tabular-nums">
-                {folder.itemCount} items
+              <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11.5px] text-white/60 tabular-nums">
+                {resources.length} item{resources.length === 1 ? '' : 's'}
               </div>
             </button>
-          ))}
-        </HubGrid>
-      </motion.section>
+            {folders.map((folder, i) => (
+              <button
+                key={folder.id}
+                onClick={() => setFilterFolder(folder.id)}
+                className={cn(
+                  'group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 text-left touch-manipulation flex flex-col min-h-[140px] rounded-2xl border',
+                  filterFolder === folder.id
+                    ? 'border-elec-yellow/60'
+                    : 'border-white/[0.06]'
+                )}
+              >
+                <div
+                  className={cn(
+                    'absolute inset-x-0 top-0 h-px opacity-70 group-hover:opacity-100 transition-opacity',
+                    toneDot[folder.tone]
+                  )}
+                />
+                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/60">
+                  {String(i + 1).padStart(2, '0')} · Folder
+                </div>
+                <h3 className="mt-3 text-base font-semibold text-white tracking-tight">
+                  {folder.label}
+                </h3>
+                <div className="flex-grow" />
+                <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11.5px] text-white/60 tabular-nums">
+                  {folder.count} item{folder.count === 1 ? '' : 's'}
+                </div>
+              </button>
+            ))}
+          </HubGrid>
+        </motion.section>
+      )}
 
-      {/* Filter */}
       <motion.div variants={itemVariants}>
         <FilterBar
           tabs={[
             { value: 'all', label: 'All' },
-            { value: 'document', label: 'Documents' },
+            { value: 'pdf', label: 'PDFs' },
+            { value: 'doc', label: 'Docs' },
+            { value: 'slides', label: 'Slides' },
             { value: 'video', label: 'Videos' },
-            { value: 'presentation', label: 'Slides' },
-            { value: 'spreadsheet', label: 'Sheets' },
             { value: 'image', label: 'Images' },
+            { value: 'link', label: 'Links' },
           ]}
-          activeTab={filterType}
-          onTabChange={setFilterType}
+          activeTab={filterKind}
+          onTabChange={setFilterKind}
           search={searchQuery}
           onSearchChange={setSearchQuery}
           searchPlaceholder="Search documents…"
@@ -169,7 +320,9 @@ export function DocumentLibrarySection() {
                 onClick={() => setViewMode('grid')}
                 className={cn(
                   'px-3 py-1 text-[11.5px] font-medium rounded-full transition-colors touch-manipulation',
-                  viewMode === 'grid' ? 'bg-elec-yellow text-black' : 'text-white hover:text-white'
+                  viewMode === 'grid'
+                    ? 'bg-elec-yellow text-black'
+                    : 'text-white hover:text-white'
                 )}
               >
                 Grid
@@ -178,7 +331,9 @@ export function DocumentLibrarySection() {
                 onClick={() => setViewMode('list')}
                 className={cn(
                   'px-3 py-1 text-[11.5px] font-medium rounded-full transition-colors touch-manipulation',
-                  viewMode === 'list' ? 'bg-elec-yellow text-black' : 'text-white hover:text-white'
+                  viewMode === 'list'
+                    ? 'bg-elec-yellow text-black'
+                    : 'text-white hover:text-white'
                 )}
               >
                 List
@@ -188,43 +343,94 @@ export function DocumentLibrarySection() {
         />
       </motion.div>
 
-      {/* Recent */}
       <motion.section variants={itemVariants} className="space-y-5">
-        <SectionHeader eyebrow="Recent" title="Recent documents" />
-        {filteredResources.length === 0 ? (
-          <EmptyState title="No documents found" description="Try adjusting filters or upload a new file." />
+        <SectionHeader
+          eyebrow={loading ? 'Loading…' : 'Documents'}
+          title={loading ? '—' : `${filtered.length} item${filtered.length === 1 ? '' : 's'}`}
+        />
+
+        {error ? (
+          <EmptyState
+            title="Could not load documents"
+            description={error}
+            action="Retry"
+            onAction={refresh}
+          />
+        ) : loading ? (
+          <HubGrid columns={4}>
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div
+                key={i}
+                className="h-[140px] bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl animate-pulse"
+              />
+            ))}
+          </HubGrid>
+        ) : filtered.length === 0 ? (
+          <EmptyState
+            title={resources.length === 0 ? 'No documents yet' : 'No matches'}
+            description={
+              resources.length === 0
+                ? 'Upload teaching resources from the Teaching Resources section to see them here.'
+                : 'Try adjusting your filters or search query.'
+            }
+            action={resources.length === 0 ? 'Open Teaching Resources' : undefined}
+            onAction={
+              resources.length === 0
+                ? () => onNavigate?.('teachingresources')
+                : undefined
+            }
+          />
         ) : viewMode === 'grid' ? (
           <HubGrid columns={4}>
-            {filteredResources.slice(0, 12).map((resource, i) => (
-              <div
+            {filtered.slice(0, 24).map((resource, i) => (
+              <button
                 key={resource.id}
-                className="group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-4 flex flex-col min-h-[140px]"
+                type="button"
+                onClick={() => openResource(resource)}
+                disabled={opening === resource.id}
+                className="group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-4 flex flex-col min-h-[140px] rounded-2xl border border-white/[0.06] text-left touch-manipulation focus:outline-none focus:ring-2 focus:ring-elec-yellow/40 disabled:opacity-60"
               >
                 <div
                   className={cn(
                     'absolute inset-x-0 top-0 h-px opacity-70',
-                    toneDot[typeTone(resource.type)]
+                    toneDot[KIND_TONE[resource.kind]]
                   )}
                 />
                 <div className="flex items-start justify-between">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    {String(i + 1).padStart(2, '0')} · {resource.type}
+                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/60">
+                    {String(i + 1).padStart(2, '0')} · {KIND_LABEL[resource.kind]}
                   </div>
                   <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
+                    <DropdownMenuTrigger
+                      asChild
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       <button
+                        type="button"
+                        onClick={(e) => e.stopPropagation()}
                         className="text-white hover:text-white text-[16px] leading-none px-1 touch-manipulation"
                         aria-label="Options"
                       >
                         ⋯
                       </button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem className="h-11">Preview</DropdownMenuItem>
-                      <DropdownMenuItem className="h-11">Download</DropdownMenuItem>
-                      <DropdownMenuItem className="h-11">Share</DropdownMenuItem>
+                    <DropdownMenuContent
+                      align="end"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <DropdownMenuItem
+                        className="h-11"
+                        onClick={() => openResource(resource)}
+                      >
+                        Open
+                      </DropdownMenuItem>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem className="h-11 text-red-400">Delete</DropdownMenuItem>
+                      <DropdownMenuItem
+                        className="h-11 text-red-400 focus:text-red-300"
+                        onClick={() => setDeleting(resource)}
+                      >
+                        Delete
+                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>
@@ -232,30 +438,40 @@ export function DocumentLibrarySection() {
                   {resource.title}
                 </h4>
                 <div className="flex-grow" />
-                <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11px] text-white tabular-nums">
-                  {formatFileSize(resource.fileSize)}
+                <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11px] text-white/60 tabular-nums">
+                  {formatFileSize(resource.size_bytes)}
                 </div>
-              </div>
+              </button>
             ))}
           </HubGrid>
         ) : (
           <ListCard>
-            {filteredResources.slice(0, 20).map((resource) => (
-              <div
+            {filtered.slice(0, 60).map((resource) => (
+              <button
                 key={resource.id}
-                className="flex items-center gap-4 px-5 sm:px-6 py-4 hover:bg-[hsl(0_0%_15%)] transition-colors"
+                type="button"
+                onClick={() => openResource(resource)}
+                disabled={opening === resource.id}
+                className="w-full flex items-center gap-4 px-5 sm:px-6 py-4 hover:bg-[hsl(0_0%_15%)] transition-colors text-left touch-manipulation disabled:opacity-60"
               >
                 <span
                   aria-hidden
-                  className={cn('h-1.5 w-1.5 rounded-full shrink-0', toneDot[typeTone(resource.type)])}
+                  className={cn(
+                    'h-1.5 w-1.5 rounded-full shrink-0',
+                    toneDot[KIND_TONE[resource.kind]]
+                  )}
                 />
                 <div className="flex-1 min-w-0">
-                  <div className="text-[14px] font-medium text-white truncate">{resource.title}</div>
-                  <div className="mt-0.5 flex items-center gap-3 text-[11.5px] text-white">
-                    <span className="tabular-nums">{formatFileSize(resource.fileSize)}</span>
-                    <span>{getUploaderName(resource.uploadedBy)}</span>
+                  <div className="text-[14px] font-medium text-white truncate">
+                    {resource.title}
+                  </div>
+                  <div className="mt-0.5 flex items-center gap-3 text-[11.5px] text-white/60">
                     <span className="tabular-nums">
-                      {new Date(resource.uploadedAt).toLocaleDateString('en-GB', {
+                      {formatFileSize(resource.size_bytes)}
+                    </span>
+                    {resource.uploader_name && <span>{resource.uploader_name}</span>}
+                    <span className="tabular-nums">
+                      {new Date(resource.created_at).toLocaleDateString('en-GB', {
                         day: 'numeric',
                         month: 'short',
                       })}
@@ -263,27 +479,57 @@ export function DocumentLibrarySection() {
                   </div>
                 </div>
                 <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
+                  <DropdownMenuTrigger
+                    asChild
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <button
+                      type="button"
+                      onClick={(e) => e.stopPropagation()}
                       className="text-white hover:text-white text-[16px] leading-none px-1 touch-manipulation shrink-0"
                       aria-label="Options"
                     >
                       ⋯
                     </button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem className="h-11">Preview</DropdownMenuItem>
-                    <DropdownMenuItem className="h-11">Download</DropdownMenuItem>
-                    <DropdownMenuItem className="h-11">Share</DropdownMenuItem>
+                  <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
+                    <DropdownMenuItem
+                      className="h-11"
+                      onClick={() => openResource(resource)}
+                    >
+                      Open
+                    </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem className="h-11 text-red-400">Delete</DropdownMenuItem>
+                    <DropdownMenuItem
+                      className="h-11 text-red-400 focus:text-red-300"
+                      onClick={() => setDeleting(resource)}
+                    >
+                      Delete
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-              </div>
+              </button>
             ))}
           </ListCard>
         )}
       </motion.section>
+
+      <ConfirmationDialog
+        open={!!deleting}
+        onOpenChange={(v) => {
+          if (!v) setDeleting(null);
+        }}
+        title="Delete document?"
+        description={
+          deleting
+            ? `"${deleting.title}" will be permanently removed. This cannot be undone.`
+            : ''
+        }
+        confirmText="Delete"
+        cancelText="Cancel"
+        variant="destructive"
+        onConfirm={confirmDelete}
+      />
     </PageFrame>
   );
 }

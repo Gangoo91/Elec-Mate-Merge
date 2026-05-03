@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
+import { useCollegeSettings } from '@/hooks/college/useCollegeSettings';
 import {
   ListCard,
   ListRow,
@@ -44,6 +45,8 @@ export function QualityDashboardSection({ onNavigate }: QualityDashboardSectionP
     getOverdueILPReviewsData,
     getPendingGradesData,
   } = useCollegeSupabase();
+  const { settings } = useCollegeSettings();
+  const lowAttendance = settings.low_attendance_threshold_percent;
 
   // ----- Derived metrics -----
   const metrics = useMemo(() => {
@@ -137,7 +140,7 @@ export function QualityDashboardSection({ onNavigate }: QualityDashboardSectionP
       const present = studentRecords.filter(
         (a) => a.status === 'Present' || a.status === 'Late'
       ).length;
-      return (present / studentRecords.length) * 100 < 80;
+      return (present / studentRecords.length) * 100 < lowAttendance;
     });
     const pendingAssessments = getPendingGradesData();
     const epaGatewayDueSoon = epaRecords.filter((e) => {
@@ -161,7 +164,7 @@ export function QualityDashboardSection({ onNavigate }: QualityDashboardSectionP
       pendingAssessments,
       epaGatewayDueSoon,
     };
-  }, [students, attendance, ilps, epaRecords, grades, getOverdueILPReviewsData, getPendingGradesData]);
+  }, [students, attendance, ilps, epaRecords, grades, getOverdueILPReviewsData, getPendingGradesData, lowAttendance]);
 
   if (isLoading) return <LoadingState />;
 
@@ -236,7 +239,7 @@ export function QualityDashboardSection({ onNavigate }: QualityDashboardSectionP
           {
             title: 'Low attendance students',
             count: metrics.lowAttendanceStudents.length,
-            desc: `${metrics.lowAttendanceStudents.length} below 80% attendance`,
+            desc: `${metrics.lowAttendanceStudents.length} below ${lowAttendance}% attendance`,
             tone: 'red' as const,
             section: 'attendance' as CollegeSection,
           },

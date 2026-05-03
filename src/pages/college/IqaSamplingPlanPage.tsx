@@ -55,6 +55,8 @@ export default function IqaSamplingPlanPage() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const data = useIqaSamplingPlan(id ?? null);
+  const [visibleEligible, setVisibleEligible] = useState(50);
+  const [visibleEligibleOtj, setVisibleEligibleOtj] = useState(50);
 
   if (!id) {
     return (
@@ -352,11 +354,27 @@ export default function IqaSamplingPlanPage() {
             </p>
           </div>
         ) : (
-          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl divide-y divide-white/[0.04]">
-            {eligible.map((o) => (
-              <EligibleRow key={o.id} obs={o} onAdd={() => handleAdd(o.id)} />
-            ))}
-          </div>
+          <>
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl divide-y divide-white/[0.04]">
+              {eligible.slice(0, visibleEligible).map((o) => (
+                <EligibleRow key={o.id} obs={o} onAdd={() => handleAdd(o.id)} />
+              ))}
+            </div>
+            {eligible.length > visibleEligible && (
+              <div className="mt-3 flex items-center justify-between gap-3">
+                <p className="text-[11.5px] text-white/60 tabular-nums">
+                  Showing {Math.min(visibleEligible, eligible.length)} of {eligible.length}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setVisibleEligible((n) => n + 50)}
+                  className="h-11 px-4 text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+                >
+                  Load more →
+                </button>
+              </div>
+            )}
+          </>
         )}
       </motion.section>
 
@@ -386,7 +404,7 @@ export default function IqaSamplingPlanPage() {
           </div>
         ) : (
           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl divide-y divide-white/[0.04]">
-            {eligibleOtj.map((o) => (
+            {eligibleOtj.slice(0, visibleEligibleOtj).map((o) => (
               <EligibleOtjRow
                 key={o.id}
                 otj={o}
@@ -399,6 +417,20 @@ export default function IqaSamplingPlanPage() {
                 }
               />
             ))}
+          </div>
+        )}
+        {eligibleOtj.length > visibleEligibleOtj && (
+          <div className="mt-3 flex items-center justify-between gap-3">
+            <p className="text-[11.5px] text-white/60 tabular-nums">
+              Showing {Math.min(visibleEligibleOtj, eligibleOtj.length)} of {eligibleOtj.length}
+            </p>
+            <button
+              type="button"
+              onClick={() => setVisibleEligibleOtj((n) => n + 50)}
+              className="h-11 px-4 text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+            >
+              Load more →
+            </button>
           </div>
         )}
       </motion.section>

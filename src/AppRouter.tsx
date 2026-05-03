@@ -135,6 +135,7 @@ const CohortEpaPage = lazy(() => import('@/pages/college/CohortEpaPage'));
 const TutorQuizzesPage = lazy(() => import('@/pages/college/TutorQuizzesPage'));
 const TutorQuizDetailPage = lazy(() => import('@/pages/college/TutorQuizDetailPage'));
 const CurriculumSettingsPage = lazy(() => import('@/pages/college/CurriculumSettingsPage'));
+const OperationalSettingsPage = lazy(() => import('@/pages/college/OperationalSettingsPage'));
 const ElecIdPage = lazyWithRetry(() => import('@/pages/ElecIdPage'));
 const PrivacyPolicy = lazy(() => import('@/pages/legal/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('@/pages/legal/TermsOfService'));
@@ -2200,6 +2201,19 @@ const AppRouter = () => {
               <LazyRoute>
                 <CollegeGuard>
                   <CurriculumSettingsPage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* Operational thresholds — IQA sampling rate, audit window,
+              attendance bands, EPA verdict bands. */}
+          <Route
+            path="college/settings/operational"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <OperationalSettingsPage />
                 </CollegeGuard>
               </LazyRoute>
             }

@@ -62,7 +62,12 @@ const KIND_DOT: Record<InboxKind, string> = {
 
 export function NotificationCenter(_props: NotificationCenterProps) {
   const navigate = useNavigate();
-  const { items: inbox, stats: inboxStats } = useUnifiedInbox();
+  const {
+    items: inbox,
+    stats: inboxStats,
+    loading: inboxLoading,
+    error: inboxError,
+  } = useUnifiedInbox();
   const { items: marking, stats: markingStats } = useMarkingQueue();
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState<NotifTab>('all');
@@ -200,7 +205,31 @@ export function NotificationCenter(_props: NotificationCenterProps) {
 
             <ScrollArea className="max-h-[420px]">
               <TabsContent value={tab} className="m-0">
-                {filtered.length === 0 ? (
+                {inboxError ? (
+                  <div className="py-10 px-5 text-center">
+                    <div className="text-[13px] font-medium text-red-400">
+                      Could not load notifications
+                    </div>
+                    <div className="mt-1 text-[11.5px] text-white/60 break-words">
+                      {inboxError}
+                    </div>
+                  </div>
+                ) : inboxLoading && filtered.length === 0 ? (
+                  <div className="divide-y divide-white/[0.06]">
+                    {Array.from({ length: 3 }).map((_, i) => (
+                      <div key={i} className="px-5 py-3.5 animate-pulse">
+                        <div className="flex gap-3 items-start">
+                          <span className="mt-1.5 h-2 w-2 rounded-full bg-white/10 shrink-0" />
+                          <div className="min-w-0 flex-1 space-y-2">
+                            <div className="h-3 w-1/3 bg-white/10 rounded" />
+                            <div className="h-3 w-3/4 bg-white/10 rounded" />
+                            <div className="h-3 w-1/2 bg-white/10 rounded" />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : filtered.length === 0 ? (
                   <div className="py-12 text-center">
                     <div className="text-[13px] font-medium text-white">All caught up</div>
                     <div className="mt-1 text-[11.5px] text-white">Nothing here right now.</div>

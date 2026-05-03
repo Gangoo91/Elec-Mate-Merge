@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { useCollege } from '@/contexts/CollegeContext';
+import { useNavigate } from 'react-router-dom';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,84 +16,106 @@ import {
   itemVariants,
 } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
+import { useToast } from '@/hooks/use-toast';
+import {
+  useSchemesOfWork,
+  type SchemeOfWorkRow,
+  type SchemeStatus,
+} from '@/hooks/college/useSchemesOfWork';
+import { NewSchemeDialog } from '@/components/college/dialogs/NewSchemeDialog';
+import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 
-const mockSchemesOfWork = [
-  {
-    id: 'sow-1',
-    title: 'Level 3 Electrical Installation - Year 1',
-    courseId: 'course-1',
-    courseName: 'Electrical Installation Level 3',
-    academicYear: '2024/25',
-    totalWeeks: 36,
-    completedWeeks: 12,
-    status: 'Active',
-    createdBy: 'staff-1',
-    createdByName: 'John Smith',
-    lastUpdated: '2024-01-10',
-    units: [
-      { name: 'Health & Safety', weeks: 4, completed: true },
-      { name: 'Electrical Science', weeks: 8, completed: true },
-      { name: 'Installation Methods', weeks: 10, completed: false },
-      { name: 'Testing & Inspection', weeks: 8, completed: false },
-      { name: 'Fault Diagnosis', weeks: 6, completed: false },
-    ],
-  },
-  {
-    id: 'sow-2',
-    title: 'Level 2 Electrical Fundamentals',
-    courseId: 'course-2',
-    courseName: 'Electrical Installation Level 2',
-    academicYear: '2024/25',
-    totalWeeks: 32,
-    completedWeeks: 14,
-    status: 'Active',
-    createdBy: 'staff-2',
-    createdByName: 'Sarah Johnson',
-    lastUpdated: '2024-01-08',
-    units: [
-      { name: 'Introduction to Electrical', weeks: 6, completed: true },
-      { name: 'Basic Circuits', weeks: 8, completed: true },
-      { name: 'Wiring Systems', weeks: 10, completed: false },
-      { name: 'Safety Practices', weeks: 8, completed: false },
-    ],
-  },
-  {
-    id: 'sow-3',
-    title: 'Level 3 AM2 Preparation',
-    courseId: 'course-1',
-    courseName: 'Electrical Installation Level 3',
-    academicYear: '2024/25',
-    totalWeeks: 12,
-    completedWeeks: 0,
-    status: 'Draft',
-    createdBy: 'staff-1',
-    createdByName: 'John Smith',
-    lastUpdated: '2024-01-05',
-    units: [
-      { name: 'AM2 Overview', weeks: 2, completed: false },
-      { name: 'Practical Skills Review', weeks: 4, completed: false },
-      { name: 'Mock Assessments', weeks: 4, completed: false },
-      { name: 'Final Preparation', weeks: 2, completed: false },
-    ],
-  },
-];
+const STATUS_TONE: Record<SchemeStatus, 'green' | 'amber' | 'yellow'> = {
+  Active: 'green',
+  Draft: 'amber',
+  Archived: 'yellow',
+};
 
 export function SchemesOfWorkSection() {
-  const { courses } = useCollege();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const { schemes, isLoading, error, refetch, update, remove, duplicate } = useSchemesOfWork();
+
   const [searchQuery, setSearchQuery] = useState('');
   const [filterStatus, setFilterStatus] = useState<string>('all');
-  const [filterCourse, setFilterCourse] = useState<string>('all');
+  const [filterCohort, setFilterCohort] = useState<string>('all');
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [editingScheme, setEditingScheme] = useState<SchemeOfWorkRow | null>(null);
+  const [deletingScheme, setDeletingScheme] = useState<SchemeOfWorkRow | null>(null);
 
-  const filteredSchemes = mockSchemesOfWork.filter((scheme) => {
-    const matchesSearch =
-      scheme.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      scheme.courseName.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesStatus = filterStatus === 'all' || scheme.status === filterStatus;
-    const matchesCourse = filterCourse === 'all' || scheme.courseId === filterCourse;
-    return matchesSearch && matchesStatus && matchesCourse;
-  });
+  const cohortOptions = useMemo(() => {
+    const seen = new Map<string, string>();
+    for (const s of schemes) {
+      if (s.cohort_id && s.cohort_name) seen.set(s.cohort_id, s.cohort_name);
+    }
+    return Array.from(seen.entries()).map(([id, name]) => ({ id, name }));
+  }, [schemes]);
 
-  const activeCount = mockSchemesOfWork.filter((s) => s.status === 'Active').length;
+  const filtered = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    return schemes.filter((s) => {
+      const haystack =
+        `${s.title} ${s.cohort_name ?? ''} ${s.qualification_title ?? ''} ${s.qualification_code}`.toLowerCase();
+      const matchesSearch = !q || haystack.includes(q);
+      const matchesStatus = filterStatus === 'all' || s.status === filterStatus;
+      const matchesCohort = filterCohort === 'all' || s.cohort_id === filterCohort;
+      return matchesSearch && matchesStatus && matchesCohort;
+    });
+  }, [schemes, searchQuery, filterStatus, filterCohort]);
+
+  const counts = useMemo(() => {
+    const c = { all: schemes.length, Active: 0, Draft: 0, Archived: 0 } as Record<string, number>;
+    for (const s of schemes) c[s.status] = (c[s.status] ?? 0) + 1;
+    return c;
+  }, [schemes]);
+
+  const handleArchive = async (scheme: SchemeOfWorkRow) => {
+    try {
+      await update.mutateAsync({
+        id: scheme.id,
+        patch: { status: scheme.status === 'Archived' ? 'Active' : 'Archived' },
+      });
+      toast({
+        title: scheme.status === 'Archived' ? 'Scheme reactivated' : 'Scheme archived',
+        description: scheme.title,
+      });
+    } catch (e) {
+      toast({
+        title: 'Could not change status',
+        description: (e as Error).message,
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleDuplicate = async (scheme: SchemeOfWorkRow) => {
+    try {
+      await duplicate.mutateAsync(scheme.id);
+      toast({ title: 'Scheme duplicated', description: `${scheme.title} (copy)` });
+    } catch (e) {
+      toast({
+        title: 'Could not duplicate',
+        description: (e as Error).message,
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!deletingScheme) return;
+    const scheme = deletingScheme;
+    try {
+      await remove.mutateAsync(scheme.id);
+      toast({ title: 'Scheme deleted', description: scheme.title });
+      setDeletingScheme(null);
+    } catch (e) {
+      toast({
+        title: 'Could not delete',
+        description: (e as Error).message,
+        variant: 'destructive',
+      });
+    }
+  };
 
   return (
     <PageFrame>
@@ -101,10 +123,20 @@ export function SchemesOfWorkSection() {
         <PageHero
           eyebrow="Curriculum · Schemes of Work"
           title="Scheme planning"
-          description={`${activeCount} active scheme${activeCount === 1 ? '' : 's'} of work across courses.`}
+          description={
+            isLoading
+              ? 'Loading schemes…'
+              : `${counts.Active ?? 0} active scheme${(counts.Active ?? 0) === 1 ? '' : 's'} of work across cohorts.`
+          }
           tone="emerald"
           actions={
-            <button className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap">
+            <button
+              onClick={() => {
+                setEditingScheme(null);
+                setDialogOpen(true);
+              }}
+              className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
+            >
               New scheme →
             </button>
           }
@@ -114,18 +146,10 @@ export function SchemesOfWorkSection() {
       <motion.div variants={itemVariants}>
         <FilterBar
           tabs={[
-            { value: 'all', label: 'All', count: mockSchemesOfWork.length },
-            { value: 'Active', label: 'Active', count: activeCount },
-            {
-              value: 'Draft',
-              label: 'Draft',
-              count: mockSchemesOfWork.filter((s) => s.status === 'Draft').length,
-            },
-            {
-              value: 'Archived',
-              label: 'Archived',
-              count: mockSchemesOfWork.filter((s) => s.status === 'Archived').length,
-            },
+            { value: 'all', label: 'All', count: counts.all },
+            { value: 'Active', label: 'Active', count: counts.Active ?? 0 },
+            { value: 'Draft', label: 'Draft', count: counts.Draft ?? 0 },
+            { value: 'Archived', label: 'Archived', count: counts.Archived ?? 0 },
           ]}
           activeTab={filterStatus}
           onTabChange={setFilterStatus}
@@ -134,36 +158,59 @@ export function SchemesOfWorkSection() {
           searchPlaceholder="Search schemes…"
           actions={
             <select
-              value={filterCourse}
-              onChange={(e) => setFilterCourse(e.target.value)}
+              value={filterCohort}
+              onChange={(e) => setFilterCohort(e.target.value)}
               className="h-10 px-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
             >
-              <option value="all">All Courses</option>
-              {courses
-                .filter((c) => c.status === 'Active')
-                .map((course) => (
-                  <option key={course.id} value={course.id}>
-                    {course.name}
-                  </option>
-                ))}
+              <option value="all">All Cohorts</option>
+              {cohortOptions.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name}
+                </option>
+              ))}
             </select>
           }
         />
       </motion.div>
 
-      {filteredSchemes.length === 0 ? (
-        <EmptyState title="No schemes found" description="Try adjusting filters." />
+      {error ? (
+        <EmptyState
+          title="Could not load schemes"
+          description={error.message}
+          action="Retry"
+          onAction={() => refetch()}
+        />
+      ) : isLoading ? (
+        <div className="space-y-3">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div
+              key={i}
+              className="h-44 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl animate-pulse"
+            />
+          ))}
+        </div>
+      ) : filtered.length === 0 ? (
+        <EmptyState
+          title={schemes.length === 0 ? 'No schemes yet' : 'No matches'}
+          description={
+            schemes.length === 0
+              ? 'Create your first scheme of work to plan how a qualification is delivered to a cohort across an academic year.'
+              : 'Try adjusting your filters or search query.'
+          }
+          action={schemes.length === 0 ? 'Create scheme' : undefined}
+          onAction={
+            schemes.length === 0
+              ? () => {
+                  setEditingScheme(null);
+                  setDialogOpen(true);
+                }
+              : undefined
+          }
+        />
       ) : (
         <motion.div variants={itemVariants} className="space-y-4">
-          {filteredSchemes.map((scheme) => {
-            const progressPercent = Math.round((scheme.completedWeeks / scheme.totalWeeks) * 100);
-            const tone =
-              scheme.status === 'Active'
-                ? 'green'
-                : scheme.status === 'Draft'
-                  ? 'amber'
-                  : 'yellow';
-
+          {filtered.map((scheme) => {
+            const progress = computeProgress(scheme.start_date, scheme.end_date);
             return (
               <div
                 key={scheme.id}
@@ -171,15 +218,17 @@ export function SchemesOfWorkSection() {
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
-                      {scheme.courseName} · {scheme.academicYear}
+                    <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/60">
+                      {scheme.qualification_title || scheme.qualification_code}
+                      {scheme.cohort_name && ` · ${scheme.cohort_name}`}
+                      {scheme.academic_year && ` · ${scheme.academic_year}`}
                     </div>
                     <h3 className="mt-1.5 text-lg sm:text-xl font-semibold text-white tracking-tight">
                       {scheme.title}
                     </h3>
                   </div>
                   <div className="flex items-center gap-1.5 shrink-0">
-                    <Pill tone={tone as 'green' | 'amber' | 'yellow'}>{scheme.status}</Pill>
+                    <Pill tone={STATUS_TONE[scheme.status]}>{scheme.status}</Pill>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <button
@@ -190,63 +239,165 @@ export function SchemesOfWorkSection() {
                         </button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem className="h-11">View details</DropdownMenuItem>
-                        <DropdownMenuItem className="h-11">Edit scheme</DropdownMenuItem>
-                        <DropdownMenuItem className="h-11">Export to PDF</DropdownMenuItem>
-                        <DropdownMenuItem className="h-11">Duplicate</DropdownMenuItem>
-                        <DropdownMenuItem className="h-11">Archive</DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="h-11"
+                          onClick={() => navigate('/college?section=lessonplans')}
+                        >
+                          View lesson plans
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="h-11"
+                          onClick={() => {
+                            setEditingScheme(scheme);
+                            setDialogOpen(true);
+                          }}
+                        >
+                          Edit scheme
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="h-11"
+                          onClick={() => handleDuplicate(scheme)}
+                        >
+                          Duplicate
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="h-11"
+                          onClick={() => handleArchive(scheme)}
+                        >
+                          {scheme.status === 'Archived' ? 'Reactivate' : 'Archive'}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="h-11 text-red-400 focus:text-red-300"
+                          onClick={() => setDeletingScheme(scheme)}
+                        >
+                          Delete
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
                 </div>
 
-                <div className="mt-4">
-                  <div className="flex items-baseline justify-between text-[11.5px]">
-                    <span className="text-white uppercase tracking-[0.12em]">Progress</span>
-                    <span className="font-medium text-white tabular-nums">
-                      {scheme.completedWeeks}/{scheme.totalWeeks} wks · {progressPercent}%
-                    </span>
-                  </div>
-                  <div className="mt-1.5 h-1 bg-white/[0.06] rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-elec-yellow/80 rounded-full transition-all"
-                      style={{ width: `${progressPercent}%` }}
-                    />
-                  </div>
-                </div>
-
-                <div className="mt-4 flex flex-wrap gap-1.5">
-                  {scheme.units.map((unit, i) => (
-                    <span
-                      key={i}
-                      className={cn(
-                        'inline-flex items-center gap-1.5 text-[11px] px-2 py-1 rounded-full border tabular-nums',
-                        unit.completed
-                          ? 'bg-green-500/10 text-green-400 border-green-500/20'
-                          : 'bg-white/[0.03] text-white border-white/[0.06]'
-                      )}
-                    >
-                      <span
-                        aria-hidden
+                {progress.totalWeeks > 0 && (
+                  <div className="mt-4">
+                    <div className="flex items-baseline justify-between text-[11.5px]">
+                      <span className="text-white/60 uppercase tracking-[0.12em]">
+                        {progress.label}
+                      </span>
+                      <span className="font-medium text-white tabular-nums">
+                        {progress.elapsedWeeks}/{progress.totalWeeks} wks · {progress.percent}%
+                      </span>
+                    </div>
+                    <div className="mt-1.5 h-1 bg-white/[0.06] rounded-full overflow-hidden">
+                      <div
                         className={cn(
-                          'h-1.5 w-1.5 rounded-full',
-                          unit.completed ? 'bg-green-400' : 'bg-white/30'
+                          'h-full rounded-full transition-all',
+                          progress.percent >= 100 ? 'bg-emerald-500/80' : 'bg-elec-yellow/80'
                         )}
+                        style={{ width: `${Math.min(progress.percent, 100)}%` }}
                       />
-                      {unit.name} · {unit.weeks}w
-                    </span>
-                  ))}
-                </div>
+                    </div>
+                  </div>
+                )}
 
-                <div className="mt-5 pt-4 border-t border-white/[0.06] flex flex-wrap items-center gap-x-5 gap-y-1 text-[11.5px] text-white">
-                  <span className="tabular-nums">{scheme.totalWeeks} weeks total</span>
-                  <span>By {scheme.createdByName}</span>
+                <div className="mt-5 pt-4 border-t border-white/[0.06] flex flex-wrap items-center gap-x-5 gap-y-1 text-[11.5px] text-white/60">
+                  {scheme.start_date && (
+                    <span className="tabular-nums">
+                      Starts{' '}
+                      {new Date(scheme.start_date).toLocaleDateString('en-GB', {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric',
+                      })}
+                    </span>
+                  )}
+                  {scheme.end_date && (
+                    <span className="tabular-nums">
+                      Ends{' '}
+                      {new Date(scheme.end_date).toLocaleDateString('en-GB', {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric',
+                      })}
+                    </span>
+                  )}
+                  <span>
+                    Updated{' '}
+                    {new Date(scheme.updated_at).toLocaleDateString('en-GB', {
+                      day: 'numeric',
+                      month: 'short',
+                    })}
+                  </span>
                 </div>
               </div>
             );
           })}
         </motion.div>
       )}
+
+      <NewSchemeDialog
+        open={dialogOpen}
+        onOpenChange={(v) => {
+          setDialogOpen(v);
+          if (!v) setEditingScheme(null);
+        }}
+        editing={editingScheme}
+      />
+
+      <ConfirmationDialog
+        open={!!deletingScheme}
+        onOpenChange={(v) => {
+          if (!v) setDeletingScheme(null);
+        }}
+        title="Delete scheme of work?"
+        description={
+          deletingScheme
+            ? `"${deletingScheme.title}" will be permanently removed. This cannot be undone.`
+            : ''
+        }
+        confirmText="Delete"
+        cancelText="Cancel"
+        variant="destructive"
+        loading={remove.isPending}
+        onConfirm={handleDelete}
+      />
     </PageFrame>
   );
+}
+
+interface ProgressInfo {
+  totalWeeks: number;
+  elapsedWeeks: number;
+  percent: number;
+  label: string;
+}
+
+function computeProgress(startDate: string | null, endDate: string | null): ProgressInfo {
+  if (!startDate || !endDate) {
+    return { totalWeeks: 0, elapsedWeeks: 0, percent: 0, label: 'Progress' };
+  }
+  const start = new Date(startDate).getTime();
+  const end = new Date(endDate).getTime();
+  const now = Date.now();
+  const totalDays = Math.max(0, Math.round((end - start) / 86400000));
+  const totalWeeks = Math.max(1, Math.round(totalDays / 7));
+
+  if (now < start) {
+    const daysToStart = Math.round((start - now) / 86400000);
+    return {
+      totalWeeks,
+      elapsedWeeks: 0,
+      percent: 0,
+      label: daysToStart === 1 ? 'Starts tomorrow' : `Starts in ${daysToStart} days`,
+    };
+  }
+
+  const elapsedDays = Math.round((Math.min(now, end) - start) / 86400000);
+  const elapsedWeeks = Math.min(totalWeeks, Math.max(0, Math.round(elapsedDays / 7)));
+  const percent = Math.round((elapsedWeeks / totalWeeks) * 100);
+  return {
+    totalWeeks,
+    elapsedWeeks,
+    percent,
+    label: now >= end ? 'Complete' : 'In progress',
+  };
 }

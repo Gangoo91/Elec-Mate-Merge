@@ -33,8 +33,8 @@ export function useCollegeConversations(enabled: boolean = true) {
         'postgres_changes',
         {
           event: '*',
-          schema: 'college',
-          table: 'conversations',
+          schema: 'public',
+          table: 'college_conversations',
         },
         () => {
           queryClient.invalidateQueries({ queryKey: COLLEGE_CONVERSATIONS_KEY });

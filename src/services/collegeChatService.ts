@@ -351,8 +351,8 @@ export const collegeMessageService = {
         'postgres_changes',
         {
           event: 'INSERT',
-          schema: 'college',
-          table: 'messages',
+          schema: 'public',
+          table: 'college_messages',
           filter: `conversation_id=eq.${conversationId}`,
         },
         (payload) => onMessage(payload.new as unknown as CollegeMessage)

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PageFrame } from '@/components/college/primitives';
 import {
@@ -35,6 +35,7 @@ export default function MarkingQueuePage() {
   const [search, setSearch] = useState('');
   const [openAttemptId, setOpenAttemptId] = useState<string | null>(null);
   const [openStudentName, setOpenStudentName] = useState<string | undefined>();
+  const [visibleCount, setVisibleCount] = useState(50);
 
   const filtered = useMemo(() => {
     let list = items;
@@ -50,6 +51,14 @@ export default function MarkingQueuePage() {
     }
     return list;
   }, [items, filter, search]);
+
+  // Reset paging when filter or search changes — avoids "stuck on page 5" UX.
+  useEffect(() => {
+    setVisibleCount(50);
+  }, [filter, search]);
+
+  const visible = useMemo(() => filtered.slice(0, visibleCount), [filtered, visibleCount]);
+  const canLoadMore = filtered.length > visibleCount;
 
   const openItem = (item: MarkingQueueItem) => {
     setOpenAttemptId(item.attempt_id);
@@ -159,13 +168,29 @@ export default function MarkingQueuePage() {
           ) : filtered.length === 0 ? (
             <EmptyState filter={filter} hasAny={items.length > 0} />
           ) : (
-            <ul className="space-y-2">
-              {filtered.map((item) => (
-                <li key={item.attempt_id}>
-                  <QueueRow item={item} onOpen={() => openItem(item)} />
-                </li>
-              ))}
-            </ul>
+            <>
+              <ul className="space-y-2">
+                {visible.map((item) => (
+                  <li key={item.attempt_id}>
+                    <QueueRow item={item} onOpen={() => openItem(item)} />
+                  </li>
+                ))}
+              </ul>
+              {canLoadMore && (
+                <div className="mt-4 flex items-center justify-between gap-3">
+                  <p className="text-[11.5px] text-white/60 tabular-nums">
+                    Showing {visible.length} of {filtered.length}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setVisibleCount((n) => n + 50)}
+                    className="h-11 px-4 text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+                  >
+                    Load more →
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>

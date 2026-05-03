@@ -7,6 +7,7 @@ import { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
+import { useCollegeSettings } from '@/hooks/college/useCollegeSettings';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 import {
   PageFrame,
@@ -34,6 +35,9 @@ interface Student360SectionProps {
 export function Student360Section({ studentId, onNavigate, onBack }: Student360SectionProps) {
   const { students, courses, cohorts, attendance, grades, ilps, epaRecords, isLoading } =
     useCollegeSupabase();
+  const { settings } = useCollegeSettings();
+  const lowAttendance = settings.low_attendance_threshold_percent;
+  const highAttendance = settings.high_attendance_threshold_percent;
 
   const student = useMemo(() => students.find((s) => s.id === studentId), [students, studentId]);
 
@@ -117,10 +121,10 @@ export function Student360Section({ studentId, onNavigate, onBack }: Student360S
 
   const attendanceColour = useMemo(() => {
     if (attendanceRate === null) return 'text-white';
-    if (attendanceRate >= 90) return 'text-emerald-400';
-    if (attendanceRate >= 80) return 'text-amber-400';
+    if (attendanceRate >= highAttendance) return 'text-emerald-400';
+    if (attendanceRate >= lowAttendance) return 'text-amber-400';
     return 'text-red-400';
-  }, [attendanceRate]);
+  }, [attendanceRate, highAttendance, lowAttendance]);
 
   const gradeTone = (grade?: string | null): Tone => {
     const g = grade?.toLowerCase();
@@ -249,9 +253,9 @@ export function Student360Section({ studentId, onNavigate, onBack }: Student360S
               tone:
                 attendanceRate === null
                   ? undefined
-                  : attendanceRate >= 90
+                  : attendanceRate >= highAttendance
                     ? 'green'
-                    : attendanceRate >= 80
+                    : attendanceRate >= lowAttendance
                       ? 'amber'
                       : 'red',
             },

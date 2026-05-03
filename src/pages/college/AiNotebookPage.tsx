@@ -38,10 +38,14 @@ export default function AiNotebookPage() {
   const { user } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const queryStudent = searchParams.get('student');
+  const queryPrompt = searchParams.get('prompt');
   const [subjectStudentId, setSubjectStudentId] = useState<string | null>(queryStudent);
   const [learners, setLearners] = useState<LearnerOption[]>([]);
   const [loadingLearners, setLoadingLearners] = useState(true);
   const [pickerOpen, setPickerOpen] = useState(!queryStudent);
+  // Latch the initial prompt so it only auto-sends once per page load —
+  // re-renders / cohort changes shouldn't keep firing it.
+  const [pendingPrompt, setPendingPrompt] = useState<string | null>(queryPrompt);
 
   // Pull the staff member's cohort + assigned learners. Falls back to all
   // college learners if the staff member has no assignments.
@@ -113,6 +117,31 @@ export default function AiNotebookPage() {
   });
 
   const activeLearner = learners.find((l) => l.id === subjectStudentId) ?? null;
+
+  // If the launcher passed a `?prompt=...`, fire it once the notebook is
+  // ready (subject is set + the conversations hook is no longer loading).
+  // Depend on the specific stable members of `nb` rather than the whole
+  // object — `nb` itself is a fresh shell on every render so depending
+  // on it would retrigger this effect every paint.
+  const nbSend = nb.send;
+  const nbLoadingConversations = nb.loadingConversations;
+  useEffect(() => {
+    if (!pendingPrompt) return;
+    if (!subjectStudentId) return;
+    if (nbLoadingConversations) return;
+    nbSend(pendingPrompt);
+    setPendingPrompt(null);
+    const next = new URLSearchParams(searchParams);
+    next.delete('prompt');
+    setSearchParams(next, { replace: true });
+  }, [
+    pendingPrompt,
+    subjectStudentId,
+    nbLoadingConversations,
+    nbSend,
+    searchParams,
+    setSearchParams,
+  ]);
 
   // Render the picker as a standalone view when no learner selected.
   if (pickerOpen || !subjectStudentId) {

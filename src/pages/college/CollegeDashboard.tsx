@@ -101,6 +101,16 @@ const TutorNotebookSection = lazy(() =>
     default: m.TutorNotebookSection,
   }))
 );
+const SchemesOfWorkSection = lazy(() =>
+  import('@/components/college/sections/SchemesOfWorkSection').then((m) => ({
+    default: m.SchemesOfWorkSection,
+  }))
+);
+const DocumentLibrarySection = lazy(() =>
+  import('@/components/college/sections/DocumentLibrarySection').then((m) => ({
+    default: m.DocumentLibrarySection,
+  }))
+);
 const EmployerPortalSection = lazy(() =>
   import('@/components/college/sections/EmployerPortalSection').then((m) => ({
     default: m.EmployerPortalSection,
@@ -192,6 +202,8 @@ export type CollegeSection =
   | 'lessonplans'
   | 'teachingresources'
   | 'tutornotebook'
+  | 'schemesofwork'
+  | 'documentlibrary'
   // Assessment Hub sections
   | 'grading'
   | 'attendance'
@@ -232,6 +244,8 @@ const sectionTitles: Record<CollegeSection, string> = {
   lessonplans: 'Lesson Plans',
   teachingresources: 'Teaching Resources',
   tutornotebook: 'Tutor Notebook',
+  schemesofwork: 'Schemes of Work',
+  documentlibrary: 'Document Library',
   grading: 'Grading',
   attendance: 'Attendance',
   ilpmanagement: 'ILP Management',
@@ -335,6 +349,16 @@ const CollegeDashboard = () => {
       'tutor notebook': 'tutornotebook',
       notebook: 'tutornotebook',
       'teaching-notebook': 'tutornotebook',
+      'schemes-of-work': 'schemesofwork',
+      schemesofwork: 'schemesofwork',
+      'schemes of work': 'schemesofwork',
+      schemes: 'schemesofwork',
+      sow: 'schemesofwork',
+      'document-library': 'documentlibrary',
+      documentlibrary: 'documentlibrary',
+      'document library': 'documentlibrary',
+      documents: 'documentlibrary',
+      docs: 'documentlibrary',
 
       // Assessment Hub sections
       grading: 'grading',
@@ -400,6 +424,8 @@ const CollegeDashboard = () => {
       'lessonplans',
       'teachingresources',
       'tutornotebook',
+      'schemesofwork',
+      'documentlibrary',
       'timetable',
       'livelesson',
     ];
@@ -481,6 +507,10 @@ const CollegeDashboard = () => {
         return <TeachingResourcesSection />;
       case 'tutornotebook':
         return <TutorNotebookSection />;
+      case 'schemesofwork':
+        return <SchemesOfWorkSection />;
+      case 'documentlibrary':
+        return <DocumentLibrarySection onNavigate={handleNavigate} />;
 
       // Assessment Hub sections
       case 'grading':

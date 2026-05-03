@@ -104,6 +104,15 @@ export function CurriculumHub({ onNavigate }: CurriculumHubProps) {
             />
             <HubCard
               number="02"
+              eyebrow="Year Plan"
+              title="Schemes of Work"
+              description="Plan how each qualification is delivered to a cohort across the academic year."
+              tone="cyan"
+              meta="Per cohort"
+              onClick={() => onNavigate('schemesofwork')}
+            />
+            <HubCard
+              number="03"
               eyebrow="Plans & Delivery"
               title="Lesson Plans"
               description="Create, sequence and publish lesson plans per cohort."
@@ -112,7 +121,7 @@ export function CurriculumHub({ onNavigate }: CurriculumHubProps) {
               onClick={() => onNavigate('lessonplans')}
             />
             <HubCard
-              number="03"
+              number="04"
               eyebrow="Materials Library"
               title="Teaching Resources"
               description="Slides, handouts and reference materials for lessons."
@@ -121,7 +130,7 @@ export function CurriculumHub({ onNavigate }: CurriculumHubProps) {
               onClick={() => onNavigate('teachingresources')}
             />
             <HubCard
-              number="04"
+              number="05"
               eyebrow="Quality & Policy"
               title="Compliance & QA"
               description="Policies, quality documentation and Ofsted-ready records."
@@ -137,7 +146,7 @@ export function CurriculumHub({ onNavigate }: CurriculumHubProps) {
           <SectionHeader eyebrow="AI-Powered" title="Intelligent tools" />
           <HubGrid columns={2}>
             <HubCard
-              number="05"
+              number="06"
               eyebrow="Notes & Summaries"
               title="Teaching Notebook"
               description="AI-assisted notes, lesson summaries and auto-generated quizzes."
@@ -147,7 +156,7 @@ export function CurriculumHub({ onNavigate }: CurriculumHubProps) {
               onClick={() => onNavigate('tutornotebook')}
             />
             <HubCard
-              number="06"
+              number="07"
               eyebrow="Scheduled Delivery"
               title="Timetable"
               description="Weekly lesson schedule across cohorts, rooms and tutors."

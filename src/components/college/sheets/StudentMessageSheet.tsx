@@ -59,6 +59,15 @@ export function StudentMessageSheet({
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  // Reset thread state when switching to a different student so the sheet
+  // doesn't briefly render stale messages from the previous learner.
+  useEffect(() => {
+    setActiveThreadId(null);
+    setMessages([]);
+    setThreads([]);
+    setMode('list');
+  }, [studentId]);
+
   // Load threads on open
   useEffect(() => {
     if (!open) return;
@@ -70,8 +79,18 @@ export function StudentMessageSheet({
       .eq('student_id', studentId)
       .order('last_message_at', { ascending: false })
       .limit(50)
-      .then(({ data }) => {
+      .then(({ data, error }) => {
         if (cancelled) return;
+        if (error) {
+          console.error('Load threads failed:', error);
+          toast({
+            title: 'Could not load messages',
+            description: error.message,
+            variant: 'destructive',
+          });
+          setLoadingThreads(false);
+          return;
+        }
         const rows = (data ?? []) as Thread[];
         setThreads(rows);
         // If there's only one thread, jump straight in. Otherwise show the list.
@@ -85,18 +104,31 @@ export function StudentMessageSheet({
     return () => {
       cancelled = true;
     };
-  }, [open, studentId]);
+  }, [open, studentId, toast]);
 
-  const loadMessages = useCallback(async (threadId: string) => {
-    setLoadingMessages(true);
-    const { data } = await supabase
-      .from('student_messages')
-      .select('id, thread_id, sender_kind, body, created_at, read_at')
-      .eq('thread_id', threadId)
-      .order('created_at');
-    setMessages((data ?? []) as Message[]);
-    setLoadingMessages(false);
-  }, []);
+  const loadMessages = useCallback(
+    async (threadId: string) => {
+      setLoadingMessages(true);
+      const { data, error } = await supabase
+        .from('student_messages')
+        .select('id, thread_id, sender_kind, body, created_at, read_at')
+        .eq('thread_id', threadId)
+        .order('created_at');
+      if (error) {
+        console.error('Load messages failed:', error);
+        toast({
+          title: 'Could not load messages',
+          description: error.message,
+          variant: 'destructive',
+        });
+        setLoadingMessages(false);
+        return;
+      }
+      setMessages((data ?? []) as Message[]);
+      setLoadingMessages(false);
+    },
+    [toast]
+  );
 
   useEffect(() => {
     if (!activeThreadId) return;
@@ -111,8 +143,16 @@ export function StudentMessageSheet({
     if (!activeThreadId || !open) return;
     let cancelled = false;
     (async () => {
-      await supabase.rpc('mark_message_thread_read', { p_thread_id: activeThreadId });
+      const { error } = await supabase.rpc('mark_message_thread_read', {
+        p_thread_id: activeThreadId,
+      });
       if (cancelled) return;
+      if (error) {
+        // Non-fatal — read receipts are best-effort. Log so we notice
+        // schema/RPC drift without breaking the user's flow.
+        console.error('mark_message_thread_read failed:', error);
+        return;
+      }
       setThreads((prev) =>
         prev.map((t) => (t.id === activeThreadId ? { ...t, unread_count_tutor: 0 } : t))
       );
@@ -181,10 +221,16 @@ export function StudentMessageSheet({
     };
   }, [open, activeThreadId]);
 
-  // Scroll to bottom when new messages arrive
+  // Auto-scroll to bottom only if the user was already near the bottom.
+  // This avoids yanking the tutor away from older messages they're reading
+  // when realtime delivers a new arrival mid-scroll.
   useEffect(() => {
-    if (!scrollRef.current) return;
-    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    const el = scrollRef.current;
+    if (!el) return;
+    const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+    if (distanceFromBottom < 120) {
+      el.scrollTop = el.scrollHeight;
+    }
   }, [messages]);
 
   const sendMessage = async () => {
@@ -259,12 +305,17 @@ export function StudentMessageSheet({
         .maybeSingle();
       if (msgErr || !inserted) throw msgErr ?? new Error('Message insert failed');
 
-      // Reconcile: swap optimistic for server row
-      setMessages((prev) =>
-        prev.map((m) =>
-          m.id === optimisticToken ? (inserted as Message) : m
-        )
-      );
+      // Reconcile: drop the optimistic placeholder, then add the server row
+      // only if realtime hasn't already delivered it. Without this dedup we
+      // get a brief duplicate when realtime fires before the insert resolves.
+      const insertedRow = inserted as Message;
+      setMessages((prev) => {
+        const withoutOptimistic = prev.filter((m) => m.id !== optimisticToken);
+        if (withoutOptimistic.some((m) => m.id === insertedRow.id)) {
+          return withoutOptimistic;
+        }
+        return [...withoutOptimistic, insertedRow];
+      });
 
       // No manual counter update — the bump_thread_counters trigger on
       // student_messages handles unread_count_student and last_message_at
@@ -502,7 +553,11 @@ export function StudentMessageSheet({
                   }}
                   rows={2}
                   placeholder="Write a message… ⌘↵ to send"
-                  className="flex-1 min-h-[44px] max-h-[160px] bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl px-3 py-2.5 text-[13.5px] text-white placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 transition-colors resize-none"
+                  inputMode="text"
+                  autoCapitalize="sentences"
+                  autoCorrect="on"
+                  spellCheck
+                  className="flex-1 min-h-[44px] max-h-[160px] bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl px-3 py-2.5 text-base text-white placeholder:text-white/65 focus:outline-none focus:ring-2 focus:ring-elec-yellow/40 focus:border-elec-yellow/60 transition-colors resize-none touch-manipulation"
                 />
                 <PrimaryButton
                   onClick={sendMessage}

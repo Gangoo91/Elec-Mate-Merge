@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { AttendanceHeatmap } from '@/components/college/ui/AttendanceHeatmap';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { CollegeStudent } from '@/contexts/CollegeSupabaseContext';
+import { useCollegeSettings } from '@/hooks/college/useCollegeSettings';
 import {
   getInitials,
   formatUKDateShort,
@@ -47,6 +48,9 @@ export function StudentDetailSheet({
   onWithdraw,
 }: StudentDetailSheetProps) {
   const { attendance, cohorts, ilps } = useCollegeSupabase();
+  const { settings } = useCollegeSettings();
+  const lowAttendance = settings.low_attendance_threshold_percent;
+  const highAttendance = settings.high_attendance_threshold_percent;
   const [activeTab, setActiveTab] = useState('overview');
 
   const studentAttendance = useMemo(() => {
@@ -97,7 +101,7 @@ export function StudentDetailSheet({
           ? 'blue'
           : 'yellow';
 
-  const attendancePctTone = attendanceRate >= 90 ? 'text-emerald-400' : attendanceRate >= 80 ? 'text-amber-400' : 'text-red-400';
+  const attendancePctTone = attendanceRate >= highAttendance ? 'text-emerald-400' : attendanceRate >= lowAttendance ? 'text-amber-400' : 'text-red-400';
   const progressPctTone = progressPercent >= 70 ? 'text-emerald-400' : progressPercent >= 50 ? 'text-amber-400' : 'text-red-400';
 
   return (
@@ -303,9 +307,9 @@ export function StudentDetailSheet({
                         <div
                           className={cn(
                             'h-full rounded-full transition-all',
-                            attendanceRate >= 90
+                            attendanceRate >= highAttendance
                               ? 'bg-emerald-400/80'
-                              : attendanceRate >= 80
+                              : attendanceRate >= lowAttendance
                                 ? 'bg-amber-400/80'
                                 : 'bg-red-400/80'
                           )}

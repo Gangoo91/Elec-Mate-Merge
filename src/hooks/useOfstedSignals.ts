@@ -84,7 +84,19 @@ export function useOfstedSignals() {
         .eq('id', collegeId)
         .maybeSingle();
 
-      const ninetyDaysAgo = new Date(Date.now() - 90 * dayMs).toISOString().slice(0, 10);
+      // Audit window is per-college configurable (defaults 90 days). Falls
+      // back to 90 if the college hasn't created a settings row yet.
+      const { data: cs } = await supabase
+        .from('college_settings')
+        .select('audit_window_days')
+        .eq('college_id', collegeId)
+        .maybeSingle();
+      const auditWindowDays =
+        (cs as { audit_window_days?: number } | null)?.audit_window_days ?? 90;
+
+      const auditCutoff = new Date(Date.now() - auditWindowDays * dayMs)
+        .toISOString()
+        .slice(0, 10);
       const yearAgo = new Date(Date.now() - 365 * dayMs).toISOString();
 
       const [
@@ -116,20 +128,28 @@ export function useOfstedSignals() {
           .from('college_policies')
           .select('id, category, status, version, requires_acknowledgement')
           .eq('college_id', collegeId),
-        supabase.from('policy_acknowledgements').select('policy_id, user_id, policy_version'),
-        supabase.from('college_attendance').select('status, date').gte('date', ninetyDaysAgo),
+        // Acknowledgements are scoped through the policy relationship so we
+        // never accidentally pull rows from other colleges. We use an inner
+        // join filter on college_policies.college_id rather than relying on
+        // RLS alone — RLS exists, but defense in depth makes the scope
+        // explicit at the call site.
+        supabase
+          .from('policy_acknowledgements')
+          .select('policy_id, user_id, policy_version, college_policies!inner(college_id)')
+          .eq('college_policies.college_id', collegeId),
+        supabase.from('college_attendance').select('status, date').gte('date', auditCutoff),
         supabase
           .from('college_observations')
           .select('id, observed_at, outcome')
-          .gte('observed_at', ninetyDaysAgo),
+          .gte('observed_at', auditCutoff),
         supabase
           .from('college_lesson_plans')
           .select('id, scheduled_date, status, created_at')
-          .gte('scheduled_date', ninetyDaysAgo),
+          .gte('scheduled_date', auditCutoff),
         supabase
           .from('college_otj_entries')
           .select('id, duration_minutes, activity_date, verification_status')
-          .gte('activity_date', ninetyDaysAgo),
+          .gte('activity_date', auditCutoff),
         // IQA plans for THIS college within the period — used as the parent
         // filter for the actual samples lookup below. We resolve plans in
         // parallel with everything else, then issue a follow-up samples

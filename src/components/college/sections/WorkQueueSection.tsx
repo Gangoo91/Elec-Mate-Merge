@@ -3,6 +3,10 @@ import { motion } from 'framer-motion';
 import { Input } from '@/components/ui/input';
 import { useWorkQueue } from '@/hooks/college/useWorkQueue';
 import type { WorkItemPriority, WorkItemStatus, WorkQueueItem } from '@/hooks/college/useWorkQueue';
+import {
+  useWorkQueueState,
+  type WorkQueueSourceType,
+} from '@/hooks/college/useWorkQueueState';
 import { useToast } from '@/hooks/use-toast';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 import {
@@ -35,6 +39,8 @@ interface WorkQueueSectionProps {
 
 export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
   const { items, isLoading, stats, refresh } = useWorkQueue();
+  const { stateMap, setStatus, saveNotes, staffId } = useWorkQueueState();
+  const canPersist = !!staffId;
   const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState('');
   const [filterPriority, setFilterPriority] = useState<string>('all');
@@ -42,18 +48,45 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
   const [filterType, setFilterType] = useState<string>('all');
   const [noteItemId, setNoteItemId] = useState<string | null>(null);
   const [noteText, setNoteText] = useState('');
+  const [savingItemId, setSavingItemId] = useState<string | null>(null);
 
   const handleRefresh = async () => {
     refresh();
     await new Promise((resolve) => setTimeout(resolve, 500));
   };
 
-  const [localStatus, setLocalStatus] = useState<Record<string, WorkItemStatus>>({});
-  const getItemStatus = (item: WorkQueueItem) => localStatus[item.id] || item.status;
-  const handleStartWork = (id: string) =>
-    setLocalStatus((prev) => ({ ...prev, [id]: 'In Progress' }));
-  const handleCompleteWork = (id: string) =>
-    setLocalStatus((prev) => ({ ...prev, [id]: 'Completed' }));
+  // Merge persisted per-tutor state on top of the source-derived 'Pending'.
+  // Composite key matches what useWorkQueueState builds: `${type}:${sourceId}`.
+  const getItemStatus = (item: WorkQueueItem): WorkItemStatus => {
+    const stateKey = `${item.type}:${item.sourceId}`;
+    return stateMap.get(stateKey)?.status ?? item.status;
+  };
+
+  const persistStatus = async (item: WorkQueueItem, status: 'In Progress' | 'Completed') => {
+    setSavingItemId(item.id);
+    try {
+      await setStatus.mutateAsync({
+        sourceType: item.type as WorkQueueSourceType,
+        sourceId: item.sourceId,
+        status,
+      });
+      toast({
+        title: status === 'In Progress' ? 'Started' : 'Marked complete',
+        description: item.title,
+      });
+    } catch (e) {
+      toast({
+        title: 'Could not update status',
+        description: (e as Error).message,
+        variant: 'destructive',
+      });
+    } finally {
+      setSavingItemId(null);
+    }
+  };
+
+  const handleStartWork = (item: WorkQueueItem) => persistStatus(item, 'In Progress');
+  const handleCompleteWork = (item: WorkQueueItem) => persistStatus(item, 'Completed');
 
   const handleViewDetails = (item: WorkQueueItem) => {
     switch (item.type) {
@@ -240,26 +273,28 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
                               {overdue && ' · overdue'}
                             </span>
                           )}
-                          {currentStatus === 'Pending' && (
+                          {canPersist && currentStatus === 'Pending' && (
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
-                                handleStartWork(item.id);
+                                handleStartWork(item);
                               }}
-                              className="text-elec-yellow/90 hover:text-elec-yellow font-medium touch-manipulation"
+                              disabled={savingItemId === item.id}
+                              className="text-elec-yellow/90 hover:text-elec-yellow font-medium touch-manipulation disabled:opacity-50"
                             >
-                              Start work →
+                              {savingItemId === item.id ? 'Saving…' : 'Start work →'}
                             </button>
                           )}
-                          {currentStatus === 'In Progress' && (
+                          {canPersist && currentStatus === 'In Progress' && (
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
-                                handleCompleteWork(item.id);
+                                handleCompleteWork(item);
                               }}
-                              className="text-emerald-400 hover:text-emerald-300 font-medium touch-manipulation"
+                              disabled={savingItemId === item.id}
+                              className="text-emerald-400 hover:text-emerald-300 font-medium touch-manipulation disabled:opacity-50"
                             >
-                              Mark complete →
+                              {savingItemId === item.id ? 'Saving…' : 'Mark complete →'}
                             </button>
                           )}
                         </div>
@@ -270,33 +305,41 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
                           label: 'View details',
                           onClick: () => handleViewDetails(item),
                         },
-                        ...(currentStatus === 'Pending'
+                        ...(canPersist && currentStatus === 'Pending'
                           ? [
                               {
                                 label: 'Start work',
-                                onClick: () => handleStartWork(item.id),
+                                onClick: () => handleStartWork(item),
                                 divider: true,
                               },
                             ]
                           : []),
-                        ...(currentStatus === 'In Progress'
+                        ...(canPersist && currentStatus === 'In Progress'
                           ? [
                               {
                                 label: 'Mark complete',
-                                onClick: () => handleCompleteWork(item.id),
+                                onClick: () => handleCompleteWork(item),
                                 variant: 'success' as const,
                                 divider: true,
                               },
                             ]
                           : []),
-                        {
-                          label: 'Add note',
-                          onClick: () => {
-                            setNoteItemId(noteItemId === item.id ? null : item.id);
-                            setNoteText('');
-                          },
-                          divider: true,
-                        },
+                        ...(canPersist
+                          ? [
+                              {
+                                label: 'Add note',
+                                onClick: () => {
+                                  const stateKey = `${item.type}:${item.sourceId}`;
+                                  const existing = stateMap.get(stateKey);
+                                  setNoteItemId(noteItemId === item.id ? null : item.id);
+                                  setNoteText(
+                                    noteItemId === item.id ? '' : existing?.notes ?? ''
+                                  );
+                                },
+                                divider: true,
+                              },
+                            ]
+                          : []),
                       ]}
                     />
                     {noteItemId === item.id && (
@@ -305,18 +348,46 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
                           placeholder="Add a note…"
                           value={noteText}
                           onChange={(e) => setNoteText(e.target.value)}
+                          autoFocus
+                          inputMode="text"
+                          autoCapitalize="sentences"
+                          ref={(el) => {
+                            // Scroll into view so the mobile keyboard doesn't
+                            // hide the input when it slides up from the bottom.
+                            if (el) {
+                              setTimeout(() => {
+                                el.scrollIntoView({
+                                  block: 'center',
+                                  behavior: 'smooth',
+                                });
+                              }, 50);
+                            }
+                          }}
                           className={`${inputClass} flex-1`}
                         />
                         <PrimaryButton
-                          onClick={() => {
-                            toast({ title: 'Note added', description: noteText });
-                            setNoteItemId(null);
-                            setNoteText('');
+                          onClick={async () => {
+                            try {
+                              await saveNotes.mutateAsync({
+                                sourceType: item.type as WorkQueueSourceType,
+                                sourceId: item.sourceId,
+                                notes: noteText,
+                              });
+                              toast({ title: 'Note saved' });
+                              setNoteItemId(null);
+                              setNoteText('');
+                            } catch (e) {
+                              toast({
+                                title: 'Could not save note',
+                                description: (e as Error).message,
+                                variant: 'destructive',
+                              });
+                            }
                           }}
-                          disabled={!noteText.trim()}
+                          disabled={!noteText.trim() || saveNotes.isPending}
                           size="sm"
                         >
-                          Save
+                          {saveNotes.isPending ? 'Saving…' : 'Save'}
                         </PrimaryButton>
                       </div>
                     )}

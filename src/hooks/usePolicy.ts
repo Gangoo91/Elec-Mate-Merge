@@ -183,34 +183,16 @@ export function usePolicy(policyId: string | null) {
   const publishVersion = useCallback(
     async (changeSummary: string | null) => {
       if (!policy) return;
-      const userRes = await supabase.auth.getUser();
-      const userId = userRes.data.user?.id ?? null;
-      const newVersion = policy.version + (policy.status === 'live' ? 1 : 0);
-      const today = new Date().toISOString().slice(0, 10);
-
-      // 1. Append to version history (snapshot of current content)
-      const { error: versErr } = await supabase.from('college_policy_versions').insert({
-        policy_id: policy.id,
-        version: newVersion,
-        content_md: policy.content_md ?? '',
-        published_by: userId,
-        change_summary: changeSummary,
+      // Single atomic RPC: snapshot the current content into
+      // college_policy_versions and promote the policy to live in one
+      // transaction. Replaces the previous two-step client mutation
+      // which could leave an orphaned version row if the second update
+      // failed.
+      const { error } = await supabase.rpc('publish_policy_version', {
+        p_policy_id: policy.id,
+        p_change_summary: changeSummary,
       });
-      if (versErr) throw versErr;
-
-      // 2. Promote: status=live, version=newVersion, effective_from=today,
-      //    approved_by/at recorded.
-      const { error: updErr } = await supabase
-        .from('college_policies')
-        .update({
-          version: newVersion,
-          status: 'live',
-          effective_from: today,
-          approved_by: userId,
-          approved_at: new Date().toISOString(),
-        })
-        .eq('id', policy.id);
-      if (updErr) throw updErr;
+      if (error) throw error;
     },
     [policy]
   );
