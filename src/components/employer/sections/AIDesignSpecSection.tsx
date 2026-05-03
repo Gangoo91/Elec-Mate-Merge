@@ -134,7 +134,7 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
         )
         .subscribe();
 
-      const { error: invokeError } = await supabase.functions.invoke('create-circuit-design-job', {
+      const { error: invokeError } = await supabase.functions.invoke('circuit-designer', {
         body: { jobId: job.id },
       });
 

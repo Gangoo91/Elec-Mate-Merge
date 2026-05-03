@@ -1,8 +1,5 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { DesignInputs, CircuitInput } from '@/types/installation-design';
 import { ProjectInfoStep } from './ProjectInfoStep';
 import { SupplyDetailsStep } from './SupplyDetailsStep';
@@ -10,7 +7,7 @@ import { CircuitBuilderStep } from './CircuitBuilderStep';
 import { InstallationDetailsStep } from './InstallationDetailsStep';
 import { PreCalculationStep } from './PreCalculationStep';
 import { ReviewStep } from './ReviewStep';
-import { ArrowLeft, ArrowRight, Sparkles, Check } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { toast } from 'sonner';
 import { clearDesignCache } from '@/utils/clearDesignCache';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
@@ -22,6 +19,7 @@ import {
   validateCircuit,
 } from '@/utils/circuit-calculations';
 import { cn } from '@/lib/utils';
+import { Eyebrow } from '@/components/college/primitives';
 
 interface StructuredDesignWizardProps {
   onGenerate: (inputs: DesignInputs) => Promise<void>;
@@ -355,54 +353,82 @@ export const StructuredDesignWizard = ({
   };
 
   return (
-    <div className="space-y-4">
-      {/* Premium Step Indicator */}
-      <div className="px-2">
-        <div className="flex items-center justify-between gap-1 sm:gap-2">
+    <div className="space-y-6">
+      {/* Editorial Step Indicator */}
+      <div className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3">
+          <Eyebrow>
+            STEP {String(currentStep + 1).padStart(2, '0')} · {STEPS[currentStep].label.toUpperCase()}
+          </Eyebrow>
+          <span className="text-[11px] text-white/50 tabular-nums">
+            {currentStep + 1} of {STEPS.length}
+          </span>
+        </div>
+
+        {/* Numbered step row — desktop/tablet */}
+        <div className="hidden sm:grid grid-cols-6 gap-px bg-black border border-white/[0.08] rounded-2xl overflow-hidden">
           {STEPS.map((step, index) => {
             const isActive = index === currentStep;
             const isCompleted = index < currentStep;
             const isClickable = index < currentStep;
-
             return (
-              <div
+              <button
                 key={step.id}
-                className={cn('flex-1 flex flex-col items-center', isClickable && 'cursor-pointer')}
+                type="button"
+                disabled={!isClickable}
                 onClick={() => isClickable && handleStepClick(index)}
+                className={cn(
+                  'group relative bg-[hsl(0_0%_10%)] px-3 py-3 lg:px-4 lg:py-4 text-left touch-manipulation transition-all',
+                  isClickable && 'hover:bg-elec-yellow/[0.04] active:scale-[0.99]',
+                  isActive &&
+                    'bg-gradient-to-br from-elec-yellow/[0.10] via-amber-500/[0.03] to-transparent'
+                )}
               >
-                {/* Step circle */}
                 <div
                   className={cn(
-                    'w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center',
-                    'text-xs sm:text-sm font-semibold',
-                    'transition-all duration-ios-normal ease-ios-ease',
-                    'border-2',
-                    isActive &&
-                      'bg-elec-yellow text-black border-elec-yellow shadow-[0_0_0_4px_hsl(var(--elec-yellow)/0.2)]',
-                    isCompleted && 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40',
-                    !isActive && !isCompleted && 'bg-white/[0.03] text-white border-white/[0.08]'
+                    'text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums',
+                    isActive
+                      ? 'text-elec-yellow'
+                      : isCompleted
+                        ? 'text-white/80'
+                        : 'text-white/40'
                   )}
                 >
-                  {isCompleted ? <Check className="w-4 h-4 sm:w-5 sm:h-5" /> : index + 1}
+                  {String(index + 1).padStart(2, '0')}
                 </div>
-                {/* Step label - show on larger screens */}
-                <span
+                <div
                   className={cn(
-                    'hidden sm:block mt-2 text-xs font-medium text-center transition-colors duration-ios-fast',
-                    isActive ? 'text-elec-yellow' : isCompleted ? 'text-white' : 'text-white'
+                    'mt-1 text-[12.5px] font-semibold leading-tight tracking-tight',
+                    isActive
+                      ? 'text-elec-yellow'
+                      : isCompleted
+                        ? 'text-white'
+                        : 'text-white/40'
                   )}
                 >
                   {step.label}
-                </span>
-              </div>
+                </div>
+                <div
+                  className={cn(
+                    'mt-0.5 text-[11px] leading-snug truncate',
+                    isActive
+                      ? 'text-white/85'
+                      : isCompleted
+                        ? 'text-white/60'
+                        : 'text-white/30'
+                  )}
+                >
+                  {step.description}
+                </div>
+              </button>
             );
           })}
         </div>
 
-        {/* Progress bar */}
-        <div className="mt-4 h-1 bg-white/5 rounded-full overflow-hidden">
+        {/* Hairline progress */}
+        <div className="h-px bg-white/[0.06] overflow-hidden">
           <motion.div
-            className="h-full bg-gradient-to-r from-elec-yellow to-elec-yellow/80 rounded-full"
+            className="h-full bg-elec-yellow"
             initial={{ width: 0 }}
             animate={{ width: `${progressPercentage}%` }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
@@ -410,9 +436,9 @@ export const StructuredDesignWizard = ({
         </div>
       </div>
 
-      {/* Step Content with animations */}
-      <Card className="bg-white/[0.03] border-white/[0.08] rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.3)] overflow-hidden">
-        <div className="p-4 sm:p-6">
+      {/* Step Content — flat on mobile, editorial cell on tablet+ */}
+      <div className="sm:bg-[hsl(0_0%_10%)] sm:border sm:border-white/[0.08] sm:rounded-2xl sm:overflow-hidden">
+        <div className="py-4 sm:p-6 lg:p-8">
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
               key={currentStep}
@@ -430,93 +456,78 @@ export const StructuredDesignWizard = ({
             </motion.div>
           </AnimatePresence>
         </div>
-      </Card>
+      </div>
 
-      {/* Premium Navigation */}
+      {/* Editorial Navigation — flat sticky on mobile, card on tablet+ */}
       <div className="pb-safe">
-        <Card className="bg-white/[0.03] border-white/[0.08] rounded-xl p-3 sm:p-4 sticky bottom-0 sm:static shadow-[0_-4px_20px_rgba(0,0,0,0.3)]">
+        <div className="sticky bottom-0 sm:static z-30 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 sm:p-4 bg-elec-dark/95 backdrop-blur-sm sm:bg-[hsl(0_0%_10%)] sm:border sm:border-white/[0.08] sm:rounded-2xl border-t border-white/[0.06] sm:border-t">
           <div className="flex items-center justify-between gap-3">
-            <Button
-              variant="ghost"
+            <button
+              type="button"
               onClick={handleBack}
               disabled={currentStep === 0 || isProcessing}
               className={cn(
-                'gap-2 h-12 px-4 rounded-xl',
-                'bg-white/5 border border-white/[0.08]',
-                'hover:bg-white/10 hover:border-white/15',
-                'disabled:opacity-30',
-                'transition-all duration-ios-fast',
+                'inline-flex items-center gap-2 h-11 px-4 rounded-xl text-[13px] font-medium',
+                'bg-white/[0.03] border border-white/[0.08] text-white',
+                'hover:bg-white/[0.06] hover:border-white/15 transition-colors',
+                'disabled:opacity-30 disabled:cursor-not-allowed',
                 'touch-manipulation'
               )}
             >
               <ArrowLeft className="h-4 w-4" />
-              <span className="hidden sm:inline">Back</span>
-            </Button>
+              <span>Back</span>
+            </button>
 
-            {/* Step indicator for mobile */}
-            <div className="flex-1 flex justify-center sm:hidden">
-              <Badge variant="secondary" className="bg-white/5 text-white border-0">
-                {currentStep + 1} / {STEPS.length}
-              </Badge>
-            </div>
-
-            {/* Progress percentage for desktop */}
-            <div className="hidden sm:flex flex-1 justify-center">
-              <Badge variant="secondary" className="bg-white/5 text-white border-0 px-3 py-1">
+            <div className="flex-1 flex justify-center">
+              <span className="text-[11px] uppercase tracking-[0.18em] text-white/60 tabular-nums">
                 {Math.round(progressPercentage)}% Complete
-              </Badge>
+              </span>
             </div>
 
             {currentStep < STEPS.length - 1 ? (
-              <Button
+              <button
+                type="button"
                 onClick={handleNext}
                 disabled={!canProceed() || isProcessing}
                 className={cn(
-                  'gap-2 h-12 px-6 rounded-xl',
-                  'bg-elec-yellow text-black font-semibold',
-                  'hover:bg-elec-yellow/90',
-                  'disabled:opacity-30 disabled:bg-white/5 disabled:text-white',
-                  'shadow-[0_2px_8px_rgba(0,0,0,0.2)]',
-                  'active:scale-[0.98]',
-                  'transition-all duration-ios-fast',
-                  'touch-manipulation'
+                  'inline-flex items-center gap-2 h-11 px-5 rounded-xl text-[13px] font-semibold',
+                  'bg-elec-yellow text-black',
+                  'hover:bg-elec-yellow/90 transition-colors',
+                  'disabled:opacity-30 disabled:bg-white/[0.05] disabled:text-white/50 disabled:cursor-not-allowed',
+                  'active:scale-[0.98] touch-manipulation'
                 )}
               >
                 <span>Next</span>
                 <ArrowRight className="h-4 w-4" />
-              </Button>
+              </button>
             ) : (
-              <Button
+              <button
+                type="button"
                 onClick={handleGenerate}
                 disabled={!canProceed() || isProcessing}
                 className={cn(
-                  'gap-2 h-12 px-6 rounded-xl',
-                  'bg-elec-yellow text-black font-semibold',
-                  'hover:bg-elec-yellow/90',
-                  'disabled:opacity-30 disabled:bg-white/5 disabled:text-white',
-                  'shadow-[0_4px_12px_rgba(0,0,0,0.3)]',
-                  'active:scale-[0.98]',
-                  'transition-all duration-ios-fast',
-                  'touch-manipulation'
+                  'inline-flex items-center gap-2 h-11 px-5 rounded-xl text-[13px] font-semibold',
+                  'bg-elec-yellow text-black',
+                  'hover:bg-elec-yellow/90 transition-colors',
+                  'disabled:opacity-30 disabled:bg-white/[0.05] disabled:text-white/50 disabled:cursor-not-allowed',
+                  'active:scale-[0.98] touch-manipulation'
                 )}
               >
                 {isProcessing ? (
                   <>
                     <div className="animate-spin rounded-full h-4 w-4 border-2 border-black/20 border-t-black" />
-                    <span className="hidden sm:inline">Generating...</span>
-                    <span className="sm:hidden">...</span>
+                    <span>Generating</span>
                   </>
                 ) : (
                   <>
-                    <Sparkles className="h-5 w-5" />
-                    <span className="hidden sm:inline">Generate Design</span>
-                    <span className="sm:hidden">Generate</span>
+                    <span>Generate Design</span>
+                    <ArrowRight className="h-4 w-4" />
                   </>
                 )}
-              </Button>
+              </button>
             )}
           </div>
-        </Card>
+        </div>
       </div>
 
       {/* Clear Cache Confirmation Dialog */}

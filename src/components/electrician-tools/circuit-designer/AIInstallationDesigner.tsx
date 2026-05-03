@@ -2,8 +2,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { StructuredDesignWizard } from './structured-input/StructuredDesignWizard';
-import { DesignReviewEditor } from './DesignReviewEditor';
-import { DesignProcessingView } from './DesignProcessingView';
+import EditorialDesignResults from './EditorialDesignResults';
+import { CircuitDesignStream } from './CircuitDesignStream';
 import { DesignInputs, CircuitInput } from '@/types/installation-design';
 import { AgentInbox } from '@/components/install-planner-v2/AgentInbox';
 import { supabase } from '@/integrations/supabase/client';
@@ -38,126 +38,6 @@ const getFriendlyErrorMessage = (error: string): string => {
 
   // Generic fallback
   return `Design generation failed: ${error.slice(0, 100)}`;
-};
-
-// Format structured installation guidance into readable text
-const formatInstallationGuidance = (guidance: any): string => {
-  if (!guidance) return '';
-
-  const sections: string[] = [];
-
-  // Executive Summary
-  if (guidance.executiveSummary) {
-    sections.push(`📋 OVERVIEW\n${guidance.executiveSummary}\n`);
-  }
-
-  // Safety Considerations
-  if (guidance.safetyConsiderations?.length > 0) {
-    const safetyItems = guidance.safetyConsiderations
-      .map((s: any) => `• ${s.consideration || s.description || s}`)
-      .join('\n');
-    sections.push(`⚠️ SAFETY CONSIDERATIONS\n${safetyItems}\n`);
-  }
-
-  // Materials Required
-  if (guidance.materialsRequired?.length > 0) {
-    const materials = guidance.materialsRequired
-      .map((m: any) => {
-        const qty = m.quantity || '';
-        const item = m.item || m.name || '';
-        const spec = m.specification ? ` (${m.specification})` : '';
-        return `• ${qty}${qty ? 'x ' : ''}${item}${spec}`;
-      })
-      .join('\n');
-    sections.push(`📦 MATERIALS REQUIRED\n${materials}\n`);
-  }
-
-  // Tools Required
-  if (guidance.toolsRequired?.length > 0) {
-    const tools = guidance.toolsRequired
-      .map((t: any) => `• ${t.tool || t.name || t}${t.purpose ? ` - ${t.purpose}` : ''}`)
-      .join('\n');
-    sections.push(`🔧 TOOLS REQUIRED\n${tools}\n`);
-  }
-
-  // Cable Routing
-  if (guidance.cableRouting?.length > 0) {
-    const routing = guidance.cableRouting
-      .map((r: any) => `• ${r.step || r.description || r}${r.method ? ` (${r.method})` : ''}`)
-      .join('\n');
-    sections.push(`🔌 CABLE ROUTING\n${routing}\n`);
-  }
-
-  // Installation Procedure
-  if (guidance.installationProcedure?.length > 0) {
-    const steps = guidance.installationProcedure
-      .map((step: any) => {
-        const num = step.stepNumber || '';
-        const title = step.title || '';
-        const desc = step.description || '';
-        return `${num}. ${title}\n   ${desc}`;
-      })
-      .join('\n\n');
-    sections.push(`🔧 INSTALLATION STEPS\n${steps}\n`);
-  }
-
-  // Testing Requirements removed - handled separately in expectedTests
-
-  return sections.join('\n---\n\n');
-};
-
-// Map progress percentage to stage for accurate UI display
-// Phase 1 (Designer): 0-50%, Phase 2 (Installation): 50-100%
-const getStageFromProgress = (progress: number): number => {
-  if (progress < 5) return 0; // Initialising
-  if (progress < 15) return 1; // Understanding Requirements
-  if (progress < 25) return 2; // Searching Regulations
-  if (progress < 50) return 3; // AI Circuit Design (Phase 1)
-  if (progress < 70) return 4; // Installation Guidance (Phase 2)
-  if (progress < 95) return 5; // Compliance Validation
-  return 6; // Finalising/Downloading
-};
-
-// Transform Installation Agent's testingRequirements to expectedTestResults format
-const transformTestingRequirements = (testingReqs: any): any => {
-  if (!testingReqs?.tests || !Array.isArray(testingReqs.tests)) return undefined;
-
-  const result: any = {
-    r1r2: { at20C: '', at70C: '', calculation: '' },
-    zs: { calculated: '', maxPermitted: '', compliant: 'Yes' },
-    insulationResistance: { testVoltage: '500V DC', minResistance: '≥1.0MΩ' },
-    polarity: 'Verify correct polarity at all terminations',
-    rcdTest: { at1x: '≤300ms @ 30mA', at5x: '≤40ms @ 150mA' },
-  };
-
-  // Extract values from structured testing requirements
-  testingReqs.tests.forEach((test: any) => {
-    const testName = test.testName || '';
-    const procedure = test.procedure || '';
-    const expectedReading = test.expectedReading || '';
-    const acceptanceCriteria = test.acceptanceCriteria || '';
-
-    if (testName.toLowerCase().includes('continuity') || testName.toLowerCase().includes('r1+r2')) {
-      result.r1r2.calculation = procedure;
-      result.r1r2.at70C = expectedReading;
-    }
-    if (testName.toLowerCase().includes('loop') || testName.toLowerCase().includes('zs')) {
-      result.zs.calculated = expectedReading;
-      result.zs.maxPermitted = acceptanceCriteria;
-    }
-    if (testName.toLowerCase().includes('insulation')) {
-      result.insulationResistance.minResistance =
-        expectedReading || result.insulationResistance.minResistance;
-    }
-    if (testName.toLowerCase().includes('polarity')) {
-      result.polarity = procedure || result.polarity;
-    }
-    if (testName.toLowerCase().includes('rcd')) {
-      result.rcdTest = { ...result.rcdTest, ...(test.details || {}) };
-    }
-  });
-
-  return result;
 };
 
 // Transform backend expectedTests to frontend expectedTestResults format
@@ -265,6 +145,7 @@ export const AIInstallationDesigner = () => {
     return null;
   });
   const [jobId, setJobId] = useState<string | null>(null);
+  const [activeInputs, setActiveInputs] = useState<DesignInputs | null>(null);
   const successToastShown = useRef(!!savedResultsState?.fromSavedResults);
   // State for context imported from other agents via AgentInbox
   const [importedContext, setImportedContext] = useState<ImportedAgentContext | null>(null);
@@ -275,15 +156,12 @@ export const AIInstallationDesigner = () => {
   const [showSaveCustomerPrompt, setShowSaveCustomerPrompt] = useState(false);
   const [savePromptDismissed, setSavePromptDismissed] = useState(false);
 
-  // Use job polling hook (now includes installationGuidance and installationAgentStatus)
   const {
     job,
     progress,
     status,
     currentStep,
     designData: jobDesignData,
-    installationGuidance,
-    installationAgentStatus,
     error,
   } = useCircuitDesignGeneration(jobId);
 
@@ -314,10 +192,11 @@ export const AIInstallationDesigner = () => {
         });
       }
 
+      setActiveInputs(inputs);
       setCurrentView('processing');
 
       // Create async job via job queue
-      const { data, error } = await supabase.functions.invoke('create-circuit-design-job', {
+      const { data, error } = await supabase.functions.invoke('circuit-designer', {
         body: {
           mode: 'direct-design',
           projectInfo: {
@@ -381,36 +260,14 @@ export const AIInstallationDesigner = () => {
     }
   };
 
-  // Monitor job completion
   useEffect(() => {
-    // Check if installation agent is ready (complete, failed, skipped, or timeout)
-    const guidanceReady =
-      installationAgentStatus === 'complete' ||
-      installationAgentStatus === 'failed' ||
-      installationAgentStatus === 'skipped' ||
-      installationAgentStatus === 'timeout';
+    if (status === 'complete' && jobDesignData && !successToastShown.current) {
+      console.log('✅ Job complete, processing results...');
 
-    // Debug logging for installation guidance
-    console.log('📦 Installation guidance status:', {
-      hasGuidance: !!installationGuidance,
-      agentStatus: installationAgentStatus,
-      guidanceReady,
-      keys: installationGuidance ? Object.keys(installationGuidance) : [],
-      sample: installationGuidance?.circuit_0 ? 'Has circuit_0' : 'No circuit_0',
-    });
-
-    if (status === 'complete' && jobDesignData && guidanceReady && !successToastShown.current) {
-      console.log('✅ Job complete with guidance ready, processing results...');
-
-      // Extract project info from job inputs
       const jobInputs = (job as any)?.job_inputs;
 
       const designWithMetadata = {
-        circuits: jobDesignData.circuits.map((circuit: any, index: number) => {
-          // Get circuit-specific guidance
-          const circuitKey = `circuit_${index}`;
-          const circuitGuidance = installationGuidance?.[circuitKey];
-
+        circuits: jobDesignData.circuits.map((circuit: any) => {
           return {
             ...circuit,
             // Explicitly preserve all core fields
@@ -426,12 +283,6 @@ export const AIInstallationDesigner = () => {
             calculations: circuit.calculations,
             justifications: circuit.justifications,
             installationMethod: circuit.installationMethod || circuit.installMethod,
-            // Format circuit-specific installation guidance for UI display
-            installationGuidance: circuitGuidance?.guidance
-              ? formatInstallationGuidance(circuitGuidance.guidance)
-              : undefined,
-            // Pass structured guidance object for PDF consumption
-            installationGuidanceStructured: circuitGuidance?.guidance || undefined,
             // Use backend expectedTests as primary source - NO text fallback
             // Only numerical values from expectedTests, null if unavailable
             expectedTestResults: circuit.expectedTests
@@ -524,10 +375,6 @@ export const AIInstallationDesigner = () => {
         },
         diversityApplied: false,
         materials: [],
-        // CRITICAL: Add installation guidance from Design Installation Agent
-        // This is the TOP-LEVEL guidance that drives the InstallationGuidancePerCircuitPanel
-        installationGuidance: installationGuidance,
-        // CRITICAL: Pass validation state to frontend
         validationPassed: jobDesignData.validationPassed,
         validationIssues: jobDesignData.validationIssues || [],
         autoFixSuggestions: jobDesignData.autoFixSuggestions || [],
@@ -576,7 +423,7 @@ export const AIInstallationDesigner = () => {
       setCurrentView('input');
       setJobId(null);
     }
-  }, [status, jobDesignData, installationGuidance, installationAgentStatus, error]);
+  }, [status, jobDesignData, error]);
 
   // Load design data from session on mount
   useEffect(() => {
@@ -699,24 +546,19 @@ export const AIInstallationDesigner = () => {
       )}
 
       {currentView === 'processing' && (
-        <DesignProcessingView
-          progress={{
-            stage: getStageFromProgress(progress),
-            percent: progress,
-            message: currentStep || 'Processing...',
-            designer_progress: job?.designer_progress || 0,
-            designer_status: job?.designer_status || 'pending',
-            installer_progress: job?.installer_progress || 0,
-            installer_status: job?.installer_status || 'pending',
-          }}
+        <CircuitDesignStream
+          jobId={jobId}
+          inputs={activeInputs ?? undefined}
           userRequest={userRequest}
-          totalCircuits={totalCircuits}
+          jobProgress={progress}
+          jobStatus={status}
+          currentStep={currentStep}
           onCancel={handleCancel}
         />
       )}
 
       {currentView === 'results' && designData && (
-        <DesignReviewEditor design={designData} onReset={handleRetry} />
+        <EditorialDesignResults design={designData} onReset={handleRetry} />
       )}
     </div>
   );

@@ -120,12 +120,32 @@ export interface DesignKnowledgeResult {
   weightedScore?: number;
 }
 
+export interface BS7671Facet {
+  id?: string;
+  reg_number?: string;
+  primary_topic?: string;
+  facet_type?: string;
+  content: string;
+  document_type?: string;
+  edition_code?: string;
+  page_number?: number;
+  rrf_score?: number;
+  vector_score?: number;
+  bm25_score?: number;
+  equipment_category?: string;
+  protection_method?: string;
+  bs7671_zones?: string[];
+  keywords?: string[];
+  [key: string]: any;
+}
+
 export interface RAGContext {
   regulations: RegulationResult[];
   designKnowledge: DesignKnowledgeResult[];
-  // practicalGuides removed - handled by Design Installation Agent
+  bs7671Facets?: BS7671Facet[];
   totalResults: number;
-  searchTime: number;
+  searchTime?: number;
+  searchDuration?: number;
 }
 
 // ========================================

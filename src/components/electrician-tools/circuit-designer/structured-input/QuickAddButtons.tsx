@@ -1,7 +1,5 @@
-import { Button } from '@/components/ui/button';
 import { CircuitInput } from '@/types/installation-design';
 import { SMART_DEFAULTS, DEFAULT_CABLE_LENGTHS } from '@/lib/circuit-templates';
-import { Plus, Zap, Lightbulb, UtensilsCrossed, Droplets, Car } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface QuickAddButtonsProps {
@@ -36,8 +34,9 @@ const QUICK_ADD_PRESETS = {
 export const QuickAddButtons = ({ installationType, onAddCircuit }: QuickAddButtonsProps) => {
   const presets = QUICK_ADD_PRESETS[installationType];
 
-  const handleQuickAdd = (preset: (typeof presets)[0]) => {
-    const defaults = SMART_DEFAULTS[installationType];
+  const handleQuickAdd = (preset: (typeof presets)[number]) => {
+    // Reference SMART_DEFAULTS to preserve dependency surface (parity with previous behaviour)
+    void SMART_DEFAULTS[installationType];
     const presetType = preset.type as string;
     const defaultLength =
       DEFAULT_CABLE_LENGTHS[installationType][
@@ -57,56 +56,33 @@ export const QuickAddButtons = ({ installationType, onAddCircuit }: QuickAddButt
     });
   };
 
-  // Get icon for circuit type
-  const getIcon = (type: string) => {
-    if (type.includes('socket') || type.includes('ring')) return Zap;
-    if (type.includes('lighting')) return Lightbulb;
-    if (type.includes('cooker') || type.includes('kitchen')) return UtensilsCrossed;
-    if (type.includes('shower')) return Droplets;
-    if (type.includes('ev') || type.includes('charger')) return Car;
-    return Zap;
-  };
-
   return (
-    <div
-      className={cn(
-        'p-4 rounded-xl',
-        'bg-gradient-to-br from-elec-yellow/[0.06] to-transparent',
-        'border border-elec-yellow/20 border-dashed'
-      )}
-    >
-      <div className="flex items-center gap-2 mb-4">
-        <div className="p-1.5 rounded-lg bg-elec-yellow/15">
-          <Plus className="h-4 w-4 text-elec-yellow" />
-        </div>
-        <h3 className="font-semibold text-sm text-white">Quick Add Common Circuits</h3>
+    <div className="space-y-3">
+      <div className="flex items-baseline justify-between gap-3">
+        <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
+          Quick add
+        </span>
+        <span className="text-[11px] text-white/50 tabular-nums">
+          {presets.length} options
+        </span>
       </div>
-      <div className="grid grid-cols-2 gap-2.5">
-        {presets.map((preset) => {
-          const Icon = getIcon(preset.type);
-          return (
-            <Button
-              key={preset.type}
-              variant="ghost"
-              onClick={() => handleQuickAdd(preset)}
-              className={cn(
-                'h-12 px-3 gap-2.5 justify-start',
-                'bg-gradient-to-br from-white/[0.06] to-white/[0.02]',
-                'border border-elec-yellow/20',
-                'hover:bg-elec-yellow/10 hover:border-elec-yellow/40',
-                'active:scale-[0.98] active:bg-elec-yellow/15',
-                'transition-all duration-150',
-                'touch-manipulation',
-                'rounded-xl'
-              )}
-            >
-              <div className="p-1 rounded-md bg-elec-yellow/10">
-                <Icon className="h-3.5 w-3.5 text-elec-yellow" />
-              </div>
-              <span className="text-sm font-medium text-white truncate">{preset.label}</span>
-            </Button>
-          );
-        })}
+      <div className="flex flex-wrap gap-2 sm:gap-2.5">
+        {presets.map((preset) => (
+          <button
+            key={preset.type}
+            type="button"
+            onClick={() => handleQuickAdd(preset)}
+            className={cn(
+              'bg-[hsl(0_0%_10%)] border border-white/[0.10] rounded-xl px-4 h-11',
+              'text-[13px] font-medium text-white',
+              'hover:border-white/20 hover:bg-elec-yellow/[0.04]',
+              'active:scale-[0.99] transition-colors',
+              'touch-manipulation'
+            )}
+          >
+            + {preset.label}
+          </button>
+        ))}
       </div>
     </div>
   );

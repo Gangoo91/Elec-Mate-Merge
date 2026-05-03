@@ -1,7 +1,6 @@
-import { Badge } from '@/components/ui/badge';
-import { CheckCircle2, AlertCircle, Zap, Building2, ClipboardCheck, Sparkles } from 'lucide-react';
 import { DesignInputs } from '@/types/installation-design';
 import { cn } from '@/lib/utils';
+import { Eyebrow } from '@/components/college/primitives';
 
 interface ReviewStepProps {
   inputs: DesignInputs;
@@ -16,195 +15,269 @@ export const ReviewStep = ({ inputs }: ReviewStepProps) => {
 
   const missingData = inputs.circuits.filter((c) => !c.cableLength);
 
+  const overallLabel = hasIssues ? 'Incomplete' : 'Ready';
+  const overallClass = hasIssues ? 'text-red-400' : 'text-emerald-400';
+
+  const deliverables = [
+    'BS 7671 compliant cable sizing for each circuit',
+    'Protection device selection (MCB/RCBO ratings and curves)',
+    'Voltage drop calculations with compliance verification',
+    'Earth fault loop impedance (Zs) calculations',
+    'Detailed justifications referencing BS 7671 regulations',
+    'Expected test values (R1+R2, Zs, IR, RCD)',
+    'BS 7671 compliance validation report',
+  ];
+
   return (
-    <div className="space-y-6">
-      {/* Section Header */}
-      <div className="flex items-center gap-3">
-        <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-          <ClipboardCheck className="h-5 w-5 text-elec-yellow" />
+    <div className="space-y-8 sm:space-y-10">
+      {/* Section header — editorial */}
+      <div className="space-y-2">
+        <Eyebrow>06 · REVIEW</Eyebrow>
+        <h2 className="text-[26px] sm:text-[32px] lg:text-[36px] font-semibold tracking-tight leading-[1.1] text-white">
+          Ready for the designer.
+        </h2>
+        <p className="text-[14px] leading-relaxed text-white/85 max-w-2xl">
+          Last look before generation. The designer will produce the cable schedule, MCB selection,
+          validation report and install guidance.
+        </p>
+      </div>
+
+      {/* Headline summary strip — gridline pattern */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-black border border-white/[0.08] rounded-2xl overflow-hidden">
+        <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
+            Status
+          </div>
+          <div
+            className={cn(
+              'mt-1 text-[13px] font-semibold uppercase tracking-[0.18em]',
+              overallClass
+            )}
+          >
+            {overallLabel}
+          </div>
         </div>
-        <div>
-          <h2 className="text-lg font-semibold text-white">Review & Generate</h2>
-          <p className="text-sm text-white">Confirm your design parameters</p>
+        <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
+            Circuits
+          </div>
+          <div className="mt-1 text-[13px] font-semibold text-elec-yellow tabular-nums">
+            {inputs.circuits.length}
+          </div>
+        </div>
+        <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
+            Supply
+          </div>
+          <div className="mt-1 text-[13px] font-semibold text-white tabular-nums">
+            {inputs.phases === 'single' ? '1Φ' : '3Φ'} · {inputs.voltage}V
+          </div>
+        </div>
+        <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
+            Earthing
+          </div>
+          <div className="mt-1 text-[13px] font-semibold text-white">{inputs.earthingSystem}</div>
         </div>
       </div>
 
-      {/* Validation Status */}
+      {/* Status banner */}
       {hasIssues ? (
-        <div
-          className={cn(
-            'flex items-start gap-3 p-4 rounded-xl border',
-            'bg-red-500/10 border-red-500/30'
-          )}
-        >
-          <AlertCircle className="h-5 w-5 text-red-400 shrink-0 mt-0.5" />
-          <div>
-            <h4 className="text-sm font-semibold text-white mb-0.5">Missing Information</h4>
-            <p className="text-xs text-red-200">
-              Please complete all required fields before generating the design
-            </p>
+        <div className="bg-[hsl(0_0%_10%)] border border-red-500/40 rounded-2xl p-4 sm:p-5">
+          <div className="flex items-baseline gap-3">
+            <span className="text-[11px] uppercase tracking-[0.18em] font-semibold text-red-400 shrink-0">
+              Fail
+            </span>
+            <div className="flex-1">
+              <div className="text-[15px] font-semibold text-white">Missing information</div>
+              <p className="mt-1 text-[12.5px] leading-relaxed text-white/75">
+                Complete all required fields before generating the design.
+              </p>
+            </div>
           </div>
         </div>
       ) : (
-        <div
-          className={cn(
-            'flex items-start gap-3 p-4 rounded-xl border',
-            'bg-green-500/10 border-green-500/30'
-          )}
-        >
-          <CheckCircle2 className="h-5 w-5 text-green-400 shrink-0 mt-0.5" />
-          <div>
-            <h4 className="text-sm font-semibold text-white mb-0.5">Ready to Generate</h4>
-            <p className="text-xs text-green-300">All required information provided</p>
+        <div className="bg-[hsl(0_0%_10%)] border border-emerald-500/40 rounded-2xl p-4 sm:p-5">
+          <div className="flex items-baseline gap-3">
+            <span className="text-[11px] uppercase tracking-[0.18em] font-semibold text-emerald-400 shrink-0">
+              Pass
+            </span>
+            <div className="flex-1">
+              <div className="text-[15px] font-semibold text-white">Ready to generate</div>
+              <p className="mt-1 text-[12.5px] leading-relaxed text-white/75">
+                All required information provided.
+              </p>
+            </div>
           </div>
         </div>
       )}
 
-      {/* Project Summary */}
-      <div className={cn('p-4 rounded-xl', 'bg-white/5 backdrop-blur border border-white/10')}>
-        <div className="flex items-center gap-2 mb-4">
-          <div className="p-2 rounded-lg bg-elec-yellow/10">
-            <Building2 className="h-4 w-4 text-elec-yellow" />
-          </div>
-          <h3 className="text-sm font-semibold text-white">Project Details</h3>
-        </div>
-
-        <div className="space-y-3">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      {/* Project details */}
+      <div className="space-y-3">
+        <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+          Project details
+        </span>
+        <div className="bg-[hsl(0_0%_10%)] border border-white/[0.10] rounded-2xl p-4 sm:p-5 space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <p className="text-xs text-white mb-1">Project Name</p>
-              <p className="text-sm font-medium text-white">
-                {inputs.projectName || <span className="text-red-400">Not set</span>}
-              </p>
-            </div>
-            <div>
-              <p className="text-xs text-white mb-1">Location</p>
-              <p className="text-sm font-medium text-white">
-                {inputs.location || <span className="text-red-400">Not set</span>}
-              </p>
-            </div>
-          </div>
-
-          <div className="pt-3 border-t border-white/10 flex flex-wrap items-center gap-2">
-            <Badge className="bg-white/10 text-white border-0 text-xs capitalize">
-              {inputs.propertyType}
-            </Badge>
-            <Badge className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 text-xs">
-              {inputs.phases === 'single' ? 'Single Phase' : '3-Phase'} {inputs.voltage}V
-            </Badge>
-            <Badge className="bg-white/10 text-white border-0 text-xs">
-              {inputs.earthingSystem}
-            </Badge>
-          </div>
-        </div>
-      </div>
-
-      {/* Circuits Summary */}
-      <div className={cn('p-4 rounded-xl', 'bg-white/5 backdrop-blur border border-white/10')}>
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <div className="p-2 rounded-lg bg-elec-yellow/10">
-              <Zap className="h-4 w-4 text-elec-yellow" />
-            </div>
-            <h3 className="text-sm font-semibold text-white">Circuits Overview</h3>
-          </div>
-          <Badge className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 text-xs">
-            {inputs.circuits.length} Circuit{inputs.circuits.length !== 1 ? 's' : ''}
-          </Badge>
-        </div>
-
-        <div className="space-y-3">
-          {inputs.circuits.map((circuit, index) => (
-            <div
-              key={circuit.id}
-              className={cn('p-3 rounded-lg', 'bg-white/5 border border-white/10')}
-            >
-              <div className="flex items-center gap-2 mb-2">
-                <Badge
-                  variant="outline"
-                  className="bg-white/5 text-white border-white/10 text-xs px-2"
-                >
-                  #{index + 1}
-                </Badge>
-                <span className="font-semibold text-sm text-white flex-1 truncate">
-                  {circuit.name || <span className="text-red-400">Unnamed Circuit</span>}
-                </span>
-                {!circuit.loadPower && <AlertCircle className="h-4 w-4 text-red-400 shrink-0" />}
+              <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-1">
+                Project name
               </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-                <div>
-                  <span className="text-white">Power:</span>
-                  <span className="ml-1.5 font-medium text-white">{circuit.loadPower}W</span>
-                </div>
-                <div>
-                  <span className="text-white">Length:</span>
-                  <span className="ml-1.5 font-medium text-white">
-                    {circuit.cableLength ? `${circuit.cableLength}m` : 'Auto'}
+              <div className="text-[14px] font-medium text-white">
+                {inputs.projectName || (
+                  <span className="text-red-400 text-[11px] uppercase tracking-[0.18em]">
+                    Not set
                   </span>
-                </div>
-                <div>
-                  <span className="text-white">Phase:</span>
-                  <span className="ml-1.5 font-medium text-white">
-                    {circuit.phases === 'single' ? '1Φ' : '3Φ'}
-                  </span>
-                </div>
-                {circuit.specialLocation && circuit.specialLocation !== 'none' && (
-                  <div>
-                    <Badge className="bg-orange-500/20 text-orange-300 border-0 text-xs capitalize">
-                      {circuit.specialLocation}
-                    </Badge>
-                  </div>
                 )}
               </div>
             </div>
-          ))}
+            <div>
+              <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-1">
+                Location
+              </div>
+              <div className="text-[14px] font-medium text-white">
+                {inputs.location || (
+                  <span className="text-red-400 text-[11px] uppercase tracking-[0.18em]">
+                    Not set
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-3 border-t border-white/[0.08] flex flex-wrap items-center gap-2">
+            <span className="text-[11px] uppercase tracking-[0.14em] text-white border border-white/15 bg-white/[0.04] rounded-full px-2.5 py-0.5 capitalize">
+              {inputs.propertyType}
+            </span>
+            <span className="text-[11px] uppercase tracking-[0.14em] tabular-nums text-elec-yellow border border-elec-yellow/30 bg-elec-yellow/[0.06] rounded-full px-2.5 py-0.5">
+              {inputs.phases === 'single' ? 'Single phase' : '3-phase'} {inputs.voltage}V
+            </span>
+            <span className="text-[11px] uppercase tracking-[0.14em] text-white border border-white/15 bg-white/[0.04] rounded-full px-2.5 py-0.5">
+              {inputs.earthingSystem}
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Warnings */}
+      {/* Circuits overview */}
+      <div className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3">
+          <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+            Circuits overview
+          </span>
+          <span className="text-[11px] text-white/50 tabular-nums">
+            {inputs.circuits.length} circuit{inputs.circuits.length !== 1 ? 's' : ''}
+          </span>
+        </div>
+        <div className="space-y-3 sm:space-y-4">
+          {inputs.circuits.map((circuit, index) => {
+            const isMissing = !circuit.loadPower || !circuit.name;
+            const borderClass = isMissing ? 'border-red-500/40' : 'border-white/[0.10]';
+            const statusLabel = isMissing ? 'Fail' : 'Pass';
+            const statusClass = isMissing ? 'text-red-400' : 'text-emerald-400';
+
+            return (
+              <div
+                key={circuit.id}
+                className={cn(
+                  'bg-[hsl(0_0%_10%)] border rounded-2xl p-4 sm:p-5',
+                  borderClass
+                )}
+              >
+                <div className="flex items-baseline gap-2 mb-2">
+                  <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-white/50">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span
+                    className={cn(
+                      'text-[11px] uppercase tracking-[0.18em] font-semibold',
+                      statusClass
+                    )}
+                  >
+                    {statusLabel}
+                  </span>
+                </div>
+                <div className="text-[16px] font-semibold tracking-tight text-white truncate mb-3">
+                  {circuit.name || (
+                    <span className="text-red-400 text-[13px] uppercase tracking-[0.18em]">
+                      Unnamed circuit
+                    </span>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-[12.5px]">
+                  <div>
+                    <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-0.5">
+                      Power
+                    </div>
+                    <div className="font-medium text-white tabular-nums">
+                      {circuit.loadPower ? `${circuit.loadPower}W` : '—'}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-0.5">
+                      Length
+                    </div>
+                    <div className="font-medium text-white tabular-nums">
+                      {circuit.cableLength ? `${circuit.cableLength}m` : 'Auto'}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-0.5">
+                      Phase
+                    </div>
+                    <div className="font-medium text-white">
+                      {circuit.phases === 'single' ? '1Φ' : '3Φ'}
+                    </div>
+                  </div>
+                  {circuit.specialLocation && circuit.specialLocation !== 'none' && (
+                    <div>
+                      <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-0.5">
+                        Location
+                      </div>
+                      <div className="text-[11px] uppercase tracking-[0.14em] text-amber-400 capitalize">
+                        {circuit.specialLocation}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Cable length warning */}
       {missingData.length > 0 && (
-        <div
-          className={cn(
-            'flex items-start gap-2 p-3 rounded-xl border',
-            'bg-orange-500/10 border-orange-500/30'
-          )}
-        >
-          <AlertCircle className="h-4 w-4 text-orange-400 shrink-0 mt-0.5" />
-          <p className="text-xs text-orange-200">
-            <span className="font-medium text-orange-300">Note:</span> {missingData.length} circuit
-            {missingData.length > 1 ? 's' : ''} missing cable length. AI will estimate based on
-            typical installations.
-          </p>
+        <div className="bg-[hsl(0_0%_10%)] border border-amber-500/40 rounded-2xl p-4 sm:p-5">
+          <div className="flex items-baseline gap-3">
+            <span className="text-[11px] uppercase tracking-[0.18em] font-semibold text-amber-400 shrink-0">
+              Warning
+            </span>
+            <p className="text-[12.5px] leading-relaxed text-white/85 flex-1">
+              {missingData.length} circuit{missingData.length > 1 ? 's' : ''} missing cable length
+              — the designer will estimate based on typical installations.
+            </p>
+          </div>
         </div>
       )}
 
-      {/* Expected Output */}
-      <div
-        className={cn('p-4 rounded-xl', 'bg-white/5 backdrop-blur border border-elec-yellow/20')}
-      >
-        <div className="flex items-center gap-2 mb-4">
-          <div className="p-2 rounded-lg bg-elec-yellow/10">
-            <Sparkles className="h-4 w-4 text-elec-yellow" />
-          </div>
-          <h3 className="text-sm font-semibold text-white">What You'll Get</h3>
-        </div>
-
-        <div className="grid gap-2">
-          {[
-            'BS 7671 compliant cable sizing for each circuit',
-            'Protection device selection (MCB/RCBO ratings and curves)',
-            'Voltage drop calculations with compliance verification',
-            'Earth fault loop impedance (Zs) calculations',
-            'Detailed justifications referencing BS 7671 regulations',
-            'Materials list with specifications',
-            'Installation guidance and practical tips',
-          ].map((item, index) => (
-            <div key={index} className="flex items-start gap-2.5 text-sm">
-              <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-              <span className="text-white">{item}</span>
-            </div>
-          ))}
+      {/* Expected output */}
+      <div className="space-y-3">
+        <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+          What you'll get
+        </span>
+        <div className="bg-[hsl(0_0%_10%)] border border-white/[0.10] rounded-2xl p-4 sm:p-5">
+          <ul className="space-y-2.5">
+            {deliverables.map((item, index) => (
+              <li key={index} className="flex items-start gap-3 text-[13px]">
+                <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-elec-yellow shrink-0 mt-0.5 w-7">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <span className="text-white/85 leading-relaxed flex-1">{item}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>

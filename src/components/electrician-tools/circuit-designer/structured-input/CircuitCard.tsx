@@ -1,15 +1,12 @@
 import { useState } from 'react';
 import { IOSInput } from '@/components/ui/ios-input';
 import { IOSSelect } from '@/components/ui/ios-select';
-import { Button } from '@/components/ui/button';
 import {
   CircuitInput,
   DomesticLoadType,
   CommercialLoadType,
   IndustrialLoadType,
 } from '@/types/installation-design';
-import { Trash2, Copy, ChevronDown, Zap } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
 import { DEFAULT_CABLE_LENGTHS } from '@/lib/circuit-templates';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
@@ -91,77 +88,40 @@ export const CircuitCard = ({
   const loadOptions = getLoadOptions();
 
   return (
-    <div
-      className={cn(
-        'relative p-4 rounded-2xl',
-        'bg-gradient-to-br from-elec-yellow/[0.04] to-white/[0.02]',
-        'backdrop-blur border border-elec-yellow/20',
-        'transition-all duration-ios-fast',
-        'hover:border-elec-yellow/35',
-        'shadow-[0_2px_8px_rgba(0,0,0,0.15)]'
-      )}
-    >
-      {/* Header - Native app style with swipe hint */}
-      <div className="flex items-center justify-between mb-5">
-        <div className="flex items-center gap-2.5">
-          <div className="p-2 rounded-xl bg-elec-yellow/15 border border-elec-yellow/20">
-            <Zap className="h-4 w-4 text-elec-yellow" />
-          </div>
-          <div className="flex flex-col">
-            <div className="flex items-center gap-2">
-              <Badge
-                variant="secondary"
-                className="bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow text-xs font-semibold px-2"
-              >
-                Circuit {index + 1}
-              </Badge>
-              {circuit.phases === 'three' && (
-                <Badge className="bg-purple-500/20 text-purple-300 border border-purple-500/30 text-xs px-1.5">
-                  3Φ
-                </Badge>
-              )}
-            </div>
-          </div>
+    <div className="bg-[hsl(0_0%_10%)] border border-white/[0.10] rounded-2xl p-4 sm:p-5">
+      {/* Header — editorial, no icons */}
+      <div className="flex items-start justify-between gap-3 mb-5">
+        <div className="flex items-baseline gap-2 flex-wrap">
+          <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-elec-yellow">
+            Circuit {String(index + 1).padStart(2, '0')}
+          </span>
+          {circuit.phases === 'three' && (
+            <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
+              · Three phase
+            </span>
+          )}
         </div>
-        <div className="flex gap-1.5">
-          <Button
-            variant="ghost"
-            size="sm"
+        <div className="flex items-center gap-3 shrink-0">
+          <button
+            type="button"
             onClick={onDuplicate}
-            className={cn(
-              'h-9 w-9 p-0 rounded-xl',
-              'bg-white/[0.06] hover:bg-elec-yellow/15',
-              'border border-white/10 hover:border-elec-yellow/30',
-              'text-white hover:text-elec-yellow',
-              'transition-all duration-ios-fast',
-              'active:scale-95',
-              'touch-manipulation'
-            )}
+            className="text-[12px] text-white/60 hover:text-elec-yellow transition-colors touch-manipulation"
           >
-            <Copy className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
+            Duplicate
+          </button>
+          <span className="h-3 w-px bg-white/10" aria-hidden />
+          <button
+            type="button"
             onClick={onDelete}
-            className={cn(
-              'h-9 w-9 p-0 rounded-xl',
-              'bg-red-500/10 hover:bg-red-500/20',
-              'border border-red-500/20 hover:border-red-500/40',
-              'text-red-400 hover:text-red-300',
-              'transition-all duration-ios-fast',
-              'active:scale-95',
-              'touch-manipulation'
-            )}
+            className="text-[12px] text-white/60 hover:text-elec-yellow transition-colors touch-manipulation"
           >
-            <Trash2 className="h-4 w-4" />
-          </Button>
+            Remove
+          </button>
         </div>
       </div>
 
       {/* Form Fields */}
       <div className="space-y-4">
-        {/* Circuit Name */}
         <IOSInput
           label="Circuit Name *"
           value={circuit.name}
@@ -170,7 +130,6 @@ export const CircuitCard = ({
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* Load Type */}
           <IOSSelect
             label="Load Type"
             value={circuit.loadType}
@@ -190,7 +149,6 @@ export const CircuitCard = ({
             options={loadOptions}
           />
 
-          {/* Phases */}
           <IOSSelect
             label="Phases *"
             value={circuit.phases}
@@ -202,7 +160,7 @@ export const CircuitCard = ({
           />
         </div>
 
-        {/* Circuit Topology - Show only for socket circuits */}
+        {/* Circuit Topology — only for socket circuits */}
         {(circuit.loadType === 'socket' ||
           circuit.loadType === 'office-sockets' ||
           circuit.loadType === 'workshop-sockets') && (
@@ -211,7 +169,7 @@ export const CircuitCard = ({
             value={circuit.circuitTopology || 'auto'}
             onValueChange={(v: 'ring' | 'radial' | 'auto') => onUpdate({ circuitTopology: v })}
             options={[
-              { value: 'auto', label: 'Auto-detect (AI decides)' },
+              { value: 'auto', label: 'Auto-detect (designer decides)' },
               { value: 'ring', label: 'Ring Final Circuit', description: '32A, 2.5mm²' },
               { value: 'radial', label: 'Radial Circuit', description: 'MCB based on load' },
             ]}
@@ -226,7 +184,6 @@ export const CircuitCard = ({
         )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* Load Power */}
           <IOSInput
             label="Load Power (W) *"
             type="number"
@@ -237,7 +194,6 @@ export const CircuitCard = ({
             placeholder="Ring: 7360W | Lighting: 1000W"
           />
 
-          {/* Cable Length */}
           <IOSInput
             label="Cable Run (m)"
             type="number"
@@ -252,26 +208,27 @@ export const CircuitCard = ({
         {/* Advanced Options */}
         <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
           <CollapsibleTrigger asChild>
-            <Button
-              variant="ghost"
+            <button
+              type="button"
               className={cn(
-                'w-full justify-between h-11 px-4 rounded-xl',
-                'bg-white/[0.04] border border-elec-yellow/15',
-                'hover:bg-elec-yellow/10 hover:border-elec-yellow/30',
-                'text-white text-sm font-medium',
-                'transition-all duration-ios-fast',
-                'active:scale-[0.99]',
+                'w-full h-11 px-4 rounded-xl flex items-center justify-between',
+                'bg-[hsl(0_0%_10%)] border border-white/[0.10]',
+                'hover:border-white/20 hover:bg-elec-yellow/[0.04]',
+                'text-[13px] font-medium text-white',
+                'transition-colors active:scale-[0.99]',
                 'touch-manipulation'
               )}
             >
-              <span>{showAdvanced ? 'Hide' : 'Show'} Advanced Options</span>
-              <ChevronDown
+              <span>{showAdvanced ? 'Hide advanced options' : 'Show advanced options'}</span>
+              <span
                 className={cn(
-                  'h-4 w-4 text-elec-yellow/60 transition-transform duration-ios-normal',
-                  showAdvanced && 'rotate-180'
+                  'text-[10.5px] font-semibold uppercase tracking-[0.18em]',
+                  showAdvanced ? 'text-elec-yellow' : 'text-white/50'
                 )}
-              />
-            </Button>
+              >
+                {showAdvanced ? 'Close' : 'Open'}
+              </span>
+            </button>
           </CollapsibleTrigger>
 
           <CollapsibleContent className="mt-4 space-y-4">

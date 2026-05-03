@@ -21,7 +21,11 @@ export class AIDesigner {
       completed: number,
       total: number,
       circuitName: string
-    ) => void
+    ) => void,
+    private circuitDoneCallback?: (
+      circuit: DesignedCircuit,
+      index: number
+    ) => Promise<void>
   ) {
     this.openAiKey = Deno.env.get('OPENAI_API_KEY')!;
 
@@ -48,24 +52,47 @@ export class AIDesigner {
     // Build system prompt ONCE with RAG context (shared across all circuits)
     const systemPrompt = this.buildSystemPrompt(context, installationType, inputs);
 
-    // Create parallel promises for each circuit
+    // Create parallel promises for each circuit, with per-circuit streaming hook
+    let completedCount = 0;
     const circuitPromises = inputs.circuits.map((circuit, index) =>
       this.generateSingleCircuit(circuit, index, systemPrompt, installationType, inputs.supply)
+        .then(async (designed) => {
+          completedCount++;
+          // Stream to partials table immediately (best-effort, non-blocking)
+          if (this.circuitDoneCallback) {
+            try {
+              await this.circuitDoneCallback({ ...designed, circuitNumber: index + 1 }, index);
+            } catch (err) {
+              this.logger.warn('circuitDoneCallback failed (continuing)', {
+                index,
+                error: err instanceof Error ? err.message : String(err),
+              });
+            }
+          }
+          // Bump progress per-circuit-as-it-lands
+          if (this.circuitProgressCallback) {
+            try {
+              await this.circuitProgressCallback(
+                completedCount,
+                inputs.circuits.length,
+                designed.name || `Circuit ${index + 1}`
+              );
+            } catch (err) {
+              this.logger.warn('circuitProgressCallback failed (continuing)', {
+                error: err instanceof Error ? err.message : String(err),
+              });
+            }
+          }
+          return designed;
+        })
     );
 
     // Execute ALL circuits in parallel
     this.logger.info('Executing parallel AI calls', { count: circuitPromises.length });
     const results = await Promise.allSettled(circuitPromises);
 
-    // Report progress for successful circuits
+    // Total successful generations
     const successfulCount = results.filter((r) => r.status === 'fulfilled').length;
-    if (this.circuitProgressCallback) {
-      await this.circuitProgressCallback(
-        successfulCount,
-        inputs.circuits.length,
-        'Initial parallel batch'
-      );
-    }
 
     // Map results to preserve original array positions
     // Set circuitNumber = index + 1 for consistency with frontend display
@@ -228,7 +255,7 @@ export class AIDesigner {
             { role: 'user', content: JSON.stringify(singleCircuitInput, null, 2) },
           ],
           model: PRIMARY_MODEL,
-          max_completion_tokens: 4000, // Sufficient for single circuit
+          max_completion_tokens: 24000, // Generous — cite-or-die requires room for regulation_refs + structuredOutput + justifications
           tools,
           tool_choice,
         },
@@ -285,7 +312,7 @@ export class AIDesigner {
                 { role: 'user', content: JSON.stringify(singleCircuitInput, null, 2) },
               ],
               model: FALLBACK_MODEL,
-              max_completion_tokens: 4000,
+              max_completion_tokens: 24000,
               tools,
               tool_choice,
             },
@@ -350,17 +377,32 @@ export class AIDesigner {
     const parts: string[] = [];
 
     // Enhanced core identity - trust AI to reason with RAG
-    parts.push('You are a BS 7671:2018+A3:2024 electrical circuit design expert.');
+    parts.push('You are a BS 7671:2018+A4:2026 electrical circuit design expert.');
     parts.push('');
     parts.push(
       '🔢 CRITICAL: Set circuitNumber = circuit.index + 1 from input (e.g., index 0 = Way 1, index 1 = Way 2)'
     );
     parts.push('');
+    parts.push('=== GROUNDING RULES (NON-NEGOTIABLE) ===');
+    parts.push('');
     parts.push(
-      'The RAG knowledge base contains all BS 7671 data (cable sizing tables, voltage drop formulas, Zs limits, protection requirements).'
+      'Every numeric choice you make MUST be grounded in the RAG CONTEXT below — not in your training memory.'
     );
     parts.push(
-      'Use this knowledge to design compliant circuits. Your design justifications should reference specific regulations and calculations from the RAG context.'
+      '1. CABLE SIZE: cable_table_ref MUST be the exact BS 7671 Appendix 4 table from which the chosen Iz was sourced (e.g. "4D1A"). If no Iz facet exists in RAG for the cable type+size+method+temperature combination you chose, set cable_table_ref to "ungrounded" and add a note to ungrounded_choices.'
+    );
+    parts.push(
+      '2. REGULATIONS: regulation_refs[] MUST contain at least 2 BS 7671 regulation numbers from the RAG context that support this circuit design (typical pattern: one for protection coordination, one for Zs/disconnection, one for special-location if applicable). DO NOT invent regulation numbers. If a numeric choice cannot be backed by a reg in the provided context, list the choice in ungrounded_choices.'
+    );
+    parts.push(
+      '3. HONESTY: ungrounded_choices is your honesty signal. Empty array = everything grounded. Non-empty = circuit ships with a "needs review" badge. This is FAR better than inventing citations.'
+    );
+    parts.push(
+      '4. The RAG context is A4:2026-aware. Trust it over older training memory.'
+    );
+    parts.push('');
+    parts.push(
+      'Use the RAG knowledge to design compliant circuits. Your design justifications should reference specific regulations and calculations from the RAG context.'
     );
     parts.push('');
     parts.push('=== CRITICAL: DATA CONSISTENCY (MANDATORY) ===');
@@ -389,14 +431,52 @@ export class AIDesigner {
     parts.push('- This creates a DANGEROUS SAFETY HAZARD - cables overload, fires occur');
     parts.push('- The justification is the engineering truth - structured data must match it');
     parts.push('');
-    parts.push('Installation environments have MANDATORY cable type rules:');
-    parts.push('- Domestic: Twin & Earth for internal, SWA for external');
+    parts.push('=== CABLE TYPE RULES BY LOCATION (MANDATORY) ===');
+    parts.push('');
     parts.push(
-      '- Commercial: LSZH singles in conduit, SWA for sub-mains, FP200/FP400 for fire circuits'
+      '🔴 The cable family is dictated by WHERE the circuit runs, not what type of load it is.'
     );
     parts.push(
-      '- Industrial: SWA standard, LSZH singles in heavy conduit, FP200/FP400 for fire/emergency'
+      '🔴 Read circuit.specialLocation, circuit.outdoorInstall, and the circuit name carefully.'
     );
+    parts.push('');
+    parts.push('OUTDOOR / EXTERNAL (above-ground): SWA 3-core or 4-core 90°C XLPE.');
+    parts.push(
+      '  ✗ NEVER twin & earth (BS 6004) — that is a BS 6004 indoor cable, UV degrades it, no mechanical protection.'
+    );
+    parts.push('  ✓ SWA per BS 6724 — UV stable, mechanical protection from armour.');
+    parts.push('  Per BS 7671 522.6 / 522.8.');
+    parts.push('');
+    parts.push('UNDERGROUND / BURIED: SWA mandatory — Method D (direct in ground).');
+    parts.push('  Mechanical protection requirement makes T&E unsuitable.');
+    parts.push('  Per BS 7671 522.6.');
+    parts.push('');
+    parts.push('FIRE ALARM / EMERGENCY LIGHTING / SMOKE DETECTION / SOUNDER:');
+    parts.push('  FP200 enhanced (or FP400, or MICC mineral-insulated).');
+    parts.push('  ✗ NEVER twin & earth — fails the fire-resistance test.');
+    parts.push('  Per BS 7671 560.7 · BS 5266-1 · BS 5839-1.');
+    parts.push('');
+    parts.push(
+      'INDUSTRIAL FIXED PLANT (motors, machinery, VFDs, welding, compressors, production lines):'
+    );
+    parts.push('  SWA preferred — mechanical protection + EMC screening.');
+    parts.push('  LSZH singles in steel conduit/trunking acceptable when fully enclosed.');
+    parts.push('  ✗ T&E unacceptable for industrial fixed plant.');
+    parts.push('');
+    parts.push('COMMERCIAL DISTRIBUTION + SUBMAINS: SWA 4-core 90°C XLPE.');
+    parts.push('  LSZH singles in steel conduit/trunking for general lighting/socket runs.');
+    parts.push('');
+    parts.push('DOMESTIC INDOOR (lighting, sockets, kitchen, bathroom indoor): T&E acceptable.');
+    parts.push('  T&E (BS 6004) is suitable for indoor concealed wiring on Method C clipped direct.');
+    parts.push('');
+    parts.push('NEGATIVE EXAMPLES (THESE ARE WRONG):');
+    parts.push('  ✗ Outdoor lighting circuit with cableType "1.5 mm² twin and earth" — FAIL');
+    parts.push('  ✗ EV charger (specialLocation: outdoor) with T&E — FAIL');
+    parts.push('  ✗ Fire alarm with T&E — FAIL');
+    parts.push('  ✗ Three-phase motor with T&E — FAIL');
+    parts.push('  ✓ Outdoor lighting with "1.5 mm² SWA 3-core 90°C XLPE" — correct');
+    parts.push('  ✓ Fire alarm with "1.5 mm² FP200 enhanced" — correct');
+    parts.push('  ✓ Three-phase motor with "6 mm² SWA 4-core 90°C XLPE" — correct');
     parts.push('');
     parts.push('Enclosure selection follows cable type:');
     parts.push('- SWA: Clipped direct (armour provides protection)');
@@ -406,6 +486,23 @@ export class AIDesigner {
     parts.push('');
     parts.push('');
     parts.push('=== BS 7671 TABLE 41.3 - MAXIMUM Zs VALUES (MANDATORY) ===');
+    parts.push('');
+    parts.push('🔴 ZS LOOKUP DISCIPLINE:');
+    parts.push('1. Read protectionDevice.rating EXACTLY (e.g. 20).');
+    parts.push('2. Read protectionDevice.curve EXACTLY (e.g. B).');
+    parts.push('3. Find that ROW. Set calculations.maxZs to that EXACT value.');
+    parts.push('4. RCBOs use the SAME Table 41.3 values as MCBs of equivalent type+rating.');
+    parts.push('   The RCBO\'s integrated 30 mA RCD is *additional* protection per 411.4.5;');
+    parts.push('   the declared maxZs in the schedule remains the Table 41.3 value.');
+    parts.push('');
+    parts.push('🔴 NEGATIVE EXAMPLES (THESE ARE COMMON MISTAKES — DO NOT DO):');
+    parts.push('   ✗ 20A Type B with maxZs = 1.37   ← that is the 32A row, FAIL');
+    parts.push('   ✗ 16A Type B with maxZs = 2.19   ← that is the 20A row, FAIL');
+    parts.push('   ✗ 16A Type C with maxZs = 0.68   ← that is the 32A row, FAIL');
+    parts.push('   ✗ 32A Type B with maxZs = 0.87   ← that is the 50A row, FAIL');
+    parts.push('   ✓ 20A Type B → 2.19Ω (correct)');
+    parts.push('   ✓ 32A Type B → 1.37Ω (correct)');
+    parts.push('   ✓ 16A Type C → 1.37Ω (correct)');
     parts.push('');
     parts.push('🔴 CRITICAL: Use EXACT values from this table - do NOT calculate or approximate!');
     parts.push('');
@@ -427,6 +524,70 @@ export class AIDesigner {
     parts.push('');
     parts.push(
       '⚠️ CRITICAL: Only Type D has 5s values. Types B and C use 0.4s ONLY (final circuits).'
+    );
+    parts.push('');
+    parts.push('=== SINGLE-PHASE vs THREE-PHASE VOLTAGE (CRITICAL) ===');
+    parts.push('');
+    parts.push(
+      '🔴 The SUPPLY voltage and the CIRCUIT voltage are NOT the same thing on a three-phase board.'
+    );
+    parts.push('');
+    parts.push('SUPPLY (the board feed):');
+    parts.push('   ✓ 230 V single-phase: phase-to-neutral, 1φ supply');
+    parts.push('   ✓ 400 V three-phase: line-to-line, 3φ supply (415 V on some legacy systems)');
+    parts.push('');
+    parts.push('CIRCUIT voltage (what each way operates at):');
+    parts.push(
+      '   ✓ phases==="single" → CIRCUIT VOLTAGE IS 230 V (phase-to-neutral) regardless of supply'
+    );
+    parts.push('   ✓ phases==="three"  → CIRCUIT VOLTAGE IS 400 V or 415 V (line-to-line)');
+    parts.push('');
+    parts.push('CALCULATIONS — use the right voltage:');
+    parts.push('   Single-phase:  Ib = P / 230');
+    parts.push('   Three-phase:   Ib = P / (√3 × 400) ≈ P / 692.8');
+    parts.push('');
+    parts.push(
+      'A 3 kW lighting circuit on a TP+N board is STILL a 230 V single-phase circuit:'
+    );
+    parts.push('   ✓ Ib = 3000 / 230 = 13.0 A · 16 A MCB suits it');
+    parts.push('   ✗ Ib = 3000 / 400 = 7.5 A · this is WRONG (carrying supply voltage onto a 1φ circuit)');
+    parts.push('');
+    parts.push(
+      'VOLT DROP — also referenced to the circuit voltage, not the supply voltage:'
+    );
+    parts.push(
+      '   Single-phase circuit Vd %  =  Vd_volts / 230 × 100  (NOT / 400)'
+    );
+    parts.push('   Three-phase circuit Vd %  =  Vd_volts / 400 × 100');
+    parts.push('');
+    parts.push(
+      '🔴 Set calculations.voltage to 230 for single-phase circuits, 400 (or 415) for three-phase circuits.'
+    );
+    parts.push(
+      '🔴 Single-phase circuits on a TP+N board live on a single phase (L1, L2, or L3) — the assignment is handled by the board layout, but each circuit IS still a 230 V single-phase circuit for cable / Ib / Vd purposes.'
+    );
+    parts.push('');
+    parts.push('=== RING FINAL VOLTAGE DROP (PARALLEL PATHS) ===');
+    parts.push('');
+    parts.push(
+      '🔴 Ring finals have TWO legs in parallel. Worst-case load is at the mid-point of the ring.'
+    );
+    parts.push('🔴 Effective length × current = (L × Ib) / 4 — not L × Ib.');
+    parts.push('');
+    parts.push('FORMULA:');
+    parts.push('   Vd_volts = (mV/A/m × Ib × L_total) / 4000');
+    parts.push('   where L_total is the total ring perimeter (the cableLength field).');
+    parts.push('');
+    parts.push('NEGATIVE EXAMPLES:');
+    parts.push(
+      '   ✗ 32A ring on 2.5 mm² T&E (mV/A/m=18) over 20 m: Vd_volts = 18×32×20/1000 = 11.5 V (5.0%) ← USED RADIAL FORMULA, WRONG'
+    );
+    parts.push(
+      '   ✓ Same ring, correct formula: Vd_volts = 18×32×20/4000 = 2.88 V (1.25%) ← ring formula'
+    );
+    parts.push('');
+    parts.push(
+      '🔴 Set calculations.voltageDrop.percent and .volts using the RING formula when circuitTopology=="ring" or the load is described as a ring final.'
     );
     parts.push('');
     parts.push('=== RING FINAL CIRCUIT RULES (FROM RAG KNOWLEDGE) ===');
@@ -949,9 +1110,30 @@ export class AIDesigner {
     parts.push('  • Data centres: Raised floor or overhead basket per TIA-942');
     parts.push('');
 
-    // Inject Regulations Intelligence (Phase 5: Reduced to 15 for performance)
+    // BS 7671 FACETS (A4:2026 grounded — primary source for cite-or-die)
+    // These are atomic, semantically-indexed facts. Cite them by reg_number.
+    if (context.bs7671Facets && context.bs7671Facets.length > 0) {
+      parts.push('=== BS 7671 FACETS (A4:2026 GROUNDED — PRIMARY) ===');
+      parts.push('Each facet below is an atomic, retrievable fact from BS 7671:2018+A4:2026,');
+      parts.push('GN3 9th Ed:2022 (A4), or OSG 9th Ed:2022 (A4). Use these for cable Iz lookup,');
+      parts.push('regulation references, Zs limits, and protection requirements. The reg_number');
+      parts.push('value is what you must put into regulation_refs. The table reference (e.g. 4D1A)');
+      parts.push('is what you must put into cable_table_ref.');
+      parts.push('');
+      context.bs7671Facets.slice(0, 30).forEach((f: any, i: number) => {
+        const ref = f.reg_number ? ` [${f.reg_number}]` : '';
+        const doc = f.document_type ? ` (${f.document_type})` : '';
+        const topic = f.primary_topic ? ` ${f.primary_topic}` : '';
+        const ftype = f.facet_type ? `[${String(f.facet_type).toUpperCase()}]` : '';
+        parts.push(`${i + 1}. ${ftype}${ref}${doc}${topic}`);
+        if (f.content) parts.push(`   ${f.content}`);
+      });
+      parts.push('');
+    }
+
+    // Regulations intelligence (legacy enrichment table — secondary)
     if (context.regulations && context.regulations.length > 0) {
-      parts.push('=== REGULATIONS INTELLIGENCE ===');
+      parts.push('=== REGULATIONS INTELLIGENCE (SECONDARY) ===');
       context.regulations.slice(0, 15).forEach((reg) => {
         parts.push(`${reg.regulation_number}: ${reg.content}`);
       });
@@ -1074,7 +1256,7 @@ export class AIDesigner {
 
     // === YOUR ROLE ===
     parts.push('=== YOUR ROLE ===');
-    parts.push('You are a BS 7671:2018+A3:2024 electrical circuit design expert.');
+    parts.push('You are a BS 7671:2018+A4:2026 electrical circuit design expert.');
     parts.push('FOCUS on cable sizing, protection device selection, and electrical calculations.');
     parts.push('USE THE KNOWLEDGE BASE ABOVE to design compliant circuits.');
     parts.push(
@@ -1268,7 +1450,7 @@ export class AIDesigner {
           ? `• Lighting: 90% | Radial sockets: 100% up to 10A + 60% remainder | Motors/Process: 100% (NO diversity) | Heating: 100%`
           : `• Lighting: 66% of total | Radial sockets: 100% up to 10A + 40% remainder | Ring finals: 32A per ring (100% largest + 40% others) | Cookers: 10A + 30% of excess (+ 5A if socket) | Showers: 100% largest + 100% second + 25% remainder | Heating: 100% | EV/Immersion/Floor warming/Storage heaters: 100% (NO diversity)`;
 
-    const systemPrompt = `BS 7671:2018+A3:2024 expert. Design ${inputs.circuits.length} compliant ${installationType || 'domestic'} circuit(s) WITH DIVERSITY per IET On-Site Guide.
+    const systemPrompt = `BS 7671:2018+A4:2026 expert. Design ${inputs.circuits.length} compliant ${installationType || 'domestic'} circuit(s) WITH DIVERSITY per IET On-Site Guide.
 
 QUICK RULES:
 - Calculate Ib (connected load) AND Id (diversified current)
@@ -1462,7 +1644,7 @@ CRITICAL: In diversityApplied justification, cite specific table item (e.g., "pe
   private buildCorrectionPrompt(validationErrors: string, originalDesign: Design): string {
     const parts: string[] = [];
 
-    parts.push('You are a BS 7671:2018+A3:2024 electrical circuit design expert.');
+    parts.push('You are a BS 7671:2018+A4:2026 electrical circuit design expert.');
     parts.push('');
     parts.push('=== CORRECTION MODE ===');
     parts.push('The previous design failed validation. Fix ONLY the errors listed below.');
@@ -1666,6 +1848,38 @@ CRITICAL: In diversityApplied justification, cite specific table item (e.g., "pe
                     },
                   },
                   required: ['type', 'rating', 'curve', 'kaRating'],
+                },
+                cable_table_ref: {
+                  type: 'string',
+                  description:
+                    'BS 7671 Appendix 4 cable table reference grounding the cableSize choice. MUST be one of: "4D1A","4D2A","4D4A","4D5A","4E1A","4E2A","4E4A","4F1A","4F2A","4F4A","4F1B","4F2B","4G1A","4G2A","4H1A","4H2A","4J1A","4J2A","4J4A". This must match the table from which the chosen cable Iz was sourced. If RAG context lacks an explicit Iz facet for this cable choice, output "ungrounded" — do NOT invent a table number.',
+                },
+                regulation_refs: {
+                  type: 'array',
+                  description:
+                    'BS 7671 regulation numbers grounding the design. Each ref must come from the RAG context provided. Minimum 2 refs required. If the model cannot ground a numeric choice in a regulation from RAG, list it under ungrounded_choices instead. Examples: [{reg:"433.1.1",reason:"Ib≤In≤Iz coordination"},{reg:"411.4.5",reason:"TN-S Zs limit"}]',
+                  minItems: 2,
+                  items: {
+                    type: 'object',
+                    properties: {
+                      reg: {
+                        type: 'string',
+                        description:
+                          'Regulation number, e.g. "433.1.1", "411.3.3", "421.1.7", "543.1.2"',
+                      },
+                      reason: {
+                        type: 'string',
+                        description: 'One-line reason this regulation applies to this circuit',
+                      },
+                    },
+                    required: ['reg', 'reason'],
+                  },
+                },
+                ungrounded_choices: {
+                  type: 'array',
+                  description:
+                    'Honest signal: any numeric choice (cable size, protection rating, Zs) that the model could NOT ground in RAG context. Empty array if all grounded. If non-empty, the circuit will be flagged for human review.',
+                  items: { type: 'string' },
                 },
                 calculations: {
                   type: 'object',
@@ -2013,6 +2227,9 @@ CRITICAL: In diversityApplied justification, cite specific table item (e.g., "pe
                 'cpcSize',
                 'cableType',
                 'protectionDevice',
+                'cable_table_ref',
+                'regulation_refs',
+                'ungrounded_choices',
                 'rcdProtected',
                 'calculations',
                 'expectedTests',

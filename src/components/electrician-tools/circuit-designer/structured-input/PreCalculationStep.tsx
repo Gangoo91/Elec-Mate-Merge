@@ -4,25 +4,14 @@
  */
 
 import { CircuitInput } from '@/types/installation-design';
-import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import {
-  CheckCircle2,
-  AlertTriangle,
-  XCircle,
-  Zap,
-  Cable,
-  Shield,
-  PoundSterling,
-  Info,
-  Gauge,
-} from 'lucide-react';
 import {
   validateCircuit,
   estimateMaterialCost,
   MaterialEstimate,
 } from '@/utils/circuit-calculations';
 import { cn } from '@/lib/utils';
+import { Eyebrow } from '@/components/college/primitives';
 
 interface PreCalculationStepProps {
   circuits: CircuitInput[];
@@ -71,221 +60,281 @@ export const PreCalculationStep = ({
   const readinessScore =
     maxPossibleFields > 0 ? Math.round((fieldsProvided / maxPossibleFields) * 100) : 0;
 
+  // Overall status label
+  let overallStatusLabel = 'Pass';
+  let overallStatusClass = 'text-emerald-400';
+  if (totalErrors > 0) {
+    overallStatusLabel = 'Fail';
+    overallStatusClass = 'text-red-400';
+  } else if (totalWarnings > 0) {
+    overallStatusLabel = 'Warning';
+    overallStatusClass = 'text-amber-400';
+  }
+
   return (
-    <div className="space-y-6">
-      {/* Section Header */}
-      <div className="flex items-center gap-3">
-        <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-          <Gauge className="h-5 w-5 text-elec-yellow" />
-        </div>
-        <div>
-          <h2 className="text-lg font-semibold text-white">Pre-Flight Check</h2>
-          <p className="text-sm text-white">Validating before AI processing</p>
-        </div>
+    <div className="space-y-8 sm:space-y-10">
+      {/* Section header — editorial */}
+      <div className="space-y-2">
+        <Eyebrow>05 · VALIDATE</Eyebrow>
+        <h2 className="text-[26px] sm:text-[32px] lg:text-[36px] font-semibold tracking-tight leading-[1.1] text-white">
+          Pre-flight check.
+        </h2>
+        <p className="text-[14px] leading-relaxed text-white/85 max-w-2xl">
+          We've sanity-checked the inputs. Resolve anything below before the designer runs — issues
+          here usually mean a derate or earthing rethink.
+        </p>
       </div>
 
-      {/* AI Processing Readiness */}
-      <div
-        className={cn('p-4 rounded-xl', 'bg-white/5 backdrop-blur border border-elec-yellow/20')}
-      >
-        <div className="flex items-center gap-3 mb-4">
-          <div className="p-2.5 rounded-xl bg-elec-yellow/10">
-            <Zap className="h-5 w-5 text-elec-yellow" />
+      {/* Headline summary strip — gridline pattern */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-black border border-white/[0.08] rounded-2xl overflow-hidden">
+        <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
+            Status
           </div>
-          <div className="flex-1 min-w-0">
-            <h3 className="text-base font-semibold text-white">AI Processing Readiness</h3>
-            <p className="text-xs text-white">More details = faster AI processing time</p>
-          </div>
-        </div>
-
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-white">Details Provided</span>
-            <span className="text-2xl font-bold text-elec-yellow">{readinessScore}%</span>
-          </div>
-          <Progress value={readinessScore} className="h-2" />
-          <p className="text-xs text-white">
-            {readinessScore >= 80 && 'Excellent! AI will process this very quickly'}
-            {readinessScore >= 50 &&
-              readinessScore < 80 &&
-              'Good! AI will have most details it needs'}
-            {readinessScore < 50 && 'AI will need to infer some details (may take longer)'}
-          </p>
-        </div>
-      </div>
-
-      {/* Validation Status */}
-      {totalErrors === 0 && totalWarnings === 0 && (
-        <div
-          className={cn(
-            'flex items-start gap-3 p-4 rounded-xl border',
-            'bg-green-500/10 border-green-500/30'
-          )}
-        >
-          <CheckCircle2 className="h-5 w-5 text-green-400 shrink-0 mt-0.5" />
-          <div>
-            <h4 className="text-sm font-semibold text-white mb-0.5">All Circuits Valid</h4>
-            <p className="text-xs text-green-300">Ready to generate BS 7671 compliant design</p>
-          </div>
-        </div>
-      )}
-
-      {totalWarnings > 0 && (
-        <div
-          className={cn(
-            'flex items-start gap-3 p-4 rounded-xl border',
-            'bg-orange-500/10 border-orange-500/30'
-          )}
-        >
-          <AlertTriangle className="h-5 w-5 text-orange-400 shrink-0 mt-0.5" />
-          <div>
-            <h4 className="text-sm font-semibold text-white mb-0.5">Warnings ({totalWarnings})</h4>
-            <p className="text-xs text-orange-200">
-              Review warnings below - design will proceed with assumptions
-            </p>
-          </div>
-        </div>
-      )}
-
-      {totalErrors > 0 && (
-        <div
-          className={cn(
-            'flex items-start gap-3 p-4 rounded-xl border',
-            'bg-red-500/10 border-red-500/30'
-          )}
-        >
-          <XCircle className="h-5 w-5 text-red-400 shrink-0 mt-0.5" />
-          <div>
-            <h4 className="text-sm font-semibold text-white mb-0.5">
-              Validation Errors ({totalErrors})
-            </h4>
-            <p className="text-xs text-red-200">Please fix errors before generating design</p>
-          </div>
-        </div>
-      )}
-
-      {/* Circuit Validation Cards */}
-      <div className="space-y-3">
-        {validations.map(({ circuit, validation }, index) => (
           <div
-            key={circuit.id}
             className={cn(
-              'p-4 rounded-xl',
-              'bg-white/5 backdrop-blur border',
-              validation.isValid ? 'border-white/10' : 'border-red-500/30',
-              'transition-all duration-ios-fast'
+              'mt-1 text-[13px] font-semibold uppercase tracking-[0.18em]',
+              overallStatusClass
             )}
           >
-            {/* Circuit Header */}
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2 flex-1 min-w-0">
-                {validation.isValid ? (
-                  <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0" />
-                ) : (
-                  <XCircle className="h-4 w-4 text-red-400 shrink-0" />
-                )}
-                <span className="font-semibold text-sm text-white truncate">
-                  {circuit.name || 'Unnamed Circuit'}
-                </span>
-              </div>
-              <div className="flex gap-2 shrink-0">
-                {circuit.calculatedIb && (
-                  <Badge className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 text-xs">
-                    {circuit.calculatedIb.toFixed(1)}A
-                  </Badge>
-                )}
-                {circuit.suggestedMCB && (
-                  <Badge className="bg-white/10 text-white border-white/20 text-xs">
-                    {circuit.suggestedMCB}A MCB
-                  </Badge>
-                )}
-              </div>
-            </div>
-
-            {/* Errors & Warnings */}
-            {(validation.errors.length > 0 || validation.warnings.length > 0) && (
-              <div className="space-y-2 mb-3">
-                {validation.errors.map((error, i) => (
-                  <div key={`error-${i}`} className="flex items-start gap-2 text-xs">
-                    <XCircle className="h-3.5 w-3.5 mt-0.5 text-red-400 shrink-0" />
-                    <span className="text-red-300">{error}</span>
-                  </div>
-                ))}
-                {validation.warnings.map((warning, i) => (
-                  <div key={`warning-${i}`} className="flex items-start gap-2 text-xs">
-                    <AlertTriangle className="h-3.5 w-3.5 mt-0.5 text-orange-400 shrink-0" />
-                    <span className="text-orange-200">{warning}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* Material Estimate */}
-            {circuit.calculatedIb && circuit.cableLength && materialEstimates[index] && (
-              <div className="pt-3 border-t border-white/10 space-y-2">
-                <div className="flex items-center gap-2 text-xs text-white">
-                  <Cable className="h-3.5 w-3.5 text-elec-yellow shrink-0" />
-                  <span className="flex-1 truncate">
-                    Cable: {materialEstimates[index].cableSize}mm² ×{' '}
-                    {materialEstimates[index].cableLength}m
-                  </span>
-                  <span className="font-medium text-white shrink-0">
-                    £{materialEstimates[index].estimatedCableCost}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 text-xs text-white">
-                  <Shield className="h-3.5 w-3.5 text-elec-yellow shrink-0" />
-                  <span className="flex-1 truncate">
-                    Protection: {materialEstimates[index].protectionDevice}
-                  </span>
-                  <span className="font-medium text-white shrink-0">
-                    £{materialEstimates[index].estimatedDeviceCost}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 text-xs font-semibold text-elec-yellow pt-2 border-t border-white/5">
-                  <PoundSterling className="h-3.5 w-3.5 shrink-0" />
-                  <span className="flex-1">Circuit Total</span>
-                  <span className="shrink-0">£{materialEstimates[index].totalEstimate}</span>
-                </div>
-              </div>
-            )}
+            {overallStatusLabel}
           </div>
-        ))}
+        </div>
+        <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
+            Readiness
+          </div>
+          <div className="mt-1 text-[13px] font-semibold text-elec-yellow tabular-nums">
+            {readinessScore}%
+          </div>
+        </div>
+        <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
+            Errors
+          </div>
+          <div
+            className={cn(
+              'mt-1 text-[13px] font-semibold tabular-nums',
+              totalErrors > 0 ? 'text-red-400' : 'text-white'
+            )}
+          >
+            {totalErrors}
+          </div>
+        </div>
+        <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
+            Warnings
+          </div>
+          <div
+            className={cn(
+              'mt-1 text-[13px] font-semibold tabular-nums',
+              totalWarnings > 0 ? 'text-amber-400' : 'text-white'
+            )}
+          >
+            {totalWarnings}
+          </div>
+        </div>
       </div>
 
-      {/* Total Cost Estimate */}
-      {totalMaterialCost > 0 && (
-        <div
-          className={cn('p-4 rounded-xl', 'bg-white/5 backdrop-blur border border-elec-yellow/20')}
-        >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-elec-yellow/10">
-                <PoundSterling className="h-5 w-5 text-elec-yellow" />
-              </div>
-              <span className="text-base font-semibold text-white">Estimated Materials</span>
-            </div>
-            <span className="text-2xl font-bold text-elec-yellow">
-              £{totalMaterialCost.toFixed(2)}
+      {/* Readiness detail */}
+      <div className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3">
+          <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+            Designer readiness
+          </span>
+          <span className="text-[11px] text-white/50 tabular-nums">
+            {fieldsProvided}/{maxPossibleFields} fields
+          </span>
+        </div>
+        <div className="bg-[hsl(0_0%_10%)] border border-white/[0.10] rounded-2xl p-4 sm:p-5 space-y-3">
+          <div className="flex items-baseline justify-between">
+            <span className="text-[12.5px] text-white/70">Details provided</span>
+            <span className="text-[20px] font-semibold text-elec-yellow tabular-nums">
+              {readinessScore}%
             </span>
           </div>
-          <p className="text-xs text-white mt-3 pl-14">
-            Excludes labour, accessories, and VAT. AI will provide detailed materials list.
+          <Progress value={readinessScore} className="h-1.5" />
+          <p className="text-[12px] leading-relaxed text-white/65">
+            {readinessScore >= 80 && 'Excellent — the designer has the context it needs.'}
+            {readinessScore >= 50 &&
+              readinessScore < 80 &&
+              'Good — most context provided, the designer will infer the rest.'}
+            {readinessScore < 50 &&
+              'Limited context — the designer will infer install method, protection and other details.'}
+          </p>
+        </div>
+      </div>
+
+      {/* Per-circuit validation cards */}
+      <div className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3">
+          <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
+            Per-circuit checks
+          </span>
+          <span className="text-[11px] text-white/50 tabular-nums">
+            {circuits.length} circuit{circuits.length !== 1 ? 's' : ''}
+          </span>
+        </div>
+        <div className="space-y-3 sm:space-y-4">
+          {validations.map(({ circuit, validation }, index) => {
+            const hasErrors = validation.errors.length > 0;
+            const hasWarnings = validation.warnings.length > 0;
+            const statusLabel = hasErrors ? 'Fail' : hasWarnings ? 'Warning' : 'Pass';
+            const statusClass = hasErrors
+              ? 'text-red-400'
+              : hasWarnings
+                ? 'text-amber-400'
+                : 'text-emerald-400';
+            const borderClass = hasErrors
+              ? 'border-red-500/40'
+              : hasWarnings
+                ? 'border-amber-500/40'
+                : 'border-white/[0.10]';
+
+            return (
+              <div
+                key={circuit.id}
+                className={cn(
+                  'bg-[hsl(0_0%_10%)] border rounded-2xl p-4 sm:p-5 transition-all',
+                  borderClass
+                )}
+              >
+                {/* Circuit header */}
+                <div className="flex items-start justify-between gap-3 mb-3">
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-white/50">
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+                      <span
+                        className={cn(
+                          'text-[11px] uppercase tracking-[0.18em] font-semibold',
+                          statusClass
+                        )}
+                      >
+                        {statusLabel}
+                      </span>
+                    </div>
+                    <div className="mt-1.5 text-[16px] sm:text-[17px] font-semibold tracking-tight leading-[1.2] text-white truncate">
+                      {circuit.name || 'Unnamed circuit'}
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-2 shrink-0 justify-end">
+                    {circuit.calculatedIb && (
+                      <span className="text-[11px] uppercase tracking-[0.14em] tabular-nums text-elec-yellow border border-elec-yellow/30 bg-elec-yellow/[0.06] rounded-full px-2.5 py-0.5">
+                        {circuit.calculatedIb.toFixed(1)} A
+                      </span>
+                    )}
+                    {circuit.suggestedMCB && (
+                      <span className="text-[11px] uppercase tracking-[0.14em] tabular-nums text-white border border-white/15 bg-white/[0.04] rounded-full px-2.5 py-0.5">
+                        {circuit.suggestedMCB} A MCB
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Errors & warnings */}
+                {(hasErrors || hasWarnings) && (
+                  <div className="space-y-2 mb-3">
+                    {validation.errors.map((error, i) => (
+                      <div key={`error-${i}`} className="flex items-start gap-2.5 text-[12.5px]">
+                        <span className="text-[10px] uppercase tracking-[0.18em] font-semibold text-red-400 shrink-0 mt-0.5 w-12">
+                          Fail
+                        </span>
+                        <span className="text-white/85 leading-relaxed flex-1">{error}</span>
+                      </div>
+                    ))}
+                    {validation.warnings.map((warning, i) => (
+                      <div key={`warning-${i}`} className="flex items-start gap-2.5 text-[12.5px]">
+                        <span className="text-[10px] uppercase tracking-[0.18em] font-semibold text-amber-400 shrink-0 mt-0.5 w-12">
+                          Warn
+                        </span>
+                        <span className="text-white/85 leading-relaxed flex-1">{warning}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Material estimate */}
+                {circuit.calculatedIb && circuit.cableLength && materialEstimates[index] && (
+                  <div className="pt-3 border-t border-white/[0.08]">
+                    <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                      Estimate
+                    </div>
+                    <div className="space-y-1.5">
+                      <div className="flex items-baseline justify-between gap-3 text-[12.5px]">
+                        <span className="text-white/70 truncate">
+                          Cable {materialEstimates[index].cableSize}mm² ×{' '}
+                          {materialEstimates[index].cableLength}m
+                        </span>
+                        <span className="font-medium text-white tabular-nums shrink-0">
+                          £{materialEstimates[index].estimatedCableCost}
+                        </span>
+                      </div>
+                      <div className="flex items-baseline justify-between gap-3 text-[12.5px]">
+                        <span className="text-white/70 truncate">
+                          Protection {materialEstimates[index].protectionDevice}
+                        </span>
+                        <span className="font-medium text-white tabular-nums shrink-0">
+                          £{materialEstimates[index].estimatedDeviceCost}
+                        </span>
+                      </div>
+                      <div className="flex items-baseline justify-between gap-3 pt-2 border-t border-white/[0.06] text-[12.5px]">
+                        <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+                          Circuit total
+                        </span>
+                        <span className="font-semibold text-elec-yellow tabular-nums shrink-0">
+                          £{materialEstimates[index].totalEstimate}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Total cost estimate */}
+      {totalMaterialCost > 0 && (
+        <div className="space-y-3">
+          <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+            Materials total
+          </span>
+          <div className="grid grid-cols-2 gap-px bg-black border border-white/[0.08] rounded-2xl overflow-hidden">
+            <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
+              <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
+                Estimated materials
+              </div>
+              <div className="mt-1 text-[13px] font-semibold text-white">
+                Pre-flight estimate only
+              </div>
+            </div>
+            <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
+              <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
+                Total
+              </div>
+              <div className="mt-1 text-[18px] sm:text-[20px] font-semibold text-elec-yellow tabular-nums">
+                £{totalMaterialCost.toFixed(2)}
+              </div>
+            </div>
+          </div>
+          <p className="text-[12px] leading-relaxed text-white/60">
+            Excludes labour, accessories and VAT. The designer will produce a detailed materials
+            list.
           </p>
         </div>
       )}
 
-      {/* Info Footer */}
-      <div
-        className={cn(
-          'flex items-start gap-2 p-3 rounded-xl border',
-          'bg-white/5 backdrop-blur border-blue-500/30'
-        )}
-      >
-        <Info className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
-        <p className="text-xs leading-relaxed text-blue-200">
-          AI will perform full BS 7671 compliance calculations including voltage drop, fault
-          current, and derating factors. These estimates are for pre-flight validation only.
+      {/* Footer note */}
+      <div className="bg-[hsl(0_0%_10%)] border border-white/[0.10] rounded-2xl p-4 sm:p-5">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-1.5">
+          Note
+        </div>
+        <p className="text-[12.5px] leading-relaxed text-white/75">
+          The designer performs full BS 7671 compliant calculations including voltage drop, fault
+          current and derating factors. The figures above are pre-flight estimates only.
         </p>
       </div>
     </div>

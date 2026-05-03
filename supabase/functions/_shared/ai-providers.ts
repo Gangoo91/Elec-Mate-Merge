@@ -66,6 +66,42 @@ export async function generateEmbedding(text: string, openAiKey: string): Promis
 }
 
 /**
+ * Generate embeddings using OpenAI text-embedding-3-large at 3072 dims.
+ * Use this for tables ingested with halfvec(3072) — bs7671_facets, bs7671_chunks,
+ * bs7671_tables, bs7671_figures, bs7671_page_summaries.
+ */
+export async function generateLargeEmbedding(
+  text: string,
+  openAiKey: string
+): Promise<number[]> {
+  const response = await fetch('https://api.openai.com/v1/embeddings', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${openAiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      input: text,
+      model: 'text-embedding-3-large',
+      dimensions: 3072,
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new AIProviderError(
+      `OpenAI 3-large embedding failed: ${response.status} - ${errorText}`,
+      'openai',
+      response.status,
+      response.status === 429 || response.status >= 500
+    );
+  }
+
+  const data = await response.json();
+  return data.data[0].embedding;
+}
+
+/**
  * Call Google Gemini 3 Flash for tooling/generation tasks
  * Default model, excellent for vision/OCR tasks
  */

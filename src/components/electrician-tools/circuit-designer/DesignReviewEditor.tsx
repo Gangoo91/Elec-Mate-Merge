@@ -76,10 +76,9 @@ import { MobileCircuitResults } from './MobileCircuitResults';
 import { CircuitCard } from './CircuitCard';
 import { RequestSummaryHeader } from './RequestSummaryHeader';
 import { processElectricalText } from '@/lib/text-processor';
+import { Eyebrow } from '@/components/college/primitives';
 import { ExpectedTestsDisplay } from './ExpectedTestsDisplay';
-import { InstallationGuidanceDisplay } from './InstallationGuidanceDisplay';
 import { InstallationGuidancePanel } from './InstallationGuidancePanel';
-import { InstallationGuidancePerCircuitPanel } from './InstallationGuidancePerCircuitPanel';
 import { storeContextForAgent, type AgentType } from '@/utils/circuit-context-generator';
 
 interface DesignReviewEditorProps {
@@ -2206,110 +2205,110 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: showSuccessAnimation ? 2.5 : 0 }}
-        className="space-y-4 sm:space-y-5 md:space-y-6 px-3 sm:px-4 pb-safe"
+        className="max-w-7xl mx-auto space-y-6 sm:space-y-8 px-3 sm:px-4 pb-safe"
       >
-        {/* Failed Circuits Warning Banner */}
+        {/* Failed Circuits Warning Banner — text-only editorial */}
         {failedCircuitsCount > 0 && (
-          <Alert variant="destructive" className="animate-in fade-in duration-300">
-            <AlertTriangle className="h-4 w-4" />
-            <AlertTitle>
+          <div className="rounded-2xl border border-red-400/30 bg-red-500/[0.06] p-4 sm:p-5 animate-in fade-in duration-300">
+            <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-red-400">
+              Generation incomplete
+            </div>
+            <div className="mt-1.5 text-[15px] font-semibold tracking-tight text-white">
               {failedCircuitsCount} circuit{failedCircuitsCount !== 1 ? 's' : ''} could not be
-              generated
-            </AlertTitle>
-            <AlertDescription>
-              {failedCircuitsNames.join(', ')} - These circuits may need to be regenerated or added
+              generated.
+            </div>
+            <p className="mt-1 text-[13px] leading-relaxed text-white/75">
+              {failedCircuitsNames.join(', ')} — these circuits may need to be regenerated or added
               manually.
-            </AlertDescription>
-          </Alert>
+            </p>
+          </div>
         )}
 
-        {/* Redesigned Header - Clean & Prominent */}
-        <div className="space-y-4">
-          {/* Title Row - Clean & Prominent */}
-          <div className="flex items-start justify-between gap-4 flex-wrap">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 bg-gradient-to-br from-elec-yellow to-amber-600 rounded-2xl flex items-center justify-center shadow-lg shadow-elec-yellow/20">
-                <Zap className="h-7 w-7 text-black" />
-              </div>
-              <div>
-                <h1 className="text-2xl md:text-3xl font-bold text-white">{design.projectName}</h1>
-                <div className="flex items-center gap-2 text-white mt-1">
-                  <MapPin className="h-4 w-4" />
-                  <span>{design.location}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Compliance Badge - Large & Clear */}
-            <div
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl ${
+        {/* Editorial hero */}
+        <section className="space-y-3">
+          <Eyebrow>DESIGN COMPLETE</Eyebrow>
+          <h2 className="text-[26px] sm:text-[32px] lg:text-[36px] font-semibold tracking-tight leading-[1.1]">
+            <span className="text-elec-yellow">Your</span>{' '}
+            <span className="text-white">circuit design.</span>
+          </h2>
+          <p className="text-[14px] sm:text-[15px] leading-relaxed text-white/85 max-w-2xl">
+            <span className="text-white">{design.projectName}</span>
+            {design.location ? (
+              <>
+                {' '}<span className="text-white/60">·</span> {design.location}
+              </>
+            ) : null}{' '}
+            <span className="text-white/60">·</span> {design.circuits.length} circuit
+            {design.circuits.length === 1 ? '' : 's'} sized and{' '}
+            <span
+              className={
                 allCompliant
-                  ? 'bg-green-500/15 border border-green-500/30'
-                  : 'bg-amber-500/15 border border-amber-500/30'
-              }`}
+                  ? 'text-emerald-400 font-medium'
+                  : 'text-amber-400 font-medium'
+              }
             >
-              {allCompliant ? (
-                <CheckCircle2 className="h-5 w-5 text-green-500" />
-              ) : (
-                <AlertTriangle className="h-5 w-5 text-amber-500" />
-              )}
-              <span
-                className={`font-semibold ${allCompliant ? 'text-green-500' : 'text-amber-500'}`}
+              {allCompliant ? 'validated against the regs' : 'flagged for review'}
+            </span>
+            .
+          </p>
+          <p className="text-[11px] uppercase tracking-[0.18em] text-white/60">
+            BS 7671:2018 · A4:2026
+          </p>
+        </section>
+
+        {/* Editorial summary strip — gridline pattern */}
+        <section>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-black border border-white/[0.08] rounded-2xl overflow-hidden">
+            <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
+              <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+                Circuits
+              </div>
+              <div className="mt-1 text-[20px] sm:text-[24px] font-semibold text-elec-yellow tabular-nums">
+                {design.circuits.length}
+              </div>
+            </div>
+            <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
+              <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
+                Connected load
+              </div>
+              <div className="mt-1 text-[20px] sm:text-[24px] font-semibold text-white tabular-nums">
+                {fmt(design.totalLoad / 1000, 2)}
+                <span className="text-[13px] sm:text-[15px] text-white/60 font-medium ml-0.5">
+                  kW
+                </span>
+              </div>
+            </div>
+            <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
+              <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
+                Total Ib
+              </div>
+              <div className="mt-1 text-[20px] sm:text-[24px] font-semibold text-white tabular-nums">
+                {(design as any).totalDesignCurrent
+                  ? fmt((design as any).totalDesignCurrent, 1)
+                  : '—'}
+                <span className="text-[13px] sm:text-[15px] text-white/60 font-medium ml-0.5">
+                  A
+                </span>
+              </div>
+            </div>
+            <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
+              <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
+                Status
+              </div>
+              <div
+                className={`mt-1 text-[13px] font-semibold uppercase tracking-[0.18em] ${
+                  allCompliant ? 'text-emerald-400' : 'text-amber-400'
+                }`}
               >
-                {allCompliant ? 'BS 7671 Compliant' : 'Review Required'}
-              </span>
+                {allCompliant ? 'Compliant' : 'Review'}
+              </div>
+              <div className="mt-0.5 text-[11px] text-white/60">
+                {design.consumerUnit?.incomingSupply?.earthingSystem || 'TN-C-S'} ·{' '}
+                {design.consumerUnit?.incomingSupply?.voltage || 230}V
+              </div>
             </div>
           </div>
-
-          {/* Key Metrics Row - Clean Cards */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <MetricCard
-              icon={Zap}
-              label="Connected Load"
-              value={`${fmt(design.totalLoad / 1000, 2)}kW`}
-              color="yellow"
-            />
-            <MetricCard
-              icon={TrendingDown}
-              label="After Diversity"
-              value={`${fmt((design.diversifiedLoad || design.diversityBreakdown?.diversifiedLoad || design.totalLoad) / 1000, 2)}kW`}
-              subValue={
-                design.diversityFactor ? `${(design.diversityFactor * 100).toFixed(0)}%` : undefined
-              }
-              color="green"
-            />
-            <MetricCard
-              icon={Cable}
-              label="Circuits"
-              value={design.circuits.length.toString()}
-              color="blue"
-            />
-            <MetricCard
-              icon={Shield}
-              label="Main Switch"
-              value={`${design.consumerUnit?.mainSwitchRating || 100}A`}
-              color="purple"
-            />
-          </div>
-
-          {/* System Info - Compact Pills */}
-          <div className="flex flex-wrap gap-2">
-            <InfoPill label={design.installationType || 'domestic'} />
-            <InfoPill label={`${design.consumerUnit?.incomingSupply?.voltage || 230}V`} />
-            <InfoPill label={design.consumerUnit?.incomingSupply?.earthingSystem || 'TN-C-S'} />
-            <InfoPill
-              label={`Ze: ${design.consumerUnit?.incomingSupply?.Ze?.toFixed(2) || '0.35'}Ω`}
-            />
-            {design.consumerUnit?.incomingSupply?.incomingPFC && (
-              <InfoPill
-                label={`PSCC: ${(design.consumerUnit.incomingSupply.incomingPFC / 1000).toFixed(1)}kA`}
-              />
-            )}
-            {(design as any).totalDesignCurrent && (
-              <InfoPill label={`Total Ib: ${fmt((design as any).totalDesignCurrent, 1)}A`} />
-            )}
-          </div>
-        </div>
+        </section>
 
         {/* Diversity Breakdown Card */}
         {design.diversityBreakdown && (
@@ -2598,28 +2597,51 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           </div>
         </Card>
 
-        {/* Circuit Detail Card */}
+        {/* Circuit Detail Card — editorial chrome */}
         {currentCircuit &&
         typeof currentCircuit.cableSize === 'number' &&
         currentCircuit.protectionDevice &&
         currentCircuit.calculations &&
         currentCircuit.justifications ? (
-          <Card className="p-6">
+          <div className="bg-[hsl(0_0%_10%)] border border-white/[0.10] rounded-2xl p-4 sm:p-6">
             <div className="space-y-6">
-              {/* Header */}
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-xl font-bold flex items-center gap-2">
-                    <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-sm">
-                      C{currentCircuit.circuitNumber}
+              {/* Editorial header — numbered eyebrow + circuit name + text-only status */}
+              <div className="flex items-start justify-between gap-4 flex-wrap">
+                <div className="min-w-0">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow tabular-nums">
+                      {String(currentCircuit.circuitNumber ?? selectedCircuit + 1).padStart(2, '0')}
                     </span>
+                    <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60 truncate">
+                      · Circuit {selectedCircuit + 1} of {design.circuits.length}
+                    </span>
+                  </div>
+                  <h3 className="mt-2 text-[22px] sm:text-[26px] font-semibold tracking-tight leading-[1.15] text-white">
                     {currentCircuit.name}
                   </h3>
-                  <p className="text-muted-foreground capitalize">{currentCircuit.loadType}</p>
+                  <p className="mt-1 text-[13px] text-white/70 capitalize">
+                    {currentCircuit.loadType}
+                  </p>
                 </div>
-                <Badge variant="outline" className="text-xs">
-                  Circuit {selectedCircuit + 1} of {design.circuits.length}
-                </Badge>
+                {(() => {
+                  const status =
+                    currentCircuit.complianceStatus === 'pass'
+                      ? { label: 'Pass', tone: 'text-emerald-400' }
+                      : currentCircuit.complianceStatus === 'warning'
+                        ? { label: 'Warning', tone: 'text-amber-400' }
+                        : currentCircuit.complianceStatus === 'fail'
+                          ? { label: 'Review', tone: 'text-red-400' }
+                          : currentCircuit.warnings?.length
+                            ? { label: 'Warning', tone: 'text-amber-400' }
+                            : { label: 'Pass', tone: 'text-emerald-400' };
+                  return (
+                    <span
+                      className={`text-[11px] uppercase tracking-[0.18em] font-semibold ${status.tone}`}
+                    >
+                      {status.label}
+                    </span>
+                  );
+                })()}
               </div>
 
               {/* Special Location Alert */}
@@ -3070,16 +3092,6 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                 </div>
               )}
 
-              {/* Installation Method Guidance - New Component */}
-              {currentCircuit.installationGuidance && (
-                <InstallationGuidanceDisplay
-                  installationGuidance={
-                    currentCircuit.installationGuidance as EnhancedInstallationGuidance
-                  }
-                  testingRequirements={currentCircuit.testingRequirements}
-                />
-              )}
-
               {/* 6. Special Location Compliance */}
               {currentCircuit.specialLocationCompliance?.isSpecialLocation && (
                 <div className="space-y-3 bg-orange-500/10 border border-orange-500/30 p-4 rounded-lg">
@@ -3334,7 +3346,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                 </div>
               )}
             </div>
-          </Card>
+          </div>
         ) : (
           <Card className="p-6">
             <Alert variant="destructive">
@@ -3347,112 +3359,41 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           </Card>
         )}
 
-        {/* NEW: Installation Guidance Section */}
-        {design.installationGuidance ? (
-          <Card className="p-6">
-            <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <Wrench className="h-5 w-5 text-primary" />
-                <h3 className="text-lg font-semibold">Installation Guidance</h3>
-                <Badge variant="secondary" className="ml-auto">
-                  AI Generated
-                </Badge>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Comprehensive installation guidance generated in parallel with circuit design
-              </p>
-              <InstallationGuidancePerCircuitPanel
-                guidance={
-                  // Unwrap nested .guidance field (circuit_0.guidance → circuit_0)
-                  Object.entries(design.installationGuidance as any).reduce(
-                    (acc, [key, value]) => {
-                      acc[key] = (value as any).guidance || value;
-                      return acc;
-                    },
-                    {} as Record<string, EnhancedInstallationGuidance>
-                  )
-                }
-                circuits={design.circuits}
-              />
-            </div>
-          </Card>
-        ) : (
-          <Card className="p-4 border-amber-500/30 bg-amber-500/5">
-            <div className="flex items-center gap-3">
-              <Loader2 className="h-5 w-5 animate-spin text-amber-500" />
-              <div>
-                <p className="font-medium text-foreground">
-                  Installation guidance is being generated...
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  This may take a moment. The guidance will appear when ready.
-                </p>
-              </div>
-            </div>
-          </Card>
-        )}
-
-        {/* Actions */}
+        {/* Actions — editorial */}
         <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3">
-          <Button
-            size="lg"
+          <button
+            type="button"
             onClick={handleExportPDF}
-            className={`w-full sm:flex-1 min-h-[44px] touch-manipulation ${isExporting ? 'animate-pulse' : ''}`}
             disabled={isExporting}
+            className="w-full sm:flex-1 h-11 px-5 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 disabled:opacity-60 transition-colors touch-manipulation"
           >
-            {isExporting ? (
-              <>
-                <Loader2 className="h-6 w-6 mr-2 animate-spin" />
-                <span className="animate-pulse">Generating...</span>
-              </>
-            ) : (
-              <>
-                <Download className="h-5 w-5 mr-2" />
-                Download PDF
-              </>
-            )}
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
+            {isExporting ? 'Generating…' : 'Download PDF'}
+          </button>
+          <button
+            type="button"
             onClick={openSendToEICDialog}
             disabled={isSendingToEIC}
-            className="w-full sm:flex-1 min-h-[44px] touch-manipulation bg-elec-yellow/10 hover:bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 hover:border-elec-yellow/50"
+            className="w-full sm:flex-1 h-11 px-5 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.10] text-white text-[13px] font-medium hover:border-white/20 hover:bg-white/[0.04] disabled:opacity-60 transition-colors touch-manipulation"
           >
-            {isSendingToEIC ? (
-              <>
-                <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                Saving...
-              </>
-            ) : (
-              <>
-                <FileCheck className="h-5 w-5 mr-2" />
-                Send to EIC
-              </>
-            )}
-          </Button>
-          <Button
-            size="lg"
-            variant="secondary"
+            {isSendingToEIC ? 'Saving…' : 'Send to EIC'}
+          </button>
+          <button
+            type="button"
             onClick={handleCreateInstallationMethod}
-            className="w-full sm:flex-1 min-h-[44px] touch-manipulation"
+            className="w-full sm:flex-1 h-11 px-5 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.10] text-white text-[13px] font-medium hover:border-white/20 hover:bg-white/[0.04] transition-colors touch-manipulation"
           >
-            <Wrench className="h-5 w-5 mr-2" />
             Create Installation Method
-          </Button>
+          </button>
 
           {/* Send to Agent Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button
-                size="lg"
-                variant="outline"
-                className="w-full sm:flex-1 min-h-[44px] touch-manipulation gap-2"
+              <button
+                type="button"
+                className="w-full sm:flex-1 h-11 px-5 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.10] text-white text-[13px] font-medium hover:border-white/20 hover:bg-white/[0.04] transition-colors touch-manipulation"
               >
-                <Send className="h-5 w-5" />
                 Send to Agent
-                <ChevronDown className="h-4 w-4 ml-1" />
-              </Button>
+              </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuItem
@@ -3627,14 +3568,13 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             </DialogContent>
           </Dialog>
 
-          <Button
-            size="lg"
-            variant="outline"
+          <button
+            type="button"
             onClick={onReset}
-            className="w-full sm:w-auto min-h-[44px] touch-manipulation"
+            className="w-full sm:w-auto h-11 px-5 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.10] text-white text-[13px] font-medium hover:border-white/20 hover:bg-white/[0.04] transition-colors touch-manipulation"
           >
             New Design
-          </Button>
+          </button>
         </div>
       </motion.div>
 

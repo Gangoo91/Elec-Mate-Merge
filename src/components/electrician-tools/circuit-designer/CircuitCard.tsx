@@ -9,7 +9,6 @@ import {
   buildJustificationSections,
 } from './mobile/MobileJustificationAccordion';
 import { MobileTestResultsCompact } from './mobile/MobileTestResultsCompact';
-import { MobileInstallationGuidanceSection } from './mobile/MobileInstallationGuidanceSection';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { CheckCircle2, AlertTriangle, AlertCircle, Zap, Calculator } from 'lucide-react';
 
@@ -138,9 +137,6 @@ export const CircuitCard = ({
               <div className="space-y-6 mt-6">
                 {/* Detailed Justifications Accordion */}
                 <MobileJustificationAccordion sections={buildJustificationSections(circuit)} />
-
-                {/* Installation Guidance - Always shown on desktop, opt-in on mobile */}
-                <MobileInstallationGuidanceSection circuit={circuit} />
 
                 {/* Expected Test Results */}
                 <MobileTestResultsCompact circuit={circuit} />

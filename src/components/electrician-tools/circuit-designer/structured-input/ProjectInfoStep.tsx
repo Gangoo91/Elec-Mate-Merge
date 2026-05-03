@@ -1,8 +1,8 @@
 import { IOSInput } from '@/components/ui/ios-input';
-import { Building, Building2, Factory, FolderOpen } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import ClientSelector from '@/components/ClientSelector';
 import { Customer } from '@/hooks/inspection/useCustomers';
+import { Eyebrow } from '@/components/college/primitives';
 
 interface ProjectInfoStepProps {
   projectName: string;
@@ -23,16 +23,18 @@ const INSTALLATION_TYPES = [
   {
     value: 'domestic',
     label: 'Domestic',
-    icon: Building,
     description: 'Houses, flats, residential',
   },
   {
     value: 'commercial',
     label: 'Commercial',
-    icon: Building2,
     description: 'Offices, shops, restaurants',
   },
-  { value: 'industrial', label: 'Industrial', icon: Factory, description: 'Factories, warehouses' },
+  {
+    value: 'industrial',
+    label: 'Industrial',
+    description: 'Factories, warehouses',
+  },
 ] as const;
 
 export const ProjectInfoStep = ({
@@ -50,121 +52,128 @@ export const ProjectInfoStep = ({
   onCustomerIdChange,
 }: ProjectInfoStepProps) => {
   return (
-    <div className="space-y-6">
-      {/* Section Header */}
-      <div className="flex items-center gap-3">
-        <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-          <FolderOpen className="h-5 w-5 text-elec-yellow" />
-        </div>
-        <div>
-          <h2 className="text-lg font-semibold text-white">Project Details</h2>
-          <p className="text-sm text-white">Basic information about your installation</p>
-        </div>
+    <div className="space-y-8 sm:space-y-10">
+      {/* Section header — editorial */}
+      <div className="space-y-2">
+        <Eyebrow>01 · PROJECT</Eyebrow>
+        <h2 className="text-[26px] sm:text-[32px] lg:text-[36px] font-semibold tracking-tight leading-[1.1] text-white">
+          Project details.
+        </h2>
+        <p className="text-[14px] leading-relaxed text-white/85 max-w-2xl">
+          Give the designer enough context to ground the design — the property type drives default
+          load assumptions, voltage and three-phase logic.
+        </p>
       </div>
 
-      {/* Installation Type Selection */}
+      {/* Installation Type Selection — editorial grid, no icons */}
       <div className="space-y-3">
-        <label className="block text-ios-subhead font-medium text-white">
-          Installation Type *
-        </label>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          {INSTALLATION_TYPES.map((type) => {
-            const Icon = type.icon;
+        <div className="flex items-baseline justify-between gap-3">
+          <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+            Installation type *
+          </span>
+          <span className="text-[11px] text-white/50 tabular-nums">
+            {INSTALLATION_TYPES.length} options
+          </span>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+          {INSTALLATION_TYPES.map((type, i) => {
             const isSelected = installationType === type.value;
             return (
-              <div
+              <button
                 key={type.value}
+                type="button"
+                onClick={() => setInstallationType(type.value)}
                 className={cn(
-                  'relative p-4 rounded-xl cursor-pointer',
-                  'bg-white/[0.03] border-2',
-                  'transition-all duration-ios-normal ease-ios-ease',
-                  'touch-manipulation active:scale-[0.98]',
+                  'group relative bg-[hsl(0_0%_10%)] border rounded-2xl px-4 py-5 sm:px-6 sm:py-6 flex flex-col text-left touch-manipulation transition-all min-h-[110px]',
+                  'hover:bg-elec-yellow/[0.04] active:scale-[0.99]',
                   isSelected
-                    ? 'border-elec-yellow bg-elec-yellow/10 shadow-[0_0_0_4px_hsl(var(--elec-yellow)/0.1)]'
-                    : 'border-white/[0.08] hover:border-white/15 hover:bg-white/5'
+                    ? 'border-elec-yellow/60 bg-gradient-to-br from-elec-yellow/[0.10] via-amber-500/[0.03] to-transparent'
+                    : 'border-white/[0.10] hover:border-white/20'
                 )}
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                onClick={() => setInstallationType(type.value as any)}
               >
-                <div className="flex items-start gap-3">
-                  <div
+                <div className="flex items-baseline gap-2">
+                  <span
                     className={cn(
-                      'p-2 rounded-lg transition-colors duration-ios-fast',
-                      isSelected ? 'bg-elec-yellow text-black' : 'bg-white/10 text-white'
+                      'text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums',
+                      isSelected ? 'text-elec-yellow' : 'text-white/50'
                     )}
                   >
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div
-                      className={cn(
-                        'font-semibold transition-colors duration-ios-fast',
-                        isSelected ? 'text-elec-yellow' : 'text-white'
-                      )}
-                    >
-                      {type.label}
-                    </div>
-                    <div className="text-xs text-white mt-0.5">{type.description}</div>
-                  </div>
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
                 </div>
-                {/* Selection indicator */}
-                {isSelected && (
-                  <div className="absolute top-2 right-2">
-                    <div className="w-2 h-2 rounded-full bg-elec-yellow" />
-                  </div>
-                )}
-              </div>
+                <div
+                  className={cn(
+                    'mt-2 text-[18px] sm:text-[20px] font-semibold tracking-tight leading-[1.15]',
+                    isSelected ? 'text-elec-yellow' : 'text-white'
+                  )}
+                >
+                  {type.label}
+                </div>
+                <div className="mt-1 text-[12.5px] leading-snug text-white/70">
+                  {type.description}
+                </div>
+              </button>
             );
           })}
         </div>
       </div>
 
-      {/* Select Existing Customer */}
-      <ClientSelector
-        onSelectCustomer={(customer: Customer | null) => {
-          if (customer) {
-            setClientName(customer.name);
-            if (customer.address) setLocation(customer.address);
-            onCustomerIdChange?.(customer.id);
-          } else {
-            onCustomerIdChange?.(undefined);
-          }
-        }}
-        selectedCustomerId={customerId}
-      />
+      {/* Client selector */}
+      <div className="space-y-3">
+        <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
+          Existing client
+        </span>
+        <ClientSelector
+          onSelectCustomer={(customer: Customer | null) => {
+            if (customer) {
+              setClientName(customer.name);
+              if (customer.address) setLocation(customer.address);
+              onCustomerIdChange?.(customer.id);
+            } else {
+              onCustomerIdChange?.(undefined);
+            }
+          }}
+          selectedCustomerId={customerId}
+        />
+      </div>
 
       {/* Form Fields */}
-      <div className="space-y-4">
-        <IOSInput
-          label="Project Name *"
-          value={projectName}
-          onChange={(e) => setProjectName(e.target.value)}
-          placeholder="e.g., 24 Maple Drive Rewire"
-        />
+      <div className="space-y-3">
+        <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
+          Project information
+        </span>
+        <div className="space-y-4">
+          <IOSInput
+            label="Project Name *"
+            value={projectName}
+            onChange={(e) => setProjectName(e.target.value)}
+            placeholder="e.g., 24 Maple Drive Rewire"
+          />
 
-        <IOSInput
-          label="Location *"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          placeholder="e.g., Manchester, M1 1AA"
-          hint="Property address or area"
-        />
+          <IOSInput
+            label="Location *"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            placeholder="e.g., Manchester, M1 1AA"
+            hint="Property address or area"
+          />
 
-        <IOSInput
-          label="Client Name"
-          value={clientName}
-          onChange={(e) => setClientName(e.target.value)}
-          placeholder="e.g., John Smith"
-          hint="Optional - for your records"
-        />
+          <IOSInput
+            label="Client Name"
+            value={clientName}
+            onChange={(e) => setClientName(e.target.value)}
+            placeholder="e.g., John Smith"
+            hint="Optional — for your records"
+          />
 
-        <IOSInput
-          label="Company / Electrician"
-          value={electricianName}
-          onChange={(e) => setElectricianName(e.target.value)}
-          placeholder="e.g., ABC Electrical Ltd"
-          hint="Optional - appears on design output"
-        />
+          <IOSInput
+            label="Company / Electrician"
+            value={electricianName}
+            onChange={(e) => setElectricianName(e.target.value)}
+            placeholder="e.g., ABC Electrical Ltd"
+            hint="Optional — appears on the design output"
+          />
+        </div>
       </div>
     </div>
   );

@@ -1,11 +1,9 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { CircuitInput } from '@/types/installation-design';
-import { Plus, Zap, CircuitBoard } from 'lucide-react';
 import { CircuitCard } from './CircuitCard';
 import { CircuitPresetSelector } from './CircuitPresetSelector';
 import { QuickAddButtons } from './QuickAddButtons';
+import { Eyebrow } from '@/components/college/primitives';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 
@@ -57,33 +55,27 @@ export const CircuitBuilderStep = ({
     }
   };
 
+  // Total estimated kW for the summary strip
+  const totalKw =
+    circuits.reduce((sum, c) => sum + (typeof c.loadPower === 'number' ? c.loadPower : 0), 0) /
+    1000;
+  const hasThreePhase = circuits.some((c) => c.phases === 'three');
+
   return (
-    <div className="space-y-5">
-      {/* Section Header - Native app style */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/10 border border-elec-yellow/30 shadow-[0_0_12px_rgba(255,204,0,0.1)]">
-            <CircuitBoard className="h-5 w-5 text-elec-yellow" />
-          </div>
-          <div>
-            <h2 className="text-lg font-semibold text-white">Build Your Circuits</h2>
-            <p className="text-sm text-white">Add circuits for accurate calculations</p>
-          </div>
-        </div>
-        <Badge
-          variant="secondary"
-          className={cn(
-            'px-3 py-1.5 rounded-full font-semibold',
-            circuits.length > 0
-              ? 'bg-elec-yellow/15 border border-elec-yellow/30 text-elec-yellow'
-              : 'bg-white/5 border border-white/10 text-white'
-          )}
-        >
-          {circuits.length} Circuit{circuits.length !== 1 ? 's' : ''}
-        </Badge>
+    <div className="space-y-8 sm:space-y-10">
+      {/* Section header — editorial */}
+      <div className="space-y-2">
+        <Eyebrow>03 · CIRCUITS</Eyebrow>
+        <h2 className="text-[26px] sm:text-[32px] lg:text-[36px] font-semibold tracking-tight leading-[1.1] text-white">
+          Circuit list.
+        </h2>
+        <p className="text-[14px] leading-relaxed text-white/85 max-w-2xl">
+          Add the circuits the designer should size. Use a preset to start, or build them one by
+          one.
+        </p>
       </div>
 
-      {/* Quick Add Templates */}
+      {/* Preset templates */}
       <CircuitPresetSelector
         installationType={installationType}
         onSelectPreset={(preset) => {
@@ -98,34 +90,57 @@ export const CircuitBuilderStep = ({
         }}
       />
 
-      {/* Quick Add Buttons */}
+      {/* Quick Add */}
       <QuickAddButtons installationType={installationType} onAddCircuit={addCircuit} />
 
-      {/* Circuits List */}
+      {/* Circuits list */}
       {circuits.length > 0 && (
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow"></div>
-              Your Circuits
-            </h3>
-            <Button
-              variant="ghost"
-              size="sm"
+          {/* Summary strip — gridline pattern */}
+          <div className="grid grid-cols-3 gap-px bg-black border border-white/[0.08] rounded-2xl overflow-hidden">
+            <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
+              <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
+                Circuits
+              </div>
+              <div className="mt-1 text-[13px] font-semibold text-white tabular-nums">
+                {circuits.length}
+              </div>
+            </div>
+            <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
+              <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
+                Total load
+              </div>
+              <div className="mt-1 text-[13px] font-semibold text-elec-yellow tabular-nums">
+                {totalKw > 0 ? `${totalKw.toFixed(2)} kW` : '—'}
+              </div>
+            </div>
+            <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
+              <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
+                Three phase
+              </div>
+              <div className="mt-1 text-[13px] font-semibold text-white">
+                {hasThreePhase ? 'Yes' : 'No'}
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-baseline justify-between gap-3">
+            <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+              Your circuits
+            </span>
+            <button
+              type="button"
               onClick={addBlankCircuit}
               className={cn(
-                'gap-2 h-11 px-4 rounded-xl',
-                'bg-elec-yellow/10 border border-elec-yellow/25',
-                'hover:bg-elec-yellow/20 hover:border-elec-yellow/40',
-                'text-elec-yellow font-medium',
-                'transition-all duration-ios-fast',
-                'active:scale-[0.97]',
+                'bg-[hsl(0_0%_10%)] border border-white/[0.10] rounded-xl px-4 h-11',
+                'text-[13px] font-medium text-white',
+                'hover:border-white/20 hover:bg-elec-yellow/[0.04]',
+                'active:scale-[0.99] transition-colors',
                 'touch-manipulation'
               )}
             >
-              <Plus className="h-4 w-4" />
-              <span>Add Custom</span>
-            </Button>
+              + Add custom
+            </button>
           </div>
 
           <div className="space-y-3">
@@ -134,9 +149,9 @@ export const CircuitBuilderStep = ({
                 <motion.div
                   key={circuit.id}
                   layout
-                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                  initial={{ opacity: 0, y: 20, scale: 0.98 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.15 } }}
+                  exit={{ opacity: 0, scale: 0.98, transition: { duration: 0.15 } }}
                   transition={{ type: 'spring', stiffness: 300, damping: 25 }}
                 >
                   <CircuitCard
@@ -154,41 +169,41 @@ export const CircuitBuilderStep = ({
         </div>
       )}
 
-      {/* Empty State - Native app feel */}
+      {/* Empty state — editorial centred text */}
       {circuits.length === 0 && (
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           className={cn(
-            'p-8 sm:p-12 text-center rounded-2xl',
-            'bg-gradient-to-br from-elec-yellow/[0.04] to-transparent',
-            'border-2 border-dashed border-elec-yellow/20'
+            'bg-[hsl(0_0%_10%)] border border-white/[0.10] rounded-2xl',
+            'px-6 py-10 sm:px-8 sm:py-12 text-center'
           )}
         >
-          <div className="inline-flex p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20 mb-5">
-            <Zap className="h-10 w-10 sm:h-12 sm:w-12 text-elec-yellow" />
+          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/50">
+            No circuits yet
           </div>
-          <h3 className="text-base sm:text-lg font-semibold text-white mb-2">
-            No Circuits Added Yet
+          <h3 className="mt-2 text-[15px] font-semibold text-white">
+            Start with a preset, or add one manually.
           </h3>
-          <p className="text-sm text-white mb-6 max-w-sm mx-auto">
-            Choose a template above or add individual circuits to start designing
+          <p className="mt-1 text-[13px] text-white/60 max-w-sm mx-auto leading-snug">
+            Pick a template above to seed a typical layout, tap a quick-add pill, or add a blank
+            circuit to fill in yourself.
           </p>
-          <Button
-            onClick={addBlankCircuit}
-            className={cn(
-              'gap-2.5 h-13 px-8 rounded-xl',
-              'bg-elec-yellow text-black font-semibold text-base',
-              'hover:bg-elec-yellow/90',
-              'shadow-[0_4px_16px_rgba(255,204,0,0.25)]',
-              'active:scale-[0.97]',
-              'transition-all duration-ios-fast',
-              'touch-manipulation'
-            )}
-          >
-            <Plus className="h-5 w-5" />
-            Add Your First Circuit
-          </Button>
+          <div className="mt-5 flex justify-center">
+            <button
+              type="button"
+              onClick={addBlankCircuit}
+              className={cn(
+                'bg-[hsl(0_0%_10%)] border border-elec-yellow/60 rounded-xl px-5 h-11',
+                'text-[13px] font-semibold text-elec-yellow',
+                'hover:bg-elec-yellow/[0.06]',
+                'active:scale-[0.99] transition-colors',
+                'touch-manipulation'
+              )}
+            >
+              + Add your first circuit
+            </button>
+          </div>
         </motion.div>
       )}
     </div>
