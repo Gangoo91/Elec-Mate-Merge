@@ -324,11 +324,11 @@ export const ThreePhaseScheduleOfTests: React.FC<ThreePhaseScheduleOfTestsProps>
                       <TableHead className="w-16">Circuit</TableHead>
                       <TableHead>Description</TableHead>
                       <TableHead className="w-20">Rating</TableHead>
-                      <TableHead className="w-24 bg-red-50 dark:bg-red-950/20">L1 (A)</TableHead>
-                      <TableHead className="w-24 bg-yellow-50 dark:bg-yellow-950/20">
+                      <TableHead className="w-24 bg-amber-50 dark:bg-amber-950/20">L1 (A)</TableHead>
+                      <TableHead className="w-24 bg-zinc-100 dark:bg-zinc-800/20">
                         L2 (A)
                       </TableHead>
-                      <TableHead className="w-24 bg-blue-50 dark:bg-blue-950/20">L3 (A)</TableHead>
+                      <TableHead className="w-24 bg-slate-50 dark:bg-slate-800/20">L3 (A)</TableHead>
                       <TableHead className="w-28">Balance</TableHead>
                       <TableHead className="w-24">Rotation</TableHead>
                       <TableHead className="w-24">Zs (Ω)</TableHead>
@@ -481,7 +481,7 @@ const ThreePhaseCircuitRow: React.FC<{
       </TableCell>
       <TableCell className="max-w-[200px] truncate">{circuit.circuitDescription}</TableCell>
       <TableCell>{circuit.protectiveDeviceRating}A</TableCell>
-      <TableCell className="bg-red-50/50 dark:bg-red-950/10">
+      <TableCell className="bg-amber-50/50 dark:bg-amber-950/10">
         <input
           type="text"
           value={circuit.phaseBalanceL1 || ''}
@@ -490,7 +490,7 @@ const ThreePhaseCircuitRow: React.FC<{
           placeholder="0"
         />
       </TableCell>
-      <TableCell className="bg-yellow-50/50 dark:bg-yellow-950/10">
+      <TableCell className="bg-zinc-100/50 dark:bg-zinc-800/10">
         <input
           type="text"
           value={circuit.phaseBalanceL2 || ''}
@@ -499,7 +499,7 @@ const ThreePhaseCircuitRow: React.FC<{
           placeholder="0"
         />
       </TableCell>
-      <TableCell className="bg-blue-50/50 dark:bg-blue-950/10">
+      <TableCell className="bg-slate-50/50 dark:bg-slate-800/10">
         <input
           type="text"
           value={circuit.phaseBalanceL3 || ''}
@@ -590,16 +590,16 @@ const MobileThreePhaseCard: React.FC<{
 
         {/* Phase Values Row */}
         <div className="grid grid-cols-3 gap-2 mb-3">
-          <div className="p-2 rounded-lg bg-red-50 dark:bg-red-950/20 text-center">
-            <p className="text-xs text-red-600 dark:text-red-400 font-medium">L1</p>
+          <div className="p-2 rounded-lg bg-amber-50 dark:bg-amber-950/20 text-center">
+            <p className="text-xs text-amber-700 dark:text-amber-600 font-medium">L1</p>
             <p className="text-lg font-semibold">{loads.L1 || '-'}A</p>
           </div>
-          <div className="p-2 rounded-lg bg-yellow-50 dark:bg-yellow-950/20 text-center">
-            <p className="text-xs text-yellow-600 dark:text-yellow-400 font-medium">L2</p>
+          <div className="p-2 rounded-lg bg-zinc-100 dark:bg-zinc-800/20 text-center">
+            <p className="text-xs text-zinc-700 dark:text-zinc-400 font-medium">L2</p>
             <p className="text-lg font-semibold">{loads.L2 || '-'}A</p>
           </div>
-          <div className="p-2 rounded-lg bg-blue-50 dark:bg-blue-950/20 text-center">
-            <p className="text-xs text-blue-600 dark:text-blue-400 font-medium">L3</p>
+          <div className="p-2 rounded-lg bg-slate-50 dark:bg-slate-800/20 text-center">
+            <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">L3</p>
             <p className="text-lg font-semibold">{loads.L3 || '-'}A</p>
           </div>
         </div>
@@ -699,7 +699,7 @@ const MobileEditDrawer: React.FC<{
             <h4 className="text-sm font-medium text-muted-foreground">Phase Loads (Amps)</h4>
             <div className="grid grid-cols-3 gap-3">
               <div>
-                <label className="text-xs font-medium text-red-600 dark:text-red-400">L1</label>
+                <label className="text-xs font-medium text-amber-700 dark:text-amber-600">L1</label>
                 <Input
                   type="number"
                   inputMode="decimal"
@@ -708,11 +708,11 @@ const MobileEditDrawer: React.FC<{
                     setLocalValues((prev) => ({ ...prev, phaseBalanceL1: e.target.value }))
                   }
                   placeholder="0"
-                  className="h-12 text-lg text-center touch-manipulation bg-red-50/50 dark:bg-red-950/20 border-red-200"
+                  className="h-12 text-lg text-center touch-manipulation bg-amber-50/50 dark:bg-amber-950/20 border-amber-200"
                 />
               </div>
               <div>
-                <label className="text-xs font-medium text-yellow-600 dark:text-yellow-400">
+                <label className="text-xs font-medium text-zinc-700 dark:text-zinc-400">
                   L2
                 </label>
                 <Input
@@ -723,11 +723,11 @@ const MobileEditDrawer: React.FC<{
                     setLocalValues((prev) => ({ ...prev, phaseBalanceL2: e.target.value }))
                   }
                   placeholder="0"
-                  className="h-12 text-lg text-center touch-manipulation bg-yellow-50/50 dark:bg-yellow-950/20 border-yellow-200"
+                  className="h-12 text-lg text-center touch-manipulation bg-zinc-100/50 dark:bg-zinc-800/20 border-zinc-300"
                 />
               </div>
               <div>
-                <label className="text-xs font-medium text-blue-600 dark:text-blue-400">L3</label>
+                <label className="text-xs font-medium text-slate-600 dark:text-slate-400">L3</label>
                 <Input
                   type="number"
                   inputMode="decimal"
@@ -736,7 +736,7 @@ const MobileEditDrawer: React.FC<{
                     setLocalValues((prev) => ({ ...prev, phaseBalanceL3: e.target.value }))
                   }
                   placeholder="0"
-                  className="h-12 text-lg text-center touch-manipulation bg-blue-50/50 dark:bg-blue-950/20 border-blue-200"
+                  className="h-12 text-lg text-center touch-manipulation bg-slate-50/50 dark:bg-slate-800/20 border-slate-300"
                 />
               </div>
             </div>

@@ -110,7 +110,7 @@ const CommercialCircuitGuide = () => {
         principle: 'Phase Sequence',
         explanation: 'Correct phase rotation essential for three-phase motors',
         testing: 'Use phase sequence tester before connecting rotating machinery',
-        standard: 'L1-L2-L3 clockwise rotation (Red-Yellow-Blue historically)',
+        standard: 'L1-L2-L3 clockwise rotation (Brown-Black-Grey per BS 7671)',
       },
     ],
     practicalGuidance: [
