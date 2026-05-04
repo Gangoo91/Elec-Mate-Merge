@@ -193,8 +193,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
           <div className="flex items-center border border-border rounded-lg p-1 bg-card shrink-0">
             <button
               onClick={() => setViewMode('grid')}
-              className={cn(
-                'h-11 w-11 flex items-center justify-center rounded touch-manipulation active:scale-95',
+              className={cn('h-11 w-11 flex items-center justify-center rounded touch-manipulation active:scale-95',
                 viewMode === 'grid' ? 'bg-elec-yellow/10 text-elec-yellow' : 'text-white'
               )}
             >
@@ -202,8 +201,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
             </button>
             <button
               onClick={() => setViewMode('list')}
-              className={cn(
-                'h-11 w-11 flex items-center justify-center rounded touch-manipulation active:scale-95',
+              className={cn('h-11 w-11 flex items-center justify-center rounded touch-manipulation active:scale-95',
                 viewMode === 'list' ? 'bg-elec-yellow/10 text-elec-yellow' : 'text-white'
               )}
             >
@@ -240,8 +238,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
             <button
               key={cat}
               onClick={() => setCategoryFilter(cat)}
-              className={cn(
-                'px-4 h-10 rounded-full text-xs font-medium whitespace-nowrap transition-colors shrink-0 touch-manipulation active:scale-95',
+              className={cn('px-4 h-10 rounded-full text-xs font-medium whitespace-nowrap transition-colors shrink-0 touch-manipulation active:scale-95',
                 categoryFilter === cat
                   ? 'bg-elec-yellow text-black'
                   : 'bg-muted text-white hover:bg-muted/80'
@@ -372,8 +369,8 @@ function GridCard({
 
   const statusColors: Record<string, string> = {
     draft: 'bg-muted text-white',
-    'in-progress': 'bg-blue-500/10 text-blue-500',
-    completed: 'bg-green-500/10 text-green-500',
+    'in-progress': 'bg-white/[0.02] text-white/85',
+    completed: 'bg-white/[0.02] text-white/85',
     reviewed: 'bg-elec-yellow/10 text-elec-yellow',
   };
 
@@ -396,7 +393,7 @@ function GridCard({
       </div>
 
       {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+      <div className="absolute inset-0 bg-white/[0.02]" />
 
       {/* Content */}
       <div className="absolute inset-x-0 bottom-0 p-3 space-y-1.5">
@@ -424,7 +421,7 @@ function GridCard({
       {/* Diary source badge */}
       {(entry.category?.id === 'site-diary-evidence' ||
         entry.category === 'site-diary-evidence') && (
-        <div className="absolute top-2 left-2 flex items-center gap-1 px-1.5 py-0.5 rounded bg-cyan-500/80 text-white text-[10px] font-medium">
+        <div className="absolute top-2 left-2 flex items-center gap-1 px-1.5 py-0.5 rounded bg-white/[0.02] text-white text-[10px] font-medium">
           <NotebookPen className="h-3 w-3" />
           Diary
         </div>
@@ -432,7 +429,7 @@ function GridCard({
 
       {/* Verified badge */}
       {entry.isVerified && (
-        <div className="absolute top-2 right-2 flex items-center gap-1 px-1.5 py-0.5 rounded bg-emerald-500/80 text-white text-[10px] font-medium">
+        <div className="absolute top-2 right-2 flex items-center gap-1 px-1.5 py-0.5 rounded bg-white/[0.02] text-white text-[10px] font-medium">
           <ShieldCheck className="h-3 w-3" />
           Verified
         </div>
@@ -453,8 +450,8 @@ function ListItem({
 }) {
   const statusColors: Record<string, string> = {
     draft: 'bg-muted text-white',
-    'in-progress': 'bg-blue-500/10 text-blue-500',
-    completed: 'bg-green-500/10 text-green-500',
+    'in-progress': 'bg-white/[0.02] text-white/85',
+    completed: 'bg-white/[0.02] text-white/85',
     reviewed: 'bg-elec-yellow/10 text-elec-yellow',
   };
 
@@ -506,13 +503,13 @@ function ListItem({
         )}
         {(entry.category?.id === 'site-diary-evidence' ||
           entry.category === 'site-diary-evidence') && (
-          <div className="flex items-center gap-0.5 text-cyan-400">
+          <div className="flex items-center gap-0.5 text-white/85">
             <NotebookPen className="h-3 w-3" />
             <span className="text-[10px] font-medium">Diary</span>
           </div>
         )}
         {entry.isVerified && (
-          <div className="flex items-center gap-0.5 text-emerald-400">
+          <div className="flex items-center gap-0.5 text-white/85">
             <ShieldCheck className="h-3 w-3" />
             <span className="text-[10px] font-medium">Verified</span>
           </div>

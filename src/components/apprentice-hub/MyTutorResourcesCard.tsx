@@ -76,8 +76,7 @@ export function MyTutorResourcesCard() {
                     type="button"
                     onClick={() => handleOpen(r)}
                     disabled={opening === r.id}
-                    className={cn(
-                      'w-full px-1 py-2.5 flex items-baseline justify-between gap-3 text-left hover:bg-white/[0.02] transition-colors touch-manipulation',
+                    className={cn('w-full px-1 py-2.5 flex items-baseline justify-between gap-3 text-left hover:bg-white/[0.02] transition-colors touch-manipulation',
                       opening === r.id && 'opacity-60'
                     )}
                   >
@@ -117,7 +116,7 @@ export function MyTutorResourcesCard() {
               <button
                 type="button"
                 onClick={() => setExpanded((v) => !v)}
-                className="mt-2 px-1 text-[11.5px] font-medium text-purple-300 hover:text-purple-200 transition-colors touch-manipulation"
+                className="mt-2 px-1 text-[11.5px] font-medium text-white/85 hover:text-white/85 transition-colors touch-manipulation"
               >
                 {expanded ? 'Show less' : `Show ${Math.min(16, resources.length - 4)} more`}
               </button>

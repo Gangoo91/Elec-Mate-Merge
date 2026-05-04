@@ -130,9 +130,9 @@ export function PortfolioHubShell({
 
         {/* Desktop Quick Stats */}
         <div className="p-4 border-t border-border space-y-3">
-          <QuickStatItem label="Portfolio" value="67%" color="text-green-500" />
-          <QuickStatItem label="OTJ Hours" value="340h" color="text-purple-500" />
-          <QuickStatItem label="Reviews" value="12" color="text-blue-500" />
+          <QuickStatItem label="Portfolio" value="67%" color="text-white/85" />
+          <QuickStatItem label="OTJ Hours" value="340h" color="text-white/85" />
+          <QuickStatItem label="Reviews" value="12" color="text-white/85" />
         </div>
 
         {/* Desktop Capture Button */}
@@ -252,8 +252,7 @@ function DesktopNavItem({ icon, label, active, onClick, badge }: DesktopNavItemP
   return (
     <button
       onClick={onClick}
-      className={cn(
-        'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors relative touch-manipulation',
+      className={cn('w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors relative touch-manipulation',
         active
           ? 'bg-elec-yellow/10 text-elec-yellow'
           : 'text-muted-foreground hover:bg-muted hover:text-foreground'
@@ -262,7 +261,7 @@ function DesktopNavItem({ icon, label, active, onClick, badge }: DesktopNavItemP
       {icons[icon]}
       <span>{label}</span>
       {badge !== undefined && badge > 0 && (
-        <span className="absolute right-3 bg-red-500 text-white text-xs font-bold rounded-full h-5 min-w-[20px] flex items-center justify-center px-1">
+        <span className="absolute right-3 bg-white/[0.02] text-white text-xs font-bold rounded-full h-5 min-w-[20px] flex items-center justify-center px-1">
           {badge > 99 ? '99+' : badge}
         </span>
       )}

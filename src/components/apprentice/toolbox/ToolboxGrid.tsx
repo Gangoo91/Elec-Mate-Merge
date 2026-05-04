@@ -31,11 +31,13 @@ interface ToolboxGridProps {
 }
 
 const ToolboxGrid = ({ onToolSelection }: ToolboxGridProps) => {
+  const iconClass = 'h-5 w-5 text-white/85';
+
   const toolboxCategories: ToolboxCategory[] = [
     {
       id: 1,
       title: 'Basic Tools & Materials Guide',
-      icon: <Wrench className="h-5 w-5 text-elec-yellow" />,
+      icon: <Wrench className={iconClass} />,
       link: '/apprentice/basic-tools-materials',
       description:
         'Interactive cable quiz, tool guides, buying advice, and material identification',
@@ -43,14 +45,14 @@ const ToolboxGrid = ({ onToolSelection }: ToolboxGridProps) => {
     {
       id: 2,
       title: 'Electrical Installation Guides',
-      icon: <FileText className="h-5 w-5 text-elec-yellow" />,
+      icon: <FileText className={iconClass} />,
       description:
         'Step-by-step installation guides for domestic, commercial, industrial, and outdoor environments',
     },
     {
       id: 3,
       title: 'What to Expect in Your Apprenticeship',
-      icon: <Users className="h-5 w-5 text-elec-yellow" />,
+      icon: <Users className={iconClass} />,
       link: '/apprentice/apprenticeship-expectations',
       description:
         'Day 1 preparation, site etiquette, chain of command, and year-by-year expectations',
@@ -58,14 +60,14 @@ const ToolboxGrid = ({ onToolSelection }: ToolboxGridProps) => {
     {
       id: 4,
       title: 'Off-the-Job Training Explained',
-      icon: <Clock className="h-5 w-5 text-elec-yellow" />,
+      icon: <Clock className={iconClass} />,
       link: '/apprentice/off-job-training-guide',
       description: 'What counts as off-the-job learning, how to log it, and sample templates',
     },
     {
       id: 5,
       title: 'Building Your Work Portfolio',
-      icon: <FolderOpen className="h-5 w-5 text-elec-yellow" />,
+      icon: <FolderOpen className={iconClass} />,
       link: '/apprentice/portfolio-building',
       description:
         'How to document work properly, what assessors look for, and common pitfalls to avoid',
@@ -73,7 +75,7 @@ const ToolboxGrid = ({ onToolSelection }: ToolboxGridProps) => {
     {
       id: 6,
       title: 'Apprenticeship Rights & Pay',
-      icon: <DollarSign className="h-5 w-5 text-elec-yellow" />,
+      icon: <DollarSign className={iconClass} />,
       link: '/apprentice/rights-and-pay',
       description:
         'National wage tiers, your rights on site, and support channels when things go wrong',
@@ -81,7 +83,7 @@ const ToolboxGrid = ({ onToolSelection }: ToolboxGridProps) => {
     {
       id: 7,
       title: 'Communication Skills',
-      icon: <MessageCircle className="h-5 w-5 text-elec-yellow" />,
+      icon: <MessageCircle className={iconClass} />,
       link: '/apprentice/communication-skills',
       description:
         'How to speak with supervisors, report problems, and take feedback professionally',
@@ -89,21 +91,21 @@ const ToolboxGrid = ({ onToolSelection }: ToolboxGridProps) => {
     {
       id: 8,
       title: 'Study Tips for Electrical Apprentices',
-      icon: <BookOpen className="h-5 w-5 text-elec-yellow" />,
+      icon: <BookOpen className={iconClass} />,
       link: '/apprentice/study-tips',
       description: 'Revision strategies for 18th Edition and Level 3 exams, plus free resources',
     },
     {
       id: 9,
       title: 'Site Slang & Jargon Decoder',
-      icon: <MessageSquare className="h-5 w-5 text-elec-yellow" />,
+      icon: <MessageSquare className={iconClass} />,
       link: '/apprentice/site-jargon',
       description: 'Translate real-world terms and regional slang to help you fit in on site',
     },
     {
       id: 10,
       title: "Mistakes You're Allowed to Make",
-      icon: <AlertCircle className="h-5 w-5 text-elec-yellow" />,
+      icon: <AlertCircle className={iconClass} />,
       link: '/apprentice/learning-from-mistakes',
       description:
         'Safe screw-ups vs dangerous errors - build confidence and reduce imposter syndrome',
@@ -111,28 +113,28 @@ const ToolboxGrid = ({ onToolSelection }: ToolboxGridProps) => {
     {
       id: 11,
       title: 'Power Factor Calculator',
-      icon: <Calculator className="h-5 w-5 text-elec-yellow" />,
+      icon: <Calculator className={iconClass} />,
       description: 'Calculate power factor and understand its implications',
       onSelect: () => onToolSelection('powerCalculator'),
     },
     {
       id: 12,
       title: 'Cable Sizing Calculator',
-      icon: <Calculator className="h-5 w-5 text-elec-yellow" />,
+      icon: <Calculator className={iconClass} />,
       description: 'Calculate appropriate cable sizes based on current and voltage drop',
       onSelect: () => onToolSelection('cableSizing'),
     },
     {
       id: 13,
       title: 'Exam Preparation',
-      icon: <FileCheck className="h-5 w-5 text-elec-yellow" />,
+      icon: <FileCheck className={iconClass} />,
       link: '/apprentice/exam-prep',
       description: 'Practice tests and revision materials for your assessments',
     },
     {
       id: 14,
       title: 'Safety Fundamentals',
-      icon: <Shield className="h-5 w-5 text-elec-yellow" />,
+      icon: <Shield className={iconClass} />,
       link: '/apprentice/safety-fundamentals',
       description: 'Critical safety information for electrical work - your top priority',
     },

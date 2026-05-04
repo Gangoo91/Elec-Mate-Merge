@@ -129,11 +129,11 @@ export const DailyAffirmation = () => {
   };
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-br from-purple-500/[0.08] via-white/[0.02] to-elec-yellow/[0.06] p-5">
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-purple-500/70 via-violet-400/70 to-indigo-400/70 opacity-70" />
+    <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5">
+      <div className="absolute inset-x-0 top-0 h-px bg-white/[0.02] opacity-70" />
       <div className="flex items-start gap-3">
         <div className="shrink-0 mt-0.5">
-          <Quote className="h-4 w-4 text-purple-400" />
+          <Quote className="h-4 w-4 text-white/85" />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
@@ -141,7 +141,7 @@ export const DailyAffirmation = () => {
               Daily affirmation
             </span>
             {isPersonalised && (
-              <span className="inline-flex items-center text-[10px] font-medium px-2 py-0.5 rounded-full border bg-purple-500/10 text-purple-400 border-purple-500/20">
+              <span className="inline-flex items-center text-[10px] font-medium px-2 py-0.5 rounded-full border bg-white/[0.02] text-white/85 border-white/[0.06]">
                 For you · today
               </span>
             )}
@@ -160,7 +160,7 @@ export const DailyAffirmation = () => {
         <button
           onClick={handleLike}
           className={`h-10 w-10 rounded-full flex items-center justify-center touch-manipulation hover:bg-white/[0.06] transition-colors ${
-            isLiked ? 'text-pink-400' : 'text-white'
+            isLiked ? 'text-white/85' : 'text-white'
           }`}
           aria-label={isLiked ? 'Unlike' : 'Like'}
         >
@@ -169,7 +169,7 @@ export const DailyAffirmation = () => {
         <button
           onClick={handleSpeak}
           className={`h-10 w-10 rounded-full flex items-center justify-center touch-manipulation hover:bg-white/[0.06] transition-colors ${
-            isSpeaking ? 'text-purple-400' : 'text-white'
+            isSpeaking ? 'text-white/85' : 'text-white'
           }`}
           aria-label={isSpeaking ? 'Stop reading' : 'Read aloud'}
         >

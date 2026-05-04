@@ -1,7 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { HelpCircle, CheckCircle, XCircle, RotateCcw } from 'lucide-react';
+import { CheckCircle, XCircle, RotateCcw } from 'lucide-react';
 import { useState } from 'react';
 
 const RightsQuiz = () => {
@@ -161,119 +159,114 @@ const RightsQuiz = () => {
     }, 0);
   };
 
-  const getScoreColor = (score: number) => {
-    if (score >= 11) return 'text-green-400';
-    if (score >= 7) return 'text-yellow-400';
-    return 'text-red-400';
-  };
-
   if (showResults) {
     const score = getScore();
     return (
-      <Card className="border-blue-500/30 bg-blue-500/10">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <HelpCircle className="h-5 w-5 text-blue-400" />
-            <CardTitle className="text-blue-400">Quiz Results</CardTitle>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Quiz results
+        </span>
+        <div className="text-center">
+          <div className="text-[36px] font-semibold text-elec-yellow font-mono">
+            {score}/{questions.length}
           </div>
-        </CardHeader>
-        <CardContent>
-          <div className="text-center mb-6">
-            <div className={`text-4xl font-bold ${getScoreColor(score)} mb-2`}>
-              {score}/{questions.length}
-            </div>
-            <p className="text-white">
-              {score >= 11
-                ? 'Excellent! You know your rights well.'
-                : score >= 7
-                  ? 'Good knowledge, but room for improvement.'
-                  : 'Consider reviewing your rights and entitlements.'}
-            </p>
-          </div>
+          <p className="text-[14px] text-white/85 leading-relaxed mt-2">
+            {score >= 11
+              ? 'Excellent — you know your rights well.'
+              : score >= 7
+                ? 'Good knowledge, but room for improvement.'
+                : 'Consider reviewing your rights and entitlements.'}
+          </p>
+        </div>
 
-          <div className="space-y-4 mb-6">
-            {questions.map((question, index) => {
-              const userAnswer = answers[index];
-              const isCorrect = userAnswer === question.correct;
+        <div className="space-y-3">
+          {questions.map((question, index) => {
+            const userAnswer = answers[index];
+            const isCorrect = userAnswer === question.correct;
 
-              return (
-                <div key={index} className="border border-blue-500/20 rounded-lg p-4">
-                  <div className="flex items-start gap-2 mb-2">
-                    {isCorrect ? (
-                      <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                    ) : (
-                      <XCircle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
-                    )}
-                    <div>
-                      <h4 className="font-medium text-white mb-1">{question.question}</h4>
-                      <p className="text-sm text-white mb-2">
-                        Your answer: {question.options[userAnswer]}
+            return (
+              <div
+                key={index}
+                className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
+              >
+                <div className="flex items-start gap-2">
+                  {isCorrect ? (
+                    <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  ) : (
+                    <XCircle className="h-5 w-5 text-white/55 mt-0.5 flex-shrink-0" />
+                  )}
+                  <div className="space-y-1">
+                    <h4 className="text-[14px] font-semibold text-white">{question.question}</h4>
+                    <p className="text-[13px] text-white/85">
+                      Your answer: {question.options[userAnswer]}
+                    </p>
+                    {!isCorrect && (
+                      <p className="text-[13px] text-elec-yellow">
+                        Correct answer: {question.options[question.correct]}
                       </p>
-                      {!isCorrect && (
-                        <p className="text-sm text-green-400 mb-2">
-                          Correct answer: {question.options[question.correct]}
-                        </p>
-                      )}
-                      <p className="text-xs text-blue-400">{question.explanation}</p>
-                    </div>
+                    )}
+                    <p className="text-[12px] text-white/55 leading-relaxed">
+                      {question.explanation}
+                    </p>
                   </div>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
+        </div>
 
-          <Button onClick={resetQuiz} className="w-full">
-            <RotateCcw className="h-4 w-4 mr-2" />
-            Retake Quiz
-          </Button>
-        </CardContent>
-      </Card>
+        <Button
+          onClick={resetQuiz}
+          className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
+        >
+          <RotateCcw className="h-4 w-4 mr-2" />
+          Retake quiz
+        </Button>
+      </div>
     );
   }
 
   const question = questions[currentQuestion];
 
   return (
-    <Card className="border-blue-500/30 bg-blue-500/10">
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <HelpCircle className="h-5 w-5 text-blue-400" />
-            <CardTitle className="text-blue-400">Rights Assessment Quiz</CardTitle>
-          </div>
-          <Badge variant="outline" className="border-blue-400/40 text-blue-400">
-            {currentQuestion + 1} of {questions.length}
-          </Badge>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <div className="mb-6">
-          <h3 className="text-lg font-medium text-white mb-4">{question.question}</h3>
-          <div className="space-y-3">
-            {question.options.map((option, index) => (
-              <Button
-                key={index}
-                variant="outline"
-                className="w-full text-left justify-start h-auto p-4 border-blue-500/20 hover:bg-blue-500/20"
-                onClick={() => handleAnswer(index)}
-              >
-                <span className="mr-3 text-blue-400 font-bold">
-                  {String.fromCharCode(65 + index)}.
-                </span>
-                {option}
-              </Button>
-            ))}
-          </div>
-        </div>
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className="flex items-center justify-between">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Rights assessment quiz
+        </span>
+        <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+          {currentQuestion + 1} of {questions.length}
+        </span>
+      </div>
 
-        <div className="w-full bg-white/5 rounded-full h-2">
-          <div
-            className="bg-blue-500 h-2 rounded-full transition-all duration-300"
-            style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
-          />
+      <div className="space-y-4">
+        <h3 className="text-[16px] sm:text-[18px] font-semibold text-white leading-tight">
+          {question.question}
+        </h3>
+        <div className="space-y-2">
+          {question.options.map((option, index) => (
+            <Button
+              key={index}
+              variant="outline"
+              className="w-full text-left justify-start h-auto p-4 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+              onClick={() => handleAnswer(index)}
+            >
+              <span className="mr-3 text-white/55 font-mono">
+                {String.fromCharCode(65 + index)}.
+              </span>
+              <span className="text-[14px] whitespace-normal">{option}</span>
+            </Button>
+          ))}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+
+      <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+        <div
+          className="h-full bg-elec-yellow transition-all duration-500"
+          style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
+        />
+      </div>
+    </div>
   );
 };
 

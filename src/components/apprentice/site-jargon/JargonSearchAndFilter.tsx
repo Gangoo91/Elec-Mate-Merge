@@ -7,7 +7,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Search, Filter, X } from 'lucide-react';
 import { siteJargonCategories } from '@/data/apprentice/siteJargonData';
@@ -65,64 +64,65 @@ const JargonSearchAndFilter = ({
 
   return (
     <div className="space-y-4">
-      {/* Search Bar */}
       <div className="relative">
         {!searchTerm && (
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/55 pointer-events-none" />
         )}
         <Input
           placeholder="Search terms, definitions, or usage examples..."
           value={searchTerm}
           onChange={(e) => onSearchChange(e.target.value)}
-          className={cn('pr-12', !searchTerm && 'pl-10')}
+          className={cn(
+            'h-11 pr-12 text-base touch-manipulation border-white/15 focus:border-elec-yellow focus:ring-elec-yellow',
+            !searchTerm && 'pl-10'
+          )}
         />
         {searchTerm && (
           <Button
             variant="ghost"
             size="sm"
             onClick={() => onSearchChange('')}
-            className="absolute right-1 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0"
+            className="absolute right-1 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 hover:bg-white/[0.05]"
           >
             <X className="h-4 w-4" />
           </Button>
         )}
       </div>
 
-      {/* Filter Toggle */}
       <div className="flex items-center justify-between">
         <Button
           variant="outline"
           size="sm"
           onClick={() => setShowFilters(!showFilters)}
-          className="flex items-center gap-2"
+          className="h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation flex items-center gap-2"
         >
           <Filter className="h-4 w-4" />
           Filters
           {hasActiveFilters && (
-            <Badge variant="secondary" className="ml-1">
+            <span className="text-[10px] uppercase tracking-[0.18em] text-elec-yellow ml-1">
               Active
-            </Badge>
+            </span>
           )}
         </Button>
 
-        <div className="text-sm text-white">
-          Showing {filteredCount} of {totalTerms} terms
-        </div>
+        <span className="text-[12px] text-white/55">
+          {filteredCount} of {totalTerms} terms
+        </span>
       </div>
 
-      {/* Expandable Filters */}
       {showFilters && (
-        <div className="space-y-4 p-4 border rounded-lg bg-muted/30">
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Category Filter */}
             <div className="space-y-2">
-              <label className="text-sm font-medium">Category</label>
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Category
+              </span>
               <Select value={selectedCategory} onValueChange={onCategoryChange}>
-                <SelectTrigger>
+                <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="All categories" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Categories</SelectItem>
+                  <SelectItem value="all">All categories</SelectItem>
                   {siteJargonCategories.map((category) => (
                     <SelectItem key={category.id} value={category.id}>
                       {category.name}
@@ -132,15 +132,16 @@ const JargonSearchAndFilter = ({
               </Select>
             </div>
 
-            {/* Difficulty Filter */}
             <div className="space-y-2">
-              <label className="text-sm font-medium">Difficulty</label>
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Difficulty
+              </span>
               <Select value={selectedDifficulty} onValueChange={onDifficultyChange}>
-                <SelectTrigger>
+                <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="All levels" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Levels</SelectItem>
+                  <SelectItem value="all">All levels</SelectItem>
                   <SelectItem value="basic">Basic</SelectItem>
                   <SelectItem value="intermediate">Intermediate</SelectItem>
                   <SelectItem value="advanced">Advanced</SelectItem>
@@ -149,30 +150,42 @@ const JargonSearchAndFilter = ({
             </div>
           </div>
 
-          {/* Tags Filter */}
           {availableTags.length > 0 && (
             <div className="space-y-2">
-              <label className="text-sm font-medium">Tags</label>
-              <div className="flex flex-wrap gap-2">
-                {availableTags.map((tag) => (
-                  <Badge
-                    key={tag}
-                    variant={selectedTags.includes(tag) ? 'default' : 'outline'}
-                    className="cursor-pointer hover:bg-primary/80"
-                    onClick={() => toggleTag(tag)}
-                  >
-                    {tag}
-                  </Badge>
-                ))}
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Tags
+              </span>
+              <div className="flex flex-wrap gap-1.5">
+                {availableTags.map((tag) => {
+                  const active = selectedTags.includes(tag);
+                  return (
+                    <button
+                      key={tag}
+                      onClick={() => toggleTag(tag)}
+                      className={cn(
+                        'text-[12px] px-2 py-0.5 rounded-md border touch-manipulation transition-colors',
+                        active
+                          ? 'bg-elec-yellow text-black border-elec-yellow'
+                          : 'text-white/85 border-white/10 bg-white/[0.03] hover:bg-white/[0.05]'
+                      )}
+                    >
+                      {tag}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           )}
 
-          {/* Clear Filters */}
           {hasActiveFilters && (
             <div className="flex justify-end">
-              <Button variant="outline" size="sm" onClick={clearFilters}>
-                Clear All Filters
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={clearFilters}
+                className="h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+              >
+                Clear all filters
               </Button>
             </div>
           )}

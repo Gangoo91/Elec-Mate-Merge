@@ -1,11 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { ClipboardList } from 'lucide-react';
-
 const IndustrialPlanningPhases = () => {
   const planningPhases = [
     {
-      phase: 'Initial Assessment & Documentation',
+      phase: 'Initial assessment & documentation',
       duration: '1-2 weeks',
       tasks: [
         'ATEX zone classification review',
@@ -16,7 +12,7 @@ const IndustrialPlanningPhases = () => {
       ],
     },
     {
-      phase: 'Design & Specification',
+      phase: 'Design & specification',
       duration: '2-3 weeks',
       tasks: [
         'Motor control system design',
@@ -27,7 +23,7 @@ const IndustrialPlanningPhases = () => {
       ],
     },
     {
-      phase: 'Procurement & Preparation',
+      phase: 'Procurement & preparation',
       duration: '3-4 weeks',
       tasks: [
         'ATEX certified equipment procurement',
@@ -40,37 +36,47 @@ const IndustrialPlanningPhases = () => {
   ];
 
   return (
-    <Card className="border-blue-500/30 bg-white/5">
-      <CardHeader>
-        <div className="flex items-center gap-2">
-          <ClipboardList className="h-6 w-6 text-blue-400" />
-          <CardTitle className="text-blue-300">Industrial Project Planning Phases</CardTitle>
-        </div>
-        <p className="text-white">Structured approach to complex industrial installations</p>
-      </CardHeader>
-      <CardContent className="space-y-4">
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className="space-y-1">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Planning phases
+        </span>
+        <h3 className="text-[18px] font-semibold text-white leading-tight">
+          Industrial project planning phases
+        </h3>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Structured approach to complex industrial installations.
+        </p>
+      </div>
+      <div className="space-y-3">
         {planningPhases.map((phase, index) => (
-          <div key={index} className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="font-semibold text-blue-300">
+          <div
+            key={index}
+            className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 sm:p-4 space-y-3"
+          >
+            <div className="flex items-baseline justify-between gap-3">
+              <h4 className="text-[14px] font-medium text-white">
                 Phase {index + 1}: {phase.phase}
-              </h3>
-              <Badge variant="outline" className="border-blue-400 text-blue-300">
+              </h4>
+              <span className="text-[12px] text-white/55 font-mono flex-shrink-0">
                 {phase.duration}
-              </Badge>
+              </span>
             </div>
-            <div className="space-y-2">
+            <ul className="space-y-1">
               {phase.tasks.map((task, taskIndex) => (
-                <div key={taskIndex} className="flex items-center gap-2 text-sm">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full flex-shrink-0" />
-                  <span className="text-white">{task}</span>
-                </div>
+                <li
+                  key={taskIndex}
+                  className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                >
+                  <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                  <span>{task}</span>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         ))}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Lightbulb, Zap } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 interface SmartSuggestion {
   value: string;
@@ -158,29 +157,30 @@ const SmartInputSuggestions: React.FC<SmartInputSuggestionsProps> = ({
         variant="ghost"
         size="sm"
         onClick={() => setShowSuggestions(!showSuggestions)}
-        className="h-6 px-2 text-xs text-white hover:text-elec-yellow"
+        className="h-9 px-2 text-[12px] text-white/55 hover:text-white hover:bg-white/[0.05] touch-manipulation"
       >
-        <Lightbulb className="mr-1 h-3 w-3" />
         {showSuggestions ? 'Hide' : 'Show'} common values
+        <ChevronDown
+          className={`ml-1 h-3 w-3 transition-transform duration-200 ${showSuggestions ? 'rotate-180' : ''}`}
+        />
       </Button>
 
       {showSuggestions && (
         <div className="mt-2 space-y-2">
-          <div className="grid grid-cols-2 gap-1">
+          <div className="flex flex-wrap gap-1.5">
             {filteredSuggestions.slice(0, 6).map((suggestion, index) => (
-              <Badge
+              <button
                 key={index}
-                variant="outline"
-                className="cursor-pointer hover:bg-elec-yellow/20 hover:border-elec-yellow/50 text-xs px-2 py-1 justify-between"
+                type="button"
                 onClick={() => onSuggestionSelect(suggestion.value)}
+                className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] touch-manipulation min-h-[28px]"
               >
-                <span>{suggestion.label}</span>
-                <Zap className="ml-1 h-3 w-3" />
-              </Badge>
+                {suggestion.label}
+              </button>
             ))}
           </div>
           {filteredSuggestions.length > 6 && (
-            <p className="text-xs text-white">
+            <p className="text-[11px] text-white/55">
               And {filteredSuggestions.length - 6} more suggestions...
             </p>
           )}

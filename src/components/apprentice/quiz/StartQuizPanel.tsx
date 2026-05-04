@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { AlertTriangle, Play, CheckCircle } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 
 interface StartQuizPanelProps {
   isCompleted: boolean;
@@ -9,50 +9,60 @@ interface StartQuizPanelProps {
 
 const StartQuizPanel = ({ isCompleted, onStartQuiz, onBack }: StartQuizPanelProps) => {
   return (
-    <div className="flex flex-col h-full">
-      <div className="mb-8">
-        <p className="text-white">
-          This quiz will test your understanding of the key health and safety concepts covered in
-          this unit. Complete the quiz to demonstrate your knowledge.
-        </p>
-        {isCompleted && (
-          <div className="flex items-center gap-2 mt-4 p-3 bg-green-950/30 border border-green-600/30 rounded-md">
-            <CheckCircle className="h-5 w-5 text-green-500" />
-            <p className="text-green-400">
-              You have already completed this quiz. You can retake it to improve your score.
-            </p>
-          </div>
-        )}
-      </div>
+    <div className="flex flex-col h-full space-y-6">
+      <p className="text-[14px] text-white/85 leading-relaxed">
+        This quiz will test your understanding of the key health and safety concepts covered in
+        this unit. Complete the quiz to demonstrate your knowledge.
+      </p>
 
-      <div className="flex-grow space-y-6 p-6 border border-elec-yellow/20 rounded-lg bg-white/5">
-        <div className="flex items-center gap-2 mb-2">
-          <Play className="h-5 w-5 text-elec-yellow" />
-          <h3 className="font-semibold">Timed Assessment - 45 Minutes</h3>
+      {isCompleted && (
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 flex items-start gap-3">
+          <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
+          <p className="text-[14px] text-white/85 leading-relaxed">
+            You have already completed this quiz. You can retake it to improve your score.
+          </p>
+        </div>
+      )}
+
+      <div className="flex-grow rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5">
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Timed assessment
+          </span>
+          <h3 className="text-[18px] font-semibold text-white">45 minutes</h3>
         </div>
 
-        <ul className="space-y-6 list-disc pl-6 text-white">
-          <li>You have 45 minutes to complete the quiz</li>
-          <li>You can retake the quiz as many times as needed</li>
-          <li>Take your time and read each question carefully</li>
+        <ul className="space-y-2">
+          {[
+            'You have 45 minutes to complete the quiz',
+            'You can retake the quiz as many times as needed',
+            'Take your time and read each question carefully',
+          ].map((note, idx) => (
+            <li
+              key={idx}
+              className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+            >
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>{note}</span>
+            </li>
+          ))}
         </ul>
 
-        <div className="mt-4 flex items-start gap-3 bg-amber-950/30 p-4 rounded-lg border border-amber-500/30">
-          <AlertTriangle className="h-5 w-5 text-amber-500 mt-0.5" />
-          <div>
-            <p className="font-medium text-amber-500">Important</p>
-            <p className="text-sm text-white">
-              Make sure you have enough time to complete the quiz before starting. If you leave the
-              page, your progress may be lost.
-            </p>
-          </div>
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Important
+          </span>
+          <p className="text-[14px] text-white/85 leading-relaxed">
+            Make sure you have enough time to complete the quiz before starting. If you leave the
+            page, your progress may be lost.
+          </p>
         </div>
       </div>
 
-      <div className="flex justify-between mt-6 pt-4">
+      <div className="flex justify-between gap-3">
         <Button
           variant="outline"
-          className="border-elec-yellow/30 hover:bg-elec-yellow/10 w-[120px]"
+          className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation w-[120px]"
           onClick={onBack}
         >
           Back
@@ -60,7 +70,7 @@ const StartQuizPanel = ({ isCompleted, onStartQuiz, onBack }: StartQuizPanelProp
 
         <Button
           onClick={onStartQuiz}
-          className="bg-elec-yellow hover:bg-elec-yellow/80 text-elec-dark font-medium w-[120px]"
+          className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] w-[140px]"
         >
           {isCompleted ? 'Retake Quiz' : 'Start Quiz'}
         </Button>

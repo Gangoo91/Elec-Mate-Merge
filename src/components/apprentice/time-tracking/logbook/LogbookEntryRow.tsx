@@ -59,14 +59,14 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
 
   return (
     <>
-      <tr key={entry.id} className={entry.isAutomatic ? 'bg-elec-yellow/5' : ''}>
+      <tr key={entry.id}>
         {isEditing ? (
           <>
             <td className="p-3">
               <Input
                 value={editedActivity}
                 onChange={(e) => setEditedActivity(e.target.value)}
-                className="w-full bg-white/5"
+                className="w-full h-10 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                 disabled={entry.isAutomatic}
               />
             </td>
@@ -75,7 +75,7 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
                 type="number"
                 value={editedDuration}
                 onChange={(e) => setEditedDuration(parseInt(e.target.value) || 0)}
-                className="w-full bg-white/5 text-center"
+                className="w-full h-10 text-base text-center touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                 disabled={entry.isAutomatic}
               />
             </td>
@@ -83,7 +83,7 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
               <Input
                 value={editedNotes}
                 onChange={(e) => setEditedNotes(e.target.value)}
-                className="w-full bg-white/5"
+                className="w-full h-10 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                 disabled={entry.isAutomatic}
               />
             </td>
@@ -93,6 +93,7 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
                 variant="ghost"
                 onClick={handleSaveChanges}
                 disabled={entry.isAutomatic}
+                className="text-white hover:bg-white/[0.05] touch-manipulation"
               >
                 <Save className="h-4 w-4" />
               </Button>
@@ -100,50 +101,53 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
           </>
         ) : (
           <>
-            <td className="p-3">{entry.activity}</td>
-            <td className="p-3 text-center">
+            <td className="p-3 text-[14px] text-white/85">{entry.activity}</td>
+            <td className="p-3 text-center text-[13px] text-white font-mono">
               {Math.floor(entry.duration / 60)}h {entry.duration % 60}m
             </td>
-            <td className="p-3 hidden md:table-cell">
+            <td className="p-3 hidden md:table-cell text-[13px] text-white/70">
               <div className="line-clamp-1">{entry.notes}</div>
             </td>
             <td className="p-3 text-right">
-              <div className="flex gap-1">
+              <div className="flex gap-1 justify-end">
                 {!entry.isAutomatic && (
                   <>
-                    <Button size="sm" variant="ghost" onClick={handleEdit}>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={handleEdit}
+                      className="text-white/55 hover:text-white hover:bg-white/[0.05] touch-manipulation"
+                    >
                       <Pencil className="h-4 w-4" />
                     </Button>
                     <Button
                       size="sm"
                       variant="ghost"
                       onClick={() => onDelete(entry.id)}
-                      className="text-red-400 hover:text-red-300"
+                      className="text-red-300 hover:text-red-200 hover:bg-red-500/[0.08] touch-manipulation"
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
                   </>
                 )}
 
-                {/* Quick Add to Portfolio */}
                 <Button
                   size="sm"
                   variant="ghost"
                   onClick={handleQuickAdd}
                   disabled={isConverting}
-                  className="text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10"
-                  title="Quick Add to Portfolio"
+                  className="text-white/55 hover:text-white hover:bg-white/[0.05] touch-manipulation"
+                  title="Quick add to portfolio"
                 >
                   <Zap className="h-4 w-4" />
                 </Button>
 
-                {/* Custom Add to Portfolio */}
                 <Button
                   size="sm"
                   variant="ghost"
                   onClick={() => setShowPortfolioDialog(true)}
-                  className="text-white hover:text-foreground"
-                  title="Custom Add to Portfolio"
+                  className="text-white/55 hover:text-white hover:bg-white/[0.05] touch-manipulation"
+                  title="Custom add to portfolio"
                 >
                   <Plus className="h-4 w-4" />
                 </Button>

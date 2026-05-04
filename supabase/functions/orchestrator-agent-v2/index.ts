@@ -82,7 +82,7 @@ const availableAgents: AvailableAgent[] = [
   },
   {
     name: 'cost',
-    endpoint: 'cost-engineer-v3',
+    endpoint: 'cost-engineer',
     capabilities: ['pricing', 'materials', 'labour'],
     priority: 5,
   },

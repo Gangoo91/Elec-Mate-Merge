@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import TimeTracker from '@/components/apprentice/TimeTracker';
 import DigitalLogbook from '@/components/apprentice/time-tracking/DigitalLogbook';
@@ -50,176 +49,159 @@ const TrainingManagementCard = ({
     }
   };
 
+  const Legend = () => (
+    <div className="flex flex-wrap items-center gap-3 text-[11px] text-white/55">
+      <div className="flex items-center gap-1.5">
+        <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></div>
+        <span>Automatic</span>
+      </div>
+      <div className="flex items-center gap-1.5">
+        <div className="w-1.5 h-1.5 rounded-full border border-white/30"></div>
+        <span>Manual</span>
+      </div>
+      <div className="flex items-center gap-1.5">
+        <div className="w-1.5 h-1.5 bg-white/55 rounded-full"></div>
+        <span>Verified</span>
+      </div>
+    </div>
+  );
+
   return (
-    <Card className={cn('bg-white/5', className)}>
-      <CardHeader className={isMobile ? 'pb-2' : ''}>
-        <div
-          className={`flex items-center ${isMobile ? 'justify-between flex-wrap gap-1' : 'justify-between gap-4'}`}
-        >
-          <CardTitle className={isMobile ? 'text-2xl' : ''}>
-            {isMobile ? (
-              <div className="flex flex-col">
-                <div className="text-3xl font-bold">Off-The-Job</div>
-                <div className="text-3xl font-bold">Training Logger</div>
-                <div className="text-sm text-white mt-1">
-                  Track your 20% off-the-job training time
-                </div>
-              </div>
-            ) : (
-              'Training Management'
-            )}
-          </CardTitle>
-          {!isMobile && (
-            <div className="flex items-center gap-2 text-sm">
-              <div className="flex items-center">
-                <div className="w-3 h-3 bg-elec-yellow/70 rounded-full mr-1.5"></div>
-                <span>Automatic</span>
-              </div>
-              <div className="flex items-center ml-3">
-                <div className="w-3 h-3 bg-white/5 rounded-full border border-elec-yellow/40 mr-1.5"></div>
-                <span>Manual</span>
-              </div>
-              <div className="flex items-center ml-3">
-                <div className="w-3 h-3 bg-green-500/70 rounded-full mr-1.5"></div>
-                <span>Verified</span>
-              </div>
-            </div>
+    <div
+      className={cn(
+        'rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4',
+        className
+      )}
+    >
+      <div
+        className={`flex items-start ${isMobile ? 'flex-col gap-2' : 'justify-between gap-4'}`}
+      >
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Off-the-job training logger
+          </span>
+          {isMobile && (
+            <p className="text-[13px] text-white/70 leading-relaxed">
+              Track your 20% off-the-job training time
+            </p>
           )}
         </div>
-      </CardHeader>
-      <CardContent className={isMobile ? 'px-3 py-2' : ''}>
-        {isMobile && (
-          <div className="flex items-center gap-4 mb-4">
-            <div className="flex items-center">
-              <div className="w-3 h-3 bg-elec-yellow/70 rounded-full mr-1.5"></div>
-              <span className="text-sm">Automatic</span>
-            </div>
-            <div className="flex items-center">
-              <div className="w-3 h-3 bg-white/5 rounded-full border border-elec-yellow/40 mr-1.5"></div>
-              <span className="text-sm">Manual</span>
-            </div>
-            <div className="flex items-center">
-              <div className="w-3 h-3 bg-green-500/70 rounded-full mr-1.5"></div>
-              <span className="text-sm">Verified</span>
-            </div>
-          </div>
-        )}
+        {!isMobile && <Legend />}
+      </div>
 
-        <Tabs defaultValue={activeTab} value={activeTab} onValueChange={setActiveTab}>
-          {isMobile ? (
-            <div className="mb-4 bg-white/10 rounded-md p-2">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-between bg-transparent text-white"
-                  >
-                    {getTabDisplayName(activeTab)}
-                    <ChevronDown className="h-4 w-4 ml-2" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  align="center"
-                  className="w-full min-w-[200px] bg-white/10 border-elec-gray/40"
+      {isMobile && <Legend />}
+
+      <Tabs defaultValue={activeTab} value={activeTab} onValueChange={setActiveTab}>
+        {isMobile ? (
+          <div className="mb-4">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="w-full justify-between h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
                 >
-                  <DropdownMenuItem onClick={() => setActiveTab('auto')} className="justify-center">
-                    Auto-Track
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => setActiveTab('recent')}
-                    className="justify-center"
-                  >
-                    Recent
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => setActiveTab('logbook')}
-                    className="justify-center"
-                  >
-                    Logbook
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => setActiveTab('weekly')}
-                    className="justify-center"
-                  >
-                    Weekly
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => setActiveTab('certificates')}
-                    className="justify-center"
-                  >
-                    Certificates
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => setActiveTab('evidence')}
-                    className="justify-center"
-                  >
-                    Evidence
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-          ) : (
-            <TabsList className="mb-4 bg-white/10 w-full">
-              <TabsTrigger value="auto" className="flex-1">
-                Auto-Track
-              </TabsTrigger>
-              <TabsTrigger value="recent" className="flex-1">
-                Recent
-              </TabsTrigger>
-              <TabsTrigger value="logbook" className="flex-1">
-                Logbook
-              </TabsTrigger>
-              <TabsTrigger value="weekly" className="flex-1">
-                Weekly
-              </TabsTrigger>
-              <TabsTrigger value="certificates" className="flex-1">
-                Certificates
-              </TabsTrigger>
-              <TabsTrigger value="evidence" className="flex-1">
-                Evidence
-              </TabsTrigger>
-            </TabsList>
-          )}
-
-          <TabsContent value="auto">
-            <AutomatedTrackingCard />
-          </TabsContent>
-
-          <TabsContent value="recent">
-            <TimeTracker />
-          </TabsContent>
-
-          <TabsContent value="logbook">
-            <DigitalLogbook />
-          </TabsContent>
-
-          <TabsContent value="weekly">
-            <WeeklyOverview />
-          </TabsContent>
-
-          <TabsContent value="certificates">
-            <CertificatesManager />
-          </TabsContent>
-
-          <TabsContent value="evidence">
-            <TrainingEvidence />
-          </TabsContent>
-        </Tabs>
-
-        {isMobile && (
-          <div className="flex items-center justify-between mt-6 pt-2 border-t border-elec-gray/30">
-            <div className="flex items-center">
-              <Clock className="h-5 w-5 text-elec-yellow mr-2" />
-              <span className="text-3xl font-bold">4h</span>
-            </div>
-            <div>
-              <div className="text-3xl font-bold">3m</div>
-              <div className="text-xs text-right text-white">Total logged time</div>
-            </div>
+                  {getTabDisplayName(activeTab)}
+                  <ChevronDown className="h-4 w-4 ml-2" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="center"
+                className="w-full min-w-[200px] bg-background border-white/[0.06]"
+              >
+                <DropdownMenuItem onClick={() => setActiveTab('auto')} className="justify-center">
+                  Auto-track
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => setActiveTab('recent')}
+                  className="justify-center"
+                >
+                  Recent
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => setActiveTab('logbook')}
+                  className="justify-center"
+                >
+                  Logbook
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => setActiveTab('weekly')}
+                  className="justify-center"
+                >
+                  Weekly
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => setActiveTab('certificates')}
+                  className="justify-center"
+                >
+                  Certificates
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => setActiveTab('evidence')}
+                  className="justify-center"
+                >
+                  Evidence
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
+        ) : (
+          <TabsList className="mb-4 bg-white/[0.02] border border-white/[0.06] w-full">
+            <TabsTrigger value="auto" className="flex-1">
+              Auto-track
+            </TabsTrigger>
+            <TabsTrigger value="recent" className="flex-1">
+              Recent
+            </TabsTrigger>
+            <TabsTrigger value="logbook" className="flex-1">
+              Logbook
+            </TabsTrigger>
+            <TabsTrigger value="weekly" className="flex-1">
+              Weekly
+            </TabsTrigger>
+            <TabsTrigger value="certificates" className="flex-1">
+              Certificates
+            </TabsTrigger>
+            <TabsTrigger value="evidence" className="flex-1">
+              Evidence
+            </TabsTrigger>
+          </TabsList>
         )}
-      </CardContent>
-    </Card>
+
+        <TabsContent value="auto">
+          <AutomatedTrackingCard />
+        </TabsContent>
+
+        <TabsContent value="recent">
+          <TimeTracker />
+        </TabsContent>
+
+        <TabsContent value="logbook">
+          <DigitalLogbook />
+        </TabsContent>
+
+        <TabsContent value="weekly">
+          <WeeklyOverview />
+        </TabsContent>
+
+        <TabsContent value="certificates">
+          <CertificatesManager />
+        </TabsContent>
+
+        <TabsContent value="evidence">
+          <TrainingEvidence />
+        </TabsContent>
+      </Tabs>
+
+      {isMobile && (
+        <div className="flex items-center justify-between mt-2 pt-3 border-t border-white/[0.06]">
+          <div className="flex items-center gap-2">
+            <Clock className="h-4 w-4 text-white/55" />
+            <span className="text-2xl font-mono text-white">4h 3m</span>
+          </div>
+          <span className="text-[11px] text-white/55">Total logged time</span>
+        </div>
+      )}
+    </div>
   );
 };
 

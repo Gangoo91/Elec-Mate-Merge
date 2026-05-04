@@ -1,103 +1,70 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import {
-  Download,
-  FileText,
-  Image,
-  Video,
-  Folder,
-  Star,
-  CheckCircle,
-  ExternalLink,
-  Eye,
-  Copy,
-} from 'lucide-react';
+import { Download, Eye, ExternalLink } from 'lucide-react';
 
 const TemplatesAndExamples = () => {
   const templates = [
     {
-      category: 'Portfolio Structure',
+      category: 'Portfolio structure',
       items: [
         {
-          name: 'Portfolio Contents Page Template',
-          type: 'Word Document',
+          name: 'Portfolio contents page template',
+          type: 'Word document',
           description: 'Professional contents page with sections and page numbers',
-          downloadUrl: '#',
-          previewUrl: '#',
         },
         {
-          name: 'Evidence Tracking Spreadsheet',
-          type: 'Excel Sheet',
+          name: 'Evidence tracking spreadsheet',
+          type: 'Excel sheet',
           description: 'Track evidence against learning outcomes and competencies',
-          downloadUrl: '#',
-          previewUrl: '#',
         },
         {
-          name: 'Portfolio Introduction Template',
-          type: 'Word Document',
+          name: 'Portfolio introduction template',
+          type: 'Word document',
           description: 'Professional introduction with personal statement and objectives',
-          downloadUrl: '#',
-          previewUrl: '#',
         },
       ],
     },
     {
-      category: 'Evidence Documentation',
+      category: 'Evidence documentation',
       items: [
         {
-          name: 'Work Activity Evidence Form',
-          type: 'PDF Form',
+          name: 'Work activity evidence form',
+          type: 'PDF form',
           description: 'Template for documenting practical work activities',
-          downloadUrl: '#',
-          previewUrl: '#',
         },
         {
-          name: 'Witness Testimony Template',
-          type: 'Word Document',
+          name: 'Witness testimony template',
+          type: 'Word document',
           description: 'Structured format for supervisor and peer testimonies',
-          downloadUrl: '#',
-          previewUrl: '#',
         },
         {
-          name: 'Reflection Template',
-          type: 'Word Document',
+          name: 'Reflection template',
+          type: 'Word document',
           description: 'Guided template for writing meaningful reflections',
-          downloadUrl: '#',
-          previewUrl: '#',
         },
         {
-          name: 'Photo Evidence Labels',
-          type: 'Word Document',
+          name: 'Photo evidence labels',
+          type: 'Word document',
           description: 'Professional labels for photographs and visual evidence',
-          downloadUrl: '#',
-          previewUrl: '#',
         },
       ],
     },
     {
-      category: 'Assessment Preparation',
+      category: 'Assessment preparation',
       items: [
         {
-          name: 'Professional Discussion Preparation',
-          type: 'PDF Guide',
+          name: 'Professional discussion preparation',
+          type: 'PDF guide',
           description: 'Question bank and preparation strategies',
-          downloadUrl: '#',
-          previewUrl: '#',
         },
         {
-          name: 'Competency Mapping Worksheet',
-          type: 'Excel Sheet',
+          name: 'Competency mapping worksheet',
+          type: 'Excel sheet',
           description: 'Map your evidence to specific competency criteria',
-          downloadUrl: '#',
-          previewUrl: '#',
         },
         {
-          name: 'Assessment Checklist',
-          type: 'PDF Form',
+          name: 'Assessment checklist',
+          type: 'PDF form',
           description: 'Final preparation checklist before assessment',
-          downloadUrl: '#',
-          previewUrl: '#',
         },
       ],
     },
@@ -105,8 +72,8 @@ const TemplatesAndExamples = () => {
 
   const examples = [
     {
-      title: 'Excellent Portfolio Example',
-      type: 'Complete Portfolio',
+      title: 'Excellent portfolio example',
+      type: 'Complete portfolio',
       description: 'Anonymised example of a high-quality apprentice portfolio',
       level: 'Outstanding',
       highlights: [
@@ -117,10 +84,10 @@ const TemplatesAndExamples = () => {
       ],
     },
     {
-      title: 'Evidence Collection Examples',
-      type: 'Photo Gallery',
+      title: 'Evidence collection examples',
+      type: 'Photo gallery',
       description: 'Examples of well-documented practical work with explanations',
-      level: 'Good Practice',
+      level: 'Good practice',
       highlights: [
         'Professional quality photographs',
         'Clear before/during/after sequences',
@@ -129,10 +96,10 @@ const TemplatesAndExamples = () => {
       ],
     },
     {
-      title: 'Reflection Writing Examples',
-      type: 'Text Samples',
+      title: 'Reflection writing examples',
+      type: 'Text samples',
       description: 'Examples of effective reflective writing at different levels',
-      level: 'Best Practice',
+      level: 'Best practice',
       highlights: [
         'Demonstrates learning and development',
         'Links theory to practice effectively',
@@ -144,7 +111,7 @@ const TemplatesAndExamples = () => {
 
   const quickStartGuides = [
     {
-      title: 'Week 1: Getting Started',
+      title: 'Week 1: Getting started',
       description: 'Essential first steps for new apprentices',
       tasks: [
         'Download and set up folder structure',
@@ -154,7 +121,7 @@ const TemplatesAndExamples = () => {
       ],
     },
     {
-      title: 'Month 1: Establishing Routine',
+      title: 'Month 1: Establishing routine',
       description: 'Building evidence collection habits',
       tasks: [
         'Complete first witness testimony',
@@ -164,7 +131,7 @@ const TemplatesAndExamples = () => {
       ],
     },
     {
-      title: 'Month 3: Quality Review',
+      title: 'Month 3: Quality review',
       description: 'Reviewing and improving your portfolio',
       tasks: [
         'Conduct evidence gap analysis',
@@ -175,217 +142,187 @@ const TemplatesAndExamples = () => {
     },
   ];
 
-  const getLevelColor = (level: string) => {
-    switch (level) {
-      case 'Outstanding':
-        return 'border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/10 text-green-400';
-      case 'Good Practice':
-        return 'border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 text-blue-400';
-      case 'Best Practice':
-        return 'border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-pink-500/10 text-purple-400';
-      default:
-        return 'border-white/20 bg-gradient-to-br from-gray-500/10 to-slate-500/10 text-white';
-    }
-  };
-
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-orange-500/10">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Download className="h-6 w-6" />
-            Templates, Examples & Resources
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-white">
-            Access our comprehensive collection of templates, examples, and resources to help you
-            build a professional portfolio efficiently and effectively.
-          </p>
-        </CardContent>
-      </Card>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Templates, examples & resources
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Access our comprehensive collection of templates, examples, and resources to help you
+          build a professional portfolio efficiently and effectively.
+        </p>
+      </div>
 
-      {/* Templates Section */}
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold text-white">Portfolio Templates</h3>
+        <h3 className="text-[18px] sm:text-[20px] font-semibold text-white leading-tight">
+          Portfolio templates
+        </h3>
         {templates.map((category, categoryIndex) => (
-          <Card key={categoryIndex} className="border-blue-500/20 bg-white/5">
-            <CardHeader>
-              <CardTitle className="text-blue-400 flex items-center gap-2">
-                <Folder className="h-5 w-5" />
-                {category.category}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {category.items.map((template, templateIndex) => (
-                  <div
-                    key={templateIndex}
-                    className="border border-elec-yellow/20 rounded-lg p-4 space-y-3"
-                  >
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <h4 className="font-medium text-white">{template.name}</h4>
-                        <Badge
-                          variant="outline"
-                          className="text-elec-yellow border-elec-yellow/30 mt-1"
-                        >
-                          {template.type}
-                        </Badge>
-                      </div>
-                      <FileText className="h-5 w-5 text-elec-yellow flex-shrink-0" />
-                    </div>
-
-                    <p className="text-sm text-white">{template.description}</p>
-
-                    <div className="flex gap-2">
-                      <Button variant="outline" size="sm" className="border-elec-yellow/30">
-                        <Download className="h-3 w-3 mr-1" />
-                        Download
-                      </Button>
-                      <Button variant="outline" size="sm" className="border-elec-yellow/30">
-                        <Eye className="h-3 w-3 mr-1" />
-                        Preview
-                      </Button>
-                    </div>
+          <div
+            key={categoryIndex}
+            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
+          >
+            <h4 className="text-[14px] font-semibold text-white">{category.category}</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {category.items.map((template, templateIndex) => (
+                <div
+                  key={templateIndex}
+                  className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
+                >
+                  <div>
+                    <h5 className="text-[14px] font-semibold text-white">{template.name}</h5>
+                    <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block mt-1">
+                      {template.type}
+                    </span>
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+                  <p className="text-[14px] text-white/85 leading-relaxed">{template.description}</p>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                    >
+                      <Download className="h-3 w-3 mr-1" />
+                      Download
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                    >
+                      <Eye className="h-3 w-3 mr-1" />
+                      Preview
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         ))}
       </div>
 
-      {/* Examples Section */}
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold text-white">Portfolio Examples</h3>
+        <h3 className="text-[18px] sm:text-[20px] font-semibold text-white leading-tight">
+          Portfolio examples
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {examples.map((example, index) => (
-            <Card key={index} className={getLevelColor(example.level)}>
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <CardTitle className="text-lg">{example.title}</CardTitle>
-                    <Badge className="mt-1" variant="outline">
-                      <Star className="h-3 w-3 mr-1" />
-                      {example.level}
-                    </Badge>
-                  </div>
-                  <div className="text-current">
-                    {example.type === 'Complete Portfolio' && <FileText className="h-5 w-5" />}
-                    {example.type === 'Photo Gallery' && <Image className="h-5 w-5" />}
-                    {example.type === 'Text Samples' && <Copy className="h-5 w-5" />}
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-sm text-white">{example.description}</p>
-
-                <div>
-                  <h4 className="font-medium text-white mb-2">Key Highlights:</h4>
-                  <ul className="space-y-1">
-                    {example.highlights.map((highlight, highlightIndex) => (
-                      <li key={highlightIndex} className="flex items-start gap-2">
-                        <CheckCircle className="h-3 w-3 text-current mt-1 flex-shrink-0" />
-                        <span className="text-xs text-white">{highlight}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <Button variant="outline" size="sm" className="w-full">
-                  <ExternalLink className="h-3 w-3 mr-1" />
-                  View Example
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-
-      {/* Quick Start Guides */}
-      <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/10">
-        <CardHeader>
-          <CardTitle className="text-green-400">Quick Start Guides</CardTitle>
-          <p className="text-white">
-            Step-by-step guides to help you get started and maintain momentum
-          </p>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {quickStartGuides.map((guide, index) => (
-              <div key={index} className="space-y-3">
-                <div>
-                  <h4 className="font-medium text-green-400">{guide.title}</h4>
-                  <p className="text-sm text-white">{guide.description}</p>
-                </div>
-                <ul className="space-y-2">
-                  {guide.tasks.map((task, taskIndex) => (
-                    <li key={taskIndex} className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-sm text-white">{task}</span>
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
+            >
+              <div className="space-y-1">
+                <h4 className="text-[16px] font-semibold text-white leading-tight">
+                  {example.title}
+                </h4>
+                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block">
+                  {example.level}
+                </span>
+              </div>
+              <p className="text-[14px] text-white/85 leading-relaxed">{example.description}</p>
+              <div className="space-y-1.5">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Key highlights
+                </span>
+                <ul className="space-y-1">
+                  {example.highlights.map((highlight, highlightIndex) => (
+                    <li
+                      key={highlightIndex}
+                      className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                      <span>{highlight}</span>
                     </li>
                   ))}
                 </ul>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+              >
+                <ExternalLink className="h-3 w-3 mr-1" />
+                View example
+              </Button>
+            </div>
+          ))}
+        </div>
+      </div>
 
-      {/* Resource Library */}
-      <Card className="border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-pink-500/10">
-        <CardHeader>
-          <CardTitle className="text-purple-400">Additional Resources</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <h4 className="font-medium text-white mb-3">Video Tutorials</h4>
-              <ul className="space-y-2">
-                <li className="flex items-center gap-2">
-                  <Video className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm text-white">Portfolio Structure Setup</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Video className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm text-white">Evidence Photography Techniques</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Video className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm text-white">Writing Effective Reflections</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Video className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm text-white">Assessment Preparation Tips</span>
-                </li>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Quick start guides
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Step-by-step guides to help you get started and maintain momentum
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {quickStartGuides.map((guide, index) => (
+            <div key={index} className="space-y-2">
+              <h4 className="text-[14px] font-semibold text-white">{guide.title}</h4>
+              <p className="text-[14px] text-white/70 leading-relaxed">{guide.description}</p>
+              <ul className="space-y-1.5">
+                {guide.tasks.map((task, taskIndex) => (
+                  <li
+                    key={taskIndex}
+                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  >
+                    <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                    <span>{task}</span>
+                  </li>
+                ))}
               </ul>
             </div>
-            <div>
-              <h4 className="font-medium text-white mb-3">Support Resources</h4>
-              <ul className="space-y-2">
-                <li className="flex items-center gap-2">
-                  <FileText className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm text-white">Portfolio FAQ Document</span>
+          ))}
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Additional resources
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <h4 className="text-[14px] font-semibold text-white">Video tutorials</h4>
+            <ul className="space-y-1.5">
+              {[
+                'Portfolio structure setup',
+                'Evidence photography techniques',
+                'Writing effective reflections',
+                'Assessment preparation tips',
+              ].map((item, i) => (
+                <li
+                  key={i}
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                  <span>{item}</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <FileText className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm text-white">Troubleshooting Common Issues</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <FileText className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm text-white">Assessment Criteria Explained</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <FileText className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm text-white">Industry Standards Reference</span>
-                </li>
-              </ul>
-            </div>
+              ))}
+            </ul>
           </div>
-        </CardContent>
-      </Card>
+          <div className="space-y-2">
+            <h4 className="text-[14px] font-semibold text-white">Support resources</h4>
+            <ul className="space-y-1.5">
+              {[
+                'Portfolio FAQ document',
+                'Troubleshooting common issues',
+                'Assessment criteria explained',
+                'Industry standards reference',
+              ].map((item, i) => (
+                <li
+                  key={i}
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

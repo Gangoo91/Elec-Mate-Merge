@@ -15,36 +15,36 @@ const categories: Category[] = [
     id: 'all',
     label: 'All Podcasts',
     icon: <Headphones className="h-4 w-4" />,
-    color: 'text-orange-400',
-    bgColor: 'bg-orange-500/20 border-orange-500/40',
+    color: 'text-white/85',
+    bgColor: 'bg-white/[0.02] border-white/[0.06]',
   },
   {
     id: 'trades-specific',
     label: 'Trades & Construction',
     icon: <Wrench className="h-4 w-4" />,
-    color: 'text-amber-400',
-    bgColor: 'bg-amber-500/20 border-amber-500/40',
+    color: 'text-white/85',
+    bgColor: 'bg-white/[0.02] border-white/[0.06]',
   },
   {
     id: 'general-mental-health',
     label: 'General Wellbeing',
     icon: <Brain className="h-4 w-4" />,
-    color: 'text-blue-400',
-    bgColor: 'bg-blue-500/20 border-blue-500/40',
+    color: 'text-white/85',
+    bgColor: 'bg-white/[0.02] border-white/[0.06]',
   },
   {
     id: 'personal-stories',
     label: 'Personal Stories',
     icon: <BookOpen className="h-4 w-4" />,
-    color: 'text-pink-400',
-    bgColor: 'bg-pink-500/20 border-pink-500/40',
+    color: 'text-white/85',
+    bgColor: 'bg-white/[0.02] border-white/[0.06]',
   },
   {
     id: 'sleep-anxiety',
     label: 'Sleep & Anxiety',
     icon: <Moon className="h-4 w-4" />,
-    color: 'text-indigo-400',
-    bgColor: 'bg-indigo-500/20 border-indigo-500/40',
+    color: 'text-white/85',
+    bgColor: 'bg-white/[0.02] border-white/[0.06]',
   },
 ];
 
@@ -93,13 +93,13 @@ const CategoryFilterBar = ({
     <div className="relative group">
       {/* Left Scroll Fade - Mobile indicator */}
       {showLeftArrow && (
-        <div className="sm:hidden absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+        <div className="sm:hidden absolute left-0 top-0 bottom-0 w-6 bg-white/[0.02] from-background z-10 pointer-events-none" />
       )}
 
       {/* Left Scroll Arrow - Desktop Only */}
       {showLeftArrow && (
         <div className="hidden sm:flex absolute left-0 top-0 bottom-0 z-10 items-center">
-          <div className="bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/90 to-transparent pr-4 pl-1">
+          <div className="bg-white/[0.02] from-[#0a0a0a] via-[#0a0a0a]/90 pr-4 pl-1">
             <Button
               variant="ghost"
               size="icon"
@@ -169,13 +169,13 @@ const CategoryFilterBar = ({
 
       {/* Right Scroll Fade - Mobile indicator */}
       {showRightArrow && (
-        <div className="sm:hidden absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+        <div className="sm:hidden absolute right-0 top-0 bottom-0 w-6 bg-white/[0.02] from-background z-10 pointer-events-none" />
       )}
 
       {/* Right Scroll Arrow - Desktop Only */}
       {showRightArrow && (
         <div className="hidden sm:flex absolute right-0 top-0 bottom-0 z-10 items-center">
-          <div className="bg-gradient-to-l from-[#0a0a0a] via-[#0a0a0a]/90 to-transparent pl-4 pr-1">
+          <div className="bg-white/[0.02] from-[#0a0a0a] via-[#0a0a0a]/90 pl-4 pr-1">
             <Button
               variant="ghost"
               size="icon"

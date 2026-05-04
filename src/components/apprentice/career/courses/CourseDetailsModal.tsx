@@ -1,16 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { openExternalUrl } from '@/utils/open-external-url';
 import {
   Table,
@@ -24,26 +13,12 @@ import { useToast } from '@/hooks/use-toast';
 import CourseEnquiryForm from './CourseEnquiryForm';
 import {
   X,
+  ExternalLink,
+  Phone,
+  Mail,
   MapPin,
   Clock,
   Users,
-  BookOpen,
-  TrendingUp,
-  PoundSterling,
-  Award,
-  Target,
-  CheckCircle,
-  Calendar,
-  Mail,
-  Star,
-  Briefcase,
-  GraduationCap,
-  ExternalLink,
-  Wifi,
-  Database,
-  Shield,
-  Phone,
-  Building,
 } from 'lucide-react';
 import { EnhancedCareerCourse } from './enhancedCoursesData';
 
@@ -67,12 +42,10 @@ interface CourseDetailsModalProps {
 
 const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
   const { toast } = useToast();
-  const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
+  const [contactInfo] = useState<ContactInfo | null>(null);
 
   const fetchContactDetails = async () => {
     if (!course.external_url) return;
-
-    // Open provider's website directly — contact details are on their site
     openExternalUrl(course.external_url);
     toast({
       title: 'Opening Provider Website',
@@ -101,40 +74,10 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
     }
   };
 
-  const getDemandColor = (demand: string) => {
-    switch (demand) {
-      case 'High':
-        return 'bg-green-500/20 text-green-400 border-green-500/30';
-      case 'Medium':
-        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
-      default:
-        return 'bg-white/10 text-white border-white/20';
-    }
-  };
-
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case 'Essential Qualifications':
-        return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-      case 'Emerging Technologies':
-        return 'bg-green-500/20 text-green-400 border-green-500/30';
-      case 'Safety & Compliance':
-        return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
-      case 'Specialised Skills':
-        return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
-      case 'Business & Management':
-        return 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30';
-      default:
-        return 'bg-white/10 text-white border-white/20';
-    }
-  };
-
-  // Enhanced data for live courses with fallbacks
-  const hasValidData = (data: any[] | undefined) => data && data.length > 0;
+  const hasValidData = (data: unknown[] | undefined) => Boolean(data && data.length > 0);
   const getDisplayValue = (value: string | undefined, fallback: string) => value || fallback;
 
-  // Generate smart content for missing data
-  const generateCourseOutline = (title: string) => [
+  const generateCourseOutline = (_title: string) => [
     'Course fundamentals and overview',
     'Core principles and regulations',
     'Practical application techniques',
@@ -142,7 +85,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
     'Industry best practices',
   ];
 
-  const generateCareerOutcomes = (title: string) => [
+  const generateCareerOutcomes = (_title: string) => [
     'Enhanced professional qualifications',
     'Improved career advancement opportunities',
     'Access to specialised project work',
@@ -155,502 +98,319 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
     'Safety awareness certification',
   ];
 
-  // Use fallback content for live courses with missing data
   const displayCourseOutline = hasValidData(course.courseOutline)
-    ? course.courseOutline
+    ? course.courseOutline!
     : generateCourseOutline(course.title);
 
   const displayCareerOutcomes = hasValidData(course.careerOutcomes)
-    ? course.careerOutcomes
+    ? course.careerOutcomes!
     : generateCareerOutcomes(course.title);
 
   const displayPrerequisites = hasValidData(course.prerequisites)
-    ? course.prerequisites
+    ? course.prerequisites!
     : generatePrerequisites();
 
   const displayAccreditations = hasValidData(course.accreditation)
-    ? course.accreditation
+    ? course.accreditation!
     : ['Industry recognised certification'];
 
   const displayLocations = hasValidData(course.locations)
-    ? course.locations
+    ? course.locations!
     : ['Multiple UK locations', 'Online delivery available'];
 
   const displayNextDates = hasValidData(course.nextDates)
-    ? course.nextDates
+    ? course.nextDates!
     : ['Contact provider for available dates'];
 
   const isLiveCourse = course.isLive || course.source;
 
+  const Pill = ({ children }: { children: React.ReactNode }) => (
+    <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+      {children}
+    </span>
+  );
+
+  const Section = ({ eyebrow, children }: { eyebrow: string; children: React.ReactNode }) => (
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        {eyebrow}
+      </span>
+      <div>{children}</div>
+    </div>
+  );
+
   return (
     <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-gradient-to-br from-elec-gray to-elec-card border border-elec-yellow/20 rounded-xl w-full max-w-5xl max-h-[90vh] overflow-y-auto">
-        <div className="p-6 space-y-6">
+      <div className="rounded-xl border border-white/[0.06] bg-elec-gray w-full max-w-5xl max-h-[90vh] overflow-y-auto">
+        <div className="p-4 sm:p-6 space-y-5">
           {/* Header */}
-          <div className="flex justify-between items-start">
-            <div className="flex-1">
-              <div className="flex flex-wrap items-center gap-3 mb-3">
-                <Badge className={`${getCategoryColor(course.category)} text-xs border`}>
-                  {course.category}
-                </Badge>
+          <div className="flex justify-between items-start gap-4">
+            <div className="flex-1 space-y-3">
+              <div className="flex flex-wrap items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span>{course.category}</span>
                 {isLiveCourse && (
-                  <Badge
-                    variant="outline"
-                    className="text-xs bg-blue-500/10 text-blue-400 border-blue-500/30 flex items-center gap-1"
-                  >
-                    <Wifi className="h-3 w-3" />
-                    Live Data
-                  </Badge>
+                  <>
+                    <span className="text-white/25">·</span>
+                    <span>Live data</span>
+                  </>
                 )}
-                <div className="flex items-center gap-1 bg-amber-500/20 text-amber-400 px-2.5 py-1 rounded-lg text-xs border border-amber-500/30">
-                  <Star className="h-3 w-3 fill-amber-400" />
-                  <span className="font-medium">{course.rating}</span>
-                </div>
+                <span className="text-white/25">·</span>
+                <span>Rated {course.rating}</span>
               </div>
-              <h3 className="text-2xl font-semibold text-white mb-2">{course.title}</h3>
-              <p className="text-elec-yellow text-lg mb-3">
+              <h3 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
+                {course.title}
+              </h3>
+              <p className="text-[14px] text-white/70">
                 {getDisplayValue(course.provider, 'Provider TBC')}
               </p>
 
-              <div className="flex flex-wrap items-center gap-2 mb-4">
+              <div className="flex flex-wrap items-center gap-2">
                 {course.external_url && (
                   <Button
                     variant="outline"
                     size="sm"
-                    className="h-10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation active:scale-95 transition-all"
+                    className="h-10 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
                     onClick={handleOpenCourseUrl}
                   >
                     <ExternalLink className="h-3.5 w-3.5 mr-1.5" />
-                    View Provider Site
+                    View provider site
                   </Button>
                 )}
 
                 <Button
                   variant="outline"
                   size="sm"
-                  className="h-10 border-blue-500/30 text-blue-400 hover:bg-blue-500/10 touch-manipulation active:scale-95 transition-all"
+                  className="h-10 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
                   onClick={fetchContactDetails}
                   disabled={!course.external_url}
                 >
                   <Phone className="h-3.5 w-3.5 mr-1.5" />
-                  {'Visit Provider Website'}
+                  Visit provider website
                 </Button>
               </div>
 
-              <p className="text-white text-justify">{course.description}</p>
+              <p className="text-[14px] text-white/85 leading-relaxed">{course.description}</p>
               {isLiveCourse && course.source && (
-                <p className="text-xs text-white mt-2 flex items-center gap-1.5">
-                  <Database className="h-3 w-3" />
-                  Source: {course.source}
-                </p>
+                <p className="text-[11px] text-white/55 font-mono">Source: {course.source}</p>
               )}
             </div>
             <Button
               variant="ghost"
               size="sm"
               onClick={onClose}
-              className="text-white hover:text-white hover:bg-white/10"
+              className="text-white hover:text-white hover:bg-white/[0.05]"
             >
               <X className="h-5 w-5" />
             </Button>
           </div>
 
           {/* Key Information Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Card className="bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border-elec-yellow/20">
-              <CardContent className="p-4 text-center">
-                <div className="p-2 rounded-lg bg-elec-yellow/20 w-fit mx-auto mb-2">
-                  <Clock className="h-5 w-5 text-elec-yellow" />
-                </div>
-                <div className="font-medium text-white">{course.duration}</div>
-                <div className="text-xs text-white">Duration</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-gradient-to-br from-blue-500/10 to-blue-500/5 border-blue-500/20">
-              <CardContent className="p-4 text-center">
-                <div className="p-2 rounded-lg bg-blue-500/20 w-fit mx-auto mb-2">
-                  <Users className="h-5 w-5 text-blue-400" />
-                </div>
-                <div className="font-medium text-white">{course.level}</div>
-                <div className="text-xs text-white">Level</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-gradient-to-br from-green-500/10 to-green-500/5 border-green-500/20">
-              <CardContent className="p-4 text-center">
-                <div className="p-2 rounded-lg bg-green-500/20 w-fit mx-auto mb-2">
-                  <PoundSterling className="h-5 w-5 text-green-400" />
-                </div>
-                <div className="font-medium text-white text-sm">{course.price}</div>
-                <div className="text-xs text-white">Price Range</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-gradient-to-br from-purple-500/10 to-purple-500/5 border-purple-500/20">
-              <CardContent className="p-4 text-center">
-                <div className="p-2 rounded-lg bg-purple-500/20 w-fit mx-auto mb-2">
-                  <TrendingUp className="h-5 w-5 text-purple-400" />
-                </div>
-                <div className="font-medium text-white">{course.futureProofing}/5</div>
-                <div className="text-xs text-white">Future-Proof</div>
-              </CardContent>
-            </Card>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {[
+              { label: 'Duration', value: course.duration },
+              { label: 'Level', value: course.level },
+              { label: 'Price', value: course.price },
+              { label: 'Future-proof', value: `${course.futureProofing}/5` },
+            ].map((item) => (
+              <div
+                key={item.label}
+                className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
+              >
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  {item.label}
+                </span>
+                <div className="text-[14px] text-white/85">{item.value}</div>
+              </div>
+            ))}
           </div>
 
           {/* Industry Information */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-green-500/20 overflow-hidden relative">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-green-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-              <CardHeader className="pb-3 relative">
-                <CardTitle className="text-lg flex items-center gap-3 text-white">
-                  <div className="p-2 rounded-lg bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30">
-                    <TrendingUp className="h-4 w-4 text-green-400" />
-                  </div>
-                  Industry Outlook
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3 relative">
-                <div className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10">
-                  <span className="text-sm text-white">Industry Demand:</span>
-                  <Badge className={`${getDemandColor(course.industryDemand)} text-xs border`}>
-                    {course.industryDemand}
-                  </Badge>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <Section eyebrow="Industry outlook">
+              <div className="space-y-2">
+                <div className="flex items-baseline justify-between text-[14px]">
+                  <span className="text-white/70">Industry demand</span>
+                  <span className="text-white/85">{course.industryDemand}</span>
                 </div>
-                <div className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10">
-                  <span className="text-sm text-white">Salary Impact:</span>
-                  <span className="text-sm text-green-400 font-medium">{course.salaryImpact}</span>
+                <div className="flex items-baseline justify-between text-[14px]">
+                  <span className="text-white/70">Salary impact</span>
+                  <span className="text-white/85">{course.salaryImpact}</span>
                 </div>
                 {course.employerSupport && (
-                  <div className="flex items-center gap-2 text-sm text-emerald-400 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-                    <Briefcase className="h-4 w-4" />
-                    <span>Employer Support Available</span>
-                  </div>
+                  <div className="text-[14px] text-white/85">Employer support available</div>
                 )}
-              </CardContent>
-            </Card>
+              </div>
+            </Section>
 
-            <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-amber-500/20 overflow-hidden relative">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-              <CardHeader className="pb-3 relative">
-                <CardTitle className="text-lg flex items-center gap-3 text-white">
-                  <div className="p-2 rounded-lg bg-gradient-to-br from-amber-500/20 to-amber-500/5 border border-amber-500/30">
-                    <Award className="h-4 w-4 text-amber-400" />
-                  </div>
-                  Accreditations
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="relative">
-                <div className="flex flex-wrap gap-2">
-                  {displayAccreditations.map((acc, idx) => (
-                    <Badge
-                      key={idx}
-                      variant="outline"
-                      className="text-xs bg-amber-500/10 text-amber-400 border-amber-500/30"
-                    >
-                      {acc}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+            <Section eyebrow="Accreditations">
+              <div className="flex flex-wrap gap-1.5">
+                {displayAccreditations.map((acc, idx) => (
+                  <Pill key={idx}>{acc}</Pill>
+                ))}
+              </div>
+            </Section>
           </div>
 
           {/* Course Content */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-blue-500/20 overflow-hidden relative">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-              <CardHeader className="pb-3 relative">
-                <CardTitle className="text-lg flex items-center gap-3 text-white">
-                  <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30">
-                    <BookOpen className="h-4 w-4 text-blue-400" />
-                  </div>
-                  Course Outline
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="relative">
-                <div className="space-y-2">
-                  {displayCourseOutline.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-start gap-2 text-sm p-2 rounded-lg bg-white/5"
-                    >
-                      <CheckCircle className="h-3.5 w-3.5 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-white">{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+            <Section eyebrow="Course outline">
+              <ul className="space-y-2">
+                {displayCourseOutline.map((item, idx) => (
+                  <li
+                    key={idx}
+                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  >
+                    <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </Section>
 
-            <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-purple-500/20 overflow-hidden relative">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-              <CardHeader className="pb-3 relative">
-                <CardTitle className="text-lg flex items-center gap-3 text-white">
-                  <div className="p-2 rounded-lg bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/30">
-                    <Target className="h-4 w-4 text-purple-400" />
-                  </div>
-                  Career Outcomes
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="relative">
-                <div className="space-y-2">
-                  {displayCareerOutcomes.map((outcome, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-start gap-2 text-sm p-2 rounded-lg bg-white/5"
-                    >
-                      <CheckCircle className="h-3.5 w-3.5 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-white">{outcome}</span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+            <Section eyebrow="Career outcomes">
+              <ul className="space-y-2">
+                {displayCareerOutcomes.map((outcome, idx) => (
+                  <li
+                    key={idx}
+                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  >
+                    <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                    <span>{outcome}</span>
+                  </li>
+                ))}
+              </ul>
+            </Section>
           </div>
 
           {/* Assessment & Prerequisites */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-cyan-500/20 overflow-hidden relative">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-              <CardHeader className="pb-3 relative">
-                <CardTitle className="text-lg flex items-center gap-3 text-white">
-                  <div className="p-2 rounded-lg bg-gradient-to-br from-cyan-500/20 to-cyan-500/5 border border-cyan-500/30">
-                    <GraduationCap className="h-4 w-4 text-cyan-400" />
-                  </div>
-                  Assessment
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3 relative">
-                <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-                  <span className="text-xs text-white">Method</span>
-                  <p className="text-sm text-white">{course.assessmentMethod}</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <Section eyebrow="Assessment">
+              <div className="space-y-2 text-[14px] text-white/85 leading-relaxed">
+                <div>
+                  <span className="text-white/55">Method: </span>
+                  {course.assessmentMethod}
                 </div>
-                <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-                  <span className="text-xs text-white">Continuous Assessment</span>
-                  <p className="text-sm text-white">
-                    {course.continuousAssessment ? 'Yes' : 'Final exam only'}
-                  </p>
+                <div>
+                  <span className="text-white/55">Continuous: </span>
+                  {course.continuousAssessment ? 'Yes' : 'Final exam only'}
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </Section>
 
-            <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-orange-500/20 overflow-hidden relative">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-              <CardHeader className="pb-3 relative">
-                <CardTitle className="text-lg flex items-center gap-3 text-white">
-                  <div className="p-2 rounded-lg bg-gradient-to-br from-orange-500/20 to-orange-500/5 border border-orange-500/30">
-                    <Shield className="h-4 w-4 text-orange-400" />
-                  </div>
-                  Prerequisites
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="relative">
-                <div className="space-y-2">
-                  {displayPrerequisites.map((prereq, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center gap-2 text-sm p-2 rounded-lg bg-white/5"
-                    >
-                      <div className="w-1.5 h-1.5 rounded-full bg-orange-400 flex-shrink-0" />
-                      <span className="text-white">{prereq}</span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+            <Section eyebrow="Prerequisites">
+              <ul className="space-y-2">
+                {displayPrerequisites.map((prereq, idx) => (
+                  <li
+                    key={idx}
+                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  >
+                    <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                    <span>{prereq}</span>
+                  </li>
+                ))}
+              </ul>
+            </Section>
           </div>
 
           {/* Locations */}
-          <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
-            <div className="absolute top-0 right-0 w-48 h-48 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-            <CardHeader className="pb-3 relative">
-              <CardTitle className="text-lg flex items-center gap-3 text-white">
-                <div className="p-2 rounded-lg bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
-                  <MapPin className="h-4 w-4 text-elec-yellow" />
-                </div>
-                Available Locations
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="relative">
-              <div className="flex flex-wrap gap-2">
-                {displayLocations.map((location, idx) => (
-                  <span
-                    key={idx}
-                    className="text-sm bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg flex items-center gap-1.5 text-white"
-                  >
-                    <MapPin className="h-3.5 w-3.5 text-elec-yellow" />
-                    {location}
-                  </span>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+          <Section eyebrow="Available locations">
+            <div className="flex flex-wrap gap-1.5">
+              {displayLocations.map((location, idx) => (
+                <Pill key={idx}>{location}</Pill>
+              ))}
+            </div>
+          </Section>
 
           {/* Course Dates */}
-          <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
-            <div className="absolute top-0 right-0 w-48 h-48 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-            <CardHeader className="pb-3 relative">
-              <CardTitle className="text-lg flex items-center gap-3 text-white">
-                <div className="p-2 rounded-lg bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
-                  <Calendar className="h-4 w-4 text-elec-yellow" />
-                </div>
-                Upcoming Course Dates
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="relative">
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow className="border-white/10">
-                      <TableHead className="text-white">Start Date</TableHead>
-                      <TableHead className="text-white">Location</TableHead>
-                      <TableHead className="text-white">Format</TableHead>
-                      <TableHead className="text-white">Availability</TableHead>
-                      <TableHead className="text-right text-white">Action</TableHead>
+          <Section eyebrow="Upcoming course dates">
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow className="border-white/10">
+                    <TableHead className="text-white/70">Start date</TableHead>
+                    <TableHead className="text-white/70">Location</TableHead>
+                    <TableHead className="text-white/70">Format</TableHead>
+                    <TableHead className="text-white/70">Availability</TableHead>
+                    <TableHead className="text-right text-white/70">Action</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {displayNextDates.map((date, idx) => (
+                    <TableRow key={idx} className="border-white/10">
+                      <TableCell className="text-white/85">{date}</TableCell>
+                      <TableCell className="text-white/85">
+                        {displayLocations[idx % displayLocations.length]}
+                      </TableCell>
+                      <TableCell className="text-white/85">
+                        {getDisplayValue(course.format?.split(',')[0], 'To be confirmed')}
+                      </TableCell>
+                      <TableCell className="text-white/85">
+                        {idx % 3 === 0 ? 'Limited spaces' : 'Available'}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <Button
+                          size="sm"
+                          className="h-9 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
+                          onClick={handleOpenCourseUrl}
+                          disabled={!course.external_url}
+                        >
+                          <ExternalLink className="h-3 w-3 mr-1" />
+                          {course.external_url ? 'Book now' : 'Contact provider'}
+                        </Button>
+                      </TableCell>
                     </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {displayNextDates.map((date, idx) => (
-                      <TableRow key={idx} className="border-white/10">
-                        <TableCell className="text-white">{date}</TableCell>
-                        <TableCell className="text-white">
-                          {displayLocations[idx % displayLocations.length]}
-                        </TableCell>
-                        <TableCell className="text-white">
-                          {getDisplayValue(course.format?.split(',')[0], 'To be confirmed')}
-                        </TableCell>
-                        <TableCell>
-                          <Badge
-                            className={`text-xs ${
-                              idx % 3 === 0
-                                ? 'bg-red-500/20 text-red-400 border-red-500/30'
-                                : 'bg-green-500/20 text-green-400 border-green-500/30'
-                            }`}
-                          >
-                            {idx % 3 === 0 ? 'Limited spaces' : 'Available'}
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="h-9 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation active:scale-95 transition-all"
-                            onClick={handleOpenCourseUrl}
-                            disabled={!course.external_url}
-                          >
-                            <ExternalLink className="h-3 w-3 mr-1" />
-                            {course.external_url ? 'Book Now' : 'Contact Provider'}
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-            </CardContent>
-          </Card>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </Section>
 
-          {/* Contact Information Card */}
+          {/* Contact Information */}
           {contactInfo && (
-            <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-blue-500/20 overflow-hidden relative">
-              <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-              <CardHeader className="relative">
-                <CardTitle className="text-white flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30">
-                    <Building className="h-5 w-5 text-blue-400" />
-                  </div>
-                  Provider Contact Details
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3 relative">
+            <Section eyebrow="Provider contact details">
+              <div className="space-y-3 text-[14px] text-white/85 leading-relaxed">
                 {contactInfo.phone && (
-                  <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
-                    <div className="p-2 rounded-lg bg-green-500/20">
-                      <Phone className="h-4 w-4 text-green-400" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-white">Phone</p>
-                      <a
-                        href={`tel:${contactInfo.phone}`}
-                        className="text-white hover:text-green-400 transition-colors"
-                      >
-                        {contactInfo.phone}
-                      </a>
-                    </div>
+                  <div className="flex items-center gap-2">
+                    <Phone className="h-4 w-4 text-white/55" />
+                    <a href={`tel:${contactInfo.phone}`} className="hover:text-elec-yellow">
+                      {contactInfo.phone}
+                    </a>
                   </div>
                 )}
-
                 {contactInfo.email && (
-                  <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
-                    <div className="p-2 rounded-lg bg-blue-500/20">
-                      <Mail className="h-4 w-4 text-blue-400" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-white">Email</p>
-                      <a
-                        href={`mailto:${contactInfo.email}`}
-                        className="text-white hover:text-blue-400 transition-colors"
-                      >
-                        {contactInfo.email}
-                      </a>
-                    </div>
+                  <div className="flex items-center gap-2">
+                    <Mail className="h-4 w-4 text-white/55" />
+                    <a href={`mailto:${contactInfo.email}`} className="hover:text-elec-yellow">
+                      {contactInfo.email}
+                    </a>
                   </div>
                 )}
-
                 {contactInfo.address && (
-                  <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
-                    <div className="p-2 rounded-lg bg-orange-500/20">
-                      <MapPin className="h-4 w-4 text-orange-400" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-white">Address</p>
-                      <p className="text-white">{contactInfo.address}</p>
-                    </div>
+                  <div className="flex items-center gap-2">
+                    <MapPin className="h-4 w-4 text-white/55" />
+                    <span>{contactInfo.address}</span>
                   </div>
                 )}
-
                 {contactInfo.contactPerson && (
-                  <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
-                    <div className="p-2 rounded-lg bg-purple-500/20">
-                      <Users className="h-4 w-4 text-purple-400" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-white">Contact Person</p>
-                      <p className="text-white">{contactInfo.contactPerson}</p>
-                    </div>
+                  <div className="flex items-center gap-2">
+                    <Users className="h-4 w-4 text-white/55" />
+                    <span>{contactInfo.contactPerson}</span>
                   </div>
                 )}
-
                 {contactInfo.officeHours && (
-                  <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
-                    <div className="p-2 rounded-lg bg-yellow-500/20">
-                      <Clock className="h-4 w-4 text-yellow-400" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-white">Office Hours</p>
-                      <p className="text-white">{contactInfo.officeHours}</p>
-                    </div>
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-4 w-4 text-white/55" />
+                    <span>{contactInfo.officeHours}</span>
                   </div>
                 )}
-              </CardContent>
-            </Card>
+              </div>
+            </Section>
           )}
 
-          {/* Contact Form - Hidden */}
-          <Card className="border-elec-yellow/20 bg-white/5 hidden">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center gap-2 text-white">
-                <Mail className="h-4 w-4 text-elec-yellow" />
-                Course Enquiry
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <CourseEnquiryForm
-                course={course}
-                onSuccess={() => {
-                  // Modal could be closed here if desired
-                }}
-              />
-            </CardContent>
-          </Card>
+          {/* Hidden enquiry form */}
+          <div className="hidden">
+            <CourseEnquiryForm course={course} onSuccess={() => {}} />
+          </div>
         </div>
       </div>
     </div>

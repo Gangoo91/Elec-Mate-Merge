@@ -72,6 +72,11 @@ const QuoteBuilderCreate = () => {
   const haptic = useHaptic();
   const { refreshQuotes } = useQuoteStorage();
   const [costContext, setCostContext] = useState<Record<string, unknown> | null>(null);
+  const [selectedTier, setSelectedTier] = useState<{
+    key: string;
+    amount: number;
+    marginPercent: number;
+  } | null>(null);
   const [certificateContext, setCertificateContext] = useState<CertificateContext | null>(null);
   const [siteVisitContext, setSiteVisitContext] = useState<SiteVisitContext | null>(null);
   const [materialsContext, setMaterialsContext] = useState<MaterialsContext | null>(null);
@@ -105,6 +110,7 @@ const QuoteBuilderCreate = () => {
       const parsed = storageGetJSONSync<any>(costSessionId, null);
       if (parsed) {
         setCostContext(parsed.costData);
+        if (parsed.selectedTier) setSelectedTier(parsed.selectedTier);
         storageRemoveSync(costSessionId);
       }
     }
@@ -265,8 +271,23 @@ const QuoteBuilderCreate = () => {
             animate={{ opacity: 1, y: 0 }}
             className="mx-4 mt-4 px-4 py-3 rounded-xl bg-emerald-500/[0.06] border border-emerald-500/15"
           >
-            <p className="text-[13px] font-semibold text-emerald-400">Cost Data Imported</p>
-            <p className="text-[12px] text-white mt-0.5">{costContext.materials?.length || 0} materials pre-filled</p>
+            <p className="text-[13px] font-semibold text-emerald-400">
+              Cost Data Imported
+              {selectedTier && (
+                <span className="ml-2 text-[11px] font-medium text-emerald-400/80 uppercase tracking-[0.14em]">
+                  · {selectedTier.key} tier · {selectedTier.marginPercent.toFixed(1)}% margin
+                </span>
+              )}
+            </p>
+            <p className="text-[12px] text-white mt-0.5">
+              {Array.isArray(costContext.materials) ? costContext.materials.length : 0} materials pre-filled
+              {selectedTier && (
+                <span className="text-white/55">
+                  {' '}
+                  · £{selectedTier.amount.toLocaleString('en-GB')}
+                </span>
+              )}
+            </p>
           </motion.div>
         )}
         {certificateContext && (

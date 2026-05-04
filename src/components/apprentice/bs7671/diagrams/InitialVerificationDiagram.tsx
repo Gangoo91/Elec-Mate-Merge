@@ -1,6 +1,3 @@
-import { CheckCircle, AlertTriangle, FileText, Clock } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-
 interface InitialVerificationDiagramProps {
   stepType: string;
   installationType?: string;
@@ -10,181 +7,209 @@ const InitialVerificationDiagram = ({
   stepType,
   installationType,
 }: InitialVerificationDiagramProps) => {
-  const getVerificationSequence = () => {
-    return [
-      {
-        phase: 'Planning & Documentation Review',
-        items: [
-          'Review installation drawings and specifications',
-          'Check compliance with BS 7671 requirements',
-          'Verify design calculations and cable schedules',
-          'Confirm protective device coordination',
-        ],
-        icon: '📋',
-        color: 'blue',
-      },
-      {
-        phase: 'Visual Inspection - External',
-        items: [
-          'Service head and meter position inspection',
-          'Main earthing terminal arrangements',
-          'External bonding conductor verification',
-          'Cable entry and IP rating checks',
-        ],
-        icon: '🏠',
-        color: 'green',
-      },
-      {
-        phase: 'Visual Inspection - Internal',
-        items: [
-          'Consumer unit/distribution board inspection',
-          'Circuit protective devices verification',
-          'Cable installation methods and supports',
-          'Socket outlets and accessory mounting',
-        ],
-        icon: '⚡',
-        color: 'amber',
-      },
-      {
-        phase: 'Testing Preparation',
-        items: [
-          'Isolation and proving dead procedures',
-          'Test equipment calibration verification',
-          'Circuit identification and labelling',
-          'Load disconnection for testing',
-        ],
-        icon: '🔧',
-        color: 'purple',
-      },
-    ];
-  };
+  void stepType;
 
-  const verificationSequence = getVerificationSequence();
+  const verificationSequence = [
+    {
+      phase: 'Planning & documentation review',
+      items: [
+        'Review installation drawings and specifications',
+        'Check compliance with BS 7671 requirements',
+        'Verify design calculations and cable schedules',
+        'Confirm protective device coordination',
+      ],
+    },
+    {
+      phase: 'Visual inspection — external',
+      items: [
+        'Service head and meter position inspection',
+        'Main earthing terminal arrangements',
+        'External bonding conductor verification',
+        'Cable entry and IP rating checks',
+      ],
+    },
+    {
+      phase: 'Visual inspection — internal',
+      items: [
+        'Consumer unit / distribution board inspection',
+        'Circuit protective devices verification',
+        'Cable installation methods and supports',
+        'Socket outlets and accessory mounting',
+      ],
+    },
+    {
+      phase: 'Testing preparation',
+      items: [
+        'Isolation and proving dead procedures',
+        'Test equipment calibration verification',
+        'Circuit identification and labelling',
+        'Load disconnection for testing',
+      ],
+    },
+  ];
 
   return (
-    <div className="space-y-6">
-      <div className="text-sm text-indigo-200 mb-4">
-        Initial Verification Sequence for {installationType || 'electrical'} installations
-      </div>
+    <div className="space-y-4">
+      <p className="text-[14px] text-white/85 leading-relaxed">
+        Initial verification sequence for {installationType || 'electrical'} installations.
+      </p>
 
-      {/* BS7671 Compliance Notice */}
-      <div className="bg-blue-600/20 p-4 rounded border border-blue-500/30">
-        <div className="flex items-center gap-2 mb-3">
-          <FileText className="h-5 w-5 text-blue-400" />
-          <h4 className="font-medium text-blue-200">BS 7671 Initial Verification Requirements</h4>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-          <div className="space-y-1">
-            <span className="text-blue-300 font-medium">Regulation 610.1:</span>
-            <p className="text-blue-100">
-              Every installation shall be inspected and tested during erection and upon completion
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          BS 7671 initial verification requirements
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="space-y-0.5">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Regulation 610.1
+            </span>
+            <p className="text-[14px] text-white/85 leading-relaxed">
+              Every installation shall be inspected and tested during erection and upon completion.
             </p>
           </div>
-          <div className="space-y-1">
-            <span className="text-blue-300 font-medium">Regulation 643.1:</span>
-            <p className="text-blue-100">
-              Testing shall follow the sequence specified to avoid damage
+          <div className="space-y-0.5">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Regulation 643.1
+            </span>
+            <p className="text-[14px] text-white/85 leading-relaxed">
+              Testing shall follow the sequence specified to avoid damage.
             </p>
           </div>
         </div>
       </div>
 
-      {/* Verification Sequence */}
-      <div className="space-y-4">
+      <div className="space-y-3">
         {verificationSequence.map((phase, index) => (
           <div
             key={index}
-            className={`bg-${phase.color}-600/20 p-4 rounded border border-${phase.color}-500/30`}
+            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
           >
-            <div className="flex items-center gap-3 mb-3">
-              <span className="text-lg">{phase.icon}</span>
-              <div className="flex items-center gap-2">
-                <span
-                  className={`bg-${phase.color}-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold`}
-                >
-                  {index + 1}
-                </span>
-                <h4 className={`font-medium text-${phase.color}-200`}>{phase.phase}</h4>
-              </div>
+            <div className="flex items-baseline gap-3">
+              <span className="text-[12px] font-mono text-white/55 flex-shrink-0">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                {phase.phase}
+              </span>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
               {phase.items.map((item, itemIndex) => (
-                <div
+                <li
                   key={itemIndex}
-                  className={`flex items-start gap-2 text-xs text-${phase.color}-100`}
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
                 >
-                  <CheckCircle className={`h-3 w-3 text-${phase.color}-400 mt-0.5 flex-shrink-0`} />
+                  <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         ))}
       </div>
 
-      {/* Critical Safety Reminder */}
-      <div className="bg-red-500/10 p-4 rounded border border-red-500/30">
-        <h4 className="font-medium text-red-300 mb-2 flex items-center gap-2">
-          <AlertTriangle className="h-4 w-4" />
-          Initial Verification Critical Points
-        </h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
-          <div className="space-y-1">
-            <h5 className="font-medium text-red-200">Before Energising:</h5>
-            <ul className="text-red-100 space-y-1">
-              <li>• Complete all visual inspections</li>
-              <li>• Verify all connections are secure</li>
-              <li>• Confirm protective device ratings</li>
-              <li>• Check polarity at all points</li>
+      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+          Initial verification critical points
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-1.5">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Before energising
+            </span>
+            <ul className="space-y-1.5">
+              {[
+                'Complete all visual inspections',
+                'Verify all connections are secure',
+                'Confirm protective device ratings',
+                'Check polarity at all points',
+              ].map((item, i) => (
+                <li
+                  key={i}
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
             </ul>
           </div>
-          <div className="space-y-1">
-            <h5 className="font-medium text-red-200">Documentation Required:</h5>
-            <ul className="text-red-100 space-y-1">
-              <li>• Electrical Installation Certificate</li>
-              <li>• Schedule of Inspections</li>
-              <li>• Schedule of Test Results</li>
-              <li>• Circuit charts and drawings</li>
+          <div className="space-y-1.5">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Documentation required
+            </span>
+            <ul className="space-y-1.5">
+              {[
+                'Electrical Installation Certificate',
+                'Schedule of Inspections',
+                'Schedule of Test Results',
+                'Circuit charts and drawings',
+              ].map((item, i) => (
+                <li
+                  key={i}
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
       </div>
 
-      {/* Installation Type Specific Requirements */}
       {installationType && (
-        <div className="bg-purple-600/20 p-4 rounded border border-purple-500/30">
-          <h4 className="font-medium text-purple-200 mb-2">
-            {installationType.charAt(0).toUpperCase() + installationType.slice(1)} Installation
-            Specific Requirements
-          </h4>
-          <div className="text-xs text-purple-100">
-            {installationType === 'domestic' && (
-              <div className="space-y-1">
-                <p>• Verify main protective bonding to water, gas, and other services</p>
-                <p>
-                  • Check RCD protection for socket outlets ≤20A and circuits in special locations
-                </p>
-                <p>• Confirm consumer unit location and accessibility</p>
-                <p>• Verify earthing arrangements and TN-C-S supply considerations</p>
-              </div>
-            )}
-            {installationType === 'commercial' && (
-              <div className="space-y-1">
-                <p>• Verify fire alarm and emergency lighting integration</p>
-                <p>• Check compliance with building regulations and fire safety</p>
-                <p>• Confirm isolation arrangements for maintenance</p>
-                <p>• Verify discrimination and selectivity of protective devices</p>
-              </div>
-            )}
-            {installationType === 'industrial' && (
-              <div className="space-y-1">
-                <p>• Check motor protection and control circuit arrangements</p>
-                <p>• Verify hazardous area classifications and equipment</p>
-                <p>• Confirm earthing and equipotential bonding systems</p>
-                <p>• Check compliance with relevant industry standards</p>
-              </div>
-            )}
-          </div>
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            {installationType.charAt(0).toUpperCase() + installationType.slice(1)} installation —
+            specific requirements
+          </span>
+          <ul className="space-y-1.5">
+            {installationType === 'domestic' &&
+              [
+                'Verify main protective bonding to water, gas, and other services',
+                'Check RCD protection for socket outlets ≤20A and circuits in special locations',
+                'Confirm consumer unit location and accessibility',
+                'Verify earthing arrangements and TN-C-S supply considerations',
+              ].map((item, i) => (
+                <li
+                  key={i}
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            {installationType === 'commercial' &&
+              [
+                'Verify fire alarm and emergency lighting integration',
+                'Check compliance with building regulations and fire safety',
+                'Confirm isolation arrangements for maintenance',
+                'Verify discrimination and selectivity of protective devices',
+              ].map((item, i) => (
+                <li
+                  key={i}
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            {installationType === 'industrial' &&
+              [
+                'Check motor protection and control circuit arrangements',
+                'Verify hazardous area classifications and equipment',
+                'Confirm earthing and equipotential bonding systems',
+                'Check compliance with relevant industry standards',
+              ].map((item, i) => (
+                <li
+                  key={i}
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
+          </ul>
         </div>
       )}
     </div>

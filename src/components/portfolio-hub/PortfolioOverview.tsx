@@ -105,7 +105,7 @@ export function PortfolioOverview({
       </div>
 
       {/* Progress Rings */}
-      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/5 to-transparent overflow-hidden">
+      <Card className="border-elec-yellow/20 bg-white/[0.02] overflow-hidden">
         <CardContent className="pt-6 pb-4">
           <ProgressRingsGroup
             portfolio={portfolioProgress}
@@ -148,23 +148,22 @@ export function PortfolioOverview({
         onClick={() => {
           window.location.href = '/apprentice/epa-simulator';
         }}
-        className={cn(
-          'w-full flex items-center gap-4 p-4 rounded-xl',
-          'bg-gradient-to-r from-purple-500/10 to-purple-500/5',
-          'border border-purple-500/25',
+        className={cn('w-full flex items-center gap-4 p-4 rounded-xl',
+          'bg-white/[0.02]',
+          'border border-white/[0.06]',
           'text-left active:scale-[0.98] transition-transform touch-manipulation'
         )}
       >
-        <div className="h-12 w-12 rounded-xl bg-purple-500/20 flex items-center justify-center shrink-0">
-          <Award className="h-6 w-6 text-purple-400" />
+        <div className="h-12 w-12 rounded-xl bg-white/[0.02] flex items-center justify-center shrink-0">
+          <Award className="h-6 w-6 text-white/85" />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-semibold text-purple-300">EPA Readiness</p>
+          <p className="text-sm font-semibold text-white/85">EPA Readiness</p>
           <p className="text-xs text-white mt-0.5">
             Mock discussions, knowledge tests &amp; readiness score
           </p>
         </div>
-        <ChevronRight className="h-5 w-5 text-purple-400 shrink-0" />
+        <ChevronRight className="h-5 w-5 text-white/85 shrink-0" />
       </button>
 
       {/* Smart Next Action */}
@@ -187,21 +186,21 @@ export function PortfolioOverview({
           label="Capture Evidence"
           description="Add new portfolio item"
           onClick={onQuickCapture}
-          color="bg-blue-500"
+          color="bg-white/[0.02]"
         />
         <QuickActionCard
           icon={Clock}
           label="Log Hours"
           description="Track OTJ time"
           onClick={() => onNavigate('progress')}
-          color="bg-purple-500"
+          color="bg-white/[0.02]"
         />
         <QuickActionCard
           icon={MessageCircle}
           label="Tutor Chat"
           description={pendingReviews > 0 ? `${pendingReviews} pending` : 'No new messages'}
           onClick={() => onNavigate('tutor')}
-          color="bg-green-500"
+          color="bg-white/[0.02]"
           badge={pendingReviews > 0 ? pendingReviews : undefined}
         />
         <QuickActionCard
@@ -209,7 +208,7 @@ export function PortfolioOverview({
           label="View Progress"
           description="KSB tracking"
           onClick={() => onNavigate('progress')}
-          color="bg-amber-500"
+          color="bg-white/[0.02]"
         />
       </div>
 
@@ -252,8 +251,8 @@ export function PortfolioOverview({
 function NextActionCard({ action, onAction }: { action: NextAction; onAction: () => void }) {
   const priorityColors = {
     high: 'bg-red-500/10 border-red-500/30 text-red-500',
-    medium: 'bg-amber-500/10 border-amber-500/30 text-amber-500',
-    low: 'bg-blue-500/10 border-blue-500/30 text-blue-500',
+    medium: 'bg-white/[0.02] border-white/[0.06] text-white/85',
+    low: 'bg-white/[0.02] border-white/[0.06] text-white/85',
   };
 
   const icons = {
@@ -267,21 +266,19 @@ function NextActionCard({ action, onAction }: { action: NextAction; onAction: ()
 
   return (
     <Card
-      className={cn(
-        'border overflow-hidden cursor-pointer active:scale-[0.98] transition-transform touch-manipulation',
+      className={cn('border overflow-hidden cursor-pointer active:scale-[0.98] transition-transform touch-manipulation',
         priorityColors[action.priority]
       )}
     >
       <CardContent className="p-4" onClick={onAction}>
         <div className="flex items-start gap-3">
           <div
-            className={cn(
-              'h-10 w-10 rounded-xl flex items-center justify-center shrink-0',
+            className={cn('h-10 w-10 rounded-xl flex items-center justify-center shrink-0',
               action.priority === 'high'
-                ? 'bg-red-500'
+                ? 'bg-white/[0.02]'
                 : action.priority === 'medium'
-                  ? 'bg-amber-500'
-                  : 'bg-blue-500'
+                  ? 'bg-white/[0.02]'
+                  : 'bg-white/[0.02]'
             )}
           >
             <Icon className="h-5 w-5 text-white" />
@@ -320,8 +317,7 @@ function QuickActionCard({
   return (
     <button
       onClick={onClick}
-      className={cn(
-        'relative flex flex-col items-start p-4 rounded-xl',
+      className={cn('relative flex flex-col items-start p-4 rounded-xl',
         'bg-card border border-border',
         'hover:border-elec-yellow/30 hover:bg-elec-yellow/5',
         'transition-all duration-200',
@@ -335,7 +331,7 @@ function QuickActionCard({
       <span className="text-xs text-muted-foreground">{description}</span>
 
       {badge !== undefined && badge > 0 && (
-        <span className="absolute top-3 right-3 bg-red-500 text-white text-[10px] font-bold rounded-full h-5 min-w-[20px] flex items-center justify-center px-1">
+        <span className="absolute top-3 right-3 bg-white/[0.02] text-white text-[10px] font-bold rounded-full h-5 min-w-[20px] flex items-center justify-center px-1">
           {badge > 9 ? '9+' : badge}
         </span>
       )}
@@ -346,11 +342,11 @@ function QuickActionCard({
 // Activity Item Row
 function ActivityItemRow({ item }: { item: ActivityItem }) {
   const typeConfig = {
-    evidence_added: { icon: FileText, color: 'text-blue-500', bg: 'bg-blue-500/10' },
-    review_received: { icon: MessageCircle, color: 'text-green-500', bg: 'bg-green-500/10' },
-    hours_logged: { icon: Clock, color: 'text-purple-500', bg: 'bg-purple-500/10' },
-    ksb_completed: { icon: CheckCircle2, color: 'text-emerald-500', bg: 'bg-emerald-500/10' },
-    milestone: { icon: Target, color: 'text-amber-500', bg: 'bg-amber-500/10' },
+    evidence_added: { icon: FileText, color: 'text-white/85', bg: 'bg-white/[0.02]' },
+    review_received: { icon: MessageCircle, color: 'text-white/85', bg: 'bg-white/[0.02]' },
+    hours_logged: { icon: Clock, color: 'text-white/85', bg: 'bg-white/[0.02]' },
+    ksb_completed: { icon: CheckCircle2, color: 'text-white/85', bg: 'bg-white/[0.02]' },
+    milestone: { icon: Target, color: 'text-white/85', bg: 'bg-white/[0.02]' },
   };
 
   const config = typeConfig[item.type];

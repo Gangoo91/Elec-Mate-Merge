@@ -26,11 +26,11 @@ const VERDICT_LABEL: Record<string, string> = {
 };
 
 const VERDICT_TONE: Record<string, string> = {
-  ready: 'text-emerald-300 border-emerald-400/30 bg-emerald-500/[0.07]',
-  on_track: 'text-emerald-200 border-emerald-400/20 bg-emerald-500/[0.05]',
-  needs_focus: 'text-amber-300 border-amber-400/30 bg-amber-500/[0.07]',
-  not_yet: 'text-rose-300 border-rose-400/30 bg-rose-500/[0.07]',
-  refer: 'text-rose-300 border-rose-400/30 bg-rose-500/[0.07]',
+  ready: 'text-white/85 border-white/[0.06] bg-white/[0.02]',
+  on_track: 'text-white/85 border-white/[0.06] bg-white/[0.02]',
+  needs_focus: 'text-white/85 border-white/[0.06] bg-white/[0.02]',
+  not_yet: 'text-white/85 border-white/[0.06] bg-white/[0.02]',
+  refer: 'text-white/85 border-white/[0.06] bg-white/[0.02]',
 };
 
 export function HubHero({ studentName, courseName, latestVerdict, latestGrade }: Props) {
@@ -70,8 +70,7 @@ export function HubHero({ studentName, courseName, latestVerdict, latestGrade }:
           )}
           {verdictLabel && (
             <span
-              className={cn(
-                'inline-flex items-center h-6 px-2.5 rounded-full border text-[10.5px] font-medium uppercase tracking-[0.14em]',
+              className={cn('inline-flex items-center h-6 px-2.5 rounded-full border text-[10.5px] font-medium uppercase tracking-[0.14em]',
                 verdictTone
               )}
             >

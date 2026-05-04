@@ -3,7 +3,6 @@ import { SubsectionProps } from '../types';
 import HealthSafetySubsection from './health-safety/HealthSafetySubsection';
 import { renderElectricalTheorySection1 } from './electrical-theory/ElectricalTheoryContent';
 import ElectricalTheorySection from '@/components/apprentice/section/ElectricalTheorySection';
-import { Card, CardContent } from '@/components/ui/card';
 
 export const renderSection1 = ({
   subsectionId,
@@ -75,16 +74,12 @@ export const renderSection1 = ({
       id
     );
     return (
-      <Card className="border-elec-yellow/20 bg-transparent shadow-none">
-        <CardContent className="p-0">
-          <HealthSafetySubsection
-            subsectionId={id}
-            isCompleted={isCompleted}
-            markAsComplete={markAsComplete}
-            subsectionType={type}
-          />
-        </CardContent>
-      </Card>
+      <HealthSafetySubsection
+        subsectionId={id}
+        isCompleted={isCompleted}
+        markAsComplete={markAsComplete}
+        subsectionType={type}
+      />
     );
   };
 
@@ -122,10 +117,10 @@ export const renderSection1 = ({
 
   console.log('Section1Renderer - No matching subsection found for:', subsectionId);
   return (
-    <Card className="border-elec-yellow/20 bg-white/10">
-      <CardContent className="p-6 text-center">
-        <p className="text-white">Content for subsection {subsectionId} is not yet available.</p>
-      </CardContent>
-    </Card>
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 text-center">
+      <p className="text-[14px] text-white/85 leading-relaxed">
+        Content for subsection {subsectionId} is not yet available.
+      </p>
+    </div>
   );
 };

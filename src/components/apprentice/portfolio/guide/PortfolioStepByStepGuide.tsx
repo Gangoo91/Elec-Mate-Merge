@@ -1,12 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { CheckCircle, FileText, Target, Users, Clock } from 'lucide-react';
-
 const PortfolioStepByStepGuide = () => {
   const steps = [
     {
       number: 1,
       title: 'Understand Your Requirements',
-      icon: Target,
       description:
         'Familiarise yourself with your apprenticeship framework requirements and assessment criteria.',
       tasks: [
@@ -19,7 +15,6 @@ const PortfolioStepByStepGuide = () => {
     {
       number: 2,
       title: 'Plan Your Portfolio Structure',
-      icon: FileText,
       description:
         'Organise your portfolio into logical sections that align with your learning outcomes.',
       tasks: [
@@ -32,7 +27,6 @@ const PortfolioStepByStepGuide = () => {
     {
       number: 3,
       title: 'Collect and Document Evidence',
-      icon: CheckCircle,
       description: 'Gather evidence systematically throughout your apprenticeship journey.',
       tasks: [
         'Take photos of practical work',
@@ -44,7 +38,6 @@ const PortfolioStepByStepGuide = () => {
     {
       number: 4,
       title: 'Reflect and Analyse',
-      icon: Users,
       description: 'Add reflective commentary to demonstrate your learning and development.',
       tasks: [
         'Write reflections for each piece of evidence',
@@ -56,7 +49,6 @@ const PortfolioStepByStepGuide = () => {
     {
       number: 5,
       title: 'Review and Submit',
-      icon: Clock,
       description: 'Regularly review your portfolio quality and submit according to deadlines.',
       tasks: [
         'Check against assessment criteria',
@@ -69,64 +61,75 @@ const PortfolioStepByStepGuide = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow">Step-by-Step Portfolio Building Guide</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-white">
-            Follow this systematic approach to build a comprehensive portfolio that demonstrates
-            your competency and learning throughout your electrical apprenticeship.
-          </p>
-        </CardContent>
-      </Card>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Step-by-step portfolio guide
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Follow this systematic approach to build a comprehensive portfolio that demonstrates your
+          competency and learning throughout your electrical apprenticeship.
+        </p>
+      </div>
 
       <div className="space-y-4">
         {steps.map((step) => (
-          <Card key={step.number} className="border-elec-yellow/20 bg-white/5">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-elec-yellow text-elec-dark flex items-center justify-center font-bold">
-                  {step.number}
-                </div>
-                <step.icon className="h-6 w-6 text-elec-yellow" />
-                <CardTitle className="text-white">{step.title}</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-white">{step.description}</p>
+          <div
+            key={step.number}
+            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Step {step.number}
+              </span>
+            </div>
+            <h3 className="text-[18px] sm:text-[20px] font-semibold text-white leading-tight">
+              {step.title}
+            </h3>
+            <p className="text-[14px] text-white/85 leading-relaxed">{step.description}</p>
 
-              <div className="space-y-2">
-                <h4 className="text-sm font-medium text-elec-yellow">Key Tasks:</h4>
-                <ul className="space-y-1">
-                  {step.tasks.map((task, index) => (
-                    <li key={index} className="flex items-center gap-2 text-sm text-white">
-                      <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
-                      {task}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
+            <div className="space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Key tasks
+              </span>
+              <ul className="space-y-1.5">
+                {step.tasks.map((task, index) => (
+                  <li
+                    key={index}
+                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  >
+                    <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                    <span>{task}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         ))}
       </div>
 
-      <Card className="border-blue-500/20 bg-blue-500/10">
-        <CardHeader>
-          <CardTitle className="text-blue-300">Portfolio Success Tips</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ul className="text-blue-200 text-sm space-y-2">
-            <li>• Start collecting evidence from day one of your apprenticeship</li>
-            <li>• Take photos and make notes immediately after completing tasks</li>
-            <li>• Ask supervisors and colleagues for witness statements</li>
-            <li>• Keep original documents and make backup copies</li>
-            <li>• Review and update your portfolio regularly</li>
-            <li>• Seek feedback from tutors and mentors</li>
-          </ul>
-        </CardContent>
-      </Card>
+      <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+          Portfolio success tips
+        </span>
+        <ul className="space-y-1.5">
+          {[
+            'Start collecting evidence from day one of your apprenticeship',
+            'Take photos and make notes immediately after completing tasks',
+            'Ask supervisors and colleagues for witness statements',
+            'Keep original documents and make backup copies',
+            'Review and update your portfolio regularly',
+            'Seek feedback from tutors and mentors',
+          ].map((tip, index) => (
+            <li
+              key={index}
+              className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+            >
+              <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+              <span>{tip}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

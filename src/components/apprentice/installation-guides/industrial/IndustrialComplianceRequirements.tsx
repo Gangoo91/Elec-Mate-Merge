@@ -1,6 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileCheck, Shield } from 'lucide-react';
-
 const IndustrialComplianceRequirements = () => {
   const complianceRequirements = [
     {
@@ -26,29 +23,31 @@ const IndustrialComplianceRequirements = () => {
   ];
 
   return (
-    <Card className="border-red-500/30 bg-white/5">
-      <CardHeader>
-        <div className="flex items-center gap-2">
-          <FileCheck className="h-6 w-6 text-red-400" />
-          <CardTitle className="text-red-300">Essential Compliance Standards</CardTitle>
-        </div>
-        <p className="text-white">Mandatory standards for industrial installations</p>
-      </CardHeader>
-      <CardContent className="space-y-3">
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className="space-y-1">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Compliance
+        </span>
+        <h3 className="text-[18px] font-semibold text-white leading-tight">
+          Essential compliance standards
+        </h3>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Mandatory standards for industrial installations.
+        </p>
+      </div>
+      <div className="space-y-2">
         {complianceRequirements.map((req, index) => (
-          <div key={index} className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex-1">
-                <h4 className="font-medium text-red-200 mb-1">{req.standard}</h4>
-                <p className="text-sm text-white mb-2">{req.description}</p>
-                <p className="text-xs text-orange-300">Application: {req.application}</p>
-              </div>
-              <Shield className="h-5 w-5 text-red-400 flex-shrink-0 mt-1" />
-            </div>
+          <div
+            key={index}
+            className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1.5"
+          >
+            <h4 className="text-[14px] font-medium text-white">{req.standard}</h4>
+            <p className="text-[13px] text-white/85 leading-relaxed">{req.description}</p>
+            <p className="text-[12px] text-white/55">Application: {req.application}</p>
           </div>
         ))}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

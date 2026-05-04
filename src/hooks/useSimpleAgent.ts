@@ -25,7 +25,7 @@ export interface UseSimpleAgentReturn {
 
 const AGENT_FUNCTIONS: Record<AgentType, string> = {
   designer: 'designer-agent',
-  'cost-engineer': 'cost-engineer-v3',
+  'cost-engineer': 'cost-engineer',
   'health-safety': 'health-safety-v3',
   installer: 'installer-v3',
   'project-manager': 'project-mgmt-v3',

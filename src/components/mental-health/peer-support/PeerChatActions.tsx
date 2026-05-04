@@ -53,7 +53,7 @@ export function PeerChatActions({
             onClick={() => setShowReportDialog(true)}
             className="gap-2 cursor-pointer"
           >
-            <Flag className="h-4 w-4 text-orange-500" />
+            <Flag className="h-4 w-4 text-white/85" />
             <span>Report User</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator />

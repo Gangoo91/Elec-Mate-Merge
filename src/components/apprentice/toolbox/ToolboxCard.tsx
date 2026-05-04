@@ -1,7 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Clock } from 'lucide-react';
 
 interface ToolboxCardProps {
@@ -21,82 +19,45 @@ const ToolboxCard = ({
   description,
   comingSoon,
 }: ToolboxCardProps) => {
-  // Get current location to check if router is available
-  const location = useLocation();
-
-  // Create the card content
   const cardContent = (
-    <Card
-      className={`border-elec-yellow/20 bg-white/5 transition-all duration-300 h-full flex flex-col relative overflow-hidden ${
-        comingSoon
-          ? 'opacity-80 border-amber-500/30'
-          : 'hover:bg-white/5 cursor-pointer hover:scale-102'
+    <div
+      className={`rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 h-full flex flex-col gap-3 transition-colors ${
+        comingSoon ? 'opacity-70' : 'hover:bg-white/[0.04] cursor-pointer'
       }`}
     >
-      {comingSoon && (
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-orange-500/5 pointer-events-none" />
-      )}
-      <CardHeader className="pb-2 relative z-10">
-        <div className="flex items-center gap-3">
-          <div
-            className={`p-2 rounded-md transition-colors ${
-              comingSoon ? 'bg-amber-500/20' : 'bg-elec-yellow/10'
-            }`}
-          >
-            {icon}
-          </div>
-          <div className="flex-1">
-            <CardTitle className="text-lg flex items-center gap-2 flex-wrap">
-              {title}
-              {comingSoon && (
-                <Badge
-                  variant="outline"
-                  className="text-xs border-amber-500/60 text-amber-400 bg-amber-500/10 animate-pulse flex items-center gap-1"
-                >
-                  <Clock className="h-3 w-3" />
-                  Coming Soon
-                </Badge>
-              )}
-            </CardTitle>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent className="flex flex-col flex-1 justify-between relative z-10">
-        {description && (
-          <div className={`text-sm mb-4 ${comingSoon ? 'text-white' : 'text-white'}`}>
-            {description}
-          </div>
+      <div className="flex items-center gap-3">
+        <div className="text-white/85 flex-shrink-0">{icon}</div>
+        <h3 className="text-[16px] font-semibold text-white leading-tight flex-1">{title}</h3>
+        {comingSoon && (
+          <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] flex items-center gap-1">
+            <Clock className="h-3 w-3" />
+            Coming soon
+          </span>
         )}
-        <Button
-          className={`w-full mt-auto transition-all duration-300 ${
-            comingSoon
-              ? 'bg-amber-600/20 border-amber-500/40 text-amber-300 hover:bg-amber-600/20 cursor-not-allowed'
-              : ''
-          }`}
-          disabled={comingSoon}
-          variant={comingSoon ? 'outline' : 'default'}
-        >
-          {comingSoon ? (
-            <span className="flex items-center gap-2">
-              <Clock className="h-4 w-4 animate-spin" />
-              Coming Soon
-            </span>
-          ) : link ? (
-            'View Details'
-          ) : (
-            `Open ${title}`
-          )}
-        </Button>
-      </CardContent>
-    </Card>
+      </div>
+
+      {description && (
+        <p className="text-[14px] text-white/85 leading-relaxed flex-1">{description}</p>
+      )}
+
+      <Button
+        className={`w-full h-11 mt-auto touch-manipulation ${
+          comingSoon
+            ? 'bg-white/[0.03] border border-white/10 text-white/55 hover:bg-white/[0.03] cursor-not-allowed'
+            : 'bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold active:scale-[0.98]'
+        }`}
+        disabled={comingSoon}
+        variant={comingSoon ? 'outline' : 'default'}
+      >
+        {comingSoon ? 'Coming soon' : link ? 'View details' : `Open ${title}`}
+      </Button>
+    </div>
   );
 
-  // If coming soon, render as disabled div
   if (comingSoon) {
     return <div className="h-full">{cardContent}</div>;
   }
 
-  // If link is provided, render as a Link, otherwise as a button
   if (link) {
     return (
       <Link to={link} className="block h-full">

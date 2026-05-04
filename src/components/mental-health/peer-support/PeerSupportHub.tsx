@@ -115,8 +115,7 @@ const InitialsAvatar: React.FC<InitialsAvatarProps> = ({
       {online && (
         <span
           aria-hidden
-          className={cn(
-            'absolute -bottom-0.5 -right-0.5 rounded-full bg-emerald-400 border-[3px] border-[hsl(0_0%_8%)]',
+          className={cn('absolute -bottom-0.5 -right-0.5 rounded-full bg-white/[0.02] border-[3px] border-[hsl(0_0%_8%)]',
             dot
           )}
         />
@@ -410,7 +409,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
               />
               <div className="flex-1 min-w-0 space-y-4">
                 {responseTime && (
-                  <div className="inline-flex items-center gap-1.5 text-[12px] text-emerald-400">
+                  <div className="inline-flex items-center gap-1.5 text-[12px] text-white/85">
                     <Zap className="w-3.5 h-3.5" />
                     {responseTime}
                   </div>
@@ -461,8 +460,8 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
           </motion.div>
 
           <motion.div variants={itemVariants}>
-            <div className="border-l-2 border-amber-500/40 bg-[hsl(0_0%_12%)] rounded-r-xl px-5 py-4">
-              <Eyebrow className="text-amber-400">Note</Eyebrow>
+            <div className="border-l-2 border-white/[0.06] bg-[hsl(0_0%_12%)] rounded-r-xl px-5 py-4">
+              <Eyebrow className="text-white/85">Note</Eyebrow>
               <p className="mt-1.5 text-[13px] text-white/85 leading-relaxed">
                 This is peer support, not professional therapy. All conversations are confidential.
               </p>
@@ -561,30 +560,26 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                 return (
                   <div key={msg.id} className={cn('flex', isOwn ? 'justify-end' : 'justify-start')}>
                     <div
-                      className={cn(
-                        'max-w-[80%] rounded-2xl px-4 py-3',
+                      className={cn('max-w-[80%] rounded-2xl px-4 py-3',
                         isOwn
                           ? 'bg-elec-yellow text-black rounded-br-md'
                           : 'bg-[hsl(0_0%_12%)] border border-white/[0.06] text-white rounded-bl-md'
                       )}
                     >
                       <p
-                        className={cn(
-                          'text-[13.5px] whitespace-pre-wrap leading-relaxed',
+                        className={cn('text-[13.5px] whitespace-pre-wrap leading-relaxed',
                           isOwn ? 'text-black' : 'text-white'
                         )}
                       >
                         {msg.content}
                       </p>
                       <div
-                        className={cn(
-                          'flex items-center gap-1.5 mt-1.5',
+                        className={cn('flex items-center gap-1.5 mt-1.5',
                           isOwn ? 'justify-end' : ''
                         )}
                       >
                         <span
-                          className={cn(
-                            'text-[10px] tabular-nums',
+                          className={cn('text-[10px] tabular-nums',
                             isOwn ? 'text-black/60' : 'text-white/50'
                           )}
                         >
@@ -752,9 +747,8 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                   </h3>
                   <div className="flex items-center gap-1.5 mt-0.5">
                     <span
-                      className={cn(
-                        'inline-block w-1.5 h-1.5 rounded-full',
-                        myProfile.is_available ? 'bg-emerald-400' : 'bg-white/30'
+                      className={cn('inline-block w-1.5 h-1.5 rounded-full',
+                        myProfile.is_available ? 'bg-white/[0.02]' : 'bg-white/30'
                       )}
                     />
                     <span className="text-[12px] text-white/70">
@@ -824,8 +818,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
           <div className="flex items-center gap-1 p-1 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-full w-fit">
             <button
               onClick={() => setActiveTab('browse')}
-              className={cn(
-                'px-4 py-1.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-colors touch-manipulation',
+              className={cn('px-4 py-1.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-colors touch-manipulation',
                 activeTab === 'browse'
                   ? 'bg-elec-yellow text-black'
                   : 'text-white/70 hover:text-white hover:bg-white/[0.04]'
@@ -835,8 +828,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
             </button>
             <button
               onClick={() => setActiveTab('chats')}
-              className={cn(
-                'px-4 py-1.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-colors touch-manipulation inline-flex items-center gap-1.5',
+              className={cn('px-4 py-1.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-colors touch-manipulation inline-flex items-center gap-1.5',
                 activeTab === 'chats'
                   ? 'bg-elec-yellow text-black'
                   : 'text-white/70 hover:text-white hover:bg-white/[0.04]'
@@ -845,8 +837,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
               My chats
               {unreadCount > 0 && (
                 <span
-                  className={cn(
-                    'tabular-nums text-[11px] px-1.5 rounded-full',
+                  className={cn('tabular-nums text-[11px] px-1.5 rounded-full',
                     activeTab === 'chats' ? 'bg-black/15 text-black' : 'bg-elec-yellow text-black'
                   )}
                 >
@@ -944,8 +935,8 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
 
         {/* CRISIS LINE — left-rule editorial card */}
         <motion.div variants={itemVariants}>
-          <div className="border-l-2 border-amber-500/40 bg-[hsl(0_0%_12%)] rounded-r-xl px-5 py-5">
-            <Eyebrow className="text-amber-400">If you're in crisis</Eyebrow>
+          <div className="border-l-2 border-white/[0.06] bg-[hsl(0_0%_12%)] rounded-r-xl px-5 py-5">
+            <Eyebrow className="text-white/85">If you're in crisis</Eyebrow>
             <p className="mt-2 text-[13px] text-white/85 leading-relaxed">
               Mental Health Mates are peer supporters, not professional counsellors. Call{' '}
               <a href="tel:116123" className="text-elec-yellow font-semibold">

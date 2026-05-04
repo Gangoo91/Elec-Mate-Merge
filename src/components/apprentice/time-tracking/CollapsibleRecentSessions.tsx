@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { useRealtimeTracking } from '@/hooks/time-tracking/useRealtimeTracking';
-import { ChevronDown, ChevronUp, Clock, MapPin, Calendar, FileText, Plus } from 'lucide-react';
+import { ChevronDown, MapPin, Calendar, FileText, Plus } from 'lucide-react';
 import { format } from 'date-fns';
 
 interface CollapsibleRecentSessionsProps {
@@ -39,72 +37,62 @@ const CollapsibleRecentSessions = ({ onAddToPortfolio }: CollapsibleRecentSessio
 
   if (isLoading) {
     return (
-      <Card className="bg-white/5 border-elec-yellow/20">
-        <CardContent className="p-4">
-          <div className="animate-pulse space-y-2">
-            <div className="h-4 bg-elec-yellow/20 rounded w-3/4" />
-            <div className="h-3 bg-elec-yellow/20 rounded w-1/2" />
-          </div>
-        </CardContent>
-      </Card>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
+        <div className="animate-pulse space-y-2">
+          <div className="h-4 bg-white/[0.04] rounded w-3/4" />
+          <div className="h-3 bg-white/[0.04] rounded w-1/2" />
+        </div>
+      </div>
     );
   }
 
   return (
-    <Card className="bg-white/5 border-elec-yellow/20">
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02]">
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <CollapsibleTrigger asChild>
-          <CardHeader className="pb-3 cursor-pointer hover:bg-elec-yellow/5 active:bg-elec-yellow/10 transition-all touch-manipulation">
-            <CardTitle className="text-elec-light flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Clock className="h-5 w-5 text-elec-yellow" />
-                Recent Training Sessions
-                <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-                  {completedSessions.length}
-                </Badge>
-              </div>
-              {isOpen ? (
-                <ChevronUp className="h-4 w-4 text-elec-light/70" />
-              ) : (
-                <ChevronDown className="h-4 w-4 text-elec-light/70" />
-              )}
-            </CardTitle>
-          </CardHeader>
+          <button className="w-full p-4 flex items-center justify-between text-left touch-manipulation min-h-[44px]">
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Recent training sessions
+              </span>
+              <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                {completedSessions.length}
+              </span>
+            </div>
+            <ChevronDown
+              className={`h-4 w-4 text-white/55 transition-transform duration-200 ${
+                isOpen ? 'rotate-180' : ''
+              }`}
+            />
+          </button>
         </CollapsibleTrigger>
 
         <CollapsibleContent>
-          <CardContent className="pt-0">
+          <div className="px-4 pb-4">
             {completedSessions.length === 0 ? (
-              <div className="text-center py-6">
-                <Clock className="h-8 w-8 text-elec-light/30 mx-auto mb-2" />
-                <p className="text-elec-light/70 text-sm">No completed sessions yet</p>
-                <p className="text-elec-light/50 text-xs mt-1">
-                  Start tracking your learning activities to see them here
-                </p>
-              </div>
+              <p className="text-[14px] text-white/55 leading-relaxed py-4">
+                No completed sessions yet. Start tracking your learning activities to see them here.
+              </p>
             ) : (
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {completedSessions.map((session) => (
                   <div
                     key={session.id}
-                    className="bg-white/10 rounded-lg p-3 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-colors"
+                    className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3"
                   >
-                    <div className="flex items-start justify-between">
+                    <div className="flex items-start justify-between gap-2">
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-2">
-                          <h4 className="font-medium text-elec-light text-sm truncate">
+                        <div className="flex items-center gap-2 mb-2 flex-wrap">
+                          <h4 className="text-[14px] text-white truncate">
                             {session.activity_type}
                           </h4>
-                          <Badge
-                            variant="outline"
-                            className="border-elec-yellow/30 text-elec-yellow text-xs"
-                          >
+                          <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
                             {formatDuration(session.duration || 0)}
-                          </Badge>
+                          </span>
                         </div>
 
-                        <div className="space-y-1 text-xs text-elec-light/60">
-                          <div className="flex items-center gap-1">
+                        <div className="space-y-1 text-[11px] text-white/55">
+                          <div className="flex items-center gap-1 font-mono">
                             <Calendar className="h-3 w-3" />
                             {formatSessionDate(session.start_time)}
                           </div>
@@ -125,7 +113,7 @@ const CollapsibleRecentSessions = ({ onAddToPortfolio }: CollapsibleRecentSessio
                         </div>
 
                         {session.notes && (
-                          <p className="text-xs text-elec-light/70 mt-2 bg-white/10 rounded p-2">
+                          <p className="text-[12px] text-white/70 mt-2 leading-relaxed">
                             {session.notes}
                           </p>
                         )}
@@ -136,7 +124,7 @@ const CollapsibleRecentSessions = ({ onAddToPortfolio }: CollapsibleRecentSessio
                           variant="outline"
                           size="sm"
                           onClick={() => onAddToPortfolio(session.id)}
-                          className="ml-2 h-8 w-8 p-0 border-elec-yellow/30 hover:bg-elec-yellow/10"
+                          className="h-8 w-8 p-0 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
                         >
                           <Plus className="h-3 w-3" />
                         </Button>
@@ -146,25 +134,25 @@ const CollapsibleRecentSessions = ({ onAddToPortfolio }: CollapsibleRecentSessio
                 ))}
 
                 {completedSessions.length >= 10 && (
-                  <div className="text-center">
+                  <div className="text-center pt-2">
                     <Button
                       variant="outline"
                       size="sm"
-                      className="text-xs"
+                      className="h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
                       onClick={() => {
                         // TODO: navigate to full sessions history view
                       }}
                     >
-                      View All Sessions
+                      View all sessions
                     </Button>
                   </div>
                 )}
               </div>
             )}
-          </CardContent>
+          </div>
         </CollapsibleContent>
       </Collapsible>
-    </Card>
+    </div>
   );
 };
 

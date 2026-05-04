@@ -166,7 +166,7 @@ const TrainingTimeTracker = () => {
   };
 
   const LiveTimerView = () => (
-    <Card className="bg-gradient-to-r from-green-600 to-blue-600 text-white">
+    <Card className="rounded-xl border border-white/[0.06] bg-white/[0.02] text-white">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Timer className="h-5 w-5" />
@@ -221,7 +221,7 @@ const TrainingTimeTracker = () => {
       <Card>
         <CardContent className="p-4">
           <div className="text-center">
-            <div className="text-2xl font-bold text-green-600">{trackingStats.todayHours}h</div>
+            <div className="text-2xl font-bold text-elec-yellow">{trackingStats.todayHours}h</div>
             <p className="text-sm text-white">Today</p>
           </div>
         </CardContent>
@@ -230,7 +230,7 @@ const TrainingTimeTracker = () => {
       <Card>
         <CardContent className="p-4">
           <div className="text-center">
-            <div className="text-2xl font-bold text-blue-600">{trackingStats.weekHours}h</div>
+            <div className="text-2xl font-bold text-white">{trackingStats.weekHours}h</div>
             <p className="text-sm text-white">This Week</p>
             <Progress
               value={(trackingStats.weekHours / trackingStats.weeklyTarget) * 100}
@@ -243,7 +243,7 @@ const TrainingTimeTracker = () => {
       <Card>
         <CardContent className="p-4">
           <div className="text-center">
-            <div className="text-2xl font-bold text-purple-600">{trackingStats.monthHours}h</div>
+            <div className="text-2xl font-bold text-white">{trackingStats.monthHours}h</div>
             <p className="text-sm text-white">This Month</p>
           </div>
         </CardContent>
@@ -252,7 +252,7 @@ const TrainingTimeTracker = () => {
       <Card>
         <CardContent className="p-4">
           <div className="text-center">
-            <div className="text-2xl font-bold text-orange-600">{trackingStats.streak}</div>
+            <div className="text-2xl font-bold text-elec-yellow">{trackingStats.streak}</div>
             <p className="text-sm text-white">Day Streak</p>
           </div>
         </CardContent>

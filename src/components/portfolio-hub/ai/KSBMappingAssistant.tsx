@@ -196,8 +196,7 @@ export function KSBMappingAssistant({
                         </div>
                       </div>
                       <ChevronRight
-                        className={cn(
-                          'h-4 w-4 text-muted-foreground transition-transform',
+                        className={cn('h-4 w-4 text-muted-foreground transition-transform',
                           isExpanded && 'rotate-90'
                         )}
                       />
@@ -222,17 +221,16 @@ export function KSBMappingAssistant({
                               return (
                                 <div
                                   key={ac.acFullRef}
-                                  className={cn(
-                                    'p-3 pl-12 transition-colors cursor-pointer touch-manipulation active:bg-muted/50',
+                                  className={cn('p-3 pl-12 transition-colors cursor-pointer touch-manipulation active:bg-muted/50',
                                     isSelected && 'bg-elec-yellow/10',
-                                    isCompleted && 'bg-green-500/5'
+                                    isCompleted && 'bg-white/[0.02]'
                                   )}
                                   onClick={() => toggleKSB(ac.acFullRef)}
                                 >
                                   <div className="flex items-start gap-3">
                                     <div className="mt-0.5 shrink-0">
                                       {isCompleted ? (
-                                        <CheckCircle2 className="h-5 w-5 text-green-500" />
+                                        <CheckCircle2 className="h-5 w-5 text-white/85" />
                                       ) : isSelected ? (
                                         <CheckCircle2 className="h-5 w-5 text-elec-yellow" />
                                       ) : (

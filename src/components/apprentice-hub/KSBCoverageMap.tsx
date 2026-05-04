@@ -97,11 +97,11 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
     switch (status) {
       case 'completed':
       case 'verified':
-        return <CheckCircle2 className="h-4 w-4 text-green-500" />;
+        return <CheckCircle2 className="h-4 w-4 text-white/85" />;
       case 'evidence_submitted':
-        return <FileText className="h-4 w-4 text-blue-500" />;
+        return <FileText className="h-4 w-4 text-white/85" />;
       case 'in_progress':
-        return <Clock className="h-4 w-4 text-amber-500" />;
+        return <Clock className="h-4 w-4 text-white/85" />;
       default:
         return <AlertCircle className="h-4 w-4 text-white" />;
     }
@@ -111,25 +111,25 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
     switch (status) {
       case 'completed':
         return (
-          <Badge className="bg-green-500/10 text-green-500 border-green-500/20 text-xs">
+          <Badge className="bg-white/[0.02] text-white/85 border-white/[0.06] text-xs">
             Complete
           </Badge>
         );
       case 'verified':
         return (
-          <Badge className="bg-green-500/10 text-green-500 border-green-500/20 text-xs">
+          <Badge className="bg-white/[0.02] text-white/85 border-white/[0.06] text-xs">
             Verified
           </Badge>
         );
       case 'evidence_submitted':
         return (
-          <Badge className="bg-blue-500/10 text-blue-500 border-blue-500/20 text-xs">
+          <Badge className="bg-white/[0.02] text-white/85 border-white/[0.06] text-xs">
             Evidence
           </Badge>
         );
       case 'in_progress':
         return (
-          <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20 text-xs">
+          <Badge className="bg-white/[0.02] text-white/85 border-white/[0.06] text-xs">
             In Progress
           </Badge>
         );
@@ -145,14 +145,14 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
   const getRouteBadge = (route: string) => {
     if (route === 'installation') {
       return (
-        <Badge className="bg-blue-500/10 text-blue-500 border-blue-500/20 text-xs">
+        <Badge className="bg-white/[0.02] text-white/85 border-white/[0.06] text-xs">
           Installation
         </Badge>
       );
     }
     if (route === 'maintenance') {
       return (
-        <Badge className="bg-purple-500/10 text-purple-500 border-purple-500/20 text-xs">
+        <Badge className="bg-white/[0.02] text-white/85 border-white/[0.06] text-xs">
           Maintenance
         </Badge>
       );
@@ -164,16 +164,16 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
     knowledge: {
       icon: Brain,
       label: 'Knowledge',
-      color: 'text-blue-500',
-      bgColor: 'bg-blue-500/10',
+      color: 'text-white/85',
+      bgColor: 'bg-white/[0.02]',
       items: knowledge,
       stats: stats.knowledge,
     },
     behaviour: {
       icon: Heart,
       label: 'Behaviours',
-      color: 'text-pink-500',
-      bgColor: 'bg-pink-500/10',
+      color: 'text-white/85',
+      bgColor: 'bg-white/[0.02]',
       items: behaviours,
       stats: stats.behaviours,
     },
@@ -315,7 +315,7 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
           <>
             {/* Overall Progress Summary */}
             <div className="px-4 mb-4">
-              <div className="p-4 rounded-xl bg-gradient-to-r from-elec-yellow/10 to-amber-600/10 border border-elec-yellow/20">
+              <div className="p-4 rounded-xl bg-white/[0.02] border border-elec-yellow/20">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm font-medium">Overall Progress</span>
                   <span className="text-sm text-white">
@@ -335,8 +335,8 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
 
             {/* Skills integrated note */}
             <div className="px-4 mb-3">
-              <div className="flex items-start gap-2 p-2.5 rounded-lg bg-blue-500/10 text-xs text-white">
-                <Info className="h-3.5 w-3.5 shrink-0 mt-0.5 text-blue-500" />
+              <div className="flex items-start gap-2 p-2.5 rounded-lg bg-white/[0.02] text-xs text-white">
+                <Info className="h-3.5 w-3.5 shrink-0 mt-0.5 text-white/85" />
                 <span>
                   Skills are integrated into knowledge units. Each knowledge KSB includes both
                   theory and practical competence delivered through 5357-23 qualification units.
@@ -377,8 +377,7 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
                     <TabsContent key={type} value={type} className="mt-0 space-y-4">
                       {/* Type Summary */}
                       <div
-                        className={cn(
-                          'p-3 rounded-xl border',
+                        className={cn('p-3 rounded-xl border',
                           config.bgColor,
                           'border-transparent'
                         )}
@@ -399,15 +398,15 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
                         </div>
                         <div className="flex gap-4 mt-3 text-xs text-white">
                           <span className="flex items-center gap-1">
-                            <CheckCircle2 className="h-3 w-3 text-green-500" />
+                            <CheckCircle2 className="h-3 w-3 text-white/85" />
                             {config.stats.completed} done
                           </span>
                           <span className="flex items-center gap-1">
-                            <FileText className="h-3 w-3 text-blue-500" />
+                            <FileText className="h-3 w-3 text-white/85" />
                             {config.stats.evidenceSubmitted} evidence
                           </span>
                           <span className="flex items-center gap-1">
-                            <Clock className="h-3 w-3 text-amber-500" />
+                            <Clock className="h-3 w-3 text-white/85" />
                             {config.stats.inProgress} active
                           </span>
                         </div>

@@ -26,7 +26,7 @@ export function StatRing({
   percent,
   size = 120,
   trackClass = 'stroke-white/10',
-  ringClass = 'stroke-green-400',
+  ringClass = 'stroke-elec-yellow',
   strokeWidth: strokeWidthProp,
   children,
 }: StatRingProps) {

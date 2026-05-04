@@ -1,5 +1,4 @@
 import ToolCard from './ToolCard';
-import { CircuitBoard, Lightbulb, Zap } from 'lucide-react';
 
 const PowerToolsTab = () => {
   const drillTools = [
@@ -106,19 +105,24 @@ const PowerToolsTab = () => {
   ];
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="text-center space-y-2">
-        <h2 className="text-2xl font-semibold text-elec-yellow">Power Tools</h2>
-        <p className="text-white max-w-3xl mx-auto leading-relaxed">
+    <div className="px-4 sm:px-6 py-4 sm:py-6 space-y-6">
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Power tools
+        </span>
+        <h2 className="text-[22px] sm:text-[26px] font-semibold text-white leading-tight">
+          Power tools
+        </h2>
+        <p className="text-[14px] text-white/85 leading-relaxed max-w-2xl">
           Whilst your employer often provides larger power tools, having some basics of your own
           gives you flexibility and ensures you're never without essential equipment.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
         <ToolCard
-          title="Cordless Drill System"
-          icon={<CircuitBoard className="h-8 w-8 text-elec-yellow" />}
+          title="Cordless drill system"
+          icon={null}
           description="An essential power tool for electrical installations. Modern 18V systems offer excellent power-to-weight ratios."
           items={drillTools}
           apprenticeTip="Stick to one battery platform - batteries are expensive! Many brands offer starter kits with drill, battery, and charger. Check if your employer uses a specific brand."
@@ -126,8 +130,8 @@ const PowerToolsTab = () => {
         />
 
         <ToolCard
-          title="Inspection & Access Tools"
-          icon={<Lightbulb className="h-8 w-8 text-elec-yellow" />}
+          title="Inspection & access"
+          icon={null}
           description="For accessing and examining difficult-to-reach areas safely. Essential for fault-finding and inspection work."
           items={inspectionTools}
           apprenticeTip="A good torch is used multiple times daily. Rechargeable LED torches save money on batteries and provide consistent brightness. Keep it charged!"
@@ -135,8 +139,8 @@ const PowerToolsTab = () => {
         />
 
         <ToolCard
-          title="Specialist Power Tools"
-          icon={<Zap className="h-8 w-8 text-elec-yellow" />}
+          title="Specialist power tools"
+          icon={null}
           description="Heavier tools usually provided by employers but useful to understand for future investment."
           items={specialistTools}
           apprenticeTip="Don't buy these until you're established - they're expensive and employers usually provide them. Learn to use them safely first."
@@ -144,55 +148,76 @@ const PowerToolsTab = () => {
         />
       </div>
 
-      <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
-        <h3 className="text-lg font-medium text-red-300 mb-2 flex items-center gap-2">
-          <CircuitBoard className="h-5 w-5" />
-          Power Tool Safety & Maintenance
-        </h3>
-        <div className="space-y-2 text-sm text-white leading-relaxed">
+      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+          Power tool safety & maintenance
+        </span>
+        <div className="space-y-2 text-[14px] text-white/85 leading-relaxed">
           <p>
-            <strong className="text-red-300">PAT Testing:</strong> All portable electrical tools
-            must be PAT tested annually (or as per company policy). Keep records and labels up to
-            date.
+            <strong>PAT testing:</strong> All portable electrical tools must be PAT tested annually
+            (or as per company policy). Keep records and labels up to date.
           </p>
           <p>
-            <strong className="text-red-300">Daily Checks:</strong> Inspect tools before use - check
-            casings, cables, and switches. Damaged tools must be immediately taken out of service.
+            <strong>Daily checks:</strong> Inspect tools before use - check casings, cables, and
+            switches. Damaged tools must be immediately taken out of service.
           </p>
           <p>
-            <strong className="text-red-300">110V on Sites:</strong> Many construction sites require
-            110V tools for safety. Check site requirements and use appropriate transformers if
-            needed.
+            <strong>110V on sites:</strong> Many construction sites require 110V tools for safety.
+            Check site requirements and use appropriate transformers if needed.
           </p>
           <p>
-            <strong className="text-red-300">Battery Care:</strong> Store batteries at room
-            temperature, charge regularly, and replace when capacity drops significantly. Quality
-            batteries last 3-5 years with proper care.
+            <strong>Battery care:</strong> Store batteries at room temperature, charge regularly, and
+            replace when capacity drops significantly. Quality batteries last 3-5 years with proper
+            care.
           </p>
         </div>
       </div>
 
-      <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
-        <h3 className="text-lg font-medium text-green-300 mb-2">
-          Investment Timeline for Apprentices
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-          <div>
-            <h4 className="font-medium text-green-200 mb-2">Year 1-2: Basics (£150-250)</h4>
-            <ul className="space-y-1 text-white">
-              <li>• Cordless drill with 2 batteries</li>
-              <li>• LED torch</li>
-              <li>• Basic drill bits and screwdriver bits</li>
-              <li>• Simple inspection tools</li>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Investment timeline for apprentices
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[14px] text-white/85 leading-relaxed">
+          <div className="space-y-2">
+            <p className="font-medium text-white">Year 1-2: basics (£150-250)</p>
+            <ul className="space-y-1">
+              <li className="flex items-start gap-2">
+                <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                <span>Cordless drill with 2 batteries</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                <span>LED torch</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                <span>Basic drill bits and screwdriver bits</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                <span>Simple inspection tools</span>
+              </li>
             </ul>
           </div>
-          <div>
-            <h4 className="font-medium text-green-200 mb-2">Year 3-4: Expansion (£200-400)</h4>
-            <ul className="space-y-1 text-white">
-              <li>• Additional batteries and faster charger</li>
-              <li>• More comprehensive bit sets</li>
-              <li>• Advanced inspection equipment</li>
-              <li>• Specialist tools as needed</li>
+          <div className="space-y-2">
+            <p className="font-medium text-white">Year 3-4: expansion (£200-400)</p>
+            <ul className="space-y-1">
+              <li className="flex items-start gap-2">
+                <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                <span>Additional batteries and faster charger</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                <span>More comprehensive bit sets</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                <span>Advanced inspection equipment</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                <span>Specialist tools as needed</span>
+              </li>
             </ul>
           </div>
         </div>

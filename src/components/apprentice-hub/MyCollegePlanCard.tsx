@@ -50,12 +50,12 @@ export function MyCollegePlanCard() {
   const pct = rollUp.completion_percent;
   const ringColour =
     pct >= 80
-      ? 'stroke-emerald-400'
+      ? 'stroke-white/55'
       : pct >= 50
         ? 'stroke-elec-yellow'
         : pct >= 25
-          ? 'stroke-amber-400'
-          : 'stroke-purple-400';
+          ? 'stroke-white/55'
+          : 'stroke-white/55';
 
   return (
     <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
@@ -66,7 +66,7 @@ export function MyCollegePlanCard() {
             Your ILP
           </div>
           {rollUp.unread_tutor_comments > 0 && (
-            <span className="text-[10.5px] tabular-nums text-blue-300">
+            <span className="text-[10.5px] tabular-nums text-white/85">
               {rollUp.unread_tutor_comments} new from your tutor
             </span>
           )}
@@ -218,8 +218,7 @@ function Narrative({
   return (
     <div>
       <div
-        className={cn(
-          'text-[10px] font-medium uppercase tracking-[0.16em] mb-1',
+        className={cn('text-[10px] font-medium uppercase tracking-[0.16em] mb-1',
           tone === 'emerald' ? 'text-emerald-300/85' : 'text-amber-300/85'
         )}
       >
@@ -259,7 +258,7 @@ function GoalRow({
       : status === 'overdue'
         ? 'text-red-300'
         : status === 'blocked'
-          ? 'text-amber-300'
+          ? 'text-white/85'
           : 'text-white/90';
 
   return (
@@ -272,10 +271,9 @@ function GoalRow({
           onToggleComplete(!isComplete);
           if (!goal.student_acknowledged) onAcknowledge();
         }}
-        className={cn(
-          'mt-0.5 h-6 w-6 rounded-full border flex items-center justify-center flex-shrink-0 transition-all touch-manipulation',
+        className={cn('mt-0.5 h-6 w-6 rounded-full border flex items-center justify-center flex-shrink-0 transition-all touch-manipulation',
           isComplete
-            ? 'bg-emerald-500/25 border-emerald-400 text-emerald-200'
+            ? 'bg-white/[0.02] border-white/[0.06] text-white/85'
             : 'border-white/25 text-transparent active:scale-95 hover:border-white/55'
         )}
       >
@@ -292,8 +290,7 @@ function GoalRow({
       >
         <div className="flex items-start justify-between gap-2">
           <h5
-            className={cn(
-              'text-[13.5px] sm:text-[13px] font-medium leading-snug',
+            className={cn('text-[13.5px] sm:text-[13px] font-medium leading-snug',
               isComplete ? 'text-white/85 line-through' : 'text-white'
             )}
           >
@@ -320,13 +317,13 @@ function GoalRow({
           {hasUnreadTutor && (
             <>
               <Sep />
-              <span className="text-blue-300">New comment</span>
+              <span className="text-white/85">New comment</span>
             </>
           )}
           {!goal.student_acknowledged && (
             <>
               <Sep />
-              <span className="text-amber-300">Unread</span>
+              <span className="text-white/85">Unread</span>
             </>
           )}
         </p>

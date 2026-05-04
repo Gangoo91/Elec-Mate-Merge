@@ -224,9 +224,9 @@ export function ChatImageUpload({
           </AnimatePresence>
 
           {/* Tips */}
-          <div className="flex items-start gap-2 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
-            <AlertCircle className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
-            <p className="text-xs text-blue-300">
+          <div className="flex items-start gap-2 p-3 rounded-xl border border-white/[0.06] bg-white/[0.02]">
+            <AlertCircle className="h-4 w-4 text-white/55 shrink-0 mt-0.5" />
+            <p className="text-[12px] text-white/85">
               Take a clear photo of wiring, boards, or components. Dave can identify issues and give
               specific advice.
             </p>

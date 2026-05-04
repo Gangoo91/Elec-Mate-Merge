@@ -253,7 +253,7 @@ const WellbeingJournal = () => {
         {/* Cloud Sync Status */}
         <div className="flex items-center justify-center gap-2 text-[12px]">
           {user ? (
-            <span className="flex items-center gap-1 text-emerald-400">
+            <span className="flex items-center gap-1 text-white/85">
               <Cloud className="h-3 w-3" />
               Synced to cloud
             </span>
@@ -324,8 +324,7 @@ const WellbeingJournal = () => {
               <div className="flex gap-2 overflow-x-auto pb-2">
                 <button
                   onClick={() => setFilterMood(null)}
-                  className={cn(
-                    'px-4 h-10 min-w-[60px] rounded-full text-[12.5px] font-medium transition-colors touch-manipulation',
+                  className={cn('px-4 h-10 min-w-[60px] rounded-full text-[12.5px] font-medium transition-colors touch-manipulation',
                     filterMood === null
                       ? 'bg-elec-yellow text-black'
                       : 'bg-[hsl(0_0%_12%)] text-white border border-white/[0.08]'
@@ -337,8 +336,7 @@ const WellbeingJournal = () => {
                   <button
                     key={mood.value}
                     onClick={() => setFilterMood(mood.value)}
-                    className={cn(
-                      'px-3 h-10 min-w-[50px] rounded-full text-[12.5px] transition-colors touch-manipulation',
+                    className={cn('px-3 h-10 min-w-[50px] rounded-full text-[12.5px] transition-colors touch-manipulation',
                       filterMood === mood.value
                         ? 'bg-elec-yellow text-black'
                         : 'bg-[hsl(0_0%_12%)] text-white border border-white/[0.08]'
@@ -488,8 +486,7 @@ const WellbeingJournal = () => {
                 onClick={() =>
                   setCurrentEntry({ ...currentEntry, mood: mood.value, moodLabel: mood.label })
                 }
-                className={cn(
-                  'flex flex-col items-center p-2 sm:p-3 rounded-xl transition-all min-h-[72px]',
+                className={cn('flex flex-col items-center p-2 sm:p-3 rounded-xl transition-all min-h-[72px]',
                   'touch-manipulation active:scale-[0.95]',
                   currentEntry.mood === mood.value
                     ? 'bg-elec-yellow/15 border border-elec-yellow/40'
@@ -555,7 +552,7 @@ const WellbeingJournal = () => {
                   key={index}
                   className="flex items-center gap-3 px-4 py-3 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.08]"
                 >
-                  <span className="text-emerald-400 font-semibold">+</span>
+                  <span className="text-white/85 font-semibold">+</span>
                   <span className="text-[13px] text-white flex-1">{item}</span>
                   <button
                     onClick={() => removeGratitude(index)}
@@ -597,7 +594,7 @@ const WellbeingJournal = () => {
                   key={index}
                   className="flex items-center gap-3 px-4 py-3 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.08]"
                 >
-                  <span className="text-orange-400 font-semibold">!</span>
+                  <span className="text-white/85 font-semibold">!</span>
                   <span className="text-[13px] text-white flex-1">{item}</span>
                   <button
                     onClick={() => removeTrigger(index)}
@@ -623,8 +620,7 @@ const WellbeingJournal = () => {
               <button
                 key={tag}
                 onClick={() => toggleTag(tag)}
-                className={cn(
-                  'px-4 py-2.5 rounded-full text-[13px] transition-all min-h-[40px] touch-manipulation active:scale-[0.95]',
+                className={cn('px-4 py-2.5 rounded-full text-[13px] transition-all min-h-[40px] touch-manipulation active:scale-[0.95]',
                   currentEntry.tags?.includes(tag)
                     ? 'bg-elec-yellow text-black font-semibold'
                     : 'bg-[hsl(0_0%_9%)] text-white border border-white/[0.08] hover:bg-[hsl(0_0%_15%)]'
@@ -733,7 +729,7 @@ const WellbeingJournal = () => {
             <div className="space-y-2">
               {(selectedEntry.gratitude || []).map((item, index) => (
                 <div key={index} className="flex items-start gap-2">
-                  <span className="text-emerald-400 mt-0.5">+</span>
+                  <span className="text-white/85 mt-0.5">+</span>
                   <span className="text-[13px] text-white">{item}</span>
                 </div>
               ))}
@@ -747,7 +743,7 @@ const WellbeingJournal = () => {
             <div className="space-y-2">
               {(selectedEntry.triggers || []).map((item, index) => (
                 <div key={index} className="flex items-start gap-2">
-                  <span className="text-orange-400 mt-0.5">!</span>
+                  <span className="text-white/85 mt-0.5">!</span>
                   <span className="text-[13px] text-white">{item}</span>
                 </div>
               ))}

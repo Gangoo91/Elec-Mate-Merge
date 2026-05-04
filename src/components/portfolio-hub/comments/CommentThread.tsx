@@ -69,11 +69,11 @@ export function CommentThread({
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
       case 'tutor':
-        return 'bg-blue-500/20 text-blue-500 border-blue-500/30';
+        return 'bg-white/[0.02] text-white/85 border-white/[0.06]';
       case 'assessor':
-        return 'bg-purple-500/20 text-purple-500 border-purple-500/30';
+        return 'bg-white/[0.02] text-white/85 border-white/[0.06]';
       case 'student':
-        return 'bg-green-500/20 text-green-500 border-green-500/30';
+        return 'bg-white/[0.02] text-white/85 border-white/[0.06]';
       default:
         return 'bg-muted text-muted-foreground';
     }
@@ -81,12 +81,11 @@ export function CommentThread({
 
   return (
     <div
-      className={cn(
-        'rounded-lg border transition-all',
+      className={cn('rounded-lg border transition-all',
         needsAction
-          ? 'border-amber-500/30 bg-amber-500/5'
+          ? 'border-white/[0.06] bg-white/[0.02]'
           : rootComment.isResolved
-            ? 'border-green-500/20 bg-green-500/5'
+            ? 'border-white/[0.06] bg-white/[0.02]'
             : 'border-border bg-card'
       )}
     >
@@ -96,11 +95,10 @@ export function CommentThread({
           {/* Avatar */}
           <Avatar className="h-8 w-8 sm:h-10 sm:w-10 shrink-0">
             <AvatarFallback
-              className={cn(
-                'text-xs font-medium',
+              className={cn('text-xs font-medium',
                 isFromTutor
                   ? 'bg-elec-yellow/20 text-elec-yellow'
-                  : 'bg-green-500/20 text-green-500'
+                  : 'bg-white/[0.02] text-white/85'
               )}
             >
               {rootComment.authorInitials}
@@ -121,7 +119,7 @@ export function CommentThread({
               {rootComment.isResolved && (
                 <Badge
                   variant="outline"
-                  className="text-[10px] bg-green-500/10 text-green-500 border-green-500/20"
+                  className="text-[10px] bg-white/[0.02] text-white/85 border-white/[0.06]"
                 >
                   <CheckCircle2 className="h-3 w-3 mr-1" />
                   Resolved
@@ -130,7 +128,7 @@ export function CommentThread({
               {needsAction && (
                 <Badge
                   variant="outline"
-                  className="text-[10px] bg-amber-500/10 text-amber-500 border-amber-500/20"
+                  className="text-[10px] bg-white/[0.02] text-white/85 border-white/[0.06]"
                 >
                   <AlertCircle className="h-3 w-3 mr-1" />
                   Action Required
@@ -179,7 +177,7 @@ export function CommentThread({
                   variant="outline"
                   size="sm"
                   onClick={handleResolve}
-                  className="h-10 text-xs gap-1 text-green-500 hover:text-green-400 hover:bg-green-500/10 touch-manipulation active:scale-95"
+                  className="h-10 text-xs gap-1 text-white/85 hover:text-white/85 hover:bg-white/[0.02] touch-manipulation active:scale-95"
                 >
                   <CheckCircle2 className="h-3 w-3" />
                   Mark Resolved
@@ -249,9 +247,8 @@ function CommentReply({ comment, currentUserId }: CommentReplyProps) {
       <div className="flex items-start gap-3 pl-2 sm:pl-8">
         <Avatar className="h-6 w-6 sm:h-8 sm:w-8 shrink-0">
           <AvatarFallback
-            className={cn(
-              'text-[10px] sm:text-xs font-medium',
-              isOwnComment ? 'bg-green-500/20 text-green-500' : 'bg-elec-yellow/20 text-elec-yellow'
+            className={cn('text-[10px] sm:text-xs font-medium',
+              isOwnComment ? 'bg-white/[0.02] text-white/85' : 'bg-elec-yellow/20 text-elec-yellow'
             )}
           >
             {comment.authorInitials}

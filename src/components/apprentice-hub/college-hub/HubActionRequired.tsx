@@ -15,10 +15,10 @@ const KIND_LABEL: Record<ActionRequiredKind, string> = {
 };
 
 const KIND_TONE: Record<ActionRequiredKind, string> = {
-  otj_rejected: 'text-rose-300',
-  quiz_overdue: 'text-amber-300',
-  goal_blocked: 'text-rose-300',
-  tutor_comment_unread: 'text-blue-300',
+  otj_rejected: 'text-white/85',
+  quiz_overdue: 'text-white/85',
+  goal_blocked: 'text-white/85',
+  tutor_comment_unread: 'text-white/85',
 };
 
 interface Props {
@@ -29,10 +29,10 @@ export function HubActionRequired({ items }: Props) {
   if (items.length === 0) return null;
 
   return (
-    <section className="rounded-2xl border border-amber-400/20 bg-amber-500/[0.04] overflow-hidden">
+    <section className="rounded-2xl border border-white/[0.06] bg-white/[0.02] overflow-hidden">
       <div className="px-4 sm:px-5 py-4 sm:py-5">
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
-          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-amber-300">
+          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-white/85">
             Action required
           </div>
           <span className="text-[10.5px] tabular-nums text-amber-200/85">
@@ -48,8 +48,7 @@ export function HubActionRequired({ items }: Props) {
               >
                 <div className="min-w-0">
                   <div
-                    className={cn(
-                      'text-[10.5px] font-medium uppercase tracking-[0.16em]',
+                    className={cn('text-[10.5px] font-medium uppercase tracking-[0.16em]',
                       KIND_TONE[item.kind]
                     )}
                   >

@@ -742,17 +742,17 @@ const SpecialistReferenceGuide = () => {
   return (
     <div className="space-y-6">
       {/* BS 7671 Part 7 Quick Reference */}
-      <Card className="border-blue-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Book className="h-6 w-6 text-blue-400" />
-            <CardTitle className="text-blue-300">BS 7671 Part 7 Quick Reference</CardTitle>
+            <Book className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">BS 7671 Part 7 Quick Reference</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Alert className="border-blue-500/50 bg-blue-500/10">
-            <Info className="h-4 w-4 text-blue-400" />
-            <AlertDescription className="text-blue-200 text-sm">
+          <Alert className="border-white/[0.06] bg-white/[0.02]">
+            <Info className="h-4 w-4 text-white/55" />
+            <AlertDescription className="text-white/85 text-sm">
               Part 7 supplements the general requirements of Parts 1-6. Where there is any conflict,
               Part 7 requirements take precedence for the specific installation type.
             </AlertDescription>
@@ -761,18 +761,18 @@ const SpecialistReferenceGuide = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-blue-500/30">
-                  <th className="text-left py-2 text-blue-200">Section</th>
-                  <th className="text-left py-2 text-blue-200">Title</th>
-                  <th className="text-left py-2 text-blue-200">Applicability</th>
-                  <th className="text-left py-2 text-blue-200">Key Requirement</th>
+                <tr className="border-b border-white/[0.06]">
+                  <th className="text-left py-2 text-white/85">Section</th>
+                  <th className="text-left py-2 text-white/85">Title</th>
+                  <th className="text-left py-2 text-white/85">Applicability</th>
+                  <th className="text-left py-2 text-white/85">Key Requirement</th>
                 </tr>
               </thead>
               <tbody>
                 {bs7671Part7Sections.map((section, idx) => (
-                  <tr key={idx} className="border-b border-blue-500/20 hover:bg-blue-500/5">
+                  <tr key={idx} className="border-b border-white/[0.06] hover:bg-white/[0.02]">
                     <td className="py-2">
-                      <Badge variant="outline" className="border-blue-400 text-blue-300">
+                      <Badge variant="outline" className="border-white/10 text-white">
                         {section.section}
                       </Badge>
                     </td>
@@ -788,18 +788,18 @@ const SpecialistReferenceGuide = () => {
       </Card>
 
       {/* IET Guidance Note 7 Overview */}
-      <Card className="border-teal-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <BookOpen className="h-6 w-6 text-teal-400" />
-            <CardTitle className="text-teal-300">{gn7Contents.title}</CardTitle>
+            <BookOpen className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">{gn7Contents.title}</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="bg-teal-500/10 p-4 rounded-lg border border-teal-500/20">
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-teal-200 font-medium">{gn7Contents.edition}</span>
-              <Badge variant="outline" className="border-teal-400 text-teal-300">
+              <span className="text-white/85 font-medium">{gn7Contents.edition}</span>
+              <Badge variant="outline" className="border-white/10 text-white">
                 Essential Reference
               </Badge>
             </div>
@@ -808,9 +808,9 @@ const SpecialistReferenceGuide = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
             {gn7Contents.chapters.map((chapter, idx) => (
-              <div key={idx} className="bg-teal-500/10 p-3 rounded border border-teal-500/20">
+              <div key={idx} className="bg-white/[0.02] p-3 rounded border border-white/[0.06]">
                 <div className="flex items-center gap-2 mb-1">
-                  <Badge variant="outline" className="border-teal-400 text-teal-300 text-xs">
+                  <Badge variant="outline" className="border-white/10 text-white text-xs">
                     Ch.{chapter.chapter}
                   </Badge>
                   <span className="text-white text-sm font-medium">{chapter.title}</span>
@@ -823,34 +823,32 @@ const SpecialistReferenceGuide = () => {
       </Card>
 
       {/* Certification Requirements */}
-      <Card className="border-purple-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <ClipboardList className="h-6 w-6 text-purple-400" />
-            <CardTitle className="text-purple-300">
+            <ClipboardList className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">
               Certification Requirements by Installation Type
             </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
           {certificationRequirements.map((cert, idx) => (
-            <div key={idx} className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
-              <h4 className="font-medium text-purple-200 mb-3">{cert.installationType}</h4>
+            <div key={idx} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+              <h4 className="font-medium text-white/85 mb-3">{cert.installationType}</h4>
 
               <div className="space-y-2 mb-3">
                 {cert.certificates.map((doc, docIdx) => (
                   <div key={docIdx} className="flex items-center justify-between text-sm">
                     <div className="flex items-center gap-2">
-                      <FileText className="h-4 w-4 text-purple-400" />
+                      <FileText className="h-4 w-4 text-white/55" />
                       <span className="text-white">{doc.type}</span>
                       <span className="text-white">- {doc.description}</span>
                     </div>
                     <Badge
                       variant="outline"
                       className={
-                        doc.required
-                          ? 'border-green-400 text-green-300'
-                          : 'border-white/50 text-white'
+                        doc.required ? 'border-white/10 text-white' : 'border-white/50 text-white'
                       }
                     >
                       {doc.required ? 'Required' : 'Optional'}
@@ -866,22 +864,20 @@ const SpecialistReferenceGuide = () => {
       </Card>
 
       {/* Industry Bodies and Schemes */}
-      <Card className="border-amber-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Building className="h-6 w-6 text-amber-400" />
-            <CardTitle className="text-amber-300">
-              Industry Bodies & Certification Schemes
-            </CardTitle>
+            <Building className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">Industry Bodies & Certification Schemes</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {industrySchemes.map((scheme, idx) => (
-              <div key={idx} className="bg-amber-500/10 p-4 rounded-lg border border-amber-500/20">
+              <div key={idx} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
                 <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-bold text-amber-200">{scheme.name}</h4>
-                  <Badge variant="outline" className="border-amber-400 text-amber-300 text-xs">
+                  <h4 className="font-bold text-white/85">{scheme.name}</h4>
+                  <Badge variant="outline" className="border-white/10 text-white text-xs">
                     <Globe className="h-3 w-3 mr-1" />
                     {scheme.website}
                   </Badge>
@@ -893,7 +889,7 @@ const SpecialistReferenceGuide = () => {
                   {scheme.applicableTo.map((app, appIdx) => (
                     <span
                       key={appIdx}
-                      className="text-xs bg-amber-600/20 text-amber-200 px-2 py-0.5 rounded"
+                      className="text-xs bg-white/[0.02] text-white/85 px-2 py-0.5 rounded"
                     >
                       {app}
                     </span>
@@ -901,11 +897,11 @@ const SpecialistReferenceGuide = () => {
                 </div>
 
                 <div className="text-xs">
-                  <div className="text-amber-300 mb-1">Key Benefits:</div>
+                  <div className="text-white mb-1">Key Benefits:</div>
                   <ul className="space-y-0.5 text-white">
                     {scheme.benefits.slice(0, 3).map((benefit, bIdx) => (
                       <li key={bIdx} className="flex items-start gap-1">
-                        <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-3 w-3 text-white/55 mt-0.5 flex-shrink-0" />
                         {benefit}
                       </li>
                     ))}
@@ -918,49 +914,49 @@ const SpecialistReferenceGuide = () => {
       </Card>
 
       {/* Further Training and Qualifications */}
-      <Card className="border-green-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <GraduationCap className="h-6 w-6 text-green-400" />
-            <CardTitle className="text-green-300">Further Training & Qualifications</CardTitle>
+            <GraduationCap className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">Further Training & Qualifications</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
           {qualificationsPathways.map((pathway, idx) => (
-            <div key={idx} className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+            <div key={idx} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
               <div className="flex items-center gap-2 mb-3">
                 {pathway.area === 'Solar PV Installation' && (
-                  <Sun className="h-5 w-5 text-amber-400" />
+                  <Sun className="h-5 w-5 text-white/55" />
                 )}
                 {pathway.area === 'EV Charging Installation' && (
-                  <Car className="h-5 w-5 text-lime-400" />
+                  <Car className="h-5 w-5 text-white/55" />
                 )}
                 {pathway.area === 'Inspection and Testing' && (
-                  <Zap className="h-5 w-5 text-blue-400" />
+                  <Zap className="h-5 w-5 text-white/55" />
                 )}
                 {pathway.area === 'Design and Verification' && (
-                  <Target className="h-5 w-5 text-purple-400" />
+                  <Target className="h-5 w-5 text-white/55" />
                 )}
                 {pathway.area === 'Building Regulations' && (
-                  <Building className="h-5 w-5 text-orange-400" />
+                  <Building className="h-5 w-5 text-white/55" />
                 )}
                 {pathway.area === '18th Edition BS 7671' && (
                   <Book className="h-5 w-5 text-red-400" />
                 )}
-                <h4 className="font-medium text-green-200">{pathway.area}</h4>
+                <h4 className="font-medium text-white/85">{pathway.area}</h4>
               </div>
 
               <div className="space-y-2 mb-3">
                 {pathway.qualifications.map((qual, qIdx) => (
                   <div
                     key={qIdx}
-                    className="flex items-center justify-between bg-green-600/10 p-2 rounded"
+                    className="flex items-center justify-between bg-white/[0.02] p-2 rounded"
                   >
                     <div>
                       <span className="text-white text-sm font-medium">{qual.name}</span>
                       <p className="text-xs text-white">{qual.description}</p>
                     </div>
-                    <Badge variant="outline" className="border-green-400 text-green-300 text-xs">
+                    <Badge variant="outline" className="border-white/10 text-white text-xs">
                       {qual.level}
                     </Badge>
                   </div>
@@ -968,7 +964,7 @@ const SpecialistReferenceGuide = () => {
               </div>
 
               <div className="text-xs text-white">
-                <span className="text-green-300">Prerequisites: </span>
+                <span className="text-white">Prerequisites: </span>
                 {pathway.prerequisites.join(', ')}
               </div>
               <div className="text-xs text-white mt-1 flex items-center gap-1">
@@ -981,17 +977,17 @@ const SpecialistReferenceGuide = () => {
       </Card>
 
       {/* IP Ratings Quick Reference */}
-      <Card className="border-cyan-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Shield className="h-6 w-6 text-cyan-400" />
-            <CardTitle className="text-cyan-300">IP Ratings Quick Reference</CardTitle>
+            <Shield className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">IP Ratings Quick Reference</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Alert className="border-cyan-500/50 bg-cyan-500/10">
-            <Info className="h-4 w-4 text-cyan-400" />
-            <AlertDescription className="text-cyan-200 text-sm">
+          <Alert className="border-white/[0.06] bg-white/[0.02]">
+            <Info className="h-4 w-4 text-white/55" />
+            <AlertDescription className="text-white/85 text-sm">
               IP = Ingress Protection. First digit (0-6) = solid object protection. Second digit
               (0-9) = water protection. X = not specified.
             </AlertDescription>
@@ -1000,18 +996,18 @@ const SpecialistReferenceGuide = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-cyan-500/30">
-                  <th className="text-left py-2 text-cyan-200">IP Rating</th>
-                  <th className="text-left py-2 text-cyan-200">Solid Protection</th>
-                  <th className="text-left py-2 text-cyan-200">Water Protection</th>
-                  <th className="text-left py-2 text-cyan-200">Typical Use</th>
+                <tr className="border-b border-white/[0.06]">
+                  <th className="text-left py-2 text-white/85">IP Rating</th>
+                  <th className="text-left py-2 text-white/85">Solid Protection</th>
+                  <th className="text-left py-2 text-white/85">Water Protection</th>
+                  <th className="text-left py-2 text-white/85">Typical Use</th>
                 </tr>
               </thead>
               <tbody>
                 {ipRatingsTable.map((ip, idx) => (
-                  <tr key={idx} className="border-b border-cyan-500/20">
+                  <tr key={idx} className="border-b border-white/[0.06]">
                     <td className="py-2">
-                      <Badge variant="outline" className="border-cyan-400 text-cyan-300">
+                      <Badge variant="outline" className="border-white/10 text-white">
                         {ip.rating}
                       </Badge>
                     </td>
@@ -1027,29 +1023,29 @@ const SpecialistReferenceGuide = () => {
       </Card>
 
       {/* RCD Types Reference */}
-      <Card className="border-rose-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Zap className="h-6 w-6 text-rose-400" />
-            <CardTitle className="text-rose-300">RCD Types Quick Reference</CardTitle>
+            <Zap className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">RCD Types Quick Reference</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-rose-500/30">
-                  <th className="text-left py-2 text-rose-200">RCD Type</th>
-                  <th className="text-left py-2 text-rose-200">Detects</th>
-                  <th className="text-left py-2 text-rose-200">Applications</th>
-                  <th className="text-left py-2 text-rose-200">Notes</th>
+                <tr className="border-b border-white/[0.06]">
+                  <th className="text-left py-2 text-white/85">RCD Type</th>
+                  <th className="text-left py-2 text-white/85">Detects</th>
+                  <th className="text-left py-2 text-white/85">Applications</th>
+                  <th className="text-left py-2 text-white/85">Notes</th>
                 </tr>
               </thead>
               <tbody>
                 {rcdTypesTable.map((rcd, idx) => (
-                  <tr key={idx} className="border-b border-rose-500/20">
+                  <tr key={idx} className="border-b border-white/[0.06]">
                     <td className="py-2">
-                      <Badge variant="outline" className="border-rose-400 text-rose-300">
+                      <Badge variant="outline" className="border-white/10 text-white">
                         {rcd.type}
                       </Badge>
                     </td>
@@ -1065,23 +1061,23 @@ const SpecialistReferenceGuide = () => {
       </Card>
 
       {/* Useful Resources */}
-      <Card className="border-indigo-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <ExternalLink className="h-6 w-6 text-indigo-400" />
-            <CardTitle className="text-indigo-300">Useful Resources & Links</CardTitle>
+            <ExternalLink className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">Useful Resources & Links</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
           {usefulResources.map((category, idx) => (
-            <div key={idx} className="bg-indigo-500/10 p-4 rounded-lg border border-indigo-500/20">
-              <h4 className="font-medium text-indigo-200 mb-3">{category.category}</h4>
+            <div key={idx} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+              <h4 className="font-medium text-white/85 mb-3">{category.category}</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {category.resources.map((resource, rIdx) => (
                   <div key={rIdx} className="flex items-start gap-2 text-sm">
-                    <Lightbulb className="h-4 w-4 text-indigo-400 mt-0.5 flex-shrink-0" />
+                    <Lightbulb className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
                     <div>
-                      <span className="text-indigo-200 font-medium">{resource.name}</span>
+                      <span className="text-white/85 font-medium">{resource.name}</span>
                       <p className="text-xs text-white">{resource.description}</p>
                       <span className="text-xs text-white">Source: {resource.source}</span>
                     </div>

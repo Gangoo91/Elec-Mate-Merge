@@ -35,16 +35,15 @@ const EventsList = ({ events, defaultExpanded = true }: EventsListProps) => {
   }
 
   return (
-    <Card className="border-amber-500/20 overflow-hidden">
+    <Card className="border-white/[0.06] overflow-hidden">
       {/* Collapsible Header */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full p-4 flex items-center justify-between bg-gradient-to-r from-amber-500/10 to-transparent
-          min-h-[72px] touch-manipulation active:bg-amber-500/20 transition-colors duration-300"
+        className="w-full p-4 flex items-center justify-between bg-white/[0.02] min-h-[72px] touch-manipulation active:bg-white/[0.02] transition-colors duration-300"
       >
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center">
-            <Calendar className="h-5 w-5 text-amber-400" />
+          <div className="w-10 h-10 rounded-xl bg-white/[0.02] flex items-center justify-center">
+            <Calendar className="h-5 w-5 text-white/85" />
           </div>
           <div className="text-left">
             <h3 className="font-semibold text-white">Upcoming Events</h3>
@@ -54,7 +53,7 @@ const EventsList = ({ events, defaultExpanded = true }: EventsListProps) => {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <Badge variant="outline" className="bg-amber-500/20 text-amber-400 border-amber-500/30">
+          <Badge variant="outline" className="bg-white/[0.02] text-white/85 border-white/[0.06]">
             {events.length}
           </Badge>
           <div
@@ -72,30 +71,28 @@ const EventsList = ({ events, defaultExpanded = true }: EventsListProps) => {
           {events.map((event, index) => (
             <div
               key={index}
-              className="p-4 rounded-lg border border-amber-500/20 bg-amber-500/5
-                touch-manipulation active:scale-[0.99] transition-all duration-300"
+              className="p-4 rounded-lg border border-white/[0.06] bg-white/[0.02] touch-manipulation active:scale-[0.99] transition-all duration-300"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">
                   <h4 className="font-medium text-white text-sm mb-2">{event.name}</h4>
                   <div className="space-y-1.5">
                     <div className="flex items-center gap-2 text-xs text-white">
-                      <Calendar className="h-3.5 w-3.5 text-amber-400 flex-shrink-0" />
+                      <Calendar className="h-3.5 w-3.5 text-white/85 flex-shrink-0" />
                       <span>{event.date}</span>
                     </div>
                     <div className="flex items-center gap-2 text-xs text-white">
-                      <Clock className="h-3.5 w-3.5 text-amber-400 flex-shrink-0" />
+                      <Clock className="h-3.5 w-3.5 text-white/85 flex-shrink-0" />
                       <span>{event.time}</span>
                     </div>
                     <div className="flex items-center gap-2 text-xs text-white">
-                      <MapPin className="h-3.5 w-3.5 text-amber-400 flex-shrink-0" />
+                      <MapPin className="h-3.5 w-3.5 text-white/85 flex-shrink-0" />
                       <span className="line-clamp-1">{event.location}</span>
                     </div>
                   </div>
                 </div>
                 <Button
-                  className="bg-amber-500 hover:bg-amber-600 text-black h-11 px-4 flex-shrink-0
-                    touch-manipulation active:scale-[0.98] transition-all duration-300"
+                  className="bg-white/[0.02] hover:bg-white/[0.02] text-black h-11 px-4 flex-shrink-0 touch-manipulation active:scale-[0.98] transition-all duration-300"
                   onClick={() => handleRegister(event)}
                 >
                   Register

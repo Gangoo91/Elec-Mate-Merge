@@ -1,5 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, Star } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 interface CareerSectionCardProps {
   title: string;
@@ -10,34 +9,22 @@ interface CareerSectionCardProps {
 
 const CareerSectionCard = ({ title, description, icon, onClick }: CareerSectionCardProps) => {
   return (
-    <Card
-      className="border-elec-yellow/20 bg-white/5 hover:border-elec-yellow/50 hover:bg-white/10 transition-all duration-300 cursor-pointer h-full flex flex-col group touch-manipulation active:scale-[0.98]"
+    <button
+      type="button"
       onClick={onClick}
+      className="rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] transition-colors h-full w-full text-left p-4 sm:p-5 flex flex-col gap-3 group touch-manipulation active:scale-[0.98]"
     >
-      <CardHeader className="pb-3">
-        <div className="flex items-start justify-between">
-          <div className="flex-1">
-            <CardTitle className="text-lg text-elec-yellow group-hover:text-elec-yellow/90 transition-colors">
-              {title}
-            </CardTitle>
-          </div>
-          <ArrowRight className="h-5 w-5 text-white group-hover:text-elec-yellow transition-colors" />
-        </div>
-      </CardHeader>
+      <div className="flex items-start justify-between gap-3">
+        <h3 className="text-[16px] sm:text-[17px] font-semibold text-white leading-tight">
+          {title}
+        </h3>
+        <ArrowRight className="h-4 w-4 text-white/40 group-hover:text-white/70 transition-colors flex-shrink-0" />
+      </div>
 
-      <CardContent className="flex-1 flex flex-col justify-between pt-0">
-        <p className="text-sm text-elec-light/80 leading-relaxed mb-4">{description}</p>
+      <p className="text-[13px] text-white/70 leading-relaxed flex-1">{description}</p>
 
-        <div className="flex items-center justify-between">
-          <div className="transition-transform group-hover:scale-110 duration-300">{icon}</div>
-
-          <div className="flex items-center gap-1 text-xs text-white">
-            <Star className="h-3 w-3 fill-current text-elec-yellow" />
-            <span>Popular</span>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+      <div className="text-white/55">{icon}</div>
+    </button>
   );
 };
 

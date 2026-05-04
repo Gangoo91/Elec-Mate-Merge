@@ -119,27 +119,32 @@ const ComplianceTrackingTab = () => {
     },
   ];
 
+  const pillClass = (kind: 'yellow' | 'neutral') =>
+    kind === 'yellow'
+      ? 'text-[12px] text-elec-yellow px-2 py-0.5 rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04]'
+      : 'text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]';
+
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'compliant':
-        return <Badge className="bg-green-600 text-white">Compliant</Badge>;
+        return <span className={pillClass('yellow')}>Compliant</span>;
       case 'on-track':
-        return <Badge className="bg-blue-600 text-white">On Track</Badge>;
+        return <span className={pillClass('neutral')}>On track</span>;
       case 'attention-needed':
-        return <Badge className="bg-orange-600 text-white">Needs Attention</Badge>;
+        return <span className={pillClass('neutral')}>Needs attention</span>;
       default:
-        return <Badge>Unknown</Badge>;
+        return <span className={pillClass('neutral')}>Unknown</span>;
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'compliant':
-        return <CheckCircle className="h-4 w-4 text-green-500" />;
+        return <CheckCircle className="h-4 w-4 text-elec-yellow" />;
       case 'on-track':
-        return <Clock className="h-4 w-4 text-blue-500" />;
+        return <Clock className="h-4 w-4 text-white/85" />;
       case 'attention-needed':
-        return <AlertTriangle className="h-4 w-4 text-orange-500" />;
+        return <AlertTriangle className="h-4 w-4 text-white/55" />;
       default:
         return <FileText className="h-4 w-4 text-white" />;
     }
@@ -149,13 +154,13 @@ const ComplianceTrackingTab = () => {
     switch (status) {
       case 'signed':
       case 'current':
-        return <Badge className="bg-green-600 text-white">Complete</Badge>;
+        return <span className={pillClass('yellow')}>Complete</span>;
       case 'in-progress':
-        return <Badge className="bg-blue-600 text-white">In Progress</Badge>;
+        return <span className={pillClass('neutral')}>In progress</span>;
       case 'pending':
-        return <Badge className="bg-orange-600 text-white">Pending</Badge>;
+        return <span className={pillClass('neutral')}>Pending</span>;
       default:
-        return <Badge>Unknown</Badge>;
+        return <span className={pillClass('neutral')}>Unknown</span>;
     }
   };
 
@@ -168,7 +173,7 @@ const ComplianceTrackingTab = () => {
             <Shield className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-green-500">92%</div>
+            <div className="text-2xl font-bold text-elec-yellow">92%</div>
             <p className="text-xs text-white">Overall compliance</p>
           </CardContent>
         </Card>
@@ -179,7 +184,7 @@ const ComplianceTrackingTab = () => {
             <Clock className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-blue-500">22.3%</div>
+            <div className="text-2xl font-bold text-white">22.3%</div>
             <p className="text-xs text-white">Above 20% requirement</p>
           </CardContent>
         </Card>
@@ -190,7 +195,7 @@ const ComplianceTrackingTab = () => {
             <Award className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-orange-500">73%</div>
+            <div className="text-2xl font-bold text-white">73%</div>
             <p className="text-xs text-white">Gateway preparation</p>
           </CardContent>
         </Card>
@@ -201,7 +206,7 @@ const ComplianceTrackingTab = () => {
             <Calendar className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-purple-500">14d</div>
+            <div className="text-2xl font-bold text-elec-yellow">14d</div>
             <p className="text-xs text-white">Days remaining</p>
           </CardContent>
         </Card>
@@ -248,7 +253,7 @@ const ComplianceTrackingTab = () => {
 
                     <div className="flex justify-between text-xs">
                       <span className="text-white">Deadline: {item.deadline}</span>
-                      <span className="italic text-purple-500">AI: {item.aiStatus}</span>
+                      <span className="italic text-white/55">AI: {item.aiStatus}</span>
                     </div>
                   </div>
                 </div>
@@ -305,7 +310,7 @@ const ComplianceTrackingTab = () => {
             {auditTrail.map((entry, index) => (
               <div
                 key={index}
-                className="flex items-center justify-between border-l-2 border-blue-500 pl-4 py-2"
+                className="flex items-center justify-between border-l-2 border-white/15 pl-4 py-2"
               >
                 <div>
                   <p className="font-medium text-sm">{entry.action}</p>
@@ -338,21 +343,16 @@ const ComplianceTrackingTab = () => {
         </Button>
       </div>
 
-      <Card className="border-green-500/50 bg-green-500/10">
-        <CardHeader>
-          <CardTitle className="text-green-300 flex items-center gap-2">
-            <Shield className="h-5 w-5" />
-            Automated Compliance Monitoring
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-white">
-            Your intelligent compliance system continuously monitors all apprenticeship
-            requirements, tracks deadlines, validates evidence, and maintains detailed audit trails.
-            Stay confident knowing you're always meeting standards and ready for assessments.
-          </p>
-        </CardContent>
-      </Card>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Automated compliance monitoring
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Your intelligent compliance system continuously monitors all apprenticeship requirements,
+          tracks deadlines, validates evidence, and maintains detailed audit trails. Stay confident
+          knowing you're always meeting standards and ready for assessments.
+        </p>
+      </div>
     </div>
   );
 };

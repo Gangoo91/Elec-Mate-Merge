@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { CheckCircle, XCircle, RotateCcw, Brain, ArrowLeft, Trophy } from 'lucide-react';
+import { CheckCircle, XCircle, RotateCcw, ArrowLeft } from 'lucide-react';
 
 interface CulturalAwarenessQuizProps {
   onBack: () => void;
@@ -137,156 +135,106 @@ const CulturalAwarenessQuiz = ({ onBack }: CulturalAwarenessQuizProps) => {
 
   const getScoreMessage = () => {
     const percentage = (score / questions.length) * 100;
-    if (percentage >= 80) {
-      return 'Excellent! You have a strong understanding of workplace culture.';
-    } else if (percentage >= 60) {
-      return "Good work! You're developing solid cultural awareness.";
-    } else {
-      return 'Keep learning! Review the explanations and practice more.';
-    }
-  };
-
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case 'Professional Communication':
-        return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-      case 'Safety Communication':
-        return 'bg-red-500/20 text-red-400 border-red-500/30';
-      case 'Learning Culture':
-        return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
-      case 'Professional Integrity':
-        return 'bg-green-500/20 text-green-400 border-green-500/30';
-      case 'Workplace Integration':
-        return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
-      default:
-        return 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30';
-    }
+    if (percentage >= 80) return 'Excellent';
+    if (percentage >= 60) return 'Good work';
+    return 'Keep learning';
   };
 
   if (quizCompleted) {
     const percentage = Math.round((score / questions.length) * 100);
-    const isExcellent = percentage >= 80;
-    const isGood = percentage >= 60;
 
     return (
-      <div className="space-y-6 animate-fade-in">
-        <div className="flex items-center gap-4 mb-6">
-          <Button
-            variant="outline"
-            onClick={onBack}
-            className="flex items-center gap-2 h-11 border-white/20 hover:border-cyan-500/50 hover:bg-cyan-500/10 touch-manipulation active:scale-95 transition-all"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Tools
-          </Button>
-          <div>
-            <h2 className="text-2xl font-bold text-white">Quiz Complete!</h2>
-            <p className="text-white">Review your performance</p>
-          </div>
+      <div className="space-y-6 animate-fade-in text-left">
+        <Button
+          variant="ghost"
+          onClick={onBack}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back to tools
+        </Button>
+
+        <div className="space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Cultural awareness quiz
+          </span>
+          <h2 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
+            Quiz complete
+          </h2>
         </div>
 
-        <Card
-          className={`bg-gradient-to-br from-elec-gray to-elec-card ${isExcellent ? 'border-green-500/30' : isGood ? 'border-cyan-500/30' : 'border-orange-500/30'} overflow-hidden relative`}
-        >
-          <div
-            className={`absolute top-0 right-0 w-64 h-64 ${isExcellent ? 'bg-green-500/5' : isGood ? 'bg-cyan-500/5' : 'bg-orange-500/5'} rounded-full blur-3xl -translate-y-1/2 translate-x-1/2`}
-          />
-          <CardHeader className="relative text-center pb-0">
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+          <div className="flex items-baseline justify-between">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Final score
+            </span>
+            <span className="text-[12px] text-white/85 font-mono">
+              {score}/{questions.length} · {percentage}%
+            </span>
+          </div>
+          <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
             <div
-              className={`mx-auto p-4 rounded-2xl ${isExcellent ? 'bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30' : isGood ? 'bg-gradient-to-br from-cyan-500/20 to-cyan-500/5 border border-cyan-500/30' : 'bg-gradient-to-br from-orange-500/20 to-orange-500/5 border border-orange-500/30'} w-fit mb-4`}
-            >
-              <Trophy
-                className={`h-10 w-10 ${isExcellent ? 'text-green-400' : isGood ? 'text-cyan-400' : 'text-orange-400'}`}
-              />
-            </div>
-            <CardTitle className="text-white text-2xl">Final Score</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6 relative text-center">
-            <div>
-              <div
-                className={`text-6xl font-bold mb-2 ${isExcellent ? 'text-green-400' : isGood ? 'text-cyan-400' : 'text-orange-400'}`}
-              >
-                {score}/{questions.length}
-              </div>
-              <div className="text-xl text-white mb-4">{percentage}% Score</div>
-              <div
-                className={`inline-block px-6 py-3 rounded-xl ${isExcellent ? 'bg-green-500/10 border border-green-500/20' : isGood ? 'bg-cyan-500/10 border border-cyan-500/20' : 'bg-orange-500/10 border border-orange-500/20'}`}
-              >
-                <p
-                  className={`${isExcellent ? 'text-green-300' : isGood ? 'text-cyan-300' : 'text-orange-300'}`}
-                >
-                  {getScoreMessage()}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+              className="h-full bg-elec-yellow transition-all duration-500"
+              style={{ width: `${percentage}%` }}
+            />
+          </div>
+          <p className="text-[16px] sm:text-[18px] font-medium text-white">{getScoreMessage()}</p>
+        </div>
 
-        <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-cyan-500/20 overflow-hidden relative">
-          <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-          <CardHeader className="relative">
-            <CardTitle className="text-white flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-gradient-to-br from-cyan-500/20 to-cyan-500/5 border border-cyan-500/30">
-                <Brain className="h-5 w-5 text-cyan-400" />
-              </div>
-              Review Your Answers
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4 relative">
-            {questions.map((question, index) => {
-              const isCorrect = answers[index] === question.correctAnswer;
-              return (
-                <div
-                  key={question.id}
-                  className={`p-4 rounded-xl ${isCorrect ? 'bg-green-500/10 border border-green-500/20' : 'bg-red-500/10 border border-red-500/20'}`}
-                >
-                  <div className="flex items-start gap-3">
-                    <div
-                      className={`p-2 rounded-lg flex-shrink-0 ${isCorrect ? 'bg-green-500/20' : 'bg-red-500/20'}`}
-                    >
-                      {isCorrect ? (
-                        <CheckCircle className="h-4 w-4 text-green-400" />
-                      ) : (
-                        <XCircle className="h-4 w-4 text-red-400" />
-                      )}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-white text-sm mb-2">{question.question}</p>
-                      <p className="text-xs text-white mb-2">
-                        <strong className="text-white">Correct answer:</strong>{' '}
-                        {question.options[question.correctAnswer]}
-                      </p>
-                      <p className="text-xs text-green-300/80">{question.explanation}</p>
-                      <Badge
-                        variant="outline"
-                        className={`mt-3 text-xs ${getCategoryColor(question.category)}`}
-                      >
-                        {question.category}
-                      </Badge>
-                    </div>
+        <div className="space-y-3">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Review your answers
+          </span>
+
+          {questions.map((question, index) => {
+            const isCorrect = answers[index] === question.correctAnswer;
+            return (
+              <div
+                key={question.id}
+                className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
+              >
+                <div className="flex items-start gap-2">
+                  {isCorrect ? (
+                    <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-1" />
+                  ) : (
+                    <XCircle className="h-4 w-4 text-red-400 flex-shrink-0 mt-1" />
+                  )}
+                  <div className="flex-1 space-y-1">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                      {question.category}
+                    </span>
+                    <p className="text-[14px] font-medium text-white leading-snug">
+                      {question.question}
+                    </p>
+                    <p className="text-[12px] text-white/55">
+                      Correct: {question.options[question.correctAnswer]}
+                    </p>
+                    <p className="text-[14px] text-white/85 leading-relaxed">
+                      {question.explanation}
+                    </p>
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            );
+          })}
 
-            <div className="flex flex-wrap gap-3 pt-4 border-t border-white/10">
-              <Button
-                onClick={handleRestart}
-                className="h-11 bg-cyan-500 hover:bg-cyan-500/90 text-black touch-manipulation active:scale-95 transition-all"
-              >
-                <RotateCcw className="mr-2 h-4 w-4" />
-                Take Quiz Again
-              </Button>
-              <Button
-                variant="outline"
-                onClick={onBack}
-                className="h-11 border-white/20 hover:border-cyan-500/50 hover:bg-cyan-500/10 touch-manipulation active:scale-95 transition-all"
-              >
-                Back to Tools
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+          <div className="flex flex-col sm:flex-row gap-2 pt-2 border-t border-white/[0.06]">
+            <Button
+              onClick={handleRestart}
+              className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98]"
+            >
+              <RotateCcw className="mr-2 h-4 w-4" />
+              Take quiz again
+            </Button>
+            <Button
+              variant="outline"
+              onClick={onBack}
+              className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+            >
+              Back to tools
+            </Button>
+          </div>
+        </div>
       </div>
     );
   }
@@ -295,144 +243,121 @@ const CulturalAwarenessQuiz = ({ onBack }: CulturalAwarenessQuizProps) => {
   const progress = ((currentQuestion + 1) / questions.length) * 100;
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center gap-4 mb-6">
-        <Button
-          variant="outline"
-          onClick={onBack}
-          className="flex items-center gap-2 h-11 border-white/20 hover:border-cyan-500/50 hover:bg-cyan-500/10 touch-manipulation active:scale-95 transition-all"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to Tools
-        </Button>
-        <div>
-          <h2 className="text-2xl font-bold text-white">Cultural Awareness Quiz</h2>
-          <p className="text-white">Test your workplace culture knowledge</p>
+    <div className="space-y-6 animate-fade-in text-left">
+      <Button
+        variant="ghost"
+        onClick={onBack}
+        className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+      >
+        <ArrowLeft className="mr-2 h-5 w-5" />
+        Back to tools
+      </Button>
+
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Cultural awareness quiz
+        </span>
+        <h2 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
+          Workplace culture
+        </h2>
+      </div>
+
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
+        <div className="flex items-baseline justify-between">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Question {currentQuestion + 1} of {questions.length}
+          </span>
+          <span className="text-[12px] text-white/85 font-mono">{Math.round(progress)}%</span>
+        </div>
+        <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-elec-yellow transition-all duration-500"
+            style={{ width: `${progress}%` }}
+          />
         </div>
       </div>
 
-      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-cyan-500/20 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-        <CardHeader className="relative">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-gradient-to-br from-cyan-500/20 to-cyan-500/5 border border-cyan-500/30">
-                <Brain className="h-5 w-5 text-cyan-400" />
-              </div>
-              <CardTitle className="text-white">Question {currentQuestion + 1}</CardTitle>
-            </div>
-            <Badge variant="outline" className="bg-cyan-500/10 text-cyan-400 border-cyan-500/30">
-              {currentQuestion + 1} of {questions.length}
-            </Badge>
+      {!showResult ? (
+        <>
+          <div className="space-y-3">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              {currentQ.category}
+            </span>
+            <p className="text-[16px] sm:text-[18px] font-medium text-white leading-snug">
+              {currentQ.question}
+            </p>
           </div>
-          <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-gradient-to-r from-cyan-500 to-cyan-400 transition-all duration-500 ease-out rounded-full"
-              style={{ width: `${progress}%` }}
-            />
+
+          <div className="space-y-2">
+            {currentQ.options.map((option, index) => {
+              const isSelected = selectedAnswer === index;
+              const optionStyle = isSelected
+                ? 'bg-elec-yellow/[0.04] border-elec-yellow/40'
+                : 'bg-white/[0.02] border-white/[0.06]';
+              return (
+                <button
+                  key={index}
+                  onClick={() => handleAnswerSelect(index)}
+                  className={`w-full text-left p-4 rounded-xl border text-[14px] transition-all touch-manipulation active:scale-[0.99] flex items-start gap-3 ${optionStyle}`}
+                >
+                  <span className="w-7 h-7 rounded-lg bg-white/[0.04] border border-white/10 flex items-center justify-center text-[12px] font-semibold flex-shrink-0">
+                    {String.fromCharCode(65 + index)}
+                  </span>
+                  <span className="pt-0.5 flex-1 text-white/85 leading-relaxed">{option}</span>
+                </button>
+              );
+            })}
           </div>
-        </CardHeader>
 
-        <CardContent className="space-y-6 relative">
-          {!showResult ? (
-            <>
-              <div>
-                <Badge variant="outline" className={`mb-4 ${getCategoryColor(currentQ.category)}`}>
-                  {currentQ.category}
-                </Badge>
-                <h3 className="text-lg font-medium text-white">{currentQ.question}</h3>
-              </div>
-
-              <div className="space-y-3">
-                {currentQ.options.map((option, index) => (
-                  <Button
-                    key={index}
-                    variant="outline"
-                    className={`w-full text-left justify-start h-auto p-4 whitespace-normal transition-all ${
-                      selectedAnswer === index
-                        ? 'border-cyan-500 bg-cyan-500/10 text-white'
-                        : 'border-white/10 hover:border-white/20 text-white hover:text-white'
-                    }`}
-                    onClick={() => handleAnswerSelect(index)}
-                  >
-                    <span className="mr-3 font-bold text-cyan-400">
-                      {String.fromCharCode(65 + index)}.
-                    </span>
-                    <span className="flex-1">{option}</span>
-                  </Button>
-                ))}
-              </div>
-
-              <Button
-                onClick={handleNextQuestion}
-                disabled={selectedAnswer === null}
-                className="w-full h-11 bg-cyan-500 hover:bg-cyan-500/90 text-black disabled:opacity-50 touch-manipulation active:scale-95 transition-all"
-              >
-                {currentQuestion === questions.length - 1 ? 'Finish Quiz' : 'Check Answer'}
-              </Button>
-            </>
-          ) : (
-            <div className="space-y-6">
-              <div
-                className={`p-6 rounded-xl text-center ${
-                  selectedAnswer === currentQ.correctAnswer
-                    ? 'bg-green-500/10 border border-green-500/20'
-                    : 'bg-red-500/10 border border-red-500/20'
-                }`}
-              >
-                <div className="flex items-center justify-center gap-3 mb-4">
-                  <div
-                    className={`p-3 rounded-xl ${
-                      selectedAnswer === currentQ.correctAnswer
-                        ? 'bg-green-500/20'
-                        : 'bg-red-500/20'
-                    }`}
-                  >
-                    {selectedAnswer === currentQ.correctAnswer ? (
-                      <CheckCircle className="h-8 w-8 text-green-400" />
-                    ) : (
-                      <XCircle className="h-8 w-8 text-red-400" />
-                    )}
-                  </div>
-                  <h3
-                    className={`text-2xl font-bold ${
-                      selectedAnswer === currentQ.correctAnswer ? 'text-green-400' : 'text-red-400'
-                    }`}
-                  >
-                    {selectedAnswer === currentQ.correctAnswer ? 'Correct!' : 'Incorrect'}
-                  </h3>
-                </div>
-
-                {selectedAnswer !== currentQ.correctAnswer && (
-                  <p className="text-white mb-4">
-                    <strong className="text-white">Correct answer:</strong>{' '}
-                    {currentQ.options[currentQ.correctAnswer]}
-                  </p>
-                )}
-              </div>
-
-              <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
-                <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-lg bg-blue-500/20 flex-shrink-0">
-                    <Brain className="h-4 w-4 text-blue-400" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-blue-400 mb-1">Explanation</h4>
-                    <p className="text-white text-sm">{currentQ.explanation}</p>
-                  </div>
-                </div>
-              </div>
-
-              <Button
-                onClick={handleContinue}
-                className="w-full h-11 bg-cyan-500 hover:bg-cyan-500/90 text-black touch-manipulation active:scale-95 transition-all"
-              >
-                {currentQuestion === questions.length - 1 ? 'View Results' : 'Next Question'}
-              </Button>
+          <Button
+            onClick={handleNextQuestion}
+            disabled={selectedAnswer === null}
+            className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold disabled:opacity-40 touch-manipulation active:scale-[0.98]"
+          >
+            {currentQuestion === questions.length - 1 ? 'Finish quiz' : 'Check answer'}
+          </Button>
+        </>
+      ) : (
+        <div className="space-y-4">
+          <div
+            className={`rounded-xl border p-4 sm:p-5 space-y-2 ${
+              selectedAnswer === currentQ.correctAnswer
+                ? 'bg-elec-yellow/[0.04] border-elec-yellow/30'
+                : 'bg-red-500/[0.04] border-red-500/30'
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              {selectedAnswer === currentQ.correctAnswer ? (
+                <CheckCircle className="h-5 w-5 text-elec-yellow" />
+              ) : (
+                <XCircle className="h-5 w-5 text-red-400" />
+              )}
+              <p className="text-[16px] font-medium text-white">
+                {selectedAnswer === currentQ.correctAnswer ? 'Correct' : 'Incorrect'}
+              </p>
             </div>
-          )}
-        </CardContent>
-      </Card>
+            {selectedAnswer !== currentQ.correctAnswer && (
+              <p className="text-[14px] text-white/85 leading-relaxed">
+                Correct answer: {currentQ.options[currentQ.correctAnswer]}
+              </p>
+            )}
+          </div>
+
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Explanation
+            </span>
+            <p className="text-[14px] text-white/85 leading-relaxed">{currentQ.explanation}</p>
+          </div>
+
+          <Button
+            onClick={handleContinue}
+            className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98]"
+          >
+            {currentQuestion === questions.length - 1 ? 'View results' : 'Next question'}
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

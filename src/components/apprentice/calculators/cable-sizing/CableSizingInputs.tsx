@@ -1,4 +1,4 @@
-import { Calculator, RotateCcw, ChevronRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 
 import { CableSizingInputs, CableSizingErrors, CableType } from './useCableSizing';
@@ -13,7 +13,6 @@ import {
   CalculatorSelect,
   CalculatorInputGrid,
   CalculatorActions,
-  CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
 import { cn } from '@/lib/utils';
 
@@ -111,8 +110,6 @@ const burialDepthOptions = [
   { value: '1.5', label: '1.5m (Road crossings)' },
 ];
 
-const config = CALCULATOR_CONFIG['cable'];
-
 const CableSizingForm = ({
   inputs,
   errors,
@@ -150,13 +147,9 @@ const CableSizingForm = ({
     <div className="space-y-6">
       {/* Section: Basic Parameters */}
       <div className="space-y-3">
-        <h3
-          className="text-sm font-semibold flex items-center gap-2"
-          style={{ color: config.gradientFrom }}
-        >
-          <Calculator className="h-4 w-4" />
-          Cable Sizing Parameters
-        </h3>
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Cable sizing parameters
+        </span>
 
         {inputMode === 'current' && (
           <CalculatorInputGrid columns={2}>
@@ -196,12 +189,16 @@ const CableSizingForm = ({
 
       {/* Section: Installation Method */}
       <div className="space-y-3">
-        <h4 className="text-sm font-medium text-white">Installation Method (BS 7671)</h4>
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Installation method (BS 7671)
+        </span>
 
         {/* Current Selection Display */}
-        <div className="p-3 rounded-xl bg-white/[0.04] border border-white/5">
-          <div className="text-xs text-white mb-1">Selected Method</div>
-          <div className="text-sm text-white font-medium">
+        <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.06] space-y-0.5">
+          <div className="text-[11px] uppercase tracking-[0.18em] text-white/55">
+            Selected method
+          </div>
+          <div className="text-[14px] text-white font-medium">
             {getMethodLabel(uiSelections.installationMethodUI)}
           </div>
         </div>
@@ -213,20 +210,14 @@ const CableSizingForm = ({
               <button
                 key={key}
                 onClick={() => handleCategorySelect(key)}
-                className={cn(
-                  'p-3 text-left rounded-xl border transition-all touch-manipulation min-h-11',
-                  'border-white/10 hover:border-white/20 hover:bg-white/[0.04]'
-                )}
+                className="p-3 text-left rounded-lg border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] transition-all touch-manipulation min-h-11"
               >
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-2">
                   <div>
-                    <div className="font-medium text-white text-sm">{label}</div>
-                    <div className="text-xs text-white mt-0.5">{description}</div>
+                    <div className="font-medium text-white text-[14px]">{label}</div>
+                    <div className="text-[12px] text-white/55 mt-0.5">{description}</div>
                   </div>
-                  <ChevronRight
-                    className="h-4 w-4 shrink-0"
-                    style={{ color: config.gradientFrom }}
-                  />
+                  <ChevronRight className="h-4 w-4 shrink-0 text-white/55" />
                 </div>
               </button>
             ))}
@@ -236,12 +227,11 @@ const CableSizingForm = ({
           <div className="space-y-2">
             <button
               onClick={() => setSelectedCategory(null)}
-              className="text-sm font-medium flex items-center gap-1 min-h-11 touch-manipulation"
-              style={{ color: config.gradientFrom }}
+              className="text-[13px] font-medium flex items-center gap-1 min-h-11 touch-manipulation text-white/85 hover:text-white"
             >
               ← Back to categories
             </button>
-            <div className="text-xs text-white mb-1">
+            <div className="text-[11px] uppercase tracking-[0.18em] text-white/55 mb-1">
               {
                 installationCategories[selectedCategory as keyof typeof installationCategories]
                   ?.label
@@ -253,19 +243,11 @@ const CableSizingForm = ({
                   key={option.value}
                   onClick={() => handleMethodSelect(option.value)}
                   className={cn(
-                    'w-full p-3 text-left rounded-xl border transition-all touch-manipulation min-h-11 text-sm text-white',
+                    'w-full p-3 text-left rounded-lg border transition-all touch-manipulation min-h-11 text-[14px]',
                     uiSelections.installationMethodUI === option.value
-                      ? 'border-white/20'
-                      : 'border-white/10 hover:border-white/20 hover:bg-white/[0.04]'
+                      ? 'border-elec-yellow/40 bg-elec-yellow/[0.04] text-white'
+                      : 'border-white/[0.06] bg-white/[0.02] text-white hover:bg-white/[0.04]'
                   )}
-                  style={
-                    uiSelections.installationMethodUI === option.value
-                      ? {
-                          borderColor: `${config.gradientFrom}40`,
-                          background: `${config.gradientFrom}10`,
-                        }
-                      : undefined
-                  }
                 >
                   {option.label}
                 </button>
@@ -277,7 +259,9 @@ const CableSizingForm = ({
 
       {/* Section: Cable Type */}
       <div className="space-y-3">
-        <h4 className="text-sm font-medium text-white">Cable Type</h4>
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Cable type
+        </span>
         <CalculatorSelect
           label="Insulation Type"
           value={uiSelections.cableTypeUI}
@@ -319,12 +303,9 @@ const CableSizingForm = ({
       {/* Section: Underground-Specific Fields (Conditional) */}
       {showUndergroundFields && (
         <div className="space-y-3">
-          <h4
-            className="text-sm font-medium flex items-center gap-2"
-            style={{ color: config.gradientFrom }}
-          >
-            Underground Installation Factors (BS 7671 Tables 4B3/4B4)
-          </h4>
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Underground installation factors (BS 7671 Tables 4B3 / 4B4)
+          </span>
           <CalculatorInputGrid columns={2}>
             <CalculatorSelect
               label="Soil Thermal Resistivity"
@@ -346,7 +327,9 @@ const CableSizingForm = ({
 
       {/* Section: Environmental Conditions */}
       <div className="space-y-3">
-        <h4 className="text-sm font-medium text-white">Environmental Conditions</h4>
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Environmental conditions
+        </span>
         <CalculatorInputGrid columns={3}>
           <CalculatorInput
             label={showUndergroundFields ? 'Soil Temperature (°C)' : 'Ambient Temperature (°C)'}
@@ -380,7 +363,9 @@ const CableSizingForm = ({
 
       {/* Section: Load Characteristics */}
       <div className="space-y-3">
-        <h4 className="text-sm font-medium text-white">Load Characteristics</h4>
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Load characteristics
+        </span>
         <CalculatorInputGrid columns={2}>
           <CalculatorSelect
             label="Load Type"
@@ -404,7 +389,9 @@ const CableSizingForm = ({
       {/* Section: System Parameters (only in current mode) */}
       {inputMode !== 'load' && (
         <div className="space-y-3">
-          <h4 className="text-sm font-medium text-white">System Parameters</h4>
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            System parameters
+          </span>
           <CalculatorInputGrid columns={2}>
             <CalculatorSelect
               label="System Voltage (V)"

@@ -1,13 +1,10 @@
-import { Info, ChevronDown, CheckCircle2, Cable, Calculator, AlertTriangle } from 'lucide-react';
+import { ChevronDown, AlertTriangle } from 'lucide-react';
 import { CableSizingInputs, DeratingFactors, BS7671CableOption } from './useCableSizing';
 import { RequiredFieldTooltip } from '@/components/ui/required-field-tooltip';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import ProtectiveDeviceSection from './ProtectiveDeviceSection';
-import { CALCULATOR_CONFIG } from '@/components/calculators/shared';
-
-const config = CALCULATOR_CONFIG['cable'];
 
 interface CableSizingResultProps {
   recommendedCable: BS7671CableOption | null;
@@ -78,51 +75,31 @@ const CableSizingResult = ({
     <div className="space-y-6">
       {!recommendedCable ? (
         <div className="text-center py-12">
-          <p className="text-white">
-            Enter the circuit specifications and click "Calculate Cable Size" to get results
+          <p className="text-[14px] text-white/55 leading-relaxed">
+            Enter the circuit specifications and tap "Calculate" to get results
           </p>
         </div>
       ) : (
         <>
           {/* Recommended Cable */}
-          <div>
-            <div className="flex items-center gap-2 mb-6">
-              <CheckCircle2 className="h-6 w-6" style={{ color: config.gradientFrom }} />
-              <h3
-                className="text-xl font-semibold bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                }}
-              >
-                Recommended Cable
-              </h3>
-            </div>
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Recommended cable
+            </span>
 
             {/* Cable Size - Centred, Prominent */}
-            <div className="text-center mb-8">
+            <div className="text-center">
               <div className="flex items-baseline justify-center gap-2 mb-2">
-                <span
-                  className="text-6xl md:text-7xl font-bold bg-clip-text text-transparent"
-                  style={{
-                    backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                  }}
-                >
+                <span className="text-5xl md:text-6xl font-mono font-semibold text-white">
                   {recommendedCable.size}
                 </span>
-                <span
-                  className="text-3xl md:text-4xl bg-clip-text text-transparent"
-                  style={{
-                    backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                  }}
-                >
-                  mm²
-                </span>
+                <span className="text-2xl md:text-3xl font-mono text-white/85">mm²</span>
               </div>
               <div className="space-y-1">
-                <p className="text-lg font-medium text-white">
+                <p className="text-[14px] font-medium text-white">
                   {getCableTypeDisplay(inputs.cableType)}
                 </p>
-                <p className="text-sm text-white">
+                <p className="text-[12px] text-white/55 font-mono">
                   {recommendedCable.tableReference} —{' '}
                   {getInstallationMethodDisplay(deratingFactors?.referenceMethod || 'C')}
                 </p>
@@ -130,51 +107,37 @@ const CableSizingResult = ({
             </div>
 
             {/* Capacity Info */}
-            <div className="space-y-4 mb-6">
-              <div
-                className="flex items-center justify-between py-3 border-b"
-                style={{ borderColor: `${config.gradientFrom}20` }}
-              >
-                <span className="text-sm text-white flex items-center gap-1">
-                  Tabulated Capacity (It)
+            <div className="space-y-1">
+              <div className="flex items-center justify-between py-3 border-b border-white/[0.06]">
+                <span className="text-[13px] text-white/85 flex items-center gap-1">
+                  Tabulated capacity (It)
                   <RequiredFieldTooltip content="Current-carrying capacity from BS 7671 Appendix 4 tables at reference conditions" />
                 </span>
-                <span className="text-2xl font-bold" style={{ color: config.gradientFrom }}>
+                <span className="text-2xl font-mono text-white">
                   {recommendedCable.tabulatedCapacity}A
                 </span>
               </div>
 
-              <div
-                className="flex items-center justify-between py-3 border-b"
-                style={{ borderColor: `${config.gradientFrom}20` }}
-              >
-                <span className="text-sm text-white flex items-center gap-1">
-                  Effective Capacity
+              <div className="flex items-center justify-between py-3 border-b border-white/[0.06]">
+                <span className="text-[13px] text-white/85 flex items-center gap-1">
+                  Effective capacity
                   <RequiredFieldTooltip content="It × Ca × Cg × Ci — the current-carrying capacity adjusted for installation conditions" />
                 </span>
-                <span className="text-2xl font-bold" style={{ color: config.gradientFrom }}>
+                <span className="text-2xl font-mono text-white">
                   {recommendedCable.deratedCapacity}A
                 </span>
               </div>
 
               <div className="flex items-center justify-between py-3">
-                <span className="text-sm text-white flex items-center gap-1">
-                  Voltage Drop
+                <span className="text-[13px] text-white/85 flex items-center gap-1">
+                  Voltage drop
                   <RequiredFieldTooltip content="Voltage drop must not exceed 3% for lighting or 5% for other circuits per BS 7671" />
                 </span>
                 <div className="text-right">
-                  <div className="text-xl font-bold text-white">
+                  <div className="text-xl font-mono text-white">
                     {recommendedCable.calculatedVoltageDrop}V
                   </div>
-                  <div
-                    className={`text-sm font-medium ${
-                      recommendedCable.voltageDropPercent <= 3
-                        ? 'text-green-400'
-                        : recommendedCable.voltageDropPercent <= 5
-                          ? 'text-amber-400'
-                          : 'text-red-400'
-                    }`}
-                  >
+                  <div className="text-[12px] font-mono text-white/55">
                     ({recommendedCable.voltageDropPercent}%)
                   </div>
                 </div>
@@ -184,44 +147,32 @@ const CableSizingResult = ({
 
           {/* Alternative Options */}
           {alternativeCables.length > 0 && (
-            <div className="mt-8 pt-8 border-t" style={{ borderColor: `${config.gradientFrom}30` }}>
-              <h3
-                className="text-lg font-semibold mb-4 flex items-center gap-2"
-                style={{ color: config.gradientFrom }}
-              >
-                <Cable className="h-5 w-5" />
-                Alternative Options
-              </h3>
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Alternative options
+              </span>
               <div className="space-y-3">
                 {alternativeCables.map((cable, index) => (
                   <div
                     key={index}
-                    className="p-4 rounded-lg border border-white/5 hover:border-white/10 transition-colors bg-white/[0.04]"
+                    className="p-3 rounded-lg border border-white/[0.06] bg-white/[0.02]"
                   >
                     <div className="flex items-baseline gap-2 mb-3">
-                      <span className="text-3xl font-bold text-white">{cable.size}</span>
-                      <span className="text-lg text-white">mm²</span>
+                      <span className="text-2xl font-mono text-white">{cable.size}</span>
+                      <span className="text-[14px] font-mono text-white/85">mm²</span>
                     </div>
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span className="text-white">Tabulated:</span>
-                        <span className="font-bold text-white">{cable.tabulatedCapacity}A</span>
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-[13px]">
+                        <span className="text-white/85">Tabulated</span>
+                        <span className="font-mono text-white">{cable.tabulatedCapacity}A</span>
                       </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-white">Effective:</span>
-                        <span className="font-bold text-white">{cable.deratedCapacity}A</span>
+                      <div className="flex justify-between text-[13px]">
+                        <span className="text-white/85">Effective</span>
+                        <span className="font-mono text-white">{cable.deratedCapacity}A</span>
                       </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-white">Voltage Drop:</span>
-                        <span
-                          className={`font-bold ${
-                            cable.voltageDropPercent <= 3
-                              ? 'text-green-400'
-                              : cable.voltageDropPercent <= 5
-                                ? 'text-amber-400'
-                                : 'text-red-400'
-                          }`}
-                        >
+                      <div className="flex justify-between text-[13px]">
+                        <span className="text-white/85">Voltage drop</span>
+                        <span className="font-mono text-white">
                           {cable.calculatedVoltageDrop}V ({cable.voltageDropPercent}%)
                         </span>
                       </div>
@@ -234,43 +185,28 @@ const CableSizingResult = ({
 
           {/* Show Calculation Derivation */}
           <Collapsible open={showDerivation} onOpenChange={setShowDerivation} className="mt-6">
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-2">
-                <Calculator className="h-4 w-4" style={{ color: config.gradientFrom }} />
-                <span className="text-sm font-medium text-white">
-                  {showDerivation ? 'Hide calculation derivation' : 'Show calculation derivation'}
-                </span>
-              </div>
+            <CollapsibleTrigger className="w-full rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 flex items-center justify-between text-left touch-manipulation min-h-[44px]">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                {showDerivation ? 'Hide calculation derivation' : 'Show calculation derivation'}
+              </span>
               <ChevronDown
                 className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
+                  'h-4 w-4 text-white/55 transition-transform duration-200',
                   showDerivation && 'rotate-180'
                 )}
               />
             </CollapsibleTrigger>
-            <CollapsibleContent className="pt-6">
+            <CollapsibleContent className="pt-4">
               <div className="space-y-4">
-                <div className="flex items-center gap-2 mb-4">
-                  <Calculator className="h-5 w-5" style={{ color: config.gradientFrom }} />
-                  <h4 className="text-lg font-semibold" style={{ color: config.gradientFrom }}>
-                    BS 7671 Calculation Steps
-                  </h4>
-                </div>
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  BS 7671 calculation steps
+                </span>
 
                 <div className="space-y-3">
                   {/* Step 1 */}
-                  <div
-                    className="p-4 bg-white/[0.04] rounded-lg border-l-2"
-                    style={{ borderLeftColor: config.gradientFrom }}
-                  >
+                  <div className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02]">
                     <div className="flex items-start gap-3 text-left">
-                      <span
-                        className="flex items-center justify-center w-7 h-7 rounded-full text-sm font-bold flex-shrink-0"
-                        style={{
-                          background: `${config.gradientFrom}20`,
-                          color: config.gradientFrom,
-                        }}
-                      >
+                      <span className="flex items-center justify-center w-7 h-7 rounded-full text-[12px] font-mono flex-shrink-0 bg-white/[0.04] text-white/85">
                         1
                       </span>
                       <div className="flex-1">
@@ -289,18 +225,9 @@ const CableSizingResult = ({
                   </div>
 
                   {/* Step 2 */}
-                  <div
-                    className="p-4 bg-white/[0.04] rounded-lg border-l-2"
-                    style={{ borderLeftColor: config.gradientFrom }}
-                  >
+                  <div className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02]">
                     <div className="flex items-start gap-3 text-left">
-                      <span
-                        className="flex items-center justify-center w-7 h-7 rounded-full text-sm font-bold flex-shrink-0"
-                        style={{
-                          background: `${config.gradientFrom}20`,
-                          color: config.gradientFrom,
-                        }}
-                      >
+                      <span className="flex items-center justify-center w-7 h-7 rounded-full text-[12px] font-mono flex-shrink-0 bg-white/[0.04] text-white/85">
                         2
                       </span>
                       <div className="flex-1">
@@ -345,17 +272,11 @@ const CableSizingResult = ({
                               </span>
                             </div>
                           )}
-                          <div
-                            className="flex items-center justify-between gap-2 pt-2 mt-2 border-t"
-                            style={{ borderColor: `${config.gradientFrom}10` }}
-                          >
+                          <div className="flex items-center justify-between gap-2 pt-2 mt-2 border-t border-white/[0.06]">
                             <span className="text-white font-medium whitespace-nowrap">
                               Overall:
                             </span>
-                            <span
-                              className="font-mono font-bold"
-                              style={{ color: config.gradientFrom }}
-                            >
+                            <span className="font-mono text-white">
                               {totalDerating.toFixed(3)}
                             </span>
                           </div>
@@ -365,18 +286,9 @@ const CableSizingResult = ({
                   </div>
 
                   {/* Step 3 */}
-                  <div
-                    className="p-4 bg-white/[0.04] rounded-lg border-l-2"
-                    style={{ borderLeftColor: config.gradientFrom }}
-                  >
+                  <div className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02]">
                     <div className="flex items-start gap-3 text-left">
-                      <span
-                        className="flex items-center justify-center w-7 h-7 rounded-full text-sm font-bold flex-shrink-0"
-                        style={{
-                          background: `${config.gradientFrom}20`,
-                          color: config.gradientFrom,
-                        }}
-                      >
+                      <span className="flex items-center justify-center w-7 h-7 rounded-full text-[12px] font-mono flex-shrink-0 bg-white/[0.04] text-white/85">
                         3
                       </span>
                       <div className="flex-1">
@@ -389,10 +301,7 @@ const CableSizingResult = ({
                         </p>
                         <p className="text-sm text-white mt-1">
                           It ≥ {inputs.current}A ÷ {totalDerating.toFixed(3)} ={' '}
-                          <span
-                            className="font-mono font-bold"
-                            style={{ color: config.gradientFrom }}
-                          >
+                          <span className="font-mono text-white">
                             {(parseFloat(inputs.current) / totalDerating).toFixed(1)}A
                           </span>
                         </p>
@@ -401,50 +310,27 @@ const CableSizingResult = ({
                   </div>
 
                   {/* Step 4 */}
-                  <div
-                    className="p-4 bg-white/[0.04] rounded-lg border-l-2"
-                    style={{ borderLeftColor: config.gradientFrom }}
-                  >
+                  <div className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02]">
                     <div className="flex items-start gap-3 text-left">
-                      <span
-                        className="flex items-center justify-center w-7 h-7 rounded-full text-sm font-bold flex-shrink-0"
-                        style={{
-                          background: `${config.gradientFrom}20`,
-                          color: config.gradientFrom,
-                        }}
-                      >
+                      <span className="flex items-center justify-center w-7 h-7 rounded-full text-[12px] font-mono flex-shrink-0 bg-white/[0.04] text-white/85">
                         4
                       </span>
                       <div className="flex-1">
                         <h4 className="font-semibold text-white text-base">Cable Selection</h4>
                         <p className="text-xs text-white mb-1">{recommendedCable.tableReference}</p>
                         <p className="text-sm text-white">
-                          Selected{' '}
-                          <span className="font-medium" style={{ color: config.gradientFrom }}>
-                            {recommendedCable.sizeLabel}
-                          </span>{' '}
+                          Selected <span className="font-medium">{recommendedCable.sizeLabel}</span>{' '}
                           with It ={' '}
-                          <span className="font-mono font-bold">
-                            {recommendedCable.tabulatedCapacity}A
-                          </span>
+                          <span className="font-mono">{recommendedCable.tabulatedCapacity}A</span>
                         </p>
                       </div>
                     </div>
                   </div>
 
                   {/* Step 5 */}
-                  <div
-                    className="p-4 bg-white/[0.04] rounded-lg border-l-2"
-                    style={{ borderLeftColor: config.gradientFrom }}
-                  >
+                  <div className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02]">
                     <div className="flex items-start gap-3 text-left">
-                      <span
-                        className="flex items-center justify-center w-7 h-7 rounded-full text-sm font-bold flex-shrink-0"
-                        style={{
-                          background: `${config.gradientFrom}20`,
-                          color: config.gradientFrom,
-                        }}
-                      >
+                      <span className="flex items-center justify-center w-7 h-7 rounded-full text-[12px] font-mono flex-shrink-0 bg-white/[0.04] text-white/85">
                         5
                       </span>
                       <div className="flex-1">
@@ -458,12 +344,10 @@ const CableSizingResult = ({
                           {inputs.length}m ÷ 1000
                         </p>
                         <p className="text-sm mt-1">
-                          <span
-                            className={`font-mono font-bold ${recommendedCable.meetsVoltageDrop ? 'text-green-400' : 'text-red-400'}`}
-                          >
+                          <span className="font-mono text-white">
                             = {recommendedCable.calculatedVoltageDrop}V
                           </span>
-                          <span className="text-white ml-1">
+                          <span className="text-white/55 ml-1">
                             ({recommendedCable.voltageDropPercent}%)
                           </span>
                         </p>
@@ -485,11 +369,11 @@ const CableSizingResult = ({
       )}
 
       {errors.general && (
-        <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
-          <div className="flex items-start gap-2">
-            <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
-            <p className="text-sm text-white">{errors.general}</p>
-          </div>
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Error
+          </span>
+          <p className="text-[14px] text-white/85 leading-relaxed">{errors.general}</p>
         </div>
       )}
     </div>

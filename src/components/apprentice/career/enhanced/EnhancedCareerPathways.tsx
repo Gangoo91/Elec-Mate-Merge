@@ -118,17 +118,17 @@ const EnhancedCareerPathways = () => {
     };
 
     return (
-      <div className="space-y-6 animate-fade-in">
-        <div className="flex items-center gap-4">
+      <div className="space-y-5 animate-fade-in">
+        <div className="flex items-center gap-3">
           <Button
-            variant="outline"
+            variant="ghost"
             size="sm"
             onClick={() => setSelectedPath(null)}
-            className="h-10 flex items-center gap-2 border-white/20 hover:bg-white/10 hover:border-elec-yellow/30 touch-manipulation active:scale-95 transition-all"
+            className="h-10 text-white hover:text-white hover:bg-white/[0.05] -ml-2 touch-manipulation"
           >
-            <ArrowLeft className="h-4 w-4" /> Back to Career Pathways
+            <ArrowLeft className="h-4 w-4 mr-2" /> Back to career pathways
           </Button>
-          <h2 className="text-2xl font-semibold text-white">{path.title}</h2>
+          <h2 className="text-[20px] sm:text-[24px] font-semibold text-white">{path.title}</h2>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -228,16 +228,17 @@ const EnhancedCareerPathways = () => {
   ];
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
-      <div className="flex flex-col items-center justify-center mb-6">
-        <h1 className="text-3xl font-bold tracking-tight mb-4 flex items-center gap-3">
-          <TrendingUp className="h-8 w-8 text-elec-yellow" />
-          UK Electrical Career Pathways
+    <div className="max-w-6xl mx-auto space-y-6 animate-fade-in">
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Career pathways
+        </span>
+        <h1 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
+          UK electrical career pathways
         </h1>
-        <p className="text-white text-center max-w-3xl mb-4">
-          Comprehensive career development framework including skills matrices, professional
-          development strategies, industry insights, and progression pathways for electrical
-          professionals in the UK
+        <p className="text-[14px] text-white/70 max-w-3xl leading-relaxed">
+          Skills matrices, professional development strategies, industry insights, and progression
+          pathways for electrical professionals in the UK.
         </p>
       </div>
 

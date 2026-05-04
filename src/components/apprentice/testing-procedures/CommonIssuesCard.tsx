@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronRight, Info } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type Issue = {
@@ -37,33 +37,34 @@ const CommonIssuesCard = () => {
   };
 
   return (
-    <div className="bg-blue-950/30 border border-blue-500/30 rounded-md p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <Info className="text-blue-300 h-5 w-5" />
-        <h3 className="text-blue-200 font-medium">Common Issues & Solutions</h3>
-      </div>
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        Common issues
+      </span>
 
-      <ul className="text-sm text-blue-100/80 space-y-3">
+      <ul className="space-y-2">
         {issuesList.map((issue, index) => (
-          <li key={index} className="border-b border-blue-500/20 pb-2">
+          <li key={index} className="border-b border-white/[0.06] pb-2 last:border-0 last:pb-0">
             <button
               onClick={() => toggleIssue(index)}
-              className="flex justify-between items-center w-full text-left hover:text-blue-200 transition-colors"
+              className="flex justify-between items-center w-full text-left touch-manipulation min-h-[36px]"
             >
-              <span className="font-medium">{issue.title}:</span>
+              <span className="text-[14px] text-white/85">{issue.title}</span>
               <ChevronRight
                 className={cn(
-                  'h-4 w-4 transition-transform',
+                  'h-4 w-4 text-white/55 transition-transform',
                   expandedIssue === index && 'rotate-90'
                 )}
               />
             </button>
 
             {expandedIssue === index && (
-              <div className="mt-2 pl-4 border-l-2 border-blue-500/30 animate-fade-in">
-                <p className="text-blue-100/70 mb-1">{issue.description}</p>
-                <p className="text-blue-200 font-medium mt-1 text-xs">Solution:</p>
-                <p className="text-blue-100/90">{issue.solution}</p>
+              <div className="mt-2 pl-3 border-l border-white/[0.06] animate-fade-in space-y-1">
+                <p className="text-[13px] text-white/70 leading-relaxed">{issue.description}</p>
+                <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Solution
+                </p>
+                <p className="text-[13px] text-white/85 leading-relaxed">{issue.solution}</p>
               </div>
             )}
           </li>

@@ -179,8 +179,7 @@ function Section({
 }) {
   return (
     <section
-      className={cn(
-        'rounded-2xl border bg-[hsl(0_0%_10%)] overflow-hidden',
+      className={cn('rounded-2xl border bg-[hsl(0_0%_10%)] overflow-hidden',
         accent ? 'border-elec-yellow/30' : 'border-white/[0.06]'
       )}
     >
@@ -190,8 +189,7 @@ function Section({
         </h2>
         {subtle && (
           <span
-            className={cn(
-              'text-[11px] tabular-nums whitespace-nowrap',
+            className={cn('text-[11px] tabular-nums whitespace-nowrap',
               subtleTone === 'red' ? 'text-red-300' : 'text-white/85'
             )}
           >
@@ -247,11 +245,11 @@ function QuizRow({ q, isNew, onClick }: { q: AssignedQuiz; isNew: boolean; onCli
     if (q.status === 'completed')
       return {
         label: q.best_percentage != null ? `${q.best_percentage}%` : 'Completed',
-        cls: 'text-emerald-300',
+        cls: 'text-white/85',
         accentLabel: 'View',
       };
     if (q.status === 'in_progress')
-      return { label: 'In progress', cls: 'text-amber-300', accentLabel: 'Resume' };
+      return { label: 'In progress', cls: 'text-white/85', accentLabel: 'Resume' };
     return { label: kindWord(q.kind), cls: 'text-white/90', accentLabel: 'Start' };
   })();
 
@@ -259,8 +257,7 @@ function QuizRow({ q, isNew, onClick }: { q: AssignedQuiz; isNew: boolean; onCli
     <button
       type="button"
       onClick={onClick}
-      className={cn(
-        'group w-full -mx-4 sm:-mx-5 px-4 sm:px-5 py-3.5 flex items-baseline gap-4 text-left transition-colors touch-manipulation',
+      className={cn('group w-full -mx-4 sm:-mx-5 px-4 sm:px-5 py-3.5 flex items-baseline gap-4 text-left transition-colors touch-manipulation',
         'hover:bg-white/[0.02] active:bg-white/[0.04]'
       )}
     >

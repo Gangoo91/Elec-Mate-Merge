@@ -1,7 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { CheckCircle, AlertTriangle, BookOpen, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { useState } from 'react';
 
 const CaseStudiesTab = () => {
@@ -11,7 +9,7 @@ const CaseStudiesTab = () => {
     {
       id: 1,
       title: 'The Wrong Circuit Breaker',
-      category: 'Technical Error',
+      category: 'Technical error',
       severity: 'Moderate',
       scenario:
         'Jamie, a second-year apprentice, was tasked with replacing a faulty 20A MCB in a domestic consumer unit. In a rush to finish before lunch, Jamie grabbed what looked like the right breaker from the van and installed it without checking the rating. It was actually a 32A MCB.',
@@ -36,8 +34,9 @@ const CaseStudiesTab = () => {
     {
       id: 2,
       title: 'The Live Working Incident',
-      category: 'Safety Violation',
+      category: 'Safety violation',
       severity: 'Serious',
+      isSafety: true,
       scenario:
         'Alex was changing a faulty socket outlet in an office. The socket appeared dead (no power to a plugged-in device), so Alex assumed it was safe to work on without proper isolation. Unknown to Alex, the socket was on a different circuit that was still live.',
       discovery:
@@ -87,145 +86,158 @@ const CaseStudiesTab = () => {
     },
   ];
 
-  const getSeverityColor = (severity: string) => {
-    switch (severity) {
-      case 'Serious':
-        return 'destructive';
-      case 'Moderate':
-        return 'default';
-      case 'Minor':
-        return 'outline';
-      default:
-        return 'outline';
-    }
-  };
-
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <BookOpen className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Real Apprentice Case Studies</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {caseStudies.map((caseStudy) => (
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Real apprentice case studies
+        </span>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          {caseStudies.map((caseStudy) => {
+            const isSelected = selectedCase === caseStudy.id;
+            const containerClass = caseStudy.isSafety
+              ? 'rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 cursor-pointer transition-all touch-manipulation space-y-2'
+              : `rounded-xl border bg-white/[0.02] p-4 cursor-pointer transition-all touch-manipulation space-y-2 ${
+                  isSelected ? 'border-elec-yellow' : 'border-white/[0.06] hover:border-white/15'
+                }`;
+
+            return (
               <div
                 key={caseStudy.id}
-                className={`border rounded-lg p-4 cursor-pointer transition-all hover:bg-white/5 ${
-                  selectedCase === caseStudy.id
-                    ? 'border-elec-yellow bg-elec-yellow/10'
-                    : 'border-elec-yellow/20'
-                }`}
-                onClick={() => setSelectedCase(selectedCase === caseStudy.id ? null : caseStudy.id)}
+                className={containerClass}
+                onClick={() =>
+                  setSelectedCase(selectedCase === caseStudy.id ? null : caseStudy.id)
+                }
               >
-                <div className="flex items-start justify-between mb-3">
-                  <h3 className="font-semibold text-white text-sm">{caseStudy.title}</h3>
-                  <Badge variant={getSeverityColor(caseStudy.severity)} className="text-xs">
+                <div className="flex items-start justify-between gap-2">
+                  <h3 className="text-[14px] font-semibold text-white">{caseStudy.title}</h3>
+                  <span
+                    className={
+                      caseStudy.isSafety
+                        ? 'text-[10px] font-medium uppercase tracking-[0.18em] text-red-300 flex-shrink-0'
+                        : 'text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 flex-shrink-0'
+                    }
+                  >
                     {caseStudy.severity}
-                  </Badge>
+                  </span>
                 </div>
 
-                <Badge
-                  variant="outline"
-                  className="mb-3 text-xs border-elec-yellow/40 text-elec-yellow"
-                >
+                <span className="inline-block text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                   {caseStudy.category}
-                </Badge>
+                </span>
 
-                <p className="text-xs text-white line-clamp-3">{caseStudy.scenario}</p>
+                <p className="text-[13px] text-white/85 leading-relaxed line-clamp-3">
+                  {caseStudy.scenario}
+                </p>
 
-                {selectedCase === caseStudy.id && (
+                {isSelected && (
                   <Button
                     size="sm"
-                    className="mt-3 w-full"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      // This would open a detailed view
-                    }}
+                    className="mt-2 w-full h-10 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
+                    onClick={(e) => e.stopPropagation()}
                   >
                     <ExternalLink className="h-3 w-3 mr-1" />
-                    View Full Case
+                    View full case
                   </Button>
                 )}
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+            );
+          })}
+        </div>
+      </div>
 
       {selectedCase && (
-        <Card className="border-elec-yellow/20 bg-white/5">
-          <CardHeader>
-            <CardTitle className="text-elec-yellow">
-              {caseStudies.find((c) => c.id === selectedCase)?.title}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {(() => {
-              const currentCase = caseStudies.find((c) => c.id === selectedCase);
-              if (!currentCase) return null;
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5">
+          {(() => {
+            const currentCase = caseStudies.find((c) => c.id === selectedCase);
+            if (!currentCase) return null;
 
-              return (
-                <div className="space-y-6">
-                  <div>
-                    <h4 className="font-semibold text-white mb-2">The Scenario</h4>
-                    <p className="text-sm text-white">{currentCase.scenario}</p>
+            return (
+              <>
+                <div className="space-y-1">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Case study
+                  </span>
+                  <h2 className="text-[20px] font-semibold text-white leading-tight">
+                    {currentCase.title}
+                  </h2>
+                </div>
+
+                <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    The scenario
+                  </span>
+                  <p className="text-[14px] text-white/85 leading-relaxed">
+                    {currentCase.scenario}
+                  </p>
+                </div>
+
+                <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    How it was discovered
+                  </span>
+                  <p className="text-[14px] text-white/85 leading-relaxed">
+                    {currentCase.discovery}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                      Consequences
+                    </span>
+                    <ul className="space-y-1.5">
+                      {currentCase.consequences.map((consequence, index) => (
+                        <li
+                          key={index}
+                          className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                        >
+                          <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                          <span>{consequence}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
 
-                  <div>
-                    <h4 className="font-semibold text-white mb-2">How It Was Discovered</h4>
-                    <p className="text-sm text-white">{currentCase.discovery}</p>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <h4 className="font-semibold text-orange-300 mb-2 flex items-center gap-2">
-                        <AlertTriangle className="h-4 w-4" />
-                        Consequences
-                      </h4>
-                      <ul className="space-y-1">
-                        {currentCase.consequences.map((consequence, index) => (
-                          <li key={index} className="text-sm text-white flex items-start gap-2">
-                            <div className="w-1 h-1 bg-orange-400 rounded-full mt-2 flex-shrink-0"></div>
-                            {consequence}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div>
-                      <h4 className="font-semibold text-green-300 mb-2 flex items-center gap-2">
-                        <CheckCircle className="h-4 w-4" />
-                        Lessons Learned
-                      </h4>
-                      <ul className="space-y-1">
-                        {currentCase.lessons.map((lesson, index) => (
-                          <li key={index} className="text-sm text-white flex items-start gap-2">
-                            <div className="w-1 h-1 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
-                            {lesson}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="font-semibold text-blue-300 mb-2">Final Outcome</h4>
-                    <p className="text-sm text-white">{currentCase.outcome}</p>
-                  </div>
-
-                  <div className="bg-elec-yellow/10 p-4 rounded-lg">
-                    <h4 className="font-semibold text-elec-yellow mb-2">Prevention Strategy</h4>
-                    <p className="text-sm text-white">{currentCase.prevention}</p>
+                  <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                      Lessons learned
+                    </span>
+                    <ul className="space-y-1.5">
+                      {currentCase.lessons.map((lesson, index) => (
+                        <li
+                          key={index}
+                          className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                        >
+                          <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                          <span>{lesson}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
-              );
-            })()}
-          </CardContent>
-        </Card>
+
+                <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Final outcome
+                  </span>
+                  <p className="text-[14px] text-white/85 leading-relaxed">
+                    {currentCase.outcome}
+                  </p>
+                </div>
+
+                <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Prevention strategy
+                  </span>
+                  <p className="text-[14px] text-white/85 leading-relaxed">
+                    {currentCase.prevention}
+                  </p>
+                </div>
+              </>
+            );
+          })()}
+        </div>
       )}
     </div>
   );

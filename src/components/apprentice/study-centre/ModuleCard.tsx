@@ -1,6 +1,5 @@
 import { LucideIcon } from 'lucide-react';
-import { Card } from '@/components/ui/card';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface ModuleCardProps {
   number: string;
@@ -10,21 +9,8 @@ interface ModuleCardProps {
   href?: string;
 }
 
-export function ModuleCard({ number, title, description, icon: Icon, href }: ModuleCardProps) {
+export function ModuleCard({ number, title, description, icon: _Icon, href }: ModuleCardProps) {
   const navigate = useNavigate();
-
-  const CardContent = (
-    <div className="p-6 h-full flex flex-col items-center text-center justify-start">
-      <div className="mb-4 flex-shrink-0">
-        <Icon className="h-8 w-8 text-elec-yellow" />
-      </div>
-      <h4 className="text-elec-yellow font-semibold text-base mb-2 flex-shrink-0">{number}</h4>
-      <h3 className="text-elec-light font-semibold text-base mb-3 group-hover:text-elec-yellow transition-colors leading-tight flex-shrink-0">
-        {title}
-      </h3>
-      <p className="text-white leading-relaxed text-sm line-clamp-4">{description}</p>
-    </div>
-  );
 
   const handleClick = () => {
     console.log(`ModuleCard clicked with href: ${href}`);
@@ -36,23 +22,19 @@ export function ModuleCard({ number, title, description, icon: Icon, href }: Mod
     }
   };
 
-  if (href) {
-    return (
-      <Card
-        className="group relative overflow-hidden hover:bg-[#222222] hover:border-elec-yellow/40 cursor-pointer h-[200px] flex flex-col active:scale-[0.98]"
-        onClick={handleClick}
-      >
-        {CardContent}
-      </Card>
-    );
-  }
-
   return (
-    <Card
-      className="group relative overflow-hidden hover:bg-[#222222] hover:border-elec-yellow/40 cursor-pointer h-[200px] flex flex-col active:scale-[0.98]"
+    <button
+      type="button"
       onClick={handleClick}
+      className="text-left rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 active:bg-white/[0.04] transition-colors touch-manipulation h-full space-y-2"
     >
-      {CardContent}
-    </Card>
+      <div className="flex items-baseline gap-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 font-mono">
+          {number}
+        </span>
+      </div>
+      <h3 className="text-[16px] font-semibold text-white leading-tight">{title}</h3>
+      <p className="text-[14px] text-white/70 leading-relaxed line-clamp-4">{description}</p>
+    </button>
   );
 }

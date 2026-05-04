@@ -16,12 +16,10 @@ export interface TimeEntryDialogProps {
 export const TimeEntryDialog = ({ isOpen, onClose, onSubmit }: TimeEntryDialogProps) => {
   return (
     <ResponsiveDialog open={isOpen} onOpenChange={onClose}>
-      <ResponsiveDialogContent className="sm:max-w-2xl bg-white/5 border-elec-yellow/20">
-        <ResponsiveDialogHeader className="pb-4 border-b border-elec-yellow/20">
-          <ResponsiveDialogTitle className="text-elec-light flex items-center gap-2">
-            Log Training Hours
-          </ResponsiveDialogTitle>
-          <p className="text-sm text-elec-light/70 mt-2">
+      <ResponsiveDialogContent className="sm:max-w-2xl bg-background border-white/[0.06]">
+        <ResponsiveDialogHeader className="pb-4 border-b border-white/[0.06]">
+          <ResponsiveDialogTitle className="text-white">Log training hours</ResponsiveDialogTitle>
+          <p className="text-[13px] text-white/70 mt-2 leading-relaxed">
             Record your off-the-job training activities and hours
           </p>
         </ResponsiveDialogHeader>

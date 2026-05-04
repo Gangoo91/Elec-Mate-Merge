@@ -93,8 +93,7 @@ export function SharePortfolioSheet({ open, onOpenChange }: SharePortfolioSheetP
                       haptic.light();
                       setSelectedExpiry(opt.value);
                     }}
-                    className={cn(
-                      'px-3 py-2 rounded-xl text-xs font-medium touch-manipulation active:scale-95 transition-all',
+                    className={cn('px-3 py-2 rounded-xl text-xs font-medium touch-manipulation active:scale-95 transition-all',
                       selectedExpiry === opt.value
                         ? 'bg-elec-yellow text-black'
                         : 'bg-white/[0.06] text-white border border-white/[0.08]'
@@ -169,8 +168,7 @@ function ShareLinkCard({
 
   return (
     <div
-      className={cn(
-        'p-4 rounded-2xl border space-y-3',
+      className={cn('p-4 rounded-2xl border space-y-3',
         isExpired
           ? 'bg-white/[0.02] border-white/[0.06] opacity-60'
           : 'bg-white/[0.03] border-white/[0.08]'
@@ -180,11 +178,10 @@ function ShareLinkCard({
         <div className="flex items-center gap-2">
           <Badge
             variant="outline"
-            className={cn(
-              'text-[10px]',
+            className={cn('text-[10px]',
               isExpired
                 ? 'border-red-500/30 text-red-400'
-                : 'border-green-500/30 text-green-400'
+                : 'border-white/[0.06] text-white/85'
             )}
           >
             {isExpired ? 'Expired' : 'Active'}

@@ -157,13 +157,12 @@ export function QuickReflectionSheet({ open, onOpenChange, onSaved }: Props) {
               onChange={(e) => setText(e.target.value)}
               rows={8}
               placeholder="A few sentences. The job, the people, what you learned, where you got stuck…"
-              className="w-full px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[14px] text-white placeholder:text-white/50 leading-relaxed focus:outline-none focus:border-cyan-400/40 focus:ring-1 focus:ring-cyan-400/20 touch-manipulation resize-none"
+              className="w-full px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[14px] text-white placeholder:text-white/50 leading-relaxed focus:outline-none focus:border-white/[0.06] focus:ring-1 focus:ring-white/10 touch-manipulation resize-none"
             />
             <div className="flex items-baseline justify-between gap-3">
               <span
-                className={cn(
-                  'text-[10.5px] tabular-nums',
-                  charCount >= 12 ? 'text-emerald-300' : 'text-white/95'
+                className={cn('text-[10.5px] tabular-nums',
+                  charCount >= 12 ? 'text-white/85' : 'text-white/95'
                 )}
               >
                 {charCount} chars · 12 minimum
@@ -176,7 +175,7 @@ export function QuickReflectionSheet({ open, onOpenChange, onSaved }: Props) {
                   type="checkbox"
                   checked={countAsOtj}
                   onChange={(e) => setCountAsOtj(e.target.checked)}
-                  className="mt-0.5 h-4 w-4 rounded border border-white/30 bg-white/[0.05] checked:bg-cyan-500 checked:border-cyan-500 touch-manipulation"
+                  className="mt-0.5 h-4 w-4 rounded border border-white/30 bg-white/[0.05] checked:bg-elec-yellow checked:border-elec-yellow touch-manipulation"
                 />
                 <div className="flex-1">
                   <div className="text-[13px] font-medium text-white">
@@ -200,10 +199,9 @@ export function QuickReflectionSheet({ open, onOpenChange, onSaved }: Props) {
                         type="button"
                         key={p}
                         onClick={() => setDuration(p)}
-                        className={cn(
-                          'h-8 px-3 rounded-full border text-[11.5px] font-medium tabular-nums touch-manipulation transition-colors',
+                        className={cn('h-8 px-3 rounded-full border text-[11.5px] font-medium tabular-nums touch-manipulation transition-colors',
                           duration === p
-                            ? 'border-cyan-400/40 bg-cyan-500/[0.12] text-cyan-100'
+                            ? 'border-white/[0.06] bg-white/[0.02] text-white/85'
                             : 'border-white/[0.10] bg-white/[0.02] text-white/95 hover:text-white hover:border-white/[0.22]'
                         )}
                       >
@@ -229,10 +227,9 @@ export function QuickReflectionSheet({ open, onOpenChange, onSaved }: Props) {
               type="button"
               onClick={handleSubmit}
               disabled={!valid || saving}
-              className={cn(
-                'flex-1 h-11 rounded-lg text-[13px] font-semibold transition-colors touch-manipulation',
+              className={cn('flex-1 h-11 rounded-lg text-[13px] font-semibold transition-colors touch-manipulation',
                 valid && !saving
-                  ? 'bg-cyan-500 text-black hover:bg-cyan-400'
+                  ? 'bg-white/[0.02] text-black hover:bg-white/[0.02]'
                   : 'bg-white/[0.05] text-white/40'
               )}
             >

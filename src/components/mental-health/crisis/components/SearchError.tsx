@@ -11,7 +11,7 @@ const SearchError = ({ error, apiStatus }: SearchErrorProps) => {
   // Special handling for API errors
   if (apiStatus === 'REQUEST_DENIED' || apiStatus === 'INVALID_REQUEST') {
     return (
-      <div className="mt-4 p-3 bg-amber-500/10 text-amber-500 rounded-md text-sm border border-amber-500/20">
+      <div className="mt-4 p-3 bg-white/[0.02] text-white/85 rounded-md text-sm border border-white/[0.06]">
         <div className="flex items-center gap-2">
           <AlertTriangle className="h-4 w-4" />
           <div>
@@ -28,7 +28,7 @@ const SearchError = ({ error, apiStatus }: SearchErrorProps) => {
   }
 
   return (
-    <div className="mt-4 p-3 bg-red-500/10 text-red-500 rounded-md text-sm border border-red-500/20">
+    <div className="mt-4 p-3 bg-red-500/10 text-red-500 rounded-md text-sm border border-white/[0.06]">
       <div className="flex items-center gap-2">
         <Info className="h-4 w-4" />
         <p>{error}</p>

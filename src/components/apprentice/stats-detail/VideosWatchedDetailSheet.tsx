@@ -39,29 +39,29 @@ import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
 import { categoryLabels, type VideoCategory } from '@/data/apprentice/curatedVideos';
 
 const categoryColours: Partial<Record<VideoCategory, string>> = {
-  'electrical-theory': 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30',
-  wiring: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
-  'testing-inspection': 'bg-purple-500/20 text-purple-300 border-purple-500/30',
-  bs7671: 'bg-green-500/20 text-green-300 border-green-500/30',
-  'am2-prep': 'bg-blue-500/20 text-blue-300 border-blue-500/30',
-  domestic: 'bg-orange-500/20 text-orange-300 border-orange-500/30',
-  commercial: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30',
-  'solar-ev': 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
-  safety: 'bg-red-500/20 text-red-300 border-red-500/30',
-  'tools-equipment': 'bg-pink-500/20 text-pink-300 border-pink-500/30',
-  career: 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30',
+  'electrical-theory': 'bg-white/[0.03] text-white/85 border-white/10',
+  wiring: 'bg-white/[0.03] text-white/85 border-white/10',
+  'testing-inspection': 'bg-white/[0.03] text-white/85 border-white/10',
+  bs7671: 'bg-white/[0.03] text-white/85 border-white/10',
+  'am2-prep': 'bg-white/[0.03] text-white/85 border-white/10',
+  domestic: 'bg-white/[0.03] text-white/85 border-white/10',
+  commercial: 'bg-white/[0.03] text-white/85 border-white/10',
+  'solar-ev': 'bg-white/[0.03] text-white/85 border-white/10',
+  safety: 'bg-white/[0.03] text-white/85 border-white/10',
+  'tools-equipment': 'bg-white/[0.03] text-white/85 border-white/10',
+  career: 'bg-white/[0.03] text-white/85 border-white/10',
 };
 
 const levelColours = {
-  beginner: 'bg-green-400',
-  intermediate: 'bg-amber-400',
-  advanced: 'bg-red-400',
+  beginner: 'bg-elec-yellow',
+  intermediate: 'bg-elec-yellow/60',
+  advanced: 'bg-white/30',
 };
 
 const levelTextColours = {
-  beginner: 'text-green-400',
-  intermediate: 'text-amber-400',
-  advanced: 'text-red-400',
+  beginner: 'text-elec-yellow',
+  intermediate: 'text-white/85',
+  advanced: 'text-white/55',
 };
 
 const levelLabels = {
@@ -135,8 +135,6 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
             {/* ── Hero: StatRing with glow ── */}
             <div className="flex flex-col items-center text-center pt-2 pb-1">
               <div className="relative">
-                {/* Glow behind ring */}
-                <div className="absolute inset-0 bg-elec-yellow/15 rounded-full blur-2xl scale-110" />
                 <StatRing
                   percent={completionPercent}
                   size={140}
@@ -173,23 +171,21 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
               transition={{ delay: 0.15 }}
               className="grid grid-cols-2 gap-3"
             >
-              <div className="relative rounded-2xl overflow-hidden bg-white/[0.04] border border-white/[0.06] p-4 text-center">
-                <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/40 to-elec-yellow/0" />
-                <Clock className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
+              <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 text-center">
+                <Clock className="h-4 w-4 text-white/55 mx-auto mb-2" />
                 <p className="text-xl font-bold text-white">
                   {watchTimeMinutes > 0 ? formatTime(watchTimeMinutes) : '0m'}
                 </p>
-                <p className="text-[11px] text-white mt-1 uppercase tracking-wider font-medium">
+                <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 mt-1">
                   Time invested
                 </p>
               </div>
-              <div className="relative rounded-2xl overflow-hidden bg-white/[0.04] border border-white/[0.06] p-4 text-center">
-                <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500/0 via-amber-400/40 to-amber-500/0" />
-                <Video className="h-5 w-5 text-amber-400 mx-auto mb-2" />
+              <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 text-center">
+                <Video className="h-4 w-4 text-white/55 mx-auto mb-2" />
                 <p className="text-xl font-bold text-white">
                   {remainingTimeMinutes > 0 ? formatTime(remainingTimeMinutes) : '0m'}
                 </p>
-                <p className="text-[11px] text-white mt-1 uppercase tracking-wider font-medium">
+                <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 mt-1">
                   Remaining
                 </p>
               </div>
@@ -202,13 +198,12 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
               >
-                <div className="flex items-center gap-2 mb-3">
-                  <Sparkles className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-sm font-semibold text-white">Up Next</span>
-                </div>
+                <span className="block text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 mb-3">
+                  Up next
+                </span>
                 <button
                   onClick={goToVideos}
-                  className="w-full text-left rounded-2xl overflow-hidden bg-white/[0.04] border border-elec-yellow/20 touch-manipulation active:scale-[0.98] transition-all group"
+                  className="w-full text-left rounded-xl overflow-hidden border border-white/[0.06] bg-white/[0.02] touch-manipulation active:bg-white/[0.04] transition-all group"
                 >
                   {/* Thumbnail */}
                   <div className="relative w-full aspect-video bg-black/50">
@@ -272,11 +267,10 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.25 }}
               >
-                <div className="flex items-center gap-2 mb-3">
-                  <BarChart3 className="h-4 w-4 text-white" />
-                  <span className="text-sm font-semibold text-white">Difficulty Level</span>
-                </div>
-                <div className="rounded-2xl bg-white/[0.04] border border-white/[0.06] p-4">
+                <span className="block text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 mb-3">
+                  Difficulty level
+                </span>
+                <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
                   {/* Individual level bars */}
                   <div className="space-y-3">
                     {(['beginner', 'intermediate', 'advanced'] as const).map((level) => {
@@ -318,10 +312,11 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
               >
-                <div className="flex items-center gap-2 mb-3">
-                  <LayoutGrid className="h-4 w-4 text-white" />
-                  <span className="text-sm font-semibold text-white">Categories</span>
-                  <span className="text-xs text-white ml-auto">
+                <div className="flex items-baseline justify-between mb-3">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Categories
+                  </span>
+                  <span className="text-[12px] text-white/55">
                     {categoriesExplored} of {categoriesTotal} explored
                   </span>
                 </div>
@@ -334,7 +329,7 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                         width: `${Math.round((categoriesExplored / categoriesTotal) * 100)}%`,
                       }}
                       transition={{ duration: 0.8, ease: 'easeOut', delay: 0.5 }}
-                      className="h-full rounded-full bg-gradient-to-r from-elec-yellow to-amber-400"
+                      className="h-full rounded-full bg-elec-yellow"
                     />
                   </div>
                 </div>
@@ -345,9 +340,8 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                       key={category}
                       onClick={goToVideos}
                       className={cn(
-                        'px-3 py-1.5 rounded-xl text-xs font-semibold border',
-                        'touch-manipulation active:scale-95 transition-all',
-                        categoryColours[category] || 'bg-white/10 text-white border-white/15'
+                        'text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]',
+                        'touch-manipulation active:bg-white/[0.06] transition-all'
                       )}
                     >
                       {label} ({count})
@@ -364,10 +358,11 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.35 }}
               >
-                <div className="flex items-center gap-2 mb-3">
-                  <Bookmark className="h-4 w-4 text-white" />
-                  <span className="text-sm font-semibold text-white">Bookmarked</span>
-                  <span className="text-xs text-white ml-auto">
+                <div className="flex items-baseline justify-between mb-3">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Bookmarked
+                  </span>
+                  <span className="text-[12px] text-white/55">
                     {bookmarks.length} saved
                     {unwatchedBookmarks.length > 0
                       ? ` · ${unwatchedBookmarks.length} unwatched`
@@ -398,11 +393,7 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                       <div className="flex-1 min-w-0 py-2 pr-3">
                         <p className="text-sm text-white font-medium truncate">{b.title}</p>
                         <span
-                          className={cn(
-                            'inline-block mt-1 px-2 py-0.5 rounded-lg text-[10px] font-semibold border',
-                            categoryColours[b.category as VideoCategory] ||
-                              'bg-white/10 text-white border-white/15'
-                          )}
+                          className="inline-block mt-1 text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
                         >
                           {categoryLabels[b.category as VideoCategory] || b.category}
                         </span>
@@ -429,15 +420,12 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="relative rounded-2xl overflow-hidden bg-elec-yellow/[0.06] border border-elec-yellow/15 p-4"
+                className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2"
               >
-                <div className="absolute -top-8 -right-8 w-24 h-24 bg-elec-yellow/10 rounded-full blur-2xl pointer-events-none" />
-                <div className="relative flex items-start gap-3">
-                  <div className="p-2 rounded-xl bg-elec-yellow/15 flex-shrink-0">
-                    <Lightbulb className="h-4 w-4 text-elec-yellow" />
-                  </div>
-                  <p className="text-sm text-white leading-relaxed">{insightText}</p>
-                </div>
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+                  Insight
+                </span>
+                <p className="text-[14px] text-white/85 leading-relaxed">{insightText}</p>
               </motion.div>
             )}
 
@@ -489,16 +477,16 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                 transition={{ delay: 0.3 }}
                 className="flex flex-col items-center text-center py-6"
               >
-                <div className="p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20 mb-4">
-                  <Play className="h-8 w-8 text-elec-yellow" />
+                <div className="p-4 rounded-2xl border border-white/[0.06] bg-white/[0.02] mb-4">
+                  <Play className="h-7 w-7 text-elec-yellow" />
                 </div>
-                <h3 className="text-base font-semibold text-white mb-1">Start watching</h3>
-                <p className="text-sm text-white max-w-[260px] mb-5">
+                <h3 className="text-[16px] font-semibold text-white mb-1">Start watching</h3>
+                <p className="text-[14px] text-white/70 max-w-[260px] mb-5 leading-relaxed">
                   Curated electrical training videos from industry experts, ready when you are
                 </p>
                 <button
                   onClick={goToVideos}
-                  className="flex items-center gap-2 px-6 h-12 rounded-xl bg-elec-yellow text-black text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
+                  className="flex items-center gap-2 px-6 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[14px] font-semibold touch-manipulation active:scale-[0.98] transition-all"
                 >
                   Browse videos
                   <ChevronRight className="h-4 w-4" />

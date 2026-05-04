@@ -1,10 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Settings, Factory, Zap } from 'lucide-react';
-
 const IndustrialDesignConsiderations = () => {
   const designConsiderations = [
     {
-      category: 'Motor Control Systems',
+      category: 'Motor control systems',
       considerations: [
         'Soft-start requirements for large motors',
         'Variable frequency drive integration',
@@ -14,7 +11,7 @@ const IndustrialDesignConsiderations = () => {
       ],
     },
     {
-      category: 'Hazardous Areas',
+      category: 'Hazardous areas',
       considerations: [
         'ATEX zone classifications (Zone 0, 1, 2)',
         'Temperature class requirements',
@@ -24,7 +21,7 @@ const IndustrialDesignConsiderations = () => {
       ],
     },
     {
-      category: 'Heavy Machinery',
+      category: 'Heavy machinery',
       considerations: [
         'Load calculations for large motors',
         'Starting current and diversity factors',
@@ -36,33 +33,40 @@ const IndustrialDesignConsiderations = () => {
   ];
 
   return (
-    <Card className="border-purple-500/30 bg-white/5">
-      <CardHeader>
-        <div className="flex items-center gap-2">
-          <Settings className="h-6 w-6 text-purple-400" />
-          <CardTitle className="text-purple-300">Critical Design Considerations</CardTitle>
-        </div>
-        <p className="text-white">Key factors for industrial electrical design</p>
-      </CardHeader>
-      <CardContent className="space-y-4">
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className="space-y-1">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Design
+        </span>
+        <h3 className="text-[18px] font-semibold text-white leading-tight">
+          Critical design considerations
+        </h3>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Key factors for industrial electrical design.
+        </p>
+      </div>
+      <div className="space-y-3">
         {designConsiderations.map((item, index) => (
-          <div key={index} className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
-            <h3 className="font-semibold text-purple-300 mb-3 flex items-center gap-2">
-              <Factory className="h-4 w-4" />
-              {item.category}
-            </h3>
-            <div className="space-y-2">
+          <div
+            key={index}
+            className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 sm:p-4 space-y-2"
+          >
+            <h4 className="text-[14px] font-medium text-white">{item.category}</h4>
+            <ul className="space-y-1">
               {item.considerations.map((consideration, conIndex) => (
-                <div key={conIndex} className="flex items-start gap-2 text-sm">
-                  <Zap className="h-3 w-3 text-purple-400 mt-1 flex-shrink-0" />
-                  <span className="text-white">{consideration}</span>
-                </div>
+                <li
+                  key={conIndex}
+                  className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                >
+                  <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                  <span>{consideration}</span>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         ))}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

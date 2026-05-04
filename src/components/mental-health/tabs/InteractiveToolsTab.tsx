@@ -36,9 +36,9 @@ const BodyScanTool = () => {
   return (
     <div className="space-y-4 pt-4 text-center">
       <p className="text-[13px] font-medium text-white">Focus on: {parts[step]}</p>
-      <p className="text-3xl font-semibold tabular-nums text-cyan-400">{time}s</p>
+      <p className="text-3xl font-semibold tabular-nums text-white/85">{time}s</p>
       <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
-        <div className="h-full bg-cyan-400 rounded-full transition-all" style={{ width: `${((step * 20 + (20 - time)) / (parts.length * 20)) * 100}%` }} />
+        <div className="h-full bg-white/[0.02] rounded-full transition-all" style={{ width: `${((step * 20 + (20 - time)) / (parts.length * 20)) * 100}%` }} />
       </div>
       <p className="text-[11px] text-white">Step {step + 1} of {parts.length}</p>
       <div className="flex gap-2">
@@ -65,11 +65,11 @@ const WorryTimeTool = () => {
   const s = time % 60;
   return (
     <div className="space-y-4 pt-4 text-center">
-      <p className="text-4xl font-semibold tabular-nums text-orange-400">
+      <p className="text-4xl font-semibold tabular-nums text-white/85">
         {String(m).padStart(2, '0')}:{String(s).padStart(2, '0')}
       </p>
       <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
-        <div className="h-full bg-orange-400 rounded-full transition-all" style={{ width: `${((900 - time) / 900) * 100}%` }} />
+        <div className="h-full bg-white/[0.02] rounded-full transition-all" style={{ width: `${((900 - time) / 900) * 100}%` }} />
       </div>
       <p className="text-[12px] text-white">
         {!active && time === 900 ? '15 minutes to process your worries' : active ? 'Let it out — write, think, pace' : "Time's up — let go now"}
@@ -138,8 +138,7 @@ const EnergyTool = () => {
           <button
             key={l.id}
             onClick={() => setSel(l.id)}
-            className={cn(
-              'p-3 rounded-2xl border text-center touch-manipulation active:scale-[0.97] transition-all',
+            className={cn('p-3 rounded-2xl border text-center touch-manipulation active:scale-[0.97] transition-all',
               sel === l.id
                 ? 'bg-elec-yellow/10 border-elec-yellow/30'
                 : 'bg-[hsl(0_0%_12%)] border-white/[0.08]'
@@ -243,17 +242,16 @@ const InteractiveToolsTab = () => {
                 >
                   <span
                     aria-hidden
-                    className={cn(
-                      'w-[3px] h-10 rounded-full shrink-0',
-                      t.tone === 'red' && 'bg-red-400',
-                      t.tone === 'blue' && 'bg-blue-400',
-                      t.tone === 'cyan' && 'bg-cyan-400',
-                      t.tone === 'orange' && 'bg-orange-400',
-                      t.tone === 'emerald' && 'bg-emerald-400',
-                      t.tone === 'indigo' && 'bg-indigo-400',
-                      t.tone === 'purple' && 'bg-purple-400',
-                      t.tone === 'green' && 'bg-green-400',
-                      t.tone === 'amber' && 'bg-amber-400'
+                    className={cn('w-[3px] h-10 rounded-full shrink-0',
+                      t.tone === 'red' && 'bg-white/[0.02]',
+                      t.tone === 'blue' && 'bg-white/[0.02]',
+                      t.tone === 'cyan' && 'bg-white/[0.02]',
+                      t.tone === 'orange' && 'bg-white/[0.02]',
+                      t.tone === 'emerald' && 'bg-white/[0.02]',
+                      t.tone === 'indigo' && 'bg-white/[0.02]',
+                      t.tone === 'purple' && 'bg-white/[0.02]',
+                      t.tone === 'green' && 'bg-white/[0.02]',
+                      t.tone === 'amber' && 'bg-white/[0.02]'
                     )}
                   />
                   <div className="flex-1 min-w-0">
@@ -266,8 +264,7 @@ const InteractiveToolsTab = () => {
                     <div className="mt-0.5 text-[11.5px] text-white truncate">{t.sub}</div>
                   </div>
                   <ChevronDown
-                    className={cn(
-                      'h-4 w-4 text-white shrink-0 transition-transform duration-200',
+                    className={cn('h-4 w-4 text-white shrink-0 transition-transform duration-200',
                       isOpen && 'rotate-180'
                     )}
                   />

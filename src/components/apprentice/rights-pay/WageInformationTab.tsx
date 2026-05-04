@@ -1,7 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { PoundSterling, TrendingUp, Calculator, Info, AlertTriangle } from 'lucide-react';
+// Imports trimmed for editorial restraint redesign
 
 const WageInformationTab = () => {
   const currentRates = {
@@ -198,329 +195,335 @@ const WageInformationTab = () => {
     'If you are consistently underpaid compared to the market, it may be time to look elsewhere',
   ];
 
+  const Section = ({
+    eyebrow,
+    children,
+    accent = 'neutral',
+  }: {
+    eyebrow: string;
+    children: React.ReactNode;
+    accent?: 'neutral' | 'yellow' | 'red';
+  }) => {
+    const containerClass =
+      accent === 'red'
+        ? 'rounded-xl border border-red-500/30 bg-red-500/[0.04]'
+        : accent === 'yellow'
+          ? 'rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04]'
+          : 'rounded-xl border border-white/[0.06] bg-white/[0.02]';
+    const eyebrowClass =
+      accent === 'red'
+        ? 'text-red-300'
+        : accent === 'yellow'
+          ? 'text-elec-yellow/85'
+          : 'text-white/55';
+    return (
+      <div className={`${containerClass} p-4 sm:p-5 space-y-3`}>
+        <span
+          className={`text-[10px] font-medium uppercase tracking-[0.18em] ${eyebrowClass}`}
+        >
+          {eyebrow}
+        </span>
+        {children}
+      </div>
+    );
+  };
+
   return (
     <div className="space-y-6">
-      <Alert className="border-green-500/50 bg-green-500/10">
-        <PoundSterling className="h-4 w-4 text-green-400" />
-        <AlertDescription className="text-white">
-          <strong>Important:</strong> Rates shown are the legal minimum — many employers pay above
-          these. Current 2025/26 rates apply until 31 March 2026, then new rates take effect.
-        </AlertDescription>
-      </Alert>
+      <Section eyebrow="Important" accent="yellow">
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Rates shown are the legal minimum — many employers pay above these. Current 2025/26 rates
+          apply until 31 March 2026, then new rates take effect.
+        </p>
+      </Section>
 
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-elec-yellow">
-            <Calculator className="h-5 w-5" />
-            UK Minimum Wage Rates for Apprentices
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {/* Current Rates */}
-          <div className="space-y-3">
-            <h4 className="font-semibold text-green-400 text-sm">Current Rates (2025/26)</h4>
-            <div className="p-3 bg-green-500/10 rounded-lg border border-green-500/30">
-              <div className="flex justify-between items-center">
-                <span className="font-medium text-white">Apprentice Rate (Year 1 / Under 19)</span>
-                <Badge className="bg-green-500/20 text-green-400">
-                  £{currentRates.apprenticeMinimum}/hr
-                </Badge>
-              </div>
-            </div>
-            <div className="p-3 bg-green-500/10 rounded-lg border border-green-500/30">
-              <div className="flex justify-between items-center">
-                <span className="font-medium text-white">After Year 1, aged 21+ (NLW)</span>
-                <Badge className="bg-green-500/20 text-green-400">
-                  £{currentRates.nationalLivingWage}/hr
-                </Badge>
-              </div>
-            </div>
+      <Section eyebrow="UK minimum wage rates for apprentices">
+        <div className="space-y-3">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Current rates (2025/26)
+          </span>
+          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 flex justify-between items-center">
+            <span className="text-[14px] text-white/85">Apprentice rate (Year 1 / Under 19)</span>
+            <span className="font-mono text-elec-yellow text-[13px]">
+              £{currentRates.apprenticeMinimum}/hr
+            </span>
           </div>
-
-          {/* April 2026 Rates */}
-          <div className="space-y-3">
-            <h4 className="font-semibold text-blue-400 text-sm">From 1 April 2026</h4>
-            <div className="p-3 bg-blue-500/10 rounded-lg border border-blue-500/30">
-              <div className="flex justify-between items-center">
-                <span className="font-medium text-white">Apprentice Rate (Year 1 / Under 19)</span>
-                <Badge className="bg-blue-500/20 text-blue-400">
-                  £{aprilRates.apprenticeMinimum.toFixed(2)}/hr
-                </Badge>
-              </div>
-            </div>
-            <div className="p-3 bg-blue-500/10 rounded-lg border border-blue-500/30">
-              <div className="flex justify-between items-center">
-                <span className="font-medium text-white">After Year 1, aged 21+ (NLW)</span>
-                <Badge className="bg-blue-500/20 text-blue-400">
-                  £{aprilRates.nationalLivingWage}/hr
-                </Badge>
-              </div>
-            </div>
+          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 flex justify-between items-center">
+            <span className="text-[14px] text-white/85">After Year 1, aged 21+ (NLW)</span>
+            <span className="font-mono text-elec-yellow text-[13px]">
+              £{currentRates.nationalLivingWage}/hr
+            </span>
           </div>
+        </div>
 
-          {/* Full Age-Based Table */}
-          <div className="space-y-2 mt-4">
-            <h4 className="font-medium text-white text-sm">All Age-Based Rates:</h4>
-            <div className="border border-white/10 rounded-lg overflow-hidden">
-              <div className="grid grid-cols-3 gap-0 text-xs p-2 bg-white/10 font-medium text-white">
-                <span>Age Group</span>
-                <span className="text-center">Current</span>
-                <span className="text-center">Apr 2026</span>
-              </div>
-              {ageBasedRates.map((rate, index) => (
-                <div key={index} className="grid grid-cols-3 gap-0 text-xs p-2 border-t border-white/5">
-                  <span className="text-white">{rate.age}</span>
-                  <span className="text-center text-green-400 font-medium">£{rate.current.toFixed(2)}</span>
-                  <span className="text-center text-blue-400 font-medium">£{rate.april.toFixed(2)}</span>
-                </div>
-              ))}
-            </div>
+        <div className="space-y-3">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            From 1 April 2026
+          </span>
+          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 flex justify-between items-center">
+            <span className="text-[14px] text-white/85">Apprentice rate (Year 1 / Under 19)</span>
+            <span className="font-mono text-white text-[13px]">
+              £{aprilRates.apprenticeMinimum.toFixed(2)}/hr
+            </span>
           </div>
-        </CardContent>
-      </Card>
+          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 flex justify-between items-center">
+            <span className="text-[14px] text-white/85">After Year 1, aged 21+ (NLW)</span>
+            <span className="font-mono text-white text-[13px]">
+              £{aprilRates.nationalLivingWage}/hr
+            </span>
+          </div>
+        </div>
 
-      <Card className="border-blue-500/20 bg-blue-500/10">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-blue-400">
-            <TrendingUp className="h-5 w-5" />
-            Career Progression & Expected Wages
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            {progressionPath.map((stage, index) => (
+        <div className="space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            All age-based rates
+          </span>
+          <div className="rounded-lg border border-white/[0.06] overflow-hidden">
+            <div className="grid grid-cols-3 gap-0 text-[12px] p-2 bg-white/[0.04] text-white/85">
+              <span>Age group</span>
+              <span className="text-center">Current</span>
+              <span className="text-center">Apr 2026</span>
+            </div>
+            {ageBasedRates.map((rate, index) => (
               <div
                 key={index}
-                className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center p-4 bg-blue-500/5 rounded-lg border border-blue-500/20"
+                className="grid grid-cols-3 gap-0 text-[12px] p-2 border-t border-white/[0.06]"
               >
-                <div className="md:col-span-1">
-                  <h4 className="font-medium text-blue-300 text-lg">{stage.stage}</h4>
-                  <p className="text-sm text-white mt-1">{stage.description}</p>
-                </div>
-                <div className="md:col-span-1 text-center">
-                  <div className="text-base font-semibold text-blue-300">{stage.wage}</div>
-                </div>
-                <div className="md:col-span-1 text-right">
-                  <div className="text-base font-semibold text-blue-300">{stage.annual}</div>
-                </div>
+                <span className="text-white/85">{rate.age}</span>
+                <span className="text-center font-mono text-elec-yellow">
+                  £{rate.current.toFixed(2)}
+                </span>
+                <span className="text-center font-mono text-white">
+                  £{rate.april.toFixed(2)}
+                </span>
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </Section>
 
-      <Card className="border-purple-500/20 bg-purple-500/10">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-purple-400">
-            <Info className="h-5 w-5" />
-            Regional Wage Variations (Annual Apprentice Salaries)
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {regionalVariations.map((region, index) => (
-              <div
-                key={index}
-                className="p-3 bg-purple-500/5 rounded-lg border border-purple-500/20"
-              >
-                <div className="flex justify-between items-start mb-1">
-                  <h4 className="font-medium text-purple-300">{region.region}</h4>
-                  <Badge className="bg-purple-500/20 text-purple-300 text-xs">
-                    {region.averageWage}
-                  </Badge>
-                </div>
-                <p className="text-xs text-white">{region.description}</p>
+      <Section eyebrow="Career progression & expected wages">
+        <div className="space-y-3">
+          {progressionPath.map((stage, index) => (
+            <div
+              key={index}
+              className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center rounded-xl border border-white/[0.06] bg-white/[0.02] p-4"
+            >
+              <div>
+                <h4 className="text-[16px] font-semibold text-white">{stage.stage}</h4>
+                <p className="text-[13px] text-white/70 mt-1">{stage.description}</p>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-orange-500/20 bg-orange-500/10">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-orange-400">
-            <AlertTriangle className="h-5 w-5" />
-            Factors Affecting Your Pay
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {payFactors.map((factor, index) => (
-              <div key={index} className="border border-orange-500/20 rounded-lg p-4">
-                <h4 className="font-medium text-orange-300 mb-2">{factor.factor}</h4>
-                <p className="text-sm text-white mb-1">{factor.impact}</p>
-                <p className="text-xs text-white">{factor.examples}</p>
+              <div className="text-center">
+                <div className="text-[14px] font-semibold text-white">{stage.wage}</div>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+              <div className="text-right">
+                <div className="text-[14px] font-semibold text-elec-yellow">{stage.annual}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
 
-      {/* JIB Grading System */}
-      <Card className="border-green-500/20 bg-green-500/10">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-green-400">
-            <PoundSterling className="h-5 w-5" />
-            JIB Grading & Industry Pay Rates
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-white mb-4">
-            The Joint Industry Board (JIB) sets recommended pay grades for the electrical contracting
-            industry. JIB-registered employers typically pay these rates, which are significantly higher
-            than legal minimums. These are hourly base rates — overtime is additional.
+      <Section eyebrow="Regional wage variations">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {regionalVariations.map((region, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
+            >
+              <div className="flex justify-between items-start gap-2">
+                <h4 className="text-[14px] font-semibold text-white">{region.region}</h4>
+                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
+                  {region.averageWage}
+                </span>
+              </div>
+              <p className="text-[13px] text-white/70 leading-relaxed">{region.description}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section eyebrow="Factors affecting your pay">
+        <div className="space-y-3">
+          {payFactors.map((factor, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1"
+            >
+              <h4 className="text-[14px] font-semibold text-white">{factor.factor}</h4>
+              <p className="text-[14px] text-white/85 leading-relaxed">{factor.impact}</p>
+              <p className="text-[12px] text-white/55 leading-relaxed">{factor.examples}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section eyebrow="JIB grading & industry pay rates">
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          The Joint Industry Board (JIB) sets recommended pay grades for the electrical contracting
+          industry. JIB-registered employers typically pay these rates, which are significantly
+          higher than legal minimums. These are hourly base rates — overtime is additional.
+        </p>
+        <div className="space-y-3">
+          {jibGrades.map((grade, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1"
+            >
+              <div className="flex justify-between items-start gap-2">
+                <h4 className="text-[14px] font-semibold text-white">{grade.grade}</h4>
+                <span className="text-[12px] font-mono text-elec-yellow px-2 py-0.5 rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] whitespace-nowrap">
+                  {grade.jibRate}/hr
+                </span>
+              </div>
+              <p className="text-[13px] text-white/70 leading-relaxed">{grade.description}</p>
+            </div>
+          ))}
+        </div>
+        <p className="text-[12px] text-white/55 leading-relaxed">
+          JIB rates are reviewed annually and typically exceed legal minimums. Not all employers are
+          JIB-registered — ask at interview whether they follow JIB grading.
+        </p>
+      </Section>
+
+      <Section eyebrow="Overtime, call-out & additional pay">
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Overtime rates vary by employer, but these are typical in the electrical industry. Your
+          contract should specify your exact rates — check before you start.
+        </p>
+        <div className="space-y-3">
+          {overtimeRates.map((item, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
+            >
+              <div className="flex justify-between items-start gap-2">
+                <h4 className="text-[14px] font-semibold text-white">{item.type}</h4>
+                <span className="text-[12px] text-elec-yellow px-2 py-0.5 rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] whitespace-nowrap">
+                  {item.rate}
+                </span>
+              </div>
+              <p className="text-[13px] text-white/70 leading-relaxed">{item.when}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section eyebrow="Understanding your payslip">
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Your employer must provide an itemised payslip every pay period. Here is what each
+          section means:
+        </p>
+        <div className="space-y-3">
+          {payslipBreakdown.map((item, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
+            >
+              <h4 className="text-[14px] font-semibold text-white">{item.item}</h4>
+              <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
+            </div>
+          ))}
+        </div>
+        <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+            Tax code tips
+          </span>
+          <p className="text-[13px] text-white/85 leading-relaxed">
+            Most apprentices will be on tax code 1257L, meaning you can earn £12,570 before paying
+            any income tax. If your tax code looks wrong (e.g. BR which means you pay tax on
+            everything), contact HMRC on 0300 200 3300 to get it corrected. Wrong tax codes are
+            common when starting a new job and can cost you hundreds of pounds.
           </p>
-          <div className="space-y-3">
-            {jibGrades.map((grade, index) => (
-              <div key={index} className="border border-green-500/20 rounded-lg p-4">
-                <div className="flex justify-between items-start mb-1">
-                  <h4 className="font-medium text-green-300">{grade.grade}</h4>
-                  <Badge className="bg-green-500/20 text-green-400 text-xs">
-                    {grade.jibRate}/hr
-                  </Badge>
-                </div>
-                <p className="text-xs text-white">{grade.description}</p>
+        </div>
+      </Section>
+
+      <Section eyebrow="Negotiating a pay rise">
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Many apprentices assume they cannot negotiate pay. While Year 1 rates are often fixed,
+          from Year 2 onwards many employers are open to paying above the minimum — especially if
+          you are productive, reliable, and progressing well.
+        </p>
+        <ul className="space-y-1.5">
+          {negotiationTips.map((tip, index) => (
+            <li
+              key={index}
+              className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+            >
+              <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+              <span>{tip}</span>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      <Section eyebrow="What to do if you are underpaid" accent="red">
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Being paid below the legal minimum wage is a criminal offence. If you suspect you are
+          being underpaid, follow these steps:
+        </p>
+        <div className="space-y-3">
+          {[
+            {
+              step: '1',
+              title: 'Check your payslips',
+              desc:
+                'Calculate your hourly rate by dividing gross pay by hours worked. Include all hours — travel between sites, training time, and overtime.',
+            },
+            {
+              step: '2',
+              title: 'Check which rate applies to you',
+              desc:
+                'Under 19 or in your first year = apprentice rate (£7.55 current, £8.00 from April 2026). Over 21 and past first year = NLW (£12.21 current, £12.71 from April 2026).',
+            },
+            {
+              step: '3',
+              title: 'Talk to your employer first',
+              desc:
+                'It may be a genuine payroll mistake. Raise it in writing (email) so there is a record.',
+            },
+            {
+              step: '4',
+              title: 'Contact ACAS',
+              desc:
+                'Free, confidential advice on 0300 123 1100. They can help mediate if your employer will not resolve it.',
+            },
+            {
+              step: '5',
+              title: 'Report to HMRC',
+              desc:
+                'Call the NMW helpline on 0300 123 1100 or use the online complaint form. HMRC can investigate and enforce back-pay.',
+            },
+            {
+              step: '6',
+              title: 'Keep records',
+              desc:
+                'Save all payslips, timesheets, rotas, and any written communication. These are your evidence.',
+            },
+          ].map((item, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
+            >
+              <div className="flex items-center gap-2">
+                <span className="w-6 h-6 rounded-full border border-white/15 bg-white/[0.03] flex items-center justify-center flex-shrink-0 text-[12px] font-mono text-white">
+                  {item.step}
+                </span>
+                <h4 className="text-[14px] font-semibold text-white">{item.title}</h4>
               </div>
-            ))}
-          </div>
-          <p className="text-xs text-white mt-3">
-            JIB rates are reviewed annually and typically exceed legal minimums. Not all employers
-            are JIB-registered — ask at interview whether they follow JIB grading.
-          </p>
-        </CardContent>
-      </Card>
+              <p className="text-[13px] text-white/85 leading-relaxed ml-8">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
 
-      {/* Overtime & Additional Pay */}
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-elec-yellow">
-            <Calculator className="h-5 w-5" />
-            Overtime, Call-out & Additional Pay
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-white mb-4">
-            Overtime rates vary by employer, but these are typical in the electrical industry.
-            Your contract should specify your exact rates — check before you start.
-          </p>
-          <div className="space-y-3">
-            {overtimeRates.map((item, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-3">
-                <div className="flex justify-between items-start mb-1">
-                  <h4 className="font-medium text-elec-yellow text-sm">{item.type}</h4>
-                  <Badge className="bg-elec-yellow/20 text-elec-yellow text-xs">
-                    {item.rate}
-                  </Badge>
-                </div>
-                <p className="text-xs text-white">{item.when}</p>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Understanding Your Payslip */}
-      <Card className="border-blue-500/20 bg-white/5">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-blue-400">
-            <Info className="h-5 w-5" />
-            Understanding Your Payslip
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-white mb-4">
-            Your employer must provide an itemised payslip every pay period. Here is what each
-            section means:
-          </p>
-          <div className="space-y-3">
-            {payslipBreakdown.map((item, index) => (
-              <div key={index} className="border border-blue-500/20 rounded-lg p-3">
-                <h4 className="font-medium text-blue-300 text-sm mb-1">{item.item}</h4>
-                <p className="text-xs text-white">{item.description}</p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-            <h4 className="font-medium text-blue-300 text-sm mb-2">Tax Code Tips</h4>
-            <p className="text-xs text-white">
-              Most apprentices will be on tax code 1257L, meaning you can earn £12,570 before paying
-              any income tax. If your tax code looks wrong (e.g. BR which means you pay tax on everything),
-              contact HMRC on 0300 200 3300 to get it corrected. Wrong tax codes are common when starting
-              a new job and can cost you hundreds of pounds.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Negotiating Your Pay */}
-      <Card className="border-purple-500/20 bg-purple-500/10">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-purple-400">
-            <TrendingUp className="h-5 w-5" />
-            Negotiating a Pay Rise
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-white mb-4">
-            Many apprentices assume they cannot negotiate pay. While Year 1 rates are often fixed,
-            from Year 2 onwards many employers are open to paying above the minimum — especially
-            if you are productive, reliable, and progressing well.
-          </p>
-          <ul className="space-y-2">
-            {negotiationTips.map((tip, index) => (
-              <li key={index} className="flex items-start gap-2 text-sm text-white">
-                <span className="text-purple-400 flex-shrink-0 mt-0.5">•</span>
-                {tip}
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
-
-      {/* What to Do If Underpaid */}
-      <Card className="border-red-500/20 bg-red-500/10">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-red-400">
-            <AlertTriangle className="h-5 w-5" />
-            What to Do If You Are Underpaid
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            <p className="text-sm text-white">
-              Being paid below the legal minimum wage is a criminal offence. If you suspect you are
-              being underpaid, follow these steps:
-            </p>
-            {[
-              { step: '1', title: 'Check your payslips', desc: 'Calculate your hourly rate by dividing gross pay by hours worked. Include all hours — travel between sites, training time, and overtime.' },
-              { step: '2', title: 'Check which rate applies to you', desc: 'Under 19 or in your first year = apprentice rate (£7.55 current, £8.00 from April 2026). Over 21 and past first year = NLW (£12.21 current, £12.71 from April 2026).' },
-              { step: '3', title: 'Talk to your employer first', desc: 'It may be a genuine payroll mistake. Raise it in writing (email) so there is a record.' },
-              { step: '4', title: 'Contact ACAS', desc: 'Free, confidential advice on 0300 123 1100. They can help mediate if your employer will not resolve it.' },
-              { step: '5', title: 'Report to HMRC', desc: 'Call the NMW helpline on 0300 123 1100 or use the online complaint form. HMRC can investigate and enforce back-pay.' },
-              { step: '6', title: 'Keep records', desc: 'Save all payslips, timesheets, rotas, and any written communication. These are your evidence.' },
-            ].map((item, index) => (
-              <div key={index} className="border border-red-500/20 rounded-lg p-3">
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-6 h-6 rounded-full bg-red-500/20 flex items-center justify-center flex-shrink-0">
-                    <span className="text-red-400 text-xs font-bold">{item.step}</span>
-                  </div>
-                  <h4 className="font-medium text-red-300 text-sm">{item.title}</h4>
-                </div>
-                <p className="text-xs text-white ml-8">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Alert className="border-yellow-500/50 bg-yellow-500/10">
-        <Info className="h-4 w-4 text-yellow-400" />
-        <AlertDescription className="text-white">
-          <strong>Important:</strong> Many electrical apprentices earn above minimum wage. Research
-          typical rates in your area and don't be afraid to negotiate, especially if you have prior
-          experience or additional qualifications.
-        </AlertDescription>
-      </Alert>
+      <Section eyebrow="Important" accent="yellow">
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Many electrical apprentices earn above minimum wage. Research typical rates in your area
+          and don't be afraid to negotiate, especially if you have prior experience or additional
+          qualifications.
+        </p>
+      </Section>
     </div>
   );
 };

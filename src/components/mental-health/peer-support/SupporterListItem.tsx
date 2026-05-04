@@ -62,7 +62,7 @@ const SupporterListItem: React.FC<SupporterListItemProps> = ({
         )}
         <span
           aria-hidden
-          className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-400 border-[3px] border-[hsl(0_0%_12%)]"
+          className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-white/[0.02] border-[3px] border-[hsl(0_0%_12%)]"
         />
       </div>
 

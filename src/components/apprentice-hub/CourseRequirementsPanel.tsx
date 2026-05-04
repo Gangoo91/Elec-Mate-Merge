@@ -108,8 +108,7 @@ export function CourseRequirementsPanel({ onChangeCourse }: CourseRequirementsPa
               </p>
             </div>
             <div
-              className={cn(
-                'w-8 h-8 rounded-full bg-white/5 flex items-center justify-center transition-transform flex-shrink-0',
+              className={cn('w-8 h-8 rounded-full bg-white/5 flex items-center justify-center transition-transform flex-shrink-0',
                 expanded && 'rotate-180'
               )}
             >

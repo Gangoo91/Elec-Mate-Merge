@@ -66,7 +66,7 @@ export function AITagSuggestions({
   }
 
   return (
-    <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/5 to-transparent">
+    <Card className="border-elec-yellow/20 bg-white/[0.02]">
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
           <CardTitle className="text-base flex items-center gap-2">
@@ -100,7 +100,7 @@ export function AITagSuggestions({
               className="flex items-center justify-between w-full text-left"
             >
               <div className="flex items-center gap-2">
-                <Brain className="h-4 w-4 text-blue-500" />
+                <Brain className="h-4 w-4 text-white/85" />
                 <span className="text-sm font-medium">KSB Mappings</span>
                 <Badge variant="secondary" className="text-xs">
                   {result.ksb_suggestions.length}
@@ -120,8 +120,7 @@ export function AITagSuggestions({
                   return (
                     <div
                       key={ksb.code}
-                      className={cn(
-                        'p-3 rounded-lg border transition-all',
+                      className={cn('p-3 rounded-lg border transition-all',
                         isSelected
                           ? 'border-elec-yellow bg-elec-yellow/10'
                           : 'border-border bg-background hover:border-elec-yellow/50'
@@ -135,8 +134,7 @@ export function AITagSuggestions({
                             </Badge>
                             <Badge
                               variant="outline"
-                              className={cn(
-                                'text-xs capitalize',
+                              className={cn('text-xs capitalize',
                                 getKSBCategoryColor(ksb.category)
                               )}
                             >
@@ -169,7 +167,7 @@ export function AITagSuggestions({
                               size="sm"
                               variant="ghost"
                               onClick={() => onAcceptKSB?.(ksb)}
-                              className="h-7 w-7 p-0 text-green-500 hover:bg-green-500/10"
+                              className="h-7 w-7 p-0 text-white/85 hover:bg-white/[0.02]"
                             >
                               <PlusCircle className="h-4 w-4" />
                             </Button>
@@ -193,7 +191,7 @@ export function AITagSuggestions({
               className="flex items-center justify-between w-full text-left"
             >
               <div className="flex items-center gap-2">
-                <Target className="h-4 w-4 text-green-500" />
+                <Target className="h-4 w-4 text-white/85" />
                 <span className="text-sm font-medium">Suggested Tags</span>
                 <Badge variant="secondary" className="text-xs">
                   {result.tag_suggestions.length}
@@ -214,8 +212,7 @@ export function AITagSuggestions({
                     <Badge
                       key={tag.tag}
                       variant="outline"
-                      className={cn(
-                        'cursor-pointer transition-all',
+                      className={cn('cursor-pointer transition-all',
                         isSelected
                           ? 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30'
                           : 'hover:border-elec-yellow/50'
@@ -245,17 +242,16 @@ export function AITagSuggestions({
               className="flex items-center justify-between w-full text-left"
             >
               <div className="flex items-center gap-2">
-                <Star className="h-4 w-4 text-amber-500" />
+                <Star className="h-4 w-4 text-white/85" />
                 <span className="text-sm font-medium">Quality Assessment</span>
                 <Badge
                   variant="outline"
-                  className={cn(
-                    'text-xs',
+                  className={cn('text-xs',
                     result.quality_assessment.score >= 80
-                      ? 'bg-green-500/20 text-green-500 border-green-500/30'
+                      ? 'bg-white/[0.02] text-white/85 border-white/[0.06]'
                       : result.quality_assessment.score >= 60
-                        ? 'bg-amber-500/20 text-amber-500 border-amber-500/30'
-                        : 'bg-red-500/20 text-red-500 border-red-500/30'
+                        ? 'bg-white/[0.02] text-white/85 border-white/[0.06]'
+                        : 'bg-white/[0.02] text-red-500 border-red-500/30'
                   )}
                 >
                   {result.quality_assessment.score}/100
@@ -274,14 +270,14 @@ export function AITagSuggestions({
                   {result.quality_assessment.feedback}
                 </p>
                 {result.quality_assessment.improvements.length > 0 && (
-                  <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                  <div className="p-2 rounded-lg bg-white/[0.02] border border-white/[0.06]">
                     <div className="flex items-start gap-2">
-                      <Lightbulb className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" />
+                      <Lightbulb className="h-4 w-4 text-white/85 mt-0.5 shrink-0" />
                       <div>
-                        <p className="text-xs font-medium text-amber-500 mb-1">
+                        <p className="text-xs font-medium text-white/85 mb-1">
                           Suggestions to improve:
                         </p>
-                        <ul className="text-xs text-amber-600 space-y-0.5">
+                        <ul className="text-xs text-white/85 space-y-0.5">
                           {result.quality_assessment.improvements.map((imp, i) => (
                             <li key={i}>• {imp}</li>
                           ))}
@@ -303,7 +299,7 @@ export function AITagSuggestions({
               className="flex items-center justify-between w-full text-left"
             >
               <div className="flex items-center gap-2">
-                <AlertCircle className="h-4 w-4 text-blue-500" />
+                <AlertCircle className="h-4 w-4 text-white/85" />
                 <span className="text-sm font-medium">Detected Content</span>
               </div>
               {expandedSections.content ? (

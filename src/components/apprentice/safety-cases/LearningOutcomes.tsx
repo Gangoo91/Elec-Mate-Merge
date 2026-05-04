@@ -1,6 +1,5 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { CheckCircle, GraduationCap } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 
 const LearningOutcomes = () => {
   const outcomes = [
@@ -15,34 +14,20 @@ const LearningOutcomes = () => {
   ];
 
   return (
-    <Card className="bg-gradient-to-br from-white/5 to-elec-card border-white/10 overflow-hidden relative animate-fade-in mt-6">
-      <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 animate-fade-in mt-6">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        Learning outcomes
+      </span>
 
-      <CardHeader className="relative">
-        <CardTitle className="text-white flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30">
-            <GraduationCap className="h-5 w-5 text-green-400" />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+        {outcomes.map((outcome, index) => (
+          <div key={index} className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed">
+            <CheckCircle className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-1" />
+            <span>{outcome}</span>
           </div>
-          Learning Outcomes
-        </CardTitle>
-      </CardHeader>
-
-      <CardContent className="relative">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {outcomes.map((outcome, index) => (
-            <div
-              key={index}
-              className="flex items-start gap-3 p-3 rounded-xl bg-white/10 border border-white/10 hover:border-green-500/30 transition-colors"
-            >
-              <div className="p-1.5 rounded-lg bg-green-500/20 flex-shrink-0 mt-0.5">
-                <CheckCircle className="h-3.5 w-3.5 text-green-400" />
-              </div>
-              <span className="text-sm text-white">{outcome}</span>
-            </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+        ))}
+      </div>
+    </div>
   );
 };
 

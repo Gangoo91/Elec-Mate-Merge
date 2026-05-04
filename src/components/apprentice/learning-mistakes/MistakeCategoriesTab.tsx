@@ -1,16 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { AlertTriangle, CheckCircle, Brain, Target } from 'lucide-react';
-
 const MistakeCategoriesTab = () => {
   const mistakeCategories = [
     {
       category: 'Learning Mistakes',
-      icon: Brain,
       severity: 'Minor',
-      color: 'border-green-500/20 bg-green-500/10',
-      iconColor: 'text-green-400',
-      badgeClass: 'border-green-500/40 text-green-400',
       description: 'Normal part of the learning process',
       examples: [
         {
@@ -35,11 +27,7 @@ const MistakeCategoriesTab = () => {
     },
     {
       category: 'Technical Mistakes',
-      icon: Target,
       severity: 'Moderate',
-      color: 'border-amber-500/20 bg-amber-500/10',
-      iconColor: 'text-amber-400',
-      badgeClass: 'border-amber-500/40 text-amber-400',
       description: 'Require immediate correction and learning',
       examples: [
         {
@@ -64,12 +52,9 @@ const MistakeCategoriesTab = () => {
     },
     {
       category: 'Safety Mistakes',
-      icon: AlertTriangle,
       severity: 'Serious',
-      color: 'border-red-500/20 bg-red-500/10',
-      iconColor: 'text-red-400',
-      badgeClass: '',
       description: 'Never acceptable - immediate action required',
+      isSafety: true,
       examples: [
         {
           mistake: 'Working live without proper procedures',
@@ -134,90 +119,105 @@ const MistakeCategoriesTab = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <AlertTriangle className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Understanding Mistake Categories</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            {mistakeCategories.map((category, index) => {
-              const IconComponent = category.icon;
-              return (
-                <div key={index} className={`border rounded-lg p-6 ${category.color}`}>
-                  <div className="flex items-center gap-3 mb-4">
-                    <IconComponent className={`h-6 w-6 ${category.iconColor}`} />
-                    <div className="flex-1">
-                      <h3 className="text-xl font-semibold text-white">{category.category}</h3>
-                      <p className="text-sm text-white">{category.description}</p>
-                    </div>
-                    <Badge
-                      variant={category.severity === 'Serious' ? 'destructive' : 'outline'}
-                      className={category.badgeClass}
-                    >
-                      {category.severity}
-                    </Badge>
-                  </div>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Understanding mistake categories
+        </span>
+        <div className="space-y-5">
+          {mistakeCategories.map((category, index) => {
+            const containerClass = category.isSafety
+              ? 'rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 space-y-3'
+              : 'rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3';
+            const eyebrowClass = category.isSafety
+              ? 'text-[10px] font-medium uppercase tracking-[0.18em] text-red-300'
+              : 'text-[10px] font-medium uppercase tracking-[0.18em] text-white/55';
 
-                  <div className="space-y-4">
-                    {category.examples.map((example, exampleIndex) => (
-                      <div key={exampleIndex} className="bg-black/20 rounded-lg p-4">
-                        <h4 className="font-medium text-white mb-2">{example.mistake}</h4>
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 text-sm">
-                          <div>
-                            <span className="font-medium text-orange-300">Consequence:</span>
-                            <p className="text-white">{example.consequence}</p>
-                          </div>
-                          <div>
-                            <span className="font-medium text-blue-300">Lesson:</span>
-                            <p className="text-white">{example.lesson}</p>
-                          </div>
-                          <div>
-                            <span className="font-medium text-green-300">Recovery:</span>
-                            <p className="text-white">{example.recovery}</p>
-                          </div>
+            return (
+              <div key={index} className={containerClass}>
+                <div className="flex items-start justify-between gap-3 flex-wrap">
+                  <div className="space-y-1">
+                    <h3 className="text-[18px] font-semibold text-white">{category.category}</h3>
+                    <p className="text-[14px] text-white/85 leading-relaxed">
+                      {category.description}
+                    </p>
+                  </div>
+                  <span className={eyebrowClass}>{category.severity}</span>
+                </div>
+
+                <div className="space-y-3">
+                  {category.examples.map((example, exampleIndex) => (
+                    <div
+                      key={exampleIndex}
+                      className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2"
+                    >
+                      <h4 className="text-[14px] font-semibold text-white">{example.mistake}</h4>
+                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                            Consequence
+                          </span>
+                          <p className="text-[13px] text-white/85 leading-relaxed">
+                            {example.consequence}
+                          </p>
+                        </div>
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                            Lesson
+                          </span>
+                          <p className="text-[13px] text-white/85 leading-relaxed">
+                            {example.lesson}
+                          </p>
+                        </div>
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                            Recovery
+                          </span>
+                          <p className="text-[13px] text-white/85 leading-relaxed">
+                            {example.recovery}
+                          </p>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Brain className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Common Mistake Patterns</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {commonPatterns.map((pattern, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <h4 className="font-semibold text-white mb-2">{pattern.pattern}</h4>
-                <p className="text-sm text-white mb-3">{pattern.description}</p>
-                <div>
-                  <h5 className="font-medium text-elec-yellow mb-2">Solutions:</h5>
-                  <ul className="space-y-1">
-                    {pattern.solutions.map((solution, solutionIndex) => (
-                      <li key={solutionIndex} className="text-sm text-white flex items-start gap-2">
-                        <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
-                        {solution}
-                      </li>
-                    ))}
-                  </ul>
+                    </div>
+                  ))}
                 </div>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Common mistake patterns
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {commonPatterns.map((pattern, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
+            >
+              <h4 className="text-[16px] font-semibold text-white">{pattern.pattern}</h4>
+              <p className="text-[14px] text-white/85 leading-relaxed">{pattern.description}</p>
+              <div className="space-y-1.5 pt-1">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Solutions
+                </span>
+                <ul className="space-y-1">
+                  {pattern.solutions.map((solution, solutionIndex) => (
+                    <li
+                      key={solutionIndex}
+                      className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                      <span>{solution}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

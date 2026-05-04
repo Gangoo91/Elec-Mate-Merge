@@ -28,7 +28,7 @@ const CodeBlock = ({ code, language }: { code: string; language?: string }) => {
           className="flex items-center gap-1 text-xs text-white hover:text-white transition-colors touch-manipulation"
         >
           {copied ? (
-            <Check className="h-3.5 w-3.5 text-green-400" />
+            <Check className="h-3.5 w-3.5 text-elec-yellow" />
           ) : (
             <Copy className="h-3.5 w-3.5" />
           )}
@@ -36,7 +36,7 @@ const CodeBlock = ({ code, language }: { code: string; language?: string }) => {
         </button>
       </div>
       <pre className="p-3 overflow-x-auto text-sm">
-        <code className="text-green-300 font-mono whitespace-pre-wrap break-words">{code}</code>
+        <code className="text-white/85 font-mono whitespace-pre-wrap break-words">{code}</code>
       </pre>
     </div>
   );
@@ -152,7 +152,7 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
           return (
             <div
               key={index}
-              className="mt-4 mb-2 p-3 bg-gradient-to-r from-purple-500/20 to-blue-500/20 border-l-4 border-purple-500 rounded-r-lg"
+              className="mt-4 mb-2 p-3 rounded-xl border border-white/[0.06] bg-white/[0.02]"
             >
               <p
                 className="font-semibold text-white"
@@ -208,11 +208,11 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
           return (
             <div
               key={index}
-              className="my-3 p-3 bg-gradient-to-r from-amber-500/15 to-orange-500/15 border border-amber-500/40 rounded-lg"
+              className="my-3 p-3 rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04]"
             >
               <div className="flex items-start gap-2">
-                <span className="text-amber-400 text-lg shrink-0">⚠️</span>
-                <p className="text-amber-100 font-medium text-sm">{warningText}</p>
+                <span className="text-elec-yellow text-lg shrink-0">⚠</span>
+                <p className="text-white/85 font-medium text-sm">{warningText}</p>
               </div>
             </div>
           );
@@ -238,11 +238,11 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
           processed = processed
             .replace(
               technicalTerms,
-              '<span class="px-1 py-0.5 bg-blue-500/20 text-blue-300 rounded text-sm font-medium">$&</span>'
+              '<span class="px-1 py-0.5 border border-white/10 bg-white/[0.03] text-white/85 rounded text-sm font-medium">$&</span>'
             )
             .replace(
               measurements,
-              '<span class="px-1 py-0.5 bg-green-500/20 text-green-300 rounded text-xs font-mono">$&</span>'
+              '<span class="px-1 py-0.5 border border-white/10 bg-white/[0.03] text-white/85 rounded text-xs font-mono">$&</span>'
             );
 
           return (
@@ -265,15 +265,15 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
           processed = processed
             .replace(
               technicalTerms,
-              '<span class="px-1 py-0.5 bg-blue-500/20 text-blue-300 rounded text-sm font-medium">$&</span>'
+              '<span class="px-1 py-0.5 border border-white/10 bg-white/[0.03] text-white/85 rounded text-sm font-medium">$&</span>'
             )
             .replace(
               measurements,
-              '<span class="px-1 py-0.5 bg-green-500/20 text-green-300 rounded text-xs font-mono">$&</span>'
+              '<span class="px-1 py-0.5 border border-white/10 bg-white/[0.03] text-white/85 rounded text-xs font-mono">$&</span>'
             )
             .replace(
               regulationNumbers,
-              '<span class="px-1 py-0.5 bg-purple-500/20 text-purple-300 rounded text-xs font-semibold">$&</span>'
+              '<span class="px-1 py-0.5 border border-white/10 bg-white/[0.03] text-white/85 rounded text-xs font-semibold">$&</span>'
             );
 
           return (
@@ -296,11 +296,11 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
           return (
             <div
               key={index}
-              className="mt-4 p-3 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 rounded-lg"
+              className="mt-4 p-3 rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04]"
             >
               <div className="flex items-start gap-2">
-                <span className="text-amber-400 text-base shrink-0">💬</span>
-                <p className="text-amber-100 text-sm italic">{trimmed}</p>
+                <span className="text-elec-yellow text-base shrink-0">·</span>
+                <p className="text-white/85 text-sm italic">{trimmed}</p>
               </div>
             </div>
           );
@@ -312,11 +312,11 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
           processed = processed
             .replace(
               regulationNumbers,
-              '<span class="px-1.5 py-0.5 bg-purple-500/25 text-purple-300 rounded font-semibold">$&</span>'
+              '<span class="px-1.5 py-0.5 border border-white/10 bg-white/[0.03] text-white/85 rounded font-semibold">$&</span>'
             )
             .replace(
               /BS\s*7671/gi,
-              '<span class="px-1.5 py-0.5 bg-blue-500/25 text-blue-300 rounded font-semibold">$&</span>'
+              '<span class="px-1.5 py-0.5 border border-white/10 bg-white/[0.03] text-white/85 rounded font-semibold">$&</span>'
             );
 
           return (
@@ -332,7 +332,7 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
         if (trimmed.startsWith('✅') || trimmed.startsWith('✓')) {
           return (
             <div key={index} className="mb-1.5 flex items-start gap-2 ml-1">
-              <span className="text-green-400 text-sm shrink-0">✓</span>
+              <span className="text-elec-yellow text-sm shrink-0">✓</span>
               <span className="text-white text-sm">{trimmed.replace(/^[✅✓]\s*/, '')}</span>
             </div>
           );
@@ -341,7 +341,7 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
         if (trimmed.startsWith('❌') || trimmed.startsWith('✗')) {
           return (
             <div key={index} className="mb-1.5 flex items-start gap-2 ml-1">
-              <span className="text-red-400 text-sm shrink-0">✗</span>
+              <span className="text-white/55 text-sm shrink-0">✗</span>
               <span className="text-white text-sm">{trimmed.replace(/^[❌✗]\s*/, '')}</span>
             </div>
           );
@@ -352,15 +352,15 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
         processed = processed
           .replace(
             technicalTerms,
-            '<span class="px-1 py-0.5 bg-blue-500/15 text-blue-300 rounded text-sm">$&</span>'
+            '<span class="px-1 py-0.5 border border-white/10 bg-white/[0.03] text-white/85 rounded text-sm">$&</span>'
           )
           .replace(
             measurements,
-            '<span class="px-1 py-0.5 bg-green-500/15 text-green-300 rounded text-xs font-mono">$&</span>'
+            '<span class="px-1 py-0.5 border border-white/10 bg-white/[0.03] text-white/85 rounded text-xs font-mono">$&</span>'
           )
           .replace(
             regulationNumbers,
-            '<span class="px-1 py-0.5 bg-purple-500/15 text-purple-300 rounded text-xs font-medium">$&</span>'
+            '<span class="px-1 py-0.5 border border-white/10 bg-white/[0.03] text-white/85 rounded text-xs font-medium">$&</span>'
           );
 
         return (

@@ -94,20 +94,18 @@ export function DiaryWeeklySummary({
   const entryDiff = thisWeek.daysLogged - lastWeek.daysLogged;
 
   return (
-    <div className="rounded-xl overflow-hidden bg-white/[0.03] border border-white/[0.06]">
-      {/* Gradient accent top bar */}
-      <div className="h-1 bg-gradient-to-r from-elec-yellow via-amber-500 to-orange-500" />
-
+    <div className="rounded-xl overflow-hidden bg-white/[0.02] border border-white/[0.06]">
       {/* Header - always visible, toggles collapse */}
       <button
         onClick={toggleCollapsed}
-        className="w-full flex items-center justify-between px-4 py-3 touch-manipulation"
+        className="w-full flex items-center justify-between px-4 py-3 touch-manipulation min-h-[44px]"
       >
         <div className="flex items-center gap-3">
-          <h3 className="text-sm font-semibold text-white">This Week</h3>
-          {/* Compact stats when collapsed */}
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            This week
+          </span>
           {collapsed && (
-            <span className="text-xs text-white">
+            <span className="text-[12px] text-white/85 font-mono">
               {thisWeek.daysLogged} day{thisWeek.daysLogged !== 1 ? 's' : ''} ·{' '}
               {thisWeek.totalTasks} tasks
             </span>
@@ -146,31 +144,30 @@ export function DiaryWeeklySummary({
       {/* Expandable content */}
       {!collapsed && (
         <div className="px-4 pb-4 space-y-3">
-          {/* Stats grid */}
           <div className="grid grid-cols-4 gap-2 sm:gap-3">
-            <div className="text-center py-2 rounded-lg bg-white/[0.03]">
-              <div className="text-lg sm:text-xl font-bold text-elec-yellow">
-                {thisWeek.daysLogged}
+            <div className="text-center py-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+              <div className="text-[16px] font-mono text-white">{thisWeek.daysLogged}</div>
+              <div className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">
+                Days
               </div>
-              <div className="text-[10px] text-white">Days</div>
             </div>
-            <div className="text-center py-2 rounded-lg bg-white/[0.03]">
-              <div className="text-lg sm:text-xl font-bold text-green-400">
-                {thisWeek.totalTasks}
+            <div className="text-center py-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+              <div className="text-[16px] font-mono text-white">{thisWeek.totalTasks}</div>
+              <div className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">
+                Tasks
               </div>
-              <div className="text-[10px] text-white">Tasks</div>
             </div>
-            <div className="text-center py-2 rounded-lg bg-white/[0.03]">
-              <div className="text-lg sm:text-xl font-bold text-purple-400">
-                {thisWeek.skills.length}
+            <div className="text-center py-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+              <div className="text-[16px] font-mono text-white">{thisWeek.skills.length}</div>
+              <div className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">
+                Skills
               </div>
-              <div className="text-[10px] text-white">Skills</div>
             </div>
-            <div className="text-center py-2 rounded-lg bg-white/[0.03]">
-              <div className="text-lg sm:text-xl font-bold text-cyan-400">
-                {thisWeek.sites.length}
+            <div className="text-center py-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+              <div className="text-[16px] font-mono text-white">{thisWeek.sites.length}</div>
+              <div className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">
+                Sites
               </div>
-              <div className="text-[10px] text-white">Sites</div>
             </div>
           </div>
 

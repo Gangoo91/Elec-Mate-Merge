@@ -1,103 +1,99 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { BookOpen, Video, FileText, Globe, Download, ExternalLink } from 'lucide-react';
+import { Download, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const ResourcesTab = () => {
   const resourceCategories = [
     {
-      title: 'Essential Textbooks',
-      icon: BookOpen,
+      title: 'Essential textbooks',
       description: 'Core reference materials for electrical training',
       resources: [
         {
-          name: 'BS 7671:2018 (18th Edition IET Wiring Regulations)',
+          name: 'BS 7671:2018 + A4:2026 (IET Wiring Regulations)',
           description: 'The definitive guide to electrical installation standards in the UK',
-          type: 'Official Standard',
+          type: 'Official standard',
           link: 'https://electrical.theiet.org/wiring-regulations/',
         },
         {
           name: 'Guidance Note 3: Inspection & Testing',
           description: 'Comprehensive guide to electrical testing procedures',
-          type: 'IET Publication',
+          type: 'IET publication',
           link: 'https://electrical.theiet.org/guidance-notes/',
         },
         {
           name: 'On-Site Guide (BS 7671:2018)',
           description: 'Simplified guidance for electrical installations',
-          type: 'IET Publication',
+          type: 'IET publication',
           link: 'https://electrical.theiet.org/on-site-guide/',
         },
       ],
     },
     {
-      title: 'Online Learning Platforms',
-      icon: Globe,
+      title: 'Online learning platforms',
       description: 'Digital resources and interactive learning',
       resources: [
         {
           name: 'City & Guilds SmartScreen',
           description: 'Official digital learning resources for City & Guilds qualifications',
-          type: 'Learning Platform',
+          type: 'Learning platform',
           link: 'https://www.cityandguilds.com/smartscreen',
         },
         {
           name: 'EAL Digital Learning',
           description: 'Interactive modules for EAL electrical qualifications',
-          type: 'Learning Platform',
+          type: 'Learning platform',
           link: 'https://www.eal.org.uk/',
         },
         {
           name: 'JTL Learning Portal',
           description: 'Comprehensive apprenticeship learning resources',
-          type: 'Training Provider',
+          type: 'Training provider',
           link: 'https://www.jtltraining.com/',
         },
       ],
     },
     {
-      title: 'Video Learning',
-      icon: Video,
+      title: 'Video learning',
       description: 'Visual learning resources and demonstrations',
       resources: [
         {
           name: 'IET TV',
           description: 'Professional electrical engineering videos and webinars',
-          type: 'Video Library',
+          type: 'Video library',
           link: 'https://tv.theiet.org/',
         },
         {
           name: 'eFIXX — Electrical Standards Explained',
-          description: 'UK-focused electrical installation videos, regulation updates, and testing demos',
-          type: 'Free Video Series',
+          description:
+            'UK-focused electrical installation videos, regulation updates and testing demos',
+          type: 'Free video series',
           link: 'https://www.youtube.com/@eFIXX',
         },
         {
-          name: 'City & Guilds SmartScreen Videos',
+          name: 'City & Guilds SmartScreen videos',
           description: 'Practical skills demonstrations for electrical qualifications',
-          type: 'Video Resource',
+          type: 'Video resource',
           link: 'https://www.cityandguilds.com/smartscreen',
         },
       ],
     },
     {
-      title: 'Reference Materials',
-      icon: FileText,
+      title: 'Reference materials',
       description: 'Quick reference guides and charts',
       resources: [
         {
-          name: 'Cable Capacity Charts',
+          name: 'Cable capacity charts',
           description: 'Current carrying capacity tables for various cable types',
-          type: 'Reference Chart',
+          type: 'Reference chart',
           downloadable: true,
         },
         {
-          name: 'Electrical Symbols Guide',
+          name: 'Electrical symbols guide',
           description: 'Comprehensive guide to electrical schematic symbols',
-          type: 'Reference Guide',
+          type: 'Reference guide',
           downloadable: true,
         },
         {
-          name: 'Fault Finding Flowcharts',
+          name: 'Fault finding flowcharts',
           description: 'Step-by-step troubleshooting procedures',
           type: 'Flowchart',
           downloadable: true,
@@ -108,112 +104,118 @@ const ResourcesTab = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-cyan-500/10">
-        <CardHeader>
-          <CardTitle className="text-blue-400 flex items-center gap-2">
-            <BookOpen className="h-6 w-6" />
-            Study Resources Library
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-white">
-            A curated collection of essential resources for electrical apprentices and students.
-            These materials cover everything from basic principles to advanced installation
-            techniques.
-          </p>
-        </CardContent>
-      </Card>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {resourceCategories.map((category, index) => {
-          const IconComponent = category.icon;
-          return (
-            <Card key={index} className="border-elec-yellow/20 bg-white/5">
-              <CardHeader>
-                <CardTitle className="text-elec-yellow flex items-center gap-3">
-                  <div className="p-2 bg-elec-yellow/10 rounded-lg">
-                    <IconComponent className="h-5 w-5" />
-                  </div>
-                  {category.title}
-                </CardTitle>
-                <p className="text-sm text-white">{category.description}</p>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {category.resources.map((resource, resourceIndex) => (
-                    <div
-                      key={resourceIndex}
-                      className="border border-muted/30 rounded-lg p-4 bg-background/30"
-                    >
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <h4 className="font-medium text-white mb-1">{resource.name}</h4>
-                          <p className="text-sm text-white mb-2">{resource.description}</p>
-                          <span className="inline-block px-2 py-1 bg-muted/50 rounded text-xs text-white">
-                            {resource.type}
-                          </span>
-                        </div>
-                        <div className="ml-4 flex gap-2">
-                          {resource.downloadable ? (
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="border-green-500/30 hover:bg-green-500/10"
-                            >
-                              <Download className="h-3 w-3 mr-1" />
-                              Download
-                            </Button>
-                          ) : (
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="border-blue-500/30 hover:bg-blue-500/10"
-                              asChild
-                            >
-                              <a href={resource.link} target="_blank" rel="noopener noreferrer">
-                                <ExternalLink className="h-3 w-3 mr-1" />
-                                Visit
-                              </a>
-                            </Button>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Study resources library
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          A curated collection of essential resources for electrical apprentices and students.
+          These materials cover everything from basic principles to advanced installation
+          techniques.
+        </p>
       </div>
 
-      <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/10">
-        <CardHeader>
-          <CardTitle className="text-green-400">Resource Usage Tips</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <h4 className="font-medium text-white mb-2">Effective Resource Management</h4>
-              <ul className="text-sm text-white space-y-1">
-                <li>• Create a personal resource library with bookmarks</li>
-                <li>• Download key reference materials for offline access</li>
-                <li>• Use multiple formats (text, video, interactive) for better understanding</li>
-                <li>• Join online communities for additional support</li>
-              </ul>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {resourceCategories.map((category, index) => (
+          <div
+            key={index}
+            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
+          >
+            <div className="space-y-1">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                {category.title}
+              </span>
+              <p className="text-[13px] text-white/70 leading-relaxed">{category.description}</p>
             </div>
-            <div>
-              <h4 className="font-medium text-white mb-2">Quality Assurance</h4>
-              <ul className="text-sm text-white space-y-1">
-                <li>• Always use current edition materials (especially BS 7671)</li>
-                <li>• Verify information from multiple sources</li>
-                <li>• Check for updates to regulations and standards</li>
-                <li>• Prefer official publications for exam preparation</li>
-              </ul>
+            <div className="space-y-2">
+              {category.resources.map((resource, resourceIndex) => (
+                <div
+                  key={resourceIndex}
+                  className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1 min-w-0 space-y-1">
+                      <h4 className="text-[14px] font-semibold text-white leading-tight">
+                        {resource.name}
+                      </h4>
+                      <p className="text-[12px] text-white/70 leading-relaxed">
+                        {resource.description}
+                      </p>
+                      <span className="inline-block text-[11px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                        {resource.type}
+                      </span>
+                    </div>
+                    <div className="flex-shrink-0">
+                      {resource.downloadable ? (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                        >
+                          <Download className="h-3 w-3 mr-1" />
+                          Download
+                        </Button>
+                      ) : (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                          asChild
+                        >
+                          <a href={resource.link} target="_blank" rel="noopener noreferrer">
+                            <ExternalLink className="h-3 w-3 mr-1" />
+                            Visit
+                          </a>
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        </CardContent>
-      </Card>
+        ))}
+      </div>
+
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Resource usage tips
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <p className="text-[13px] text-white">Effective resource management</p>
+            <ul className="space-y-1">
+              {[
+                'Create a personal resource library with bookmarks',
+                'Download key reference materials for offline access',
+                'Use multiple formats (text, video, interactive) for better understanding',
+                'Join online communities for additional support',
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-2 text-[13px] text-white/85">
+                  <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="space-y-2">
+            <p className="text-[13px] text-white">Quality assurance</p>
+            <ul className="space-y-1">
+              {[
+                'Always use current edition materials (especially BS 7671)',
+                'Verify information from multiple sources',
+                'Check for updates to regulations and standards',
+                'Prefer official publications for exam preparation',
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-2 text-[13px] text-white/85">
+                  <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

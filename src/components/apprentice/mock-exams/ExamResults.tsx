@@ -1,5 +1,4 @@
 import React from 'react';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -27,7 +26,6 @@ const ExamResults: React.FC<ExamResultsProps> = ({
 }) => {
   const navigate = useNavigate();
 
-  // Calculate results
   const calculateResults = () => {
     let correctCount = 0;
 
@@ -49,71 +47,81 @@ const ExamResults: React.FC<ExamResultsProps> = ({
   const results = calculateResults();
 
   return (
-    <Card className="border-elec-yellow/30 bg-white/5">
-      <CardHeader>
-        <CardTitle>{examTitle}</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="text-center p-6">
-          <div className="text-6xl font-bold text-elec-yellow mb-2">{results.percentage}%</div>
-          <p className="text-white">
-            You got {results.correct} out of {results.total} questions correct
-          </p>
-        </div>
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-6">
+      <div className="space-y-1">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Exam result
+        </span>
+        <h2 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
+          {examTitle}
+        </h2>
+      </div>
 
-        <div className="space-y-8 mt-8">
-          <h2 className="text-xl font-semibold border-b border-elec-yellow/30 pb-2">
-            Review Your Answers
-          </h2>
+      <div className="text-center py-4 space-y-2">
+        <div className="text-[40px] font-mono text-white leading-none">{results.percentage}%</div>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          {results.correct} of {results.total} questions correct
+        </p>
+      </div>
 
-          {questions.map((question, index) => (
-            <div key={question.id} className="space-y-4">
-              <div className="flex items-start gap-3">
-                <div className="flex-shrink-0">
-                  {selectedAnswers[question.id] === question.correctAnswer ? (
-                    <CheckCircle className="h-5 w-5 text-green-500 mt-1" />
-                  ) : (
-                    <AlertCircle className="h-5 w-5 text-red-500 mt-1" />
-                  )}
-                </div>
-                <div>
-                  <p className="font-medium">
-                    {index + 1}. {question.text}
-                  </p>
-                  <div className="mt-2 space-y-1">
-                    {question.options.map((option, optionIndex) => (
-                      <div
-                        key={optionIndex}
-                        className={`p-2 rounded-md ${
-                          optionIndex === question.correctAnswer
-                            ? 'bg-green-500/20 border border-green-500/30'
-                            : optionIndex === selectedAnswers[question.id]
-                              ? 'bg-red-500/20 border border-red-500/30'
-                              : 'bg-white/10'
-                        }`}
-                      >
-                        {option}
-                      </div>
-                    ))}
-                  </div>
-                  {selectedAnswers[question.id] !== question.correctAnswer && (
-                    <div className="mt-3 p-3 bg-white/10 rounded-md">
-                      <p className="text-sm font-medium">Explanation:</p>
-                      <p className="text-sm text-white">{question.explanation}</p>
+      <div className="space-y-6 pt-2 border-t border-white/[0.06]">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Review your answers
+        </span>
+
+        {questions.map((question, index) => (
+          <div key={question.id} className="space-y-3">
+            <div className="flex items-start gap-3">
+              <div className="flex-shrink-0">
+                {selectedAnswers[question.id] === question.correctAnswer ? (
+                  <CheckCircle className="h-5 w-5 text-elec-yellow mt-1" />
+                ) : (
+                  <AlertCircle className="h-5 w-5 text-red-400 mt-1" />
+                )}
+              </div>
+              <div className="flex-1">
+                <p className="text-[14px] text-white/85 leading-relaxed font-medium">
+                  {index + 1}. {question.text}
+                </p>
+                <div className="mt-3 space-y-1.5">
+                  {question.options.map((option, optionIndex) => (
+                    <div
+                      key={optionIndex}
+                      className={`p-3 rounded-md text-[13px] ${
+                        optionIndex === question.correctAnswer
+                          ? 'bg-elec-yellow/[0.06] border border-elec-yellow/30 text-white'
+                          : optionIndex === selectedAnswers[question.id]
+                            ? 'bg-red-500/[0.04] border border-red-500/30 text-white/85'
+                            : 'bg-white/[0.02] border border-white/[0.06] text-white/70'
+                      }`}
+                    >
+                      {option}
                     </div>
-                  )}
+                  ))}
                 </div>
+                {selectedAnswers[question.id] !== question.correctAnswer && (
+                  <div className="mt-3 rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                      Explanation
+                    </span>
+                    <p className="text-[14px] text-white/85 leading-relaxed">
+                      {question.explanation}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
-          ))}
-        </div>
-      </CardContent>
-      <CardFooter>
-        <Button className="w-full" onClick={onReturn}>
-          Return to Mock Exams
-        </Button>
-      </CardFooter>
-    </Card>
+          </div>
+        ))}
+      </div>
+
+      <Button
+        className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98]"
+        onClick={onReturn}
+      >
+        Return to Mock Exams
+      </Button>
+    </div>
   );
 };
 

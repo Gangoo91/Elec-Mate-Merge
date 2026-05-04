@@ -37,10 +37,10 @@ interface UnitBucket {
 
 const STATUS_TONE: Record<AcStatus, string> = {
   not_started: 'bg-white/[0.10]',
-  in_progress: 'bg-blue-400',
-  evidenced: 'bg-purple-400',
-  assessed: 'bg-amber-400',
-  confirmed: 'bg-emerald-400',
+  in_progress: 'bg-white/[0.02]',
+  evidenced: 'bg-white/[0.02]',
+  assessed: 'bg-white/[0.02]',
+  confirmed: 'bg-white/[0.02]',
 };
 
 const STATUS_LABEL: Record<AcStatus, string> = {
@@ -218,11 +218,9 @@ export function MyAcCoverageCard() {
               s.pct > 0 && (
                 <div
                   key={s.status}
-                  className={cn(
-                    'h-full',
+                  className={cn('h-full',
                     STATUS_TONE[s.status],
-                    i === 0 ? 'rounded-l-full' : '',
-                    i === segments.length - 1 ? '' : ''
+                    i === 0 ? 'rounded-l-full' : '', i === segments.length - 1 ?'' : ''
                   )}
                   style={{ width: `${s.pct}%` }}
                   title={`${STATUS_LABEL[s.status]} · ${summary.buckets[s.status]}`}
@@ -265,14 +263,13 @@ export function MyAcCoverageCard() {
                     </div>
                     <div className="mt-1 h-1.5 rounded-full bg-white/[0.05] overflow-hidden">
                       <div
-                        className={cn(
-                          'h-full rounded-full',
+                        className={cn('h-full rounded-full',
                           pct >= 80
-                            ? 'bg-emerald-400'
+                            ? 'bg-white/[0.02]'
                             : pct >= 50
-                              ? 'bg-purple-400'
+                              ? 'bg-white/[0.02]'
                               : pct >= 25
-                                ? 'bg-blue-400'
+                                ? 'bg-white/[0.02]'
                                 : 'bg-white/[0.20]'
                         )}
                         style={{ width: `${Math.max(2, pct)}%` }}

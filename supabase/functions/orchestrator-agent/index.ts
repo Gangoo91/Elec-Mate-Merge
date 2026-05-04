@@ -1045,8 +1045,8 @@ function getAgentFunctionName(agent: string): string {
   const mapping: Record<string, string> = {
     designer: 'designer-agent-v3',
     design: 'designer-agent-v3',
-    'cost-engineer': 'cost-engineer-agent',
-    cost: 'cost-engineer-agent',
+    'cost-engineer': 'cost-engineer',
+    cost: 'cost-engineer',
     installer: 'installer-v3',
     installation: 'installer-v3',
     commissioning: 'commissioning-v3',

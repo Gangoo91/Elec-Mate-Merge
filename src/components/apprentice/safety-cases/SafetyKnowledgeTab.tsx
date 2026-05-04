@@ -1,21 +1,7 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
-import {
-  Shield,
-  Zap,
-  HardHat,
-  AlertTriangle,
-  CheckCircle,
-  BookOpen,
-  Clock,
-  Star,
-  ChevronRight,
-  Play,
-} from 'lucide-react';
+import { CheckCircle, Clock, Play, BookOpen, Star, ChevronRight } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const SafetyKnowledgeTab = () => {
@@ -27,7 +13,6 @@ const SafetyKnowledgeTab = () => {
     {
       id: 'electrical-hazards',
       title: 'Electrical Hazards & Risks',
-      icon: Zap,
       description:
         'Understanding electrical dangers, risk assessment methodologies, and hazard identification techniques for UK electrical installations',
       topics: [
@@ -51,7 +36,6 @@ const SafetyKnowledgeTab = () => {
     {
       id: 'ppe-safety',
       title: 'Personal Protective Equipment',
-      icon: HardHat,
       description:
         'Comprehensive guide to selecting, using, and maintaining PPE for electrical work in compliance with UK standards',
       topics: [
@@ -76,7 +60,6 @@ const SafetyKnowledgeTab = () => {
     {
       id: 'safe-isolation',
       title: 'Safe Isolation Procedures',
-      icon: Shield,
       description:
         'Step-by-step safe isolation procedures including lock-out/tag-out, proving dead, and permit-to-work systems',
       topics: [
@@ -100,7 +83,6 @@ const SafetyKnowledgeTab = () => {
     {
       id: 'emergency-response',
       title: 'Emergency Response & First Aid',
-      icon: AlertTriangle,
       description:
         'Emergency procedures for electrical incidents, first aid for electric shock, and incident reporting requirements',
       topics: [
@@ -128,7 +110,6 @@ const SafetyKnowledgeTab = () => {
     {
       id: 'working-at-height',
       title: 'Working at Height Safety',
-      icon: HardHat,
       description:
         'Safe practices for electrical work at height including ladder safety, scaffold requirements, and fall protection',
       topics: [
@@ -152,7 +133,6 @@ const SafetyKnowledgeTab = () => {
     {
       id: 'risk-assessment',
       title: 'Risk Assessment Methods',
-      icon: Shield,
       description:
         'Practical risk assessment techniques for electrical work including hazard identification and control measures',
       topics: [
@@ -180,7 +160,6 @@ const SafetyKnowledgeTab = () => {
     {
       id: 'confined-spaces',
       title: 'Confined Space Working',
-      icon: AlertTriangle,
       description:
         'Safety requirements for electrical work in confined spaces including gas testing, ventilation, and rescue procedures',
       topics: [
@@ -204,7 +183,6 @@ const SafetyKnowledgeTab = () => {
     {
       id: 'manual-handling',
       title: 'Manual Handling for Electricians',
-      icon: HardHat,
       description:
         'Safe manual handling techniques for electrical equipment, cables, and heavy components',
       topics: [
@@ -232,7 +210,6 @@ const SafetyKnowledgeTab = () => {
     {
       id: 'hazardous-areas',
       title: 'Hazardous Area Working',
-      icon: Zap,
       description:
         'Electrical safety in explosive atmospheres, DSEAR compliance, and Ex-rated equipment selection',
       topics: [
@@ -256,7 +233,6 @@ const SafetyKnowledgeTab = () => {
     {
       id: 'site-safety',
       title: 'Construction Site Safety',
-      icon: HardHat,
       description:
         'Site-specific safety requirements for electrical work on construction sites under CDM regulations',
       topics: [
@@ -279,589 +255,433 @@ const SafetyKnowledgeTab = () => {
     },
   ];
 
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case 'Critical':
-        return 'bg-red-500/20 text-red-400 border-red-400/30';
-      case 'Essential':
-        return 'bg-amber-500/20 text-amber-400 border-amber-400/30';
-      default:
-        return 'bg-blue-500/20 text-blue-400 border-blue-400/30';
-    }
-  };
-
   const markAsCompleted = (moduleId: string) => {
     if (!completedTopics.includes(moduleId)) {
       setCompletedTopics([...completedTopics, moduleId]);
     }
   };
 
-  const ModuleCard = ({ module }: { module: any }) => {
-    const Icon = module.icon;
+  type SafetyModule = (typeof safetyModules)[number];
+
+  const ModuleCard = ({ module }: { module: SafetyModule }) => {
     const isCompleted = completedTopics.includes(module.id);
 
     return (
-      <Card
-        className={`border-elec-yellow/20 bg-white/5 hover:bg-white/5 transition-all duration-200 ${
-          isMobile ? 'mb-4' : ''
-        } ${isCompleted ? 'ring-2 ring-green-500/30' : ''}`}
-      >
-        <CardHeader className={`${isMobile ? 'pb-3' : 'pb-4'}`}>
-          <div className="flex items-start justify-between">
-            <div className="flex items-center gap-3">
-              <div className={`p-2 rounded-lg bg-elec-yellow/10 ${isMobile ? 'p-1.5' : ''}`}>
-                <Icon className={`text-elec-yellow ${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
-              </div>
-              <div className="flex-1">
-                <CardTitle className={`text-elec-light ${isMobile ? 'text-base' : 'text-lg'}`}>
-                  {module.title}
-                </CardTitle>
-                <p className={`text-elec-light/70 ${isMobile ? 'text-xs mt-1' : 'text-sm mt-2'}`}>
-                  {module.description}
-                </p>
-              </div>
-            </div>
-            {isCompleted && <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0" />}
-          </div>
-        </CardHeader>
-
-        <CardContent className={`space-y-4 ${isMobile ? 'pt-0' : ''}`}>
-          <div className="flex flex-wrap gap-2">
-            {module.topics.map((topic: string, idx: number) => (
-              <Badge
-                key={idx}
-                variant="outline"
-                className={`border-elec-yellow/30 text-elec-light bg-white/10 ${
-                  isMobile ? 'text-xs px-2 py-1' : 'text-sm'
-                }`}
-              >
-                {topic}
-              </Badge>
-            ))}
-          </div>
-
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <span className={`text-elec-light/70 ${isMobile ? 'text-xs' : 'text-sm'}`}>
-                Progress
-              </span>
-              <span className={`text-elec-yellow font-medium ${isMobile ? 'text-xs' : 'text-sm'}`}>
-                {module.progress}%
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+        <div className="space-y-2">
+          <div className="flex items-baseline justify-between gap-3">
+            <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span>{module.difficulty}</span>
+              <span className="text-white/25">·</span>
+              <span className="flex items-center gap-1">
+                <Clock className="h-3 w-3" />
+                {module.duration}
               </span>
             </div>
-            <Progress
-              value={module.progress}
-              className={`bg-white/10 ${isMobile ? 'h-2' : 'h-3'}`}
+            {isCompleted && <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0" />}
+          </div>
+          <h3 className="text-[16px] sm:text-[18px] font-medium text-white leading-snug">
+            {module.title}
+          </h3>
+          <p className="text-[14px] text-white/70 leading-relaxed">{module.description}</p>
+        </div>
+
+        <div className="flex flex-wrap gap-1.5">
+          {module.topics.map((topic, idx) => (
+            <span
+              key={idx}
+              className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+            >
+              {topic}
+            </span>
+          ))}
+        </div>
+
+        <div className="space-y-2">
+          <div className="flex items-baseline justify-between">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Progress
+            </span>
+            <span className="text-[12px] text-white/85 font-mono">{module.progress}%</span>
+          </div>
+          <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-elec-yellow transition-all duration-500"
+              style={{ width: `${module.progress}%` }}
             />
           </div>
+        </div>
 
-          <div className={`flex ${isMobile ? 'flex-col gap-2' : 'items-center justify-between'}`}>
-            <div
-              className={`flex items-center gap-4 ${isMobile ? 'text-xs' : 'text-sm'} text-elec-light/70`}
+        <div className="flex flex-col sm:flex-row gap-2 pt-1">
+          <Button
+            onClick={() => setActiveModule(module.id)}
+            className="flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98]"
+          >
+            <Play className="h-4 w-4 mr-2" />
+            Start module
+          </Button>
+          {!isCompleted && (
+            <Button
+              variant="outline"
+              onClick={() => markAsCompleted(module.id)}
+              className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
             >
-              <div className="flex items-center gap-1">
-                <Clock className="h-4 w-4" />
-                <span>{module.duration}</span>
-              </div>
-              <Badge
-                variant="outline"
-                className={`${getDifficultyColor(module.difficulty)} ${isMobile ? 'text-xs' : ''}`}
-              >
-                {module.difficulty}
-              </Badge>
-            </div>
-
-            <div className={`flex gap-2 ${isMobile ? 'w-full' : ''}`}>
-              <Button
-                variant="outline"
-                size={isMobile ? 'sm' : 'default'}
-                className={`border-elec-yellow/30 hover:bg-elec-yellow/10 text-elec-yellow ${
-                  isMobile ? 'flex-1' : ''
-                }`}
-                onClick={() => setActiveModule(module.id)}
-              >
-                <Play className="h-4 w-4 mr-1" />
-                {isMobile ? 'Start' : 'Start Module'}
-              </Button>
-
-              {!isCompleted && (
-                <Button
-                  variant="ghost"
-                  size={isMobile ? 'sm' : 'default'}
-                  className={`text-green-400 hover:bg-green-400/10 ${isMobile ? 'flex-1' : ''}`}
-                  onClick={() => markAsCompleted(module.id)}
-                >
-                  <CheckCircle className="h-4 w-4 mr-1" />
-                  {isMobile ? 'Complete' : 'Mark Complete'}
-                </Button>
-              )}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+              <CheckCircle className="h-4 w-4 mr-2" />
+              Mark complete
+            </Button>
+          )}
+        </div>
+      </div>
     );
   };
 
-  const OverviewStats = () => (
-    <div className={`grid ${isMobile ? 'grid-cols-2 gap-3' : 'grid-cols-4 gap-6'} mb-6`}>
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardContent className={`${isMobile ? 'p-4' : 'p-6'} text-center`}>
-          <div className={`text-elec-yellow font-bold ${isMobile ? 'text-lg' : 'text-2xl'}`}>
-            {safetyModules.length}
-          </div>
-          <div className={`text-elec-light/70 ${isMobile ? 'text-xs' : 'text-sm'}`}>
-            Total Modules
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardContent className={`${isMobile ? 'p-4' : 'p-6'} text-center`}>
-          <div className={`text-green-400 font-bold ${isMobile ? 'text-lg' : 'text-2xl'}`}>
-            {completedTopics.length}
-          </div>
-          <div className={`text-elec-light/70 ${isMobile ? 'text-xs' : 'text-sm'}`}>Completed</div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardContent className={`${isMobile ? 'p-4' : 'p-6'} text-center`}>
-          <div className={`text-blue-400 font-bold ${isMobile ? 'text-lg' : 'text-2xl'}`}>
-            {Math.round(
-              safetyModules.reduce((acc, mod) => acc + mod.progress, 0) / safetyModules.length
-            )}
-            %
-          </div>
-          <div className={`text-elec-light/70 ${isMobile ? 'text-xs' : 'text-sm'}`}>
-            Avg Progress
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardContent className={`${isMobile ? 'p-4' : 'p-6'} text-center`}>
-          <div className={`text-amber-400 font-bold ${isMobile ? 'text-lg' : 'text-2xl'}`}>110</div>
-          <div className={`text-elec-light/70 ${isMobile ? 'text-xs' : 'text-sm'}`}>
-            Total Minutes
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
-
   return (
-    <div className={`space-y-6 ${isMobile ? 'px-2' : ''}`}>
-      <div className="text-center space-y-4">
-        <h2 className={`font-bold text-elec-light ${isMobile ? 'text-xl' : 'text-2xl'}`}>
-          Safety Knowledge Hub
+    <div className={`space-y-6 animate-fade-in text-left ${isMobile ? 'px-2' : ''}`}>
+      {/* Header */}
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Safety knowledge hub
+        </span>
+        <h2 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
+          Safety modules
         </h2>
-        <p className={`text-elec-light/70 max-w-2xl mx-auto ${isMobile ? 'text-sm px-4' : ''}`}>
+        <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
           Essential safety knowledge modules to keep you and your colleagues safe on-site. Complete
           these modules to build comprehensive safety awareness.
         </p>
       </div>
 
-      <OverviewStats />
+      {/* Stats strip */}
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Modules
+          </span>
+          <p className="text-[20px] font-semibold text-white font-mono">{safetyModules.length}</p>
+        </div>
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Completed
+          </span>
+          <p className="text-[20px] font-semibold text-white font-mono">{completedTopics.length}</p>
+        </div>
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Avg progress
+          </span>
+          <p className="text-[20px] font-semibold text-white font-mono">
+            {Math.round(
+              safetyModules.reduce((acc, mod) => acc + mod.progress, 0) / safetyModules.length
+            )}
+            %
+          </p>
+        </div>
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Total mins
+          </span>
+          <p className="text-[20px] font-semibold text-white font-mono">110</p>
+        </div>
+      </div>
 
       <Tabs defaultValue="modules" className="w-full">
-        <TabsList
-          className={`grid w-full grid-cols-3 bg-white/10 border border-elec-yellow/20 ${
-            isMobile ? 'h-auto' : ''
-          }`}
-        >
-          <TabsTrigger
-            value="modules"
-            className={`flex items-center gap-2 ${isMobile ? 'text-xs p-2' : ''}`}
-          >
+        <TabsList className="grid w-full grid-cols-3 bg-white/[0.02] border border-white/[0.06] h-auto">
+          <TabsTrigger value="modules" className="flex items-center gap-2 text-[12px] py-2">
             <BookOpen className="h-4 w-4" />
-            {isMobile ? 'Modules' : 'Safety Modules'}
+            Modules
           </TabsTrigger>
-          <TabsTrigger
-            value="quick-reference"
-            className={`flex items-center gap-2 ${isMobile ? 'text-xs p-2' : ''}`}
-          >
+          <TabsTrigger value="quick-reference" className="flex items-center gap-2 text-[12px] py-2">
             <Star className="h-4 w-4" />
-            {isMobile ? 'Reference' : 'Quick Reference'}
+            Reference
           </TabsTrigger>
-          <TabsTrigger
-            value="resources"
-            className={`flex items-center gap-2 ${isMobile ? 'text-xs p-2' : ''}`}
-          >
+          <TabsTrigger value="resources" className="flex items-center gap-2 text-[12px] py-2">
             <ChevronRight className="h-4 w-4" />
             Resources
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="modules" className="mt-6">
-          <div className={`grid gap-6 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-2'}`}>
+          <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-2'}`}>
             {safetyModules.map((module) => (
               <ModuleCard key={module.id} module={module} />
             ))}
           </div>
         </TabsContent>
 
-        <TabsContent value="quick-reference" className="mt-6 space-y-6">
-          {/* Emergency Information */}
-          <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-2 lg:grid-cols-3'}`}>
-            <Card className="border-red-500/30 bg-red-500/10">
-              <CardHeader className={isMobile ? 'pb-3' : ''}>
-                <CardTitle
-                  className={`text-red-400 flex items-center gap-2 ${isMobile ? 'text-base' : ''}`}
-                >
-                  <AlertTriangle className="h-5 w-5" />
-                  Emergency Numbers
-                </CardTitle>
-              </CardHeader>
-              <CardContent className={`space-y-2 ${isMobile ? 'text-sm' : ''}`}>
-                <div className="flex justify-between">
-                  <span>Emergency Services:</span>
-                  <span className="font-mono font-bold text-red-400">999</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>HSE Incident Line:</span>
-                  <span className="font-mono">0345 300 9923</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Gas Emergency:</span>
-                  <span className="font-mono">0800 111 999</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Electricity DNO:</span>
-                  <span className="font-mono">105</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Poison Control:</span>
-                  <span className="font-mono">0344 892 0111</span>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="border-amber-500/30 bg-amber-500/10">
-              <CardHeader className={isMobile ? 'pb-3' : ''}>
-                <CardTitle
-                  className={`text-amber-400 flex items-center gap-2 ${isMobile ? 'text-base' : ''}`}
-                >
-                  <Zap className="h-5 w-5" />
-                  Voltage Classifications
-                </CardTitle>
-              </CardHeader>
-              <CardContent className={`space-y-2 ${isMobile ? 'text-sm' : ''}`}>
-                <div className="flex justify-between">
-                  <span>Extra Low Voltage:</span>
-                  <span>≤50V AC / ≤120V DC</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Low Voltage:</span>
-                  <span>50V - 1000V AC</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>High Voltage:</span>
-                  <span>&gt;1000V AC</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>UK Mains:</span>
-                  <span>230V ±10%</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Three Phase:</span>
-                  <span>400V between phases</span>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="border-green-500/30 bg-green-500/10">
-              <CardHeader className={isMobile ? 'pb-3' : ''}>
-                <CardTitle
-                  className={`text-green-400 flex items-center gap-2 ${isMobile ? 'text-base' : ''}`}
-                >
-                  <Shield className="h-5 w-5" />
-                  Safe Isolation Steps
-                </CardTitle>
-              </CardHeader>
-              <CardContent className={`space-y-2 ${isMobile ? 'text-sm' : ''}`}>
-                <div className="flex items-center gap-2">
-                  <span className="bg-green-500/30 px-2 py-0.5 rounded text-xs">1</span> Identify
-                  circuit
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="bg-green-500/30 px-2 py-0.5 rounded text-xs">2</span> Switch off
-                  supply
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="bg-green-500/30 px-2 py-0.5 rounded text-xs">3</span> Isolate at
-                  point
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="bg-green-500/30 px-2 py-0.5 rounded text-xs">4</span> Secure
-                  isolation (lock)
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="bg-green-500/30 px-2 py-0.5 rounded text-xs">5</span> Prove
-                  voltage indicator
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="bg-green-500/30 px-2 py-0.5 rounded text-xs">6</span> Test for
-                  dead
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="bg-green-500/30 px-2 py-0.5 rounded text-xs">7</span> Re-prove
-                  indicator
-                </div>
-              </CardContent>
-            </Card>
+        <TabsContent value="quick-reference" className="mt-6 space-y-4">
+          {/* Emergency Numbers */}
+          <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+              Emergency numbers
+            </span>
+            <div className="space-y-1.5 text-[14px] text-white/85">
+              <div className="flex justify-between">
+                <span>Emergency Services</span>
+                <span className="font-mono text-white">999</span>
+              </div>
+              <div className="flex justify-between">
+                <span>HSE Incident Line</span>
+                <span className="font-mono text-white">0345 300 9923</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Gas Emergency</span>
+                <span className="font-mono text-white">0800 111 999</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Electricity DNO</span>
+                <span className="font-mono text-white">105</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Poison Control</span>
+                <span className="font-mono text-white">0344 892 0111</span>
+              </div>
+            </div>
           </div>
 
-          {/* Second Row - More Reference Cards */}
-          <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-2 lg:grid-cols-3'}`}>
-            <Card className="border-blue-500/30 bg-blue-500/10">
-              <CardHeader className={isMobile ? 'pb-3' : ''}>
-                <CardTitle
-                  className={`text-blue-400 flex items-center gap-2 ${isMobile ? 'text-base' : ''}`}
-                >
-                  <Clock className="h-5 w-5" />
-                  RCD Trip Times
-                </CardTitle>
-              </CardHeader>
-              <CardContent className={`space-y-2 ${isMobile ? 'text-sm' : ''}`}>
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Voltage classifications
+              </span>
+              <div className="space-y-1.5 text-[14px] text-white/85">
                 <div className="flex justify-between">
-                  <span>30mA @ rated (IΔn):</span>
-                  <span>≤300ms</span>
+                  <span>Extra Low Voltage</span>
+                  <span className="font-mono text-white">≤50V AC / ≤120V DC</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>30mA @ 5×IΔn:</span>
-                  <span>≤40ms</span>
+                  <span>Low Voltage</span>
+                  <span className="font-mono text-white">50V – 1000V AC</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>100mA @ rated:</span>
-                  <span>≤300ms</span>
+                  <span>High Voltage</span>
+                  <span className="font-mono text-white">&gt;1000V AC</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>S-Type delay:</span>
-                  <span>130-500ms</span>
+                  <span>UK Mains</span>
+                  <span className="font-mono text-white">230V ±10%</span>
                 </div>
-              </CardContent>
-            </Card>
+                <div className="flex justify-between">
+                  <span>Three Phase</span>
+                  <span className="font-mono text-white">400V</span>
+                </div>
+              </div>
+            </div>
 
-            <Card className="border-purple-500/30 bg-purple-500/10">
-              <CardHeader className={isMobile ? 'pb-3' : ''}>
-                <CardTitle
-                  className={`text-purple-400 flex items-center gap-2 ${isMobile ? 'text-base' : ''}`}
-                >
-                  <Zap className="h-5 w-5" />
-                  MCB Disconnection Times
-                </CardTitle>
-              </CardHeader>
-              <CardContent className={`space-y-2 ${isMobile ? 'text-sm' : ''}`}>
-                <div className="flex justify-between">
-                  <span>TN System ≤32A:</span>
-                  <span>0.4 seconds</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>TN System &gt;32A:</span>
-                  <span>5 seconds</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>TT System:</span>
-                  <span>0.2 seconds</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Distribution circuits:</span>
-                  <span>5 seconds max</span>
-                </div>
-              </CardContent>
-            </Card>
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Safe isolation steps
+              </span>
+              <ol className="space-y-1.5 text-[14px] text-white/85 list-decimal list-inside">
+                <li>Identify circuit</li>
+                <li>Switch off supply</li>
+                <li>Isolate at point</li>
+                <li>Secure isolation (lock)</li>
+                <li>Prove voltage indicator</li>
+                <li>Test for dead</li>
+                <li>Re-prove indicator</li>
+              </ol>
+            </div>
 
-            <Card className="border-orange-500/30 bg-orange-500/10">
-              <CardHeader className={isMobile ? 'pb-3' : ''}>
-                <CardTitle
-                  className={`text-orange-400 flex items-center gap-2 ${isMobile ? 'text-base' : ''}`}
-                >
-                  <AlertTriangle className="h-5 w-5" />
-                  Electric Shock Effects
-                </CardTitle>
-              </CardHeader>
-              <CardContent className={`space-y-2 ${isMobile ? 'text-sm' : ''}`}>
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                RCD trip times
+              </span>
+              <div className="space-y-1.5 text-[14px] text-white/85">
                 <div className="flex justify-between">
-                  <span>1mA:</span>
-                  <span>Perception threshold</span>
+                  <span>30mA @ rated</span>
+                  <span className="font-mono text-white">≤300ms</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>5mA:</span>
-                  <span>Pain threshold</span>
+                  <span>30mA @ 5×IΔn</span>
+                  <span className="font-mono text-white">≤40ms</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>10-30mA:</span>
-                  <span>Muscle contraction</span>
+                  <span>100mA @ rated</span>
+                  <span className="font-mono text-white">≤300ms</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>30-75mA:</span>
-                  <span>Respiratory arrest</span>
+                  <span>S-Type delay</span>
+                  <span className="font-mono text-white">130–500ms</span>
                 </div>
-                <div className="flex justify-between">
-                  <span>&gt;75mA:</span>
-                  <span>Ventricular fibrillation</span>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+              </div>
+            </div>
 
-          {/* Third Row - Key Standards */}
-          <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-2'}`}>
-            <Card className="border-elec-yellow/30 bg-elec-yellow/10">
-              <CardHeader className={isMobile ? 'pb-3' : ''}>
-                <CardTitle
-                  className={`text-elec-yellow flex items-center gap-2 ${isMobile ? 'text-base' : ''}`}
-                >
-                  <BookOpen className="h-5 w-5" />
-                  Key UK Regulations
-                </CardTitle>
-              </CardHeader>
-              <CardContent className={`space-y-3 ${isMobile ? 'text-sm' : ''}`}>
-                <div className="border-b border-elec-yellow/20 pb-2">
-                  <div className="font-medium text-elec-yellow">EAWR 1989</div>
-                  <div className="text-xs text-white">
-                    Electricity at Work Regulations - Criminal law for electrical safety
-                  </div>
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                MCB disconnection times
+              </span>
+              <div className="space-y-1.5 text-[14px] text-white/85">
+                <div className="flex justify-between">
+                  <span>TN system ≤32A</span>
+                  <span className="font-mono text-white">0.4s</span>
                 </div>
-                <div className="border-b border-elec-yellow/20 pb-2">
-                  <div className="font-medium text-elec-yellow">BS 7671:2018 +A2:2022</div>
-                  <div className="text-xs text-white">
-                    18th Edition IET Wiring Regulations - Technical standard
-                  </div>
+                <div className="flex justify-between">
+                  <span>TN system &gt;32A</span>
+                  <span className="font-mono text-white">5s</span>
                 </div>
-                <div className="border-b border-elec-yellow/20 pb-2">
-                  <div className="font-medium text-elec-yellow">HASAWA 1974</div>
-                  <div className="text-xs text-white">
-                    Health & Safety at Work Act - General duties
-                  </div>
+                <div className="flex justify-between">
+                  <span>TT system</span>
+                  <span className="font-mono text-white">0.2s</span>
                 </div>
-                <div className="border-b border-elec-yellow/20 pb-2">
-                  <div className="font-medium text-elec-yellow">CDM 2015</div>
-                  <div className="text-xs text-white">
+                <div className="flex justify-between">
+                  <span>Distribution</span>
+                  <span className="font-mono text-white">5s max</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+                Electric shock effects
+              </span>
+              <div className="space-y-1.5 text-[14px] text-white/85">
+                <div className="flex justify-between">
+                  <span>1mA</span>
+                  <span className="text-white">Perception threshold</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>5mA</span>
+                  <span className="text-white">Pain threshold</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>10–30mA</span>
+                  <span className="text-white">Muscle contraction</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>30–75mA</span>
+                  <span className="text-white">Respiratory arrest</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>&gt;75mA</span>
+                  <span className="text-white">Ventricular fibrillation</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Key UK regulations
+              </span>
+              <div className="space-y-2 text-[14px]">
+                <div>
+                  <p className="text-white font-medium">EAWR 1989</p>
+                  <p className="text-[12px] text-white/55">
+                    Electricity at Work Regulations — criminal law for electrical safety
+                  </p>
+                </div>
+                <div>
+                  <p className="text-white font-medium">BS 7671:2018 +A2:2022</p>
+                  <p className="text-[12px] text-white/55">
+                    18th Edition IET Wiring Regulations — technical standard
+                  </p>
+                </div>
+                <div>
+                  <p className="text-white font-medium">HASAWA 1974</p>
+                  <p className="text-[12px] text-white/55">
+                    Health & Safety at Work Act — general duties
+                  </p>
+                </div>
+                <div>
+                  <p className="text-white font-medium">CDM 2015</p>
+                  <p className="text-[12px] text-white/55">
                     Construction Design & Management Regulations
-                  </div>
+                  </p>
                 </div>
                 <div>
-                  <div className="font-medium text-elec-yellow">Building Regs Part P</div>
-                  <div className="text-xs text-white">
-                    Electrical safety in dwellings - England & Wales
-                  </div>
+                  <p className="text-white font-medium">Building Regs Part P</p>
+                  <p className="text-[12px] text-white/55">
+                    Electrical safety in dwellings — England & Wales
+                  </p>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
-            <Card className="border-cyan-500/30 bg-cyan-500/10">
-              <CardHeader className={isMobile ? 'pb-3' : ''}>
-                <CardTitle
-                  className={`text-cyan-400 flex items-center gap-2 ${isMobile ? 'text-base' : ''}`}
-                >
-                  <HardHat className="h-5 w-5" />
-                  PPE Voltage Ratings
-                </CardTitle>
-              </CardHeader>
-              <CardContent className={`space-y-3 ${isMobile ? 'text-sm' : ''}`}>
-                <div className="border-b border-cyan-500/20 pb-2">
-                  <div className="font-medium text-cyan-400">Class 00 Gloves</div>
-                  <div className="text-xs text-white">Max 500V AC / 750V DC - Beige colour</div>
-                </div>
-                <div className="border-b border-cyan-500/20 pb-2">
-                  <div className="font-medium text-cyan-400">Class 0 Gloves</div>
-                  <div className="text-xs text-white">Max 1000V AC / 1500V DC - Red colour</div>
-                </div>
-                <div className="border-b border-cyan-500/20 pb-2">
-                  <div className="font-medium text-cyan-400">Class 1 Gloves</div>
-                  <div className="text-xs text-white">Max 7500V AC / 11250V DC - White colour</div>
-                </div>
-                <div className="border-b border-cyan-500/20 pb-2">
-                  <div className="font-medium text-cyan-400">GS38 Test Leads</div>
-                  <div className="text-xs text-white">Fused, shrouded, max 4mm exposed tip</div>
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                PPE voltage ratings
+              </span>
+              <div className="space-y-2 text-[14px]">
+                <div>
+                  <p className="text-white font-medium">Class 00 Gloves</p>
+                  <p className="text-[12px] text-white/55">Max 500V AC / 750V DC — beige</p>
                 </div>
                 <div>
-                  <div className="font-medium text-cyan-400">Arc Flash PPE</div>
-                  <div className="text-xs text-white">
-                    Rated in cal/cm² - Match to incident energy
-                  </div>
+                  <p className="text-white font-medium">Class 0 Gloves</p>
+                  <p className="text-[12px] text-white/55">Max 1000V AC / 1500V DC — red</p>
                 </div>
-              </CardContent>
-            </Card>
+                <div>
+                  <p className="text-white font-medium">Class 1 Gloves</p>
+                  <p className="text-[12px] text-white/55">Max 7500V AC / 11250V DC — white</p>
+                </div>
+                <div>
+                  <p className="text-white font-medium">GS38 Test Leads</p>
+                  <p className="text-[12px] text-white/55">Fused, shrouded, max 4mm exposed tip</p>
+                </div>
+                <div>
+                  <p className="text-white font-medium">Arc Flash PPE</p>
+                  <p className="text-[12px] text-white/55">Rated in cal/cm² — match incident energy</p>
+                </div>
+              </div>
+            </div>
           </div>
         </TabsContent>
 
         <TabsContent value="resources" className="mt-6">
-          <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-2'}`}>
-            <Card className="border-elec-yellow/20 bg-white/5">
-              <CardHeader>
-                <CardTitle className={`text-elec-yellow ${isMobile ? 'text-base' : ''}`}>
-                  Safety Documentation
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Safety documentation
+              </span>
+              <div className="space-y-2">
                 <Button
                   variant="outline"
-                  className={`w-full justify-start border-elec-yellow/30 hover:bg-elec-yellow/10 ${
-                    isMobile ? 'text-sm h-9' : ''
-                  }`}
+                  className="w-full h-11 justify-start border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
                 >
-                  <BookOpen className="h-4 w-4 mr-2" />
                   BS 7671 Safety Guide
                 </Button>
                 <Button
                   variant="outline"
-                  className={`w-full justify-start border-elec-yellow/30 hover:bg-elec-yellow/10 ${
-                    isMobile ? 'text-sm h-9' : ''
-                  }`}
+                  className="w-full h-11 justify-start border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
                 >
-                  <HardHat className="h-4 w-4 mr-2" />
                   PPE Requirements Chart
                 </Button>
                 <Button
                   variant="outline"
-                  className={`w-full justify-start border-elec-yellow/30 hover:bg-elec-yellow/10 ${
-                    isMobile ? 'text-sm h-9' : ''
-                  }`}
+                  className="w-full h-11 justify-start border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
                 >
-                  <AlertTriangle className="h-4 w-4 mr-2" />
                   Risk Assessment Templates
                 </Button>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
-            <Card className="border-elec-yellow/20 bg-white/5">
-              <CardHeader>
-                <CardTitle className={`text-elec-yellow ${isMobile ? 'text-base' : ''}`}>
-                  Training Videos
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Training videos
+              </span>
+              <div className="space-y-2">
                 <Button
                   variant="outline"
-                  className={`w-full justify-start border-elec-yellow/30 hover:bg-elec-yellow/10 ${
-                    isMobile ? 'text-sm h-9' : ''
-                  }`}
+                  className="w-full h-11 justify-start border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
                 >
                   <Play className="h-4 w-4 mr-2" />
                   Safe Isolation Procedure
                 </Button>
                 <Button
                   variant="outline"
-                  className={`w-full justify-start border-elec-yellow/30 hover:bg-elec-yellow/10 ${
-                    isMobile ? 'text-sm h-9' : ''
-                  }`}
+                  className="w-full h-11 justify-start border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
                 >
                   <Play className="h-4 w-4 mr-2" />
                   Emergency Response
                 </Button>
                 <Button
                   variant="outline"
-                  className={`w-full justify-start border-elec-yellow/30 hover:bg-elec-yellow/10 ${
-                    isMobile ? 'text-sm h-9' : ''
-                  }`}
+                  className="w-full h-11 justify-start border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
                 >
                   <Play className="h-4 w-4 mr-2" />
                   PPE Selection Guide
                 </Button>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         </TabsContent>
       </Tabs>

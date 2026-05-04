@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { Upload, FileText, Trash2, Edit, Share, FolderOpen } from 'lucide-react';
+import { Upload, FileText, Trash2, Edit, Share } from 'lucide-react';
 
 interface UserDocument {
   id: number;
@@ -81,121 +80,113 @@ const MyDocumentsTab = () => {
 
   return (
     <div className="space-y-6">
-      {/* Upload Section */}
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Upload className="h-5 w-5" />
-            Upload Documents
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="border-2 border-dashed border-elec-yellow/30 rounded-lg p-8 text-center">
-            <Upload className="h-12 w-12 text-elec-yellow mx-auto mb-4" />
-            <h3 className="text-lg font-medium mb-2">Upload your documents</h3>
-            <p className="text-white mb-4">Drag and drop files here, or click to browse</p>
-            <Input
-              type="file"
-              multiple
-              onChange={handleFileUpload}
-              className="hidden"
-              id="file-upload"
-            />
-            <Button asChild>
-              <label htmlFor="file-upload" className="cursor-pointer">
-                Choose Files
-              </label>
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Storage Overview */}
-      <Card className="border-blue-500/30 bg-blue-500/10">
-        <CardHeader>
-          <CardTitle className="text-blue-400 flex items-center gap-2">
-            <FolderOpen className="h-5 w-5" />
-            Storage Overview
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="text-center p-3 border border-blue-500/20 rounded-lg">
-              <div className="text-2xl font-bold text-blue-400">{documents.length}</div>
-              <div className="text-sm text-white">Total Documents</div>
-            </div>
-            <div className="text-center p-3 border border-blue-500/20 rounded-lg">
-              <div className="text-2xl font-bold text-blue-400">
-                {documents.reduce((acc, doc) => acc + parseFloat(doc.size), 0).toFixed(1)} MB
-              </div>
-              <div className="text-sm text-white">Total Size</div>
-            </div>
-            <div className="text-center p-3 border border-blue-500/20 rounded-lg">
-              <div className="text-2xl font-bold text-blue-400">2.5 GB</div>
-              <div className="text-sm text-white">Available Space</div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Search */}
-      <div className="flex gap-4">
-        <Input
-          placeholder="Search your documents..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="bg-white/10 border-elec-yellow/20"
-        />
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Upload documents
+        </span>
+        <div className="border-2 border-dashed border-white/15 rounded-xl p-8 text-center space-y-3">
+          <Upload className="h-10 w-10 text-white/55 mx-auto" />
+          <h3 className="text-[16px] font-semibold text-white">Upload your documents</h3>
+          <p className="text-[14px] text-white/85 leading-relaxed">
+            Drag and drop files here, or click to browse
+          </p>
+          <Input
+            type="file"
+            multiple
+            onChange={handleFileUpload}
+            className="hidden"
+            id="file-upload"
+          />
+          <Button
+            asChild
+            className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
+          >
+            <label htmlFor="file-upload" className="cursor-pointer">
+              Choose files
+            </label>
+          </Button>
+        </div>
       </div>
 
-      {/* Documents List */}
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Storage overview
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 text-center space-y-1">
+            <div className="text-2xl font-mono text-white">{documents.length}</div>
+            <div className="text-[12px] text-white/55">Total documents</div>
+          </div>
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 text-center space-y-1">
+            <div className="text-2xl font-mono text-white">
+              {documents.reduce((acc, doc) => acc + parseFloat(doc.size), 0).toFixed(1)} MB
+            </div>
+            <div className="text-[12px] text-white/55">Total size</div>
+          </div>
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 text-center space-y-1">
+            <div className="text-2xl font-mono text-white">2.5 GB</div>
+            <div className="text-[12px] text-white/55">Available space</div>
+          </div>
+        </div>
+      </div>
+
+      <Input
+        placeholder="Search your documents..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+      />
+
       {filteredDocuments.length > 0 ? (
-        <div className="space-y-4">
+        <div className="space-y-3">
           {filteredDocuments.map((doc) => (
-            <Card key={doc.id} className="border-elec-yellow/20 bg-white/5">
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-md bg-elec-yellow/10">
-                      <FileText className="h-5 w-5 text-elec-yellow" />
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-white">{doc.name}</h4>
-                      <p className="text-sm text-white">
-                        {doc.type} • {doc.size} • Uploaded {doc.uploadDate}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Button size="sm" variant="outline">
-                      <Edit className="h-3 w-3 mr-1" />
-                      Rename
-                    </Button>
-                    <Button size="sm" variant="outline">
-                      <Share className="h-3 w-3 mr-1" />
-                      Share
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => handleDeleteDocument(doc.id)}
-                    >
-                      <Trash2 className="h-3 w-3 mr-1" />
-                      Delete
-                    </Button>
-                  </div>
+            <div
+              key={doc.id}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 flex items-center justify-between gap-3 flex-wrap"
+            >
+              <div className="flex items-center gap-3 flex-1 min-w-0">
+                <FileText className="h-5 w-5 text-white/55 flex-shrink-0" />
+                <div className="min-w-0">
+                  <h4 className="text-[14px] font-semibold text-white truncate">{doc.name}</h4>
+                  <p className="text-[12px] text-white/55 font-mono">
+                    {doc.type} · {doc.size} · {doc.uploadDate}
+                  </p>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                >
+                  <Edit className="h-3 w-3 mr-1" />
+                  Rename
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                >
+                  <Share className="h-3 w-3 mr-1" />
+                  Share
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => handleDeleteDocument(doc.id)}
+                  className="h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                >
+                  <Trash2 className="h-3 w-3 mr-1" />
+                  Delete
+                </Button>
+              </div>
+            </div>
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center py-12 text-center">
-          <div className="rounded-full bg-elec-yellow/10 p-4 mb-4">
-            <FileText className="h-8 w-8 text-elec-yellow" />
-          </div>
-          <h3 className="text-xl font-medium mb-2">No documents found</h3>
-          <p className="text-white mb-4">Upload your first document to get started</p>
+        <div className="flex flex-col items-center justify-center py-12 text-center space-y-2">
+          <h3 className="text-[18px] font-semibold text-white">No documents found</h3>
+          <p className="text-[14px] text-white/85">Upload your first document to get started</p>
         </div>
       )}
     </div>

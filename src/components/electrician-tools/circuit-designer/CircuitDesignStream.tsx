@@ -26,6 +26,8 @@ interface CircuitDesignStreamProps {
   currentStep?: string;
   estimatedTimeRemaining?: string | null;
   onCancel?: () => void;
+  /** Called when the user opts to view partial results before the job completes. */
+  onForceResults?: () => void;
 }
 
 interface PartialCircuit {
@@ -43,6 +45,7 @@ export const CircuitDesignStream = ({
   currentStep,
   estimatedTimeRemaining,
   onCancel,
+  onForceResults,
 }: CircuitDesignStreamProps) => {
   const [partials, setPartials] = useState<Map<number, PartialCircuit>>(new Map());
   const [elapsedSec, setElapsedSec] = useState(0);
@@ -150,8 +153,14 @@ export const CircuitDesignStream = ({
 
   return (
     <div className="bg-elec-dark min-h-screen pb-24 -mx-3 sm:-mx-4 md:-mx-6 lg:-mx-8 -mt-1 sm:-mt-3 md:-mt-6">
-      {/* Sticky editorial header — matches results page chrome */}
-      <div className="sticky top-0 z-50 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.06]">
+      {/* Sticky editorial header — sits BELOW the main app header (ELE-869).
+          Main header is fixed top-0 z-50; this sub-header sticks at
+          var(--header-height) with a lower z-index so the app banner always
+          wins on top. */}
+      <div
+        className="sticky z-30 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.06]"
+        style={{ top: 'var(--header-height, 56px)' }}
+      >
         <div className="px-4 sm:px-6 md:px-10 lg:px-16">
           <div className="flex items-center h-12 gap-4">
             <span className="inline-flex items-center gap-2 text-[12px] font-medium text-white">
@@ -237,6 +246,38 @@ export const CircuitDesignStream = ({
             </span>
           </div>
         </section>
+
+        {/* Force-results CTA — appears when we've waited long enough with most
+            circuits in. Lets the user bail on a stuck circuit and review what's
+            been designed. */}
+        {onForceResults &&
+          jobStatus !== 'complete' &&
+          completedCircuits >= Math.max(1, Math.ceil(totalCircuits * 0.5)) &&
+          elapsedSec >= 60 && (
+            <section className="bg-[hsl(0_0%_10%)] border border-elec-yellow/30 rounded-2xl p-5 sm:p-6">
+              <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                <div className="space-y-1 min-w-0">
+                  <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+                    Most circuits ready
+                  </div>
+                  <h3 className="text-[16px] sm:text-[17px] font-semibold tracking-tight leading-snug text-white">
+                    {completedCircuits} of {totalCircuits} designed · view results now?
+                  </h3>
+                  <p className="text-[12.5px] leading-relaxed text-white/70 max-w-2xl">
+                    Some circuits are taking longer than expected. You can review what's
+                    designed so far — circuits still working will be flagged for re-design.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={onForceResults}
+                  className="h-11 px-5 rounded-xl bg-elec-yellow text-black font-semibold text-[13px] hover:bg-elec-yellow/90 active:scale-[0.99] touch-manipulation transition-all shrink-0"
+                >
+                  View results
+                </button>
+              </div>
+            </section>
+          )}
 
         {/* Live totals strip — populates as circuits arrive */}
         <section className="grid grid-cols-3 gap-px bg-black sm:border sm:border-white/[0.08] sm:rounded-2xl sm:overflow-hidden border-y border-white/[0.06]">

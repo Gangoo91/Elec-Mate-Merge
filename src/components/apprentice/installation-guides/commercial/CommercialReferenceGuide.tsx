@@ -199,13 +199,13 @@ const CommercialReferenceGuide = () => {
                         </div>
                         <div>
                           <p className="text-white mb-1">
-                            <span className="text-green-300">Max Current:</span> {cable.maxCurrent}
+                            <span className="text-white">Max Current:</span> {cable.maxCurrent}
                           </p>
                           <p className="text-white mb-1">
-                            <span className="text-blue-300">Protection:</span> {cable.protection}
+                            <span className="text-white">Protection:</span> {cable.protection}
                           </p>
                           <p className="text-white">
-                            <span className="text-orange-300">Notes:</span> {cable.notes}
+                            <span className="text-white">Notes:</span> {cable.notes}
                           </p>
                         </div>
                       </div>
@@ -219,9 +219,9 @@ const CommercialReferenceGuide = () => {
 
         {/* Emergency Lighting Tab */}
         <TabsContent value="emergency" className="space-y-4">
-          <Card className="border-green-500/30 bg-white/5">
+          <Card className="border-white/[0.06] bg-white/5">
             <CardHeader>
-              <CardTitle className="text-green-300 flex items-center gap-2">
+              <CardTitle className="text-white flex items-center gap-2">
                 <Lightbulb className="h-6 w-6" />
                 Emergency Lighting Systems
               </CardTitle>
@@ -230,25 +230,25 @@ const CommercialReferenceGuide = () => {
               {emergencyLighting.map((light, index) => (
                 <div
                   key={index}
-                  className="bg-green-500/10 p-4 rounded-lg border border-green-500/20"
+                  className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]"
                 >
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 mb-3">
                     <h4 className="font-medium text-white">{light.type}</h4>
                     <div className="flex flex-wrap gap-2">
-                      <Badge variant="outline" className="border-green-400 text-green-300 text-xs">
+                      <Badge variant="outline" className="border-white/10 text-white text-xs">
                         {light.duration}
                       </Badge>
-                      <Badge variant="outline" className="border-blue-500 text-blue-400 text-xs">
+                      <Badge variant="outline" className="border-white/10 text-white/55 text-xs">
                         {light.standard}
                       </Badge>
                     </div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                     <p className="text-white">
-                      <span className="text-green-300">Application:</span> {light.application}
+                      <span className="text-white">Application:</span> {light.application}
                     </p>
                     <p className="text-white">
-                      <span className="text-orange-300">Notes:</span> {light.notes}
+                      <span className="text-white">Notes:</span> {light.notes}
                     </p>
                   </div>
                 </div>
@@ -284,10 +284,10 @@ const CommercialReferenceGuide = () => {
                     </div>
                     <div>
                       <p className="text-white mb-2">
-                        <span className="text-blue-300">Coverage:</span> {zone.coverage}
+                        <span className="text-white">Coverage:</span> {zone.coverage}
                       </p>
                       <p className="text-white">
-                        <span className="text-purple-300">Standard:</span> {zone.standard}
+                        <span className="text-white">Standard:</span> {zone.standard}
                       </p>
                     </div>
                   </div>
@@ -299,9 +299,9 @@ const CommercialReferenceGuide = () => {
 
         {/* Standards Tab */}
         <TabsContent value="standards" className="space-y-4">
-          <Card className="border-purple-500/30 bg-white/5">
+          <Card className="border-white/[0.06] bg-white/5">
             <CardHeader>
-              <CardTitle className="text-purple-300 flex items-center gap-2">
+              <CardTitle className="text-white flex items-center gap-2">
                 <BookOpen className="h-6 w-6" />
                 Commercial Standards & Regulations
               </CardTitle>
@@ -342,11 +342,11 @@ const CommercialReferenceGuide = () => {
               ].map((item, index) => (
                 <div
                   key={index}
-                  className="flex items-start gap-3 bg-purple-500/10 p-3 rounded-lg border border-purple-500/20"
+                  className="flex items-start gap-3 bg-white/[0.02] p-3 rounded-lg border border-white/[0.06]"
                 >
-                  <BookOpen className="h-5 w-5 text-purple-400 mt-0.5 flex-shrink-0" />
+                  <BookOpen className="h-5 w-5 text-white/55 mt-0.5 flex-shrink-0" />
                   <div>
-                    <h4 className="font-medium text-purple-200">{item.standard}</h4>
+                    <h4 className="font-medium text-white/85">{item.standard}</h4>
                     <p className="text-sm text-white">{item.description}</p>
                   </div>
                 </div>

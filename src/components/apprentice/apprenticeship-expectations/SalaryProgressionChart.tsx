@@ -1,5 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import {
   LineChart,
   Line,
@@ -13,19 +11,27 @@ import {
   Area,
   AreaChart,
 } from 'recharts';
-import {
-  PoundSterling,
-  TrendingUp,
-  MapPin,
-  Briefcase,
-  Gift,
-  Clock,
-  Car,
-  GraduationCap,
-  CheckCircle,
-  Info,
-} from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
+
+const Section = ({
+  eyebrow,
+  description,
+  children,
+}: {
+  eyebrow: string;
+  description?: string;
+  children: React.ReactNode;
+}) => (
+  <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+    <div className="space-y-1">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        {eyebrow}
+      </span>
+      {description && <p className="text-[13px] text-white/70">{description}</p>}
+    </div>
+    {children}
+  </div>
+);
 
 const SalaryProgressionChart = () => {
   const isMobile = useIsMobile();
@@ -68,66 +74,60 @@ const SalaryProgressionChart = () => {
   ];
 
   const careerEarnings = [
-    { role: 'Employed Electrician', salary: '£32k - £42k', growth: 'Steady' },
-    { role: 'Self-Employed', salary: '£40k - £65k', growth: 'Variable' },
-    { role: 'Industrial Specialist', salary: '£38k - £52k', growth: 'Strong' },
-    { role: 'Renewables Specialist', salary: '£35k - £50k', growth: 'Fast' },
-    { role: 'Electrical Supervisor', salary: '£42k - £55k', growth: 'Good' },
-    { role: 'Project Manager', salary: '£50k - £70k', growth: 'Excellent' },
+    { role: 'Employed electrician', salary: '£32k - £42k', growth: 'Steady' },
+    { role: 'Self-employed', salary: '£40k - £65k', growth: 'Variable' },
+    { role: 'Industrial specialist', salary: '£38k - £52k', growth: 'Strong' },
+    { role: 'Renewables specialist', salary: '£35k - £50k', growth: 'Fast' },
+    { role: 'Electrical supervisor', salary: '£42k - £55k', growth: 'Good' },
+    { role: 'Project manager', salary: '£50k - £70k', growth: 'Excellent' },
   ];
 
   const benefitsData = [
     {
-      icon: Car,
-      title: 'Company Van',
-      description: 'Many employers provide a van - worth £3-5k/year in personal use value',
+      title: 'Company van',
+      description: 'Many employers provide a van — represents value in personal use.',
       typical: 'Common after Year 2',
     },
     {
-      icon: Briefcase,
-      title: 'Tools Provided',
-      description: 'Power tools, test equipment, and specialist gear - £2-4k value',
+      title: 'Tools provided',
+      description: 'Power tools, test equipment, and specialist gear.',
       typical: 'Usually from day one',
     },
     {
-      icon: Gift,
       title: 'Pension',
-      description: 'Employer contributions typically 3-5% of salary',
+      description: 'Employer contributions typically 3-5% of salary.',
       typical: 'Required by law',
     },
     {
-      icon: Clock,
       title: 'Overtime',
-      description: 'Time and a half to double time rates for extra hours',
-      typical: '£5-15k extra possible',
+      description: 'Time-and-a-half to double-time rates for extra hours.',
+      typical: 'Variable additional earnings',
     },
     {
-      icon: GraduationCap,
       title: 'Training',
-      description: 'Continued professional development and certifications paid',
-      typical: 'Worth £1-3k/year',
+      description: 'Continued professional development and certifications paid for.',
+      typical: 'Part of total package',
     },
   ];
 
-  const overtimeExample = {
-    baseSalary: 35000,
-    weeklyHours: 40,
-    overtimeHours: 8,
-    overtimeRate: 1.5,
-    weeklyOvertime: 8 * (35000 / 52 / 40) * 1.5,
-    annualOvertime: 8 * (35000 / 52 / 40) * 1.5 * 48,
-  };
-
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({
+    active,
+    payload,
+    label,
+  }: {
+    active?: boolean;
+    payload?: Array<{ color: string; name: string; value: number }>;
+    label?: string;
+  }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white/5 border border-white/20 rounded-lg p-3 shadow-lg">
-          <p className="font-medium text-white mb-2">{label}</p>
-          {payload.map((entry: any, index: number) => (
-            <div key={index} className="flex items-center gap-2 text-sm">
+        <div className="rounded-lg border border-white/[0.06] bg-elec-gray p-3 shadow-lg">
+          <p className="text-[13px] text-white mb-2">{label}</p>
+          {payload.map((entry, index: number) => (
+            <div key={index} className="flex items-center gap-2 text-[12px]">
               <div className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }} />
-              <span className="text-white">{entry.name}:</span>
-              <span className="text-white font-medium">£{entry.value.toLocaleString()}</span>
+              <span className="text-white/55">{entry.name}:</span>
+              <span className="text-white font-mono">£{entry.value.toLocaleString()}</span>
             </div>
           ))}
         </div>
@@ -137,343 +137,261 @@ const SalaryProgressionChart = () => {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Main Salary Progression Chart */}
-      <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/5">
-        <CardHeader>
-          <CardTitle className="text-green-400 flex items-center gap-2">
-            <TrendingUp className="h-5 w-5" />
-            Apprenticeship Salary Progression
-          </CardTitle>
-          <p className="text-sm text-white">
-            Expected salary ranges throughout your 4-year apprenticeship
-          </p>
-        </CardHeader>
-        <CardContent>
-          <div className="h-64 sm:h-72 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={salaryData}>
-                <defs>
-                  <linearGradient id="colorRange" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10B981" stopOpacity={0.3} />
-                    <stop offset="95%" stopColor="#10B981" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                <XAxis
-                  dataKey={isMobile ? 'label' : 'year'}
-                  stroke="#9CA3AF"
-                  tick={{ fill: '#9CA3AF', fontSize: isMobile ? 10 : 12 }}
-                />
-                <YAxis
-                  stroke="#9CA3AF"
-                  tickFormatter={(value) => `£${value / 1000}k`}
-                  tick={{ fill: '#9CA3AF', fontSize: isMobile ? 10 : 12 }}
-                  width={isMobile ? 45 : 60}
-                />
-                <Tooltip content={<CustomTooltip />} />
-                <Area
-                  type="monotone"
-                  dataKey="max"
-                  stroke="transparent"
-                  fill="url(#colorRange)"
-                  name="Maximum"
-                />
-                <Line
-                  type="monotone"
-                  dataKey="min"
-                  stroke="#EF4444"
-                  strokeWidth={2}
-                  name="Minimum"
-                  dot={{ fill: '#EF4444', strokeWidth: 2, r: isMobile ? 3 : 4 }}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="average"
-                  stroke="#10B981"
-                  strokeWidth={3}
-                  name="Average"
-                  dot={{ fill: '#10B981', strokeWidth: 2, r: isMobile ? 4 : 5 }}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="max"
-                  stroke="#3B82F6"
-                  strokeWidth={2}
-                  name="Maximum"
-                  dot={{ fill: '#3B82F6', strokeWidth: 2, r: isMobile ? 3 : 4 }}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
+    <div className="space-y-5">
+      <Section
+        eyebrow="Apprenticeship salary progression"
+        description="Indicative salary ranges throughout a typical 4-year apprenticeship"
+      >
+        <div className="h-64 sm:h-72 w-full">
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={salaryData}>
+              <defs>
+                <linearGradient id="colorRange" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#10B981" stopOpacity={0.2} />
+                  <stop offset="95%" stopColor="#10B981" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+              <XAxis
+                dataKey={isMobile ? 'label' : 'year'}
+                stroke="#9CA3AF"
+                tick={{ fill: '#9CA3AF', fontSize: isMobile ? 10 : 12 }}
+              />
+              <YAxis
+                stroke="#9CA3AF"
+                tickFormatter={(value) => `£${value / 1000}k`}
+                tick={{ fill: '#9CA3AF', fontSize: isMobile ? 10 : 12 }}
+                width={isMobile ? 45 : 60}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Area
+                type="monotone"
+                dataKey="max"
+                stroke="transparent"
+                fill="url(#colorRange)"
+                name="Maximum"
+              />
+              <Line
+                type="monotone"
+                dataKey="min"
+                stroke="#EF4444"
+                strokeWidth={2}
+                name="Minimum"
+                dot={{ fill: '#EF4444', strokeWidth: 2, r: isMobile ? 3 : 4 }}
+              />
+              <Line
+                type="monotone"
+                dataKey="average"
+                stroke="#10B981"
+                strokeWidth={3}
+                name="Average"
+                dot={{ fill: '#10B981', strokeWidth: 2, r: isMobile ? 4 : 5 }}
+              />
+              <Line
+                type="monotone"
+                dataKey="max"
+                stroke="#3B82F6"
+                strokeWidth={2}
+                name="Maximum"
+                dot={{ fill: '#3B82F6', strokeWidth: 2, r: isMobile ? 3 : 4 }}
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="flex justify-center gap-4 sm:gap-6 mt-2 text-[12px] flex-wrap">
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-red-500 rounded-full" />
+            <span className="text-white/85">Minimum</span>
           </div>
-          <div className="flex justify-center gap-4 sm:gap-6 mt-4 text-sm flex-wrap">
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-              <span className="text-white">Minimum</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-              <span className="text-white">Average</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-              <span className="text-white">Maximum</span>
-            </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-green-500 rounded-full" />
+            <span className="text-white/85">Average</span>
           </div>
-
-          {/* Quick stats */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6">
-            <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-center">
-              <p className="text-white text-xs">Starting</p>
-              <p className="text-lg font-bold text-white">£17.5k</p>
-              <p className="text-white text-xs">Year 1 avg</p>
-            </div>
-            <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-center">
-              <p className="text-white text-xs">Qualified</p>
-              <p className="text-lg font-bold text-green-400">£42k</p>
-              <p className="text-white text-xs">Average</p>
-            </div>
-            <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-center">
-              <p className="text-white text-xs">4-Year Rise</p>
-              <p className="text-lg font-bold text-elec-yellow">+140%</p>
-              <p className="text-white text-xs">Growth</p>
-            </div>
-            <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-center">
-              <p className="text-white text-xs">Top Earners</p>
-              <p className="text-lg font-bold text-purple-400">£50k+</p>
-              <p className="text-white text-xs">Specialists</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Regional Comparison */}
-      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <MapPin className="h-5 w-5" />
-            Regional Salary Comparison
-          </CardTitle>
-          <p className="text-sm text-white">How salaries vary across different UK regions</p>
-        </CardHeader>
-        <CardContent>
-          <div className="h-64 sm:h-72 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={regionalData} barCategoryGap={isMobile ? '15%' : '20%'}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                <XAxis
-                  dataKey="region"
-                  stroke="#9CA3AF"
-                  tick={{ fill: '#9CA3AF', fontSize: isMobile ? 9 : 12 }}
-                />
-                <YAxis
-                  stroke="#9CA3AF"
-                  tickFormatter={(value) => `£${value / 1000}k`}
-                  tick={{ fill: '#9CA3AF', fontSize: isMobile ? 10 : 12 }}
-                  width={isMobile ? 45 : 60}
-                />
-                <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="year1" fill="#EF4444" name="Year 1" radius={[2, 2, 0, 0]} />
-                <Bar dataKey="year2" fill="#F59E0B" name="Year 2" radius={[2, 2, 0, 0]} />
-                <Bar dataKey="year3" fill="#10B981" name="Year 3" radius={[2, 2, 0, 0]} />
-                <Bar dataKey="year4" fill="#3B82F6" name="Year 4" radius={[2, 2, 0, 0]} />
-                <Bar dataKey="qualified" fill="#8B5CF6" name="Qualified" radius={[2, 2, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="flex justify-center gap-3 sm:gap-4 mt-4 text-xs flex-wrap">
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-2 bg-red-500 rounded"></div>
-              <span className="text-white">Y1</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-2 bg-amber-500 rounded"></div>
-              <span className="text-white">Y2</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-2 bg-green-500 rounded"></div>
-              <span className="text-white">Y3</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-2 bg-blue-500 rounded"></div>
-              <span className="text-white">Y4</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-2 bg-purple-500 rounded"></div>
-              <span className="text-white">Qualified</span>
-            </div>
-          </div>
-
-          <div className="mt-4 p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
-            <div className="flex items-start gap-2">
-              <Info className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <p className="text-white text-sm">
-                London salaries are typically 10-15% higher due to cost of living, but other regions
-                can offer better value when accounting for housing costs.
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Career Path Earnings */}
-      <Card className="border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-blue-500/5">
-        <CardHeader>
-          <CardTitle className="text-blue-400 flex items-center gap-2">
-            <Briefcase className="h-5 w-5" />
-            Career Path Earnings
-          </CardTitle>
-          <p className="text-sm text-white">What you could earn after qualifying</p>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {careerEarnings.map((career, index) => (
-              <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-medium text-white">{career.role}</span>
-                  <Badge
-                    variant="outline"
-                    className={`text-xs ${
-                      career.growth === 'Excellent' || career.growth === 'Fast'
-                        ? 'bg-green-500/20 text-green-400 border-green-500/30'
-                        : career.growth === 'Strong' || career.growth === 'Good'
-                          ? 'bg-blue-500/20 text-blue-400 border-blue-500/30'
-                          : 'bg-white/10 text-white'
-                    }`}
-                  >
-                    {career.growth}
-                  </Badge>
-                </div>
-                <p className="text-green-400 text-lg font-bold">{career.salary}</p>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Benefits Beyond Salary */}
-      <Card className="border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-purple-500/5">
-        <CardHeader>
-          <CardTitle className="text-purple-400 flex items-center gap-2">
-            <Gift className="h-5 w-5" />
-            Benefits Beyond Salary
-          </CardTitle>
-          <p className="text-sm text-white">
-            Your total compensation package is more than just salary
-          </p>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {benefitsData.map((benefit, index) => (
-              <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <div className="flex items-center gap-2 mb-2">
-                  <benefit.icon className="h-5 w-5 text-purple-400" />
-                  <span className="font-medium text-white">{benefit.title}</span>
-                </div>
-                <p className="text-white text-sm mb-2">{benefit.description}</p>
-                <Badge
-                  variant="outline"
-                  className="text-xs bg-purple-500/10 text-purple-400 border-purple-500/30"
-                >
-                  {benefit.typical}
-                </Badge>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Overtime Calculator Example */}
-      <Card className="border-cyan-500/30 bg-gradient-to-br from-cyan-500/10 to-cyan-500/5">
-        <CardHeader>
-          <CardTitle className="text-cyan-400 flex items-center gap-2">
-            <Clock className="h-5 w-5" />
-            Overtime Impact Example
-          </CardTitle>
-          <p className="text-sm text-white">
-            How overtime can significantly boost your earnings
-          </p>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-3">
-              <h4 className="font-medium text-white">Scenario: Qualified Electrician</h4>
-              <div className="space-y-2">
-                <div className="flex justify-between p-2 rounded bg-white/5">
-                  <span className="text-white">Base Salary</span>
-                  <span className="text-white font-medium">£35,000</span>
-                </div>
-                <div className="flex justify-between p-2 rounded bg-white/5">
-                  <span className="text-white">Standard Week</span>
-                  <span className="text-white font-medium">40 hours</span>
-                </div>
-                <div className="flex justify-between p-2 rounded bg-white/5">
-                  <span className="text-white">Overtime Rate</span>
-                  <span className="text-white font-medium">1.5x (time and a half)</span>
-                </div>
-                <div className="flex justify-between p-2 rounded bg-white/5">
-                  <span className="text-white">Weekly Overtime</span>
-                  <span className="text-white font-medium">8 hours average</span>
-                </div>
-              </div>
-            </div>
-            <div className="space-y-3">
-              <h4 className="font-medium text-white">Potential Total Earnings</h4>
-              <div className="space-y-2">
-                <div className="flex justify-between p-2 rounded bg-white/5">
-                  <span className="text-white">Base Salary</span>
-                  <span className="text-white font-medium">£35,000</span>
-                </div>
-                <div className="flex justify-between p-2 rounded bg-cyan-500/10">
-                  <span className="text-cyan-400">Annual Overtime (8hrs/wk)</span>
-                  <span className="text-cyan-400 font-medium">+£9,700</span>
-                </div>
-                <div className="flex justify-between p-3 rounded bg-green-500/20 border border-green-500/30">
-                  <span className="text-green-400 font-medium">Total Annual Earnings</span>
-                  <span className="text-green-400 font-bold text-lg">£44,700</span>
-                </div>
-              </div>
-              <p className="text-white text-xs">
-                * Calculation: (£35,000 ÷ 52 ÷ 40) × 1.5 × 8 hours × 48 weeks
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Key Takeaways */}
-      <div className="p-4 rounded-lg bg-gradient-to-r from-green-500/10 to-elec-yellow/10 border border-green-500/20">
-        <h4 className="font-medium text-white mb-3 flex items-center gap-2">
-          <CheckCircle className="h-5 w-5 text-green-400" />
-          Key Salary Takeaways
-        </h4>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div className="flex items-start gap-2">
-            <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-            <span className="text-white text-sm">
-              Your salary more than doubles during your apprenticeship
-            </span>
-          </div>
-          <div className="flex items-start gap-2">
-            <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-            <span className="text-white text-sm">
-              Specialists and self-employed can earn £50-65k+
-            </span>
-          </div>
-          <div className="flex items-start gap-2">
-            <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-            <span className="text-white text-sm">
-              Benefits like van and tools add £5-10k+ in value
-            </span>
-          </div>
-          <div className="flex items-start gap-2">
-            <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-            <span className="text-white text-sm">
-              Overtime can add £5-15k to your annual earnings
-            </span>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-blue-500 rounded-full" />
+            <span className="text-white/85">Maximum</span>
           </div>
         </div>
-      </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3">
+          {[
+            { label: 'Year 1 average', value: '£17.5k' },
+            { label: 'Qualified average', value: '£42k' },
+            { label: '4-year growth', value: 'Significant' },
+            { label: 'Top earners', value: '£50k+' },
+          ].map((s) => (
+            <div
+              key={s.label}
+              className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
+            >
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                {s.label}
+              </span>
+              <div className="text-[16px] font-semibold text-white">{s.value}</div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section
+        eyebrow="Regional salary comparison"
+        description="How salaries vary across different UK regions"
+      >
+        <div className="h-64 sm:h-72 w-full">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={regionalData} barCategoryGap={isMobile ? '15%' : '20%'}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+              <XAxis
+                dataKey="region"
+                stroke="#9CA3AF"
+                tick={{ fill: '#9CA3AF', fontSize: isMobile ? 9 : 12 }}
+              />
+              <YAxis
+                stroke="#9CA3AF"
+                tickFormatter={(value) => `£${value / 1000}k`}
+                tick={{ fill: '#9CA3AF', fontSize: isMobile ? 10 : 12 }}
+                width={isMobile ? 45 : 60}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Bar dataKey="year1" fill="#EF4444" name="Year 1" radius={[2, 2, 0, 0]} />
+              <Bar dataKey="year2" fill="#F59E0B" name="Year 2" radius={[2, 2, 0, 0]} />
+              <Bar dataKey="year3" fill="#10B981" name="Year 3" radius={[2, 2, 0, 0]} />
+              <Bar dataKey="year4" fill="#3B82F6" name="Year 4" radius={[2, 2, 0, 0]} />
+              <Bar dataKey="qualified" fill="#8B5CF6" name="Qualified" radius={[2, 2, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="flex justify-center gap-3 sm:gap-4 mt-2 text-[12px] flex-wrap">
+          {[
+            { c: 'bg-red-500', l: 'Y1' },
+            { c: 'bg-amber-500', l: 'Y2' },
+            { c: 'bg-green-500', l: 'Y3' },
+            { c: 'bg-blue-500', l: 'Y4' },
+            { c: 'bg-purple-500', l: 'Qualified' },
+          ].map((p) => (
+            <div key={p.l} className="flex items-center gap-1">
+              <div className={`w-2 h-2 ${p.c} rounded`} />
+              <span className="text-white/85">{p.l}</span>
+            </div>
+          ))}
+        </div>
+        <p className="text-[13px] text-white/70 leading-relaxed pt-2">
+          London salaries are typically higher due to cost of living, but other regions can offer
+          better value when accounting for housing costs.
+        </p>
+      </Section>
+
+      <Section
+        eyebrow="Career path earnings"
+        description="What you could earn after qualifying"
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {careerEarnings.map((career, index) => (
+            <div
+              key={index}
+              className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
+            >
+              <div className="flex items-baseline justify-between gap-2">
+                <span className="text-[14px] text-white">{career.role}</span>
+                <span className="text-[10px] text-white/55 font-mono">{career.growth}</span>
+              </div>
+              <p className="text-[16px] text-white/85 font-semibold">{career.salary}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section
+        eyebrow="Benefits beyond salary"
+        description="Your total compensation package extends past base pay"
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {benefitsData.map((benefit, index) => (
+            <div
+              key={index}
+              className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
+            >
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                {benefit.title}
+              </span>
+              <p className="text-[13px] text-white/85 leading-relaxed">{benefit.description}</p>
+              <p className="text-[12px] text-white/55">{benefit.typical}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section
+        eyebrow="Overtime impact example"
+        description="How overtime can add to your earnings"
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Scenario: qualified electrician
+            </span>
+            <div className="space-y-1.5 text-[14px] text-white/85">
+              <div className="flex justify-between">
+                <span className="text-white/55">Base salary</span>
+                <span>£35,000</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-white/55">Standard week</span>
+                <span>40 hours</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-white/55">Overtime rate</span>
+                <span>1.5x</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-white/55">Weekly overtime</span>
+                <span>8 hours average</span>
+              </div>
+            </div>
+          </div>
+          <div className="space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Potential total earnings
+            </span>
+            <div className="space-y-1.5 text-[14px] text-white/85">
+              <div className="flex justify-between">
+                <span className="text-white/55">Base salary</span>
+                <span>£35,000</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-white/55">Annual overtime</span>
+                <span>+£9,700</span>
+              </div>
+              <div className="flex justify-between pt-2 border-t border-white/[0.06]">
+                <span>Total annual earnings</span>
+                <span className="font-semibold">£44,700</span>
+              </div>
+            </div>
+            <p className="text-[11px] text-white/55 font-mono">
+              (£35,000 ÷ 52 ÷ 40) × 1.5 × 8 hours × 48 weeks
+            </p>
+          </div>
+        </div>
+      </Section>
+
+      <Section eyebrow="Key salary takeaways">
+        <ul className="space-y-1.5">
+          {[
+            'Your salary more than doubles during your apprenticeship',
+            'Specialists and self-employed can earn significantly more',
+            'Benefits like van and tools add to total package value',
+            'Overtime can add meaningfully to annual earnings',
+          ].map((item, idx) => (
+            <li
+              key={idx}
+              className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+            >
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </Section>
     </div>
   );
 };

@@ -57,10 +57,10 @@ const trendIcons: Record<QuizTrend, LucideIcon> = {
 };
 
 const trendColours: Record<QuizTrend, string> = {
-  improving: 'text-green-400',
-  declining: 'text-red-400',
-  stable: 'text-white',
-  'no-data': 'text-white',
+  improving: 'text-elec-yellow',
+  declining: 'text-red-300',
+  stable: 'text-white/55',
+  'no-data': 'text-white/55',
 };
 
 const trendLabels: Record<QuizTrend, string> = {
@@ -138,10 +138,10 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
   const { recommendations: smartRecs } = useSmartRecommendations(4);
 
   const quizBarColours: Record<string, string> = {
-    Regulations: 'bg-green-500',
-    Safety: 'bg-blue-500',
-    Testing: 'bg-orange-500',
-    Design: 'bg-purple-500',
+    Regulations: 'bg-elec-yellow',
+    Safety: 'bg-elec-yellow',
+    Testing: 'bg-elec-yellow',
+    Design: 'bg-elec-yellow',
   };
 
   const TrendIcon = trendIcons[quizTrend];
@@ -169,7 +169,6 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
             {/* ── Hero: XP ring + overall progress ── */}
             <div className="flex flex-col items-center text-center pt-2 pb-1">
               <div className="relative">
-                <div className="absolute inset-0 bg-green-400/15 rounded-full blur-2xl scale-125" />
                 <XPProgressRing
                   xpToday={xp.xpToday}
                   dailyGoal={xp.dailyGoal}
@@ -186,13 +185,12 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                 transition={{ delay: 0.25 }}
                 className="mt-3 flex items-center gap-3"
               >
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/15 border border-green-500/25">
-                  <Target className="h-3.5 w-3.5 text-green-400" />
-                  <span className="text-sm font-bold text-green-400">{overallPercent}%</span>
-                  <span className="text-xs text-green-400/70">overall</span>
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.06]">
+                  <span className="text-[12px] font-bold text-elec-yellow">{overallPercent}%</span>
+                  <span className="text-[12px] text-elec-yellow/70">overall</span>
                 </div>
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.06] border border-white/[0.08]">
-                  <span className="text-xs text-white">
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-white/10 bg-white/[0.03]">
+                  <span className="text-[12px] text-white/85">
                     {xp.xpToday}/{xp.dailyGoal} XP today
                   </span>
                 </div>
@@ -210,7 +208,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.35 }}
                 onClick={goToStudyCentre}
-                className="mt-4 flex items-center gap-2 px-6 h-12 rounded-xl bg-green-500 text-white text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all shadow-lg shadow-green-500/20"
+                className="mt-4 flex items-center gap-2 px-6 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[14px] font-semibold touch-manipulation active:scale-[0.98] transition-all"
               >
                 <BookOpen className="h-4 w-4" />
                 Go to Study Centre
@@ -250,17 +248,17 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                       <div className="flex items-center gap-2">
                         <button
                           onClick={goToStudyCentre}
-                          className="text-sm text-white font-medium touch-manipulation active:text-green-400 transition-colors"
+                          className="text-sm text-white font-medium touch-manipulation active:text-elec-yellow transition-colors"
                         >
                           {cat.subject}
                         </button>
                         {strongestCategory?.subject === cat.subject && cat.score > 0 && (
-                          <span className="text-[10px] px-2 py-0.5 rounded-full bg-green-500/20 text-green-400 font-semibold">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
                             Best
                           </span>
                         )}
                         {weakestCategory?.subject === cat.subject && cat.score > 0 && (
-                          <span className="text-[10px] px-2 py-0.5 rounded-full bg-red-500/20 text-red-400 font-semibold">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
                             Focus
                           </span>
                         )}
@@ -282,9 +280,9 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                 ))}
               </div>
               {daysSinceLastQuiz !== null && daysSinceLastQuiz >= 7 && (
-                <div className="flex items-center gap-2 mt-4 px-4 py-3 rounded-xl bg-amber-500/[0.08] border border-amber-500/20">
-                  <AlertCircle className="h-4 w-4 text-amber-400 flex-shrink-0" />
-                  <span className="text-sm text-amber-300">
+                <div className="flex items-center gap-2 mt-4 px-4 py-3 rounded-xl border border-white/[0.06] bg-white/[0.02]">
+                  <AlertCircle className="h-4 w-4 text-white/55 flex-shrink-0" />
+                  <span className="text-[13px] text-white/85">
                     Last quiz was {daysSinceLastQuiz} days ago
                   </span>
                 </div>
@@ -323,9 +321,9 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                           className={cn(
                             'h-full rounded-full',
                             set.progressPercent >= 80
-                              ? 'bg-green-400'
+                              ? 'bg-elec-yellow'
                               : set.progressPercent >= 40
-                                ? 'bg-amber-400'
+                                ? 'bg-elec-yellow/60'
                                 : 'bg-white/25'
                           )}
                         />
@@ -349,8 +347,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                 <Clock className="h-4 w-4 text-white" />
                 <span className="text-sm font-semibold text-white">On-the-Job Hours</span>
               </div>
-              <div className="relative rounded-2xl overflow-hidden bg-white/[0.06] border border-white/[0.08] p-4">
-                <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-green-500/0 via-green-400/40 to-green-500/0" />
+              <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
                 <div className="flex items-baseline justify-between mb-2.5">
                   <div className="flex items-baseline gap-1.5">
                     <AnimatedCounter
@@ -361,7 +358,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                       / {ojtHours.target.toLocaleString('en-GB')} hrs
                     </span>
                   </div>
-                  <span className="text-sm font-bold text-green-400">
+                  <span className="text-sm font-bold text-elec-yellow">
                     {ojtHours.percentComplete}%
                   </span>
                 </div>
@@ -370,7 +367,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                     initial={{ width: 0 }}
                     animate={{ width: `${Math.min(ojtHours.percentComplete, 100)}%` }}
                     transition={{ duration: 0.8, ease: 'easeOut', delay: 0.5 }}
-                    className="h-full rounded-full bg-green-400"
+                    className="h-full rounded-full bg-elec-yellow"
                   />
                 </div>
               </div>
@@ -382,15 +379,12 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.45 }}
-                className="relative rounded-2xl overflow-hidden bg-green-500/[0.08] border border-green-500/20 p-4"
+                className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2"
               >
-                <div className="absolute -top-8 -right-8 w-24 h-24 bg-green-400/10 rounded-full blur-2xl pointer-events-none" />
-                <div className="relative flex items-start gap-3">
-                  <div className="p-2 rounded-xl bg-green-500/15 flex-shrink-0">
-                    <Lightbulb className="h-4 w-4 text-green-400" />
-                  </div>
-                  <p className="text-sm text-white leading-relaxed">{insightText}</p>
-                </div>
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+                  Insight
+                </span>
+                <p className="text-[14px] text-white/85 leading-relaxed">{insightText}</p>
               </motion.div>
             )}
 
@@ -402,17 +396,17 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                 transition={{ delay: 0.3 }}
                 className="flex flex-col items-center text-center py-6"
               >
-                <div className="p-4 rounded-2xl bg-green-500/10 border border-green-500/20 mb-4">
-                  <Target className="h-8 w-8 text-green-400" />
+                <div className="p-4 rounded-2xl border border-white/[0.06] bg-white/[0.02] mb-4">
+                  <Target className="h-7 w-7 text-elec-yellow" />
                 </div>
-                <h3 className="text-base font-semibold text-white mb-1">Start learning</h3>
-                <p className="text-sm text-white max-w-[260px] mb-5">
+                <h3 className="text-[16px] font-semibold text-white mb-1">Start learning</h3>
+                <p className="text-[14px] text-white/70 max-w-[260px] mb-5 leading-relaxed">
                   Take a quiz, review flashcards, or log your on-the-job hours to track your
                   progress
                 </p>
                 <button
                   onClick={goToStudyCentre}
-                  className="flex items-center gap-2 px-6 h-12 rounded-xl bg-green-500 text-white text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
+                  className="flex items-center gap-2 px-6 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[14px] font-semibold touch-manipulation active:scale-[0.98] transition-all"
                 >
                   Go to Study Centre
                   <ChevronRight className="h-4 w-4" />

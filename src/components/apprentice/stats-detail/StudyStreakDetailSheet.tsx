@@ -128,22 +128,21 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                 transition={{ type: 'spring', duration: 0.5 }}
                 className="relative"
               >
-                <div className="absolute inset-0 bg-orange-500/15 rounded-full blur-2xl scale-110" />
-                <div className="relative w-24 h-24 rounded-full bg-orange-500/20 flex items-center justify-center ring-2 ring-orange-500/30">
-                  <Flame className="h-12 w-12 text-orange-400" />
+                <div className="relative w-24 h-24 rounded-full border border-white/[0.06] bg-white/[0.02] flex items-center justify-center">
+                  <Flame className="h-10 w-10 text-elec-yellow" />
                 </div>
                 {studiedToday && (
-                  <div className="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-green-500 flex items-center justify-center ring-2 ring-[hsl(240,5.9%,10%)]">
-                    <Zap className="h-3.5 w-3.5 text-white" />
+                  <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-elec-yellow flex items-center justify-center ring-2 ring-[hsl(240,5.9%,10%)]">
+                    <Zap className="h-3 w-3 text-black" />
                   </div>
                 )}
               </motion.div>
               <div className="mt-3">
                 <AnimatedCounter
                   value={currentStreak}
-                  className="text-5xl font-bold text-orange-400"
+                  className="text-5xl font-bold text-elec-yellow"
                 />
-                <span className="text-xl text-orange-400/80 ml-1.5">
+                <span className="text-xl text-elec-yellow/80 ml-1.5">
                   day{currentStreak !== 1 ? 's' : ''}
                 </span>
               </div>
@@ -160,7 +159,7 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.35 }}
                 onClick={goToStudyCentre}
-                className="mt-4 flex items-center gap-2 px-6 h-12 rounded-xl bg-orange-500 text-white text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all shadow-lg shadow-orange-500/20"
+                className="mt-4 flex items-center gap-2 px-6 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[14px] font-semibold touch-manipulation active:scale-[0.98] transition-all"
               >
                 <BookOpen className="h-4 w-4" />
                 Go to Study Centre
@@ -178,7 +177,7 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                 <Star className="h-4 w-4 text-white" />
                 <span className="text-sm font-semibold text-white">Milestones</span>
                 {nextMilestone && (
-                  <span className="text-xs text-orange-400 ml-auto">
+                  <span className="text-xs text-elec-yellow ml-auto">
                     Next: {nextMilestone.emoji} {nextMilestone.label}
                   </span>
                 )}
@@ -193,15 +192,15 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                     className={cn(
                       'flex-1 flex flex-col items-center gap-1.5 py-2.5 rounded-xl border transition-all',
                       m.unlocked
-                        ? 'bg-orange-500/15 border-orange-500/25'
-                        : 'bg-white/[0.03] border-white/[0.06] opacity-40'
+                        ? 'bg-elec-yellow/[0.06] border-elec-yellow/20'
+                        : 'bg-white/[0.02] border-white/[0.06] opacity-40'
                     )}
                   >
                     <span className="text-lg">{m.emoji}</span>
                     <span
                       className={cn(
                         'text-[10px] font-semibold',
-                        m.unlocked ? 'text-orange-400' : 'text-white'
+                        m.unlocked ? 'text-elec-yellow' : 'text-white'
                       )}
                     >
                       {m.label}
@@ -225,17 +224,18 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
               ].map((stat) => (
                 <div
                   key={stat.label}
-                  className="relative rounded-2xl overflow-hidden bg-white/[0.06] border border-white/[0.08] p-3.5 text-center"
+                  className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3.5 text-center"
                 >
-                  <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-orange-500/0 via-orange-400/40 to-orange-500/0" />
-                  <stat.icon className="h-5 w-5 text-orange-400 mx-auto mb-1.5" />
+                  <stat.icon className="h-4 w-4 text-white/55 mx-auto mb-1.5" />
                   <div className="flex items-baseline justify-center">
                     <AnimatedCounter value={stat.value} className="text-xl font-bold text-white" />
                     {stat.suffix && (
-                      <span className="text-xs text-white ml-0.5">{stat.suffix}</span>
+                      <span className="text-[12px] text-white/55 ml-0.5">{stat.suffix}</span>
                     )}
                   </div>
-                  <p className="text-xs text-white mt-0.5">{stat.label}</p>
+                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 mt-0.5">
+                    {stat.label}
+                  </p>
                 </div>
               ))}
             </motion.div>
@@ -247,13 +247,10 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
               transition={{ delay: 0.35 }}
               className="flex gap-3"
             >
-              <div className="flex-1 rounded-2xl bg-white/[0.06] border border-white/[0.08] p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <CalendarDays className="h-4 w-4 text-orange-400" />
-                  <span className="text-xs font-semibold text-white uppercase tracking-wider">
-                    Last 7 days
-                  </span>
-                </div>
+              <div className="flex-1 rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Last 7 days
+                </span>
                 <div className="flex items-center gap-1.5">
                   {Array.from({ length: 7 }).map((_, i) => (
                     <motion.div
@@ -262,26 +259,24 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                       animate={{ scaleY: 1 }}
                       transition={{ duration: 0.3, delay: 0.4 + i * 0.05 }}
                       className={cn(
-                        'h-3 flex-1 rounded-full origin-bottom',
-                        i < daysStudiedLast7 ? 'bg-orange-400' : 'bg-white/[0.08]'
+                        'h-2 flex-1 rounded-full origin-bottom',
+                        i < daysStudiedLast7 ? 'bg-elec-yellow' : 'bg-white/[0.08]'
                       )}
                     />
                   ))}
                 </div>
-                <p className="text-sm text-white mt-2">
-                  <span className="font-bold text-white">{daysStudiedLast7}</span> of 7 days active
+                <p className="text-[13px] text-white/85">
+                  <span className="font-bold text-white">{daysStudiedLast7}</span>
+                  <span className="text-white/55"> of 7 days active</span>
                 </p>
               </div>
               {bestStudyDay && (
-                <div className="flex-1 rounded-2xl bg-white/[0.06] border border-white/[0.08] p-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Zap className="h-4 w-4 text-orange-400" />
-                    <span className="text-xs font-semibold text-white uppercase tracking-wider">
-                      Best day
-                    </span>
-                  </div>
-                  <p className="text-lg font-bold text-white">{bestStudyDay}</p>
-                  <p className="text-xs text-white mt-1">Most active day</p>
+                <div className="flex-1 rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Best day
+                  </span>
+                  <p className="text-[16px] font-semibold text-white">{bestStudyDay}</p>
+                  <p className="text-[12px] text-white/55">Most active day</p>
                 </div>
               )}
             </motion.div>
@@ -292,12 +287,11 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
-              <div className="flex items-center gap-2 mb-3">
-                <CalendarDays className="h-4 w-4 text-white" />
-                <span className="text-sm font-semibold text-white">Study Activity</span>
-              </div>
-              <div className="rounded-2xl bg-white/[0.05] border border-white/[0.08] p-4">
-                <ActivityGrid activityMap={activityMap} variant="orange" />
+              <span className="block text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 mb-3">
+                Study activity
+              </span>
+              <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
+                <ActivityGrid activityMap={activityMap} variant="yellow" />
               </div>
             </motion.div>
 
@@ -307,15 +301,12 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.45 }}
-                className="relative rounded-2xl overflow-hidden bg-orange-500/[0.08] border border-orange-500/20 p-4"
+                className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2"
               >
-                <div className="absolute -top-8 -right-8 w-24 h-24 bg-orange-400/10 rounded-full blur-2xl pointer-events-none" />
-                <div className="relative flex items-start gap-3">
-                  <div className="p-2 rounded-xl bg-orange-500/15 flex-shrink-0">
-                    <Lightbulb className="h-4 w-4 text-orange-400" />
-                  </div>
-                  <p className="text-sm text-white leading-relaxed">{insightText}</p>
-                </div>
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+                  Insight
+                </span>
+                <p className="text-[14px] text-white/85 leading-relaxed">{insightText}</p>
               </motion.div>
             )}
 
@@ -327,16 +318,16 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                 transition={{ delay: 0.3 }}
                 className="flex flex-col items-center text-center py-6"
               >
-                <div className="p-4 rounded-2xl bg-orange-500/10 border border-orange-500/20 mb-4">
-                  <Flame className="h-8 w-8 text-orange-400" />
+                <div className="p-4 rounded-2xl border border-white/[0.06] bg-white/[0.02] mb-4">
+                  <Flame className="h-7 w-7 text-elec-yellow" />
                 </div>
-                <h3 className="text-base font-semibold text-white mb-1">Start your streak</h3>
-                <p className="text-sm text-white max-w-[260px] mb-5">
+                <h3 className="text-[16px] font-semibold text-white mb-1">Start your streak</h3>
+                <p className="text-[14px] text-white/70 max-w-[260px] mb-5 leading-relaxed">
                   Study flashcards or take a quiz today to begin building your study streak
                 </p>
                 <button
                   onClick={goToStudyCentre}
-                  className="flex items-center gap-2 px-6 h-12 rounded-xl bg-orange-500 text-white text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
+                  className="flex items-center gap-2 px-6 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[14px] font-semibold touch-manipulation active:scale-[0.98] transition-all"
                 >
                   Start studying
                   <ChevronRight className="h-4 w-4" />

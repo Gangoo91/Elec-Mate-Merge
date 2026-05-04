@@ -36,9 +36,9 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
   }, []);
 
   const phaseConfig = {
-    inhale: { duration: 4, instruction: 'Breathe In', color: 'from-blue-400 to-cyan-400' },
-    hold: { duration: 4, instruction: 'Hold', color: 'from-purple-400 to-pink-400' },
-    exhale: { duration: 4, instruction: 'Breathe Out', color: 'from-green-400 to-emerald-400' },
+    inhale: { duration: 4, instruction: 'Breathe In', color: '' },
+    hold: { duration: 4, instruction: 'Hold', color: '' },
+    exhale: { duration: 4, instruction: 'Breathe Out', color: '' },
   };
 
   useEffect(() => {
@@ -107,9 +107,9 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
   };
 
   const getCurrentColor = () => {
-    if (phase === 'ready') return 'from-blue-400/50 to-cyan-400/50';
-    if (phase === 'complete') return 'from-green-400 to-emerald-400';
-    return phaseConfig[phase as keyof typeof phaseConfig]?.color || 'from-blue-400 to-cyan-400';
+    if (phase === 'ready') return '';
+    if (phase === 'complete') return '';
+    return phaseConfig[phase as keyof typeof phaseConfig]?.color || '';
   };
 
   return (
@@ -138,7 +138,7 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
         {phase === 'complete' ? (
           /* Completion Screen */
           <div className="text-center space-y-6 animate-fade-in max-w-sm">
-            <div className="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-green-400 to-emerald-400 flex items-center justify-center">
+            <div className="w-24 h-24 mx-auto rounded-full bg-white/[0.02] flex items-center justify-center">
               <Check className="h-12 w-12 text-black" />
             </div>
             <div>
@@ -203,8 +203,8 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
               {/* Animated breathing circle — animation disabled when the
                   user has prefers-reduced-motion set */}
               <div
-                className={`absolute inset-4 rounded-full bg-gradient-to-br ${getCurrentColor()}
-                  flex items-center justify-center shadow-lg shadow-blue-500/20 ${
+                className={`absolute inset-4 rounded-full bg-white/[0.04] border border-white/[0.06]
+                  flex items-center justify-center ${
                     reduceMotion ? '' : 'transition-transform duration-1000 ease-in-out'
                   }`}
                 style={{ transform: `scale(${reduceMotion ? 1.25 : getCircleScale()})` }}

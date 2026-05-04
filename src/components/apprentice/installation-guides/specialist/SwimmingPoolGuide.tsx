@@ -577,15 +577,15 @@ const SwimmingPoolGuide = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <Card className="border-cyan-500/30 bg-cyan-500/10">
+      <Card className="border-white/[0.06] bg-white/[0.02]">
         <CardHeader>
           <div className="flex items-center gap-3">
-            <Waves className="h-8 w-8 text-cyan-400" />
+            <Waves className="h-8 w-8 text-white/55" />
             <div>
-              <CardTitle className="text-cyan-300 text-2xl">
+              <CardTitle className="text-white text-2xl">
                 Swimming Pool Installation Guide
               </CardTitle>
-              <p className="text-cyan-200/80">
+              <p className="text-white/85/80">
                 BS 7671 Section 702 - Comprehensive guide for UK electricians
               </p>
             </div>
@@ -593,23 +593,23 @@ const SwimmingPoolGuide = () => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-cyan-500/20 p-3 rounded-lg border border-cyan-500/30">
-              <Shield className="h-5 w-5 text-cyan-400 mb-2" />
+            <div className="bg-white/[0.02] p-3 rounded-lg border border-white/[0.06]">
+              <Shield className="h-5 w-5 text-white/55 mb-2" />
               <p className="text-xs text-white">Key Protection</p>
               <p className="text-sm font-medium text-white">SELV + Bonding</p>
             </div>
-            <div className="bg-cyan-500/20 p-3 rounded-lg border border-cyan-500/30">
-              <Droplets className="h-5 w-5 text-cyan-400 mb-2" />
+            <div className="bg-white/[0.02] p-3 rounded-lg border border-white/[0.06]">
+              <Droplets className="h-5 w-5 text-white/55 mb-2" />
               <p className="text-xs text-white">Zone 0 IP Rating</p>
               <p className="text-sm font-medium text-white">IPX8</p>
             </div>
-            <div className="bg-cyan-500/20 p-3 rounded-lg border border-cyan-500/30">
-              <Zap className="h-5 w-5 text-cyan-400 mb-2" />
+            <div className="bg-white/[0.02] p-3 rounded-lg border border-white/[0.06]">
+              <Zap className="h-5 w-5 text-white/55 mb-2" />
               <p className="text-xs text-white">Zone 0 Voltage</p>
               <p className="text-sm font-medium text-white">12V SELV Max</p>
             </div>
-            <div className="bg-cyan-500/20 p-3 rounded-lg border border-cyan-500/30">
-              <FileCheck className="h-5 w-5 text-cyan-400 mb-2" />
+            <div className="bg-white/[0.02] p-3 rounded-lg border border-white/[0.06]">
+              <FileCheck className="h-5 w-5 text-white/55 mb-2" />
               <p className="text-xs text-white">RCD Protection</p>
               <p className="text-sm font-medium text-white">30mA Required</p>
             </div>
@@ -630,17 +630,17 @@ const SwimmingPoolGuide = () => {
       </Alert>
 
       {/* Zone Definitions */}
-      <Card className="border-blue-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Building2 className="h-6 w-6 text-blue-400" />
-            <CardTitle className="text-blue-300">Zone Definitions (BS 7671 Section 702)</CardTitle>
+            <Building2 className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">Zone Definitions (BS 7671 Section 702)</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Alert className="border-blue-500/50 bg-blue-500/10 mb-4">
-            <Lightbulb className="h-4 w-4 text-blue-400" />
-            <AlertDescription className="text-blue-200 text-sm">
+          <Alert className="border-white/[0.06] bg-white/[0.02] mb-4">
+            <Lightbulb className="h-4 w-4 text-white/55" />
+            <AlertDescription className="text-white/85 text-sm">
               Swimming pool zones define areas with progressively reducing shock risk. Each zone has
               specific requirements for IP ratings, voltage limits, and permitted equipment.
               Understanding zones is fundamental to safe pool electrical installation.
@@ -655,10 +655,10 @@ const SwimmingPoolGuide = () => {
                   zone.color === 'red'
                     ? 'bg-red-500/10 border-red-500/30'
                     : zone.color === 'orange'
-                      ? 'bg-orange-500/10 border-orange-500/30'
+                      ? 'bg-white/[0.02] border-white/[0.06]'
                       : zone.color === 'yellow'
                         ? 'bg-yellow-500/10 border-yellow-500/30'
-                        : 'bg-green-500/10 border-green-500/30'
+                        : 'bg-white/[0.02] border-white/[0.06]'
                 }`}
               >
                 <div className="flex items-center gap-2 mb-2">
@@ -668,15 +668,15 @@ const SwimmingPoolGuide = () => {
                       zone.color === 'red'
                         ? 'border-red-400 text-red-300'
                         : zone.color === 'orange'
-                          ? 'border-orange-400 text-orange-300'
+                          ? 'border-white/10 text-white'
                           : zone.color === 'yellow'
                             ? 'border-yellow-400 text-yellow-300'
-                            : 'border-green-400 text-green-300'
+                            : 'border-white/10 text-white'
                     }`}
                   >
                     {zone.zone}
                   </Badge>
-                  <Badge variant="outline" className="border-cyan-400 text-cyan-300 text-xs">
+                  <Badge variant="outline" className="border-white/10 text-white text-xs">
                     {zone.ipRating}
                   </Badge>
                 </div>
@@ -686,10 +686,10 @@ const SwimmingPoolGuide = () => {
                     zone.color === 'red'
                       ? 'text-red-200'
                       : zone.color === 'orange'
-                        ? 'text-orange-200'
+                        ? 'text-white/85'
                         : zone.color === 'yellow'
                           ? 'text-yellow-200'
-                          : 'text-green-200'
+                          : 'text-white/85'
                   }`}
                 >
                   {zone.description}
@@ -704,11 +704,11 @@ const SwimmingPoolGuide = () => {
 
                 <div className="space-y-2">
                   <div>
-                    <span className="text-xs text-green-400">Permitted Equipment:</span>
+                    <span className="text-xs text-white/55">Permitted Equipment:</span>
                     <ul className="space-y-0.5 mt-1">
                       {zone.equipmentAllowed.map((item, itemIdx) => (
                         <li key={itemIdx} className="text-xs text-white flex items-start gap-1">
-                          <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                          <CheckCircle className="h-3 w-3 text-white/55 mt-0.5 flex-shrink-0" />
                           {item}
                         </li>
                       ))}
@@ -734,31 +734,31 @@ const SwimmingPoolGuide = () => {
       </Card>
 
       {/* IP Rating Requirements */}
-      <Card className="border-cyan-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Droplets className="h-6 w-6 text-cyan-400" />
-            <CardTitle className="text-cyan-300">{ipRatingRequirements.title}</CardTitle>
+            <Droplets className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">{ipRatingRequirements.title}</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b-2 border-cyan-500/30">
-                  <th className="text-left p-3 text-cyan-200">IP Rating</th>
-                  <th className="text-left p-3 text-cyan-200">Protection Level</th>
-                  <th className="text-left p-3 text-cyan-200">Zones</th>
-                  <th className="text-left p-3 text-cyan-200">Examples</th>
+                <tr className="border-b-2 border-white/[0.06]">
+                  <th className="text-left p-3 text-white/85">IP Rating</th>
+                  <th className="text-left p-3 text-white/85">Protection Level</th>
+                  <th className="text-left p-3 text-white/85">Zones</th>
+                  <th className="text-left p-3 text-white/85">Examples</th>
                 </tr>
               </thead>
               <tbody>
                 {ipRatingRequirements.ratings.map((rating, idx) => (
                   <tr
                     key={idx}
-                    className={`border-b border-cyan-500/20 ${idx % 2 === 0 ? 'bg-cyan-500/5' : ''}`}
+                    className={`border-b border-white/[0.06] ${idx % 2 === 0 ? 'bg-white/[0.02]' : ''}`}
                   >
-                    <td className="p-3 text-cyan-300 font-mono font-bold">{rating.rating}</td>
+                    <td className="p-3 text-white font-mono font-bold">{rating.rating}</td>
                     <td className="p-3 text-white">{rating.meaning}</td>
                     <td className="p-3 text-white">{rating.zones.join(', ')}</td>
                     <td className="p-3 text-white text-xs">{rating.examples.join(', ')}</td>
@@ -768,8 +768,8 @@ const SwimmingPoolGuide = () => {
             </table>
           </div>
 
-          <div className="bg-cyan-500/10 p-4 rounded-lg border border-cyan-500/30">
-            <h4 className="font-medium text-cyan-200 mb-2">Understanding IP Codes</h4>
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <h4 className="font-medium text-white/85 mb-2">Understanding IP Codes</h4>
             <p className="text-sm text-white mb-2">
               <strong>First digit:</strong> {ipRatingRequirements.firstDigit}
             </p>
@@ -841,40 +841,40 @@ const SwimmingPoolGuide = () => {
       </Card>
 
       {/* Supplementary Bonding */}
-      <Card className="border-purple-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Cable className="h-6 w-6 text-purple-400" />
-            <CardTitle className="text-purple-300">{supplementaryBonding.title}</CardTitle>
+            <Cable className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">{supplementaryBonding.title}</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Alert className="border-purple-500/50 bg-purple-500/10">
-            <Shield className="h-4 w-4 text-purple-400" />
-            <AlertDescription className="text-purple-200 text-sm">
+          <Alert className="border-white/[0.06] bg-white/[0.02]">
+            <Shield className="h-4 w-4 text-white/55" />
+            <AlertDescription className="text-white/85 text-sm">
               {supplementaryBonding.description}
             </AlertDescription>
           </Alert>
 
-          <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/30">
-            <h4 className="font-medium text-purple-200 mb-3">Parts to be Bonded</h4>
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <h4 className="font-medium text-white/85 mb-3">Parts to be Bonded</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {supplementaryBonding.partsToBeconnected.map((part, idx) => (
-                <div key={idx} className="bg-purple-600/10 p-3 rounded border border-purple-500/30">
-                  <h5 className="font-medium text-purple-200 text-sm">{part.part}</h5>
+                <div key={idx} className="bg-white/[0.02] p-3 rounded border border-white/[0.06]">
+                  <h5 className="font-medium text-white/85 text-sm">{part.part}</h5>
                   <p className="text-xs text-white">{part.description}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/30">
-            <h4 className="font-medium text-purple-200 mb-3">Conductor Sizing</h4>
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <h4 className="font-medium text-white/85 mb-3">Conductor Sizing</h4>
             <div className="space-y-2">
               {supplementaryBonding.conductorSizing.map((item, idx) => (
                 <div key={idx} className="flex justify-between items-center text-sm">
                   <span className="text-white">{item.connection}</span>
-                  <Badge variant="outline" className="border-purple-400 text-purple-300">
+                  <Badge variant="outline" className="border-white/10 text-white">
                     {item.size}
                   </Badge>
                 </div>
@@ -882,17 +882,17 @@ const SwimmingPoolGuide = () => {
             </div>
           </div>
 
-          <div className="bg-amber-500/10 p-4 rounded-lg border border-amber-500/30">
-            <h4 className="font-medium text-amber-200 mb-3">
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <h4 className="font-medium text-white/85 mb-3">
               Conditions for Omitting Supplementary Bonding
             </h4>
             <ul className="space-y-1">
               {supplementaryBonding.omissionConditions.map((condition, idx) => (
                 <li key={idx} className="text-sm text-white flex items-start gap-2">
                   {idx === 0 ? (
-                    <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
                   ) : (
-                    <CheckCircle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
                   )}
                   {condition}
                 </li>
@@ -900,12 +900,12 @@ const SwimmingPoolGuide = () => {
             </ul>
           </div>
 
-          <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/30">
-            <h4 className="font-medium text-purple-200 mb-3">Important Notes</h4>
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <h4 className="font-medium text-white/85 mb-3">Important Notes</h4>
             <ul className="space-y-1">
               {supplementaryBonding.notes.map((note, idx) => (
                 <li key={idx} className="text-sm text-white flex items-start gap-2">
-                  <Lightbulb className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
+                  <Lightbulb className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
                   {note}
                 </li>
               ))}
@@ -915,11 +915,11 @@ const SwimmingPoolGuide = () => {
       </Card>
 
       {/* Pool Pump and Filter Circuits */}
-      <Card className="border-green-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Fan className="h-6 w-6 text-green-400" />
-            <CardTitle className="text-green-300">{poolPumpCircuits.title}</CardTitle>
+            <Fan className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">{poolPumpCircuits.title}</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -937,10 +937,10 @@ const SwimmingPoolGuide = () => {
                 value={component.component.toLowerCase().split(' ')[0]}
                 className="space-y-4"
               >
-                <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/30">
+                <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
                   <div className="flex items-center justify-between mb-3">
-                    <h4 className="font-medium text-green-200">{component.component}</h4>
-                    <Badge variant="outline" className="border-green-400 text-green-300 text-xs">
+                    <h4 className="font-medium text-white/85">{component.component}</h4>
+                    <Badge variant="outline" className="border-white/10 text-white text-xs">
                       {component.typicalRating}
                     </Badge>
                   </div>
@@ -955,7 +955,7 @@ const SwimmingPoolGuide = () => {
                       <ul className="space-y-1">
                         {component.circuitDesign.map((item, itemIdx) => (
                           <li key={itemIdx} className="text-xs text-white flex items-start gap-2">
-                            <Cable className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                            <Cable className="h-3 w-3 text-white/55 mt-0.5 flex-shrink-0" />
                             {item}
                           </li>
                         ))}
@@ -966,7 +966,7 @@ const SwimmingPoolGuide = () => {
                       <ul className="space-y-1">
                         {component.protection.map((item, itemIdx) => (
                           <li key={itemIdx} className="text-xs text-white flex items-start gap-2">
-                            <Shield className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                            <Shield className="h-3 w-3 text-white/55 mt-0.5 flex-shrink-0" />
                             {item}
                           </li>
                         ))}
@@ -978,12 +978,12 @@ const SwimmingPoolGuide = () => {
             ))}
           </Tabs>
 
-          <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/30">
-            <h4 className="font-medium text-green-200 mb-3">Plant Room Requirements</h4>
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <h4 className="font-medium text-white/85 mb-3">Plant Room Requirements</h4>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {poolPumpCircuits.plantRoomRequirements.map((req, idx) => (
                 <li key={idx} className="text-sm text-white flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
                   {req}
                 </li>
               ))}
@@ -1039,12 +1039,12 @@ const SwimmingPoolGuide = () => {
               </ul>
             </div>
 
-            <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/30">
-              <h4 className="font-medium text-green-200 mb-3">LED Benefits</h4>
+            <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+              <h4 className="font-medium text-white/85 mb-3">LED Benefits</h4>
               <ul className="space-y-1">
                 {underwaterLighting.ledBenefits.map((benefit, idx) => (
                   <li key={idx} className="text-xs text-white flex items-start gap-2">
-                    <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="h-3 w-3 text-white/55 mt-0.5 flex-shrink-0" />
                     {benefit}
                   </li>
                 ))}
@@ -1055,23 +1055,20 @@ const SwimmingPoolGuide = () => {
       </Card>
 
       {/* Heat Pump Connections */}
-      <Card className="border-orange-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <ThermometerSun className="h-6 w-6 text-orange-400" />
-            <CardTitle className="text-orange-300">{heatPumpConnections.title}</CardTitle>
+            <ThermometerSun className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">{heatPumpConnections.title}</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {heatPumpConnections.types.map((type, idx) => (
-              <div
-                key={idx}
-                className="bg-orange-500/10 p-4 rounded-lg border border-orange-500/30"
-              >
+              <div key={idx} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
                 <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-medium text-orange-200">{type.type}</h4>
-                  <Badge variant="outline" className="border-orange-400 text-orange-300 text-xs">
+                  <h4 className="font-medium text-white/85">{type.type}</h4>
+                  <Badge variant="outline" className="border-white/10 text-white text-xs">
                     {type.typicalRating}
                   </Badge>
                 </div>
@@ -1082,7 +1079,7 @@ const SwimmingPoolGuide = () => {
                     <ul className="space-y-1">
                       {type.electricalRequirements.map((req, reqIdx) => (
                         <li key={reqIdx} className="text-xs text-white flex items-start gap-2">
-                          <Zap className="h-3 w-3 text-orange-400 mt-0.5 flex-shrink-0" />
+                          <Zap className="h-3 w-3 text-white/55 mt-0.5 flex-shrink-0" />
                           {req}
                         </li>
                       ))}
@@ -1094,7 +1091,7 @@ const SwimmingPoolGuide = () => {
                     <ul className="space-y-1">
                       {type.circuitDesign.map((item, itemIdx) => (
                         <li key={itemIdx} className="text-xs text-white flex items-start gap-2">
-                          <CircuitBoard className="h-3 w-3 text-orange-400 mt-0.5 flex-shrink-0" />
+                          <CircuitBoard className="h-3 w-3 text-white/55 mt-0.5 flex-shrink-0" />
                           {item}
                         </li>
                       ))}
@@ -1105,12 +1102,12 @@ const SwimmingPoolGuide = () => {
             ))}
           </div>
 
-          <div className="bg-orange-500/10 p-4 rounded-lg border border-orange-500/30">
-            <h4 className="font-medium text-orange-200 mb-3">Installation Considerations</h4>
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <h4 className="font-medium text-white/85 mb-3">Installation Considerations</h4>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {heatPumpConnections.installationConsiderations.map((item, idx) => (
                 <li key={idx} className="text-sm text-white flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
                   {item}
                 </li>
               ))}
@@ -1120,22 +1117,22 @@ const SwimmingPoolGuide = () => {
       </Card>
 
       {/* Hot Tubs and Spa Pools */}
-      <Card className="border-purple-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Waves className="h-6 w-6 text-purple-400" />
-            <CardTitle className="text-purple-300">{hotTubsSpas.title}</CardTitle>
+            <Waves className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">{hotTubsSpas.title}</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-white">{hotTubsSpas.description}</p>
 
-          <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/30">
-            <h4 className="font-medium text-purple-200 mb-3">Zone Application</h4>
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <h4 className="font-medium text-white/85 mb-3">Zone Application</h4>
             <ul className="space-y-1">
               {hotTubsSpas.zones.map((zone, idx) => (
                 <li key={idx} className="text-sm text-white flex items-start gap-2">
-                  <Building2 className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
+                  <Building2 className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
                   {zone}
                 </li>
               ))}
@@ -1144,11 +1141,8 @@ const SwimmingPoolGuide = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {hotTubsSpas.types.map((type, idx) => (
-              <div
-                key={idx}
-                className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/30"
-              >
-                <h4 className="font-medium text-purple-200 mb-2">{type.type}</h4>
+              <div key={idx} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+                <h4 className="font-medium text-white/85 mb-2">{type.type}</h4>
                 <p className="text-xs text-white mb-1">
                   <strong>Connection:</strong> {type.connection}
                 </p>
@@ -1161,24 +1155,24 @@ const SwimmingPoolGuide = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/30">
-              <h4 className="font-medium text-purple-200 mb-3">General Requirements</h4>
+            <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+              <h4 className="font-medium text-white/85 mb-3">General Requirements</h4>
               <ul className="space-y-1">
                 {hotTubsSpas.requirements.map((req, idx) => (
                   <li key={idx} className="text-xs text-white flex items-start gap-2">
-                    <CheckCircle className="h-3 w-3 text-purple-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="h-3 w-3 text-white/55 mt-0.5 flex-shrink-0" />
                     {req}
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="bg-amber-500/10 p-4 rounded-lg border border-amber-500/30">
-              <h4 className="font-medium text-amber-200 mb-3">Outdoor Considerations</h4>
+            <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+              <h4 className="font-medium text-white/85 mb-3">Outdoor Considerations</h4>
               <ul className="space-y-1">
                 {hotTubsSpas.outdoorConsiderations.map((item, idx) => (
                   <li key={idx} className="text-xs text-white flex items-start gap-2">
-                    <Sun className="h-3 w-3 text-amber-400 mt-0.5 flex-shrink-0" />
+                    <Sun className="h-3 w-3 text-white/55 mt-0.5 flex-shrink-0" />
                     {item}
                   </li>
                 ))}
@@ -1189,11 +1183,11 @@ const SwimmingPoolGuide = () => {
       </Card>
 
       {/* Testing Requirements */}
-      <Card className="border-cyan-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Gauge className="h-6 w-6 text-cyan-400" />
-            <CardTitle className="text-cyan-300">{testingRequirements.title}</CardTitle>
+            <Gauge className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">{testingRequirements.title}</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
@@ -1206,10 +1200,13 @@ const SwimmingPoolGuide = () => {
 
             <TabsContent value="initial" className="space-y-3">
               {testingRequirements.initialVerification.map((test, idx) => (
-                <div key={idx} className="bg-cyan-500/10 p-3 rounded-lg border border-cyan-500/20">
+                <div
+                  key={idx}
+                  className="bg-white/[0.02] p-3 rounded-lg border border-white/[0.06]"
+                >
                   <div className="flex justify-between items-start mb-1">
-                    <h5 className="font-medium text-cyan-200 text-sm">{test.test}</h5>
-                    <Badge variant="outline" className="border-cyan-400 text-cyan-300 text-xs">
+                    <h5 className="font-medium text-white/85 text-sm">{test.test}</h5>
+                    <Badge variant="outline" className="border-white/10 text-white text-xs">
                       {test.acceptable}
                     </Badge>
                   </div>
@@ -1223,9 +1220,9 @@ const SwimmingPoolGuide = () => {
               {testingRequirements.periodicInspection.map((item, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center gap-2 p-2 bg-cyan-500/10 rounded border border-cyan-500/20"
+                  className="flex items-center gap-2 p-2 bg-white/[0.02] rounded border border-white/[0.06]"
                 >
-                  <Timer className="h-4 w-4 text-cyan-400" />
+                  <Timer className="h-4 w-4 text-white/55" />
                   <span className="text-sm text-white">{item}</span>
                 </div>
               ))}
@@ -1235,9 +1232,9 @@ const SwimmingPoolGuide = () => {
               {testingRequirements.documentation.map((doc, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center gap-2 p-2 bg-cyan-500/10 rounded border border-cyan-500/20"
+                  className="flex items-center gap-2 p-2 bg-white/[0.02] rounded border border-white/[0.06]"
                 >
-                  <FileCheck className="h-4 w-4 text-cyan-400" />
+                  <FileCheck className="h-4 w-4 text-white/55" />
                   <span className="text-sm text-white">{doc}</span>
                 </div>
               ))}
@@ -1270,7 +1267,7 @@ const SwimmingPoolGuide = () => {
                   </ul>
                 </div>
                 <div>
-                  <span className="text-xs text-green-400">Solution:</span>
+                  <span className="text-xs text-white/55">Solution:</span>
                   <p className="text-xs text-white mt-1">{issue.solution}</p>
                 </div>
               </div>
@@ -1280,10 +1277,10 @@ const SwimmingPoolGuide = () => {
       </Card>
 
       {/* Final Important Notice */}
-      <Alert className="border-amber-500/50 bg-amber-500/10">
-        <AlertTriangle className="h-5 w-5 text-amber-400" />
-        <AlertDescription className="text-amber-200">
-          <strong className="text-amber-300">Remember:</strong> Swimming pool installations are
+      <Alert className="border-white/[0.06] bg-white/[0.02]">
+        <AlertTriangle className="h-5 w-5 text-white/55" />
+        <AlertDescription className="text-white/85">
+          <strong className="text-white">Remember:</strong> Swimming pool installations are
           high-risk special locations. Strict adherence to BS 7671 Section 702 is essential. All
           electrical equipment in zones must meet IP and voltage requirements. Supplementary bonding
           is critical for safety. Regular inspection and testing is vital for ongoing safety. When

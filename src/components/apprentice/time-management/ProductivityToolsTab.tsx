@@ -1,7 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Smartphone, Clock, Brain, Target, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { openExternalUrl } from '@/utils/open-external-url';
 
 const ProductivityToolsTab = () => {
@@ -12,23 +10,20 @@ const ProductivityToolsTab = () => {
       category: 'Focus',
       price: 'Free + Premium',
       features: ['Pomodoro timer', 'Study statistics', 'Focus challenges'],
-      icon: '🌳',
     },
     {
       name: 'Todoist',
       description: 'Organise tasks and projects with natural language processing',
-      category: 'Task Management',
+      category: 'Task management',
       price: 'Free + Premium',
       features: ['Project organisation', 'Due date reminders', 'Progress tracking'],
-      icon: '✅',
     },
     {
       name: 'RescueTime',
       description: 'Automatically track how you spend time on devices',
-      category: 'Time Tracking',
+      category: 'Time tracking',
       price: 'Free + Premium',
       features: ['Automatic tracking', 'Detailed reports', 'Goal setting'],
-      icon: '⏱️',
     },
     {
       name: 'Headspace',
@@ -36,7 +31,6 @@ const ProductivityToolsTab = () => {
       category: 'Wellbeing',
       price: 'Free trial + Subscription',
       features: ['Guided meditations', 'Sleep stories', 'Focus music'],
-      icon: '🧘',
     },
   ];
 
@@ -44,10 +38,9 @@ const ProductivityToolsTab = () => {
     {
       name: 'Trello',
       description: 'Visual project management using boards and cards',
-      category: 'Project Management',
+      category: 'Project management',
       url: 'https://trello.com',
       features: ['Kanban boards', 'Team collaboration', 'Due dates'],
-      icon: '📋',
     },
     {
       name: 'Google Calendar',
@@ -55,7 +48,6 @@ const ProductivityToolsTab = () => {
       category: 'Scheduling',
       url: 'https://calendar.google.com',
       features: ['Multiple calendars', 'Event reminders', 'Mobile sync'],
-      icon: '📅',
     },
     {
       name: 'Notion',
@@ -63,13 +55,12 @@ const ProductivityToolsTab = () => {
       category: 'Note-taking',
       url: 'https://notion.so',
       features: ['Database functionality', 'Template gallery', 'Team sharing'],
-      icon: '📝',
     },
   ];
 
   const techniques = [
     {
-      title: 'Pomodoro Technique',
+      title: 'Pomodoro technique',
       description: 'Work for 25 minutes, then take a 5-minute break',
       benefits: ['Maintains focus', 'Prevents burnout', 'Improves time awareness'],
       howTo: [
@@ -81,9 +72,13 @@ const ProductivityToolsTab = () => {
       ],
     },
     {
-      title: 'Time Blocking',
+      title: 'Time blocking',
       description: 'Assign specific time slots to different activities',
-      benefits: ['Reduces decision fatigue', 'Ensures important tasks get time', 'Creates routine'],
+      benefits: [
+        'Reduces decision fatigue',
+        'Ensures important tasks get time',
+        'Creates routine',
+      ],
       howTo: [
         'List all regular activities (work, college, study, personal)',
         'Estimate time needed for each',
@@ -93,7 +88,7 @@ const ProductivityToolsTab = () => {
       ],
     },
     {
-      title: 'Two-Minute Rule',
+      title: 'Two-minute rule',
       description: 'If a task takes less than 2 minutes, do it immediately',
       benefits: ['Prevents small task accumulation', 'Maintains momentum', 'Reduces mental load'],
       howTo: [
@@ -107,154 +102,165 @@ const ProductivityToolsTab = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Smartphone className="h-6 w-6" />
-            Recommended Mobile Apps
-          </CardTitle>
-          <p className="text-sm text-white">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Recommended mobile apps
+          </span>
+          <p className="text-[14px] text-white/85 leading-relaxed">
             Apps specifically useful for apprentices managing work and study
           </p>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {mobileApps.map((app, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <div className="flex items-start justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    <span className="text-2xl">{app.icon}</span>
-                    <div>
-                      <h4 className="font-semibold text-white">{app.name}</h4>
-                      <Badge variant="outline" className="text-xs border-elec-yellow/30 mt-1">
-                        {app.category}
-                      </Badge>
-                    </div>
-                  </div>
-                  <div className="text-xs text-white">{app.price}</div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {mobileApps.map((app, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
+            >
+              <div className="flex items-start justify-between gap-2">
+                <div>
+                  <h4 className="text-[14px] font-semibold text-white">{app.name}</h4>
+                  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block mt-1">
+                    {app.category}
+                  </span>
                 </div>
+                <div className="text-[12px] text-white/55">{app.price}</div>
+              </div>
+              <p className="text-[14px] text-white/85 leading-relaxed">{app.description}</p>
+              <div className="space-y-1">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Key features
+                </span>
+                <ul className="space-y-1">
+                  {app.features.map((feature, idx) => (
+                    <li
+                      key={idx}
+                      className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
-                <p className="text-sm text-white mb-3">{app.description}</p>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Web-based tools
+          </span>
+          <p className="text-[14px] text-white/85 leading-relaxed">
+            Browser-based tools for planning and organisation
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {webTools.map((tool, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
+            >
+              <div>
+                <h4 className="text-[14px] font-semibold text-white">{tool.name}</h4>
+                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block mt-1">
+                  {tool.category}
+                </span>
+              </div>
+              <p className="text-[14px] text-white/85 leading-relaxed">{tool.description}</p>
+              <div className="space-y-1">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Features
+                </span>
+                <ul className="space-y-1">
+                  {tool.features.map((feature, idx) => (
+                    <li
+                      key={idx}
+                      className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                onClick={() => openExternalUrl(tool.url)}
+              >
+                Visit site
+                <ExternalLink className="ml-2 h-3 w-3" />
+              </Button>
+            </div>
+          ))}
+        </div>
+      </div>
 
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Proven productivity techniques
+          </span>
+          <p className="text-[14px] text-white/85 leading-relaxed">
+            Time-tested methods for maximising efficiency
+          </p>
+        </div>
+        <div className="space-y-4">
+          {techniques.map((technique, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
+            >
+              <div>
+                <h3 className="text-[16px] font-semibold text-white leading-tight">
+                  {technique.title}
+                </h3>
+                <p className="text-[14px] text-white/70 leading-relaxed mt-1">
+                  {technique.description}
+                </p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <h5 className="text-xs font-medium text-white">Key Features:</h5>
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+                    Benefits
+                  </span>
                   <ul className="space-y-1">
-                    {app.features.map((feature, idx) => (
-                      <li key={idx} className="text-xs text-white flex items-center gap-2">
-                        <div className="h-1 w-1 rounded-full bg-elec-yellow" />
-                        {feature}
+                    {technique.benefits.map((benefit, idx) => (
+                      <li
+                        key={idx}
+                        className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                      >
+                        <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                        <span>{benefit}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Target className="h-6 w-6" />
-            Web-Based Tools
-          </CardTitle>
-          <p className="text-sm text-white">Browser-based tools for planning and organisation</p>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {webTools.map((tool, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-2xl">{tool.icon}</span>
-                  <div>
-                    <h4 className="font-semibold text-white">{tool.name}</h4>
-                    <Badge variant="outline" className="text-xs border-elec-yellow/30 mt-1">
-                      {tool.category}
-                    </Badge>
-                  </div>
-                </div>
-
-                <p className="text-sm text-white mb-3">{tool.description}</p>
-
-                <div className="space-y-3">
-                  <div className="space-y-1">
-                    <h5 className="text-xs font-medium text-white">Features:</h5>
-                    <ul className="space-y-1">
-                      {tool.features.map((feature, idx) => (
-                        <li key={idx} className="text-xs text-white flex items-center gap-2">
-                          <div className="h-1 w-1 rounded-full bg-elec-yellow" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="w-full border-elec-yellow/20 hover:bg-elec-yellow/10"
-                    onClick={() => openExternalUrl(tool.url)}
-                  >
-                    Visit Site
-                    <ExternalLink className="ml-2 h-3 w-3" />
-                  </Button>
+                <div className="space-y-1">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    How to implement
+                  </span>
+                  <ol className="space-y-1">
+                    {technique.howTo.map((step, idx) => (
+                      <li
+                        key={idx}
+                        className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                      >
+                        <span className="text-elec-yellow font-medium mt-0">{idx + 1}.</span>
+                        <span>{step}</span>
+                      </li>
+                    ))}
+                  </ol>
                 </div>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Brain className="h-6 w-6" />
-            Proven Productivity Techniques
-          </CardTitle>
-          <p className="text-sm text-white">Time-tested methods for maximising efficiency</p>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            {techniques.map((technique, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="text-lg font-semibold text-white mb-2">{technique.title}</h3>
-                    <p className="text-sm text-white">{technique.description}</p>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <h4 className="font-medium text-white mb-2">Benefits:</h4>
-                      <ul className="space-y-1">
-                        {technique.benefits.map((benefit, idx) => (
-                          <li key={idx} className="text-sm text-white flex items-center gap-2">
-                            <div className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                            {benefit}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div>
-                      <h4 className="font-medium text-white mb-2">How to implement:</h4>
-                      <ol className="space-y-1">
-                        {technique.howTo.map((step, idx) => (
-                          <li key={idx} className="text-sm text-white flex items-start gap-2">
-                            <span className="text-elec-yellow font-medium mt-0.5">{idx + 1}.</span>
-                            {step}
-                          </li>
-                        ))}
-                      </ol>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

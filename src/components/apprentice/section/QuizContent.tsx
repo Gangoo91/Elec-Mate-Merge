@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { CheckCircle, Clock, AlertTriangle } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 import UnitQuiz from '@/components/apprentice/UnitQuiz';
 import { healthAndSafetyQuizzes } from '@/data/unitQuizzes';
 import { useToast } from '@/components/ui/use-toast';
-import { Progress } from '@/components/ui/progress';
 import { useAuth } from '@/contexts/AuthContext';
 import { userKey } from '@/lib/userStorage';
 import { useHaptic } from '@/hooks/useHaptic';
@@ -127,83 +126,91 @@ const QuizContent = ({
   };
 
   return (
-    <div className="bg-white/5 border border-elec-yellow/20 rounded-lg p-6">
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-3">
-          <div className="p-2 rounded-full bg-elec-yellow flex items-center justify-center">
-            <span className="text-elec-dark font-bold text-xl">Q</span>
-          </div>
-          <h1 className="text-2xl font-semibold">Unit Assessment Quiz</h1>
+    <div className="space-y-6">
+      <div className="flex items-baseline justify-between gap-3">
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Assessment
+          </span>
+          <h1 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
+            Unit assessment quiz
+          </h1>
         </div>
-
-        {isCompleted && (
-          <div className="flex items-center text-green-500 gap-2">
-            <CheckCircle className="h-5 w-5" />
-            <span className="text-sm">Completed</span>
-          </div>
-        )}
+        {isCompleted && <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0" />}
       </div>
 
       {!quizStarted ? (
         <>
-          <div className="mb-8">
-            <p className="text-white">
-              This quiz will test your understanding of the key health and safety concepts covered
-              in this unit. Complete the quiz to demonstrate your knowledge.
-            </p>
-          </div>
+          <p className="text-[14px] text-white/85 leading-relaxed">
+            This quiz will test your understanding of the key health and safety concepts covered in
+            this unit. Complete the quiz to demonstrate your knowledge.
+          </p>
 
-          <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-6 mb-6">
-            <h2 className="text-xl font-semibold mb-4 text-elec-yellow">Quiz Instructions</h2>
-            <ul className="space-y-2 text-white">
-              <li>• The quiz contains 30 multiple choice questions</li>
-              <li>• You need to score at least 70% to pass</li>
-              <li>• You have 30 minutes to complete the quiz</li>
-              <li>• You can retake the quiz as many times as needed</li>
-              <li>• Take your time and read each question carefully</li>
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Quiz instructions
+            </span>
+            <ul className="space-y-1.5">
+              {[
+                'The quiz contains 30 multiple choice questions',
+                'You need to score at least 70% to pass',
+                'You have 30 minutes to complete the quiz',
+                'You can retake the quiz as many times as needed',
+                'Take your time and read each question carefully',
+              ].map((item, i) => (
+                <li
+                  key={i}
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
             </ul>
           </div>
 
-          <div className="flex justify-between items-center pt-4">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2">
             <Button
               variant="outline"
-              className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+              className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
               onClick={() =>
                 navigate(`/apprentice/study/eal/${effectiveCourseSlug}/unit/${effectiveUnitSlug}`)
               }
             >
-              Back to Unit
+              Back to unit
             </Button>
 
             <Button
               onClick={handleStartQuiz}
               disabled={isCompleted}
-              className={`${isCompleted ? 'bg-green-600/20 border-green-500/50 text-green-400' : 'hover:bg-elec-yellow hover:text-elec-dark'}`}
+              className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-40"
             >
-              {isCompleted ? 'Quiz Completed' : 'Start Quiz'}
+              {isCompleted ? 'Quiz completed' : 'Start quiz'}
               {isCompleted && <CheckCircle className="ml-2 h-4 w-4" />}
             </Button>
           </div>
         </>
       ) : (
         <>
-          {/* Timer display */}
-          <div className="mb-6 p-4 border border-elec-yellow/20 rounded-lg">
-            <div className="flex justify-between items-center mb-2">
-              <div className="flex items-center gap-2">
-                <Clock className="h-5 w-5 text-elec-yellow" />
-                <span className="font-semibold">Time Remaining</span>
-              </div>
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+            <div className="flex items-baseline justify-between">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Time remaining
+              </span>
               <span
-                className={`font-mono text-lg ${timeRemaining < 300 ? 'text-red-500 animate-pulse' : 'text-elec-yellow'}`}
+                className={`font-mono text-[14px] ${timeRemaining < 300 ? 'text-red-300 animate-pulse' : 'text-white'}`}
               >
                 {formatTime(timeRemaining)}
               </span>
             </div>
-            <Progress value={timeProgress} className="h-2" />
+            <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-elec-yellow transition-all duration-500"
+                style={{ width: `${timeProgress}%` }}
+              />
+            </div>
           </div>
 
-          {/* Quiz component */}
           <UnitQuiz
             unitCode={unitCode}
             questions={healthAndSafetyQuizzes.questions}

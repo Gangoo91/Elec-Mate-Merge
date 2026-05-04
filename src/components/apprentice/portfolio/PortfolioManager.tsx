@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import { DropdownTabs } from '@/components/ui/dropdown-tabs';
 import { Button } from '@/components/ui/button';
 import {
-  FileText,
   Plus,
   LayoutDashboard,
   FolderOpen,
@@ -12,9 +10,6 @@ import {
   BookOpen,
   Wrench,
   Building,
-  Target,
-  Clock,
-  CheckCircle2,
   Loader2,
 } from 'lucide-react';
 import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
@@ -34,69 +29,31 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
-// Quick Stats Component
 const QuickStats = ({ entries }: { entries: PortfolioEntry[] }) => {
   const completed = entries.filter((e) => e.status === 'completed').length;
   const totalHours = Math.floor(entries.reduce((total, entry) => total + entry.timeSpent, 0) / 60);
   const inProgress = entries.filter((e) => e.status === 'in-progress').length;
 
+  const stats = [
+    { label: 'Total', value: String(entries.length) },
+    { label: 'Complete', value: String(completed) },
+    { label: 'In progress', value: String(inProgress) },
+    { label: 'Hours', value: `${totalHours}h` },
+  ];
+
   return (
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-      <Card className="bg-white/5 border-elec-yellow/20">
-        <CardContent className="p-3 sm:p-4">
-          <div className="flex items-center gap-2 sm:gap-3">
-            <div className="p-1.5 sm:p-2 bg-blue-500/10 rounded-lg shrink-0">
-              <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
-            </div>
-            <div className="min-w-0">
-              <p className="text-xs text-white truncate">Total</p>
-              <p className="text-lg sm:text-2xl font-bold">{entries.length}</p>
-            </div>
+      {stats.map((s) => (
+        <div
+          key={s.label}
+          className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4"
+        >
+          <div className="text-2xl font-mono text-white">{s.value}</div>
+          <div className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-1">
+            {s.label}
           </div>
-        </CardContent>
-      </Card>
-
-      <Card className="bg-white/5 border-elec-yellow/20">
-        <CardContent className="p-3 sm:p-4">
-          <div className="flex items-center gap-2 sm:gap-3">
-            <div className="p-1.5 sm:p-2 bg-green-500/10 rounded-lg shrink-0">
-              <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
-            </div>
-            <div className="min-w-0">
-              <p className="text-xs text-white truncate">Complete</p>
-              <p className="text-lg sm:text-2xl font-bold">{completed}</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="bg-white/5 border-elec-yellow/20">
-        <CardContent className="p-3 sm:p-4">
-          <div className="flex items-center gap-2 sm:gap-3">
-            <div className="p-1.5 sm:p-2 bg-amber-500/10 rounded-lg shrink-0">
-              <Target className="h-4 w-4 sm:h-5 sm:w-5 text-amber-400" />
-            </div>
-            <div className="min-w-0">
-              <p className="text-xs text-white truncate">In Progress</p>
-              <p className="text-lg sm:text-2xl font-bold">{inProgress}</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="bg-white/5 border-elec-yellow/20">
-        <CardContent className="p-3 sm:p-4">
-          <div className="flex items-center gap-2 sm:gap-3">
-            <div className="p-1.5 sm:p-2 bg-elec-yellow/10 rounded-lg shrink-0">
-              <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
-            </div>
-            <div className="min-w-0">
-              <p className="text-xs text-white truncate">Hours</p>
-              <p className="text-lg sm:text-2xl font-bold">{totalHours}h</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+        </div>
+      ))}
     </div>
   );
 };
@@ -119,23 +76,22 @@ const ProgressView = ({
 
   return (
     <div className="space-y-4">
-      {/* View Toggle */}
-      <div className="flex gap-2 p-1 bg-white/5 rounded-lg w-fit">
+      <div className="flex gap-1 p-1 rounded-lg border border-white/[0.06] bg-white/[0.02] w-fit">
         <button
           onClick={() => setView('groups')}
-          className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-            view === 'groups' ? 'bg-elec-yellow text-elec-dark' : 'text-white hover:text-white'
+          className={`px-3 h-9 rounded-md text-[12px] font-medium transition-colors touch-manipulation ${
+            view === 'groups' ? 'bg-elec-yellow text-black' : 'text-white/55 hover:text-white'
           }`}
         >
-          By Group
+          By group
         </button>
         <button
           onClick={() => setView('competency')}
-          className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-            view === 'competency' ? 'bg-elec-yellow text-elec-dark' : 'text-white hover:text-white'
+          className={`px-3 h-9 rounded-md text-[12px] font-medium transition-colors touch-manipulation ${
+            view === 'competency' ? 'bg-elec-yellow text-black' : 'text-white/55 hover:text-white'
           }`}
         >
-          By Level
+          By level
         </button>
       </div>
 
@@ -186,16 +142,16 @@ const ResourcesDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col bg-white/5 border-elec-gray/40">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col bg-background border-white/[0.06]">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+          <DialogTitle className="flex items-center gap-2 text-white">
             {activeResource ? (
               <>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => setActiveResource(null)}
-                  className="mr-2"
+                  className="mr-2 text-white/55 hover:text-white hover:bg-white/[0.05] touch-manipulation"
                 >
                   Back
                 </Button>
@@ -211,21 +167,17 @@ const ResourcesDialog = ({
           {activeResource && ActiveComponent ? (
             <ActiveComponent />
           ) : (
-            <div className="grid gap-3 p-4">
+            <div className="grid gap-2 p-4">
               {resources.map((resource) => {
-                const Icon = resource.icon;
                 return (
                   <button
                     key={resource.id}
                     onClick={() => setActiveResource(resource.id)}
-                    className="flex items-center gap-4 p-4 rounded-xl bg-elec-card border border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors text-left"
+                    className="flex items-center justify-between gap-3 p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] transition-colors text-left touch-manipulation min-h-[44px]"
                   >
-                    <div className="p-3 rounded-lg bg-elec-yellow/10">
-                      <Icon className="h-6 w-6 text-elec-yellow" />
-                    </div>
                     <div>
-                      <p className="font-semibold text-white">{resource.label}</p>
-                      <p className="text-sm text-white">
+                      <p className="text-[14px] text-white font-medium">{resource.label}</p>
+                      <p className="text-[12px] text-white/55 mt-0.5 leading-relaxed">
                         {resource.id === 'documentation' && 'Guides and best practices'}
                         {resource.id === 'tools' && 'Integration with digital platforms'}
                         {resource.id === 'industry' && 'Sector-specific content'}
@@ -277,8 +229,8 @@ const PortfolioManager = () => {
     return (
       <div className="flex items-center justify-center p-8">
         <div className="text-center">
-          <Loader2 className="h-8 w-8 animate-spin text-elec-yellow mx-auto mb-4" />
-          <p className="text-white">Loading your portfolio...</p>
+          <Loader2 className="h-6 w-6 animate-spin text-elec-yellow mx-auto mb-3" />
+          <p className="text-[13px] text-white/55">Loading your portfolio...</p>
         </div>
       </div>
     );
@@ -286,25 +238,27 @@ const PortfolioManager = () => {
 
   return (
     <div className="space-y-4 sm:space-y-6">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="flex items-center gap-2">
           <Button
             onClick={() => setShowAddForm(true)}
-            className="bg-elec-yellow text-black hover:bg-elec-yellow/80 gap-2 flex-1 sm:flex-initial"
+            className="bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold gap-2 flex-1 sm:flex-initial h-11 touch-manipulation"
           >
             <Plus className="h-4 w-4" />
-            <span className="sm:inline">Add Entry</span>
+            <span className="sm:inline">Add entry</span>
           </Button>
 
-          {/* More Menu for Resources */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="icon" className="border-elec-yellow/30">
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-11 w-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+              >
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="bg-white/5 border-elec-yellow/20">
+            <DropdownMenuContent align="end" className="bg-background border-white/[0.06]">
               <DropdownMenuItem
                 onClick={() => {
                   setActiveResource('documentation');
@@ -323,7 +277,7 @@ const PortfolioManager = () => {
                 className="cursor-pointer"
               >
                 <Wrench className="h-4 w-4 mr-2" />
-                Digital Tools
+                Digital tools
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => {
@@ -333,7 +287,7 @@ const PortfolioManager = () => {
                 className="cursor-pointer"
               >
                 <Building className="h-4 w-4 mr-2" />
-                Industry Resources
+                Industry resources
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

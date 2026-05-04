@@ -1,11 +1,9 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useRealtimeTracking } from '@/hooks/time-tracking/useRealtimeTracking';
-import { Play, Pause, Square, Clock, MapPin } from 'lucide-react';
+import { Play, Pause, Square, MapPin } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import {
   Dialog,
@@ -69,180 +67,180 @@ const LiveTrackingPanel = () => {
 
   if (isLoading) {
     return (
-      <Card className="bg-white/5 border-elec-yellow/20">
-        <CardContent className="p-4">
-          <div className="flex items-center space-x-2">
-            <div className="animate-pulse h-4 w-4 bg-elec-yellow/50 rounded-full" />
-            <span className="text-elec-light">Loading...</span>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
+        <div className="flex items-center space-x-2">
+          <div className="animate-pulse h-4 w-4 bg-white/[0.04] rounded-full" />
+          <span className="text-[14px] text-white/85">Loading...</span>
+        </div>
+      </div>
     );
   }
 
   return (
-    <Card className="bg-white/5 border-elec-yellow/20">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-elec-light flex items-center gap-2">
-          <Clock className="h-5 w-5 text-elec-yellow" />
-          Live Tracking
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {activeSession ? (
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <div>
-                <Badge
-                  variant="outline"
-                  className="border-green-500 text-green-400 bg-green-500/10"
-                >
-                  <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse" />
-                  Active
-                </Badge>
-                <p className="text-sm text-elec-light/70 mt-1">{activeSession.activity_type}</p>
-                {activeSession.location && (
-                  <p className="text-xs text-elec-light/50 flex items-center gap-1 mt-1">
-                    <MapPin className="h-3 w-3" />
-                    {activeSession.location}
-                  </p>
-                )}
-              </div>
-              <div className="text-right">
-                <div className="text-2xl font-mono text-elec-yellow">{getElapsedTime()}</div>
-                <p className="text-xs text-elec-light/50">elapsed</p>
-              </div>
-            </div>
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        Live tracking
+      </span>
 
-            <div className="flex gap-2">
-              <Button variant="outline" size="sm" onClick={pauseSession} className="flex-1">
-                <Pause className="h-4 w-4 mr-2" />
-                Pause
-              </Button>
-              <Dialog open={showEndDialog} onOpenChange={setShowEndDialog}>
-                <DialogTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="flex-1 border-red-500 text-red-400 hover:bg-red-500/10"
-                  >
-                    <Square className="h-4 w-4 mr-2" />
-                    Stop
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="bg-white/5 border-elec-yellow/20">
-                  <DialogHeader>
-                    <DialogTitle className="text-elec-light">End Session</DialogTitle>
-                  </DialogHeader>
-                  <div className="space-y-4">
-                    <div>
-                      <p className="text-sm text-elec-light/70 mb-2">
-                        Session: {activeSession.activity_type}
-                      </p>
-                      <p className="text-sm text-elec-light/70 mb-4">
-                        Duration: {getElapsedTime()}
-                      </p>
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-sm text-elec-light">Notes (optional)</label>
-                      <Textarea
-                        value={notes}
-                        onChange={(e) => setNotes(e.target.value)}
-                        placeholder="Add notes about this session..."
-                        className="bg-white/10 border-elec-yellow/20 text-elec-light"
-                      />
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        variant="outline"
-                        onClick={() => setShowEndDialog(false)}
-                        className="flex-1"
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        onClick={handleEndSession}
-                        className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                      >
-                        End Session
-                      </Button>
-                    </div>
-                  </div>
-                </DialogContent>
-              </Dialog>
+      {activeSession ? (
+        <div className="space-y-4">
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex-1 min-w-0">
+              <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full animate-pulse" />
+                <span className="text-[11px] text-white/85">Active</span>
+              </div>
+              <p className="text-[14px] text-white/85 mt-2 leading-relaxed">
+                {activeSession.activity_type}
+              </p>
+              {activeSession.location && (
+                <p className="text-[11px] text-white/55 flex items-center gap-1 mt-1">
+                  <MapPin className="h-3 w-3" />
+                  {activeSession.location}
+                </p>
+              )}
+            </div>
+            <div className="text-right flex-shrink-0">
+              <div className="text-2xl font-mono text-elec-yellow">{getElapsedTime()}</div>
+              <p className="text-[11px] text-white/55">elapsed</p>
             </div>
           </div>
-        ) : (
-          <div className="space-y-3">
-            <p className="text-sm text-elec-light/70">No active tracking session</p>
-            <Dialog open={showStartDialog} onOpenChange={setShowStartDialog}>
+
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={pauseSession}
+              className="flex-1 h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+            >
+              <Pause className="h-4 w-4 mr-2" />
+              Pause
+            </Button>
+            <Dialog open={showEndDialog} onOpenChange={setShowEndDialog}>
               <DialogTrigger asChild>
-                <Button className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
-                  <Play className="h-4 w-4 mr-2" />
-                  Start Tracking
+                <Button
+                  variant="outline"
+                  className="flex-1 h-11 border-red-500/30 text-red-300 hover:bg-red-500/[0.08] touch-manipulation"
+                >
+                  <Square className="h-4 w-4 mr-2" />
+                  Stop
                 </Button>
               </DialogTrigger>
-              <DialogContent className="bg-white/5 border-elec-yellow/20">
+              <DialogContent className="bg-background border-white/[0.06]">
                 <DialogHeader>
-                  <DialogTitle className="text-elec-light">Start New Session</DialogTitle>
+                  <DialogTitle className="text-white">End session</DialogTitle>
                 </DialogHeader>
                 <div className="space-y-4">
-                  <div className="space-y-2">
-                    <label className="text-sm text-elec-light">Activity Type</label>
-                    <div className="grid grid-cols-2 gap-2">
-                      {activityTypes.map((type) => (
-                        <Button
-                          key={type}
-                          variant={activityType === type ? 'default' : 'outline'}
-                          size="sm"
-                          onClick={() => setActivityType(type)}
-                          className={activityType === type ? 'bg-elec-yellow text-elec-dark' : ''}
-                        >
-                          {type}
-                        </Button>
-                      ))}
-                    </div>
-                    {activityType === 'Other' && (
-                      <Input
-                        placeholder="Specify activity..."
-                        value={activityType === 'Other' ? '' : activityType}
-                        onChange={(e) => setActivityType(e.target.value)}
-                        className="bg-white/10 border-elec-yellow/20 text-elec-light"
-                      />
-                    )}
+                  <div className="space-y-1">
+                    <p className="text-[13px] text-white/70">
+                      Session: {activeSession.activity_type}
+                    </p>
+                    <p className="text-[13px] text-white/70 font-mono">
+                      Duration: {getElapsedTime()}
+                    </p>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm text-elec-light">Location (optional)</label>
-                    <Input
-                      value={location}
-                      onChange={(e) => setLocation(e.target.value)}
-                      placeholder="e.g., Study Centre, Home, Library"
-                      className="bg-white/10 border-elec-yellow/20 text-elec-light"
+                    <label className="text-[13px] text-white/85">Notes (optional)</label>
+                    <Textarea
+                      value={notes}
+                      onChange={(e) => setNotes(e.target.value)}
+                      placeholder="Add notes about this session..."
+                      className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
                     />
                   </div>
                   <div className="flex gap-2">
                     <Button
                       variant="outline"
-                      onClick={() => setShowStartDialog(false)}
-                      className="flex-1"
+                      onClick={() => setShowEndDialog(false)}
+                      className="flex-1 h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
                     >
                       Cancel
                     </Button>
                     <Button
-                      onClick={handleStartSession}
-                      disabled={!activityType.trim()}
-                      className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                      onClick={handleEndSession}
+                      className="flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
                     >
-                      Start Session
+                      End session
                     </Button>
                   </div>
                 </div>
               </DialogContent>
             </Dialog>
           </div>
-        )}
-      </CardContent>
-    </Card>
+        </div>
+      ) : (
+        <div className="space-y-3">
+          <p className="text-[14px] text-white/55 leading-relaxed">No active tracking session</p>
+          <Dialog open={showStartDialog} onOpenChange={setShowStartDialog}>
+            <DialogTrigger asChild>
+              <Button className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation">
+                <Play className="h-4 w-4 mr-2" />
+                Start tracking
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="bg-background border-white/[0.06]">
+              <DialogHeader>
+                <DialogTitle className="text-white">Start new session</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <label className="text-[13px] text-white/85">Activity type</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {activityTypes.map((type) => (
+                      <Button
+                        key={type}
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setActivityType(type)}
+                        className={`h-10 touch-manipulation ${
+                          activityType === type
+                            ? 'bg-elec-yellow text-black border-elec-yellow hover:bg-elec-yellow/90'
+                            : 'border-white/15 text-white hover:bg-white/[0.05]'
+                        }`}
+                      >
+                        {type}
+                      </Button>
+                    ))}
+                  </div>
+                  {activityType === 'Other' && (
+                    <Input
+                      placeholder="Specify activity..."
+                      value={activityType === 'Other' ? '' : activityType}
+                      onChange={(e) => setActivityType(e.target.value)}
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                    />
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[13px] text-white/85">Location (optional)</label>
+                  <Input
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    placeholder="e.g., Study Centre, Home, Library"
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowStartDialog(false)}
+                    className="flex-1 h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={handleStartSession}
+                    disabled={!activityType.trim()}
+                    className="flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:opacity-40"
+                  >
+                    Start session
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
+      )}
+    </div>
   );
 };
 

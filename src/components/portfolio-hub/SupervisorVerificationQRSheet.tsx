@@ -140,7 +140,7 @@ export function SupervisorVerificationQRSheet({
           <SheetHeader className="px-5 pt-5 pb-3 border-b border-border">
             <div className="flex items-center justify-between">
               <SheetTitle className="flex items-center gap-2 text-base">
-                <ShieldCheck className="h-5 w-5 text-emerald-400" />
+                <ShieldCheck className="h-5 w-5 text-white/85" />
                 Supervisor Verification
               </SheetTitle>
               <button
@@ -177,12 +177,12 @@ export function SupervisorVerificationQRSheet({
 
             {/* Verified status */}
             {isVerified ? (
-              <div className="rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-5 text-center space-y-3">
-                <div className="w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto">
-                  <CheckCircle className="h-6 w-6 text-emerald-400" />
+              <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-5 text-center space-y-3">
+                <div className="w-12 h-12 rounded-full bg-white/[0.02] flex items-center justify-center mx-auto">
+                  <CheckCircle className="h-6 w-6 text-white/85" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-emerald-400">
+                  <p className="text-sm font-semibold text-white/85">
                     Verified by {verification?.supervisor_name}
                   </p>
                   {verification?.supervisor_company && (
@@ -244,7 +244,7 @@ export function SupervisorVerificationQRSheet({
                       'You receive a tamper-evident verified badge',
                     ].map((step, i) => (
                       <div key={i} className="flex items-start gap-3">
-                        <span className="flex items-center justify-center h-5 w-5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-bold shrink-0 mt-0.5">
+                        <span className="flex items-center justify-center h-5 w-5 rounded-full bg-white/[0.02] text-white/85 text-[10px] font-bold shrink-0 mt-0.5">
                           {i + 1}
                         </span>
                         <span className="text-sm text-white">{step}</span>
@@ -267,7 +267,7 @@ export function SupervisorVerificationQRSheet({
                   className="h-11 touch-manipulation"
                 >
                   {copied ? (
-                    <CheckCircle className="h-4 w-4 mr-1.5 text-emerald-400" />
+                    <CheckCircle className="h-4 w-4 mr-1.5 text-white/85" />
                   ) : (
                     <Copy className="h-4 w-4 mr-1.5" />
                   )}

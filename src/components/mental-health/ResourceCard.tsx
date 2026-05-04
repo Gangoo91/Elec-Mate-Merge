@@ -23,12 +23,12 @@ const ResourceCard = ({ title, description, type, url, isExternal = true }: Reso
 
   return (
     <Card
-      className={`${isAndysManClub ? 'border-purple-500/30 bg-purple-500/5' : 'border-purple-500/20 bg-[hsl(0_0%_12%)]'} h-full`}
+      className={`${isAndysManClub ? 'border-white/[0.06] bg-white/[0.02]' : 'border-white/[0.06] bg-[hsl(0_0%_12%)]'} h-full`}
     >
       <CardHeader className="pb-2">
         <div className="flex gap-3 items-start">
           <Icon
-            className={`h-5 w-5 ${isAndysManClub ? 'text-purple-400' : 'text-purple-400'} mt-1 flex-shrink-0`}
+            className={`h-5 w-5 ${isAndysManClub ? 'text-white/85' : 'text-white/85'} mt-1 flex-shrink-0`}
           />
           <div>
             <CardTitle className="text-base">{title}</CardTitle>
@@ -41,7 +41,7 @@ const ResourceCard = ({ title, description, type, url, isExternal = true }: Reso
           <Button
             variant="outline"
             size="sm"
-            className={`w-full mt-2 ${isAndysManClub ? 'border-purple-500/30 hover:bg-purple-500/10' : ''}`}
+            className={`w-full mt-2 ${isAndysManClub ? 'border-white/[0.06] hover:bg-white/[0.02]' : ''}`}
             asChild
           >
             <a

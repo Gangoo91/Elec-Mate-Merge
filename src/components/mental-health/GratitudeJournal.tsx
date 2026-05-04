@@ -182,8 +182,8 @@ const GratitudeJournal = ({ onClose }: GratitudeJournalProps) => {
 
         {step === 'complete' && (
           <div className="flex-1 flex flex-col items-center justify-center space-y-6 animate-fade-in">
-            <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-emerald-500/20 border-2 border-emerald-400">
-              <Check className="h-12 w-12 text-emerald-400" />
+            <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-white/[0.02] border-2 border-white/[0.06]">
+              <Check className="h-12 w-12 text-white/85" />
             </div>
 
             <div className="text-center">

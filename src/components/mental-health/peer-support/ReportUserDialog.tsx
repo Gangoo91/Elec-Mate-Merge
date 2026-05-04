@@ -118,8 +118,8 @@ export function ReportUserDialog({
       <DialogContent className="max-w-[380px] rounded-2xl">
         {isSubmitted ? (
           <div className="py-8 text-center">
-            <div className="mx-auto mb-4 p-4 rounded-full bg-green-500/10 w-fit">
-              <CheckCircle className="h-8 w-8 text-green-500" />
+            <div className="mx-auto mb-4 p-4 rounded-full bg-white/[0.02] w-fit">
+              <CheckCircle className="h-8 w-8 text-white/85" />
             </div>
             <h3 className="text-lg font-semibold mb-2">Report Submitted</h3>
             <p className="text-sm text-white">
@@ -129,8 +129,8 @@ export function ReportUserDialog({
         ) : (
           <>
             <DialogHeader>
-              <div className="mx-auto mb-2 p-3 rounded-full bg-orange-500/10">
-                <Flag className="h-6 w-6 text-orange-500" />
+              <div className="mx-auto mb-2 p-3 rounded-full bg-white/[0.02]">
+                <Flag className="h-6 w-6 text-white/85" />
               </div>
               <DialogTitle className="text-center">Report {userName}</DialogTitle>
               <DialogDescription className="text-center">
@@ -151,7 +151,7 @@ export function ReportUserDialog({
                       key={option.value}
                       className={`flex items-start space-x-3 p-3 rounded-lg border transition-colors cursor-pointer ${
                         reason === option.value
-                          ? 'border-orange-500/50 bg-orange-500/5'
+                          ? 'border-white/[0.06] bg-white/[0.02]'
                           : 'border-white/[0.08] hover:border-white/[0.08]'
                       }`}
                       onClick={() => setReason(option.value)}
@@ -197,7 +197,7 @@ export function ReportUserDialog({
               <Button
                 onClick={handleSubmit}
                 disabled={isSubmitting || !reason}
-                className="w-full sm:w-auto bg-orange-500 hover:bg-orange-600 text-white"
+                className="w-full sm:w-auto bg-white/[0.02] hover:bg-white/[0.02] text-white"
               >
                 {isSubmitting ? (
                   <>

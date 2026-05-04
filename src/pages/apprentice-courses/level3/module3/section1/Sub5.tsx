@@ -309,19 +309,21 @@ export default function Sub5() {
           />
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 643.3"
-            clause="Insulation resistance shall be measured ... The minimum values of insulation resistance, for measurements made between live conductors and Earth, are given in Table 6.1. Particular regard shall be given to equipment likely to influence the verification test or be damaged; reference is made to a 250 V DC test following the connection of equipment."
+            source="BS 7671:2018+A4:2026 — Regulation 643.3 (Insulation resistance, redrafted in A4:2026)"
+            clause="Regulation 643.3 has been redrafted in A4:2026. The requirements for testing insulation resistance where equipment is likely to influence the verification test or be damaged have been clarified, and reference is made to a 250 V DC test following the connection of equipment. The requirements for RCD testing have also been changed: Table 3A (Time/current performance criteria for RCDs) in Appendix 3 has been deleted, and regardless of RCD Type, an alternating current test at rated residual operating current (IΔn) is used to verify effectiveness."
             meaning={
               <>
                 Reg 643.3 is the test that pulls a Megger MFT through its full range. The
                 instrument has to deliver 500 V DC for a normal LV test, drop to 250 V DC where
-                sensitive equipment is connected, and read insulation in megohms accurately.
+                sensitive equipment is connected (LED drivers, SPDs, electronic controls), and
+                read insulation in megohms accurately. The A4:2026 redraft also simplified RCD
+                verification to a single AC test at IΔn — no more 1/2 IΔn or 5 IΔn sequence.
                 Knowing the MFT is doing what it claims — and reading correctly through its lead
                 resistance and zeroing — is part of the L3 measurement competence the regulation
                 expects.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026, Regulation 643.3 — insulation resistance test."
+            cite="Source: BS 7671:2018+A4:2026 Part 6, Chapter 64, Regulation 643.3 (insulation resistance, redrafted in A4:2026)."
           />
 
           <InlineCheck {...checks[0]} />

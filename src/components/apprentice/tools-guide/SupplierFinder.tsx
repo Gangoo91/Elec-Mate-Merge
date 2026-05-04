@@ -1,14 +1,10 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Store, MapPin, Phone, Globe, CreditCard, Truck, GraduationCap, Star } from 'lucide-react';
 
 const SupplierFinder = () => {
   const majorSuppliers = [
     {
       name: 'Screwfix',
-      type: 'Trade Counter & Online',
+      type: 'Trade counter & online',
       speciality: 'Quick collection, everyday tools',
       apprenticeDiscount: '10% with trade card',
       locations: '700+ stores nationwide',
@@ -19,7 +15,7 @@ const SupplierFinder = () => {
     },
     {
       name: 'Toolstation',
-      type: 'Trade Counter & Online',
+      type: 'Trade counter & online',
       speciality: 'Competitive prices, trade quality',
       apprenticeDiscount: 'Account pricing available',
       locations: '500+ stores nationwide',
@@ -30,7 +26,7 @@ const SupplierFinder = () => {
     },
     {
       name: 'RS Components',
-      type: 'Specialist Electrical',
+      type: 'Specialist electrical',
       speciality: 'Test equipment, industrial supplies',
       apprenticeDiscount: 'Educational pricing',
       locations: 'Online + trade counters',
@@ -41,7 +37,7 @@ const SupplierFinder = () => {
     },
     {
       name: 'CPC Farnell',
-      type: 'Electrical Specialist',
+      type: 'Electrical specialist',
       speciality: 'Professional electrical equipment',
       apprenticeDiscount: 'Student & apprentice rates',
       locations: 'Online + collection points',
@@ -54,7 +50,7 @@ const SupplierFinder = () => {
 
   const localSuppliers = [
     {
-      type: 'Independent Electrical Wholesalers',
+      type: 'Independent electrical wholesalers',
       description:
         'Local electrical wholesalers often offer the best trade prices and personalised service',
       benefits: ['Better trade discounts', 'Local knowledge', 'Account facilities', 'Bulk pricing'],
@@ -62,7 +58,7 @@ const SupplierFinder = () => {
         "Search 'electrical wholesaler near me' or ask local electricians for recommendations",
     },
     {
-      type: 'Tool Specialists',
+      type: 'Tool specialists',
       description:
         'Specialist tool shops often have better expertise and can provide hands-on advice',
       benefits: ['Expert advice', 'Try before buying', 'Better warranties', 'Professional service'],
@@ -72,28 +68,28 @@ const SupplierFinder = () => {
 
   const costBreakdown = [
     {
-      category: 'Hand Tools',
+      category: 'Hand tools',
       essentialCost: '£150-250',
       qualityCost: '£300-450',
       timeframe: 'First 6 months',
       priority: 'Start immediately',
     },
     {
-      category: 'Power Tools',
+      category: 'Power tools',
       essentialCost: '£200-400',
       qualityCost: '£500-800',
       timeframe: 'Months 6-12',
       priority: 'Build gradually',
     },
     {
-      category: 'Test Equipment',
+      category: 'Test equipment',
       essentialCost: '£300-600',
       qualityCost: '£800-1500',
       timeframe: 'Year 2-3',
       priority: 'As training progresses',
     },
     {
-      category: 'PPE & Safety',
+      category: 'PPE & safety',
       essentialCost: '£100-200',
       qualityCost: '£200-350',
       timeframe: 'Immediate',
@@ -116,69 +112,63 @@ const SupplierFinder = () => {
     <div className="space-y-6">
       <Tabs defaultValue="major-suppliers" className="w-full">
         <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="major-suppliers">Major Suppliers</TabsTrigger>
-          <TabsTrigger value="local-suppliers">Local Options</TabsTrigger>
-          <TabsTrigger value="cost-planning">Cost Planning</TabsTrigger>
-          <TabsTrigger value="savings-tips">Savings Tips</TabsTrigger>
+          <TabsTrigger value="major-suppliers">Major</TabsTrigger>
+          <TabsTrigger value="local-suppliers">Local</TabsTrigger>
+          <TabsTrigger value="cost-planning">Costs</TabsTrigger>
+          <TabsTrigger value="savings-tips">Savings</TabsTrigger>
         </TabsList>
 
         <TabsContent value="major-suppliers">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {majorSuppliers.map((supplier, index) => (
-              <Card key={index} className="border-elec-yellow/20 bg-white/5">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-elec-yellow flex items-center gap-2">
-                      <Store className="h-5 w-5" />
-                      {supplier.name}
-                    </CardTitle>
-                    <Badge variant="outline" className="text-xs border-blue-500/40 text-blue-400">
-                      {supplier.type}
-                    </Badge>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <p className="text-sm text-white">{supplier.speciality}</p>
+              <div
+                key={index}
+                className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
+              >
+                <div className="flex items-baseline justify-between gap-3">
+                  <h3 className="text-[18px] font-semibold text-white leading-tight">
+                    {supplier.name}
+                  </h3>
+                  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] flex-shrink-0">
+                    {supplier.type}
+                  </span>
+                </div>
+                <p className="text-[14px] text-white/85 leading-relaxed">{supplier.speciality}</p>
 
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-sm">
-                      <GraduationCap className="h-4 w-4 text-green-400" />
-                      <span className="text-green-400">{supplier.apprenticeDiscount}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-white">
-                      <MapPin className="h-4 w-4" />
-                      {supplier.locations}
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-white">
-                      <Truck className="h-4 w-4" />
-                      {supplier.delivery}
-                    </div>
+                <div className="space-y-1.5 text-[13px] text-white/85">
+                  <div className="flex justify-between gap-3">
+                    <span className="text-white/55">Discount</span>
+                    <span className="text-right">{supplier.apprenticeDiscount}</span>
                   </div>
+                  <div className="flex justify-between gap-3">
+                    <span className="text-white/55">Locations</span>
+                    <span className="text-right">{supplier.locations}</span>
+                  </div>
+                  <div className="flex justify-between gap-3">
+                    <span className="text-white/55">Delivery</span>
+                    <span className="text-right">{supplier.delivery}</span>
+                  </div>
+                </div>
 
-                  <div>
-                    <h4 className="text-sm font-medium text-white mb-2">Key Strengths:</h4>
-                    <ul className="text-xs text-white space-y-1">
-                      {supplier.strengths.map((strength, i) => (
-                        <li key={i} className="flex items-center gap-2">
-                          <Star className="h-3 w-3 text-elec-yellow" />
-                          {strength}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                <div className="space-y-1">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Key strengths
+                  </span>
+                  <ul className="text-[13px] text-white/85 space-y-1">
+                    {supplier.strengths.map((strength, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                        <span>{strength}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
-                  <div className="pt-2 border-t border-elec-yellow/20 space-y-1">
-                    <div className="flex items-center gap-2 text-xs text-white">
-                      <Phone className="h-3 w-3" />
-                      {supplier.contact}
-                    </div>
-                    <div className="flex items-center gap-2 text-xs text-white">
-                      <Globe className="h-3 w-3" />
-                      {supplier.website}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                <div className="pt-2 border-t border-white/[0.06] space-y-1 text-[12px] text-white/55">
+                  <p>{supplier.contact}</p>
+                  <p>{supplier.website}</p>
+                </div>
+              </div>
             ))}
           </div>
         </TabsContent>
@@ -186,132 +176,127 @@ const SupplierFinder = () => {
         <TabsContent value="local-suppliers">
           <div className="space-y-4">
             {localSuppliers.map((supplier, index) => (
-              <Card key={index} className="border-elec-yellow/20 bg-white/5">
-                <CardHeader>
-                  <CardTitle className="text-elec-yellow text-lg">{supplier.type}</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <p className="text-white leading-relaxed">{supplier.description}</p>
+              <div
+                key={index}
+                className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
+              >
+                <h3 className="text-[18px] font-semibold text-white leading-tight">
+                  {supplier.type}
+                </h3>
+                <p className="text-[14px] text-white/85 leading-relaxed">{supplier.description}</p>
 
-                  <div>
-                    <h4 className="text-sm font-medium text-white mb-2">Benefits:</h4>
-                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-1">
-                      {supplier.benefits.map((benefit, i) => (
-                        <li key={i} className="flex items-center gap-2 text-sm text-white">
-                          <Badge
-                            variant="outline"
-                            className="h-2 w-2 rounded-full p-0 border-green-500/50 bg-green-500/20"
-                          />
-                          {benefit}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                <div className="space-y-1">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Benefits
+                  </span>
+                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-1 text-[13px] text-white/85">
+                    {supplier.benefits.map((benefit, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                        <span>{benefit}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
-                  <Alert className="border-blue-500/50 bg-blue-500/10">
-                    <MapPin className="h-4 w-4 text-blue-400" />
-                    <AlertDescription className="text-blue-200">
-                      <strong>How to find:</strong> {supplier.howToFind}
-                    </AlertDescription>
-                  </Alert>
-                </CardContent>
-              </Card>
+                <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    How to find
+                  </span>
+                  <p className="text-[13px] text-white/85 leading-relaxed">{supplier.howToFind}</p>
+                </div>
+              </div>
             ))}
           </div>
         </TabsContent>
 
         <TabsContent value="cost-planning">
-          <div className="space-y-6">
-            <Alert className="border-elec-yellow/50 bg-elec-yellow/10">
-              <CreditCard className="h-4 w-4 text-elec-yellow" />
-              <AlertDescription className="text-elec-yellow/90">
+          <div className="space-y-4">
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Total investment
+              </span>
+              <p className="text-[14px] text-white/85 leading-relaxed">
                 Total toolkit investment over 2-3 years: £750-2000. Quality tools are a career
                 investment that can last decades.
-              </AlertDescription>
-            </Alert>
+              </p>
+            </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {costBreakdown.map((category, index) => (
-                <Card key={index} className="border-elec-yellow/20 bg-white/5">
-                  <CardHeader>
-                    <CardTitle className="text-elec-yellow">{category.category}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <h4 className="text-sm font-medium text-green-300">Essential Range</h4>
-                        <p className="text-lg font-bold text-green-400">{category.essentialCost}</p>
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-medium text-blue-300">Quality Range</h4>
-                        <p className="text-lg font-bold text-blue-400">{category.qualityCost}</p>
-                      </div>
+                <div
+                  key={index}
+                  className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
+                >
+                  <h3 className="text-[16px] font-semibold text-white leading-tight">
+                    {category.category}
+                  </h3>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-0.5">
+                      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                        Essential
+                      </span>
+                      <p className="text-[16px] font-semibold text-white">{category.essentialCost}</p>
                     </div>
-
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-white">Timeframe:</span>
-                        <span className="text-white">{category.timeframe}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-white">Priority:</span>
-                        <Badge
-                          variant="outline"
-                          className={`text-xs ${
-                            category.priority === 'Start immediately' ||
-                            category.priority === 'Immediate'
-                              ? 'border-red-500/40 text-red-400'
-                              : category.priority === 'Never compromise'
-                                ? 'border-orange-500/40 text-orange-400'
-                                : 'border-blue-500/40 text-blue-400'
-                          }`}
-                        >
-                          {category.priority}
-                        </Badge>
-                      </div>
+                    <div className="space-y-0.5">
+                      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                        Quality
+                      </span>
+                      <p className="text-[16px] font-semibold text-white">{category.qualityCost}</p>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                  <div className="space-y-1.5 text-[13px] text-white/85">
+                    <div className="flex justify-between">
+                      <span className="text-white/55">Timeframe</span>
+                      <span>{category.timeframe}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-white/55">Priority</span>
+                      <span>{category.priority}</span>
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
         </TabsContent>
 
         <TabsContent value="savings-tips">
-          <Card className="border-green-500/20 bg-green-500/10">
-            <CardHeader>
-              <CardTitle className="text-green-300 flex items-center gap-2">
-                <CreditCard className="h-5 w-5" />
-                Money-Saving Strategies for Apprentices
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-4">
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+              <div className="space-y-1">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Money-saving strategies
+                </span>
+                <h3 className="text-[18px] font-semibold text-white leading-tight">
+                  Strategies for apprentices
+                </h3>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {savingsTips.map((tip, index) => (
                   <div
                     key={index}
-                    className="flex items-start gap-3 p-3 border border-green-500/20 rounded-lg"
+                    className="flex items-start gap-3 rounded-lg border border-white/[0.06] bg-white/[0.02] p-3"
                   >
-                    <Badge
-                      variant="outline"
-                      className="mt-0.5 h-6 w-6 rounded-full p-0 border-green-500/40 bg-green-500/20 flex items-center justify-center text-green-400"
-                    >
-                      {index + 1}
-                    </Badge>
-                    <span className="text-sm text-white leading-relaxed">{tip}</span>
+                    <span className="text-[12px] text-white/55 font-mono mt-0.5">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <span className="text-[13px] text-white/85 leading-relaxed">{tip}</span>
                   </div>
                 ))}
               </div>
-            </CardContent>
-          </Card>
+            </div>
 
-          <Alert className="border-orange-500/50 bg-orange-500/10">
-            <Store className="h-4 w-4 text-orange-400" />
-            <AlertDescription className="text-orange-200">
-              <strong>Apprentice Schemes:</strong> Many suppliers offer special apprentice pricing.
-              Always ask about discounts and bring your apprenticeship agreement as proof of status.
-            </AlertDescription>
-          </Alert>
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Apprentice schemes
+              </span>
+              <p className="text-[14px] text-white/85 leading-relaxed">
+                Many suppliers offer special apprentice pricing. Always ask about discounts and
+                bring your apprenticeship agreement as proof of status.
+              </p>
+            </div>
+          </div>
         </TabsContent>
       </Tabs>
     </div>

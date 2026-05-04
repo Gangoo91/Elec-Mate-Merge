@@ -473,9 +473,9 @@ export function OJTProgressSection() {
           <p className="text-sm text-white">Track your 20% off-the-job training hours</p>
         </div>
         {insights.streak.current > 0 && (
-          <div className="flex items-center gap-1.5 bg-orange-500/10 px-3 py-1.5 rounded-full">
-            <Flame className="h-4 w-4 text-orange-500" />
-            <span className="text-sm font-bold text-orange-500">{insights.streak.current}</span>
+          <div className="flex items-center gap-1.5 bg-white/[0.02] px-3 py-1.5 rounded-full">
+            <Flame className="h-4 w-4 text-white/85" />
+            <span className="text-sm font-bold text-white/85">{insights.streak.current}</span>
           </div>
         )}
       </div>
@@ -494,20 +494,18 @@ export function OJTProgressSection() {
                 </p>
               </div>
               <div
-                className={cn(
-                  'p-2 rounded-lg',
-                  getWeekColour() === 'green' && 'bg-green-500/10',
+                className={cn('p-2 rounded-lg',
+                  getWeekColour() === 'green' && 'bg-white/[0.02]',
                   getWeekColour() === 'yellow' && 'bg-elec-yellow/10',
-                  getWeekColour() === 'orange' && 'bg-orange-500/10',
+                  getWeekColour() === 'orange' && 'bg-white/[0.02]',
                   getWeekColour() === 'red' && 'bg-red-500/10'
                 )}
               >
                 <Clock
-                  className={cn(
-                    'h-5 w-5',
-                    getWeekColour() === 'green' && 'text-green-500',
+                  className={cn('h-5 w-5',
+                    getWeekColour() === 'green' && 'text-white/85',
                     getWeekColour() === 'yellow' && 'text-elec-yellow',
-                    getWeekColour() === 'orange' && 'text-orange-500',
+                    getWeekColour() === 'orange' && 'text-white/85',
                     getWeekColour() === 'red' && 'text-red-500'
                   )}
                 />
@@ -516,11 +514,10 @@ export function OJTProgressSection() {
             <div className="space-y-2">
               <div className="h-2 bg-muted rounded-full overflow-hidden">
                 <div
-                  className={cn(
-                    'h-full rounded-full transition-all',
-                    getWeekColour() === 'green' && 'bg-green-500',
+                  className={cn('h-full rounded-full transition-all',
+                    getWeekColour() === 'green' && 'bg-white/[0.02]',
                     getWeekColour() === 'yellow' && 'bg-elec-yellow',
-                    getWeekColour() === 'orange' && 'bg-orange-500',
+                    getWeekColour() === 'orange' && 'bg-white/[0.02]',
                     getWeekColour() === 'red' && 'bg-red-500'
                   )}
                   style={{ width: `${Math.min(weeklyPercent, 100)}%` }}
@@ -547,20 +544,18 @@ export function OJTProgressSection() {
                 </p>
               </div>
               <div
-                className={cn(
-                  'p-2 rounded-lg',
-                  yearlyColour === 'green' && 'bg-green-500/10',
-                  yearlyColour === 'blue' && 'bg-blue-500/10',
-                  yearlyColour === 'orange' && 'bg-orange-500/10',
+                className={cn('p-2 rounded-lg',
+                  yearlyColour === 'green' && 'bg-white/[0.02]',
+                  yearlyColour === 'blue' && 'bg-white/[0.02]',
+                  yearlyColour === 'orange' && 'bg-white/[0.02]',
                   yearlyColour === 'red' && 'bg-red-500/10'
                 )}
               >
                 <TrendingUp
-                  className={cn(
-                    'h-5 w-5',
-                    yearlyColour === 'green' && 'text-green-500',
-                    yearlyColour === 'blue' && 'text-blue-500',
-                    yearlyColour === 'orange' && 'text-orange-500',
+                  className={cn('h-5 w-5',
+                    yearlyColour === 'green' && 'text-white/85',
+                    yearlyColour === 'blue' && 'text-white/85',
+                    yearlyColour === 'orange' && 'text-white/85',
                     yearlyColour === 'red' && 'text-red-500'
                   )}
                 />
@@ -569,12 +564,11 @@ export function OJTProgressSection() {
             <div className="space-y-2">
               <div className="h-2 bg-muted rounded-full overflow-hidden">
                 <div
-                  className={cn(
-                    'h-full rounded-full transition-all',
-                    yearlyColour === 'green' && 'bg-green-500',
-                    yearlyColour === 'blue' && 'bg-blue-500',
-                    yearlyColour === 'orange' && 'bg-orange-500',
-                    yearlyColour === 'red' && 'bg-red-500'
+                  className={cn('h-full rounded-full transition-all',
+                    yearlyColour === 'green' && 'bg-white/[0.02]',
+                    yearlyColour === 'blue' && 'bg-white/[0.02]',
+                    yearlyColour === 'orange' && 'bg-white/[0.02]',
+                    yearlyColour === 'red' && 'bg-white/[0.02]'
                   )}
                   style={{ width: `${Math.min(yearlyPercent, 100)}%` }}
                 />
@@ -583,11 +577,10 @@ export function OJTProgressSection() {
                 {yearlyPercent}% complete &bull; {yearlyTarget - yearlyHours}h remaining
               </p>
               <p
-                className={cn(
-                  'text-xs font-medium',
-                  yearlyColour === 'green' && 'text-green-400',
-                  yearlyColour === 'blue' && 'text-blue-400',
-                  yearlyColour === 'orange' && 'text-orange-400',
+                className={cn('text-xs font-medium',
+                  yearlyColour === 'green' && 'text-white/85',
+                  yearlyColour === 'blue' && 'text-white/85',
+                  yearlyColour === 'orange' && 'text-white/85',
                   yearlyColour === 'red' && 'text-red-400'
                 )}
               >
@@ -844,8 +837,8 @@ export function OJTProgressSection() {
           {/* Streak */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-orange-500/10">
-                <Flame className="h-5 w-5 text-orange-500" />
+              <div className="p-2 rounded-lg bg-white/[0.02]">
+                <Flame className="h-5 w-5 text-white/85" />
               </div>
               <div>
                 <p className="text-sm font-medium text-foreground">
@@ -882,8 +875,7 @@ export function OJTProgressSection() {
               {insights.milestones.map((m) => (
                 <div
                   key={m.hours}
-                  className={cn(
-                    'flex-1 h-2 rounded-full transition-all',
+                  className={cn('flex-1 h-2 rounded-full transition-all',
                     m.reached ? 'bg-elec-yellow' : 'bg-muted'
                   )}
                   title={m.label}
@@ -959,8 +951,7 @@ export function OJTProgressSection() {
             >
               <CardTitle className="text-base font-semibold">Monthly History</CardTitle>
               <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform',
+                className={cn('h-4 w-4 text-white transition-transform',
                   showMonthly && 'rotate-180'
                 )}
               />
@@ -1021,9 +1012,9 @@ export function OJTProgressSection() {
                 }).length;
                 const dayDot =
                   verifiedCount === group.entries.length && verifiedCount > 0
-                    ? 'bg-green-500'
+                    ? 'bg-white/[0.02]'
                     : verifiedCount > 0
-                      ? 'bg-amber-500'
+                      ? 'bg-white/[0.02]'
                       : 'bg-muted-foreground/30';
 
                 return (
@@ -1052,8 +1043,7 @@ export function OJTProgressSection() {
                         </p>
                       </div>
                       <ChevronDown
-                        className={cn(
-                          'h-4 w-4 text-white transition-transform',
+                        className={cn('h-4 w-4 text-white transition-transform',
                           isExpanded && 'rotate-180'
                         )}
                       />
@@ -1079,7 +1069,7 @@ export function OJTProgressSection() {
         <Card className="bg-card border-border">
           <CardHeader className="pb-2">
             <CardTitle className="text-base font-semibold flex items-center gap-2">
-              <FileText className="h-4 w-4 text-blue-400" />
+              <FileText className="h-4 w-4 text-white/85" />
               Upcoming Assessments
             </CardTitle>
           </CardHeader>
@@ -1101,12 +1091,11 @@ export function OJTProgressSection() {
                         {assessment.type}
                       </Badge>
                       <span
-                        className={cn(
-                          'text-xs',
+                        className={cn('text-xs',
                           isOverdue
                             ? 'text-red-400 font-medium'
                             : daysUntil <= 3
-                              ? 'text-orange-400'
+                              ? 'text-white/85'
                               : 'text-white'
                         )}
                       >
@@ -1238,7 +1227,7 @@ export function OJTProgressSection() {
               {/* Duration */}
               <div className="space-y-2.5">
                 <div className="flex items-center gap-2 border-l-2 border-l-purple-500/60 pl-3">
-                  <Clock className="h-3.5 w-3.5 text-purple-400" />
+                  <Clock className="h-3.5 w-3.5 text-white/85" />
                   <span className="text-sm font-semibold text-foreground">Duration</span>
                 </div>
 
@@ -1249,8 +1238,7 @@ export function OJTProgressSection() {
                       key={preset.value}
                       type="button"
                       onClick={() => setLogData({ ...logData, duration: preset.value })}
-                      className={cn(
-                        'h-11 px-4 rounded-xl text-sm font-medium touch-manipulation active:scale-95 transition-all border',
+                      className={cn('h-11 px-4 rounded-xl text-sm font-medium touch-manipulation active:scale-95 transition-all border',
                         logData.duration === preset.value
                           ? 'bg-elec-yellow text-black border-elec-yellow'
                           : 'bg-muted/50 text-foreground border-border hover:border-elec-yellow/40'
@@ -1281,7 +1269,7 @@ export function OJTProgressSection() {
               {/* Date */}
               <div className="space-y-2.5">
                 <div className="flex items-center gap-2 border-l-2 border-l-amber-500/60 pl-3">
-                  <Calendar className="h-3.5 w-3.5 text-amber-400" />
+                  <Calendar className="h-3.5 w-3.5 text-white/85" />
                   <span className="text-sm font-semibold text-foreground">Date</span>
                 </div>
                 <Input
@@ -1295,7 +1283,7 @@ export function OJTProgressSection() {
               {/* Location & Supervisor */}
               <div className="space-y-2.5">
                 <div className="flex items-center gap-2 border-l-2 border-l-green-500/60 pl-3">
-                  <MapPin className="h-3.5 w-3.5 text-green-400" />
+                  <MapPin className="h-3.5 w-3.5 text-white/85" />
                   <span className="text-sm font-semibold text-foreground">
                     Location & Supervisor
                   </span>

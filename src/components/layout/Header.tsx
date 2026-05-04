@@ -139,7 +139,10 @@ const Header = ({ toggleSidebar, sidebarCollapsed = false }: HeaderProps) => {
     <header
       ref={headerRef}
       className={cn(
-        'fixed top-0 left-0 right-0 z-50',
+        // ELE-869 — main app header sits above all in-page sticky sub-headers
+        // (which use z-50). Modals/dialogs/sheets/drawers/toasts run at z-[100]+
+        // and still cover the header when active.
+        'fixed top-0 left-0 right-0 z-[60]',
         sidebarCollapsed ? 'lg:left-0' : 'lg:left-64',
         'transition-[left] duration-300 ease-in-out',
         'backdrop-blur-xl bg-elec-dark/90',

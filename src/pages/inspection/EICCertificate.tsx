@@ -164,42 +164,74 @@ export default function EICCertificate() {
   // Pre-populate form from design data
   useEffect(() => {
     if (designData && !hasLoadedDesign) {
-      const scheduleData = designData.schedule_data;
+      // schedule_data is JSON — typed narrowly upstream but the designer payload
+      // may carry richer multi-board fields. Cast so we can read them.
+      const scheduleData: any = designData.schedule_data;
+
+      // Source row arrays — newer payloads carry `scheduleOfTests` (already
+      // tagged with boardId/wayNumber/phaseAssignment from the designer); older
+      // ones only have `circuits`. Fall through.
+      const sourceRows: any[] =
+        scheduleData.scheduleOfTests || scheduleData.circuits || [];
 
       // Transform design circuits to test results format
-      const transformedCircuits =
-        scheduleData.circuits?.map((circuit: any, idx: number) => ({
-          id: `design-${idx + 1}`,
-          circuitDesignation: `C${idx + 1}`,
-          circuitNumber: circuit.circuitNumber || (idx + 1).toString(),
-          circuitDescription: circuit.circuitDescription || '',
-          phaseType: circuit.phaseType || 'single-phase',
-          referenceMethod: circuit.referenceMethod || '',
-          pointsServed: circuit.pointsServed || '',
-          liveSize: circuit.liveSize || '',
-          cpcSize: circuit.cpcSize || '',
-          bsStandard: circuit.bsStandard || 'BS EN 60898',
-          protectiveDeviceType: circuit.protectiveDeviceType || 'MCB',
-          protectiveDeviceCurve: circuit.protectiveDeviceCurve || 'B',
-          protectiveDeviceRating: circuit.protectiveDeviceRating || '',
-          protectiveDeviceKaRating: circuit.protectiveDeviceKaRating || '6',
-          // Expected values from design
-          expectedR1R2: circuit.r1r2 || '',
-          expectedZs: circuit.zs || '',
-          expectedMaxZs: circuit.maxZs || '',
-          // Actual test values (to be filled on-site)
-          r1r2: '',
-          zs: '',
-          maxZs: circuit.maxZs || '',
-          insulationTestVoltage: circuit.insulationTestVoltage || '500V DC',
-          insulationResistance: '',
-          polarity: '',
-          rcdRating: circuit.rcdRating || '',
-          rcdOneX: '',
-          rcdFiveX: '',
-          pfc: '',
-          functionalTesting: '',
-        })) || [];
+      const transformedCircuits = sourceRows.map((circuit: any, idx: number) => ({
+        id: circuit.id || `design-${idx + 1}`,
+        // Carry the board assignment + per-board way number + phase through to
+        // the EIC schedule so the inspection app can render circuits grouped
+        // by board instead of one flat list.
+        boardId: circuit.boardId,
+        wayNumber: circuit.wayNumber,
+        phaseAssignment: circuit.phaseAssignment ?? null,
+        circuitDesignation: `C${idx + 1}`,
+        circuitNumber: circuit.circuitNumber || (idx + 1).toString(),
+        circuitDescription: circuit.circuitDescription || circuit.name || '',
+        phaseType:
+          circuit.phaseType ||
+          (circuit.phases === 'three' ? 'three-phase' : 'single-phase'),
+        referenceMethod: circuit.referenceMethod || circuit.installationMethod || '',
+        pointsServed: circuit.pointsServed || '',
+        liveSize: circuit.liveSize || (circuit.cableSize ? String(circuit.cableSize) : ''),
+        cpcSize: circuit.cpcSize ? String(circuit.cpcSize) : '',
+        bsStandard: circuit.bsStandard || 'BS EN 60898',
+        protectiveDeviceType:
+          circuit.protectiveDeviceType || circuit.protectionDevice?.type || 'MCB',
+        protectiveDeviceCurve:
+          circuit.protectiveDeviceCurve || circuit.protectionDevice?.curve || 'B',
+        protectiveDeviceRating:
+          circuit.protectiveDeviceRating ||
+          (circuit.protectionDevice?.rating
+            ? String(circuit.protectionDevice.rating)
+            : ''),
+        protectiveDeviceKaRating:
+          circuit.protectiveDeviceKaRating ||
+          (circuit.protectionDevice?.breakingCapacityKa
+            ? String(circuit.protectionDevice.breakingCapacityKa)
+            : '6'),
+        // Expected values from design
+        expectedR1R2: circuit.r1r2 || circuit.calculations?.r1r2 || '',
+        expectedZs: circuit.zs || circuit.calculations?.zs || '',
+        expectedMaxZs: circuit.maxZs || circuit.calculations?.maxZs || '',
+        // Actual test values (to be filled on-site)
+        r1r2: '',
+        zs: '',
+        maxZs: circuit.maxZs || circuit.calculations?.maxZs || '',
+        insulationTestVoltage: circuit.insulationTestVoltage || '500V DC',
+        insulationResistance: '',
+        polarity: '',
+        rcdRating: circuit.rcdRating || circuit.protectionDevice?.rcdRating || '',
+        rcdOneX: '',
+        rcdFiveX: '',
+        pfc: '',
+        functionalTesting: '',
+      }));
+
+      // Distribution boards — when the designer sent multi-board structure,
+      // hydrate the form's distributionBoards array so the cert renders one
+      // schedule per board (origin + submains). Backwards-compat: if missing,
+      // leave the existing single-board default in place.
+      const designerBoards: any[] = scheduleData.distributionBoards || [];
+      const hasMultiBoard = designerBoards.length > 0;
 
       // Pre-populate form data
       setFormData((prev: any) => ({
@@ -213,6 +245,7 @@ export default function EICCertificate() {
           ? (scheduleData.supply.pscc / 1000).toFixed(1)
           : '',
         scheduleOfTests: transformedCircuits,
+        ...(hasMultiBoard ? { distributionBoards: designerBoards } : {}),
         designSourceId: designId,
         designSourceDate: designData.created_at,
         // Copy project info
@@ -223,7 +256,9 @@ export default function EICCertificate() {
       setHasLoadedDesign(true);
 
       toast.success('Design loaded', {
-        description: `${transformedCircuits.length} circuits pre-filled from Circuit Designer`,
+        description: hasMultiBoard
+          ? `${transformedCircuits.length} circuits across ${designerBoards.length} board${designerBoards.length === 1 ? '' : 's'} pre-filled from Circuit Designer`
+          : `${transformedCircuits.length} circuits pre-filled from Circuit Designer`,
       });
 
       // Update design status to 'in-progress'

@@ -127,8 +127,7 @@ const QuickMoodCheck = ({ onClose, onOpenSupport, onOpenCrisis }: QuickMoodCheck
                 <button
                   key={mood.value}
                   onClick={() => handleMoodSelect(mood.value)}
-                  className="w-full min-h-[72px] px-5 py-4 flex items-center gap-4 text-left
-                    hover:bg-[hsl(0_0%_15%)] active:scale-[0.98] transition-all touch-manipulation"
+                  className="w-full min-h-[72px] px-5 py-4 flex items-center gap-4 text-left hover:bg-[hsl(0_0%_15%)] active:scale-[0.98] transition-all touch-manipulation"
                 >
                   <span className="text-4xl shrink-0">{mood.emoji}</span>
                   <div className="flex-1 min-w-0">
@@ -180,8 +179,8 @@ const QuickMoodCheck = ({ onClose, onOpenSupport, onOpenCrisis }: QuickMoodCheck
 
         {step === 'complete' && selectedMoodData && (
           <div className="w-full max-w-sm space-y-6 animate-fade-in text-center">
-            <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-emerald-500/20 border-2 border-emerald-400">
-              <Check className="h-12 w-12 text-emerald-400" />
+            <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-white/[0.02] border-2 border-white/[0.06]">
+              <Check className="h-12 w-12 text-white/85" />
             </div>
 
             <div>
@@ -207,8 +206,8 @@ const QuickMoodCheck = ({ onClose, onOpenSupport, onOpenCrisis }: QuickMoodCheck
                 <div className="mt-3 flex items-center justify-center gap-1.5">
                   {getTrend() === 'up' && (
                     <>
-                      <TrendingUp className="h-5 w-5 text-emerald-400" />
-                      <span className="text-lg font-semibold text-emerald-400">Up</span>
+                      <TrendingUp className="h-5 w-5 text-white/85" />
+                      <span className="text-lg font-semibold text-white/85">Up</span>
                     </>
                   )}
                   {getTrend() === 'down' && (
@@ -232,9 +231,9 @@ const QuickMoodCheck = ({ onClose, onOpenSupport, onOpenCrisis }: QuickMoodCheck
 
             {/* Supportive Message */}
             {selectedMood && selectedMood <= 2 && (
-              <div className="bg-[hsl(0_0%_12%)] border border-amber-500/25 rounded-2xl p-5 space-y-4 text-left">
+              <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-4 text-left">
                 <div>
-                  <Eyebrow className="text-amber-400">Support</Eyebrow>
+                  <Eyebrow className="text-white/85">Support</Eyebrow>
                   <p className="mt-2 text-[14px] font-medium text-white">
                     You do not need to sit with this alone.
                   </p>
@@ -252,7 +251,7 @@ const QuickMoodCheck = ({ onClose, onOpenSupport, onOpenCrisis }: QuickMoodCheck
                   {onOpenCrisis && (
                     <button
                       onClick={onOpenCrisis}
-                      className="inline-flex items-center justify-center h-11 px-5 rounded-full text-[13px] font-semibold bg-red-500/15 text-red-400 border border-red-500/25 hover:bg-red-500/20 active:scale-[0.98] transition-all touch-manipulation"
+                      className="inline-flex items-center justify-center h-11 px-5 rounded-full text-[13px] font-semibold bg-white/[0.02] text-red-400 border border-white/[0.06] hover:bg-white/[0.02] active:scale-[0.98] transition-all touch-manipulation"
                     >
                       Open crisis help
                     </button>

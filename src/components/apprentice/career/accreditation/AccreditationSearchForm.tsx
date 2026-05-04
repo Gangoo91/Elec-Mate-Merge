@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import {
@@ -9,8 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
-import { Search, Filter, RotateCcw, X } from 'lucide-react';
+import { Search, RotateCcw, X } from 'lucide-react';
 import { accreditationCategories, accreditationLevels } from './enhancedAccreditationData';
 import { cn } from '@/lib/utils';
 
@@ -98,158 +96,150 @@ const AccreditationSearchForm = ({
   };
 
   const costRanges = ['All Costs', 'Under £200', '£200-£500', '£500-£1000', 'Over £1000'];
-
   const providers = ['All Providers', 'IET', 'ECA', 'NICEIC', 'IOSH', 'CITB', 'CompEx', 'MCS'];
 
   return (
-    <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
-      <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-      <CardContent className="p-6 space-y-4 relative">
-        {/* Search Bar */}
-        <div className="flex flex-col sm:flex-row gap-3">
-          <div className="relative flex-1">
-            {!filters.searchTerm && (
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="relative flex-1">
+          {!filters.searchTerm && (
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/55 pointer-events-none" />
+          )}
+          <Input
+            placeholder="Search accreditations, providers, or specialities..."
+            value={filters.searchTerm}
+            onChange={(e) => setFilters((prev) => ({ ...prev, searchTerm: e.target.value }))}
+            className={cn(
+              'h-11 text-base touch-manipulation bg-white/[0.03] border-white/10 text-white placeholder:text-white/40 focus:border-yellow-500 focus:ring-yellow-500',
+              !filters.searchTerm && 'pl-10'
             )}
-            <Input
-              placeholder="Search accreditations, providers, or specialities..."
-              value={filters.searchTerm}
-              onChange={(e) => setFilters((prev) => ({ ...prev, searchTerm: e.target.value }))}
-              className={cn(
-                'h-11 bg-white/5 border-white/20 text-white placeholder:text-white focus:border-elec-yellow/50',
-                !filters.searchTerm && 'pl-10'
-              )}
-              onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-            />
-          </div>
+            onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+          />
+        </div>
+        <Button
+          onClick={handleSearch}
+          className="h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 px-6 touch-manipulation"
+        >
+          <Search className="mr-2 h-4 w-4" />
+          Search
+        </Button>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <Select
+          value={filters.category}
+          onValueChange={(value) => setFilters((prev) => ({ ...prev, category: value }))}
+        >
+          <SelectTrigger className="h-11 touch-manipulation bg-white/[0.03] border-white/10 text-white">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent className="bg-elec-gray border-white/10">
+            {accreditationCategories.map((category) => (
+              <SelectItem key={category} value={category}>
+                {category}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <Select
+          value={filters.level}
+          onValueChange={(value) => setFilters((prev) => ({ ...prev, level: value }))}
+        >
+          <SelectTrigger className="h-11 touch-manipulation bg-white/[0.03] border-white/10 text-white">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent className="bg-elec-gray border-white/10">
+            {accreditationLevels.map((level) => (
+              <SelectItem key={level} value={level}>
+                {level}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <Select
+          value={filters.maxCost}
+          onValueChange={(value) => setFilters((prev) => ({ ...prev, maxCost: value }))}
+        >
+          <SelectTrigger className="h-11 touch-manipulation bg-white/[0.03] border-white/10 text-white">
+            <SelectValue placeholder="Cost range" />
+          </SelectTrigger>
+          <SelectContent className="bg-elec-gray border-white/10">
+            {costRanges.map((range) => (
+              <SelectItem key={range} value={range}>
+                {range}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <Select
+          value={filters.provider}
+          onValueChange={(value) => setFilters((prev) => ({ ...prev, provider: value }))}
+        >
+          <SelectTrigger className="h-11 touch-manipulation bg-white/[0.03] border-white/10 text-white">
+            <SelectValue placeholder="Provider" />
+          </SelectTrigger>
+          <SelectContent className="bg-elec-gray border-white/10">
+            {providers.map((provider) => (
+              <SelectItem key={provider} value={provider}>
+                {provider}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <label className="flex items-center gap-2 text-[14px] text-white/85 cursor-pointer touch-manipulation">
+          <input
+            type="checkbox"
+            checked={filters.onlineOnly}
+            onChange={(e) => setFilters((prev) => ({ ...prev, onlineOnly: e.target.checked }))}
+            className="w-4 h-4 rounded border-white/20 bg-white/[0.03] text-elec-yellow focus:ring-elec-yellow/50"
+          />
+          Online available only
+        </label>
+
+        <div className="flex items-center gap-3">
+          <span className="text-[12px] text-white/55 font-mono">
+            {resultsCount} {resultsCount === 1 ? 'result' : 'results'}
+          </span>
           <Button
-            onClick={handleSearch}
-            className="h-11 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 px-6 touch-manipulation active:scale-95 transition-all"
+            variant="outline"
+            size="sm"
+            onClick={handleReset}
+            className="h-9 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
           >
-            <Search className="mr-2 h-4 w-4" />
-            Search
+            <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
+            Reset
           </Button>
         </div>
+      </div>
 
-        {/* Filter Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          <Select
-            value={filters.category}
-            onValueChange={(value) => setFilters((prev) => ({ ...prev, category: value }))}
-          >
-            <SelectTrigger className="h-11 bg-white/5 border-white/20 text-white">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent className="bg-elec-gray border-white/20">
-              {accreditationCategories.map((category) => (
-                <SelectItem key={category} value={category}>
-                  {category}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <Select
-            value={filters.level}
-            onValueChange={(value) => setFilters((prev) => ({ ...prev, level: value }))}
-          >
-            <SelectTrigger className="h-11 bg-white/5 border-white/20 text-white">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent className="bg-elec-gray border-white/20">
-              {accreditationLevels.map((level) => (
-                <SelectItem key={level} value={level}>
-                  {level}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <Select
-            value={filters.maxCost}
-            onValueChange={(value) => setFilters((prev) => ({ ...prev, maxCost: value }))}
-          >
-            <SelectTrigger className="h-11 bg-white/5 border-white/20 text-white">
-              <SelectValue placeholder="Cost Range" />
-            </SelectTrigger>
-            <SelectContent className="bg-elec-gray border-white/20">
-              {costRanges.map((range) => (
-                <SelectItem key={range} value={range}>
-                  {range}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <Select
-            value={filters.provider}
-            onValueChange={(value) => setFilters((prev) => ({ ...prev, provider: value }))}
-          >
-            <SelectTrigger className="h-11 bg-white/5 border-white/20 text-white">
-              <SelectValue placeholder="Provider" />
-            </SelectTrigger>
-            <SelectContent className="bg-elec-gray border-white/20">
-              {providers.map((provider) => (
-                <SelectItem key={provider} value={provider}>
-                  {provider}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        {/* Online Filter & Actions */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-2">
-          <label className="flex items-center gap-3 text-sm text-white cursor-pointer p-2 rounded-lg hover:bg-white/5 active:bg-white/10 transition-all touch-manipulation">
-            <input
-              type="checkbox"
-              checked={filters.onlineOnly}
-              onChange={(e) => setFilters((prev) => ({ ...prev, onlineOnly: e.target.checked }))}
-              className="w-4 h-4 rounded border-white/20 bg-white/5 text-elec-yellow focus:ring-elec-yellow/50"
-            />
-            Online Available Only
-          </label>
-
-          <div className="flex items-center gap-3">
-            <span className="text-sm text-white">
-              <span className="text-elec-yellow font-medium">{resultsCount}</span>{' '}
-              {resultsCount === 1 ? 'result' : 'results'}
-            </span>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleReset}
-              className="h-9 border-white/20 hover:bg-white/10 touch-manipulation"
+      {activeFilters.length > 0 && (
+        <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-white/[0.06]">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Active filters
+          </span>
+          {activeFilters.map((filter, idx) => (
+            <span
+              key={idx}
+              className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] flex items-center gap-1.5"
             >
-              <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
-              Reset
-            </Button>
-          </div>
-        </div>
-
-        {/* Active Filters */}
-        {activeFilters.length > 0 && (
-          <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-white/10">
-            <span className="text-xs text-white">Active filters:</span>
-            {activeFilters.map((filter, idx) => (
-              <Badge
-                key={idx}
-                variant="outline"
-                className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 text-xs hover:bg-elec-yellow/20 transition-colors"
+              {filter}
+              <button
+                onClick={() => removeFilter(filter)}
+                className="hover:text-white text-white/55"
               >
-                {filter}
-                <button
-                  onClick={() => removeFilter(filter)}
-                  className="ml-1.5 hover:text-white transition-colors"
-                >
-                  <X className="h-3 w-3" />
-                </button>
-              </Badge>
-            ))}
-          </div>
-        )}
-      </CardContent>
-    </Card>
+                <X className="h-3 w-3" />
+              </button>
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
   );
 };
 

@@ -1,17 +1,6 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import {
-  Award,
-  BookOpen,
-  TrendingUp,
-  Users,
-  Target,
-  ExternalLink,
-  Info,
-  ArrowRight,
-} from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { openExternalUrl } from '@/utils/open-external-url';
 import AccreditationSearchForm, {
   AccreditationSearchFilters,
@@ -36,7 +25,6 @@ const EnhancedProfessionalAccreditation = () => {
   const handleSearch = (filters: AccreditationSearchFilters) => {
     let filtered = enhancedAccreditationOptions;
 
-    // Apply search term filter
     if (filters.searchTerm) {
       const searchLower = filters.searchTerm.toLowerCase();
       filtered = filtered.filter(
@@ -49,22 +37,18 @@ const EnhancedProfessionalAccreditation = () => {
       );
     }
 
-    // Apply category filter
     if (filters.category && filters.category !== 'All Categories') {
       filtered = filtered.filter((option) => option.category === filters.category);
     }
 
-    // Apply level filter
     if (filters.level && filters.level !== 'All Levels') {
       filtered = filtered.filter((option) => option.level === filters.level);
     }
 
-    // Apply online filter
     if (filters.onlineOnly) {
       filtered = filtered.filter((option) => option.onlineAvailable);
     }
 
-    // Apply cost filter
     if (filters.maxCost && filters.maxCost !== 'All Costs') {
       filtered = filtered.filter((option) => {
         const costStr = option.cost.toLowerCase();
@@ -100,7 +84,6 @@ const EnhancedProfessionalAccreditation = () => {
       });
     }
 
-    // Apply provider filter
     if (filters.provider && filters.provider !== 'All Providers') {
       filtered = filtered.filter(
         (option) =>
@@ -134,105 +117,101 @@ const EnhancedProfessionalAccreditation = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="space-y-4">
-        <h2 className="text-2xl font-semibold flex items-center gap-2">
-          <Award className="h-6 w-6 text-elec-yellow" />
-          Professional Accreditations
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Professional accreditation
+        </span>
+        <h2 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-white leading-tight">
+          Professional accreditations
         </h2>
-        <p className="text-white">
-          Advance your electrical career with recognised professional accreditations. From industry
-          memberships to specialist certifications, discover the credentials that will enhance your
-          professional standing and open new opportunities.
+        <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
+          Recognised professional accreditations to enhance your standing and open new
+          opportunities — from industry memberships to specialist certifications.
         </p>
       </div>
 
-      {/* Analytics Dashboard */}
       <AccreditationAnalytics />
 
-      {/* Search and Filters */}
       <AccreditationSearchForm
         onSearch={handleSearch}
         onReset={handleReset}
         resultsCount={filteredOptions.length}
       />
 
-      {/* Information Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray to-elec-gray/80">
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Target className="h-5 w-5 text-elec-yellow" />
-              Why Get Accredited?
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="space-y-2 text-sm text-white">
-              <p>
-                • <strong className="text-white">Professional Recognition:</strong> Demonstrate your
-                expertise and commitment to industry standards
-              </p>
-              <p>
-                • <strong className="text-white">Career Advancement:</strong> Access higher-level
-                positions and increased earning potential
-              </p>
-              <p>
-                • <strong className="text-white">Continuous Learning:</strong> Stay current with
-                evolving technologies and regulations
-              </p>
-              <p>
-                • <strong className="text-white">Network Access:</strong> Connect with industry
-                professionals and exclusive opportunities
-              </p>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Why get accredited?
+          </span>
+          <ul className="space-y-2">
+            {[
+              {
+                title: 'Professional recognition',
+                body: 'Demonstrate your expertise and commitment to industry standards.',
+              },
+              {
+                title: 'Career advancement',
+                body: 'Access higher-level positions and increased earning potential.',
+              },
+              {
+                title: 'Continuous learning',
+                body: 'Stay current with evolving technologies and regulations.',
+              },
+              {
+                title: 'Network access',
+                body: 'Connect with industry professionals and exclusive opportunities.',
+              },
+            ].map((item) => (
+              <li key={item.title} className="space-y-0.5">
+                <p className="text-[13px] text-white">{item.title}</p>
+                <p className="text-[12px] text-white/70 leading-relaxed">{item.body}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-        <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray to-elec-gray/80">
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Info className="h-5 w-5 text-elec-yellow" />
-              Getting Started
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="space-y-2 text-sm text-white">
-              <p>
-                • <strong className="text-white">Assess Your Goals:</strong> Consider your career
-                objectives and specialisation interests
-              </p>
-              <p>
-                • <strong className="text-white">Check Requirements:</strong> Ensure you meet the
-                prerequisites for your chosen accreditation
-              </p>
-              <p>
-                • <strong className="text-white">Plan Your Investment:</strong> Budget for training
-                costs and ongoing renewal fees
-              </p>
-              <p>
-                • <strong className="text-white">Start Early:</strong> Many accreditations require
-                time to complete and demonstrate competence
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Results Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <h3 className="text-lg font-medium">Available Accreditations</h3>
-          <Badge
-            variant="outline"
-            className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30"
-          >
-            {filteredOptions.length} {filteredOptions.length === 1 ? 'option' : 'options'}
-          </Badge>
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Getting started
+          </span>
+          <ul className="space-y-2">
+            {[
+              {
+                title: 'Assess your goals',
+                body: 'Consider your career objectives and specialisation interests.',
+              },
+              {
+                title: 'Check requirements',
+                body: 'Ensure you meet the prerequisites for your chosen accreditation.',
+              },
+              {
+                title: 'Plan your investment',
+                body: 'Budget for training costs and ongoing renewal fees.',
+              },
+              {
+                title: 'Start early',
+                body: 'Many accreditations require time to complete and demonstrate competence.',
+              },
+            ].map((item) => (
+              <li key={item.title} className="space-y-0.5">
+                <p className="text-[13px] text-white">{item.title}</p>
+                <p className="text-[12px] text-white/70 leading-relaxed">{item.body}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
-      {/* Accreditations Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="flex items-baseline justify-between">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Available accreditations
+        </span>
+        <span className="text-[12px] text-white/55">
+          {filteredOptions.length} {filteredOptions.length === 1 ? 'option' : 'options'}
+        </span>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredOptions.map((accreditation) => (
           <AccreditationCard
             key={accreditation.id}
@@ -242,98 +221,68 @@ const EnhancedProfessionalAccreditation = () => {
         ))}
       </div>
 
-      {/* Empty State */}
       {filteredOptions.length === 0 && (
-        <Card className="border-elec-yellow/20 bg-white/5">
-          <CardContent className="p-8 text-center">
-            <BookOpen className="h-12 w-12 text-white mx-auto mb-4" />
-            <h3 className="text-lg font-medium mb-2">No accreditations found</h3>
-            <p className="text-white mb-4">
-              Try adjusting your search criteria or explore different categories.
-            </p>
-            <Button variant="outline" onClick={handleReset}>
-              Reset Filters
-            </Button>
-          </CardContent>
-        </Card>
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-6 sm:p-8 text-center space-y-3">
+          <h3 className="text-[16px] font-semibold text-white">No accreditations found</h3>
+          <p className="text-[14px] text-white/70 leading-relaxed">
+            Try adjusting your search criteria or explore different categories.
+          </p>
+          <Button
+            variant="outline"
+            onClick={handleReset}
+            className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+          >
+            Reset filters
+          </Button>
+        </div>
       )}
 
-      {/* Additional Resources */}
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Users className="h-5 w-5 text-elec-yellow" />
-            Professional Development Resources
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h4 className="font-medium mb-3 text-amber-400">Industry Bodies</h4>
-            <div className="space-y-3 text-sm">
-              <div className="flex items-center justify-between">
-                <span className="text-white">Institution of Engineering and Technology (IET)</span>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => openExternalUrl('https://www.theiet.org')}
-                >
-                  <ExternalLink className="h-3 w-3" />
-                </Button>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-white">Electrical Contractors' Association (ECA)</span>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => openExternalUrl('https://www.eca.co.uk')}
-                >
-                  <ExternalLink className="h-3 w-3" />
-                </Button>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-white">NICEIC</span>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => openExternalUrl('https://www.niceic.com')}
-                >
-                  <ExternalLink className="h-3 w-3" />
-                </Button>
-              </div>
-            </div>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Professional development resources
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <p className="text-[13px] text-white">Industry bodies</p>
+            {[
+              { name: 'Institution of Engineering and Technology (IET)', url: 'https://www.theiet.org' },
+              { name: "Electrical Contractors' Association (ECA)", url: 'https://www.eca.co.uk' },
+              { name: 'NICEIC', url: 'https://www.niceic.com' },
+            ].map((item) => (
+              <button
+                key={item.name}
+                type="button"
+                onClick={() => openExternalUrl(item.url)}
+                className="w-full flex items-center justify-between gap-2 text-left text-[13px] text-white/85 hover:text-white touch-manipulation min-h-[44px] py-1"
+              >
+                <span>{item.name}</span>
+                <ExternalLink className="h-3.5 w-3.5 text-white/40" />
+              </button>
+            ))}
           </div>
 
-          <div>
-            <h4 className="font-medium mb-3 text-amber-400">Training Providers</h4>
-            <div className="space-y-3 text-sm">
-              <div className="flex items-center justify-between">
-                <span className="text-white">CITB Construction Training</span>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => openExternalUrl('https://www.citb.co.uk')}
-                >
-                  <ExternalLink className="h-3 w-3" />
-                </Button>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-white">IOSH Training Network</span>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => openExternalUrl('https://www.iosh.com')}
-                >
-                  <ExternalLink className="h-3 w-3" />
-                </Button>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-white">Local Training Centres</span>
-                <ArrowRight className="h-3 w-3 text-white" />
-              </div>
+          <div className="space-y-2">
+            <p className="text-[13px] text-white">Training providers</p>
+            {[
+              { name: 'CITB Construction Training', url: 'https://www.citb.co.uk' },
+              { name: 'IOSH Training Network', url: 'https://www.iosh.com' },
+            ].map((item) => (
+              <button
+                key={item.name}
+                type="button"
+                onClick={() => openExternalUrl(item.url)}
+                className="w-full flex items-center justify-between gap-2 text-left text-[13px] text-white/85 hover:text-white touch-manipulation min-h-[44px] py-1"
+              >
+                <span>{item.name}</span>
+                <ExternalLink className="h-3.5 w-3.5 text-white/40" />
+              </button>
+            ))}
+            <div className="flex items-center justify-between gap-2 text-[13px] text-white/55 py-1">
+              <span>Local training centres</span>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };

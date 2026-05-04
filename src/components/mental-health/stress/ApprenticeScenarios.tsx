@@ -171,24 +171,24 @@ const ApprenticeScenarios = () => {
                       <p className="text-sm text-white">{scenario.situation}</p>
                     </div>
 
-                    <div className="border border-red-500/20 rounded-lg p-4 bg-red-500/5">
+                    <div className="border border-white/[0.06] rounded-lg p-4 bg-white/[0.02]">
                       <h4 className="font-semibold text-white mb-2">Stress Factors</h4>
                       <ul className="space-y-1">
                         {scenario.stressors.map((stressor, index) => (
                           <li key={index} className="flex items-center gap-2 text-sm text-white">
-                            <div className="h-1.5 w-1.5 rounded-full bg-red-400" />
+                            <div className="h-1.5 w-1.5 rounded-full bg-white/[0.02]" />
                             {stressor}
                           </li>
                         ))}
                       </ul>
                     </div>
 
-                    <div className="border border-green-500/20 rounded-lg p-4 bg-green-500/5">
+                    <div className="border border-white/[0.06] rounded-lg p-4 bg-white/[0.02]">
                       <h4 className="font-semibold text-white mb-2">Effective Strategies</h4>
                       <ul className="space-y-2">
                         {scenario.strategies.map((strategy, index) => (
                           <li key={index} className="flex items-start gap-2 text-sm text-white">
-                            <div className="h-1.5 w-1.5 rounded-full bg-green-400 mt-2 flex-shrink-0" />
+                            <div className="h-1.5 w-1.5 rounded-full bg-white/[0.02] mt-2 flex-shrink-0" />
                             {strategy}
                           </li>
                         ))}

@@ -64,9 +64,9 @@ const SupporterDashboard: React.FC<SupporterDashboardProps> = ({
     : 'Unknown';
 
   const trainingBadgeColors: Record<string, string> = {
-    peer: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
-    trained: 'bg-green-500/20 text-green-300 border-green-500/30',
-    mhfa_certified: 'bg-purple-500/20 text-purple-300 border-purple-500/30',
+    peer: 'bg-white/[0.02] text-white/85 border-white/[0.06]',
+    trained: 'bg-white/[0.02] text-white/85 border-white/[0.06]',
+    mhfa_certified: 'bg-white/[0.02] text-white/85 border-white/[0.06]',
   };
 
   return (
@@ -75,29 +75,29 @@ const SupporterDashboard: React.FC<SupporterDashboardProps> = ({
       relative overflow-hidden transition-all duration-500
       ${
         profile.is_available
-          ? 'bg-gradient-to-br from-green-500/10 to-emerald-500/5 border-green-500/30'
+          ? 'bg-white/[0.02] border-white/[0.06]'
           : 'bg-white/[0.02] border-white/10'
       }
     `}
     >
       {/* Glow Effect when available */}
       {profile.is_available && (
-        <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 to-emerald-500/5 animate-pulse" />
+        <div className="absolute inset-0 bg-white/[0.02] animate-pulse" />
       )}
 
       <CardHeader className="relative pb-3">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-2">
             <div
-              className={`p-2 rounded-lg ${profile.is_available ? 'bg-green-500/20' : 'bg-white/10'}`}
+              className={`p-2 rounded-lg ${profile.is_available ? 'bg-white/[0.02]' : 'bg-white/10'}`}
             >
               <Power
-                className={`h-5 w-5 ${profile.is_available ? 'text-green-400' : 'text-white'}`}
+                className={`h-5 w-5 ${profile.is_available ? 'text-white/85' : 'text-white'}`}
               />
             </div>
             <div>
               <CardTitle className="text-base">Your Status</CardTitle>
-              <p className={`text-sm ${profile.is_available ? 'text-green-400' : 'text-white'}`}>
+              <p className={`text-sm ${profile.is_available ? 'text-white/85' : 'text-white'}`}>
                 {profile.is_available ? 'Available to help' : 'Currently offline'}
               </p>
             </div>
@@ -129,8 +129,8 @@ const SupporterDashboard: React.FC<SupporterDashboardProps> = ({
               className="w-12 h-12 rounded-xl object-cover border border-white/20"
             />
           ) : (
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/30 to-pink-500/30 border border-purple-500/30 flex items-center justify-center">
-              <User className="w-6 h-6 text-purple-400" />
+            <div className="w-12 h-12 rounded-xl bg-white/[0.02] border border-white/[0.06] flex items-center justify-center">
+              <User className="w-6 h-6 text-white/85" />
             </div>
           )}
 
@@ -172,7 +172,7 @@ const SupporterDashboard: React.FC<SupporterDashboardProps> = ({
               {profile.topics_comfortable_with.map((topic, idx) => (
                 <span
                   key={idx}
-                  className="text-xs px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20"
+                  className="text-xs px-2 py-0.5 rounded-full bg-white/[0.02] text-white/85 border border-white/[0.06]"
                 >
                   {topic}
                 </span>
@@ -184,14 +184,14 @@ const SupporterDashboard: React.FC<SupporterDashboardProps> = ({
         {/* Stats */}
         <div className="grid grid-cols-2 gap-3 pt-2">
           <div className="flex items-center gap-2 p-3 rounded-lg bg-white/5">
-            <MessageCircle className="w-4 h-4 text-purple-400" />
+            <MessageCircle className="w-4 h-4 text-white/85" />
             <div>
               <p className="text-lg font-bold text-white">{profile.total_conversations}</p>
               <p className="text-xs text-white">Total chats</p>
             </div>
           </div>
           <div className="flex items-center gap-2 p-3 rounded-lg bg-white/5">
-            <Clock className="w-4 h-4 text-blue-400" />
+            <Clock className="w-4 h-4 text-white/85" />
             <div>
               <p className="text-sm font-medium text-white">{lastActive}</p>
               <p className="text-xs text-white">Last active</p>
@@ -205,15 +205,15 @@ const SupporterDashboard: React.FC<SupporterDashboardProps> = ({
           flex items-center gap-2 p-3 rounded-lg
           ${
             profile.is_available
-              ? 'bg-green-500/10 border border-green-500/20'
+              ? 'bg-white/[0.02] border border-white/[0.06]'
               : 'bg-white/5 border border-white/10'
           }
         `}
         >
           {profile.is_available ? (
             <>
-              <CheckCircle className="w-4 h-4 text-green-400" />
-              <p className="text-sm text-green-300">You're visible to people looking for support</p>
+              <CheckCircle className="w-4 h-4 text-white/85" />
+              <p className="text-sm text-white/85">You're visible to people looking for support</p>
             </>
           ) : (
             <>

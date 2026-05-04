@@ -160,8 +160,8 @@ const ResourcesLibrary = () => {
     <div className="space-y-4">
       {/* Header */}
       <div className="text-center py-2">
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 mb-3">
-          <BookOpen className="h-6 w-6 text-blue-400" />
+        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/[0.02] mb-3">
+          <BookOpen className="h-6 w-6 text-white/85" />
         </div>
         <h2 className="text-xl font-bold text-white mb-1">Resources Library</h2>
         <p className="text-sm text-white">Comprehensive mental health support and guidance</p>
@@ -176,8 +176,7 @@ const ResourcesLibrary = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search resources..."
-          className={cn(
-            'h-12 bg-white/5 border-white/10 text-white placeholder:text-white focus:border-white/20 focus:ring-1 focus:ring-white/10 touch-manipulation',
+          className={cn('h-12 bg-white/5 border-white/10 text-white placeholder:text-white focus:border-white/20 focus:ring-1 focus:ring-white/10 touch-manipulation',
             !searchTerm && 'pl-10'
           )}
         />
@@ -187,10 +186,9 @@ const ResourcesLibrary = () => {
       <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
         <button
           onClick={() => setSelectedCategory('all')}
-          className={cn(
-            'px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95',
+          className={cn('px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95',
             selectedCategory === 'all'
-              ? 'bg-blue-500 text-white'
+              ? 'bg-white/[0.02] text-white'
               : 'bg-white/10 text-white hover:bg-white/15'
           )}
         >
@@ -198,10 +196,9 @@ const ResourcesLibrary = () => {
         </button>
         <button
           onClick={() => setSelectedCategory('external')}
-          className={cn(
-            'px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95',
+          className={cn('px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95',
             selectedCategory === 'external'
-              ? 'bg-blue-500 text-white'
+              ? 'bg-white/[0.02] text-white'
               : 'bg-white/10 text-white hover:bg-white/15'
           )}
         >
@@ -209,10 +206,9 @@ const ResourcesLibrary = () => {
         </button>
         <button
           onClick={() => setSelectedCategory('guides')}
-          className={cn(
-            'px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95',
+          className={cn('px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95',
             selectedCategory === 'guides'
-              ? 'bg-green-500 text-white'
+              ? 'bg-white/[0.02] text-white'
               : 'bg-white/10 text-white hover:bg-white/15'
           )}
         >
@@ -220,10 +216,9 @@ const ResourcesLibrary = () => {
         </button>
         <button
           onClick={() => setSelectedCategory('videos')}
-          className={cn(
-            'px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95',
+          className={cn('px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95',
             selectedCategory === 'videos'
-              ? 'bg-purple-500 text-white'
+              ? 'bg-white/[0.02] text-white'
               : 'bg-white/10 text-white hover:bg-white/15'
           )}
         >
@@ -231,10 +226,9 @@ const ResourcesLibrary = () => {
         </button>
         <button
           onClick={() => setSelectedCategory('audio')}
-          className={cn(
-            'px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95',
+          className={cn('px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95',
             selectedCategory === 'audio'
-              ? 'bg-orange-500 text-white'
+              ? 'bg-white/[0.02] text-white'
               : 'bg-white/10 text-white hover:bg-white/15'
           )}
         >
@@ -242,10 +236,9 @@ const ResourcesLibrary = () => {
         </button>
         <button
           onClick={() => setSelectedCategory('tools')}
-          className={cn(
-            'px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95',
+          className={cn('px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95',
             selectedCategory === 'tools'
-              ? 'bg-pink-500 text-white'
+              ? 'bg-white/[0.02] text-white'
               : 'bg-white/10 text-white hover:bg-white/15'
           )}
         >
@@ -254,7 +247,7 @@ const ResourcesLibrary = () => {
       </div>
 
       {/* Crisis Banner */}
-      <Card className="border-red-500/30 bg-red-500/5">
+      <Card className="border-red-500/30 bg-white/[0.02]">
         <CardContent className="p-4">
           <div className="flex items-start gap-3 mb-3">
             <AlertCircle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
@@ -275,14 +268,13 @@ const ResourcesLibrary = () => {
                     ? `sms:85258?body=SHOUT`
                     : `tel:${resource.phone.replace(/\s/g, '')}`
                 }
-                className={cn(
-                  'flex items-center justify-between p-3 rounded-lg transition-all touch-manipulation active:scale-[0.98]',
+                className={cn('flex items-center justify-between p-3 rounded-lg transition-all touch-manipulation active:scale-[0.98]',
                   resource.color === 'red' &&
-                    'border border-red-500/30 bg-red-500/10 hover:bg-red-500/20',
+                    'border border-red-500/30 bg-red-500/10 hover:bg-white/[0.02]',
                   resource.color === 'blue' &&
-                    'border border-blue-500/30 bg-blue-500/10 hover:bg-blue-500/20',
+                    'border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.02]',
                   resource.color === 'purple' &&
-                    'border border-purple-500/30 bg-purple-500/10 hover:bg-purple-500/20'
+                    'border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.02]'
                 )}
               >
                 <div className="flex-1">
@@ -290,11 +282,10 @@ const ResourcesLibrary = () => {
                   <div className="text-xs text-white mt-0.5">{resource.description}</div>
                 </div>
                 <div
-                  className={cn(
-                    'text-lg font-bold whitespace-nowrap ml-3',
+                  className={cn('text-lg font-bold whitespace-nowrap ml-3',
                     resource.color === 'red' && 'text-red-400',
-                    resource.color === 'blue' && 'text-blue-400',
-                    resource.color === 'purple' && 'text-purple-400'
+                    resource.color === 'blue' && 'text-white/85',
+                    resource.color === 'purple' && 'text-white/85'
                   )}
                 >
                   {resource.phone}
@@ -308,9 +299,9 @@ const ResourcesLibrary = () => {
       {/* External Support Services */}
       {(selectedCategory === 'all' || selectedCategory === 'external') &&
         externalFiltered.length > 0 && (
-          <Card className="border-blue-500/20 bg-white/5">
+          <Card className="border-white/[0.06] bg-white/5">
             <CardHeader>
-              <CardTitle className="text-blue-400 flex items-center gap-2">
+              <CardTitle className="text-white/85 flex items-center gap-2">
                 <Heart className="h-5 w-5" />
                 External Support Services
               </CardTitle>
@@ -320,21 +311,21 @@ const ResourcesLibrary = () => {
                 {externalFiltered.map((resource, index) => (
                   <div
                     key={index}
-                    className="border border-white/10 bg-white/5 rounded-lg p-4 hover:border-blue-500/30 transition-all"
+                    className="border border-white/10 bg-white/5 rounded-lg p-4 hover:border-white/[0.06] transition-all"
                   >
                     <div className="flex justify-between items-start mb-3">
                       <div className="flex-1">
                         <h4 className="font-semibold text-white text-sm mb-1">{resource.title}</h4>
                         <p className="text-sm text-white">{resource.description}</p>
                       </div>
-                      <span className="text-xs px-2 py-1 bg-blue-500/10 rounded-md text-blue-400 ml-3 whitespace-nowrap">
+                      <span className="text-xs px-2 py-1 bg-white/[0.02] rounded-md text-white/85 ml-3 whitespace-nowrap">
                         {resource.type}
                       </span>
                     </div>
                     <Button
                       variant="outline"
                       size="sm"
-                      className="w-full h-11 border-blue-500/30 text-white hover:bg-blue-500/10 touch-manipulation active:scale-[0.98] transition-all"
+                      className="w-full h-11 border-white/[0.06] text-white hover:bg-white/[0.02] touch-manipulation active:scale-[0.98] transition-all"
                       onClick={() => openExternalUrl(resource.url)}
                     >
                       <ExternalLink className="h-4 w-4 mr-2" />
@@ -351,9 +342,9 @@ const ResourcesLibrary = () => {
       {(selectedCategory === 'all' ||
         ['guides', 'videos', 'audio', 'tools'].includes(selectedCategory)) &&
         selfHelpFiltered.length > 0 && (
-          <Card className="border-green-500/20 bg-white/5">
+          <Card className="border-white/[0.06] bg-white/5">
             <CardHeader>
-              <CardTitle className="text-green-400 flex items-center gap-2">
+              <CardTitle className="text-white/85 flex items-center gap-2">
                 <Brain className="h-5 w-5" />
                 Self-Help & Educational Resources
               </CardTitle>
@@ -363,21 +354,21 @@ const ResourcesLibrary = () => {
                 {selfHelpFiltered.map((resource, index) => (
                   <div
                     key={index}
-                    className="border border-white/10 bg-white/5 rounded-lg p-4 hover:border-green-500/30 transition-all"
+                    className="border border-white/10 bg-white/5 rounded-lg p-4 hover:border-white/[0.06] transition-all"
                   >
                     <div className="flex justify-between items-start mb-3">
                       <div className="flex-1">
                         <h4 className="font-semibold text-white text-sm mb-1">{resource.title}</h4>
                         <p className="text-sm text-white">{resource.description}</p>
                       </div>
-                      <span className="text-xs px-2 py-1 bg-green-500/10 rounded-md text-green-400 ml-3 whitespace-nowrap">
+                      <span className="text-xs px-2 py-1 bg-white/[0.02] rounded-md text-white/85 ml-3 whitespace-nowrap">
                         {resource.type}
                       </span>
                     </div>
                     <Button
                       variant="outline"
                       size="sm"
-                      className="w-full h-11 border-green-500/30 text-white hover:bg-green-500/10 touch-manipulation active:scale-[0.98] transition-all"
+                      className="w-full h-11 border-white/[0.06] text-white hover:bg-white/[0.02] touch-manipulation active:scale-[0.98] transition-all"
                     >
                       Access Resource
                     </Button>
@@ -410,12 +401,12 @@ const ResourcesLibrary = () => {
       )}
 
       {/* Info Footer */}
-      <Card className="border-purple-500/20 bg-purple-500/5">
+      <Card className="border-white/[0.06] bg-white/[0.02]">
         <CardContent className="p-4">
           <div className="flex items-start gap-3">
-            <BookOpen className="h-5 w-5 text-purple-400 flex-shrink-0 mt-0.5" />
+            <BookOpen className="h-5 w-5 text-white/85 flex-shrink-0 mt-0.5" />
             <div>
-              <h4 className="font-medium text-purple-400 text-sm mb-1">About These Resources</h4>
+              <h4 className="font-medium text-white/85 text-sm mb-1">About These Resources</h4>
               <p className="text-xs text-white">
                 All external resources are verified UK mental health services and charities.
                 Self-help resources are designed specifically for electrical workers and

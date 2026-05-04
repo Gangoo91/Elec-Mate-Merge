@@ -39,118 +39,112 @@ const TestingProceduresPanel = ({ progress }: TestingProceduresPanelProps) => {
   return (
     <div className="space-y-4 text-left">
       {/* Search and Filter */}
-      <div className="flex flex-col sm:flex-row gap-3">
+      <div className="flex flex-col sm:flex-row gap-2">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/55" />
           <Input
             placeholder="Search tests..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-10 h-11 text-base touch-manipulation border-white/20 focus:border-cyan-500 focus:ring-cyan-500 bg-white/5 text-white placeholder:text-white"
+            className="pl-10 h-11 text-base touch-manipulation border-white/[0.08] focus:border-elec-yellow/50 focus:ring-elec-yellow/20 bg-white/[0.02] text-white placeholder:text-white/55"
           />
         </div>
-        <div className="flex gap-2">
-          {['Beginner', 'Intermediate', 'Advanced'].map((level) => (
-            <button
-              key={level}
-              onClick={() => setDifficultyFilter((prev) => (prev === level ? null : level))}
-              className={`
-                px-3 py-2 rounded-lg text-xs font-medium border transition-all touch-manipulation h-11
-                ${
-                  difficultyFilter === level
-                    ? `${difficultyConfig[level].bg} ${difficultyConfig[level].text} ${difficultyConfig[level].border}`
-                    : 'bg-white/5 text-white border-white/10'
-                }
-              `}
-            >
-              {level}
-            </button>
-          ))}
+        <div className="flex gap-1.5">
+          {['Beginner', 'Intermediate', 'Advanced'].map((level) => {
+            const isActive = difficultyFilter === level;
+            return (
+              <button
+                key={level}
+                onClick={() => setDifficultyFilter((prev) => (prev === level ? null : level))}
+                className={`px-3 rounded-lg text-[12px] font-medium border transition-all touch-manipulation h-11 ${
+                  isActive
+                    ? 'bg-elec-yellow text-black border-elec-yellow'
+                    : 'bg-white/[0.02] text-white/85 border-white/[0.08] hover:bg-white/[0.04]'
+                }`}
+              >
+                {level}
+              </button>
+            );
+          })}
         </div>
       </div>
 
       {/* Test Cards */}
-      <div className="space-y-3">
+      <div className="space-y-2">
         {filtered.map((test) => {
-          const config = difficultyConfig[test.difficulty] || difficultyConfig.Beginner;
           const stepsComplete = progress.getCompletedStepCount(test.id);
           const testDone = progress.isTestComplete(test.id);
 
           return (
             <Collapsible key={test.id}>
-              <CollapsibleTrigger className="w-full flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10 touch-manipulation h-auto min-h-[44px] hover:border-cyan-500/30 transition-colors">
-                <div className="flex items-center gap-3 min-w-0">
-                  {testDone ? (
-                    <div className="p-1.5 rounded-lg bg-green-500/20 flex-shrink-0">
-                      <CheckCircle className="h-4 w-4 text-green-400" />
-                    </div>
-                  ) : (
-                    <div className="p-1.5 rounded-lg bg-cyan-500/10 flex-shrink-0">
-                      <Zap className="h-4 w-4 text-cyan-400" />
-                    </div>
-                  )}
-                  <div className="text-left min-w-0">
-                    <div className="text-sm font-semibold text-white truncate">{test.title}</div>
-                    <div className="flex items-center gap-2 mt-0.5">
-                      <Badge
-                        className={`text-[10px] px-1.5 py-0 ${config.bg} ${config.text} border ${config.border}`}
-                      >
-                        {test.difficulty}
-                      </Badge>
-                      <span className="text-xs text-white flex items-center gap-1">
-                        <Clock className="h-3 w-3" />
-                        {test.duration}
-                      </span>
-                      {stepsComplete > 0 && (
-                        <span className="text-xs text-cyan-400 font-medium">
+              <CollapsibleTrigger className="w-full flex items-center justify-between gap-3 p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.04] touch-manipulation h-auto min-h-[44px] transition-colors text-left">
+                <div className="min-w-0 flex-1 space-y-1">
+                  <div className="flex items-baseline gap-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    <span>{test.difficulty}</span>
+                    <span className="text-white/25">·</span>
+                    <span>{test.duration}</span>
+                    {stepsComplete > 0 && (
+                      <>
+                        <span className="text-white/25">·</span>
+                        <span className="font-mono normal-case tracking-normal">
                           {stepsComplete}/{test.steps.length}
                         </span>
-                      )}
-                    </div>
+                      </>
+                    )}
                   </div>
+                  <div className="text-[14px] font-medium text-white truncate">{test.title}</div>
                 </div>
-                <ChevronDown className="h-4 w-4 text-white flex-shrink-0 transition-transform [[data-state=open]>&]:rotate-180" />
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  {testDone && <CheckCircle className="h-4 w-4 text-elec-yellow" />}
+                  <ChevronDown className="h-4 w-4 text-white/55 transition-transform [[data-state=open]>&]:rotate-180" />
+                </div>
               </CollapsibleTrigger>
               <CollapsibleContent>
-                <div className="px-4 pb-4 pt-3 mt-1 space-y-3 text-sm rounded-b-xl bg-white/[0.02]">
-                  <p className="text-white">{test.purpose}</p>
+                <div className="px-4 pb-4 pt-3 mt-1 space-y-4 text-[14px] rounded-b-xl bg-white/[0.02]">
+                  <p className="text-white/85 leading-relaxed">{test.purpose}</p>
 
                   {test.testLimits.length > 0 && (
-                    <div className="space-y-1">
-                      <h4 className="text-xs font-semibold text-cyan-400 uppercase tracking-wide">
-                        Test Limits
+                    <div className="space-y-1.5">
+                      <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                        Test limits
                       </h4>
-                      {test.testLimits.map((limit, idx) => (
-                        <div key={idx} className="text-xs p-2 rounded bg-white/[0.03] text-left">
-                          <span className="text-white">{limit.parameter}: </span>
-                          <span className="font-mono text-cyan-400">
-                            {limit.limit} {limit.unit}
-                          </span>
-                        </div>
-                      ))}
+                      <div className="space-y-1">
+                        {test.testLimits.map((limit, idx) => (
+                          <div
+                            key={idx}
+                            className="flex items-baseline justify-between gap-3 py-1.5 border-b border-white/[0.04] last:border-0 text-[13px]"
+                          >
+                            <span className="text-white/70">{limit.parameter}</span>
+                            <span className="font-mono text-white text-right">
+                              {limit.limit} {limit.unit}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   )}
 
                   {test.commonIssues.length > 0 && (
-                    <div className="space-y-1">
-                      <h4 className="text-xs font-semibold text-orange-400 uppercase tracking-wide">
-                        Common Issues
+                    <div className="space-y-1.5">
+                      <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                        Common issues
                       </h4>
-                      {test.commonIssues.map((issue, idx) => (
-                        <div key={idx} className="flex items-start gap-2 text-xs">
-                          <span className="w-1 h-1 bg-orange-400 rounded-full mt-1.5 flex-shrink-0" />
-                          <span className="text-white">{issue}</span>
-                        </div>
-                      ))}
+                      <ul className="space-y-1.5">
+                        {test.commonIssues.map((issue, idx) => (
+                          <li key={idx} className="flex items-start gap-2 text-[13px]">
+                            <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                            <span className="text-white/85 leading-relaxed">{issue}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   )}
 
                   <Button
                     onClick={() => setActiveTest(test)}
-                    className="w-full h-11 bg-cyan-600 hover:bg-cyan-500 text-white font-semibold touch-manipulation active:scale-[0.98] transition-all"
+                    className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98]"
                   >
-                    <PlayCircle className="h-4 w-4 mr-2" />
-                    {stepsComplete > 0 ? 'Continue Test Procedure' : 'Start Test Procedure'}
+                    {stepsComplete > 0 ? 'Continue test' : 'Start test'}
                   </Button>
                 </div>
               </CollapsibleContent>
@@ -159,7 +153,7 @@ const TestingProceduresPanel = ({ progress }: TestingProceduresPanelProps) => {
         })}
 
         {filtered.length === 0 && (
-          <div className="text-center py-8 text-white">
+          <div className="text-center py-8 text-white/55 text-[13px]">
             No tests match your search. Try different keywords.
           </div>
         )}

@@ -43,28 +43,24 @@ export function OJTHubNav({ activeSection, onSectionChange }: OJTHubNavProps) {
                 <button
                   key={item.id}
                   onClick={() => onSectionChange(item.id)}
-                  className={cn(
-                    'flex flex-col items-center justify-center py-1 px-3 rounded-xl transition-all duration-200',
+                  className={cn('flex flex-col items-center justify-center py-1 px-3 rounded-xl transition-all duration-200',
                     'min-w-[60px] touch-manipulation active:scale-95',
                     isActive ? 'text-elec-yellow' : 'text-muted-foreground hover:text-foreground'
                   )}
                 >
                   <div
-                    className={cn(
-                      'p-1.5 rounded-lg transition-all duration-200',
+                    className={cn('p-1.5 rounded-lg transition-all duration-200',
                       isActive && 'bg-elec-yellow/10'
                     )}
                   >
                     <Icon
-                      className={cn(
-                        'h-5 w-5 transition-transform duration-200',
+                      className={cn('h-5 w-5 transition-transform duration-200',
                         isActive && 'scale-110'
                       )}
                     />
                   </div>
                   <span
-                    className={cn(
-                      'text-[10px] mt-0.5 font-medium transition-all',
+                    className={cn('text-[10px] mt-0.5 font-medium transition-all',
                       isActive ? 'opacity-100' : 'opacity-70'
                     )}
                   >
@@ -84,7 +80,7 @@ export function OJTHubNav({ activeSection, onSectionChange }: OJTHubNavProps) {
       <aside className="hidden lg:flex flex-col w-64 border-r border-border bg-card/50 shrink-0">
         <div className="p-4 border-b border-border">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-elec-yellow to-amber-500 flex items-center justify-center">
+            <div className="h-10 w-10 rounded-xl bg-white/[0.02] flex items-center justify-center">
               <Clock className="h-5 w-5 text-black" />
             </div>
             <div>
@@ -103,8 +99,7 @@ export function OJTHubNav({ activeSection, onSectionChange }: OJTHubNavProps) {
               <button
                 key={item.id}
                 onClick={() => onSectionChange(item.id)}
-                className={cn(
-                  'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 touch-manipulation',
+                className={cn('w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 touch-manipulation',
                   isActive
                     ? 'bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/20'
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
@@ -136,7 +131,7 @@ export function OJTHubNav({ activeSection, onSectionChange }: OJTHubNavProps) {
             </div>
             <div className="h-1.5 bg-muted rounded-full overflow-hidden">
               <div
-                className="h-full bg-green-500 rounded-full transition-all duration-500"
+                className="h-full bg-white/[0.02] rounded-full transition-all duration-500"
                 style={{ width: '71%' }}
               />
             </div>

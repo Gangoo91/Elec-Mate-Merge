@@ -42,36 +42,36 @@ const categoryColors: Record<
   }
 > = {
   'trades-specific': {
-    gradient: 'from-amber-500/30 via-amber-600/20 to-amber-700/10',
-    border: 'border-amber-500/30 hover:border-amber-400/50',
-    accent: 'text-amber-400',
-    iconBg: 'bg-amber-500/20',
-    topicBg: 'bg-amber-500/15 border-amber-500/25',
-    topicText: 'text-amber-300',
+    gradient: '',
+    border: 'border-white/[0.06] hover:border-white/[0.06]',
+    accent: 'text-white/85',
+    iconBg: 'bg-white/[0.02]',
+    topicBg: 'bg-white/[0.02] border-white/[0.06]',
+    topicText: 'text-white/85',
   },
   'general-mental-health': {
-    gradient: 'from-blue-500/30 via-blue-600/20 to-blue-700/10',
-    border: 'border-blue-500/30 hover:border-blue-400/50',
-    accent: 'text-blue-400',
-    iconBg: 'bg-blue-500/20',
-    topicBg: 'bg-blue-500/15 border-blue-500/25',
-    topicText: 'text-blue-300',
+    gradient: '',
+    border: 'border-white/[0.06] hover:border-white/[0.06]',
+    accent: 'text-white/85',
+    iconBg: 'bg-white/[0.02]',
+    topicBg: 'bg-white/[0.02] border-white/[0.06]',
+    topicText: 'text-white/85',
   },
   'personal-stories': {
-    gradient: 'from-pink-500/30 via-pink-600/20 to-rose-700/10',
-    border: 'border-pink-500/30 hover:border-pink-400/50',
-    accent: 'text-pink-400',
-    iconBg: 'bg-pink-500/20',
-    topicBg: 'bg-pink-500/15 border-pink-500/25',
-    topicText: 'text-pink-300',
+    gradient: '',
+    border: 'border-white/[0.06] hover:border-white/[0.06]',
+    accent: 'text-white/85',
+    iconBg: 'bg-white/[0.02]',
+    topicBg: 'bg-white/[0.02] border-white/[0.06]',
+    topicText: 'text-white/85',
   },
   'sleep-anxiety': {
-    gradient: 'from-indigo-500/30 via-indigo-600/20 to-purple-700/10',
-    border: 'border-indigo-500/30 hover:border-indigo-400/50',
-    accent: 'text-indigo-400',
-    iconBg: 'bg-indigo-500/20',
-    topicBg: 'bg-indigo-500/15 border-indigo-500/25',
-    topicText: 'text-indigo-300',
+    gradient: '',
+    border: 'border-white/[0.06] hover:border-white/[0.06]',
+    accent: 'text-white/85',
+    iconBg: 'bg-white/[0.02]',
+    topicBg: 'bg-white/[0.02] border-white/[0.06]',
+    topicText: 'text-white/85',
   },
 };
 
@@ -103,15 +103,10 @@ const PodcastCard = ({ podcast }: PodcastCardProps) => {
     `}
     >
       {/* Glassmorphism Background Layer */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="absolute inset-0 bg-white/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
       {/* Category Gradient Header */}
-      <div
-        className={`
-        relative h-16 sm:h-24 bg-gradient-to-br ${colors.gradient}
-        flex items-center justify-center overflow-hidden
-      `}
-      >
+      <div className="relative h-16 sm:h-24 bg-white/[0.02] flex items-center justify-center overflow-hidden">
         {/* Animated Background Pattern */}
         <div
           className="absolute inset-0 opacity-10"
@@ -120,9 +115,6 @@ const PodcastCard = ({ podcast }: PodcastCardProps) => {
             backgroundSize: '24px 24px',
           }}
         />
-
-        {/* Glow Effect */}
-        <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2 group-hover:scale-150 transition-transform duration-700" />
 
         {/* Mic Icon */}
         <div
@@ -174,9 +166,7 @@ const PodcastCard = ({ podcast }: PodcastCardProps) => {
               <Button
                 size="sm"
                 onClick={() => openLink(podcast.links.spotify!)}
-                className="h-7 sm:h-9 px-2 sm:px-4 bg-[#1DB954] hover:bg-[#1ed760] text-white border-0 gap-1 sm:gap-2
-                  shadow-lg shadow-[#1DB954]/0 hover:shadow-[#1DB954]/30
-                  transition-all duration-300 hover:scale-105 active:scale-95"
+                className="h-7 sm:h-9 px-2 sm:px-4 bg-[#1DB954] hover:bg-[#1ed760] text-white border-0 gap-1 sm:gap-2 shadow-lg shadow-[#1DB954]/0 hover:shadow-[#1DB954]/30 transition-all duration-300 hover:scale-105 active:scale-95"
               >
                 <SpotifyIcon />
                 <span className="text-[10px] sm:text-xs font-medium hidden sm:inline">Spotify</span>
@@ -187,9 +177,7 @@ const PodcastCard = ({ podcast }: PodcastCardProps) => {
               <Button
                 size="sm"
                 onClick={() => openLink(podcast.links.apple!)}
-                className="h-7 sm:h-9 px-2 sm:px-4 bg-[#9933FF] hover:bg-[#a855f7] text-white border-0 gap-1 sm:gap-2
-                  shadow-lg shadow-[#9933FF]/0 hover:shadow-[#9933FF]/30
-                  transition-all duration-300 hover:scale-105 active:scale-95"
+                className="h-7 sm:h-9 px-2 sm:px-4 bg-[#9933FF] hover:bg-[#a855f7] text-white border-0 gap-1 sm:gap-2 shadow-lg shadow-[#9933FF]/0 hover:shadow-[#9933FF]/30 transition-all duration-300 hover:scale-105 active:scale-95"
               >
                 <ApplePodcastIcon />
                 <span className="text-[10px] sm:text-xs font-medium hidden sm:inline">Apple</span>
@@ -200,9 +188,7 @@ const PodcastCard = ({ podcast }: PodcastCardProps) => {
               <Button
                 size="sm"
                 onClick={() => openLink(podcast.links.youtube!)}
-                className="h-7 sm:h-9 px-2 sm:px-4 bg-[#FF0000] hover:bg-[#ff1a1a] text-white border-0 gap-1 sm:gap-2
-                  shadow-lg shadow-[#FF0000]/0 hover:shadow-[#FF0000]/30
-                  transition-all duration-300 hover:scale-105 active:scale-95"
+                className="h-7 sm:h-9 px-2 sm:px-4 bg-[#FF0000] hover:bg-[#ff1a1a] text-white border-0 gap-1 sm:gap-2 shadow-lg shadow-[#FF0000]/0 hover:shadow-[#FF0000]/30 transition-all duration-300 hover:scale-105 active:scale-95"
               >
                 <YouTubeIcon />
                 <span className="text-[10px] sm:text-xs font-medium hidden sm:inline">YouTube</span>
@@ -213,9 +199,7 @@ const PodcastCard = ({ podcast }: PodcastCardProps) => {
               <Button
                 size="sm"
                 onClick={() => openLink(podcast.links.facebook!)}
-                className="h-7 sm:h-9 px-2 sm:px-4 bg-[#1877F2] hover:bg-[#1a85ff] text-white border-0 gap-1 sm:gap-2
-                  shadow-lg shadow-[#1877F2]/0 hover:shadow-[#1877F2]/30
-                  transition-all duration-300 hover:scale-105 active:scale-95"
+                className="h-7 sm:h-9 px-2 sm:px-4 bg-[#1877F2] hover:bg-[#1a85ff] text-white border-0 gap-1 sm:gap-2 shadow-lg shadow-[#1877F2]/0 hover:shadow-[#1877F2]/30 transition-all duration-300 hover:scale-105 active:scale-95"
               >
                 <FacebookIcon />
                 <span className="text-[10px] sm:text-xs font-medium hidden sm:inline">
@@ -228,8 +212,7 @@ const PodcastCard = ({ podcast }: PodcastCardProps) => {
               <Button
                 size="sm"
                 onClick={() => openLink(podcast.links.website!)}
-                className="h-7 sm:h-9 px-2 sm:px-4 bg-white/10 hover:bg-white/20 text-white border border-white/20 gap-1 sm:gap-2
-                  transition-all duration-300 hover:scale-105 active:scale-95"
+                className="h-7 sm:h-9 px-2 sm:px-4 bg-white/10 hover:bg-white/20 text-white border border-white/20 gap-1 sm:gap-2 transition-all duration-300 hover:scale-105 active:scale-95"
               >
                 <Globe className="h-4 w-4" />
                 <span className="text-[10px] sm:text-xs font-medium hidden sm:inline">Website</span>
@@ -240,14 +223,6 @@ const PodcastCard = ({ podcast }: PodcastCardProps) => {
         )}
       </div>
 
-      {/* Bottom Glow on Hover */}
-      <div
-        className={`
-        absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-px
-        bg-gradient-to-r from-transparent via-current to-transparent
-        ${colors.accent} opacity-0 group-hover:opacity-50 transition-opacity duration-500
-      `}
-      />
     </div>
   );
 };

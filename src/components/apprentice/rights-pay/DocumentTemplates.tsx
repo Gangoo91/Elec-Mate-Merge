@@ -1,15 +1,12 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { FileText, Download, Mail, AlertTriangle, Clock } from 'lucide-react';
+import { Download } from 'lucide-react';
 
 const DocumentTemplates = () => {
   const templates = [
     {
-      title: 'Formal Complaint Letter Template',
+      title: 'Formal complaint letter template',
       description: 'Template for raising formal concerns with your employer',
       category: 'Complaint',
-      icon: AlertTriangle,
       content: `[Date]
 
 [Employer Name]
@@ -37,10 +34,9 @@ Yours sincerely,
 [Your Contact Details]`,
     },
     {
-      title: 'Training Record Request',
+      title: 'Training record request',
       description: 'Request access to your training records and progress documentation',
       category: 'Request',
-      icon: FileText,
       content: `[Date]
 
 [Training Provider Name]
@@ -69,10 +65,9 @@ Yours sincerely,
 [Contact Details]`,
     },
     {
-      title: 'Holiday Request Form',
+      title: 'Holiday request form',
       description: 'Template for requesting annual leave',
       category: 'Request',
-      icon: Clock,
       content: `Holiday Request Form
 
 Employee Name: [Your Name]
@@ -105,10 +100,9 @@ Manager Comments:
 Manager Signature: _________________ Date: _________`,
     },
     {
-      title: 'Workplace Incident Report',
+      title: 'Workplace incident report',
       description: 'Template for reporting safety incidents or near misses',
       category: 'Safety',
-      icon: AlertTriangle,
       content: `Incident Report Form
 
 Date of Incident: [Date]
@@ -156,70 +150,62 @@ Signature: _________________ Date: _________`,
     document.body.removeChild(element);
   };
 
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case 'Complaint':
-        return 'bg-red-500/20 text-red-400 border-red-500/40';
-      case 'Request':
-        return 'bg-blue-500/20 text-blue-400 border-blue-500/40';
-      case 'Safety':
-        return 'bg-orange-500/20 text-orange-400 border-orange-500/40';
-      default:
-        return 'bg-white/10 text-white border-white/30';
-    }
-  };
-
   return (
-    <Card className="border-green-500/30 bg-green-500/10">
-      <CardHeader>
-        <div className="flex items-center gap-2">
-          <FileText className="h-5 w-5 text-green-400" />
-          <CardTitle className="text-green-400">Document Templates</CardTitle>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {templates.map((template, index) => {
-            const IconComponent = template.icon;
-            return (
-              <div key={index} className="border border-green-500/20 rounded-lg p-4">
-                <div className="flex items-start gap-3 mb-3">
-                  <IconComponent className="h-5 w-5 text-green-400 mt-1 flex-shrink-0" />
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h4 className="font-semibold text-white">{template.title}</h4>
-                      <Badge className={`text-xs ${getCategoryColor(template.category)}`}>
-                        {template.category}
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-white mb-3">{template.description}</p>
-                  </div>
-                </div>
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        Document templates
+      </span>
 
-                <Button
-                  variant="outline"
-                  className="w-full h-11 touch-manipulation border-green-500/40 text-green-400 hover:bg-green-500/20"
-                  onClick={() => downloadTemplate(template)}
-                >
-                  <Download className="h-3 w-3 mr-2" />
-                  Download Template
-                </Button>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {templates.map((template, index) => (
+          <div
+            key={index}
+            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
+          >
+            <div className="space-y-1">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h4 className="text-[14px] font-semibold text-white">{template.title}</h4>
+                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                  {template.category}
+                </span>
               </div>
-            );
-          })}
-        </div>
+              <p className="text-[14px] text-white/85 leading-relaxed">{template.description}</p>
+            </div>
 
-        <div className="mt-6 p-4 bg-blue-500/20 rounded-lg border border-blue-500/30">
-          <h4 className="font-semibold text-blue-400 mb-2">How to Use These Templates</h4>
-          <ul className="text-sm text-white space-y-1">
-            <li>• Fill in all sections marked with [brackets]</li>
-            <li>• Keep copies of all correspondence for your records</li>
-            <li>• Send formal letters by email with read receipt when possible</li>
-            <li>• Follow up if you don't receive a response within reasonable time</li>
-          </ul>
-        </div>
-      </CardContent>
-    </Card>
+            <Button
+              variant="outline"
+              className="w-full h-11 touch-manipulation border-white/15 text-white hover:bg-white/[0.05]"
+              onClick={() => downloadTemplate(template)}
+            >
+              <Download className="h-3 w-3 mr-2" />
+              Download template
+            </Button>
+          </div>
+        ))}
+      </div>
+
+      <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+          How to use these templates
+        </span>
+        <ul className="space-y-1.5">
+          {[
+            'Fill in all sections marked with [brackets]',
+            'Keep copies of all correspondence for your records',
+            'Send formal letters by email with read receipt when possible',
+            "Follow up if you don't receive a response within reasonable time",
+          ].map((item, i) => (
+            <li
+              key={i}
+              className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+            >
+              <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 };
 

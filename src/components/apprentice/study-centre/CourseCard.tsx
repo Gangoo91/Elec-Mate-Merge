@@ -1,5 +1,4 @@
 import { LucideIcon } from 'lucide-react';
-import { Card } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 
 interface CourseCardProps {
@@ -14,58 +13,37 @@ interface CourseCardProps {
 export function CourseCard({
   title,
   description,
-  icon: Icon,
+  icon: _Icon,
   href,
   number,
   comingSoon,
 }: CourseCardProps) {
-  const CardContent = (
-    <div className="p-6 h-full flex flex-col items-center text-center justify-start">
+  const Inner = (
+    <div
+      className={`relative rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 h-full space-y-2 ${comingSoon ? 'opacity-70' : 'active:bg-white/[0.04] transition-colors'}`}
+    >
       {comingSoon && (
-        <div className="absolute top-3 right-3 z-10">
-          <span className="bg-elec-yellow text-elec-dark text-xs font-semibold uppercase tracking-wide px-3 py-1 rounded-full">
-            Coming Soon
-          </span>
-        </div>
+        <span className="absolute top-3 right-3 text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+          Coming soon
+        </span>
       )}
-      <div className={`mb-4 flex-shrink-0 ${comingSoon ? 'opacity-70' : ''}`}>
-        <Icon className="h-8 w-8 text-elec-yellow" />
-      </div>
       {number && (
-        <h4
-          className={`text-elec-yellow font-semibold text-base mb-2 flex-shrink-0 ${comingSoon ? 'opacity-70' : ''}`}
-        >
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 font-mono">
           {number}
-        </h4>
+        </span>
       )}
-      <h3
-        className={`text-elec-light font-semibold text-base mb-3 group-hover:text-elec-yellow transition-colors leading-tight flex-shrink-0 ${comingSoon ? 'opacity-70' : ''}`}
-      >
-        {title}
-      </h3>
-      <p
-        className={`text-white leading-relaxed text-sm line-clamp-4 ${comingSoon ? 'opacity-70' : ''}`}
-      >
-        {description}
-      </p>
+      <h3 className="text-[16px] font-semibold text-white leading-tight">{title}</h3>
+      <p className="text-[14px] text-white/70 leading-relaxed line-clamp-4">{description}</p>
     </div>
   );
 
   if (href && !comingSoon) {
     return (
-      <Link to={href} className="block h-full">
-        <Card className="group relative overflow-hidden hover:bg-[#222222] hover:border-elec-yellow/40 cursor-pointer h-[200px] flex flex-col active:scale-[0.98]">
-          {CardContent}
-        </Card>
+      <Link to={href} className="block h-full touch-manipulation">
+        {Inner}
       </Link>
     );
   }
 
-  return (
-    <Card
-      className={`group relative overflow-hidden h-[200px] flex flex-col ${comingSoon ? 'cursor-not-allowed opacity-80' : 'hover:bg-[#222222] hover:border-elec-yellow/40 cursor-pointer active:scale-[0.98]'}`}
-    >
-      {CardContent}
-    </Card>
-  );
+  return <div className="block h-full">{Inner}</div>;
 }

@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, MessageSquare, Users, CheckCircle, AlertCircle } from 'lucide-react';
+import { ArrowLeft, CheckCircle, AlertCircle } from 'lucide-react';
 
 interface CommunicationSimulatorProps {
   onBack: () => void;
@@ -23,7 +21,7 @@ interface Scenario {
 const scenarios: Scenario[] = [
   {
     id: 'help-senior',
-    title: 'Asking for Help from a Senior Electrician',
+    title: 'Asking for help from a senior electrician',
     context:
       "You're working on a complex three-phase installation and have encountered a problem you're not sure how to solve.",
     situation:
@@ -51,7 +49,7 @@ const scenarios: Scenario[] = [
   },
   {
     id: 'impatient-client',
-    title: 'Dealing with an Impatient Client',
+    title: 'Dealing with an impatient client',
     context:
       "You're rewiring a kitchen and the job is taking longer than initially estimated due to discovering old wiring that needs replacing.",
     situation:
@@ -95,73 +93,46 @@ const CommunicationSimulator = ({ onBack }: CommunicationSimulatorProps) => {
     setShowFeedback(true);
   };
 
-  const getRatingColor = (rating: string) => {
-    switch (rating) {
-      case 'excellent':
-        return 'text-green-400 bg-green-500/20 border-green-500/30';
-      case 'good':
-        return 'text-yellow-400 bg-yellow-500/20 border-yellow-500/30';
-      case 'poor':
-        return 'text-red-400 bg-red-500/20 border-red-500/30';
-      default:
-        return 'text-white bg-white/10 border-white/20';
-    }
-  };
-
-  const getRatingIcon = (rating: string) => {
-    switch (rating) {
-      case 'excellent':
-        return <CheckCircle className="h-4 w-4" />;
-      case 'good':
-        return <CheckCircle className="h-4 w-4" />;
-      case 'poor':
-        return <AlertCircle className="h-4 w-4" />;
-      default:
-        return null;
-    }
-  };
-
   if (!currentScenario) {
     return (
-      <div className="space-y-6 animate-fade-in">
-        <div className="flex items-center gap-4 mb-6">
-          <Button
-            variant="outline"
-            onClick={onBack}
-            className="flex items-center gap-2 h-11 border-white/20 hover:border-elec-yellow/50 hover:bg-elec-yellow/10 touch-manipulation active:scale-95 transition-all"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Tools
-          </Button>
-          <div>
-            <h2 className="text-2xl font-bold text-white">Communication Scenario Simulator</h2>
-            <p className="text-white">Practice workplace conversations in realistic scenarios</p>
-          </div>
+      <div className="space-y-6 animate-fade-in text-left">
+        <Button
+          variant="ghost"
+          onClick={onBack}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back to tools
+        </Button>
+
+        <div className="space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Communication simulator
+          </span>
+          <h2 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
+            Practice scenarios
+          </h2>
+          <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
+            Practice workplace conversations in realistic scenarios.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
           {scenarios.map((scenario) => (
-            <Card
+            <button
               key={scenario.id}
-              className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 hover:border-elec-yellow/40 cursor-pointer transition-all overflow-hidden relative group"
+              type="button"
               onClick={() => handleScenarioSelect(scenario)}
+              className="text-left rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 touch-manipulation active:scale-[0.98] transition-all"
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <CardHeader className="relative">
-                <CardTitle className="text-white flex items-center gap-3">
-                  <div className="p-2 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
-                    <MessageSquare className="h-4 w-4 text-elec-yellow" />
-                  </div>
-                  {scenario.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="relative">
-                <p className="text-white text-sm mb-4">{scenario.context}</p>
-                <Button className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black touch-manipulation active:scale-95 transition-all">
-                  Start Scenario
-                </Button>
-              </CardContent>
-            </Card>
+              <h3 className="text-[16px] sm:text-[18px] font-medium text-white leading-snug">
+                {scenario.title}
+              </h3>
+              <p className="text-[14px] text-white/85 leading-relaxed">{scenario.context}</p>
+              <div className="h-11 inline-flex items-center px-4 rounded-lg bg-elec-yellow text-black font-semibold text-[14px]">
+                Start scenario
+              </div>
+            </button>
           ))}
         </div>
       </div>
@@ -169,108 +140,110 @@ const CommunicationSimulator = ({ onBack }: CommunicationSimulatorProps) => {
   }
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center gap-4 mb-6">
-        <Button
-          variant="outline"
-          onClick={() => setCurrentScenario(null)}
-          className="flex items-center gap-2 h-11 border-white/20 hover:border-elec-yellow/50 hover:bg-elec-yellow/10 touch-manipulation active:scale-95 transition-all"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to Scenarios
-        </Button>
-        <div>
-          <h2 className="text-2xl font-bold text-white">{currentScenario.title}</h2>
-          <p className="text-white">Choose your response carefully</p>
-        </div>
+    <div className="space-y-6 animate-fade-in text-left">
+      <Button
+        variant="ghost"
+        onClick={() => setCurrentScenario(null)}
+        className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+      >
+        <ArrowLeft className="mr-2 h-5 w-5" />
+        Back to scenarios
+      </Button>
+
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Scenario
+        </span>
+        <h2 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
+          {currentScenario.title}
+        </h2>
       </div>
 
-      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-blue-500/20 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-        <CardHeader className="relative">
-          <CardTitle className="text-white flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30">
-              <Users className="h-4 w-4 text-blue-400" />
-            </div>
-            Scenario Context
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="relative">
-          <p className="text-white mb-4">{currentScenario.context}</p>
-          <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
-            <h4 className="font-medium text-blue-400 mb-2">The Situation:</h4>
-            <p className="text-white italic">"{currentScenario.situation}"</p>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Context
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">{currentScenario.context}</p>
+      </div>
 
-      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-48 h-48 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-        <CardHeader className="relative">
-          <CardTitle className="text-white flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
-              <MessageSquare className="h-4 w-4 text-elec-yellow" />
-            </div>
-            How do you respond?
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="relative">
-          <div className="space-y-4">
-            {currentScenario.responses.map((response, index) => (
-              <div key={index} className="space-y-2">
-                <Button
-                  variant="outline"
-                  className={`w-full text-left p-4 h-auto whitespace-normal justify-start transition-all ${
-                    selectedResponse === index
-                      ? 'border-elec-yellow bg-elec-yellow/10'
-                      : 'border-white/10 hover:border-white/20'
-                  }`}
-                  onClick={() => handleResponseSelect(index)}
-                >
-                  <span className="block text-white">{response.text}</span>
-                </Button>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          The situation
+        </span>
+        <p className="text-[14px] text-white/85 italic leading-relaxed">
+          &ldquo;{currentScenario.situation}&rdquo;
+        </p>
+      </div>
 
-                {showFeedback && selectedResponse === index && (
-                  <div className={`rounded-xl p-4 ${getRatingColor(response.rating)}`}>
-                    <div className="flex items-center gap-2 mb-2">
-                      <div
-                        className={`p-1.5 rounded-lg ${response.rating === 'excellent' ? 'bg-green-500/20' : response.rating === 'good' ? 'bg-yellow-500/20' : 'bg-red-500/20'}`}
-                      >
-                        {getRatingIcon(response.rating)}
-                      </div>
-                      <Badge variant="outline" className={getRatingColor(response.rating)}>
-                        {response.rating.charAt(0).toUpperCase() + response.rating.slice(1)}
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-white">{response.feedback}</p>
+      <div className="space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Responses
+        </span>
+        {currentScenario.responses.map((response, index) => {
+          const isSelected = selectedResponse === index;
+          let optionStyle = 'bg-white/[0.02] border-white/[0.06]';
+          if (showFeedback && isSelected) {
+            if (response.rating === 'excellent') {
+              optionStyle = 'bg-elec-yellow/[0.04] border-elec-yellow/30';
+            } else if (response.rating === 'good') {
+              optionStyle = 'bg-white/[0.04] border-white/15';
+            } else {
+              optionStyle = 'bg-red-500/[0.04] border-red-500/30';
+            }
+          } else if (isSelected) {
+            optionStyle = 'bg-elec-yellow/[0.04] border-elec-yellow/40';
+          }
+
+          return (
+            <div key={index} className="space-y-2">
+              <button
+                onClick={() => handleResponseSelect(index)}
+                disabled={showFeedback}
+                className={`w-full text-left p-4 rounded-xl border transition-all touch-manipulation active:scale-[0.99] ${optionStyle}`}
+              >
+                <p className="text-[14px] text-white/85 leading-relaxed">{response.text}</p>
+              </button>
+
+              {showFeedback && isSelected && (
+                <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 sm:p-4 space-y-2">
+                  <div className="flex items-center gap-2">
+                    {response.rating === 'poor' ? (
+                      <AlertCircle className="h-4 w-4 text-red-400" />
+                    ) : (
+                      <CheckCircle className="h-4 w-4 text-elec-yellow" />
+                    )}
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                      {response.rating}
+                    </span>
                   </div>
-                )}
-              </div>
-            ))}
-          </div>
-
-          {showFeedback && (
-            <div className="mt-6 pt-4 border-t border-white/10 flex flex-wrap gap-3">
-              <Button
-                onClick={() => setCurrentScenario(null)}
-                className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black touch-manipulation active:scale-95 transition-all"
-              >
-                Try Another Scenario
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setSelectedResponse(null);
-                  setShowFeedback(false);
-                }}
-                className="h-11 border-white/20 hover:border-elec-yellow/50 hover:bg-elec-yellow/10 touch-manipulation active:scale-95 transition-all"
-              >
-                Try Again
-              </Button>
+                  <p className="text-[14px] text-white/85 leading-relaxed">{response.feedback}</p>
+                </div>
+              )}
             </div>
-          )}
-        </CardContent>
-      </Card>
+          );
+        })}
+      </div>
+
+      {showFeedback && (
+        <div className="flex flex-col sm:flex-row gap-3 pt-2 border-t border-white/[0.06]">
+          <Button
+            onClick={() => setCurrentScenario(null)}
+            className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98]"
+          >
+            Try another scenario
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => {
+              setSelectedResponse(null);
+              setShowFeedback(false);
+            }}
+            className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+          >
+            Try again
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

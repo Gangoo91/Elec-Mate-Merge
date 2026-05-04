@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle, Info, XCircle, Lightbulb, MessageSquare } from 'lucide-react';
+import { CheckCircle, XCircle } from 'lucide-react';
 
 interface ScenarioOptionProps {
   optionId: string;
@@ -27,21 +27,23 @@ const ScenarioOption = ({
   const getOptionStyles = () => {
     if (!showFeedback) {
       return isSelected
-        ? 'border-elec-yellow bg-elec-yellow/10'
-        : 'border-white/10 hover:border-white/20 bg-white/10';
+        ? 'border-elec-yellow/50 bg-elec-yellow/[0.04]'
+        : 'border-white/[0.06] hover:border-white/15 bg-white/[0.02]';
     }
-    if (isCorrect) return 'border-green-500/50 bg-green-500/10';
-    if (isSelected && !isCorrect) return 'border-red-500/50 bg-red-500/10';
-    return 'border-white/10 bg-white/10 opacity-50';
+    if (isCorrect) return 'border-elec-yellow/40 bg-elec-yellow/[0.04]';
+    if (isSelected && !isCorrect) return 'border-red-500/30 bg-red-500/[0.04]';
+    return 'border-white/[0.06] bg-white/[0.02] opacity-60';
   };
 
   const getIndicatorStyles = () => {
     if (!showFeedback) {
-      return isSelected ? 'bg-elec-yellow text-black' : 'bg-white/10 text-white';
+      return isSelected
+        ? 'bg-elec-yellow text-black'
+        : 'bg-white/[0.04] text-white border border-white/10';
     }
-    if (isCorrect) return 'bg-green-500 text-white';
-    if (isSelected && !isCorrect) return 'bg-red-500 text-white';
-    return 'bg-white/10 text-white';
+    if (isCorrect) return 'bg-elec-yellow text-black';
+    if (isSelected && !isCorrect) return 'bg-red-500/20 text-red-300 border border-red-500/30';
+    return 'bg-white/[0.04] text-white/55 border border-white/10';
   };
 
   return (
@@ -56,7 +58,7 @@ const ScenarioOption = ({
       <div className="flex items-start gap-3">
         <div
           className={`
-          w-7 h-7 rounded-lg flex items-center justify-center text-sm font-bold flex-shrink-0
+          w-7 h-7 rounded-lg flex items-center justify-center text-[13px] font-semibold flex-shrink-0
           ${getIndicatorStyles()}
         `}
         >
@@ -68,50 +70,32 @@ const ScenarioOption = ({
             optionId
           )}
         </div>
-        <p
-          className={`text-sm ${showFeedback && !isCorrect && !isSelected ? 'text-white opacity-50' : 'text-white'}`}
-        >
-          {text}
-        </p>
+        <p className="text-[14px] text-white/85 leading-relaxed">{text}</p>
       </div>
 
       {showFeedback && (isCorrect || isSelected) && (
-        <div className="mt-4 ml-10 space-y-2.5">
-          {/* Feedback */}
-          <div
-            className={`p-3 rounded-lg bg-white/5 border-l-4 ${
-              isCorrect ? 'border-l-green-500' : 'border-l-orange-500'
-            } border border-white/10`}
-          >
-            <div className="flex items-start gap-2">
-              <MessageSquare
-                className={`h-3.5 w-3.5 flex-shrink-0 mt-0.5 ${
-                  isCorrect ? 'text-green-400' : 'text-orange-400'
-                }`}
-              />
-              <p className="text-sm text-white">{feedback}</p>
-            </div>
+        <div className="mt-4 ml-10 space-y-3">
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 sm:p-4 space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Feedback
+            </span>
+            <p className="text-[14px] text-white/85 leading-relaxed">{feedback}</p>
           </div>
 
-          {/* Regulation Reference */}
           {regulation && (
-            <div className="p-3 rounded-lg bg-white/5 border-l-4 border-l-blue-500 border border-white/10">
-              <div className="flex items-start gap-2">
-                <Info className="h-3.5 w-3.5 text-blue-400 flex-shrink-0 mt-0.5" />
-                <p className="text-sm text-white">{regulation}</p>
-              </div>
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 sm:p-4 space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Regulation
+              </span>
+              <p className="text-[14px] text-white/85 leading-relaxed">{regulation}</p>
             </div>
           )}
 
-          {/* Outcome */}
-          <div className="p-3 rounded-lg bg-white/5 border-l-4 border-l-elec-yellow border border-white/10">
-            <div className="flex items-start gap-2">
-              <Lightbulb className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <div>
-                <p className="text-xs text-white font-medium mb-0.5">Outcome</p>
-                <p className="text-sm text-white">{outcome}</p>
-              </div>
-            </div>
+          <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 sm:p-4 space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+              Outcome
+            </span>
+            <p className="text-[14px] text-white/85 leading-relaxed">{outcome}</p>
           </div>
         </div>
       )}

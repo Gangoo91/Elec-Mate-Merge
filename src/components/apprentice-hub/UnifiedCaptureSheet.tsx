@@ -403,10 +403,10 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
 
                   <button
                     onClick={() => fileInputRef.current?.click()}
-                    className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-blue-500/10 border-2 border-blue-500/20 hover:border-blue-500/40 active:scale-95 transition-all touch-manipulation"
+                    className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-white/[0.02] border-2 border-white/[0.06] hover:border-white/[0.06] active:scale-95 transition-all touch-manipulation"
                   >
-                    <div className="p-3 rounded-full bg-blue-500/20">
-                      <Upload className="h-6 w-6 text-blue-500" />
+                    <div className="p-3 rounded-full bg-white/[0.02]">
+                      <Upload className="h-6 w-6 text-white/85" />
                     </div>
                     <span className="text-sm font-medium text-foreground">Upload</span>
                   </button>
@@ -415,20 +415,20 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                     onClick={() => {
                       setStep('details');
                     }}
-                    className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-green-500/10 border-2 border-green-500/20 hover:border-green-500/40 active:scale-95 transition-all touch-manipulation"
+                    className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-white/[0.02] border-2 border-white/[0.06] hover:border-white/[0.06] active:scale-95 transition-all touch-manipulation"
                   >
-                    <div className="p-3 rounded-full bg-green-500/20">
-                      <Link2 className="h-6 w-6 text-green-500" />
+                    <div className="p-3 rounded-full bg-white/[0.02]">
+                      <Link2 className="h-6 w-6 text-white/85" />
                     </div>
                     <span className="text-sm font-medium text-foreground">Link</span>
                   </button>
 
                   <button
                     onClick={() => fileInputRef.current?.click()}
-                    className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-purple-500/10 border-2 border-purple-500/20 hover:border-purple-500/40 active:scale-95 transition-all touch-manipulation"
+                    className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-white/[0.02] border-2 border-white/[0.06] hover:border-white/[0.06] active:scale-95 transition-all touch-manipulation"
                   >
-                    <div className="p-3 rounded-full bg-purple-500/20">
-                      <Video className="h-6 w-6 text-purple-500" />
+                    <div className="p-3 rounded-full bg-white/[0.02]">
+                      <Video className="h-6 w-6 text-white/85" />
                     </div>
                     <span className="text-sm font-medium text-foreground">Video</span>
                   </button>
@@ -561,16 +561,14 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                   <div className="grid grid-cols-3 gap-2">
                     <button
                       onClick={() => setLinkTo('portfolio')}
-                      className={cn(
-                        'flex flex-col items-center gap-1 p-3 rounded-lg border-2 transition-colors touch-manipulation min-h-[60px]',
+                      className={cn('flex flex-col items-center gap-1 p-3 rounded-lg border-2 transition-colors touch-manipulation min-h-[60px]',
                         linkTo === 'portfolio'
                           ? 'border-elec-yellow bg-elec-yellow/10'
                           : 'border-border hover:border-muted-foreground/50'
                       )}
                     >
                       <Briefcase
-                        className={cn(
-                          'h-5 w-5',
+                        className={cn('h-5 w-5',
                           linkTo === 'portfolio' ? 'text-elec-yellow' : 'text-white'
                         )}
                       />
@@ -578,16 +576,14 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                     </button>
                     <button
                       onClick={() => setLinkTo('ojt')}
-                      className={cn(
-                        'flex flex-col items-center gap-1 p-3 rounded-lg border-2 transition-colors touch-manipulation min-h-[60px]',
+                      className={cn('flex flex-col items-center gap-1 p-3 rounded-lg border-2 transition-colors touch-manipulation min-h-[60px]',
                         linkTo === 'ojt'
                           ? 'border-elec-yellow bg-elec-yellow/10'
                           : 'border-border hover:border-muted-foreground/50'
                       )}
                     >
                       <Clock
-                        className={cn(
-                          'h-5 w-5',
+                        className={cn('h-5 w-5',
                           linkTo === 'ojt' ? 'text-elec-yellow' : 'text-white'
                         )}
                       />
@@ -595,16 +591,14 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                     </button>
                     <button
                       onClick={() => setLinkTo('both')}
-                      className={cn(
-                        'flex flex-col items-center gap-1 p-3 rounded-lg border-2 transition-colors touch-manipulation min-h-[60px]',
+                      className={cn('flex flex-col items-center gap-1 p-3 rounded-lg border-2 transition-colors touch-manipulation min-h-[60px]',
                         linkTo === 'both'
                           ? 'border-elec-yellow bg-elec-yellow/10'
                           : 'border-border hover:border-muted-foreground/50'
                       )}
                     >
                       <Check
-                        className={cn(
-                          'h-5 w-5',
+                        className={cn('h-5 w-5',
                           linkTo === 'both' ? 'text-elec-yellow' : 'text-white'
                         )}
                       />
@@ -641,8 +635,7 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                     <div className="flex items-center gap-2">
                       <Badge
                         variant="outline"
-                        className={cn(
-                          'text-xs capitalize',
+                        className={cn('text-xs capitalize',
                           getStrengthColor(aiResult.evidenceStrength)
                         )}
                       >
@@ -730,8 +723,7 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                                       damping: 25,
                                     }}
                                     onClick={() => toggleAC(canonicalRef)}
-                                    className={cn(
-                                      'w-full flex items-start gap-3 p-3 rounded-lg border text-left transition-colors touch-manipulation',
+                                    className={cn('w-full flex items-start gap-3 p-3 rounded-lg border text-left transition-colors touch-manipulation',
                                       isSelected
                                         ? 'border-elec-yellow/50 bg-elec-yellow/10'
                                         : 'border-border hover:border-muted-foreground/50'
@@ -760,7 +752,7 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                                         {ac.confidence >= 80 && (
                                           <Badge
                                             variant="outline"
-                                            className="text-[9px] px-1 py-0 border-green-500/30 text-green-400"
+                                            className="text-[9px] px-1 py-0 border-white/[0.06] text-white/85"
                                           >
                                             Recommended
                                           </Badge>

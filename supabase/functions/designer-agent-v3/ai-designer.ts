@@ -87,9 +87,47 @@ export class AIDesigner {
         })
     );
 
-    // Execute ALL circuits in parallel
-    this.logger.info('Executing parallel AI calls', { count: circuitPromises.length });
-    const results = await Promise.allSettled(circuitPromises);
+    // Execute ALL circuits in parallel — wrapped in a hard wall-clock deadline
+    // so even if an individual OpenAI call hangs (timeout helper failed,
+    // socket closed without response, etc.) the batch still resolves.
+    // Per-circuit promises that haven't settled by the deadline are forced
+    // to "rejected" with a deadline_exceeded reason — the existing 80% threshold
+    // + per-circuit failure handling then kicks in cleanly.
+    const HARD_DEADLINE_MS = 180_000; // 3 minutes
+    this.logger.info('Executing parallel AI calls', {
+      count: circuitPromises.length,
+      hardDeadlineMs: HARD_DEADLINE_MS,
+    });
+
+    const deadline = new Promise<PromiseSettledResult<DesignedCircuit>[]>((resolve) => {
+      setTimeout(() => {
+        // Build a settled-array of pending=rejected fallbacks. We can't actually
+        // know which promises settled, so race to mark anything still pending.
+        const fallback: PromiseSettledResult<DesignedCircuit>[] = circuitPromises.map(
+          (_p, idx) => ({
+            status: 'rejected' as const,
+            reason: new Error(
+              `Hard deadline exceeded (${HARD_DEADLINE_MS / 1000}s) — circuit ${idx + 1} did not complete`
+            ),
+          })
+        );
+        resolve(fallback);
+      }, HARD_DEADLINE_MS);
+    });
+
+    // Promise.allSettled never rejects, so race against the deadline:
+    const results = await Promise.race([Promise.allSettled(circuitPromises), deadline]);
+
+    // If the deadline wins, mark which circuits actually completed by checking
+    // whether they wrote a partial via the streaming callback. The completedCount
+    // counter (above the .then handlers) is the source of truth for this.
+    if (completedCount < circuitPromises.length) {
+      this.logger.warn('Batch did not complete fully — using whatever resolved', {
+        completedCount,
+        total: circuitPromises.length,
+        unresolved: circuitPromises.length - completedCount,
+      });
+    }
 
     // Total successful generations
     const successfulCount = results.filter((r) => r.status === 'fulfilled').length;

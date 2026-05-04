@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Star, FileText, Download, Eye, Trash2, Upload } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -80,118 +79,124 @@ const FavouritesTab = () => {
 
   return (
     <div className="space-y-6">
-      {/* Quick Access Section */}
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Star className="h-5 w-5" />
-            Quick Access
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {quickAccessDocuments.map((doc, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <FileText className="h-4 w-4 text-elec-yellow" />
-                  <h4 className="font-medium text-white">{doc.name}</h4>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Quick access
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          {quickAccessDocuments.map((doc, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
+            >
+              <div className="flex items-center gap-2">
+                <FileText className="h-4 w-4 text-white/55" />
+                <h4 className="text-[14px] font-medium text-white">{doc.name}</h4>
+              </div>
+              <p className="text-[13px] text-white/85">{doc.category}</p>
+              <p className="text-[11px] text-white/55 font-mono">Last used {doc.lastUsed}</p>
+              <Button
+                size="sm"
+                className="mt-2 w-full h-10 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
+              >
+                <Download className="h-3 w-3 mr-1" />
+                Download
+              </Button>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Favourites summary
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 text-center space-y-1">
+            <div className="text-2xl font-mono text-white">{favouriteDocuments.length}</div>
+            <div className="text-[12px] text-white/55">Favourite documents</div>
+          </div>
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 text-center space-y-1">
+            <div className="text-2xl font-mono text-white">
+              {new Set(favouriteDocuments.map((d) => d.category)).size}
+            </div>
+            <div className="text-[12px] text-white/55">Document categories</div>
+          </div>
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 text-center space-y-1">
+            <div className="text-2xl font-mono text-white">24</div>
+            <div className="text-[12px] text-white/55">Downloads this month</div>
+          </div>
+        </div>
+      </div>
+
+      {favouriteDocuments.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {favouriteDocuments.map((document) => (
+            <div
+              key={document.id}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3 relative"
+            >
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex items-center gap-2 flex-1 min-w-0">
+                  <FileText className="h-5 w-5 text-white/55 flex-shrink-0" />
+                  <h3 className="text-[14px] font-semibold text-white leading-snug">
+                    {document.name}
+                  </h3>
                 </div>
-                <p className="text-sm text-white mb-1">{doc.category}</p>
-                <p className="text-xs text-elec-yellow">Last used {doc.lastUsed}</p>
-                <Button size="sm" className="mt-2 w-full">
+                <div className="flex gap-1 flex-shrink-0">
+                  <Star className="h-4 w-4 fill-elec-yellow text-elec-yellow" />
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="p-1 h-auto text-white/55 hover:text-white hover:bg-white/[0.05]"
+                    onClick={() => handleRemoveFavourite(document.id)}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+
+              <div className="text-[12px] text-white/55 font-mono space-y-0.5">
+                <p>
+                  {document.type} · {document.size}
+                </p>
+                <p>{new Date(document.dateAdded).toLocaleDateString()}</p>
+                <p className="font-sans normal-case">{document.category}</p>
+              </div>
+
+              <div className="flex gap-2">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="flex-1 h-10 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                >
+                  <Eye className="h-3 w-3 mr-1" />
+                  View
+                </Button>
+                <Button
+                  size="sm"
+                  className="flex-1 h-10 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
+                  onClick={() => handleDownload(document)}
+                >
                   <Download className="h-3 w-3 mr-1" />
                   Download
                 </Button>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Favourites Statistics */}
-      <Card className="border-blue-500/30 bg-blue-500/10">
-        <CardHeader>
-          <CardTitle className="text-blue-400 flex items-center gap-2">
-            <Star className="h-5 w-5" />
-            Favourites Summary
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="text-center p-3 border border-blue-500/20 rounded-lg">
-              <div className="text-2xl font-bold text-blue-400">{favouriteDocuments.length}</div>
-              <div className="text-sm text-white">Favourite Documents</div>
             </div>
-            <div className="text-center p-3 border border-blue-500/20 rounded-lg">
-              <div className="text-2xl font-bold text-blue-400">
-                {new Set(favouriteDocuments.map((d) => d.category)).size}
-              </div>
-              <div className="text-sm text-white">Document Categories</div>
-            </div>
-            <div className="text-center p-3 border border-blue-500/20 rounded-lg">
-              <div className="text-2xl font-bold text-blue-400">24</div>
-              <div className="text-sm text-white">Downloads This Month</div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Favourite Documents */}
-      {favouriteDocuments.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {favouriteDocuments.map((document) => (
-            <Card key={document.id} className="border-elec-yellow/20 bg-white/5 relative">
-              <CardHeader className="pb-3">
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-2">
-                    <FileText className="h-5 w-5 text-elec-yellow" />
-                    <CardTitle className="text-sm text-white">{document.name}</CardTitle>
-                  </div>
-                  <div className="flex gap-1">
-                    <Star className="h-4 w-4 fill-elec-yellow text-elec-yellow" />
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      className="p-1 h-auto"
-                      onClick={() => handleRemoveFavourite(document.id)}
-                    >
-                      <Trash2 className="h-4 w-4 text-red-400" />
-                    </Button>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="text-xs text-white">
-                  <p>
-                    Type: {document.type} • Size: {document.size}
-                  </p>
-                  <p>Added: {new Date(document.dateAdded).toLocaleDateString()}</p>
-                  <p>Category: {document.category}</p>
-                </div>
-                <div className="flex gap-2">
-                  <Button size="sm" variant="outline" className="flex-1">
-                    <Eye className="h-3 w-3 mr-1" />
-                    View
-                  </Button>
-                  <Button size="sm" className="flex-1" onClick={() => handleDownload(document)}>
-                    <Download className="h-3 w-3 mr-1" />
-                    Download
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center py-12 text-center">
-          <div className="rounded-full bg-elec-yellow/10 p-4 mb-4">
-            <Star className="h-8 w-8 text-elec-yellow" />
-          </div>
-          <h3 className="text-xl font-medium mb-2">No favourites yet</h3>
-          <p className="text-white mb-4">Star your most important documents for quick access</p>
-          <Button variant="outline">
+        <div className="flex flex-col items-center justify-center py-12 text-center space-y-3">
+          <h3 className="text-[18px] font-semibold text-white">No favourites yet</h3>
+          <p className="text-[14px] text-white/85">
+            Star your most important documents for quick access
+          </p>
+          <Button
+            variant="outline"
+            className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+          >
             <Upload className="h-4 w-4 mr-2" />
-            Upload Documents
+            Upload documents
           </Button>
         </div>
       )}

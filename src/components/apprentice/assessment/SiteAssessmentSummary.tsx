@@ -2,9 +2,7 @@ import { useState } from 'react';
 import { copyToClipboard } from '@/utils/clipboard';
 import { shareContent } from '@/utils/share';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Download, Share2, Trash2, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Download, Share2, Trash2, CheckCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { siteAssessmentChecklist, getTotalItemCount } from './data/siteAssessmentChecklist';
 import type { useAssessmentProgress } from './hooks/useAssessmentProgress';
@@ -73,108 +71,85 @@ const SiteAssessmentSummary = ({ progress }: SiteAssessmentSummaryProps) => {
   };
 
   return (
-    <Card className="bg-gradient-to-br from-white/5 to-white/3 border-white/10">
-      <CardContent className="p-4 space-y-4">
-        {/* Score */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            {allDone ? (
-              <CheckCircle className="h-6 w-6 text-green-400" />
-            ) : (
-              <AlertTriangle className="h-6 w-6 text-elec-yellow" />
-            )}
-            <div>
-              <div className="text-lg font-bold text-white">
-                {progress.completedCount}/{totalCount}
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className="flex items-baseline justify-between">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Summary
+        </span>
+        <span className="text-[12px] text-white/85 font-mono">
+          {progress.completedCount}/{totalCount} · {percentage}%
+        </span>
+      </div>
+
+      <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+        <div
+          className="h-full bg-elec-yellow transition-all duration-500"
+          style={{ width: `${percentage}%` }}
+        />
+      </div>
+
+      <div className="grid grid-cols-3 gap-2">
+        {['pre-job', 'site-condition', 'electrical'].map((section) => {
+          const cats = siteAssessmentChecklist.filter((c) => c.section === section);
+          const sectionIds = cats.flatMap((c) => c.items.map((i) => i.id));
+          const sectionProgress = progress.getCategoryProgress(sectionIds);
+          const sectionLabelsMap: Record<string, string> = {
+            'pre-job': 'Pre-Job',
+            'site-condition': 'Site',
+            electrical: 'Electrical',
+          };
+          return (
+            <div
+              key={section}
+              className="p-2 rounded-lg bg-white/[0.02] border border-white/[0.06] text-center"
+            >
+              <div className="text-[14px] font-medium text-white font-mono">
+                {sectionProgress.checked}/{sectionProgress.total}
               </div>
-              <div className="text-xs text-white">checks completed</div>
+              <div className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">
+                {sectionLabelsMap[section]}
+              </div>
             </div>
-          </div>
-          <Badge
-            className={`${allDone ? 'bg-green-500/20 text-green-400 border-green-500/30' : 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30'}`}
-          >
-            {percentage}%
-          </Badge>
-        </div>
+          );
+        })}
+      </div>
 
-        {/* Progress bar */}
-        <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-          <div
-            className={`h-full rounded-full transition-all duration-500 ${
-              allDone
-                ? 'bg-gradient-to-r from-green-500 to-green-400'
-                : 'bg-gradient-to-r from-elec-yellow to-elec-yellow/70'
-            }`}
-            style={{ width: `${percentage}%` }}
-          />
-        </div>
-
-        {/* Category breakdown */}
-        <div className="grid grid-cols-3 gap-2">
-          {['pre-job', 'site-condition', 'electrical'].map((section) => {
-            const cats = siteAssessmentChecklist.filter((c) => c.section === section);
-            const sectionIds = cats.flatMap((c) => c.items.map((i) => i.id));
-            const sectionProgress = progress.getCategoryProgress(sectionIds);
-            const sectionDone = sectionProgress.checked === sectionProgress.total;
-            const sectionLabels: Record<string, string> = {
-              'pre-job': 'Pre-Job',
-              'site-condition': 'Site',
-              electrical: 'Electrical',
-            };
-            return (
-              <div
-                key={section}
-                className="p-2 rounded-lg bg-white/5 border border-white/10 text-center"
-              >
-                <div
-                  className={`text-sm font-bold ${sectionDone ? 'text-green-400' : 'text-white'}`}
-                >
-                  {sectionProgress.checked}/{sectionProgress.total}
-                </div>
-                <div className="text-xs text-white">{sectionLabels[section]}</div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Actions */}
-        <div className="flex gap-2">
+      <div className="flex gap-2">
+        <Button
+          onClick={handleExport}
+          disabled={progress.completedCount === 0}
+          className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-30"
+        >
+          {allDone ? <CheckCircle className="mr-2 h-4 w-4" /> : <Download className="mr-2 h-4 w-4" />}
+          Export
+        </Button>
+        <Button
+          onClick={handleShare}
+          disabled={progress.completedCount === 0}
+          variant="outline"
+          className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation disabled:opacity-30"
+        >
+          <Share2 className="h-4 w-4" />
+        </Button>
+        {!showConfirm ? (
           <Button
-            onClick={handleExport}
-            disabled={progress.completedCount === 0}
-            className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-95 transition-all disabled:opacity-30"
-          >
-            <Download className="mr-2 h-4 w-4" />
-            Export
-          </Button>
-          <Button
-            onClick={handleShare}
+            onClick={() => setShowConfirm(true)}
             disabled={progress.completedCount === 0}
             variant="outline"
-            className="h-11 border-white/20 hover:bg-white/5 touch-manipulation active:scale-95 transition-all disabled:opacity-30"
+            className="h-11 border-red-500/30 hover:bg-red-500/[0.04] text-red-300 touch-manipulation disabled:opacity-30"
           >
-            <Share2 className="h-4 w-4" />
+            <Trash2 className="h-4 w-4" />
           </Button>
-          {!showConfirm ? (
-            <Button
-              onClick={() => setShowConfirm(true)}
-              disabled={progress.completedCount === 0}
-              variant="outline"
-              className="h-11 border-red-500/30 hover:bg-red-500/10 text-red-400 touch-manipulation active:scale-95 transition-all disabled:opacity-30"
-            >
-              <Trash2 className="h-4 w-4" />
-            </Button>
-          ) : (
-            <Button
-              onClick={handleClear}
-              className="h-11 bg-red-500 hover:bg-red-500/90 text-white font-semibold touch-manipulation active:scale-95 transition-all"
-            >
-              Confirm Clear
-            </Button>
-          )}
-        </div>
-      </CardContent>
-    </Card>
+        ) : (
+          <Button
+            onClick={handleClear}
+            className="h-11 bg-red-500 hover:bg-red-500/90 text-white font-semibold touch-manipulation active:scale-[0.98]"
+          >
+            Confirm clear
+          </Button>
+        )}
+      </div>
+    </div>
   );
 };
 

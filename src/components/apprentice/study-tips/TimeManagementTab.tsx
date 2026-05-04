@@ -1,13 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Clock, Calendar, Target, CheckCircle } from 'lucide-react';
-
 const TimeManagementTab = () => {
   const scheduleTemplates = [
     {
-      title: 'Daily Routine (30-45 minutes)',
-      icon: Clock,
-      color: 'border-blue-500/20 bg-blue-500/10',
+      title: 'Daily routine (30-45 minutes)',
       activities: [
         {
           time: '10 mins',
@@ -32,9 +26,7 @@ const TimeManagementTab = () => {
       ],
     },
     {
-      title: 'Weekly Goals',
-      icon: Calendar,
-      color: 'border-green-500/20 bg-green-500/10',
+      title: 'Weekly goals',
       activities: [
         { time: 'Monday', activity: 'New regulations/theory', description: 'Learn new concepts' },
         {
@@ -107,9 +99,9 @@ const TimeManagementTab = () => {
 
   const studyEnvironment = [
     {
-      aspect: 'Physical Space',
+      aspect: 'Physical space',
       recommendations: [
-        'Good lighting - preferably natural light',
+        'Good lighting — preferably natural light',
         'Comfortable chair and desk height',
         'Minimal clutter and distractions',
         'All materials within reach',
@@ -117,7 +109,7 @@ const TimeManagementTab = () => {
       ],
     },
     {
-      aspect: 'Digital Setup',
+      aspect: 'Digital setup',
       recommendations: [
         'Multiple monitors if available',
         'Good internet connection for online resources',
@@ -127,9 +119,9 @@ const TimeManagementTab = () => {
       ],
     },
     {
-      aspect: 'Study Materials',
+      aspect: 'Study materials',
       recommendations: [
-        'BS 7671 18th Edition',
+        'BS 7671:2018 + A4:2026',
         'On-Site Guide',
         'Guidance Note 3',
         'Practice exam papers',
@@ -140,95 +132,88 @@ const TimeManagementTab = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Clock className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Study Schedule Templates</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {scheduleTemplates.map((template, index) => {
-              const IconComponent = template.icon;
-              return (
-                <div key={index} className={`border rounded-lg p-6 ${template.color}`}>
-                  <div className="flex items-center gap-3 mb-4">
-                    <IconComponent className="h-6 w-6 text-blue-400" />
-                    <h3 className="text-xl font-semibold text-white">{template.title}</h3>
-                  </div>
-
-                  <div className="space-y-3">
-                    {template.activities.map((activity, activityIndex) => (
-                      <div key={activityIndex} className="bg-black/20 rounded-lg p-3">
-                        <div className="flex items-center gap-3 mb-1">
-                          <Badge variant="outline" className="text-xs border-white/20">
-                            {activity.time}
-                          </Badge>
-                          <h4 className="font-medium text-white">{activity.activity}</h4>
-                        </div>
-                        <p className="text-sm text-white">{activity.description}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Target className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Time Management Strategies</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {timeManagementTips.map((category, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <h3 className="font-semibold text-white mb-4">{category.category}</h3>
-                <div className="space-y-3">
-                  {category.tips.map((item, itemIndex) => (
-                    <div key={itemIndex}>
-                      <h4 className="font-medium text-white text-sm mb-1">{item.tip}</h4>
-                      <p className="text-xs text-white">{item.explanation}</p>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Study schedule templates
+        </span>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+          {scheduleTemplates.map((template, index) => (
+            <div
+              key={index}
+              className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
+            >
+              <h3 className="text-[15px] font-semibold text-white">{template.title}</h3>
+              <div className="space-y-2">
+                {template.activities.map((activity, activityIndex) => (
+                  <div
+                    key={activityIndex}
+                    className="rounded-md border border-white/10 bg-white/[0.03] p-3 space-y-1"
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="text-[11px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                        {activity.time}
+                      </span>
+                      <h4 className="text-[13px] font-medium text-white">{activity.activity}</h4>
                     </div>
-                  ))}
-                </div>
+                    <p className="text-[12px] text-white/70">{activity.description}</p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+            </div>
+          ))}
+        </div>
+      </div>
 
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <CheckCircle className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Optimal Study Environment</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {studyEnvironment.map((env, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <h3 className="font-semibold text-white mb-3">{env.aspect}</h3>
-                <ul className="space-y-2">
-                  {env.recommendations.map((rec, recIndex) => (
-                    <li key={recIndex} className="text-sm text-white flex items-start gap-2">
-                      <div className="w-1 h-1 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                      {rec}
-                    </li>
-                  ))}
-                </ul>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Time management strategies
+        </span>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+          {timeManagementTips.map((category, index) => (
+            <div
+              key={index}
+              className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
+            >
+              <h3 className="text-[15px] font-semibold text-white">{category.category}</h3>
+              <div className="space-y-2">
+                {category.tips.map((item, itemIndex) => (
+                  <div key={itemIndex} className="space-y-0.5">
+                    <h4 className="text-[13px] text-white">{item.tip}</h4>
+                    <p className="text-[12px] text-white/70 leading-relaxed">{item.explanation}</p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Optimal study environment
+        </span>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+          {studyEnvironment.map((env, index) => (
+            <div
+              key={index}
+              className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
+            >
+              <h3 className="text-[15px] font-semibold text-white">{env.aspect}</h3>
+              <ul className="space-y-1.5">
+                {env.recommendations.map((rec, recIndex) => (
+                  <li
+                    key={recIndex}
+                    className="flex items-start gap-2 text-[13px] text-white/85"
+                  >
+                    <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                    <span>{rec}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

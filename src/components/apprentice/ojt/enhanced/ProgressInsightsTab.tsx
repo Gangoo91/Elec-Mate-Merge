@@ -109,31 +109,43 @@ const ProgressInsightsTab = () => {
 
   const getTrendIcon = (trend: string) => {
     return trend === 'up' ? (
-      <TrendingUp className="h-4 w-4 text-green-500" />
+      <TrendingUp className="h-4 w-4 text-elec-yellow" />
     ) : (
-      <TrendingDown className="h-4 w-4 text-red-500" />
+      <TrendingDown className="h-4 w-4 text-white/55" />
     );
   };
 
   const getImpactColor = (impact: string) => {
     switch (impact) {
       case 'positive':
-        return 'text-green-500';
+        return 'text-elec-yellow';
       case 'negative':
-        return 'text-red-500';
+        return 'text-white/55';
       default:
-        return 'text-blue-500';
+        return 'text-white/85';
     }
   };
 
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'above-average':
-        return <Badge className="bg-green-600 text-white">Above Average</Badge>;
+        return (
+          <span className="text-[12px] text-elec-yellow px-2 py-0.5 rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04]">
+            Above average
+          </span>
+        );
       case 'below-average':
-        return <Badge className="bg-orange-600 text-white">Below Average</Badge>;
+        return (
+          <span className="text-[12px] text-white/55 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+            Below average
+          </span>
+        );
       default:
-        return <Badge className="bg-blue-600 text-white">Average</Badge>;
+        return (
+          <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+            Average
+          </span>
+        );
     }
   };
 
@@ -146,7 +158,7 @@ const ProgressInsightsTab = () => {
             <TrendingUp className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent className="px-3 sm:px-6">
-            <div className="text-xl sm:text-2xl font-bold text-green-500">+15%</div>
+            <div className="text-xl sm:text-2xl font-bold text-elec-yellow">+15%</div>
             <p className="text-xs text-white">This month vs last</p>
           </CardContent>
         </Card>
@@ -157,7 +169,7 @@ const ProgressInsightsTab = () => {
             <Target className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent className="px-3 sm:px-6">
-            <div className="text-xl sm:text-2xl font-bold text-blue-500">8/12</div>
+            <div className="text-xl sm:text-2xl font-bold text-white">8/12</div>
             <p className="text-xs text-white">Monthly targets hit</p>
           </CardContent>
         </Card>
@@ -168,7 +180,7 @@ const ProgressInsightsTab = () => {
             <Users className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent className="px-3 sm:px-6">
-            <div className="text-xl sm:text-2xl font-bold text-purple-500">12th</div>
+            <div className="text-xl sm:text-2xl font-bold text-white">12th</div>
             <p className="text-xs text-white">Out of 45 apprentices</p>
           </CardContent>
         </Card>
@@ -202,7 +214,7 @@ const ProgressInsightsTab = () => {
                       <span className="font-medium">{metric.category}</span>
                       {getTrendIcon(metric.trend)}
                       <span
-                        className={`text-sm ${metric.trend === 'up' ? 'text-green-500' : 'text-red-500'}`}
+                        className={`text-sm ${metric.trend === 'up' ? 'text-elec-yellow' : 'text-white/55'}`}
                       >
                         {metric.weeklyChange > 0 ? '+' : ''}
                         {metric.weeklyChange}%
@@ -269,16 +281,16 @@ const ProgressInsightsTab = () => {
                   </div>
 
                   <div className="relative">
-                    <div className="w-full bg-muted rounded-full h-2">
+                    <div className="w-full bg-white/5 rounded-full h-2">
                       <div
-                        className="bg-blue-500 h-2 rounded-full relative"
+                        className="bg-elec-yellow h-2 rounded-full relative"
                         style={{ width: `${(item.yourValue / item.topPerformers) * 100}%` }}
                       >
-                        <div className="absolute right-0 top-0 h-2 w-1 bg-blue-700 rounded-full"></div>
+                        <div className="absolute right-0 top-0 h-2 w-1 bg-elec-yellow rounded-full"></div>
                       </div>
                     </div>
                     <div
-                      className="absolute top-0 h-2 w-1 bg-orange-500"
+                      className="absolute top-0 h-2 w-1 bg-white/40"
                       style={{ left: `${(item.cohortAverage / item.topPerformers) * 100}%` }}
                     ></div>
                   </div>
@@ -300,21 +312,16 @@ const ProgressInsightsTab = () => {
         </Button>
       </div>
 
-      <Card className="border-green-500/50 bg-green-500/10">
-        <CardHeader>
-          <CardTitle className="text-green-300 flex items-center gap-2">
-            <TrendingUp className="h-5 w-5" />
-            Intelligent Progress Monitoring
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-white">
-            Your AI-powered progress insights provide real-time analysis of your learning journey,
-            benchmark your performance against peers, and predict future outcomes. Stay motivated
-            with personalised recommendations and data-driven guidance for apprenticeship success.
-          </p>
-        </CardContent>
-      </Card>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Intelligent progress monitoring
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Your AI-powered progress insights provide real-time analysis of your learning journey,
+          benchmark your performance against peers, and predict future outcomes. Stay motivated
+          with personalised recommendations and data-driven guidance for apprenticeship success.
+        </p>
+      </div>
     </div>
   );
 };

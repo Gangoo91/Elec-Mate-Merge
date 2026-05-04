@@ -50,7 +50,7 @@ const SelfCareReminders = () => {
       {/* Progress */}
       <div className="flex items-center gap-3">
         <div className="flex-1 h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
-          <div className="h-full bg-amber-400 rounded-full transition-all duration-500" style={{ width: `${(done / total) * 100}%` }} />
+          <div className="h-full bg-white/[0.02] rounded-full transition-all duration-500" style={{ width: `${(done / total) * 100}%` }} />
         </div>
         <span className="text-xs text-white font-medium">{done}/{total}</span>
       </div>
@@ -63,15 +63,14 @@ const SelfCareReminders = () => {
             <button
               key={prompt.id}
               onClick={() => toggle(prompt.id)}
-              className={cn(
-                'w-full flex items-center gap-3 p-3 rounded-xl touch-manipulation active:scale-[0.98] transition-all text-left',
-                isDone ? 'bg-emerald-500/[0.08] border border-emerald-500/15' : 'bg-white/[0.02] border border-white/[0.06]'
+              className={cn('w-full flex items-center gap-3 p-3 rounded-xl touch-manipulation active:scale-[0.98] transition-all text-left',
+                isDone ? 'bg-white/[0.02] border border-white/[0.06]' : 'bg-white/[0.02] border border-white/[0.06]'
               )}
             >
               <span className="text-xl flex-shrink-0">{prompt.emoji}</span>
               <span className={cn('text-sm flex-1', isDone ? 'text-white line-through' : 'text-white')}>{prompt.text}</span>
               <div className={cn('w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all',
-                isDone ? 'bg-emerald-500 border-emerald-500' : 'border-white/20'
+                isDone ? 'bg-white/[0.02] border-white/[0.06]' : 'border-white/20'
               )}>
                 {isDone && <Check className="h-3 w-3 text-white" />}
               </div>
@@ -81,7 +80,7 @@ const SelfCareReminders = () => {
       </div>
 
       {done === total && (
-        <p className="text-center text-xs text-emerald-400 font-medium py-2">All done today. Well played.</p>
+        <p className="text-center text-xs text-white/85 font-medium py-2">All done today. Well played.</p>
       )}
     </div>
   );

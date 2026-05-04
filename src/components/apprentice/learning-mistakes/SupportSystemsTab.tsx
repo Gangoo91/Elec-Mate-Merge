@@ -1,7 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Users, Phone, MessageCircle, ExternalLink, Heart } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { openExternalUrl } from '@/utils/open-external-url';
 
 const SupportSystemsTab = () => {
@@ -11,32 +9,24 @@ const SupportSystemsTab = () => {
       description: 'Assessors and tutors who understand your learning journey',
       contact: 'Available during office hours',
       action: 'Contact through college portal or phone',
-      icon: Users,
-      color: 'border-blue-500/20 bg-blue-500/10',
     },
     {
       title: 'Workplace Mentor',
       description: 'Experienced electrician assigned to guide your development',
       contact: 'Daily workplace support',
       action: 'Speak to them about any challenges',
-      icon: Users,
-      color: 'border-green-500/20 bg-green-500/10',
     },
     {
       title: 'NICEIC/NAPIT Helplines',
       description: 'Technical guidance on electrical regulations and standards',
       contact: '0333 015 6626 (NICEIC) / 0345 543 0330 (NAPIT)',
       action: 'Call for technical regulation queries',
-      icon: Phone,
-      color: 'border-purple-500/20 bg-purple-500/10',
     },
     {
       title: 'Apprentice Support Networks',
       description: 'Connect with other apprentices facing similar challenges',
       contact: 'Online forums and local groups',
       action: 'Search "ElectriciansForums.net" — largest UK electrical apprentice community',
-      icon: MessageCircle,
-      color: 'border-yellow-500/20 bg-yellow-500/10',
     },
   ];
 
@@ -49,7 +39,8 @@ const SupportSystemsTab = () => {
     },
     {
       service: 'Lighthouse Construction Industry Charity',
-      description: 'Free wellbeing, financial, and legal support for construction workers and families',
+      description:
+        'Free wellbeing, financial, and legal support for construction workers and families',
       contact: '0345 605 1956',
       website: 'lighthouseclub.org',
     },
@@ -108,129 +99,113 @@ const SupportSystemsTab = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Users className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Your Support Network</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {supportContacts.map((contact, index) => {
-              const IconComponent = contact.icon;
-              return (
-                <div key={index} className={`border rounded-lg p-6 ${contact.color}`}>
-                  <div className="flex items-center gap-3 mb-4">
-                    <IconComponent className="h-6 w-6 text-white" />
-                    <h3 className="text-lg font-semibold text-white">{contact.title}</h3>
-                  </div>
-
-                  <p className="text-sm text-white mb-3">{contact.description}</p>
-
-                  <div className="space-y-2">
-                    <div>
-                      <span className="font-medium text-white">Contact: </span>
-                      <span className="text-sm text-white">{contact.contact}</span>
-                    </div>
-                    <Badge variant="outline" className="text-xs border-white/20">
-                      {contact.action}
-                    </Badge>
-                  </div>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Your support network
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {supportContacts.map((contact, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
+            >
+              <h3 className="text-[16px] font-semibold text-white">{contact.title}</h3>
+              <p className="text-[14px] text-white/85 leading-relaxed">{contact.description}</p>
+              <div className="space-y-1.5 pt-1">
+                <div className="text-[13px] text-white/85">
+                  <span className="text-white/55">Contact: </span>
+                  {contact.contact}
                 </div>
-              );
-            })}
-          </div>
-        </CardContent>
-      </Card>
+                <span className="inline-block text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                  {contact.action}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
-      <Card className="border-red-500/20 bg-red-500/10">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Heart className="h-6 w-6 text-red-400" />
-            <CardTitle className="text-red-300">Mental Health & Wellbeing Support</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {mentalHealthResources.map((resource, index) => (
-              <div key={index} className="border border-red-500/20 rounded-lg p-4">
-                <h4 className="font-semibold text-white mb-2">{resource.service}</h4>
-                <p className="text-sm text-white mb-3">{resource.description}</p>
+      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-4">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+          Mental health & wellbeing support
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {mentalHealthResources.map((resource, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
+            >
+              <h4 className="text-[16px] font-semibold text-white">{resource.service}</h4>
+              <p className="text-[14px] text-white/85 leading-relaxed">{resource.description}</p>
+              <div className="space-y-2 pt-1">
+                <div className="text-[13px] text-white/85">
+                  <span className="text-white/55">Phone: </span>
+                  {resource.contact}
+                </div>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                  onClick={() => openExternalUrl(`https://${resource.website}`)}
+                >
+                  <ExternalLink className="h-3 w-3 mr-1" />
+                  {resource.website}
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
-                <div className="space-y-2">
-                  <div className="text-sm">
-                    <span className="font-medium text-red-300">Phone: </span>
-                    <span className="text-white">{resource.contact}</span>
-                  </div>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="border-red-500/30 hover:bg-red-500/10 text-red-300 text-xs"
-                    onClick={() => openExternalUrl(`https://${resource.website}`)}
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Practical support resources
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {practicalSupport.map((support, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
+            >
+              <h4 className="text-[16px] font-semibold text-white">{support.area}</h4>
+              <ul className="space-y-1.5">
+                {support.resources.map((resource, resourceIndex) => (
+                  <li
+                    key={resourceIndex}
+                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
                   >
-                    <ExternalLink className="h-3 w-3 mr-1" />
-                    {resource.website}
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+                    <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                    <span>{resource}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
 
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow">Practical Support Resources</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {practicalSupport.map((support, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <h4 className="font-semibold text-white mb-3">{support.area}</h4>
-                <ul className="space-y-2">
-                  {support.resources.map((resource, resourceIndex) => (
-                    <li key={resourceIndex} className="text-sm text-white flex items-start gap-2">
-                      <div className="w-1 h-1 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                      {resource}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-green-500/50 bg-green-500/10">
-        <CardHeader>
-          <CardTitle className="text-green-300">Remember</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3 text-sm text-white">
-            <p>
-              • <strong>Asking for help is a sign of professionalism</strong> - it shows you care
-              about doing quality work
-            </p>
-            <p>
-              • <strong>Your training provider wants you to succeed</strong> - they're invested in
-              your development
-            </p>
-            <p>
-              • <strong>Experienced electricians remember being apprentices</strong> - most are
-              happy to share knowledge
-            </p>
-            <p>
-              • <strong>Early intervention prevents bigger problems</strong> - speak up about
-              concerns quickly
-            </p>
-            <p>
-              • <strong>You're not alone in this journey</strong> - thousands of apprentices face
-              similar challenges
-            </p>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Remember
+        </span>
+        <ul className="space-y-2">
+          {[
+            'Asking for help is a sign of professionalism — it shows you care about doing quality work',
+            "Your training provider wants you to succeed — they're invested in your development",
+            'Experienced electricians remember being apprentices — most are happy to share knowledge',
+            'Early intervention prevents bigger problems — speak up about concerns quickly',
+            "You're not alone in this journey — thousands of apprentices face similar challenges",
+          ].map((point, idx) => (
+            <li
+              key={idx}
+              className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+            >
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>{point}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

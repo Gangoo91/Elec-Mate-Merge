@@ -1,19 +1,7 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Badge } from '@/components/ui/badge';
-import {
-  Brain,
-  FileText,
-  Upload,
-  MessageSquare,
-  Lightbulb,
-  CheckCircle,
-  AlertCircle,
-  Send,
-  Sparkles,
-} from 'lucide-react';
+import { Send } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import ChatMessageRenderer from './ChatMessageRenderer';
@@ -32,37 +20,31 @@ const IntelligentPortfolioTab = () => {
 
   const portfolioSuggestions = [
     {
-      category: 'Evidence Collection',
+      category: 'Evidence collection',
       suggestions: [
         'Take before/after photos of installations',
         'Document safety procedures followed',
         'Record testing results and measurements',
         'Note any challenges and how you overcame them',
       ],
-      icon: FileText,
-      color: 'blue',
     },
     {
-      category: 'Reflection & Learning',
+      category: 'Reflection & learning',
       suggestions: [
         'Explain what you learned from each task',
         'Describe how you applied regulations',
         'Note skills you developed or improved',
         'Identify areas for future development',
       ],
-      icon: Lightbulb,
-      color: 'yellow',
     },
     {
-      category: 'Professional Development',
+      category: 'Professional development',
       suggestions: [
         'Link work to NVQ learning outcomes',
         'Reference relevant BS 7671 regulations',
         'Show progression in your skills',
         'Document feedback from supervisors',
       ],
-      icon: CheckCircle,
-      color: 'green',
     },
   ];
 
@@ -132,146 +114,135 @@ const IntelligentPortfolioTab = () => {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {portfolioSuggestions.map((section, index) => (
-          <Card
+          <div
             key={index}
-            className={`border-${section.color}-500/30 bg-gradient-to-br from-${section.color}-500/10 to-${section.color}-600/10`}
+            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
           >
-            <CardHeader>
-              <CardTitle className={`text-${section.color}-400 flex items-center gap-2`}>
-                <section.icon className="h-5 w-5" />
-                {section.category}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-2">
-                {section.suggestions.map((suggestion, idx) => (
-                  <li key={idx} className="text-sm text-white flex items-start gap-2">
-                    <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
-                    {suggestion}
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              {section.category}
+            </span>
+            <ul className="space-y-1.5">
+              {section.suggestions.map((suggestion, idx) => (
+                <li
+                  key={idx}
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                  <span>{suggestion}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         ))}
       </div>
 
-      <Card className="border-elec-yellow/50 bg-gradient-to-br from-elec-yellow/5 to-orange-500/5">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Brain className="h-5 w-5" />
-            AI Portfolio Assistant
-            <Sparkles className="h-4 w-4 text-yellow-400" />
-          </CardTitle>
-          <p className="text-sm text-white">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            AI portfolio assistant
+          </span>
+          <p className="text-[14px] text-white/85 leading-relaxed">
             Get personalised advice on portfolio development, documentation, and reflection writing
           </p>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="h-96 border border-white/20 rounded-xl p-4 overflow-y-auto bg-gradient-to-b from-white/5 to-elec-gray/90 scrollbar-thin scrollbar-thumb-elec-yellow scrollbar-track-white/10">
-              {chatMessages.length === 0 ? (
-                <div className="flex flex-col items-center justify-center h-full text-center">
-                  <div className="bg-gradient-to-r from-elec-yellow to-orange-500 rounded-full p-4 mb-6">
-                    <MessageSquare className="h-8 w-8 text-black" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-white mb-2">
-                    Welcome to your AI Portfolio Assistant! ⚡
-                  </h3>
-                  <p className="text-white mb-6 max-w-md">
-                    Ask me anything about portfolio development, documentation, or apprenticeship
-                    guidance. I'm here to help you succeed!
-                  </p>
-                  <div className="space-y-3">
-                    <p className="text-sm text-white">💡 Try asking:</p>
-                    <div className="flex flex-wrap gap-2 justify-center">
-                      {quickQuestions.slice(0, 2).map((question, index) => (
-                        <Badge
-                          key={index}
-                          variant="outline"
-                          className="cursor-pointer hover:bg-elec-yellow/20 hover:border-elec-yellow text-xs transition-all duration-200"
-                          onClick={() => setCurrentMessage(question)}
-                        >
-                          {question}
-                        </Badge>
-                      ))}
-                    </div>
+        </div>
+
+        <div className="space-y-4">
+          <div className="h-96 rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 overflow-y-auto">
+            {chatMessages.length === 0 ? (
+              <div className="flex flex-col items-center justify-center h-full text-center">
+                <h3 className="text-[18px] font-semibold text-white mb-2">
+                  Welcome to your AI portfolio assistant
+                </h3>
+                <p className="text-[14px] text-white/85 leading-relaxed mb-6 max-w-md">
+                  Ask me anything about portfolio development, documentation, or apprenticeship
+                  guidance.
+                </p>
+                <div className="space-y-3">
+                  <p className="text-[12px] text-white/55">Try asking:</p>
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    {quickQuestions.slice(0, 2).map((question, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentMessage(question)}
+                        className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] hover:bg-white/[0.05] touch-manipulation"
+                      >
+                        {question}
+                      </button>
+                    ))}
                   </div>
                 </div>
-              ) : (
-                <>
-                  {chatMessages.map((message) => (
-                    <ChatMessageRenderer
-                      key={message.id}
-                      content={message.content}
-                      isUser={message.isUser}
-                    />
-                  ))}
-                  {isLoading && (
-                    <div className="flex justify-start mb-4">
-                      <div className="bg-gradient-to-br from-elec-gray to-white/10 border border-white/20 rounded-xl p-4 mr-4 shadow-xl">
-                        <div className="flex items-center gap-3 text-sm text-white">
-                          <div className="flex space-x-1">
-                            <div className="w-2 h-2 bg-elec-yellow rounded-full animate-bounce"></div>
-                            <div
-                              className="w-2 h-2 bg-elec-yellow rounded-full animate-bounce"
-                              style={{ animationDelay: '0.1s' }}
-                            ></div>
-                            <div
-                              className="w-2 h-2 bg-elec-yellow rounded-full animate-bounce"
-                              style={{ animationDelay: '0.2s' }}
-                            ></div>
-                          </div>
-                          <span>Thinking...</span>
+              </div>
+            ) : (
+              <>
+                {chatMessages.map((message) => (
+                  <ChatMessageRenderer
+                    key={message.id}
+                    content={message.content}
+                    isUser={message.isUser}
+                  />
+                ))}
+                {isLoading && (
+                  <div className="flex justify-start mb-4">
+                    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 mr-4">
+                      <div className="flex items-center gap-3 text-[13px] text-white/85">
+                        <div className="flex space-x-1">
+                          <div className="w-2 h-2 bg-elec-yellow rounded-full animate-bounce" />
+                          <div
+                            className="w-2 h-2 bg-elec-yellow rounded-full animate-bounce"
+                            style={{ animationDelay: '0.1s' }}
+                          />
+                          <div
+                            className="w-2 h-2 bg-elec-yellow rounded-full animate-bounce"
+                            style={{ animationDelay: '0.2s' }}
+                          />
                         </div>
+                        <span>Thinking...</span>
                       </div>
                     </div>
-                  )}
-                </>
-              )}
-            </div>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
 
-            <div className="flex gap-3">
-              <Textarea
-                value={currentMessage}
-                onChange={(e) => setCurrentMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Ask about portfolio development, documentation, or apprenticeship guidance..."
-                className="flex-1 min-h-[80px] resize-none border-white/20 bg-white/5 focus:border-elec-yellow transition-colors"
-                disabled={isLoading}
-              />
-              <Button
-                onClick={handleSendMessage}
-                disabled={!currentMessage.trim() || isLoading}
-                className="px-6 bg-gradient-to-r from-elec-yellow to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black font-semibold transition-all duration-200"
-              >
-                <Send className="h-4 w-4" />
-              </Button>
-            </div>
+          <div className="flex gap-3">
+            <Textarea
+              value={currentMessage}
+              onChange={(e) => setCurrentMessage(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Ask about portfolio development, documentation, or apprenticeship guidance..."
+              className="flex-1 min-h-[80px] resize-none touch-manipulation text-base focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
+              disabled={isLoading}
+            />
+            <Button
+              onClick={handleSendMessage}
+              disabled={!currentMessage.trim() || isLoading}
+              className="px-6 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:opacity-40"
+            >
+              <Send className="h-4 w-4" />
+            </Button>
+          </div>
 
-            <div className="space-y-3">
-              <p className="text-xs text-white flex items-center gap-1">
-                <Sparkles className="h-3 w-3" />
-                Quick questions to get started:
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {quickQuestions.map((question, index) => (
-                  <Badge
-                    key={index}
-                    variant="outline"
-                    className="cursor-pointer hover:bg-elec-yellow/20 hover:border-elec-yellow text-xs transition-all duration-200"
-                    onClick={() => setCurrentMessage(question)}
-                  >
-                    {question}
-                  </Badge>
-                ))}
-              </div>
+          <div className="space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Quick questions
+            </span>
+            <div className="flex flex-wrap gap-1.5">
+              {quickQuestions.map((question, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentMessage(question)}
+                  className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] hover:bg-white/[0.05] touch-manipulation"
+                >
+                  {question}
+                </button>
+              ))}
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };

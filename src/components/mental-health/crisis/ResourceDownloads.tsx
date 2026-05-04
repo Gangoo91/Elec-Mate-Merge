@@ -5,8 +5,8 @@ import { toast } from 'sonner';
 
 const ResourceDownloads = () => {
   return (
-    <Card className="border-red-500/20 bg-[hsl(0_0%_12%)] hover:shadow-md transition-shadow shadow-sm">
-      <CardHeader className="pb-3 border-b border-red-500/10">
+    <Card className="border-white/[0.06] bg-[hsl(0_0%_12%)] hover:shadow-md transition-shadow shadow-sm">
+      <CardHeader className="pb-3 border-b border-white/[0.06]">
         <CardTitle className="text-base flex items-center gap-2">
           <Download className="h-4 w-4 text-red-500" />
           Crisis Resources
@@ -16,7 +16,7 @@ const ResourceDownloads = () => {
         <Button
           variant="outline"
           size="sm"
-          className="w-full flex items-center gap-2 text-xs hover:bg-red-500/5"
+          className="w-full flex items-center gap-2 text-xs hover:bg-white/[0.02]"
           onClick={() => {
             toast.success('Crisis plan template downloaded', {
               description: 'Document saved to your downloads folder',
@@ -29,7 +29,7 @@ const ResourceDownloads = () => {
         <Button
           variant="outline"
           size="sm"
-          className="w-full flex items-center gap-2 text-xs hover:bg-red-500/5"
+          className="w-full flex items-center gap-2 text-xs hover:bg-white/[0.02]"
           onClick={() => {
             toast.success('Emergency contacts card downloaded', {
               description: 'Document saved to your downloads folder',

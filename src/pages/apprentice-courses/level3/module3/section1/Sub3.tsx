@@ -327,11 +327,14 @@ export default function Sub3() {
           />
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 433.1.101"
-            clause="Every circuit shall be designed so that small overcurrents of long duration are unlikely to occur. The protective device shall be selected to have a nominal current or current setting (I&#x2099;) such that I&#x2099; is not less than the design current (I&#x2098;) of the circuit."
+            source="BS 7671:2018+A4:2026 — Regulation 433.1.1 (Coordination between conductor and overload protective device)"
+            clause={`Regulation 433.1.1 sets three conditions, all of which must be satisfied:
+(a) The rated current or current setting of the protective device (Iₙ) is not less than the design current (Iᵦ) of the circuit. For adjustable protective devices, Iₙ is the current setting selected.
+(b) The rated current or current setting (Iₙ) shall not exceed the lowest of the current-carrying capacities (Iz) of any of the conductors of the circuit.
+(c) The current (Iop) causing effective operation of the protective device shall not exceed 1.45 times the lowest current-carrying capacity (Iz) of any of the conductors.`}
             meaning={
               <>
-                Reg 433.1.101 ties motor mechanics to overload protection. The design current
+                Reg 433.1.1 ties motor mechanics to overload protection. The design current
                 I<sub>B</sub> for a motor circuit is derived from the mechanical power output,
                 divided by motor efficiency, then by power factor — three of the quantities
                 explored in this Sub. Get the mechanics wrong and I<sub>B</sub> is wrong; the
@@ -339,7 +342,7 @@ export default function Sub3() {
                 the cable.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026, Regulation 433.1.101 — coordination of conductor and protective device."
+            cite="Source: BS 7671:2018+A4:2026 Part 4, Chapter 43, Regulation 433.1.1 — coordination of conductor and protective device."
           />
 
           <InlineCheck {...checks[1]} />

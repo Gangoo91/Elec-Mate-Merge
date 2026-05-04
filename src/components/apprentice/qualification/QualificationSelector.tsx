@@ -6,9 +6,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { CalendarDays, GraduationCap, Award, Loader2 } from 'lucide-react';
+import { CalendarDays, Loader2 } from 'lucide-react';
 import { useQualifications } from '@/hooks/qualification/useQualifications';
 import { Qualification } from '@/types/qualification';
 import { supabase } from '@/integrations/supabase/client';
@@ -116,199 +114,175 @@ const QualificationSelector = () => {
 
   if (loading) {
     return (
-      <Card className="bg-card border-border">
-        <CardHeader className="pb-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-elec-yellow/10">
-              <Loader2 className="h-5 w-5 text-elec-yellow animate-spin" />
-            </div>
-            <div>
-              <CardTitle className="text-lg">Loading Qualifications</CardTitle>
-              <p className="text-sm text-white">Fetching available courses...</p>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-3">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+        <div className="flex items-center gap-2">
+          <Loader2 className="h-4 w-4 text-white/55 animate-spin" />
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Loading qualifications
+          </span>
+        </div>
+        <div className="space-y-2">
           {[1, 2, 3].map((i) => (
             <div key={i} className="animate-pulse">
-              <div className="h-20 bg-muted rounded-xl" />
+              <div className="h-20 bg-white/[0.04] rounded-xl" />
             </div>
           ))}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     );
   }
 
-  // Already selected state — show current with change/remove buttons
   if (userSelection && !isChanging) {
     return (
-      <Card className="bg-card border-border overflow-hidden">
-        <div className="h-1 bg-gradient-to-r from-elec-yellow via-elec-yellow/80 to-orange-500" />
-        <CardHeader className="pb-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-              <Award className="h-5 w-5 text-elec-yellow" />
-            </div>
-            <div className="flex-1">
-              <CardTitle className="text-lg">Current Qualification</CardTitle>
-              <p className="text-sm text-white">
-                Your portfolio is tailored to these requirements
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Current qualification
+        </span>
+        <p className="text-[12px] text-white/55 leading-relaxed">
+          Your portfolio is tailored to these requirements
+        </p>
+
+        <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
+          <div className="flex items-start justify-between gap-3">
+            <div className="space-y-1 flex-1">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                  {userSelection.qualification?.level}
+                </span>
+                <span className="text-[11px] text-white/55 font-mono">
+                  {userSelection.qualification?.awarding_body}
+                </span>
+              </div>
+              <h3 className="text-[15px] font-medium text-white leading-tight">
+                {userSelection.qualification?.title}
+              </h3>
+              <p className="text-[11px] text-white/55 font-mono">
+                Code: {userSelection.qualification?.code}
               </p>
             </div>
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="p-4 rounded-xl bg-muted/50 border border-border space-y-3">
-            <div className="flex items-start justify-between gap-3">
-              <div className="space-y-1 flex-1">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <Badge className="bg-elec-yellow text-black font-semibold text-xs">
-                    {userSelection.qualification?.level}
-                  </Badge>
-                  <span className="text-xs text-white">
-                    {userSelection.qualification?.awarding_body}
-                  </span>
-                </div>
-                <h3 className="font-semibold text-foreground leading-tight">
-                  {userSelection.qualification?.title}
-                </h3>
-                <p className="text-xs text-white">Code: {userSelection.qualification?.code}</p>
+            <div className="text-right flex-shrink-0">
+              <div className="text-2xl font-mono text-white">
+                {userSelection.progress_percentage}%
               </div>
-              <div className="text-right">
-                <div className="text-2xl font-bold text-elec-yellow">
-                  {userSelection.progress_percentage}%
-                </div>
-                <span className="text-xs text-white">Complete</span>
-              </div>
+              <span className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">
+                Complete
+              </span>
             </div>
-            {userSelection.target_completion_date && (
-              <div className="flex items-center gap-2 text-sm text-white pt-2 border-t border-border">
-                <CalendarDays className="h-4 w-4" />
-                Target:{' '}
-                {new Date(userSelection.target_completion_date).toLocaleDateString('en-GB', {
-                  day: 'numeric',
-                  month: 'short',
-                  year: 'numeric',
-                })}
-              </div>
-            )}
           </div>
+          {userSelection.target_completion_date && (
+            <div className="flex items-center gap-2 text-[12px] text-white/55 pt-2 border-t border-white/[0.06] font-mono">
+              <CalendarDays className="h-3 w-3" />
+              Target:{' '}
+              {new Date(userSelection.target_completion_date).toLocaleDateString('en-GB', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric',
+              })}
+            </div>
+          )}
+        </div>
 
-          {/* Change / Remove buttons */}
-          <div className="flex gap-3">
-            <button
-              onClick={() => setIsChanging(true)}
-              className="flex-1 h-12 rounded-xl bg-elec-yellow text-black font-semibold text-sm touch-manipulation active:scale-[0.97] transition-transform"
-            >
-              Change Course
-            </button>
-            <button
-              onClick={async () => {
-                const cleared = await clearQualificationSelection();
-                if (cleared) {
-                  toast.success('Qualification removed');
-                }
-              }}
-              className="h-12 px-5 rounded-xl border border-red-500/30 text-red-400 font-semibold text-sm touch-manipulation active:scale-[0.97] transition-transform hover:bg-red-500/10"
-            >
-              Remove
-            </button>
-          </div>
-        </CardContent>
-      </Card>
+        <div className="flex gap-2">
+          <button
+            onClick={() => setIsChanging(true)}
+            className="flex-1 h-11 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] touch-manipulation active:scale-[0.97] transition-transform"
+          >
+            Change course
+          </button>
+          <button
+            onClick={async () => {
+              const cleared = await clearQualificationSelection();
+              if (cleared) {
+                toast.success('Qualification removed');
+              }
+            }}
+            className="h-11 px-5 rounded-xl border border-red-500/30 text-red-300 font-medium text-[14px] touch-manipulation active:scale-[0.97] transition-transform hover:bg-red-500/[0.08]"
+          >
+            Remove
+          </button>
+        </div>
+      </div>
     );
   }
 
-  // Selection state — flat cards grouped by awarding body
   return (
-    <Card className="bg-card border-border overflow-hidden">
-      <div className="h-1 bg-gradient-to-r from-elec-yellow via-elec-yellow/80 to-orange-500" />
-      <CardHeader className="pb-4">
-        <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-            <GraduationCap className="h-5 w-5 text-elec-yellow" />
-          </div>
-          <div>
-            <CardTitle className="text-lg">Select Your Qualification</CardTitle>
-            <p className="text-sm text-white">
-              Choose your course to get a tailored portfolio experience
-            </p>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-5">
-        {Object.entries(awardingBodies).map(([body, quals]) => (
-          <div key={body} className="space-y-2">
-            <h4 className="text-xs font-semibold text-white uppercase tracking-wider px-1">
-              {body}
-            </h4>
-            <div className="space-y-2">
-              {quals.map((qualification) => {
-                // Look up stats from requirement mappings
-                const stats =
-                  Object.values(requirementStats).length > 0
-                    ? requirementStats[qualification.code]
-                    : null;
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5">
+      <div className="space-y-1">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Select your qualification
+        </span>
+        <p className="text-[12px] text-white/55 leading-relaxed">
+          Choose your course to get a tailored portfolio experience
+        </p>
+      </div>
 
-                return (
-                  <button
-                    key={qualification.id}
-                    onClick={() => handleSelectQualification(qualification)}
-                    className={cn(
-                      'w-full text-left p-4 rounded-xl min-h-[88px]',
-                      'bg-muted/50 border border-border',
-                      'hover:border-elec-yellow/50 hover:bg-muted/80',
-                      'active:scale-[0.98] transition-all duration-200 touch-manipulation',
-                      'focus:outline-none focus:ring-2 focus:ring-elec-yellow/50',
-                      selectedQualification?.id === qualification.id &&
-                        'ring-2 ring-elec-yellow border-elec-yellow/50'
-                    )}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="flex-shrink-0">
-                        <Badge className="bg-elec-yellow text-black font-semibold text-xs px-2.5 py-1">
-                          {qualification.level}
-                        </Badge>
-                      </div>
-                      <div className="flex-1 min-w-0 space-y-1">
-                        <h3 className="font-semibold text-foreground leading-tight line-clamp-2">
-                          {qualification.title}
-                        </h3>
-                        <div className="flex items-center gap-2 text-xs text-white flex-wrap">
-                          {stats && (
-                            <>
-                              <span>{stats.acCount} Assessment Criteria</span>
-                              <span className="text-white">·</span>
-                              <span>{stats.unitCount} units</span>
-                              <span className="text-white">·</span>
-                            </>
-                          )}
-                          <span>{qualification.code}</span>
-                        </div>
+      {Object.entries(awardingBodies).map(([body, quals]) => (
+        <div key={body} className="space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 px-1">
+            {body}
+          </span>
+          <div className="space-y-2">
+            {quals.map((qualification) => {
+              const stats =
+                Object.values(requirementStats).length > 0
+                  ? requirementStats[qualification.code]
+                  : null;
+
+              return (
+                <button
+                  key={qualification.id}
+                  onClick={() => handleSelectQualification(qualification)}
+                  className={cn(
+                    'w-full text-left p-4 rounded-xl min-h-[88px]',
+                    'border border-white/[0.06] bg-white/[0.02]',
+                    'hover:bg-white/[0.04] active:scale-[0.98] transition-all duration-200 touch-manipulation',
+                    'focus:outline-none focus:ring-2 focus:ring-elec-yellow/50',
+                    selectedQualification?.id === qualification.id &&
+                      'ring-2 ring-elec-yellow'
+                  )}
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono flex-shrink-0">
+                      {qualification.level}
+                    </span>
+                    <div className="flex-1 min-w-0 space-y-1">
+                      <h3 className="text-[14px] font-medium text-white leading-tight line-clamp-2">
+                        {qualification.title}
+                      </h3>
+                      <div className="flex items-center gap-1.5 text-[11px] text-white/55 flex-wrap font-mono">
+                        {stats && (
+                          <>
+                            <span>{stats.acCount} ACs</span>
+                            <span>·</span>
+                            <span>{stats.unitCount} units</span>
+                            <span>·</span>
+                          </>
+                        )}
+                        <span>{qualification.code}</span>
                       </div>
                     </div>
-                  </button>
-                );
-              })}
-            </div>
+                  </div>
+                </button>
+              );
+            })}
           </div>
-        ))}
+        </div>
+      ))}
 
-        <QualificationConfirmationDialog
-          open={showConfirmDialog}
-          onOpenChange={setShowConfirmDialog}
-          qualification={selectedQualification}
-          categories={selectedQualificationCategories}
-          onConfirm={handleConfirmSelection}
-        />
+      <QualificationConfirmationDialog
+        open={showConfirmDialog}
+        onOpenChange={setShowConfirmDialog}
+        qualification={selectedQualification}
+        categories={selectedQualificationCategories}
+        onConfirm={handleConfirmSelection}
+      />
 
-        <PortfolioSetupAnimation
-          isVisible={isSettingUp}
-          onComplete={handleSetupComplete}
-          qualificationTitle={selectedQualification?.title}
-        />
-      </CardContent>
-    </Card>
+      <PortfolioSetupAnimation
+        isVisible={isSettingUp}
+        onComplete={handleSetupComplete}
+        qualificationTitle={selectedQualification?.title}
+      />
+    </div>
   );
 };
 

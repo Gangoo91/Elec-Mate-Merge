@@ -148,7 +148,7 @@ export function MyPortfolioSummaryCard() {
             Portfolio
           </div>
           {unreadComments > 0 && (
-            <span className="text-[10.5px] tabular-nums text-blue-300">
+            <span className="text-[10.5px] tabular-nums text-white/85">
               {unreadComments} new tutor {unreadComments === 1 ? 'comment' : 'comments'}
             </span>
           )}
@@ -163,7 +163,7 @@ export function MyPortfolioSummaryCard() {
             <button
               type="button"
               onClick={() => navigate('/apprentice/portfolio-hub')}
-              className="mt-4 w-full h-11 rounded-lg bg-blue-500 text-white text-[13px] font-semibold hover:bg-blue-400 transition-colors touch-manipulation"
+              className="mt-4 w-full h-11 rounded-lg bg-white/[0.02] text-white text-[13px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
             >
               Open portfolio
             </button>
@@ -175,12 +175,12 @@ export function MyPortfolioSummaryCard() {
               <Stat
                 value={stats.actioning.toString()}
                 label="Action needed"
-                tone={stats.actioning > 0 ? 'text-amber-200' : 'text-white/85'}
+                tone={stats.actioning > 0 ? 'text-white/85' : 'text-white/85'}
               />
               <Stat
                 value={stats.approved.toString()}
                 label="Approved"
-                tone={stats.approved > 0 ? 'text-emerald-200' : 'text-white/85'}
+                tone={stats.approved > 0 ? 'text-white/85' : 'text-white/85'}
               />
             </div>
 
@@ -195,7 +195,7 @@ export function MyPortfolioSummaryCard() {
                 <button
                   type="button"
                   onClick={() => navigate('/apprentice/portfolio-hub?section=tutor')}
-                  className="w-full h-11 rounded-lg bg-blue-500 text-white text-[13px] font-semibold hover:bg-blue-400 transition-colors touch-manipulation"
+                  className="w-full h-11 rounded-lg bg-white/[0.02] text-white text-[13px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
                 >
                   Respond to tutor →
                 </button>
@@ -214,7 +214,7 @@ export function MyPortfolioSummaryCard() {
                         `/apprentice/college-ai?prompt=${encodeURIComponent(PORTFOLIO_AI_PROMPT)}`
                       )
                     }
-                    className="inline-flex items-center justify-center gap-1.5 h-11 rounded-lg border border-blue-300/30 bg-blue-300/[0.08] text-blue-200 text-[12.5px] font-semibold hover:bg-blue-300/[0.14] transition-colors touch-manipulation"
+                    className="inline-flex items-center justify-center gap-1.5 h-11 rounded-lg border border-white/[0.06] bg-white/[0.02] text-white/85 text-[12.5px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
                   >
                     <Sparkles className="h-3.5 w-3.5" />
                     Draft with AI
@@ -226,7 +226,7 @@ export function MyPortfolioSummaryCard() {
                 <button
                   type="button"
                   onClick={() => navigate('/apprentice/portfolio-hub?section=evidence')}
-                  className="h-11 rounded-lg bg-blue-500 text-white text-[13px] font-semibold hover:bg-blue-400 transition-colors touch-manipulation"
+                  className="h-11 rounded-lg bg-white/[0.02] text-white text-[13px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
                 >
                   Add evidence
                 </button>
@@ -237,7 +237,7 @@ export function MyPortfolioSummaryCard() {
                       `/apprentice/college-ai?prompt=${encodeURIComponent(PORTFOLIO_AI_PROMPT)}`
                     )
                   }
-                  className="inline-flex items-center justify-center gap-1.5 h-11 px-4 rounded-lg border border-blue-300/30 bg-blue-300/[0.08] text-blue-200 text-[13px] font-semibold hover:bg-blue-300/[0.14] transition-colors touch-manipulation"
+                  className="inline-flex items-center justify-center gap-1.5 h-11 px-4 rounded-lg border border-white/[0.06] bg-white/[0.02] text-white/85 text-[13px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
                 >
                   <Sparkles className="h-3.5 w-3.5" />
                   Draft with AI

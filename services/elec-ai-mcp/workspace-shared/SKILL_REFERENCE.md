@@ -336,21 +336,32 @@ Find invoices past their due date.
 
 #### `create_rams`
 
-Generate a full RAMS (Risk Assessment & Method Statement).
+Generate a full RAMS (Risk Assessment & Method Statement) via the same pipeline the app uses — H&S Agent + Install Planner running in parallel, with PPE, hazards, method steps and emergency procedures all populated. Polls until complete (up to ~3 min).
 
-- **Maps to:** Edge functions `create-health-safety-job` → `generate-rams`
-- **Inputs:** `{ job_description: string, job_type: string, address: string, hazards?: string[], project_info?: object }`
-- **Returns:** `{ rams_id: uuid, status: 'generating' }`
-- **Approval:** YES — confirm job details before generation
+Always gather intake details conversationally first (job description, job type, location, scale), confirm with the user, then call this tool. Never write a RAMS in chat.
+
+- **Maps to:** Edge functions `create-rams-job` → `generate-rams` (orchestrator)
+- **Inputs:**
+  - `job_description` (required, string) — what the work is, in the user's own words
+  - `job_type` (required, string) — e.g. "EICR", "consumer unit change", "rewire", "EV charger install"
+  - `location` (required, string) — site address
+  - `job_scale` (optional, string) — `domestic` | `commercial` | `industrial`. Defaults to `domestic`
+  - `project_name` (optional, string) — defaults to `"<job_type> - <location>"`
+  - `contractor` (optional, string) — defaults to user's name
+  - `supervisor` (optional, string)
+- **Returns:** `{ rams_job_id, status, hazard_count, top_risks[], method_step_count, ppe_required[], message }`
+- **Approval:** YES — confirm intake summary before calling
+- **After this:** call `generate_rams_pdf` with the returned `rams_job_id` to produce the PDF.
 
 #### `generate_rams_pdf`
 
-Generate RAMS as a client-ready PDF.
+Render the completed RAMS job as the combined PDF (PDFMonkey template), same template as in-app.
 
-- **Maps to:** Edge function `generate-rams-pdf`
-- **Inputs:** `{ rams_id: uuid }`
-- **Returns:** `{ pdf_url: string, expires_at: ISO-8601 }`
-- **Approval:** None (generation only)
+- **Maps to:** Edge function `generate-combined-rams-pdf`
+- **Inputs:** `{ rams_job_id: string }` — from `create_rams` result
+- **Returns:** `{ downloadUrl, fileName, rams_job_id, message }`
+- **Approval:** None (no external send — just produces the file)
+- **Send via:** `MEDIA:<downloadUrl>` to attach as a document in WhatsApp
 
 #### `generate_method_statement`
 

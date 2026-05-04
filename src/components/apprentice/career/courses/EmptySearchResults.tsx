@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { SearchX, RefreshCw } from 'lucide-react';
+import { RefreshCw } from 'lucide-react';
 
 interface EmptySearchResultsProps {
   type: 'courses' | 'centers';
@@ -8,23 +8,23 @@ interface EmptySearchResultsProps {
 
 const EmptySearchResults = ({ type, onReset }: EmptySearchResultsProps) => {
   return (
-    <div className={`${type === 'courses' ? 'col-span-full' : ''} text-center py-12`}>
-      <div className="p-4 rounded-xl bg-gradient-to-br from-white/5 to-white/10 border border-white/10 max-w-lg mx-auto">
-        <div className="p-4 rounded-full bg-white/5 w-fit mx-auto mb-4">
-          <SearchX className="h-8 w-8 text-white" />
-        </div>
-        <h3 className="text-lg font-medium text-white mb-2">No Results Found</h3>
-        <p className="text-white text-sm mb-4">
+    <div className={`${type === 'courses' ? 'col-span-full' : ''} text-center py-8`}>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-6 max-w-lg mx-auto space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          No results
+        </span>
+        <h3 className="text-[16px] font-semibold text-white">No results found</h3>
+        <p className="text-[14px] text-white/70 leading-relaxed">
           No {type === 'centers' ? 'training centres' : type} found matching your search criteria.
           Try adjusting your filters or search terms.
         </p>
         <Button
           variant="outline"
-          className="h-11 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation active:scale-95 transition-all"
+          className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
           onClick={onReset}
         >
           <RefreshCw className="h-4 w-4 mr-2" />
-          Reset Filters
+          Reset filters
         </Button>
       </div>
     </div>

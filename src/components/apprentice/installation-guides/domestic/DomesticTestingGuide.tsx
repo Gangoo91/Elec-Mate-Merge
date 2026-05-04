@@ -454,33 +454,33 @@ const DomesticTestingGuide = () => {
   return (
     <div className="space-y-6">
       {/* Test Sequence Order */}
-      <Card className="border-blue-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/[0.02]">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <ListOrdered className="h-6 w-6 text-blue-400" />
-            <CardTitle className="text-blue-300">{testSequenceOrder.title}</CardTitle>
+            <ListOrdered className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">{testSequenceOrder.title}</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Alert className="border-blue-500/50 bg-blue-500/10">
-            <Info className="h-4 w-4 text-blue-400" />
-            <AlertDescription className="text-blue-200 text-sm">
+          <Alert className="border-white/[0.06] bg-white/[0.02]">
+            <Info className="h-4 w-4 text-white/55" />
+            <AlertDescription className="text-white/85 text-sm">
               <strong>Important:</strong> {testSequenceOrder.note}
             </AlertDescription>
           </Alert>
 
-          <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
             <p className="text-sm text-white mb-4">{testSequenceOrder.description}</p>
             <div className="space-y-2">
               {testSequenceOrder.sequence.map((item) => (
                 <div key={item.order} className="flex items-center gap-3 text-sm">
                   <Badge
                     variant="outline"
-                    className="border-blue-400 text-blue-300 w-8 h-8 rounded-full flex items-center justify-center p-0"
+                    className="border-white/10 text-white w-8 h-8 rounded-full flex items-center justify-center p-0"
                   >
                     {item.order}
                   </Badge>
-                  <span className="text-blue-100">{item.test}</span>
+                  <span className="text-white/85">{item.test}</span>
                 </div>
               ))}
             </div>
@@ -489,34 +489,32 @@ const DomesticTestingGuide = () => {
       </Card>
 
       {/* Detailed Test Procedures */}
-      <Card className="border-green-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/[0.02]">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <TestTube className="h-6 w-6 text-green-400" />
-            <CardTitle className="text-green-300">
-              Detailed Test Procedures & Expected Values
-            </CardTitle>
+            <TestTube className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">Detailed Test Procedures & Expected Values</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
           {detailedTests.map((test, index) => (
-            <div key={index} className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+            <div key={index} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
               <div className="flex items-center gap-2 mb-3">
-                <Badge variant="outline" className="border-green-400 text-green-300 text-xs">
+                <Badge variant="outline" className="border-white/10 text-white text-xs">
                   Test {test.testNumber}
                 </Badge>
                 <h4 className="font-medium text-white text-sm">{test.test}</h4>
               </div>
 
-              <p className="text-sm text-green-200 mb-4">{test.purpose}</p>
+              <p className="text-sm text-white/85 mb-4">{test.purpose}</p>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div>
-                  <h5 className="font-medium text-green-200 mb-2 text-sm">Method</h5>
+                  <h5 className="font-medium text-white/85 mb-2 text-sm">Method</h5>
                   <ul className="space-y-1">
                     {test.method.map((step, idx) => (
                       <li key={idx} className="text-xs text-white flex items-start gap-2">
-                        <span className="text-green-400 font-medium">{idx + 1}.</span>
+                        <span className="text-white/55 font-medium">{idx + 1}.</span>
                         {step}
                       </li>
                     ))}
@@ -524,7 +522,7 @@ const DomesticTestingGuide = () => {
                 </div>
 
                 <div>
-                  <h5 className="font-medium text-green-200 mb-2 text-sm">Expected Values</h5>
+                  <h5 className="font-medium text-white/85 mb-2 text-sm">Expected Values</h5>
                   {test.expectedValues && (
                     <div className="space-y-1">
                       {test.expectedValues.map((val, idx) => (
@@ -532,37 +530,36 @@ const DomesticTestingGuide = () => {
                           <span className="text-white">
                             {'circuit' in val && (
                               <>
-                                <strong className="text-green-300">{val.circuit}:</strong> R1+R2{' '}
+                                <strong className="text-white">{val.circuit}:</strong> R1+R2{' '}
                                 {val.typicalR1R2}
                               </>
                             )}
                             {'measurement' in val && (
                               <>
-                                <strong className="text-green-300">{val.measurement}:</strong>{' '}
+                                <strong className="text-white">{val.measurement}:</strong>{' '}
                                 {val.typical}
                               </>
                             )}
                             {'device' in val && (
                               <>
-                                <strong className="text-green-300">{val.device}:</strong> Max Zs{' '}
+                                <strong className="text-white">{val.device}:</strong> Max Zs{' '}
                                 {val.maxZs}
                               </>
                             )}
                             {'rcdType' in val && (
                               <>
-                                <strong className="text-green-300">{val.rcdType}:</strong>{' '}
+                                <strong className="text-white">{val.rcdType}:</strong>{' '}
                                 {'atIdn' in val ? val.atIdn : `${val.testCurrent} - ${val.maxTime}`}
                               </>
                             )}
                             {'location' in val && (
                               <>
-                                <strong className="text-green-300">{val.location}:</strong>{' '}
-                                {val.psc}
+                                <strong className="text-white">{val.location}:</strong> {val.psc}
                               </>
                             )}
                             {'minimum' in val && !('circuit' in val) && (
                               <>
-                                <strong className="text-green-300">{val.circuit}:</strong> Min{' '}
+                                <strong className="text-white">{val.circuit}:</strong> Min{' '}
                                 {val.minimum}
                               </>
                             )}
@@ -575,7 +572,7 @@ const DomesticTestingGuide = () => {
                     <ul className="space-y-1">
                       {test.checkpoints.map((checkpoint, idx) => (
                         <li key={idx} className="text-xs text-white flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                          <CheckCircle className="h-3 w-3 text-white/55 mt-0.5 flex-shrink-0" />
                           {checkpoint}
                         </li>
                       ))}
@@ -584,18 +581,18 @@ const DomesticTestingGuide = () => {
                 </div>
               </div>
 
-              <div className="mt-3 pt-3 border-t border-green-500/20">
+              <div className="mt-3 pt-3 border-t border-white/[0.06]">
                 <div className="flex items-start gap-2">
-                  <span className="text-xs text-green-300 font-medium">Equipment:</span>
+                  <span className="text-xs text-white font-medium">Equipment:</span>
                   <span className="text-xs text-white">{test.equipment}</span>
                 </div>
                 {test.tips && (
                   <div className="mt-2">
-                    <span className="text-xs text-green-300 font-medium">Tips:</span>
+                    <span className="text-xs text-white font-medium">Tips:</span>
                     <ul className="mt-1 space-y-1">
                       {test.tips.map((tip, idx) => (
                         <li key={idx} className="text-xs text-white flex items-start gap-2">
-                          <span className="w-1.5 h-1.5 bg-green-400 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span className="w-1.5 h-1.5 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                           {tip}
                         </li>
                       ))}
@@ -636,11 +633,11 @@ const DomesticTestingGuide = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
                 <div>
-                  <h5 className="font-medium text-orange-300 mb-2">Symptoms</h5>
+                  <h5 className="font-medium text-white mb-2">Symptoms</h5>
                   <ul className="space-y-1">
                     {item.symptoms.map((symptom, idx) => (
-                      <li key={idx} className="text-xs text-orange-100 flex items-start gap-2">
-                        <span className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-1.5 flex-shrink-0"></span>
+                      <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                         {symptom}
                       </li>
                     ))}
@@ -660,11 +657,11 @@ const DomesticTestingGuide = () => {
                 </div>
 
                 <div>
-                  <h5 className="font-medium text-green-300 mb-2">Solutions</h5>
+                  <h5 className="font-medium text-white mb-2">Solutions</h5>
                   <ul className="space-y-1">
                     {item.solutions.map((solution, idx) => (
-                      <li key={idx} className="text-xs text-green-100 flex items-start gap-2">
-                        <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                      <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
+                        <CheckCircle className="h-3 w-3 text-white/55 mt-0.5 flex-shrink-0" />
                         {solution}
                       </li>
                     ))}
@@ -673,7 +670,7 @@ const DomesticTestingGuide = () => {
               </div>
 
               <div className="mt-3 pt-3 border-t border-red-500/20">
-                <span className="text-xs text-blue-300">
+                <span className="text-xs text-white">
                   <strong>Prevention:</strong> {item.prevention}
                 </span>
               </div>
@@ -683,38 +680,35 @@ const DomesticTestingGuide = () => {
       </Card>
 
       {/* Documentation Requirements */}
-      <Card className="border-purple-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/[0.02]">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <FileCheck className="h-6 w-6 text-purple-400" />
-            <CardTitle className="text-purple-300">{documentationRequirements.title}</CardTitle>
+            <FileCheck className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">{documentationRequirements.title}</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Alert className="border-purple-500/50 bg-purple-500/10">
-            <Info className="h-4 w-4 text-purple-400" />
-            <AlertDescription className="text-purple-200 text-sm">
+          <Alert className="border-white/[0.06] bg-white/[0.02]">
+            <Info className="h-4 w-4 text-white/55" />
+            <AlertDescription className="text-white/85 text-sm">
               <strong>Retention:</strong> {documentationRequirements.retention}
             </AlertDescription>
           </Alert>
 
           {documentationRequirements.certificates.map((cert, index) => (
-            <div
-              key={index}
-              className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20"
-            >
+            <div key={index} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
               <h4 className="font-medium text-white mb-2">{cert.name}</h4>
-              <p className="text-sm text-purple-200 mb-3">
+              <p className="text-sm text-white/85 mb-3">
                 <strong>When:</strong> {cert.when}
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <h5 className="font-medium text-purple-200 mb-2 text-sm">Sections</h5>
+                  <h5 className="font-medium text-white/85 mb-2 text-sm">Sections</h5>
                   <div className="space-y-1">
                     {cert.sections.map((section, idx) => (
                       <div key={idx} className="text-xs">
-                        <span className="text-purple-300 font-medium">{section.section}:</span>
+                        <span className="text-white font-medium">{section.section}:</span>
                         <span className="text-white ml-1">{section.content}</span>
                       </div>
                     ))}
@@ -724,7 +718,7 @@ const DomesticTestingGuide = () => {
                 <div>
                   {'classifications' in cert && cert.classifications && (
                     <>
-                      <h5 className="font-medium text-purple-200 mb-2 text-sm">
+                      <h5 className="font-medium text-white/85 mb-2 text-sm">
                         Classification Codes
                       </h5>
                       <div className="space-y-1">
@@ -736,10 +730,10 @@ const DomesticTestingGuide = () => {
                                 classification.code === 'C1'
                                   ? 'border-red-400 text-red-300'
                                   : classification.code === 'C2'
-                                    ? 'border-orange-400 text-orange-300'
+                                    ? 'border-white/10 text-white'
                                     : classification.code === 'C3'
                                       ? 'border-yellow-400 text-yellow-300'
-                                      : 'border-blue-400 text-blue-300'
+                                      : 'border-white/10 text-white'
                               }`}
                             >
                               {classification.code}
@@ -751,7 +745,7 @@ const DomesticTestingGuide = () => {
                     </>
                   )}
                   <div className="mt-3">
-                    <span className="text-xs text-purple-300">
+                    <span className="text-xs text-white">
                       <strong>Signatures:</strong> {cert.signatures}
                     </span>
                   </div>
@@ -760,12 +754,12 @@ const DomesticTestingGuide = () => {
             </div>
           ))}
 
-          <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
             <h4 className="font-medium text-white mb-3">Record Keeping</h4>
             <ul className="space-y-1">
               {documentationRequirements.recordKeeping.map((item, idx) => (
-                <li key={idx} className="text-sm text-purple-100 flex items-start gap-2">
-                  <ClipboardList className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
+                <li key={idx} className="text-sm text-white/85 flex items-start gap-2">
+                  <ClipboardList className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
                   {item}
                 </li>
               ))}
@@ -775,11 +769,11 @@ const DomesticTestingGuide = () => {
       </Card>
 
       {/* Test Equipment */}
-      <Card className="border-amber-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/[0.02]">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Wrench className="h-6 w-6 text-amber-400" />
-            <CardTitle className="text-amber-300">{testEquipmentCalibration.title}</CardTitle>
+            <Wrench className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">{testEquipmentCalibration.title}</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -787,9 +781,9 @@ const DomesticTestingGuide = () => {
             {testEquipmentCalibration.equipment.map((equip, index) => (
               <div
                 key={index}
-                className="bg-amber-500/10 p-3 rounded-lg border border-amber-500/20"
+                className="bg-white/[0.02] p-3 rounded-lg border border-white/[0.06]"
               >
-                <h4 className="font-medium text-amber-200 text-sm mb-2">{equip.instrument}</h4>
+                <h4 className="font-medium text-white/85 text-sm mb-2">{equip.instrument}</h4>
                 <p className="text-xs text-white mb-1">
                   <strong>Function:</strong> {equip.function}
                 </p>
@@ -809,7 +803,7 @@ const DomesticTestingGuide = () => {
                   </p>
                 )}
                 {'calibration' in equip && (
-                  <p className="text-xs text-amber-100">
+                  <p className="text-xs text-white/85">
                     <strong>Calibration:</strong> {equip.calibration}
                   </p>
                 )}
@@ -817,12 +811,12 @@ const DomesticTestingGuide = () => {
             ))}
           </div>
 
-          <div className="bg-amber-500/10 p-4 rounded-lg border border-amber-500/20">
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
             <h4 className="font-medium text-white mb-3">General Requirements</h4>
             <ul className="space-y-1">
               {testEquipmentCalibration.generalRequirements.map((req, idx) => (
-                <li key={idx} className="text-sm text-amber-100 flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                <li key={idx} className="text-sm text-white/85 flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
                   {req}
                 </li>
               ))}

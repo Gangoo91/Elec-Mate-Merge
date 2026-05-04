@@ -165,7 +165,7 @@ export function MyTutorMessagesCard() {
               Messages
             </div>
             {unreadTotal > 0 && (
-              <span className="text-[10.5px] tabular-nums text-blue-300">
+              <span className="text-[10.5px] tabular-nums text-white/85">
                 {unreadTotal} unread from your tutor
               </span>
             )}
@@ -180,7 +180,7 @@ export function MyTutorMessagesCard() {
               <button
                 type="button"
                 onClick={() => setOpen(true)}
-                className="mt-4 w-full h-11 rounded-lg bg-blue-500 text-white text-[13px] font-semibold hover:bg-blue-400 transition-colors touch-manipulation"
+                className="mt-4 w-full h-11 rounded-lg bg-white/[0.02] text-white text-[13px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
               >
                 Message your tutor
               </button>
@@ -189,9 +189,8 @@ export function MyTutorMessagesCard() {
             <>
               {latestMsg && (
                 <div
-                  className={cn(
-                    'mt-3 border-l-2 pl-3 py-1',
-                    latestMsg.sender_kind === 'tutor' ? 'border-blue-400/40' : 'border-white/[0.10]'
+                  className={cn('mt-3 border-l-2 pl-3 py-1',
+                    latestMsg.sender_kind === 'tutor' ? 'border-white/[0.06]' : 'border-white/[0.10]'
                   )}
                 >
                   <div className="text-[10.5px] uppercase tracking-[0.14em] text-white/95">
@@ -206,10 +205,9 @@ export function MyTutorMessagesCard() {
               <button
                 type="button"
                 onClick={() => setOpen(true)}
-                className={cn(
-                  'mt-4 w-full h-11 rounded-lg text-[13px] font-semibold transition-colors touch-manipulation',
+                className={cn('mt-4 w-full h-11 rounded-lg text-[13px] font-semibold transition-colors touch-manipulation',
                   unreadTotal > 0
-                    ? 'bg-blue-500 text-white hover:bg-blue-400'
+                    ? 'bg-white/[0.02] text-white hover:bg-white/[0.02]'
                     : 'border border-white/[0.10] bg-white/[0.02] text-white/85 hover:text-white hover:border-white/[0.22]'
                 )}
               >

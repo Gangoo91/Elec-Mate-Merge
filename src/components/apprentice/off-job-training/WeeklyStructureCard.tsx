@@ -1,8 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { Calendar, Clock, Target, TrendingUp } from 'lucide-react';
-
 const WeeklyStructureCard = () => {
   const weeklyStructure = {
     totalHours: 37.5,
@@ -12,7 +7,7 @@ const WeeklyStructureCard = () => {
 
   const sampleWeekSchedules = [
     {
-      pattern: 'College Day Release',
+      pattern: 'College day release',
       structure: '1 day per week at college',
       breakdown: [
         {
@@ -45,7 +40,7 @@ const WeeklyStructureCard = () => {
       cons: ['Less flexibility', 'Fixed schedule', 'Travel requirements'],
     },
     {
-      pattern: 'Block Release',
+      pattern: 'Block release',
       structure: '2-4 weeks at college per term',
       breakdown: [
         {
@@ -77,7 +72,7 @@ const WeeklyStructureCard = () => {
       cons: ['Long periods away', 'Adjustment challenges', 'Catch-up required'],
     },
     {
-      pattern: 'Flexible Learning',
+      pattern: 'Flexible learning',
       structure: 'Mixed delivery methods',
       breakdown: [
         {
@@ -113,7 +108,7 @@ const WeeklyStructureCard = () => {
   const monthlyPlanning = [
     {
       month: 'Month 1',
-      focus: 'Foundation & Induction',
+      focus: 'Foundation & induction',
       offJobHours: 32,
       activities: [
         'Health & Safety training',
@@ -125,7 +120,7 @@ const WeeklyStructureCard = () => {
     },
     {
       month: 'Month 6',
-      focus: 'Intermediate Skills',
+      focus: 'Intermediate skills',
       offJobHours: 30,
       activities: [
         'Circuit design principles',
@@ -137,7 +132,7 @@ const WeeklyStructureCard = () => {
     },
     {
       month: 'Month 12',
-      focus: 'Advanced Applications',
+      focus: 'Advanced applications',
       offJobHours: 28,
       activities: [
         'Complex installations',
@@ -151,166 +146,188 @@ const WeeklyStructureCard = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-red-500/10">
-        <CardHeader>
-          <CardTitle className="text-orange-400 flex items-center gap-2">
-            <Calendar className="h-5 w-5" />
-            Weekly & Monthly Structure Planning
-          </CardTitle>
-          <p className="text-sm text-white">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Weekly and monthly structure planning
+          </span>
+          <p className="text-[14px] text-white/85 leading-relaxed">
             Understanding how to structure your off-the-job training time effectively
           </p>
-        </CardHeader>
-        <CardContent>
-          {/* Time Allocation Overview */}
-          <div className="mb-6 p-4 bg-white/5 rounded-lg border border-orange-500/20">
-            <h4 className="font-medium text-white mb-3">20% Time Allocation Breakdown</h4>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-orange-400">
-                  {weeklyStructure.totalHours}
-                </div>
-                <div className="text-sm text-white">Total Hours/Week</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-green-400">
-                  {weeklyStructure.offJobRequired}
-                </div>
-                <div className="text-sm text-white">Off-the-Job Hours</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-blue-400">
-                  {weeklyStructure.percentage}%
-                </div>
-                <div className="text-sm text-white">Required Minimum</div>
-              </div>
+        </div>
+
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            20% time allocation breakdown
+          </span>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
+              <div className="text-2xl font-mono text-white">{weeklyStructure.totalHours}</div>
+              <div className="text-[11px] text-white/55 mt-1">Total hours/week</div>
             </div>
-            <Progress value={weeklyStructure.percentage} className="h-2" />
-            <p className="text-xs text-white mt-2">
-              This equals approximately 278 hours over a 12-month period
-            </p>
+            <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
+              <div className="text-2xl font-mono text-white">
+                {weeklyStructure.offJobRequired}
+              </div>
+              <div className="text-[11px] text-white/55 mt-1">Off-the-job hours</div>
+            </div>
+            <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
+              <div className="text-2xl font-mono text-white">{weeklyStructure.percentage}%</div>
+              <div className="text-[11px] text-white/55 mt-1">Required minimum</div>
+            </div>
           </div>
+          <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-elec-yellow transition-all duration-500"
+              style={{ width: `${weeklyStructure.percentage}%` }}
+            />
+          </div>
+          <p className="text-[11px] text-white/55 font-mono">
+            This equals approximately 278 hours over a 12-month period
+          </p>
+        </div>
 
-          {/* Sample Week Schedules */}
-          <div className="space-y-6">
-            <h4 className="font-medium text-white">Common Delivery Patterns</h4>
-            {sampleWeekSchedules.map((schedule, index) => (
-              <div key={index} className="p-4 bg-white/5 rounded-lg border border-orange-500/20">
-                <div className="flex items-center justify-between mb-3">
-                  <h5 className="font-medium text-white">{schedule.pattern}</h5>
-                  <Badge className="bg-orange-500/20 text-orange-400 border-orange-500/30">
-                    {schedule.structure}
-                  </Badge>
-                </div>
+        <div className="space-y-4">
+          <h4 className="text-[14px] font-semibold text-white">Common delivery patterns</h4>
+          {sampleWeekSchedules.map((schedule, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
+            >
+              <div className="flex items-center justify-between gap-2 flex-wrap">
+                <h5 className="text-[14px] font-semibold text-white">{schedule.pattern}</h5>
+                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                  {schedule.structure}
+                </span>
+              </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  <div>
-                    <span className="text-sm font-medium text-orange-400">Schedule Breakdown:</span>
-                    <div className="mt-2 space-y-2">
-                      {schedule.breakdown.map((item, idx) => (
-                        <div
-                          key={idx}
-                          className="flex items-center justify-between p-2 bg-white/10 rounded"
-                        >
-                          <div>
-                            <span className="text-sm font-medium text-white">
-                              {item.day || item.period || item.element}
-                            </span>
-                            <div className="text-xs text-white">{item.activities.join(', ')}</div>
-                          </div>
-                          <div className="text-right">
-                            <Badge
-                              className={`text-xs ${
-                                item.type === 'Off-the-job'
-                                  ? 'bg-green-500/20 text-green-400 border-green-500/30'
-                                  : 'bg-blue-500/20 text-blue-400 border-blue-500/30'
-                              }`}
-                            >
-                              {typeof item.hours === 'number' ? `${item.hours}h` : item.hours}
-                            </Badge>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Schedule breakdown
+                  </span>
+                  <div className="space-y-2">
+                    {schedule.breakdown.map((item, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-center justify-between gap-2 rounded-lg border border-white/[0.06] bg-white/[0.02] p-2"
+                      >
+                        <div>
+                          <span className="text-[13px] font-semibold text-white">
+                            {item.day || item.period || item.element}
+                          </span>
+                          <div className="text-[12px] text-white/70">
+                            {item.activities.join(', ')}
                           </div>
                         </div>
+                        <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
+                          {typeof item.hours === 'number' ? `${item.hours}h` : item.hours}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="space-y-1">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+                      Advantages
+                    </span>
+                    <ul className="space-y-1">
+                      {schedule.pros.map((pro, idx) => (
+                        <li
+                          key={idx}
+                          className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                        >
+                          <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                          <span>{pro}</span>
+                        </li>
                       ))}
-                    </div>
+                    </ul>
                   </div>
 
-                  <div>
-                    <div className="mb-3">
-                      <span className="text-sm font-medium text-green-400">Advantages:</span>
-                      <ul className="text-xs text-white mt-1 space-y-1">
-                        {schedule.pros.map((pro, idx) => (
-                          <li key={idx} className="flex items-start gap-1">
-                            <span className="text-green-400">✓</span>
-                            {pro}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div>
-                      <span className="text-sm font-medium text-red-400">Considerations:</span>
-                      <ul className="text-xs text-white mt-1 space-y-1">
-                        {schedule.cons.map((con, idx) => (
-                          <li key={idx} className="flex items-start gap-1">
-                            <span className="text-red-400">!</span>
-                            {con}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                  <div className="space-y-1">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                      Considerations
+                    </span>
+                    <ul className="space-y-1">
+                      {schedule.cons.map((con, idx) => (
+                        <li
+                          key={idx}
+                          className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                        >
+                          <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                          <span>{con}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="space-y-4">
+          <h4 className="text-[14px] font-semibold text-white">Monthly planning examples</h4>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {monthlyPlanning.map((month, index) => (
+              <div
+                key={index}
+                className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <h5 className="text-[14px] font-semibold text-white">{month.month}</h5>
+                  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                    {month.offJobHours}h
+                  </span>
+                </div>
+
+                <div className="space-y-1">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Focus area
+                  </span>
+                  <p className="text-[14px] text-white/85 leading-relaxed">{month.focus}</p>
+                </div>
+
+                <div className="space-y-1">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Key activities
+                  </span>
+                  <ul className="space-y-1">
+                    {month.activities.map((activity, idx) => (
+                      <li
+                        key={idx}
+                        className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                      >
+                        <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                        <span>{activity}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="space-y-1">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+                    Assessments
+                  </span>
+                  <ul className="space-y-1">
+                    {month.assessments.map((assessment, idx) => (
+                      <li
+                        key={idx}
+                        className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                      >
+                        <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                        <span>{assessment}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             ))}
           </div>
-
-          {/* Monthly Planning */}
-          <div className="mt-6">
-            <h4 className="font-medium text-white mb-4">Monthly Planning Examples</h4>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {monthlyPlanning.map((month, index) => (
-                <div key={index} className="p-4 bg-white/5 rounded-lg border border-orange-500/20">
-                  <div className="flex items-center justify-between mb-3">
-                    <h5 className="font-medium text-white">{month.month}</h5>
-                    <Badge className="bg-orange-500/20 text-orange-400 border-orange-500/30">
-                      {month.offJobHours}h
-                    </Badge>
-                  </div>
-
-                  <div className="mb-3">
-                    <span className="text-sm font-medium text-orange-400">Focus Area:</span>
-                    <p className="text-sm text-white">{month.focus}</p>
-                  </div>
-
-                  <div className="mb-3">
-                    <span className="text-sm font-medium text-blue-400">Key Activities:</span>
-                    <ul className="text-xs text-white mt-1 space-y-1">
-                      {month.activities.map((activity, idx) => (
-                        <li key={idx} className="flex items-start gap-1">
-                          <span className="text-blue-400">•</span>
-                          {activity}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div>
-                    <span className="text-sm font-medium text-green-400">Assessments:</span>
-                    <ul className="text-xs text-white mt-1 space-y-1">
-                      {month.assessments.map((assessment, idx) => (
-                        <li key={idx} className="flex items-start gap-1">
-                          <Target className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                          {assessment}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,7 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Star, Award, TrendingUp } from 'lucide-react';
-
 interface BrandComparison {
   brand: string;
   model: string;
@@ -21,94 +17,85 @@ interface ToolComparisonChartProps {
 }
 
 const ToolComparisonChart = ({ title, tools, category }: ToolComparisonChartProps) => {
-  const getRatingStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <Star
-        key={i}
-        className={`h-3 w-3 ${i < rating ? 'text-yellow-400 fill-current' : 'text-white'}`}
-      />
-    ));
-  };
-
-  const getValueBadge = (index: number) => {
-    if (index === 0)
-      return { text: 'Best Overall', color: 'bg-green-500/20 text-green-400 border-green-500/30' };
-    if (index === 1)
-      return { text: 'Best Value', color: 'bg-blue-500/20 text-blue-400 border-blue-500/30' };
-    if (index === 2)
-      return {
-        text: 'Budget Pick',
-        color: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
-      };
+  const getValueLabel = (index: number) => {
+    if (index === 0) return 'Best overall';
+    if (index === 1) return 'Best value';
+    if (index === 2) return 'Budget pick';
     return null;
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-white/5">
-      <CardHeader>
-        <div className="flex items-center gap-2">
-          <Award className="h-5 w-5 text-elec-yellow" />
-          <CardTitle className="text-elec-yellow">{title}</CardTitle>
-        </div>
-        <p className="text-sm text-white">
-          Professional comparison of top {category} tools for UK electricians
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Comparison
+        </span>
+        <h3 className="text-[18px] font-semibold text-white leading-tight">{title}</h3>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Professional comparison of top {category} tools for UK electricians.
         </p>
-      </CardHeader>
+      </div>
 
-      <CardContent>
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
-          {tools.map((tool, index) => {
-            const badge = getValueBadge(index);
-            return (
-              <div key={index} className="border border-elec-yellow/30 rounded-lg p-4 space-y-3">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h4 className="font-medium text-white">{tool.brand}</h4>
-                    <p className="text-sm text-white">{tool.model}</p>
-                  </div>
-                  {badge && (
-                    <Badge className={badge.color} variant="outline">
-                      {badge.text}
-                    </Badge>
-                  )}
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+        {tools.map((tool, index) => {
+          const label = getValueLabel(index);
+          return (
+            <div
+              key={index}
+              className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-3"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="space-y-0.5">
+                  <h4 className="text-[14px] font-medium text-white">{tool.brand}</h4>
+                  <p className="text-[13px] text-white/85">{tool.model}</p>
                 </div>
+                {label && (
+                  <span className="text-[10px] uppercase tracking-[0.18em] text-white/55 flex-shrink-0">
+                    {label}
+                  </span>
+                )}
+              </div>
 
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-white">Price:</span>
-                    <span className="text-elec-yellow font-medium">{tool.price}</span>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-white">Rating:</span>
-                    <div className="flex items-center gap-1">{getRatingStars(tool.rating)}</div>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-white">Warranty:</span>
-                    <span className="text-white">{tool.warranty}</span>
-                  </div>
+              <div className="space-y-1 text-[13px] text-white/85">
+                <div className="flex justify-between">
+                  <span>Price</span>
+                  <span className="font-mono text-white">{tool.price}</span>
                 </div>
-
-                <div>
-                  <h5 className="text-sm font-medium text-white mb-1">Key Features:</h5>
-                  <ul className="text-xs text-white space-y-0.5">
-                    {tool.features.slice(0, 3).map((feature, idx) => (
-                      <li key={idx}>• {feature}</li>
-                    ))}
-                  </ul>
+                <div className="flex justify-between">
+                  <span>Rating</span>
+                  <span className="font-mono text-white">{tool.rating}/5</span>
                 </div>
-
-                <div className="bg-blue-500/10 rounded p-2">
-                  <span className="text-xs font-medium text-blue-300">Best For:</span>
-                  <p className="text-xs text-blue-200 mt-1">{tool.bestFor}</p>
+                <div className="flex justify-between">
+                  <span>Warranty</span>
+                  <span>{tool.warranty}</span>
                 </div>
               </div>
-            );
-          })}
-        </div>
-      </CardContent>
-    </Card>
+
+              <div className="space-y-1">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Key features
+                </span>
+                <ul className="text-[13px] text-white/85 space-y-0.5">
+                  {tool.features.slice(0, 3).map((feature, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-2 space-y-1">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Best for
+                </span>
+                <p className="text-[13px] text-white/85 leading-relaxed">{tool.bestFor}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 };
 

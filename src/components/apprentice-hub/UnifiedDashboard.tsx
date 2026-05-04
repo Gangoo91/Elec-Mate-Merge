@@ -224,13 +224,10 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
   if (!userSelection && !qualLoading) {
     return (
       <div className="px-5 py-6 space-y-6 lg:px-6 lg:max-w-4xl lg:mx-auto">
-        <div className="relative overflow-hidden glass-premium rounded-2xl">
-          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 opacity-60" />
-          <div className="relative z-10 px-5 py-4">
-            <p className="text-[13px] text-white mb-0.5">{getGreeting()},</p>
-            <h2 className="text-xl font-bold text-blue-400 tracking-tight">{firstName}</h2>
-            <p className="text-[13px] text-white mt-2">Select your qualification to get started</p>
-          </div>
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">{getGreeting()}</span>
+          <h2 className="text-xl font-bold text-white tracking-tight mt-1">{firstName}</h2>
+          <p className="text-[14px] text-white/85 leading-relaxed mt-2">Select your qualification to get started</p>
         </div>
         <QualificationSelector />
       </div>
@@ -261,7 +258,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
             <p className="text-[10px] text-white mt-0.5 uppercase tracking-wider">{tree.totalACs > 0 ? 'ACs' : 'Portfolio'}</p>
           </button>
           <button onClick={() => onNavigate('hours')} className="text-center touch-manipulation active:opacity-70">
-            <p className={cn('text-lg font-bold leading-none', weeklyPercent >= 100 ? 'text-green-400' : 'text-white')}>
+            <p className={cn('text-lg font-bold leading-none', weeklyPercent >= 100 ? 'text-elec-yellow' : 'text-white')}>
               {weeklyHours.toFixed(1)}h
             </p>
             <p className="text-[10px] text-white mt-0.5 uppercase tracking-wider">Week</p>
@@ -284,13 +281,13 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
 
       {/* No-data guard */}
       {userSelection && !acLoading && !qualLoading && tree.totalACs === 0 && (
-        <div className="p-4 rounded-2xl border border-orange-500/30 bg-orange-500/10">
-          <p className="text-sm font-medium text-white">
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
+          <p className="text-[14px] text-white/85 leading-relaxed">
             No curriculum data for this course yet.
           </p>
           <button
             onClick={() => setShowCourseSelector(true)}
-            className="text-sm text-orange-300 font-semibold mt-1.5 touch-manipulation"
+            className="text-sm text-elec-yellow font-semibold mt-1.5 touch-manipulation"
           >
             Switch to a supported course
           </button>
@@ -331,11 +328,11 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
             haptic.light();
             onCapture();
           }}
-          className="w-full p-4 rounded-2xl bg-gradient-to-r from-elec-yellow/[0.08] to-transparent border border-elec-yellow/20 text-left touch-manipulation active:scale-[0.99] transition-transform"
+          className="w-full p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] text-left touch-manipulation active:scale-[0.99] transition-transform"
         >
           <div className="flex items-start gap-3">
             <div className="flex-1 min-w-0">
-              <p className="text-xs text-white font-medium mb-0.5">Next AC to Target</p>
+              <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 mb-1">Next AC to Target</p>
               <p className="text-sm font-semibold text-white leading-snug">
                 {nextAC.unitCode} {nextAC.acRef}
               </p>
@@ -347,14 +344,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
           <div className="mt-3 flex items-center gap-2">
             <div className="flex-1 h-1.5 rounded-full bg-white/[0.08] overflow-hidden">
               <motion.div
-                className={cn(
-                  'h-full rounded-full',
-                  overallPercent >= 75
-                    ? 'bg-green-400'
-                    : overallPercent >= 25
-                      ? 'bg-amber-400'
-                      : 'bg-red-400'
-                )}
+                className="h-full rounded-full bg-elec-yellow"
                 initial={{ width: 0 }}
                 animate={{ width: `${overallPercent}%` }}
                 transition={{ type: 'spring', stiffness: 60, damping: 15, delay: 0.1 }}
@@ -366,11 +356,11 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
           </div>
         </button>
       ) : tree.totalACs > 0 ? (
-        <div className="p-4 rounded-2xl bg-gradient-to-r from-green-500/[0.08] to-transparent border border-green-500/20 flex items-center gap-3">
-          <CheckCircle2 className="h-6 w-6 text-green-400 flex-shrink-0" />
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 flex items-center gap-3">
+          <CheckCircle2 className="h-6 w-6 text-elec-yellow flex-shrink-0" />
           <div>
-            <p className="text-sm font-semibold text-green-400">All ACs Covered</p>
-            <p className="text-xs text-white mt-0.5">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">All ACs covered</span>
+            <p className="text-[14px] text-white/85 leading-relaxed mt-0.5">
               {tree.totalACs} assessment criteria evidenced
             </p>
           </div>
@@ -412,26 +402,18 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                 >
                   <CollapsibleTrigger asChild>
                     <button
-                      className={cn(
-                        'w-full text-left p-4 rounded-2xl transition-all',
-                        'bg-white/[0.03] border border-white/[0.08]',
-                        'hover:border-white/[0.15] active:scale-[0.99] touch-manipulation',
-                        expandedUnits.has(unit.unitCode) && 'border-elec-yellow/30 bg-white/[0.05]'
+                      className={cn('w-full text-left p-4 rounded-xl transition-all',
+                        'bg-white/[0.02] border border-white/[0.06]',
+                        'hover:border-white/[0.12] active:scale-[0.99] touch-manipulation',
+                        expandedUnits.has(unit.unitCode) && 'border-white/[0.12]'
                       )}
                     >
                       <div className="flex items-start gap-3">
-                        <div
-                          className={cn(
-                            'p-1.5 rounded-lg mt-0.5 flex-shrink-0',
-                            expandedUnits.has(unit.unitCode)
-                              ? 'bg-elec-yellow/20'
-                              : 'bg-white/[0.06]'
-                          )}
-                        >
+                        <div className="mt-0.5 flex-shrink-0">
                           {expandedUnits.has(unit.unitCode) ? (
                             <ChevronDown className="h-4 w-4 text-elec-yellow" />
                           ) : (
-                            <ChevronRight className="h-4 w-4 text-white" />
+                            <ChevronRight className="h-4 w-4 text-white/55" />
                           )}
                         </div>
                         <div className="flex-1 min-w-0">
@@ -449,11 +431,10 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                             progress={totalUnitACs > 0 ? evidencedUnitACs / totalUnitACs : 0}
                           />
                           <span
-                            className={cn(
-                              'text-[10px] font-medium',
+                            className={cn('text-[10px] font-medium',
                               evidencedUnitACs === totalUnitACs && totalUnitACs > 0
-                                ? 'text-green-400'
-                                : 'text-white'
+                                ? 'text-elec-yellow'
+                                : 'text-white/55'
                             )}
                           >
                             {evidencedUnitACs}/{totalUnitACs}
@@ -467,7 +448,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                       {unit.learningOutcomes.map((lo) => (
                         <div key={`${unit.unitCode}-${lo.loNumber}`} className="space-y-2">
                           <div className="flex items-start gap-2 text-left">
-                            <BookOpen className="h-3.5 w-3.5 text-blue-400 mt-0.5 flex-shrink-0" />
+                            <BookOpen className="h-3.5 w-3.5 text-white/55 mt-0.5 flex-shrink-0" />
                             <p className="text-xs font-medium text-white leading-snug text-left">
                               LO{lo.loNumber}: {lo.loText}
                             </p>
@@ -492,23 +473,21 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                                     });
                                     setShowACEvidence(true);
                                   }}
-                                  className={cn(
-                                    'w-full flex items-start gap-2 text-xs text-white text-left touch-manipulation active:bg-white/[0.06] rounded-lg py-2 px-2 -mx-2 transition-colors',
-                                    hasEvidence && 'bg-green-500/[0.04]'
+                                  className={cn('w-full flex items-start gap-2 text-xs text-white text-left touch-manipulation active:bg-white/[0.06] rounded-lg py-2 px-2 -mx-2 transition-colors',
+                                    hasEvidence && 'bg-white/[0.02]'
                                   )}
                                 >
                                   {hasEvidence ? (
-                                    <CheckCircle2 className="h-4 w-4 text-green-400 flex-shrink-0 mt-px" />
+                                    <CheckCircle2 className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-px" />
                                   ) : (
-                                    <span className="text-elec-yellow flex-shrink-0 mt-px w-4 text-center">
+                                    <span className="text-white/55 flex-shrink-0 mt-px w-4 text-center">
                                       •
                                     </span>
                                   )}
                                   <span className="flex-1 text-left">
                                     <span
-                                      className={cn(
-                                        'font-medium',
-                                        hasEvidence ? 'text-green-400' : 'text-white'
+                                      className={cn('font-medium',
+                                        hasEvidence ? 'text-elec-yellow' : 'text-white'
                                       )}
                                     >
                                       {ac.acRef}
@@ -516,12 +495,9 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                                     {ac.acText.replace(`${ac.acRef} `, '')}
                                   </span>
                                   {hasEvidence && (
-                                    <Badge
-                                      variant="outline"
-                                      className="text-[9px] px-1 py-0 border-green-500/30 text-green-400 shrink-0"
-                                    >
+                                    <span className="text-[10px] text-white/85 px-1.5 py-0.5 rounded-md border border-white/10 bg-white/[0.03] shrink-0">
                                       {evidenceList.length}
-                                    </Badge>
+                                    </span>
                                   )}
                                 </button>
                               );
@@ -557,7 +533,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                 <button
                   key={entry.id}
                   onClick={() => onNavigate('work')}
-                  className="w-full flex items-start gap-3 p-3.5 rounded-2xl bg-white/[0.03] border border-white/[0.06] text-left touch-manipulation active:scale-[0.99] transition-transform"
+                  className="w-full flex items-start gap-3 p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.06] text-left touch-manipulation active:scale-[0.99] transition-transform"
                 >
                   <EvidenceThumbnail entry={entry} />
                   <div className="flex-1 min-w-0">
@@ -575,34 +551,24 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                           return (
                             <span
                               key={i}
-                              className="inline-flex items-center px-1.5 py-0.5 rounded bg-elec-yellow/10 text-elec-yellow text-[10px] font-medium"
+                              className="inline-flex items-center px-1.5 py-0.5 rounded-md border border-white/10 bg-white/[0.03] text-white/85 text-[10px] font-medium"
                             >
                               {label}
                             </span>
                           );
                         })}
                         {entryACs.length > 3 && (
-                          <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-white/[0.06] text-white text-[10px]">
+                          <span className="inline-flex items-center px-1.5 py-0.5 rounded-md border border-white/10 bg-white/[0.03] text-white/55 text-[10px]">
                             +{entryACs.length - 3}
                           </span>
                         )}
                       </div>
                     )}
                     <div className="flex items-center gap-2 mt-1.5">
-                      <Badge
-                        variant="outline"
-                        className={cn(
-                          'text-[10px] px-2 py-0.5',
-                          entry.status === 'completed' || entry.status === 'reviewed'
-                            ? 'border-green-500/30 text-green-400'
-                            : entry.status === 'in-progress'
-                              ? 'border-blue-500/30 text-blue-400'
-                              : 'border-white/20 text-white'
-                        )}
-                      >
+                      <span className="text-[10px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                         {String(entry.status || 'draft')}
-                      </Badge>
-                      <span className="text-[10px] text-white">
+                      </span>
+                      <span className="text-[10px] text-white/55">
                         {formatRelativeDate(new Date(entry.dateCreated))}
                       </span>
                     </div>
@@ -691,7 +657,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                                 stiffness: 400,
                                 damping: 25,
                               }}
-                              className="flex items-center gap-3 p-3.5 rounded-2xl bg-white/[0.03] border border-white/[0.06] border-l-2 border-l-green-500/40"
+                              className="flex items-center gap-3 p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.06]"
                             >
                               <EvidenceThumbnail entry={entry} />
                               <div className="flex-1 min-w-0">
@@ -707,19 +673,9 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                                   )}
                                 </div>
                               </div>
-                              <Badge
-                                variant="outline"
-                                className={cn(
-                                  'text-[10px] px-2 py-0.5',
-                                  entry.status === 'completed' || entry.status === 'reviewed'
-                                    ? 'border-green-500/30 text-green-400'
-                                    : entry.status === 'in-progress'
-                                      ? 'border-blue-500/30 text-blue-400'
-                                      : 'border-white/20 text-white'
-                                )}
-                              >
+                              <span className="text-[10px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                                 {String(entry.status || 'draft')}
-                              </Badge>
+                              </span>
                             </motion.div>
                           ))}
                           <motion.div
@@ -735,7 +691,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                                 setSelectedAC(null);
                                 onCapture();
                               }}
-                              className="w-full h-11 mt-3 touch-manipulation active:scale-95 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                              className="w-full h-11 mt-3 touch-manipulation active:scale-95 border-white/15 text-white hover:bg-white/[0.05]"
                             >
                               <Plus className="h-4 w-4 mr-2" />
                               Add More Evidence

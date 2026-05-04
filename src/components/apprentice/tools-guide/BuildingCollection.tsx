@@ -1,15 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { TrendingUp, Calendar, PoundSterling, Wrench } from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
-
 const BuildingCollection = () => {
-  const isMobile = useIsMobile();
-
   const phases = [
     {
       phase: 'Phase 1',
-      title: 'Essential Safety & Basic Hand Tools',
+      title: 'Essential safety & basic hand tools',
       timeframe: 'Months 1-6',
       budget: '£300-500',
       priority: 'Critical',
@@ -23,7 +16,7 @@ const BuildingCollection = () => {
     },
     {
       phase: 'Phase 2',
-      title: 'Testing Equipment & Power Tools',
+      title: 'Testing equipment & power tools',
       timeframe: 'Months 6-12',
       budget: '£400-700',
       priority: 'High',
@@ -37,7 +30,7 @@ const BuildingCollection = () => {
     },
     {
       phase: 'Phase 3',
-      title: 'Advanced Testing & Installation Tools',
+      title: 'Advanced testing & installation tools',
       timeframe: 'Months 12-24',
       budget: '£600-1000',
       priority: 'Medium',
@@ -51,7 +44,7 @@ const BuildingCollection = () => {
     },
     {
       phase: 'Phase 4',
-      title: 'Professional Specialisation Tools',
+      title: 'Professional specialisation tools',
       timeframe: 'Months 24+',
       budget: '£500-800',
       priority: 'Future',
@@ -65,29 +58,16 @@ const BuildingCollection = () => {
     },
   ];
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case 'Critical':
-        return 'bg-red-500/20 text-red-400 border-red-500/30';
-      case 'High':
-        return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
-      case 'Medium':
-        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
-      case 'Future':
-        return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-      default:
-        return 'bg-white/10 text-white border-white/20';
-    }
-  };
-
   return (
-    <div className="p-4 sm:p-6">
-      <div className="text-center mb-6">
-        <h2 className="text-xl sm:text-2xl font-semibold text-elec-yellow mb-2 flex items-center justify-center gap-2">
-          <TrendingUp className="h-6 w-6" />
-          Tool Collection Strategy
+    <div className="px-4 sm:px-6 py-4 sm:py-6 space-y-6">
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Strategy
+        </span>
+        <h2 className="text-[22px] sm:text-[26px] font-semibold text-white leading-tight">
+          Tool collection strategy
         </h2>
-        <p className="text-sm sm:text-base text-white max-w-2xl mx-auto">
+        <p className="text-[14px] text-white/85 leading-relaxed max-w-2xl">
           A strategic approach to building your electrical tool collection. Prioritise safety and
           testing tools first, then expand to power tools as your career progresses.
         </p>
@@ -95,75 +75,100 @@ const BuildingCollection = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {phases.map((phase, index) => (
-          <Card
+          <div
             key={index}
-            className="border-elec-yellow/20 bg-white/10 hover:border-elec-yellow/40 transition-all duration-300"
+            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4"
           >
-            <CardHeader className="pb-3">
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-                      {phase.phase}
-                    </Badge>
-                    <Badge className={getPriorityColor(phase.priority)}>{phase.priority}</Badge>
-                  </div>
-                  <CardTitle className="text-lg text-elec-yellow">{phase.title}</CardTitle>
-                </div>
+            <div className="space-y-1">
+              <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span>{phase.phase}</span>
+                <span className="text-white/25">·</span>
+                <span>{phase.priority}</span>
               </div>
-            </CardHeader>
+              <h3 className="text-[16px] font-semibold text-white leading-tight">{phase.title}</h3>
+            </div>
 
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-                <div className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-white">Timeline:</span>
-                  <span className="font-medium">{phase.timeframe}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <PoundSterling className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-white">Budget:</span>
-                  <span className="font-medium text-green-400">{phase.budget}</span>
-                </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[13px] text-white/85">
+              <div className="space-y-0.5">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Timeline
+                </span>
+                <p>{phase.timeframe}</p>
               </div>
+              <div className="space-y-0.5">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Budget
+                </span>
+                <p className="font-mono">{phase.budget}</p>
+              </div>
+            </div>
 
-              <div className="bg-white/5 border border-elec-yellow/20 rounded-lg p-3">
-                <h4 className="font-medium text-sm text-elec-yellow mb-2 flex items-center gap-1.5">
-                  <Wrench className="h-4 w-4" />
-                  Essential Tools
-                </h4>
-                <ul className="space-y-1.5">
-                  {phase.items.map((item, idx) => (
-                    <li key={idx} className="text-sm text-white flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full flex-shrink-0"></div>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
+            <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Essential tools
+              </span>
+              <ul className="space-y-1.5">
+                {phase.items.map((item, idx) => (
+                  <li
+                    key={idx}
+                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  >
+                    <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         ))}
       </div>
 
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="p-4 bg-gradient-to-r from-elec-yellow/5 to-green-500/5 border border-elec-yellow/20 rounded-lg">
-          <h3 className="font-medium text-elec-yellow mb-2">💡 Smart Tool Purchasing</h3>
-          <ul className="text-sm text-white space-y-1">
-            <li>• Invest in quality tools that will last your career</li>
-            <li>• Check if your employer provides tool allowances</li>
-            <li>• Consider tool insurance for expensive equipment</li>
-            <li>• Look for apprentice trade discounts</li>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Smart tool purchasing
+          </span>
+          <ul className="space-y-1 text-[14px] text-white/85 leading-relaxed">
+            <li className="flex items-start gap-2">
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>Invest in quality tools that will last your career</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>Check if your employer provides tool allowances</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>Consider tool insurance for expensive equipment</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>Look for apprentice trade discounts</span>
+            </li>
           </ul>
         </div>
 
-        <div className="p-4 bg-gradient-to-r from-blue-500/5 to-elec-yellow/5 border border-blue-500/20 rounded-lg">
-          <h3 className="font-medium text-blue-400 mb-2">🎯 Funding Your Tools</h3>
-          <ul className="text-sm text-white space-y-1">
-            <li>• Apprenticeship training provider schemes</li>
-            <li>• Government grants for apprentices</li>
-            <li>• Employer tool purchase programmes</li>
-            <li>• Hire tools for one-off requirements</li>
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Funding your tools
+          </span>
+          <ul className="space-y-1 text-[14px] text-white/85 leading-relaxed">
+            <li className="flex items-start gap-2">
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>Apprenticeship training provider schemes</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>Government grants for apprentices</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>Employer tool purchase programmes</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>Hire tools for one-off requirements</span>
+            </li>
           </ul>
         </div>
       </div>

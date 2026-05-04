@@ -59,8 +59,8 @@ const GRADE_LABELS: Record<string, string> = {
 
 const PRIORITY_COLOURS: Record<string, string> = {
   high: 'bg-red-500/10 text-red-400 border-red-500/20',
-  medium: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
-  low: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+  medium: 'bg-white/[0.02] text-white/85 border-white/[0.06]',
+  low: 'bg-white/[0.02] text-white/85 border-white/[0.06]',
 };
 
 export function EvidenceValidationReport({
@@ -131,8 +131,7 @@ export function EvidenceValidationReport({
                 {/* Grade Badge */}
                 <div className="flex items-center gap-4">
                   <div
-                    className={cn(
-                      'h-20 w-20 rounded-2xl flex flex-col items-center justify-center border',
+                    className={cn('h-20 w-20 rounded-2xl flex flex-col items-center justify-center border',
                       getGradeColour(result.overallGrade).bg,
                       getGradeColour(result.overallGrade).border
                     )}
@@ -146,8 +145,7 @@ export function EvidenceValidationReport({
                   </div>
                   <div className="flex-1">
                     <p
-                      className={cn(
-                        'text-sm font-semibold',
+                      className={cn('text-sm font-semibold',
                         getGradeColour(result.overallGrade).text
                       )}
                     >
@@ -196,8 +194,7 @@ export function EvidenceValidationReport({
                       {result.improvementActions.map((action, i) => (
                         <div
                           key={i}
-                          className={cn(
-                            'flex items-start gap-3 p-3 rounded-lg border',
+                          className={cn('flex items-start gap-3 p-3 rounded-lg border',
                             PRIORITY_COLOURS[action.priority]
                           )}
                         >

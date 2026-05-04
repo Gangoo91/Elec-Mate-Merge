@@ -26,25 +26,25 @@ const MentalHealthHubLayout = ({ children, showBackButton = true }: MentalHealth
     },
     {
       title: 'Stress Management',
-      icon: <Brain className="h-5 w-5 text-blue-400" />,
+      icon: <Brain className="h-5 w-5 text-white/85" />,
       description: 'Quick techniques & tools',
       link: `${isElectricianPath ? '/electrician' : '/apprentice'}/mental-health/stress-management`,
     },
     {
       title: 'Mental Health Mates',
-      icon: <Users className="h-5 w-5 text-purple-400" />,
+      icon: <Users className="h-5 w-5 text-white/85" />,
       description: 'Connect with peer support',
       link: '#mental-health-mates',
     },
     {
       title: 'Resources Library',
-      icon: <BookOpen className="h-5 w-5 text-green-400" />,
+      icon: <BookOpen className="h-5 w-5 text-white/85" />,
       description: 'Guides, articles & tools',
       link: `${isElectricianPath ? '/electrician' : '/apprentice'}/mental-health/resources`,
     },
     {
       title: 'Podcasts',
-      icon: <Headphones className="h-5 w-5 text-orange-400" />,
+      icon: <Headphones className="h-5 w-5 text-white/85" />,
       description: 'Mental health podcasts',
       link: `${isElectricianPath ? '/electrician' : '/apprentice'}/mental-health#podcasts`,
     },
@@ -80,7 +80,7 @@ const MentalHealthHubLayout = ({ children, showBackButton = true }: MentalHealth
       </div>
 
       {/* Emergency Banner */}
-      <Card className="border-red-500/40 bg-red-500/5 shadow-md">
+      <Card className="border-white/[0.06] bg-white/[0.02] shadow-md">
         <CardContent className="p-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
             <Shield className="h-8 w-8 text-red-500 flex-shrink-0" />
@@ -108,8 +108,7 @@ const MentalHealthHubLayout = ({ children, showBackButton = true }: MentalHealth
             className="block group"
           >
             <Card
-              className={cn(
-                'border-elec-yellow/20 bg-[hsl(0_0%_12%)] h-full hover:shadow-md hover:border-elec-yellow/30 transition-all',
+              className={cn('border-elec-yellow/20 bg-[hsl(0_0%_12%)] h-full hover:shadow-md hover:border-elec-yellow/30 transition-all',
                 'group-hover:scale-[1.02] group-active:scale-[0.98]',
                 'touch-manipulation min-h-[100px]',
                 card.urgent && 'border-red-500/30 bg-red-500/5'
@@ -122,7 +121,7 @@ const MentalHealthHubLayout = ({ children, showBackButton = true }: MentalHealth
                     <CardTitle className="text-xs sm:text-sm">{card.title}</CardTitle>
                   </div>
                   {card.urgent && (
-                    <Badge className="bg-red-500 text-white text-[10px] sm:text-xs">
+                    <Badge className="bg-white/[0.02] text-white text-[10px] sm:text-xs">
                       Urgent
                     </Badge>
                   )}

@@ -1,32 +1,45 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import {
-  Target,
-  BookOpen,
-  Calculator,
-  Zap,
-  Building,
-  FileText,
-  Clock,
-  CheckCircle,
-} from 'lucide-react';
+
+const Section = ({
+  eyebrow,
+  description,
+  children,
+}: {
+  eyebrow: string;
+  description?: string;
+  children: React.ReactNode;
+}) => (
+  <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+    <div className="space-y-1">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        {eyebrow}
+      </span>
+      {description && (
+        <p className="text-[14px] text-white/70 leading-relaxed">{description}</p>
+      )}
+    </div>
+    {children}
+  </div>
+);
+
+const Pill = ({ children }: { children: React.ReactNode }) => (
+  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+    {children}
+  </span>
+);
 
 const ExamStrategiesTab = () => {
   const examTypes = [
     {
-      title: '18th Edition BS 7671',
-      icon: BookOpen,
-      color: 'border-blue-500/20 bg-blue-500/10',
-      iconColor: 'text-blue-400',
+      title: 'BS 7671:2018+A4:2026',
       difficulty: 'High',
       duration: '2 hours',
       passRate: '70%',
       strategies: [
         {
-          strategy: 'Master Part 4 - Protection for Safety',
+          strategy: 'Master Part 4 — Protection for Safety',
           description:
-            'This section is heavily tested and forms the foundation of electrical safety',
+            'This section is heavily tested and forms the foundation of electrical safety.',
           tips: [
             'Learn Table 41.3 by heart',
             'Understand discrimination principles',
@@ -35,8 +48,8 @@ const ExamStrategiesTab = () => {
           priority: 'Critical',
         },
         {
-          strategy: 'Cable Calculations Mastery',
-          description: 'Cable sizing appears in multiple question formats throughout the exam',
+          strategy: 'Cable calculations mastery',
+          description: 'Cable sizing appears in multiple question formats throughout the exam.',
           tips: [
             'Practice current-carrying capacity daily',
             'Understand all derating factors',
@@ -45,8 +58,8 @@ const ExamStrategiesTab = () => {
           priority: 'High',
         },
         {
-          strategy: 'Effective Reference Navigation',
-          description: 'Learn to navigate BS 7671 and On-Site Guide quickly and efficiently',
+          strategy: 'Effective reference navigation',
+          description: 'Learn to navigate BS 7671 and On-Site Guide quickly and efficiently.',
           tips: [
             'Practice finding regulations in under 30 seconds',
             'Use index efficiently',
@@ -57,17 +70,15 @@ const ExamStrategiesTab = () => {
       ],
     },
     {
-      title: 'Level 3 Diploma Theory',
-      icon: Calculator,
-      color: 'border-yellow-500/20 bg-yellow-500/10',
-      iconColor: 'text-yellow-400',
-      difficulty: 'Medium-High',
+      title: 'Level 3 diploma theory',
+      difficulty: 'Medium-high',
       duration: '1.5 hours',
       passRate: '75%',
       strategies: [
         {
-          strategy: 'AC Theory Foundation',
-          description: 'Build rock-solid understanding of AC fundamentals before complex topics',
+          strategy: 'AC theory foundation',
+          description:
+            'Build rock-solid understanding of AC fundamentals before complex topics.',
           tips: [
             'Master RLC circuits completely',
             'Understand impedance thoroughly',
@@ -76,9 +87,9 @@ const ExamStrategiesTab = () => {
           priority: 'Critical',
         },
         {
-          strategy: 'Three-Phase Power Systems',
+          strategy: 'Three-phase power systems',
           description:
-            'Master the relationship between line and phase values in all configurations',
+            'Master the relationship between line and phase values in all configurations.',
           tips: [
             'Practice star-delta conversions',
             'Understand power triangles',
@@ -87,8 +98,8 @@ const ExamStrategiesTab = () => {
           priority: 'High',
         },
         {
-          strategy: 'Formula Application Strategy',
-          description: 'Focus on understanding concepts rather than memorising formulas',
+          strategy: 'Formula application strategy',
+          description: 'Focus on understanding concepts rather than memorising formulas.',
           tips: [
             'Draw circuit diagrams for every problem',
             'Work through formula derivations',
@@ -99,17 +110,14 @@ const ExamStrategiesTab = () => {
       ],
     },
     {
-      title: 'AM2 Practical Assessment',
-      icon: Zap,
-      color: 'border-green-500/20 bg-green-500/10',
-      iconColor: 'text-green-400',
+      title: 'AM2 practical assessment',
       difficulty: 'High',
       duration: '5.5 hours',
       passRate: '85%',
       strategies: [
         {
-          strategy: 'Time Management Excellence',
-          description: 'Develop a systematic approach to complete all tasks within time limits',
+          strategy: 'Time management excellence',
+          description: 'Develop a systematic approach to complete all tasks within time limits.',
           tips: [
             'Practice complete mock assessments',
             'Time each individual task',
@@ -118,8 +126,8 @@ const ExamStrategiesTab = () => {
           priority: 'Critical',
         },
         {
-          strategy: 'Methodical Testing Approach',
-          description: 'Follow BS 7671 testing sequence religiously for consistent results',
+          strategy: 'Methodical testing approach',
+          description: 'Follow BS 7671 testing sequence religiously for consistent results.',
           tips: [
             'Memorise testing sequence',
             'Practice with different MFT models',
@@ -128,8 +136,9 @@ const ExamStrategiesTab = () => {
           priority: 'High',
         },
         {
-          strategy: 'Installation Quality Focus',
-          description: 'Ensure all installation work meets current standards and regulations',
+          strategy: 'Installation quality focus',
+          description:
+            'Ensure all installation work meets current standards and regulations.',
           tips: [
             'Check cable routes and supports',
             'Verify termination quality',
@@ -140,17 +149,14 @@ const ExamStrategiesTab = () => {
       ],
     },
     {
-      title: 'Level 2 Fundamentals',
-      icon: Building,
-      color: 'border-purple-500/20 bg-purple-500/10',
-      iconColor: 'text-purple-400',
+      title: 'Level 2 fundamentals',
       difficulty: 'Medium',
       duration: '1.5 hours',
       passRate: '80%',
       strategies: [
         {
-          strategy: 'Basic Electrical Principles',
-          description: "Ensure solid foundation in Ohm's Law and basic circuit analysis",
+          strategy: 'Basic electrical principles',
+          description: "Ensure solid foundation in Ohm's Law and basic circuit analysis.",
           tips: [
             'Practice V=IR calculations daily',
             'Understand series vs parallel circuits',
@@ -159,8 +165,8 @@ const ExamStrategiesTab = () => {
           priority: 'Critical',
         },
         {
-          strategy: 'Safe Working Practices',
-          description: 'Demonstrate comprehensive understanding of electrical safety',
+          strategy: 'Safe working practices',
+          description: 'Demonstrate comprehensive understanding of electrical safety.',
           tips: [
             'Know PPE requirements',
             'Understand isolation procedures',
@@ -171,17 +177,14 @@ const ExamStrategiesTab = () => {
       ],
     },
     {
-      title: 'Inspection & Testing (2391)',
-      icon: FileText,
-      color: 'border-cyan-500/20 bg-cyan-500/10',
-      iconColor: 'text-cyan-400',
+      title: 'Inspection and testing (2391)',
       difficulty: 'High',
       duration: '3 hours',
       passRate: '65%',
       strategies: [
         {
-          strategy: 'Test Equipment Mastery',
-          description: 'Know all test equipment functions and limitations thoroughly',
+          strategy: 'Test equipment mastery',
+          description: 'Know all test equipment functions and limitations thoroughly.',
           tips: [
             'Understand MFT capabilities',
             'Know test voltage requirements',
@@ -190,8 +193,8 @@ const ExamStrategiesTab = () => {
           priority: 'Critical',
         },
         {
-          strategy: 'Fault Finding Methodology',
-          description: 'Develop systematic approach to identifying and documenting faults',
+          strategy: 'Fault finding methodology',
+          description: 'Develop systematic approach to identifying and documenting faults.',
           tips: [
             'Follow logical test sequence',
             'Document findings clearly',
@@ -205,8 +208,8 @@ const ExamStrategiesTab = () => {
 
   const examTechniques = [
     {
-      technique: 'Pre-Exam Preparation',
-      description: 'Optimise your readiness before entering the exam room',
+      technique: 'Pre-exam preparation',
+      description: 'Optimise your readiness before entering the exam room.',
       steps: [
         'Arrive 15 minutes early to settle nerves',
         'Bring spare calculators and writing materials',
@@ -216,8 +219,8 @@ const ExamStrategiesTab = () => {
       timeframe: 'Day of exam',
     },
     {
-      technique: 'Question Analysis Strategy',
-      description: "Read questions carefully and identify exactly what's being asked",
+      technique: 'Question analysis strategy',
+      description: "Read questions carefully and identify exactly what's being asked.",
       steps: [
         'Read each question twice before starting',
         'Highlight key information and requirements',
@@ -227,8 +230,8 @@ const ExamStrategiesTab = () => {
       timeframe: 'During exam',
     },
     {
-      technique: 'Time Allocation Method',
-      description: 'Manage your time effectively to complete all questions',
+      technique: 'Time allocation method',
+      description: 'Manage your time effectively to complete all questions.',
       steps: [
         'Allocate 1-2 minutes per mark as a guide',
         'Complete easier questions first to build confidence',
@@ -238,8 +241,8 @@ const ExamStrategiesTab = () => {
       timeframe: 'Throughout exam',
     },
     {
-      technique: 'Working Methodology',
-      description: 'Show clear working to maximise partial marks',
+      technique: 'Working methodology',
+      description: 'Show clear working to maximise partial marks.',
       steps: [
         'Write down the relevant formula first',
         'Show all substitution steps clearly',
@@ -252,209 +255,165 @@ const ExamStrategiesTab = () => {
 
   const advancedStrategies = [
     {
-      title: 'Memory Palace Technique',
-      description: 'Use spatial memory to remember complex regulations and tables',
+      title: 'Memory palace technique',
+      description: 'Use spatial memory to remember complex regulations and tables.',
       application: 'Ideal for BS 7671 regulation numbers and Table 41.3 values',
     },
     {
-      title: 'Pattern Recognition',
-      description: 'Identify common question patterns and develop template solutions',
+      title: 'Pattern recognition',
+      description: 'Identify common question patterns and develop template solutions.',
       application: 'Effective for cable calculation and circuit design questions',
     },
     {
-      title: 'Stress Inoculation',
-      description: 'Practice under exam-like pressure to build resilience',
+      title: 'Stress inoculation',
+      description: 'Practice under exam-like pressure to build resilience.',
       application: 'Take mock exams with strict time limits and distractions',
     },
     {
-      title: 'Interleaving Practice',
-      description: 'Mix different topic areas in study sessions rather than blocking',
+      title: 'Interleaving practice',
+      description: 'Mix different topic areas in study sessions rather than blocking.',
       application: 'Combine theory, calculations, and regulations in single sessions',
     },
   ];
 
   return (
-    <div className="space-y-6">
-      {/* Quick Reference Guide */}
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Target className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Quick Exam Success Formula</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="text-center p-4 border border-elec-yellow/20 rounded-lg">
-              <Clock className="h-8 w-8 text-blue-400 mx-auto mb-2" />
-              <h4 className="font-semibold text-white mb-1">Preparation</h4>
-              <p className="text-xs text-white">3-6 months consistent study</p>
+    <div className="space-y-5">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Quick exam success formula
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+          {[
+            { label: 'Preparation', detail: '3-6 months consistent study' },
+            { label: 'Practice', detail: 'Daily mock questions' },
+            { label: 'Strategy', detail: 'Exam-specific techniques' },
+            { label: 'Success', detail: 'Confident performance' },
+          ].map((item) => (
+            <div
+              key={item.label}
+              className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
+            >
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                {item.label}
+              </span>
+              <p className="text-[12px] text-white/85 leading-relaxed">{item.detail}</p>
             </div>
-            <div className="text-center p-4 border border-elec-yellow/20 rounded-lg">
-              <BookOpen className="h-8 w-8 text-green-400 mx-auto mb-2" />
-              <h4 className="font-semibold text-white mb-1">Practice</h4>
-              <p className="text-xs text-white">Daily mock questions</p>
-            </div>
-            <div className="text-center p-4 border border-elec-yellow/20 rounded-lg">
-              <Target className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
-              <h4 className="font-semibold text-white mb-1">Strategy</h4>
-              <p className="text-xs text-white">Exam-specific techniques</p>
-            </div>
-            <div className="text-center p-4 border border-elec-yellow/20 rounded-lg">
-              <CheckCircle className="h-8 w-8 text-purple-400 mx-auto mb-2" />
-              <h4 className="font-semibold text-white mb-1">Success</h4>
-              <p className="text-xs text-white">Confident performance</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+          ))}
+        </div>
+      </div>
 
-      {/* Exam-Specific Strategies */}
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow">Comprehensive Exam Strategies</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            {examTypes.map((exam, index) => {
-              const IconComponent = exam.icon;
-              return (
-                <div key={index} className={`border rounded-lg p-6 ${exam.color}`}>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <IconComponent className={`h-6 w-6 ${exam.iconColor}`} />
-                      <h3 className="text-xl font-semibold text-white">{exam.title}</h3>
-                    </div>
-                    <div className="flex gap-2">
-                      <Badge variant="outline" className="text-xs border-white/20">
-                        {exam.difficulty}
-                      </Badge>
-                      <Badge variant="outline" className="text-xs border-white/20">
-                        {exam.duration}
-                      </Badge>
-                      <Badge variant="outline" className="text-xs border-white/20">
-                        Pass: {exam.passRate}
-                      </Badge>
-                    </div>
-                  </div>
-
-                  <div className="space-y-4">
-                    {exam.strategies.map((strategy, strategyIndex) => (
-                      <div key={strategyIndex} className="bg-black/20 rounded-lg p-4">
-                        <div className="flex items-center justify-between mb-2">
-                          <h4 className="font-medium text-white">{strategy.strategy}</h4>
-                          <Badge
-                            variant="outline"
-                            className={`text-xs ${
-                              strategy.priority === 'Critical'
-                                ? 'border-red-400 text-red-400'
-                                : strategy.priority === 'High'
-                                  ? 'border-orange-400 text-orange-400'
-                                  : 'border-blue-400 text-blue-400'
-                            }`}
-                          >
-                            {strategy.priority}
-                          </Badge>
-                        </div>
-                        <p className="text-sm text-white mb-3">{strategy.description}</p>
-                        <div className="flex flex-wrap gap-2">
-                          {strategy.tips.map((tip, tipIndex) => (
-                            <Badge
-                              key={tipIndex}
-                              variant="outline"
-                              className="text-xs border-white/20"
-                            >
-                              {tip}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+      <Section eyebrow="Comprehensive exam strategies">
+        <div className="space-y-3">
+          {examTypes.map((exam, index) => (
+            <div
+              key={index}
+              className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
+            >
+              <div className="flex items-start justify-between gap-3 flex-wrap">
+                <h3 className="text-[16px] font-semibold text-white">{exam.title}</h3>
+                <div className="flex flex-wrap gap-1.5">
+                  <Pill>{exam.difficulty}</Pill>
+                  <Pill>{exam.duration}</Pill>
+                  <Pill>Pass: {exam.passRate}</Pill>
                 </div>
-              );
-            })}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* General Exam Techniques */}
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow">Universal Exam Techniques</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {examTechniques.map((technique, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-semibold text-white">{technique.technique}</h4>
-                  <Badge
-                    variant="outline"
-                    className="text-xs border-elec-yellow/30 text-elec-yellow"
+              </div>
+              <div className="space-y-3">
+                {exam.strategies.map((strategy, strategyIndex) => (
+                  <div
+                    key={strategyIndex}
+                    className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-2"
                   >
-                    {technique.timeframe}
-                  </Badge>
-                </div>
-                <p className="text-sm text-white mb-3">{technique.description}</p>
-                <ol className="space-y-1">
-                  {technique.steps.map((step, stepIndex) => (
-                    <li key={stepIndex} className="text-xs text-white flex items-start gap-2">
-                      <span className="text-elec-yellow font-medium">{stepIndex + 1}.</span>
-                      {step}
-                    </li>
-                  ))}
-                </ol>
+                    <div className="flex items-baseline justify-between gap-2">
+                      <h4 className="text-[14px] text-white">{strategy.strategy}</h4>
+                      <Pill>{strategy.priority}</Pill>
+                    </div>
+                    <p className="text-[13px] text-white/85 leading-relaxed">
+                      {strategy.description}
+                    </p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {strategy.tips.map((tip, tipIndex) => (
+                        <Pill key={tipIndex}>{tip}</Pill>
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+            </div>
+          ))}
+        </div>
+      </Section>
 
-      {/* Advanced Strategies */}
-      <Card className="border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-pink-500/10">
-        <CardHeader>
-          <CardTitle className="text-purple-400">Advanced Learning Strategies</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {advancedStrategies.map((strategy, index) => (
-              <div key={index} className="border border-purple-500/20 rounded-lg p-4">
-                <h4 className="font-semibold text-white mb-2">{strategy.title}</h4>
-                <p className="text-sm text-white mb-3">{strategy.description}</p>
-                <div className="bg-purple-500/10 p-3 rounded-lg">
-                  <p className="text-xs text-purple-300">
-                    <strong>Best for:</strong> {strategy.application}
-                  </p>
-                </div>
+      <Section eyebrow="Universal exam techniques">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {examTechniques.map((technique, index) => (
+            <div
+              key={index}
+              className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
+            >
+              <div className="flex items-baseline justify-between gap-2">
+                <h4 className="text-[14px] font-semibold text-white">{technique.technique}</h4>
+                <Pill>{technique.timeframe}</Pill>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+              <p className="text-[13px] text-white/70 leading-relaxed">{technique.description}</p>
+              <ol className="space-y-1">
+                {technique.steps.map((step, stepIndex) => (
+                  <li
+                    key={stepIndex}
+                    className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                  >
+                    <span className="text-white/55 font-mono">{stepIndex + 1}.</span>
+                    <span>{step}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          ))}
+        </div>
+      </Section>
 
-      {/* Call to Action */}
-      <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/10">
-        <CardContent className="p-6 text-center">
-          <h3 className="text-xl font-semibold text-green-400 mb-2">
-            Ready to Start Your Exam Success Journey?
-          </h3>
-          <p className="text-white mb-4">
-            Choose your target exam and begin with our tailored study plan and practice resources.
-          </p>
-          <div className="flex flex-wrap justify-center gap-2">
-            <Button variant="outline" className="border-green-500/30">
-              18th Edition Practice
-            </Button>
-            <Button variant="outline" className="border-green-500/30">
-              Level 3 Mock Exams
-            </Button>
-            <Button variant="outline" className="border-green-500/30">
-              AM2 Preparation
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+      <Section eyebrow="Advanced learning strategies">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {advancedStrategies.map((strategy, index) => (
+            <div
+              key={index}
+              className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
+            >
+              <h4 className="text-[14px] font-semibold text-white">{strategy.title}</h4>
+              <p className="text-[13px] text-white/70 leading-relaxed">{strategy.description}</p>
+              <p className="text-[12px] text-white/85 leading-relaxed">
+                <span className="text-white/55">Best for: </span>
+                {strategy.application}
+              </p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section eyebrow="Ready to start your exam success journey?">
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Choose your target exam and begin with a tailored study plan and practice resources.
+        </p>
+        <div className="flex flex-wrap gap-2">
+          <Button
+            variant="outline"
+            className="h-10 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
+          >
+            BS 7671 practice
+          </Button>
+          <Button
+            variant="outline"
+            className="h-10 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
+          >
+            Level 3 mock exams
+          </Button>
+          <Button
+            variant="outline"
+            className="h-10 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
+          >
+            AM2 preparation
+          </Button>
+        </div>
+      </Section>
     </div>
   );
 };

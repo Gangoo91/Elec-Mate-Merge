@@ -18,9 +18,9 @@ const SupporterCard: React.FC<SupporterCardProps> = ({
   isConnecting = false,
 }) => {
   const trainingBadgeColors: Record<string, string> = {
-    peer: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
-    trained: 'bg-green-500/20 text-green-300 border-green-500/30',
-    mhfa_certified: 'bg-purple-500/20 text-purple-300 border-purple-500/30',
+    peer: 'bg-white/[0.02] text-white/85 border-white/[0.06]',
+    trained: 'bg-white/[0.02] text-white/85 border-white/[0.06]',
+    mhfa_certified: 'bg-white/[0.02] text-white/85 border-white/[0.06]',
   };
 
   // Shorter response time labels for compact display
@@ -40,7 +40,7 @@ const SupporterCard: React.FC<SupporterCardProps> = ({
 
   return (
     <div
-      className="relative bg-gradient-to-br from-white/[0.06] to-white/[0.02] backdrop-blur-xl rounded-xl border border-purple-500/20 overflow-hidden p-3 touch-manipulation active:scale-[0.98] transition-transform duration-150"
+      className="relative bg-white/[0.02] backdrop-blur-xl rounded-xl border border-white/[0.06] overflow-hidden p-3 touch-manipulation active:scale-[0.98] transition-transform duration-150"
       onClick={() => onViewProfile?.(supporter)}
     >
       {/* Top section: Avatar + Info - horizontal layout */}
@@ -51,11 +51,11 @@ const SupporterCard: React.FC<SupporterCardProps> = ({
             <img
               src={supporter.avatar_url}
               alt={supporter.display_name}
-              className="w-11 h-11 rounded-xl object-cover border border-purple-500/30"
+              className="w-11 h-11 rounded-xl object-cover border border-white/[0.06]"
             />
           ) : (
-            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-purple-500/40 to-pink-500/40 border border-purple-500/30 flex items-center justify-center">
-              <User className="w-5 h-5 text-purple-300" />
+            <div className="w-11 h-11 rounded-xl bg-white/[0.02] border border-white/[0.06] flex items-center justify-center">
+              <User className="w-5 h-5 text-white/85" />
             </div>
           )}
         </div>
@@ -66,8 +66,8 @@ const SupporterCard: React.FC<SupporterCardProps> = ({
           <div className="flex items-center justify-between gap-2">
             <h3 className="font-semibold text-white text-sm truncate">{supporter.display_name}</h3>
             <span className="relative flex h-2 w-2 shrink-0">
-              <span className="animate-ping absolute h-full w-full rounded-full bg-green-400 opacity-75" />
-              <span className="relative rounded-full h-2 w-2 bg-green-500" />
+              <span className="animate-ping absolute h-full w-full rounded-full bg-white/[0.02] opacity-75" />
+              <span className="relative rounded-full h-2 w-2 bg-white/[0.02]" />
             </span>
           </div>
 
@@ -81,7 +81,7 @@ const SupporterCard: React.FC<SupporterCardProps> = ({
               {trainingLevelLabels[supporter.training_level]}
             </Badge>
             {responseTime && (
-              <span className="text-[10px] text-green-400 flex items-center gap-0.5">
+              <span className="text-[10px] text-white/85 flex items-center gap-0.5">
                 <Zap className="w-2.5 h-2.5" />
                 {responseTime}
               </span>
@@ -101,7 +101,7 @@ const SupporterCard: React.FC<SupporterCardProps> = ({
           {topics.slice(0, 3).map((topic, idx) => (
             <span
               key={idx}
-              className="text-[10px] px-2 py-0.5 rounded-full bg-purple-500/15 text-purple-300 border border-purple-500/20"
+              className="text-[10px] px-2 py-0.5 rounded-full bg-white/[0.02] text-white/85 border border-white/[0.06]"
             >
               {topic}
             </span>
@@ -126,7 +126,7 @@ const SupporterCard: React.FC<SupporterCardProps> = ({
             onConnect(supporter.id);
           }}
           disabled={isConnecting}
-          className="h-8 px-3 text-xs bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium gap-1.5 shadow-lg shadow-purple-500/20 touch-manipulation active:scale-[0.97]"
+          className="h-8 px-3 text-xs bg-white/[0.02] hover:from-purple-600 hover:to-pink-600 text-white font-medium gap-1.5 shadow-lg touch-manipulation active:scale-[0.97]"
         >
           {isConnecting ? (
             <Loader2 className="w-3 h-3 animate-spin" />

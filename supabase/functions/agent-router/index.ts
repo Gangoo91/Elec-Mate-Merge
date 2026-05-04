@@ -43,7 +43,7 @@ interface AgentResponse {
 const AGENT_ENDPOINTS: Record<string, string> = {
   designer: 'designer-v3',
   'designer-multi': 'designer-agent-v3', // Use V3 for multi-circuit designs
-  'cost-engineer': 'cost-engineer-v3',
+  'cost-engineer': 'cost-engineer',
   installer: 'installer-v3',
   'health-safety': 'health-safety-v3',
   commissioning: 'commissioning-v3',

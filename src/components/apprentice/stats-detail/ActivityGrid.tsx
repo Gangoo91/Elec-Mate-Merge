@@ -12,10 +12,10 @@ import { motion } from 'framer-motion';
 export type ActivityVariant = 'orange' | 'green' | 'purple' | 'yellow';
 
 const intensityMap: Record<ActivityVariant, string[]> = {
-  orange: ['bg-white/[0.06]', 'bg-orange-500/25', 'bg-orange-500/50', 'bg-orange-500/80'],
-  green: ['bg-white/[0.06]', 'bg-green-500/25', 'bg-green-500/50', 'bg-green-500/80'],
-  purple: ['bg-white/[0.06]', 'bg-purple-500/25', 'bg-purple-500/50', 'bg-purple-500/80'],
-  yellow: ['bg-white/[0.06]', 'bg-elec-yellow/25', 'bg-elec-yellow/50', 'bg-elec-yellow/80'],
+  orange: ['bg-white/[0.04]', 'bg-elec-yellow/25', 'bg-elec-yellow/50', 'bg-elec-yellow/80'],
+  green: ['bg-white/[0.04]', 'bg-elec-yellow/25', 'bg-elec-yellow/50', 'bg-elec-yellow/80'],
+  purple: ['bg-white/[0.04]', 'bg-elec-yellow/25', 'bg-elec-yellow/50', 'bg-elec-yellow/80'],
+  yellow: ['bg-white/[0.04]', 'bg-elec-yellow/25', 'bg-elec-yellow/50', 'bg-elec-yellow/80'],
 };
 
 function getIntensity(count: number): number {
@@ -58,7 +58,7 @@ export function ActivityGrid({ activityMap, variant }: ActivityGridProps) {
       <div className="grid grid-cols-7 gap-1.5">
         {/* Day labels */}
         {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
-          <div key={i} className="text-[10px] text-white text-center mb-0.5 font-medium">
+          <div key={i} className="text-[10px] text-white/55 text-center mb-0.5 font-medium">
             {d}
           </div>
         ))}
@@ -84,15 +84,15 @@ export function ActivityGrid({ activityMap, variant }: ActivityGridProps) {
         transition={{ delay: 28 * 0.015 + 0.1, duration: 0.3 }}
         className="flex items-center justify-between mt-3"
       >
-        <span className="text-xs text-white">4 weeks ago</span>
+        <span className="text-[12px] text-white/55">4 weeks ago</span>
         <div className="flex items-center gap-1.5">
-          <span className="text-xs text-white mr-1">Less</span>
+          <span className="text-[12px] text-white/55 mr-1">Less</span>
           {colours.map((c, i) => (
             <div key={i} className={cn('w-3 h-3 rounded-[3px]', c)} />
           ))}
-          <span className="text-xs text-white ml-1">More</span>
+          <span className="text-[12px] text-white/55 ml-1">More</span>
         </div>
-        <span className="text-xs text-white">Today</span>
+        <span className="text-[12px] text-white/55">Today</span>
       </motion.div>
     </div>
   );

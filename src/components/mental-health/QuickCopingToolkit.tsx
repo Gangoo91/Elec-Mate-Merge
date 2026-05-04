@@ -125,11 +125,11 @@ const techniques: QuickTechnique[] = [
 
 const getColorClasses = (color: string) => {
   const colors: Record<string, { bg: string; text: string; border: string }> = {
-    blue: { bg: 'bg-blue-500/20', text: 'text-blue-400', border: 'border-blue-500/20' },
-    purple: { bg: 'bg-purple-500/20', text: 'text-purple-400', border: 'border-purple-500/20' },
-    cyan: { bg: 'bg-cyan-500/20', text: 'text-cyan-400', border: 'border-cyan-500/20' },
-    orange: { bg: 'bg-orange-500/20', text: 'text-orange-400', border: 'border-orange-500/20' },
-    rose: { bg: 'bg-rose-500/20', text: 'text-rose-400', border: 'border-rose-500/20' },
+    blue: { bg: 'bg-white/[0.02]', text: 'text-white/85', border: 'border-white/[0.06]' },
+    purple: { bg: 'bg-white/[0.02]', text: 'text-white/85', border: 'border-white/[0.06]' },
+    cyan: { bg: 'bg-white/[0.02]', text: 'text-white/85', border: 'border-white/[0.06]' },
+    orange: { bg: 'bg-white/[0.02]', text: 'text-white/85', border: 'border-white/[0.06]' },
+    rose: { bg: 'bg-white/[0.02]', text: 'text-white/85', border: 'border-white/[0.06]' },
     yellow: { bg: 'bg-yellow-500/20', text: 'text-yellow-400', border: 'border-yellow-500/20' },
   };
   return colors[color] || colors.blue;
@@ -197,9 +197,7 @@ const QuickCopingToolkit = () => {
 
         {showFastTrack && selectedTechnique.fastTrack ? (
           // Fast track view
-          <Card
-            className={`${colors.border} bg-gradient-to-br ${colors.bg.replace('/20', '/10')} to-transparent`}
-          >
+          <Card className="border-white/[0.06] bg-white/[0.02]">
             <CardContent className="p-6 text-center">
               <Zap className={`h-8 w-8 ${colors.text} mx-auto mb-3`} />
               <p className="text-lg text-white leading-relaxed">
@@ -216,7 +214,7 @@ const QuickCopingToolkit = () => {
                   key={i}
                   className={`h-1 rounded-full transition-all ${
                     i < currentStep
-                      ? 'bg-green-400 w-8'
+                      ? 'bg-white/[0.02] w-8'
                       : i === currentStep
                         ? `${colors.text.replace('text-', 'bg-')} w-8`
                         : 'bg-white/20 w-4'
@@ -227,9 +225,7 @@ const QuickCopingToolkit = () => {
 
             {/* Current Step */}
             {currentStep < selectedTechnique.steps.length ? (
-              <Card
-                className={`${colors.border} bg-gradient-to-br ${colors.bg.replace('/20', '/10')} to-transparent`}
-              >
+              <Card className="border-white/[0.06] bg-white/[0.02]">
                 <CardContent className="p-6">
                   <div className="flex items-start gap-4">
                     <div
@@ -245,9 +241,9 @@ const QuickCopingToolkit = () => {
               </Card>
             ) : (
               // Completed
-              <Card className="border-green-500/20 bg-gradient-to-br from-green-500/10 to-emerald-500/5">
+              <Card className="border-white/[0.06] bg-white/[0.02]">
                 <CardContent className="p-6 text-center">
-                  <CheckCircle className="h-12 w-12 text-green-400 mx-auto mb-3" />
+                  <CheckCircle className="h-12 w-12 text-white/85 mx-auto mb-3" />
                   <h3 className="text-lg font-bold text-white mb-2">Well done!</h3>
                   <p className="text-sm text-white">
                     How do you feel now? Remember you can use this anytime.
@@ -298,7 +294,7 @@ const QuickCopingToolkit = () => {
     <div className="space-y-4">
       {/* Header */}
       <div className="text-center py-2">
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-yellow-500/20 to-orange-500/20 mb-3">
+        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/[0.02] mb-3">
           <Zap className="h-6 w-6 text-yellow-400" />
         </div>
         <h2 className="text-xl font-bold text-white mb-1">Quick Coping Toolkit</h2>
@@ -306,7 +302,7 @@ const QuickCopingToolkit = () => {
       </div>
 
       {/* Urgent Help Banner */}
-      <Card className="border-red-500/20 bg-gradient-to-r from-red-500/10 to-rose-500/5">
+      <Card className="border-white/[0.06] bg-white/[0.02]">
         <CardContent className="p-3">
           <div className="flex items-center gap-3">
             <Phone className="h-5 w-5 text-red-400" />
@@ -316,7 +312,7 @@ const QuickCopingToolkit = () => {
             </div>
             <a
               href="tel:116123"
-              className="px-3 py-1.5 bg-red-500/20 text-red-300 rounded-lg text-sm font-medium hover:bg-red-500/30 transition-colors"
+              className="px-3 py-1.5 bg-white/[0.02] text-red-300 rounded-lg text-sm font-medium hover:bg-white/[0.02] transition-colors"
             >
               Call
             </a>
@@ -361,13 +357,13 @@ const QuickCopingToolkit = () => {
       </div>
 
       {/* Tip Card */}
-      <Card className="border-purple-500/20 bg-gradient-to-br from-purple-500/10 to-indigo-500/5">
+      <Card className="border-white/[0.06] bg-white/[0.02]">
         <CardContent className="p-4">
           <div className="flex items-start gap-3">
-            <Sparkles className="h-5 w-5 text-purple-400 flex-shrink-0 mt-0.5" />
+            <Sparkles className="h-5 w-5 text-white/85 flex-shrink-0 mt-0.5" />
             <div>
-              <p className="text-sm text-purple-200">
-                <strong className="text-purple-400">Pro tip:</strong> Practice these when you're
+              <p className="text-sm text-white/85">
+                <strong className="text-white/85">Pro tip:</strong> Practice these when you're
                 feeling calm so they become automatic during stressful moments.
               </p>
             </div>
@@ -376,11 +372,11 @@ const QuickCopingToolkit = () => {
       </Card>
 
       {/* Self-compassion reminder */}
-      <Card className="border-pink-500/20 bg-gradient-to-br from-pink-500/10 to-rose-500/5">
+      <Card className="border-white/[0.06] bg-white/[0.02]">
         <CardContent className="p-4">
           <div className="flex items-center gap-3">
-            <Heart className="h-5 w-5 text-pink-400" />
-            <p className="text-sm text-pink-200">
+            <Heart className="h-5 w-5 text-white/85" />
+            <p className="text-sm text-white/85">
               Remember: It's okay to struggle. Reaching for these tools shows strength.
             </p>
           </div>

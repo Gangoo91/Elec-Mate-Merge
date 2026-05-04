@@ -1,5 +1,4 @@
 import ToolCard from './ToolCard';
-import { CircuitBoard, Ruler, Wrench } from 'lucide-react';
 
 const HandToolsTab = () => {
   const screwdriverTools = [
@@ -134,10 +133,15 @@ const HandToolsTab = () => {
   ];
 
   return (
-    <div className="p-3 sm:p-6 space-y-4 sm:space-y-6">
-      <div className="text-center space-y-2">
-        <h2 className="text-xl sm:text-2xl font-semibold text-elec-yellow">Essential Hand Tools</h2>
-        <p className="text-white max-w-3xl mx-auto leading-relaxed text-sm sm:text-base px-2 sm:px-0">
+    <div className="px-4 sm:px-6 py-4 sm:py-6 space-y-6">
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Hand tools
+        </span>
+        <h2 className="text-[22px] sm:text-[26px] font-semibold text-white leading-tight">
+          Essential hand tools
+        </h2>
+        <p className="text-[14px] text-white/85 leading-relaxed max-w-2xl">
           Every apprentice electrician in the UK should have these fundamental hand tools in their
           kit. Quality hand tools will last your entire career when properly maintained.
         </p>
@@ -146,7 +150,7 @@ const HandToolsTab = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         <ToolCard
           title="Screwdrivers"
-          icon={<Wrench className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />}
+          icon={null}
           description="You'll need a comprehensive set of insulated screwdrivers. VDE certified screwdrivers are essential for electrical safety."
           items={screwdriverTools}
           apprenticeTip="Start with the essential sizes first. Many employers provide basic screwdrivers, so check before buying duplicates. Always test your screwdrivers on a proving unit before use."
@@ -154,8 +158,8 @@ const HandToolsTab = () => {
         />
 
         <ToolCard
-          title="Pliers & Cutters"
-          icon={<CircuitBoard className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />}
+          title="Pliers & cutters"
+          icon={null}
           description="A range of insulated pliers and cutters are essential for wire work and cable terminations."
           items={pliersTools}
           apprenticeTip="Invest in quality cutting tools - they'll give cleaner cuts and last longer. Keep your wire strippers clean and check the cutting edges regularly."
@@ -163,8 +167,8 @@ const HandToolsTab = () => {
         />
 
         <ToolCard
-          title="Spanners & Wrenches"
-          icon={<Wrench className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />}
+          title="Spanners & wrenches"
+          icon={null}
           description="For tightening nuts and bolts on electrical equipment and earth bonding connections."
           items={spannersTools}
           apprenticeTip="An adjustable wrench covers most needs initially. Add specific sizes as you encounter them on jobs. Don't over-tighten connections - follow manufacturer torque settings."
@@ -172,8 +176,8 @@ const HandToolsTab = () => {
         />
 
         <ToolCard
-          title="Measuring & Marking"
-          icon={<Ruler className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />}
+          title="Measuring & marking"
+          icon={null}
           description="Precision is crucial for electrical installations and material calculations."
           items={measuringTools}
           apprenticeTip="A good tape measure is worth the investment - it'll be used daily. Keep pencils sharp and have spare markers. Measure twice, cut once!"
@@ -181,18 +185,17 @@ const HandToolsTab = () => {
         />
       </div>
 
-      <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 sm:p-4">
-        <h3 className="text-base sm:text-lg font-medium text-amber-300 mb-2 flex items-center gap-2">
-          <Wrench className="h-4 w-4 sm:h-5 sm:w-5" />
-          UK Electrical Standards & Budget Guidance
-        </h3>
-        <div className="space-y-2 text-xs sm:text-sm text-white leading-relaxed">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          UK electrical standards & budget guidance
+        </span>
+        <div className="space-y-2 text-[14px] text-white/85 leading-relaxed">
           <p>
-            <strong>Safety Standards:</strong> All tools must comply with BS EN 60900 for electrical
+            <strong>Safety standards:</strong> All tools must comply with BS EN 60900 for electrical
             safety. Look for VDE certification and the BSI Kitemark on safety equipment.
           </p>
           <p>
-            <strong>Budget Expectations:</strong> A basic hand tool kit should cost £150-300. Spread
+            <strong>Budget expectations:</strong> A basic hand tool kit should cost £150-300. Spread
             purchases over your first year, prioritising essential items first. Many suppliers offer
             apprentice discounts - always ask!
           </p>

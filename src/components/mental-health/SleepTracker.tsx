@@ -165,7 +165,7 @@ const SleepTracker = () => {
             <div
               className={`mt-3 text-2xl font-semibold tabular-nums ${
                 qualityTrend > 0
-                  ? 'text-emerald-400'
+                  ? 'text-white/85'
                   : qualityTrend < 0
                     ? 'text-red-400'
                     : 'text-elec-yellow'
@@ -263,7 +263,7 @@ const SleepTracker = () => {
       {/* Cloud Sync Status */}
       <div className="flex items-center justify-center gap-2 text-[12px]">
         {user ? (
-          <span className="flex items-center gap-1 text-emerald-400">
+          <span className="flex items-center gap-1 text-white/85">
             <Cloud className="h-3 w-3" />
             Synced to cloud
           </span>
@@ -293,8 +293,8 @@ const SleepTracker = () => {
 
       {/* Already logged indicator */}
       {todaysEntry && (
-        <div className="flex items-center gap-3 px-5 py-4 rounded-2xl bg-[hsl(0_0%_12%)] border border-emerald-500/25">
-          <Check className="h-5 w-5 text-emerald-400" />
+        <div className="flex items-center gap-3 px-5 py-4 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
+          <Check className="h-5 w-5 text-white/85" />
           <div className="flex-1">
             <p className="text-[13px] text-white">Logged today: {todaysEntry.hours}h</p>
             <p className="text-[11px] text-white">You can update your entry below</p>
@@ -338,10 +338,10 @@ const SleepTracker = () => {
               sleepHours < 6
                 ? 'text-red-400'
                 : sleepHours < 7
-                  ? 'text-orange-400'
+                  ? 'text-white/85'
                   : sleepHours > 9
-                    ? 'text-orange-400'
-                    : 'text-emerald-400'
+                    ? 'text-white/85'
+                    : 'text-white/85'
             }`}
           >
             {sleepHours < 6

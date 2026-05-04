@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, ArrowRight, CheckCircle, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
 import HazardIdentificationMatrix from './risk-assessment/HazardIdentificationMatrix';
 import RiskCalculationMatrix from './risk-assessment/RiskCalculationMatrix';
 import ControlMeasuresGenerator from './risk-assessment/ControlMeasuresGenerator';
@@ -93,7 +92,6 @@ const RiskAssessmentFlow = ({ progress }: RiskAssessmentFlowProps) => {
     if (currentAssessment) {
       const updated = { ...currentAssessment, controlMeasures };
       setCurrentAssessment(updated);
-      // Save to localStorage
       progress.saveRiskAssessment({
         hazard: updated.hazard,
         likelihood: updated.likelihood,
@@ -113,65 +111,60 @@ const RiskAssessmentFlow = ({ progress }: RiskAssessmentFlowProps) => {
     setCurrentAssessment(null);
   };
 
-  const getStepColor = (stepNum: number) => {
-    if (stepNum < currentStep) return 'bg-green-500 text-white';
-    if (stepNum === currentStep) return 'bg-elec-yellow text-black';
-    return 'bg-white/10 text-white';
+  const getStepClasses = (stepNum: number) => {
+    if (stepNum < currentStep) return 'bg-white/[0.04] text-white border-white/10';
+    if (stepNum === currentStep)
+      return 'bg-elec-yellow text-black font-semibold border-elec-yellow';
+    return 'bg-transparent text-white/55 border-white/10';
   };
 
   return (
-    <div className="space-y-4">
-      {/* Step indicator */}
+    <div className="space-y-5">
       <div className="flex items-center justify-between px-2">
         {steps.map((step, idx) => (
           <div key={step.number} className="flex items-center">
             <div className="flex flex-col items-center">
               <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${getStepColor(step.number)}`}
+                className={`w-8 h-8 rounded-lg border flex items-center justify-center text-[12px] transition-colors ${getStepClasses(step.number)}`}
               >
                 {step.number < currentStep ? <CheckCircle className="h-4 w-4" /> : step.number}
               </div>
-              <span className="text-xs text-white mt-1 hidden sm:block">{step.label}</span>
+              <span className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-1 hidden sm:block">
+                {step.label}
+              </span>
             </div>
             {idx < steps.length - 1 && (
               <div
-                className={`w-6 sm:w-10 h-0.5 mx-1 ${step.number < currentStep ? 'bg-green-500' : 'bg-white/10'}`}
+                className={`w-6 sm:w-10 h-px mx-1 ${step.number < currentStep ? 'bg-white/30' : 'bg-white/10'}`}
               />
             )}
           </div>
         ))}
       </div>
 
-      {/* Previous assessments count */}
       {progress.riskAssessments.length > 0 && (
-        <div className="flex items-center gap-2 p-3 rounded-xl bg-green-500/10 border border-green-500/30">
-          <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
-          <span className="text-sm text-white">
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 sm:p-4 flex items-baseline justify-between">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Saved
+          </span>
+          <span className="text-[12px] text-white/85 font-mono">
             {progress.riskAssessments.length} assessment
-            {progress.riskAssessments.length !== 1 ? 's' : ''} saved
+            {progress.riskAssessments.length !== 1 ? 's' : ''}
           </span>
         </div>
       )}
 
-      {/* Step content */}
       <div className="space-y-4">
         {currentStep === 1 && (
           <>
             <HazardIdentificationMatrix onHazardSelected={handleHazardSelected} />
             {selectedHazard && (
-              <Card className="bg-gradient-to-r from-elec-yellow/10 via-elec-yellow/5 to-transparent border-elec-yellow/30">
-                <CardContent className="p-4">
-                  <div className="flex items-start gap-3">
-                    <AlertTriangle className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-                    <div>
-                      <div className="text-sm font-semibold text-elec-yellow mb-1">
-                        Selected Hazard
-                      </div>
-                      <div className="text-sm text-white">{selectedHazard}</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+                  Selected hazard
+                </span>
+                <p className="text-[14px] text-white/85 leading-relaxed">{selectedHazard}</p>
+              </div>
             )}
           </>
         )}
@@ -194,33 +187,32 @@ const RiskAssessmentFlow = ({ progress }: RiskAssessmentFlowProps) => {
             <RiskDocumentation assessment={currentAssessment} />
             <Button
               onClick={handleStartNew}
-              className="w-full h-11 bg-green-500 hover:bg-green-500/90 text-white font-semibold touch-manipulation active:scale-95 transition-all"
+              variant="outline"
+              className="w-full h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
             >
-              Start New Assessment
+              Start new assessment
             </Button>
           </>
         )}
       </div>
 
-      {/* Navigation buttons */}
       {currentStep < 5 && (
         <div className="flex gap-3">
           {currentStep > 1 && (
             <Button
               onClick={() => setCurrentStep((prev) => prev - 1)}
               variant="outline"
-              className="flex-1 h-11 border-white/20 hover:bg-white/5 touch-manipulation active:scale-95 transition-all"
+              className="flex-1 h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back
             </Button>
           )}
-          {/* Steps 2 and 3 auto-advance on action, but still show Next for step 1 and 4 */}
           {(currentStep === 1 || currentStep === 4) && (
             <Button
               onClick={() => setCurrentStep((prev) => prev + 1)}
               disabled={!canGoNext()}
-              className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-95 transition-all disabled:opacity-30"
+              className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-30"
             >
               Next
               <ArrowRight className="ml-2 h-4 w-4" />

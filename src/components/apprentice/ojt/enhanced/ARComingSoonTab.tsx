@@ -1,222 +1,172 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Eye, Zap, Headphones, Smartphone, Calendar, Clock, Star } from 'lucide-react';
 
 const ARComingSoonTab = () => {
   const arFeatures = [
     {
-      title: '3D Circuit Visualization',
+      title: '3D circuit visualisation',
       description: 'See electrical circuits in 3D space with real-time current flow animations',
-      icon: Zap,
-      status: 'In Development',
+      status: 'In development',
     },
     {
-      title: 'Virtual Equipment Training',
+      title: 'Virtual equipment training',
       description: 'Practice with virtual test equipment before using the real thing',
-      icon: Smartphone,
       status: 'Planned',
     },
     {
-      title: 'Interactive Safety Scenarios',
+      title: 'Interactive safety scenarios',
       description: 'Experience safety situations in a controlled virtual environment',
-      icon: Eye,
-      status: 'Research Phase',
+      status: 'Research phase',
     },
     {
-      title: 'Remote Mentoring',
+      title: 'Remote mentoring',
       description: 'Share your view with mentors for real-time guidance on-site',
-      icon: Headphones,
       status: 'Concept',
     },
   ];
 
   const developmentMilestones = [
-    { phase: 'Research & Design', progress: 100, status: 'Complete' },
-    { phase: 'Prototype Development', progress: 75, status: 'In Progress' },
-    { phase: 'Beta Testing', progress: 0, status: 'Upcoming' },
-    { phase: 'Public Release', progress: 0, status: '2025 Q3' },
+    { phase: 'Research & design', progress: 100, status: 'Complete' },
+    { phase: 'Prototype development', progress: 75, status: 'In progress' },
+    { phase: 'Beta testing', progress: 0, status: 'Upcoming' },
+    { phase: 'Public release', progress: 0, status: '2025 Q3' },
   ];
 
   return (
     <div className="space-y-6">
-      {/* Hero Section */}
-      <Card className="border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-purple-600/10">
-        <CardHeader className="text-center">
-          <CardTitle className="text-blue-400 flex items-center justify-center gap-2 text-2xl">
-            <Eye className="h-6 w-6" />
-            Augmented Reality Training
-          </CardTitle>
-          <p className="text-lg text-white">The future of electrical apprentice training is here</p>
-          <Badge
-            variant="outline"
-            className="self-center bg-blue-500/20 text-blue-300 border-blue-500/50"
-          >
-            Coming Soon - 2025 Q3
-          </Badge>
-        </CardHeader>
-        <CardContent className="text-center space-y-4">
-          <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-lg p-8 border border-blue-500/30">
-            <Eye className="h-16 w-16 text-blue-400 mx-auto mb-4" />
-            <p className="text-white">
-              Imagine being able to see electrical circuits in 3D, practice with virtual equipment,
-              and receive real-time guidance from mentors - all through augmented reality.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 text-center">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Augmented reality training
+        </span>
+        <p className="text-[16px] text-white/85 leading-relaxed">
+          The future of electrical apprentice training is here
+        </p>
+        <span className="inline-block text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+          Coming soon — 2025 Q3
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed max-w-2xl mx-auto">
+          Imagine being able to see electrical circuits in 3D, practice with virtual equipment, and
+          receive real-time guidance from mentors — all through augmented reality.
+        </p>
+      </div>
 
-      {/* Planned AR Features */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Star className="h-5 w-5" />
-            Planned AR Features
-          </CardTitle>
-          <p className="text-sm text-white">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Planned AR features
+          </span>
+          <p className="text-[14px] text-white/85 leading-relaxed">
             Revolutionary training experiences powered by augmented reality technology
           </p>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {arFeatures.map((feature, index) => (
-              <Card
-                key={index}
-                className="border-white/15 bg-gradient-to-br from-white/5 to-white/[0.02]"
-              >
-                <CardHeader>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <feature.icon className="h-5 w-5 text-blue-400" />
-                    {feature.title}
-                  </CardTitle>
-                  <Badge variant="outline" className="self-start text-xs">
-                    {feature.status}
-                  </Badge>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-white">{feature.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {arFeatures.map((feature, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
+            >
+              <div className="flex items-start justify-between gap-2">
+                <h4 className="text-[14px] font-semibold text-white">{feature.title}</h4>
+                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
+                  {feature.status}
+                </span>
+              </div>
+              <p className="text-[14px] text-white/85 leading-relaxed">{feature.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
 
-      {/* Development Progress */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Calendar className="h-5 w-5" />
-            Development Progress
-          </CardTitle>
-          <p className="text-sm text-white">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Development progress
+          </span>
+          <p className="text-[14px] text-white/85 leading-relaxed">
             Track our progress towards bringing AR training to Elec-Mate
           </p>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {developmentMilestones.map((milestone, index) => (
-              <div key={index} className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="font-medium">{milestone.phase}</span>
-                  <Badge
-                    variant="outline"
-                    className={`text-xs ${
-                      milestone.status === 'Complete'
-                        ? 'bg-green-500/20 text-green-300 border-green-500/50'
-                        : milestone.status === 'In Progress'
-                          ? 'bg-blue-500/20 text-blue-300 border-blue-500/50'
-                          : 'bg-white/10 text-white border-white/50'
-                    }`}
-                  >
-                    {milestone.status}
-                  </Badge>
-                </div>
-                <div className="w-full bg-white/10 rounded-full h-2">
-                  <div
-                    className={`h-2 rounded-full transition-all duration-300 ${
-                      milestone.progress === 100
-                        ? 'bg-green-500'
-                        : milestone.progress > 0
-                          ? 'bg-blue-500'
-                          : 'bg-white/15'
-                    }`}
-                    style={{ width: `${milestone.progress}%` }}
-                  ></div>
-                </div>
-                <div className="text-xs text-white">{milestone.progress}% Complete</div>
+        </div>
+        <div className="space-y-3">
+          {developmentMilestones.map((milestone, index) => (
+            <div key={index} className="space-y-1">
+              <div className="flex justify-between items-center gap-2">
+                <span className="text-[14px] font-semibold text-white">{milestone.phase}</span>
+                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                  {milestone.status}
+                </span>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Interactive AR Preview Concept */}
-      <Card className="border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-pink-600/10">
-        <CardHeader>
-          <CardTitle className="text-purple-400 flex items-center gap-2">
-            <Eye className="h-5 w-5" />
-            AR Preview Concept
-          </CardTitle>
-          <p className="text-sm text-white">Get a glimpse of what AR training will look like</p>
-        </CardHeader>
-        <CardContent>
-          <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-lg p-6 border border-purple-500/30">
-            <div className="text-center space-y-4">
-              <div className="relative">
-                <div className="bg-white/5 rounded-lg p-8 border-2 border-dashed border-purple-500/50">
-                  <Eye className="h-12 w-12 text-purple-400 mx-auto mb-4 animate-pulse" />
-                  <p className="text-purple-300 font-semibold">AR Experience Preview</p>
-                  <p className="text-sm text-white mt-2">
-                    Point your device at electrical equipment to see interactive 3D overlays, safety
-                    information, and step-by-step guidance.
-                  </p>
-                </div>
-                <div className="absolute -top-2 -right-2">
-                  <Badge className="bg-purple-500 text-white">Demo Coming Soon</Badge>
-                </div>
+              <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-elec-yellow transition-all duration-500"
+                  style={{ width: `${milestone.progress}%` }}
+                />
               </div>
-
-              <div className="grid grid-cols-3 gap-4 mt-6">
-                <div className="text-center">
-                  <Zap className="h-8 w-8 text-yellow-400 mx-auto mb-2" />
-                  <p className="text-xs text-white">Circuit Visualization</p>
-                </div>
-                <div className="text-center">
-                  <Smartphone className="h-8 w-8 text-blue-400 mx-auto mb-2" />
-                  <p className="text-xs text-white">Mobile Compatible</p>
-                </div>
-                <div className="text-center">
-                  <Clock className="h-8 w-8 text-green-400 mx-auto mb-2" />
-                  <p className="text-xs text-white">Real-time Feedback</p>
-                </div>
+              <div className="text-[11px] text-white/55 font-mono">
+                {milestone.progress}% complete
               </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          ))}
+        </div>
+      </div>
 
-      {/* Stay Updated */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-elec-yellow">Stay Updated</CardTitle>
-          <p className="text-sm text-white">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            AR preview concept
+          </span>
+          <p className="text-[14px] text-white/85 leading-relaxed">
+            Get a glimpse of what AR training will look like
+          </p>
+        </div>
+        <div className="rounded-xl border border-dashed border-white/15 p-6 text-center space-y-3">
+          <p className="text-[14px] font-semibold text-white">AR experience preview</p>
+          <p className="text-[14px] text-white/85 leading-relaxed">
+            Point your device at electrical equipment to see interactive 3D overlays, safety
+            information, and step-by-step guidance.
+          </p>
+          <span className="inline-block text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+            Demo coming soon
+          </span>
+        </div>
+        <div className="grid grid-cols-3 gap-4">
+          {[
+            'Circuit visualisation',
+            'Mobile compatible',
+            'Real-time feedback',
+          ].map((label) => (
+            <div
+              key={label}
+              className="text-center text-[13px] text-white/85 leading-relaxed"
+            >
+              {label}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Stay updated
+          </span>
+          <p className="text-[14px] text-white/85 leading-relaxed">
             Be the first to know when AR training becomes available
           </p>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Button className="flex-1" variant="outline">
-              Join AR Beta List
-            </Button>
-            <Button className="flex-1">Get Notified on Release</Button>
-          </div>
-          <p className="text-xs text-white mt-4 text-center">
-            Expected release: Q3 2025 • Beta testing available Q2 2025
-          </p>
-        </CardContent>
-      </Card>
+        </div>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Button
+            variant="outline"
+            className="flex-1 h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+          >
+            Join AR beta list
+          </Button>
+          <Button className="flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation">
+            Get notified on release
+          </Button>
+        </div>
+        <p className="text-[12px] text-white/55 text-center">
+          Expected release: Q3 2025 · Beta testing available Q2 2025
+        </p>
+      </div>
     </div>
   );
 };

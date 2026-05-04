@@ -18,10 +18,10 @@ const TalkToSomeone = () => {
   return (
     <div className="space-y-4">
       {/* Emergency Banner - Samaritans */}
-      <Card className="border-red-500/50 bg-gradient-to-br from-red-600/20 to-red-500/10 shadow-lg shadow-red-500/10 overflow-hidden">
+      <Card className="border-white/[0.06] bg-white/[0.02] shadow-lg shadow-red-500/10 overflow-hidden">
         <CardContent className="p-4">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-full bg-red-500/30 flex items-center justify-center flex-shrink-0 animate-pulse">
+            <div className="w-14 h-14 rounded-full bg-white/[0.02] flex items-center justify-center flex-shrink-0 animate-pulse">
               <PhoneCall className="h-7 w-7 text-red-400" />
             </div>
             <div className="flex-1 min-w-0">
@@ -29,7 +29,7 @@ const TalkToSomeone = () => {
               <p className="text-sm text-white">Free, confidential support 24/7</p>
             </div>
             <Button
-              className="bg-red-500 hover:bg-red-600 text-white flex-shrink-0 h-12 px-5 touch-manipulation active:scale-[0.98]"
+              className="bg-white/[0.02] hover:bg-white/[0.02] text-white flex-shrink-0 h-12 px-5 touch-manipulation active:scale-[0.98]"
               asChild
             >
               <a href="tel:116123">
@@ -46,11 +46,10 @@ const TalkToSomeone = () => {
         {/* Message a Mate - Blue */}
         <Link to="/electrician/mental-health" className="block">
           <div
-            className="p-4 rounded-xl border border-blue-500/30 bg-gradient-to-br from-blue-500/20 to-blue-600/10
-            touch-manipulation active:scale-[0.98] transition-all duration-300 min-h-[100px] flex flex-col"
+            className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] touch-manipulation active:scale-[0.98] transition-all duration-300 min-h-[100px] flex flex-col"
           >
-            <div className="w-12 h-12 rounded-full bg-blue-500/30 flex items-center justify-center mb-2">
-              <MessageSquare className="h-6 w-6 text-blue-400" />
+            <div className="w-12 h-12 rounded-full bg-white/[0.02] flex items-center justify-center mb-2">
+              <MessageSquare className="h-6 w-6 text-white/85" />
             </div>
             <div className="text-sm font-medium text-white">Message a Mate</div>
             <div className="text-xs text-white">Connect with peers</div>
@@ -60,11 +59,10 @@ const TalkToSomeone = () => {
         {/* Find a Mentor - Emerald */}
         <Link to="/apprentice/mentor" className="block">
           <div
-            className="p-4 rounded-xl border border-emerald-500/30 bg-gradient-to-br from-emerald-500/20 to-emerald-600/10
-            touch-manipulation active:scale-[0.98] transition-all duration-300 min-h-[100px] flex flex-col"
+            className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] touch-manipulation active:scale-[0.98] transition-all duration-300 min-h-[100px] flex flex-col"
           >
-            <div className="w-12 h-12 rounded-full bg-emerald-500/30 flex items-center justify-center mb-2">
-              <User className="h-6 w-6 text-emerald-400" />
+            <div className="w-12 h-12 rounded-full bg-white/[0.02] flex items-center justify-center mb-2">
+              <User className="h-6 w-6 text-white/85" />
             </div>
             <div className="text-sm font-medium text-white">Find a Mentor</div>
             <div className="text-xs text-white">Industry guidance</div>
@@ -82,13 +80,13 @@ const TalkToSomeone = () => {
             touch-manipulation active:scale-[0.98]
             ${
               isRequestSubmitted
-                ? 'border-purple-500/50 bg-purple-500/20'
-                : 'border-purple-500/30 bg-gradient-to-br from-purple-500/20 to-purple-600/10'
+                ? 'border-white/[0.06] bg-white/[0.02]'
+                : 'border-white/[0.06] bg-white/[0.02]'
             }`}
           >
-            <div className="w-12 h-12 rounded-full bg-purple-500/30 flex items-center justify-center mb-2">
+            <div className="w-12 h-12 rounded-full bg-white/[0.02] flex items-center justify-center mb-2">
               <Heart
-                className={`h-6 w-6 ${isRequestSubmitted ? 'text-purple-300' : 'text-purple-400'}`}
+                className={`h-6 w-6 ${isRequestSubmitted ? 'text-white/85' : 'text-white/85'}`}
               />
             </div>
             <div className="text-sm font-medium text-white">
@@ -103,11 +101,10 @@ const TalkToSomeone = () => {
         {/* Text SHOUT - Green */}
         <a href="sms:85258?body=SHOUT" className="block">
           <div
-            className="p-4 rounded-xl border border-green-500/30 bg-gradient-to-br from-green-500/20 to-green-600/10
-            touch-manipulation active:scale-[0.98] transition-all duration-300 min-h-[100px] flex flex-col"
+            className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] touch-manipulation active:scale-[0.98] transition-all duration-300 min-h-[100px] flex flex-col"
           >
-            <div className="w-12 h-12 rounded-full bg-green-500/30 flex items-center justify-center mb-2">
-              <MessageSquare className="h-6 w-6 text-green-400" />
+            <div className="w-12 h-12 rounded-full bg-white/[0.02] flex items-center justify-center mb-2">
+              <MessageSquare className="h-6 w-6 text-white/85" />
             </div>
             <div className="text-sm font-medium text-white">Text SHOUT</div>
             <div className="text-xs text-white">85258 - Free 24/7</div>

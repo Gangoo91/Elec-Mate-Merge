@@ -8,7 +8,7 @@
 
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronRight, Video, Bookmark, Clock } from 'lucide-react';
+import { ChevronRight, Bookmark, Clock } from 'lucide-react';
 import { curatedVideos } from '@/data/apprentice/curatedVideos';
 import type { CuratedVideo } from '@/data/apprentice/curatedVideos';
 import { useVideoBookmarks } from '@/hooks/learning-videos/useVideoBookmarks';
@@ -28,11 +28,9 @@ export function LearningVideosSection() {
   const { isBookmarked, toggleBookmark } = useVideoBookmarks();
   const { profile } = useAuth();
 
-  // Personalise preview based on apprentice level (single source of truth from portfolio)
   const previewVideos = (() => {
     const level = profile?.apprentice_level;
     if (level === 'level2') {
-      // Level 2 apprentices: show electrical theory fundamentals first
       const theoryVideos = curatedVideos.filter(
         (v) =>
           v.channel === 'The Engineering Mindset' &&
@@ -41,7 +39,6 @@ export function LearningVideosSection() {
       );
       return theoryVideos.slice(0, 3);
     }
-    // Level 3 / AM2 / no level: show Craig's practical NVQ content
     const craigVideos = curatedVideos.filter((v) => v.channel === 'Craig Wiltshire');
     return craigVideos.slice(0, 3);
   })();
@@ -54,16 +51,12 @@ export function LearningVideosSection() {
     toggleBookmark(video.id, video.title, video.category);
   };
 
-  // Empty / coming soon state
   if (previewVideos.length === 0) {
     return (
       <motion.div variants={itemVariants}>
-        <div className="glass-premium rounded-xl p-6 text-center">
-          <div className="inline-flex p-3 rounded-full bg-elec-yellow/10 mb-3">
-            <Video className="h-6 w-6 text-elec-yellow" />
-          </div>
-          <h3 className="text-sm font-semibold text-white mb-1">Videos Coming Soon</h3>
-          <p className="text-xs text-white">
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-6 text-center space-y-2">
+          <h3 className="text-[14px] font-semibold text-white">Videos coming soon</h3>
+          <p className="text-[12px] text-white/55">
             Curated electrical training videos from approved UK creators
           </p>
         </div>
@@ -73,7 +66,6 @@ export function LearningVideosSection() {
 
   return (
     <motion.div variants={itemVariants} className="space-y-3">
-      {/* 3 preview video cards */}
       <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide sm:grid sm:grid-cols-3 sm:overflow-x-visible">
         {previewVideos.map((video) => (
           <HubVideoCard
@@ -86,13 +78,12 @@ export function LearningVideosSection() {
         ))}
       </div>
 
-      {/* View All link */}
       {curatedVideos.length > 3 && (
         <Link
           to="/apprentice/learning-videos"
-          className="flex items-center justify-center gap-2 h-11 text-sm text-elec-yellow font-medium touch-manipulation active:opacity-70 rounded-xl bg-elec-yellow/[0.06] border border-elec-yellow/10"
+          className="flex items-center justify-center gap-2 h-11 text-[13px] text-white font-medium touch-manipulation active:opacity-70 rounded-xl border border-white/[0.06] bg-white/[0.02]"
         >
-          View All {curatedVideos.length} Videos
+          View all {curatedVideos.length} videos
           <ChevronRight className="h-4 w-4" />
         </Link>
       )}
@@ -112,16 +103,8 @@ function HubVideoCard({
   onTap: () => void;
   onBookmarkToggle: () => void;
 }) {
-  const levelDot =
-    video.level === 'beginner'
-      ? 'bg-green-400'
-      : video.level === 'intermediate'
-        ? 'bg-amber-400'
-        : 'bg-red-400';
-
   return (
-    <div className="flex-shrink-0 w-[220px] sm:w-auto group relative rounded-xl overflow-hidden bg-white/[0.03] border border-white/[0.05] active:bg-white/[0.06] transition-colors">
-      {/* Thumbnail */}
+    <div className="flex-shrink-0 w-[220px] sm:w-auto group relative rounded-xl overflow-hidden bg-white/[0.02] border border-white/[0.06] active:bg-white/[0.05] transition-colors">
       <button
         onClick={onTap}
         className="relative w-full aspect-video touch-manipulation overflow-hidden"
@@ -134,21 +117,18 @@ function HubVideoCard({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
 
-        {/* Play icon */}
         <div className="absolute inset-0 flex items-center justify-center opacity-90">
           <div className="h-9 w-9 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 flex items-center justify-center">
             <div className="w-0 h-0 border-l-[8px] border-l-white border-t-[5px] border-t-transparent border-b-[5px] border-b-transparent ml-0.5" />
           </div>
         </div>
 
-        {/* Duration */}
-        <span className="absolute bottom-1.5 right-1.5 px-1.5 py-0.5 rounded bg-black/70 text-[10px] text-white font-medium backdrop-blur-sm flex items-center gap-1">
+        <span className="absolute bottom-1.5 right-1.5 px-1.5 py-0.5 rounded bg-black/70 text-[10px] text-white font-mono backdrop-blur-sm flex items-center gap-1">
           <Clock className="h-2.5 w-2.5" />
           {video.duration}
         </span>
       </button>
 
-      {/* Bookmark */}
       <button
         onClick={(e) => {
           e.stopPropagation();
@@ -161,17 +141,13 @@ function HubVideoCard({
         />
       </button>
 
-      {/* Info */}
-      <button onClick={onTap} className="text-left touch-manipulation w-full px-2.5 py-2 pb-2.5">
+      <button onClick={onTap} className="text-left touch-manipulation w-full px-2.5 py-2 pb-2.5 space-y-1">
         <h4 className="text-[12px] font-medium text-white leading-tight line-clamp-2">
           {video.title}
         </h4>
-        <div className="flex items-center gap-1.5 mt-1">
-          <span className={`h-1.5 w-1.5 rounded-full ${levelDot} flex-shrink-0`} />
-          <span className="text-[10px] text-white truncate">
-            {video.level.charAt(0).toUpperCase() + video.level.slice(1)}
-          </span>
-        </div>
+        <span className="text-[10px] uppercase tracking-[0.18em] text-white/55">
+          {video.level}
+        </span>
       </button>
     </div>
   );

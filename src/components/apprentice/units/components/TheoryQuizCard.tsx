@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle } from 'lucide-react';
 
 interface TheoryQuizCardProps {
@@ -16,27 +15,25 @@ const TheoryQuizCard = ({ courseSlug, unitCode, quizCompleted, onClick }: Theory
     <Link
       to={`/apprentice/study/eal/${courseSlug}/unit/${unitCodeFormatted}/quiz`}
       onClick={onClick}
-      className="block transition-transform hover:scale-102 duration-200 h-full"
+      className="block h-full touch-manipulation"
     >
-      <Card className="border-elec-yellow/30 bg-gradient-to-b from-white/5 to-white/5/80 hover:from-white/5/90 hover:to-white/5/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
-        <CardContent className="p-6 h-full relative">
-          <div className="flex flex-col space-y-3">
-            <div className="flex items-center gap-3">
-              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
-                <span className="text-elec-dark font-bold text-lg">Q</span>
-              </div>
-              <h3 className="text-lg font-medium">Assessment Quiz</h3>
-            </div>
-            <p className="text-sm text-white pl-[52px]">Electrical Theory Assessment Quiz</p>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 h-full relative active:bg-white/[0.04] transition-colors">
+        <div className="flex flex-col space-y-2">
+          <div className="flex items-baseline gap-3">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Assessment
+            </span>
+            <h3 className="text-[16px] font-semibold text-white leading-tight">Quiz</h3>
           </div>
+          <p className="text-[14px] text-white/70 leading-relaxed">
+            Electrical Theory Assessment Quiz
+          </p>
+        </div>
 
-          {quizCompleted && (
-            <div className="absolute top-3 right-3">
-              <CheckCircle className="h-5 w-5 text-green-500" />
-            </div>
-          )}
-        </CardContent>
-      </Card>
+        {quizCompleted && (
+          <CheckCircle className="absolute top-4 right-4 h-4 w-4 text-elec-yellow" />
+        )}
+      </div>
     </Link>
   );
 };

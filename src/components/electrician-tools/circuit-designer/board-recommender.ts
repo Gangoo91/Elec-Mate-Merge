@@ -40,6 +40,12 @@ export interface SubmainFeed {
   voltageDropOk: boolean;
   cableSizingNote: string;
   rationale: string;
+  /**
+   * Earth-fault loop impedance contributed by this feed (Ω). Adds to the
+   * parent board's Zdb to give the child board's Zdb. Computed from cable
+   * loop resistance at 70°C × length, divided by parallel runs.
+   */
+  feedLoopOhms: number;
 }
 
 export interface SPDRecommendation {
@@ -79,6 +85,36 @@ export interface BoardRecommendation {
   // Aggregates
   diversifiedLoadW: number;
   designCurrentA: number;
+  /**
+   * Earth-fault loop impedance at this board's busbar (Ω) — propagated from
+   * the supply Ze through every upstream submain feed. Origin board: Zdb = Ze.
+   * Submain: Zdb = parent.zdb + feedFromParent.feedLoopOhms.
+   *
+   * Final-circuit Zs = boardZdb + (R1 + R2 of the final-circuit cable). Without
+   * propagating the chain, submain circuits report falsely low Zs values.
+   */
+  zdb: number;
+  /**
+   * Prospective fault current at this board's busbar (kA) = U₀ / Zdb.
+   * Drives the breaking-capacity (Icn) selection for protective devices on
+   * this board. Drops as you go further into the chain (longer feeds = higher
+   * Zdb = lower PSCC), so submain devices can often be a smaller Icn than the
+   * origin's.
+   */
+  psccKa: number;
+  /**
+   * Earthing conductor at this board (mm² Cu equivalent) per BS 7671
+   * Table 54.7 / 543.1. For the origin this is the MAIN earthing conductor
+   * (MET to means of earthing). For submains it's the cpc/armour returning
+   * to the parent board's earth bar.
+   */
+  earthingConductorMm2: number;
+  /**
+   * Main protective bonding conductor (mm² Cu) per Table 54.8 / 544.1.1.
+   * Only populated on the ORIGIN board — bonding lives at the MET, not at
+   * submains. PME systems get the larger A2-onwards values.
+   */
+  mainBondingMm2?: number;
   // Designer outputs (full BS 7671 treatment)
   feedFromParent?: SubmainFeed;
   spd?: SPDRecommendation;
@@ -105,8 +141,63 @@ export interface BoardLayoutResult {
 }
 
 const MAX_WAYS_PER_BOARD = 18; // Wylex / MK / Hager 22-way is real-world max; 18 leaves spare ways
-const SINGLE_PHASE_LOAD_LIMIT_W = 23000; // ~100A @ 230V
+
+/**
+ * Single-phase supply thresholds (W diversified).
+ *
+ * UK standard cut-out is 100 A @ 230 V = 23 kW. That's the SUPPLY ceiling,
+ * not a "needs three-phase" trigger — most properties under 23 kW happily
+ * stay single-phase. Going TO three-phase is one option above that ceiling;
+ * upgrading the single-phase service to 125 A is another. Both are common.
+ *
+ * We deliberately separate three thresholds:
+ *   NEAR_LIMIT  →  warn (approaching supply ceiling)
+ *   AT_LIMIT    →  warn harder (DNO call for upgrade options)
+ *   FORCE_3PH   →  auto-design as three-phase (single-phase impractical)
+ *
+ * Domestic bar is higher because measured After-Diversity Maximum Demand
+ * (ADMD) for UK 4-bed all-electric homes with EV is typically 8–15 kW —
+ * paper diversity always overstates. Commercial / industrial bar matches
+ * the supply ceiling because those systems usually need 3φ anyway.
+ */
+const NEAR_SUPPLY_LIMIT_W = 20000; // ~87 A — domestic warning
+const AT_SUPPLY_LIMIT_W = 23000; // 100 A — DNO upgrade conversation
+const FORCE_3PH_DOMESTIC_W = 35000; // beyond reasonable 1φ even with 125 A
+const FORCE_3PH_NON_DOMESTIC_W = 23000; // commercial/industrial flips at supply ceiling
+
+/** Single circuit with Ib above this clearly needs three-phase. */
+const FORCE_3PH_CIRCUIT_A = 100;
+
+/**
+ * A circuit with Ib above this is "hard-justified" for keeping its own board
+ * even when the bucket would otherwise consolidate — high-current circuits
+ * benefit from local isolation and their own protection. Lower than the
+ * three-phase trigger because a 63A radial doesn't need 3φ but does deserve
+ * its own submain in many layouts.
+ */
 const HIGH_CURRENT_THRESHOLD_A = 63;
+
+// ── Consolidation thresholds ─────────────────────────────────────────────────
+// A submain has to earn its existence — enclosure + main switch + SWA feed +
+// glands + protection at parent costs ~£300+ in materials and ~half a day
+// labour. Below MIN_SUBMAIN_WAYS the cost isn't justified vs running the
+// circuits directly off the origin CU. Structural zones (geographic
+// separation, regulatory difference, high-current) earn their existence at a
+// lower bar because there's a *reason* beyond grouping.
+const MIN_SUBMAIN_WAYS = 5;
+const MIN_STRUCTURAL_SUBMAIN_WAYS = 2;
+// Domestic ≤ this many circuits → force everything onto a single CU.
+// A real 18-way 22-module CU handles 14 circuits with 4 spare ways. 90% of
+// UK domestic jobs sit here.
+const SINGLE_BOARD_DOMESTIC_THRESHOLD = 14;
+
+// Zones that earn a separate submain even with few circuits — geographic
+// separation, regulatory difference, or high-current isolation.
+const STRUCTURAL_ZONE_IDS: Record<string, Set<string>> = {
+  domestic: new Set(['outbuilding']),
+  commercial: new Set(['medical', 'external', 'plant-room']),
+  industrial: new Set(['process-a', 'process-b', 'external', 'plant']),
+};
 
 // Zone-based grouping (mirrors how electricians actually lay out boards in practice).
 // Each zone holds *all* its circuits — lighting + sockets + heat + special — not split
@@ -219,7 +310,7 @@ const COMMERCIAL_ZONES: ZoneDefinition[] = [
     location: 'Origin',
     pattern: /.*/,
     rationale:
-      'General circuits not assigned to a specific zone. Phase 4c (floor-plan upload) will replace this catch-all with explicit room/zone tags.',
+      'Origin consumer unit at the cut-out — circuits without a specific zone match land here as the main board feeding any submains.',
   },
 ];
 
@@ -278,7 +369,7 @@ const INDUSTRIAL_ZONES: ZoneDefinition[] = [
     location: 'Origin',
     pattern: /.*/,
     rationale:
-      'General circuits not assigned to a process area. Phase 4c (floor-plan upload) will tag circuits to specific production areas.',
+      'Origin consumer unit at the cut-out — general circuits and any not assigned to a specific process area sit on the main board feeding the submains.',
   },
 ];
 
@@ -296,7 +387,157 @@ function classifyZone(circuit: any, zones: ZoneDefinition[]): string {
   return 'main';
 }
 
-export function recommendBoardLayout(design: any): BoardLayoutResult {
+/**
+ * Whether a circuit, on its own, justifies keeping a board separate even when
+ * the bucket falls below the merge threshold. 3φ loads, high-current circuits
+ * (Ib > 63 A) and special-location circuits all need either dedicated
+ * protection or different regs — keeping them on their own submain is
+ * sensible engineering, not just nice-to-have grouping.
+ */
+function circuitHasHardReason(c: any): boolean {
+  if (c?.phases === 'three') return true;
+  const ib = Number(c?.calculations?.Ib ?? c?.calculations?.Id ?? 0);
+  if (ib > HIGH_CURRENT_THRESHOLD_A) return true;
+  // Section 7xx special locations whose protection rules diverge from the
+  // main installation (medical, swimming, agricultural, marina).
+  const loc = String(c?.specialLocation ?? '').toLowerCase();
+  if (/medical|swimming|sauna|agricultural|marina|caravan/.test(loc)) return true;
+  return false;
+}
+
+/**
+ * Post-process the zone-bucketed map to produce a *realistic* board count.
+ *
+ *   1. Domestic ≤ SINGLE_BOARD_DOMESTIC_THRESHOLD circuits → everything on one CU.
+ *   2. Each non-structural bucket is checked against MIN_SUBMAIN_WAYS. Buckets
+ *      below threshold without a hard-justified circuit are flagged for
+ *      consolidation (NOT immediately merged into main).
+ *   3. Structural buckets (outbuilding / medical / plant / external) keep
+ *      their separation if they have at least MIN_STRUCTURAL_SUBMAIN_WAYS.
+ *   4. **Consolidation pass** — undersized buckets are combined into a single
+ *      'auxiliary' submain when their combined size ≥ MIN_SUBMAIN_WAYS. This
+ *      is what a real electrician does: rather than stretch the main CU AND
+ *      sprinkle 1-2 circuits across multiple tiny submains, you bundle the
+ *      small bits into one shared "Auxiliary / Services" board with its own
+ *      enclosure + main switch + submain feed. Saves materials and labour
+ *      vs the per-zone fragmentation, while keeping isolation that the main
+ *      doesn't get burdened with.
+ *   5. If consolidated combined size < MIN_SUBMAIN_WAYS (or only one
+ *      undersized bucket exists), they fall back into main.
+ *
+ * Returns: consolidated buckets + any synthetic zone definitions for
+ * boards created during consolidation (so downstream lookups work).
+ */
+function consolidateBuckets(
+  bucketsMap: Record<string, number[]>,
+  circuits: any[],
+  installType: string,
+  zoneDefs: ZoneDefinition[]
+): {
+  buckets: Record<string, number[]>;
+  syntheticZones: ZoneDefinition[];
+} {
+  const totalCircuits = circuits.length;
+
+  // Single-board preference for small domestic jobs — a 14-circuit dwelling
+  // belongs on one 18-way CU, full stop. Don't fragment it just because the
+  // garage circuits matched the outbuilding pattern.
+  if (
+    installType === 'domestic' &&
+    totalCircuits <= SINGLE_BOARD_DOMESTIC_THRESHOLD
+  ) {
+    return {
+      buckets: { main: circuits.map((_, i) => i) },
+      syntheticZones: [],
+    };
+  }
+
+  const structural = STRUCTURAL_ZONE_IDS[installType] ?? new Set<string>();
+  const result: Record<string, number[]> = {};
+  const undersized: { zoneId: string; indices: number[]; name: string }[] = [];
+
+  for (const [zoneId, indices] of Object.entries(bucketsMap)) {
+    if (zoneId === 'main') {
+      result.main = [...(result.main ?? []), ...indices];
+      continue;
+    }
+
+    const isStructural = structural.has(zoneId);
+    const minRequired = isStructural ? MIN_STRUCTURAL_SUBMAIN_WAYS : MIN_SUBMAIN_WAYS;
+    const hasHardReason = indices.some((i) => circuitHasHardReason(circuits[i]));
+
+    if (indices.length >= minRequired || hasHardReason) {
+      // Earns its existence — keep as a submain.
+      result[zoneId] = indices;
+    } else {
+      // Hold for consolidation pass.
+      const zoneName = zoneDefs.find((z) => z.id === zoneId)?.name ?? zoneId;
+      undersized.push({ zoneId, indices, name: zoneName });
+    }
+  }
+
+  // ── Consolidation pass ────────────────────────────────────────────────
+  const syntheticZones: ZoneDefinition[] = [];
+  if (undersized.length === 0) {
+    // Nothing to consolidate.
+  } else if (undersized.length === 1) {
+    // Single small bucket — not worth a consolidated submain on its own.
+    // Drop into main (which the user can override later via rename / split).
+    result.main = [
+      ...(result.main ?? []),
+      ...undersized[0].indices,
+    ].sort((a, b) => a - b);
+  } else {
+    const combined = undersized
+      .flatMap((u) => u.indices)
+      .sort((a, b) => a - b);
+
+    if (combined.length >= MIN_SUBMAIN_WAYS) {
+      // Multiple small buckets → consolidate into one shared submain.
+      // This is the "happy medium" — neither stretching the main nor
+      // sprinkling tiny CUs everywhere.
+      const auxId = 'auxiliary';
+      result[auxId] = combined;
+      const includedNames = undersized.map((u) => u.name).join(' + ');
+      syntheticZones.push({
+        id: auxId,
+        name: 'Auxiliary CU',
+        location: 'Combined services',
+        pattern: /(?!.*)/, // never matches — synthetic, populated by consolidation only
+        rationale: `Consolidated submain housing ${includedNames} — each group was below the threshold to justify its own CU, but together they earn a shared submain. Saves enclosure + main switch + duplicated SWA feed costs vs running each as a separate board.`,
+      });
+    } else {
+      // Combined still too small → fall through to main.
+      result.main = [...(result.main ?? []), ...combined].sort((a, b) => a - b);
+    }
+  }
+
+  return { buckets: result, syntheticZones };
+}
+
+export interface RecommenderOptions {
+  /** Per-circuit phase overrides (1φ circuits only) — pins the phase regardless of balance. */
+  phaseOverrides?: Record<number, 'L1' | 'L2' | 'L3'>;
+  /**
+   * User-created boards added manually. Allows the user to split a board
+   * (create a new one + move circuits) or build a layout the heuristic
+   * recommender wouldn't have produced. These board ids must NOT collide
+   * with any zone def ids ('main', 'outbuilding', etc.).
+   */
+  userCreatedBoards?: Array<{ id: string; name: string; location: string }>;
+  /**
+   * Per-circuit board overrides. Circuit index → board id. Overrides whatever
+   * board the zone classifier would have placed it in. The target board id
+   * can be a zone id, a user-created board id, or any board id that ends up
+   * in the layout (we filter empties at the end).
+   */
+  circuitBoardOverrides?: Record<number, string>;
+}
+
+export function recommendBoardLayout(
+  design: any,
+  options: RecommenderOptions = {}
+): BoardLayoutResult {
   const circuits: any[] = design?.circuits ?? [];
   const totalDiversified = Number(design?.diversifiedLoad ?? 0);
   const userSpecifiedVoltage = Number(design?.supply?.voltage ?? 230);
@@ -307,52 +548,173 @@ export function recommendBoardLayout(design: any): BoardLayoutResult {
 
   const warnings: CoherenceWarning[] = [];
 
-  // Decide whether the design needs three-phase.
-  // If the user picked single-phase but the load demands three-phase, we DESIGN AS
-  // THREE-PHASE — phase-balanced board, 400V submain calcs, the lot — and surface
-  // a single "supply upgrade" action so the user knows to confirm with the DNO.
+  // Decide whether the design needs three-phase. The user's explicit choice is
+  // respected unless the load CLEARLY can't fit on a single-phase service.
+  //
+  //   1. Any 3φ circuit on the design → 3φ board (the AI can't supply a 3φ
+  //      load from a 1φ board).
+  //   2. Any single circuit with Ib > FORCE_3PH_CIRCUIT_A → 3φ board.
+  //   3. Total diversified load above the install-type's hard threshold:
+  //        domestic: 35 kW (way beyond a 100 A or 125 A single-phase service)
+  //        commercial / industrial: 23 kW (these systems normally need 3φ)
+  //
+  // Lower-band excedances (20–23 kW domestic, 23–35 kW domestic) emit
+  // *warnings* about supply upgrade options — they don't auto-flip. A real
+  // designer doesn't push a small house to 3-phase just because the paper
+  // diversity figure crept above 23 kW.
+  const force3phLimit =
+    installType === 'domestic' ? FORCE_3PH_DOMESTIC_W : FORCE_3PH_NON_DOMESTIC_W;
+  const hasThreePhaseCircuit = circuits.some((c) => c?.phases === 'three');
+  const hasHighCurrentCircuit = circuits.some(
+    (c) =>
+      Number(c?.calculations?.Ib ?? 0) > FORCE_3PH_CIRCUIT_A ||
+      Number(c?.calculations?.Id ?? 0) > FORCE_3PH_CIRCUIT_A
+  );
   const needsThreePhase =
     userSpecifiedPhases === 'single' &&
-    (totalDiversified > SINGLE_PHASE_LOAD_LIMIT_W ||
-      circuits.some(
-        (c) =>
-          Number(c?.calculations?.Ib ?? 0) > HIGH_CURRENT_THRESHOLD_A ||
-          Number(c?.calculations?.Id ?? 0) > HIGH_CURRENT_THRESHOLD_A
-      ));
+    (hasThreePhaseCircuit ||
+      hasHighCurrentCircuit ||
+      totalDiversified > force3phLimit);
 
   // Effective supply for the rest of the recommender — overridden to 3φ if needed.
   const supplyPhases = needsThreePhase ? 'three' : userSpecifiedPhases;
   const supplyVoltage = needsThreePhase ? 400 : userSpecifiedVoltage;
 
-  // Single legitimate human-action flag: supply upgrade.
-  // We've already DESIGNED as three-phase — the message tells the user the design
-  // is on three-phase basis and they need to involve the DNO if the property
-  // currently has single-phase service.
+  // Three-phase auto-flip warning — fires only when we ACTUALLY designed as 3φ.
   if (needsThreePhase) {
     const kw = (totalDiversified / 1000).toFixed(1);
     const ib3ph = (totalDiversified / (Math.sqrt(3) * 400)).toFixed(0);
+    let reason: string;
+    if (hasThreePhaseCircuit) {
+      reason = 'Design contains a three-phase circuit (motor, large EV charger, heat pump or similar) which can\'t be supplied from a single-phase board.';
+    } else if (hasHighCurrentCircuit) {
+      reason = `Design contains a circuit with design current > ${FORCE_3PH_CIRCUIT_A} A — beyond practical single-phase final-circuit territory.`;
+    } else {
+      reason =
+        installType === 'domestic'
+          ? `Diversified load ${kw} kW exceeds practical single-phase capacity even on a 125 A service (limit ${(FORCE_3PH_DOMESTIC_W / 1000).toFixed(0)} kW).`
+          : `Diversified load ${kw} kW exceeds 100 A single-phase service capacity.`;
+    }
     warnings.push({
       kind: 'three-phase',
       severity: 'warn',
       title: 'Three-phase service needed',
       detail:
-        `Diversified load ${kw} kW exceeds single-phase practical capacity (~23 kW @ 100 A · 230 V). ` +
+        `${reason} ` +
         `This design has been computed on a three-phase basis — 400 V line-to-line, balanced across L1/L2/L3 (board feed ~${ib3ph} A per phase). ` +
-        `If the property is currently on a single-phase service, contact your DNO to upgrade before installation. The board layout, submain sizing and load balancing below assume three-phase.`,
+        `Contact your DNO to confirm three-phase availability before installation.`,
       reg: '525 / Section A1',
+    });
+  } else if (
+    userSpecifiedPhases === 'single' &&
+    totalDiversified > NEAR_SUPPLY_LIMIT_W
+  ) {
+    // Near or at supply ceiling but NOT auto-flipped — surface the options
+    // so the designer can make a real call (DNO upgrade vs 3φ vs load-shift).
+    const kw = (totalDiversified / 1000).toFixed(1);
+    const aboveCeiling = totalDiversified > AT_SUPPLY_LIMIT_W;
+    warnings.push({
+      kind: 'three-phase',
+      severity: aboveCeiling ? 'warn' : 'info',
+      title: aboveCeiling
+        ? 'Supply upgrade needed'
+        : 'Approaching single-phase supply limit',
+      detail: aboveCeiling
+        ? `Diversified load ${kw} kW exceeds the standard 100 A single-phase service (23 kW). Options: (a) request a 125 A single-phase service from the DNO if available, (b) upgrade to three-phase, or (c) reduce peak load with smart EV charging / load management. Design left as single-phase — flip this in the Supply step if you confirm three-phase.`
+        : `Diversified load ${kw} kW is close to the 100 A single-phase ceiling (23 kW). Stays single-phase for now, but worth a load-management plan (smart EV charging, time-of-use shifting) so peak demand doesn't trip the cut-out.`,
+      reg: 'BS 7671 Section A',
     });
   }
 
   const totalWays = circuits.length;
 
-  // Multi-board fires when zone classification produces multiple zones OR when any
-  // single zone exceeds MAX_WAYS_PER_BOARD. A 20-circuit domestic with everything
-  // tagged 'main' stays a single board; a vet practice with reception + treatment +
-  // plant naturally splits into 3 boards.
-  const zoneDefsCheck = zonesFor(installType);
-  const zoneIdsPresent = new Set(circuits.map((c) => classifyZone(c, zoneDefsCheck)));
+  // Bucket by zone first, then run the consolidation pass — this is what
+  // turns "8 boards with 1-3 ckts each" into a realistic 1-3 board layout.
+  // Consolidation may also synthesise an "auxiliary" zone that combines
+  // multiple undersized buckets into one shared submain.
+  const baseZoneDefs = zonesFor(installType);
+  const rawBucketsMap: Record<string, number[]> = {};
+  circuits.forEach((c, i) => {
+    const k = classifyZone(c, baseZoneDefs);
+    if (!rawBucketsMap[k]) rawBucketsMap[k] = [];
+    rawBucketsMap[k].push(i);
+  });
+  const consolidation = consolidateBuckets(
+    rawBucketsMap,
+    circuits,
+    installType,
+    baseZoneDefs
+  );
+  let bucketsMap = consolidation.buckets;
+  // Resolved zone defs = base zone list + any synthesised by consolidation.
+  // 'auxiliary' goes at the end (after 'main' but before structural zones).
+  let zoneDefs: ZoneDefinition[] = [
+    ...baseZoneDefs,
+    ...consolidation.syntheticZones,
+  ];
+
+  // ── User overrides pass ─────────────────────────────────────────────
+  // Manual moves / new boards / merges. The user's intent always wins
+  // over the heuristic — they have project knowledge the regex doesn't.
+  const userBoards = options.userCreatedBoards ?? [];
+  const circuitOverrides = options.circuitBoardOverrides ?? {};
+  if (userBoards.length > 0 || Object.keys(circuitOverrides).length > 0) {
+    // 1. Strip overridden circuits from their current buckets.
+    const overriddenIndices = new Set(
+      Object.keys(circuitOverrides).map((s) => Number(s))
+    );
+    const stripped: Record<string, number[]> = {};
+    for (const [zoneId, indices] of Object.entries(bucketsMap)) {
+      const kept = indices.filter((i) => !overriddenIndices.has(i));
+      if (kept.length > 0) stripped[zoneId] = kept;
+    }
+    // 2. Re-add to overridden destinations.
+    for (const [idxStr, targetId] of Object.entries(circuitOverrides)) {
+      const i = Number(idxStr);
+      if (!stripped[targetId]) stripped[targetId] = [];
+      stripped[targetId].push(i);
+    }
+    // 3. Sort each bucket back into circuit-index order.
+    for (const id of Object.keys(stripped)) {
+      stripped[id].sort((a, b) => a - b);
+    }
+    // 4. Drop empty buckets EXCEPT 'main' (always survives) and any
+    //    user-created boards the user explicitly added (might be empty
+    //    placeholders awaiting circuits).
+    const userBoardIds = new Set(userBoards.map((b) => b.id));
+    for (const id of Object.keys(stripped)) {
+      if (
+        stripped[id].length === 0 &&
+        id !== 'main' &&
+        !userBoardIds.has(id)
+      ) {
+        delete stripped[id];
+      }
+    }
+    bucketsMap = stripped;
+
+    // 5. Synthesise zone defs for user-created boards not already known.
+    const knownIds = new Set(zoneDefs.map((z) => z.id));
+    const userZones: ZoneDefinition[] = userBoards
+      .filter((b) => !knownIds.has(b.id))
+      .map((b) => ({
+        id: b.id,
+        name: b.name,
+        location: b.location,
+        pattern: /(?!.*)/, // synthetic — only populated through overrides
+        rationale:
+          'User-defined submain — added manually to suit project layout the recommender did not surface.',
+      }));
+    zoneDefs = [...zoneDefs, ...userZones];
+  }
+
+  // Multi-board fires when consolidation still produces multiple zones OR when
+  // any single zone exceeds MAX_WAYS_PER_BOARD.
+  const survivingZones = Object.keys(bucketsMap).filter(
+    (id) => bucketsMap[id] && bucketsMap[id].length > 0
+  );
   const needsMultiBoard =
-    zoneIdsPresent.size > 1 || totalWays > MAX_WAYS_PER_BOARD;
+    survivingZones.length > 1 || totalWays > MAX_WAYS_PER_BOARD;
 
   // Note: multi-board, SPD, phase imbalance, Zs corrections, high-current circuits
   // are resolved IN the design — no flagging.
@@ -369,7 +731,9 @@ export function recommendBoardLayout(design: any): BoardLayoutResult {
       ? sizeBoardMainSwitch(boardCurrent)
       : Number(design?.consumerUnit?.mainSwitchRating ?? 100);
     const phaseBalance =
-      supplyPhases === 'three' ? balancePhases(circuits, allIndices, supplyVoltage) : undefined;
+      supplyPhases === 'three'
+        ? balancePhases(circuits, allIndices, supplyVoltage, options.phaseOverrides)
+        : undefined;
     const spd = assessSPD(installType, circuits, allIndices, true);
     const { resolvedMainSwitch, discrimination } = resolveDiscrimination(
       initialMain,
@@ -377,6 +741,11 @@ export function recommendBoardLayout(design: any): BoardLayoutResult {
       allIndices
     );
 
+    const supplyZe = Number(design?.consumerUnit?.incomingSupply?.Ze ?? 0.35);
+    const earthingSystem = String(
+      design?.consumerUnit?.incomingSupply?.earthingSystem ?? 'TN-C-S'
+    );
+    const servicePhase = estimateServicePhaseSize(resolvedMainSwitch);
     return {
       boards: [
         {
@@ -390,6 +759,10 @@ export function recommendBoardLayout(design: any): BoardLayoutResult {
           isOrigin: true,
           diversifiedLoadW: boardLoad,
           designCurrentA: boardCurrent,
+          zdb: supplyZe, // Origin board sees the supply Ze directly.
+          psccKa: pscckAAtBoard(supplyZe),
+          earthingConductorMm2: sizeEarthingConductor(servicePhase, earthingSystem),
+          mainBondingMm2: sizeMainBonding(servicePhase, earthingSystem),
           phaseBalance,
           spd,
           discrimination,
@@ -404,21 +777,19 @@ export function recommendBoardLayout(design: any): BoardLayoutResult {
     };
   }
 
-  // Bucket by zone (geographic / functional area), not by archetype.
-  // Each zone holds ALL its circuits — lighting + sockets + heat + special.
-  const zoneDefs = zonesFor(installType);
-  const bucketsMap: Record<string, number[]> = {};
-  circuits.forEach((c, i) => {
-    const k = classifyZone(c, zoneDefs);
-    if (!bucketsMap[k]) bucketsMap[k] = [];
-    bucketsMap[k].push(i);
-  });
+  // bucketsMap was already built + consolidated above. Use it directly.
 
   // Order zones by their definition order, with 'main' always first (origin).
+  // The comparator must be a proper (a, b) function — single-arg comparators
+  // give engine-dependent behaviour and don't reliably pull 'main' to the top.
   const orderedZones = zoneDefs
     .map((z) => z.id)
     .filter((id) => bucketsMap[id] && bucketsMap[id].length > 0)
-    .sort((a) => (a === 'main' ? -1 : 1));
+    .sort((a, b) => {
+      if (a === 'main' && b !== 'main') return -1;
+      if (b === 'main' && a !== 'main') return 1;
+      return 0;
+    });
 
   // If a single zone has > MAX_WAYS, we still split that zone into A/B/C — but
   // this is rare in zone-based grouping (a single zone rarely exceeds 18 ways).
@@ -507,7 +878,9 @@ export function recommendBoardLayout(design: any): BoardLayoutResult {
       }
 
       const phaseBalance =
-        supplyPhases === 'three' ? balancePhases(circuits, chunk, supplyVoltage) : undefined;
+        supplyPhases === 'three'
+          ? balancePhases(circuits, chunk, supplyVoltage, options.phaseOverrides)
+          : undefined;
       const spd = assessSPD(installType, circuits, chunk, isOrigin);
       // Auto-resolve discrimination by upsizing the parent if the ratio is below
       // the rule-of-thumb threshold. This is the "design properly, don't flag" approach.
@@ -549,6 +922,9 @@ export function recommendBoardLayout(design: any): BoardLayoutResult {
         isOrigin,
         diversifiedLoadW: boardLoadW,
         designCurrentA: boardCurrentA,
+        zdb: 0, // Set by the propagation pass below.
+        psccKa: 0, // Set after Zdb propagation.
+        earthingConductorMm2: 0, // Set after submain feed is finalised.
         feedFromParent: resolvedFeed,
         phaseBalance,
         spd,
@@ -562,6 +938,60 @@ export function recommendBoardLayout(design: any): BoardLayoutResult {
   // Mark the origin board with a "main" id so submain feeds can reference it
   if (boards.length > 0) boards[0].id = 'main';
   // Re-link parent ids on every submain feed (they default to 'main' already)
+
+  // ── Zdb propagation + PFC + earthing/bonding sizing ─────────────────
+  // Walk boards in topological order (origin → submains). Origin sees Ze
+  // directly; each submain inherits its parent's Zdb plus the loop ohms its
+  // feed contributes. This is what makes Zs values on submain circuits
+  // honest — without propagation they'd silently use Ze and pass when the
+  // real Zs (with the submain feed in series) would fail Table 41.3.
+  const supplyZe = Number(design?.consumerUnit?.incomingSupply?.Ze ?? 0.35);
+  const earthingSystem = String(
+    design?.consumerUnit?.incomingSupply?.earthingSystem ?? 'TN-C-S'
+  );
+  const boardById = new Map(boards.map((b) => [b.id, b]));
+  // Origin first
+  boards.forEach((b) => {
+    if (b.isOrigin) b.zdb = supplyZe;
+  });
+  // Iterate until all boards have a zdb (handles N-deep submain chains).
+  // Cap iterations defensively in case of a malformed graph.
+  for (let iter = 0; iter < boards.length + 2; iter++) {
+    let progressed = false;
+    for (const b of boards) {
+      if (b.zdb > 0 || b.isOrigin) continue;
+      if (!b.feedFromParent) continue;
+      const parent = boardById.get(b.feedFromParent.parentBoardId);
+      if (parent && (parent.zdb > 0 || parent.isOrigin)) {
+        b.zdb = (parent.zdb || supplyZe) + b.feedFromParent.feedLoopOhms;
+        progressed = true;
+      }
+    }
+    if (!progressed) break;
+  }
+  // Fallback: any board still missing zdb (orphan) gets supplyZe so Zs calcs
+  // don't divide-by-zero or pass falsely. Real fix would be to re-parent it.
+  boards.forEach((b) => {
+    if (!b.zdb) b.zdb = supplyZe;
+  });
+
+  // PFC and earthing/bonding sizes — derived once Zdb is final.
+  boards.forEach((b) => {
+    b.psccKa = pscckAAtBoard(b.zdb);
+    if (b.isOrigin) {
+      const servicePhase = estimateServicePhaseSize(b.mainSwitchRating);
+      b.earthingConductorMm2 = sizeEarthingConductor(servicePhase, earthingSystem);
+      b.mainBondingMm2 = sizeMainBonding(servicePhase, earthingSystem);
+    } else if (b.feedFromParent) {
+      // Submain earthing conductor sized from the feed's phase conductor.
+      b.earthingConductorMm2 = sizeEarthingConductor(
+        b.feedFromParent.cableSize,
+        earthingSystem
+      );
+    } else {
+      b.earthingConductorMm2 = 0;
+    }
+  });
 
   return {
     boards,
@@ -609,6 +1039,166 @@ const SWA_4C_XLPE: Array<{ size: number; iz: number; mvAmM_3ph: number; mvAmM_1p
 ];
 
 const SUBMAIN_VD_TARGET_PERCENT = 2.0; // leave 3% headroom for final circuits (BS 7671 limits 5% total)
+
+/**
+ * Earth-fault loop resistance for a single conductor, copper @ 70°C, in
+ * mΩ per metre. Source: BS 7671 Appendix I, Table I1 (resistance per metre
+ * at 70°C). Used for Zs chain propagation: a submain feed contributes
+ * ~2× this × length (phase + cpc / armour return path) to the loop.
+ */
+const CU_70C_R_PER_M_MOHM: Record<number, number> = {
+  1: 21.4,
+  1.5: 14.5,
+  2.5: 8.71,
+  4: 5.45,
+  6: 3.64,
+  10: 2.16,
+  16: 1.36,
+  25: 0.863,
+  35: 0.617,
+  50: 0.456,
+  70: 0.316,
+  95: 0.228,
+  120: 0.181,
+  150: 0.147,
+  185: 0.118,
+  240: 0.0904,
+  300: 0.0723,
+  400: 0.0566,
+};
+
+/**
+ * Loop impedance contribution (Ω) of a submain feed: 2× single-conductor
+ * resistance × length / parallel runs.
+ *
+ * The factor of 2 conservatively models the earth-fault return path: phase
+ * conductor going + return path back (SWA armour or separate cpc). Real
+ * armour resistance varies 1.0–1.6× phase R for typical SWA gauges; using
+ * 2× phase R rounds up to a safe value rather than under-stating Zs (which
+ * would otherwise let the AI sign off circuits that are actually borderline).
+ */
+function feedLoopOhmsFor(
+  cableSizeMm2: number,
+  lengthM: number,
+  parallelRuns: number
+): number {
+  // Find the closest tabulated size — round UP for safety (smaller cable = higher R).
+  const sizes = Object.keys(CU_70C_R_PER_M_MOHM).map(Number).sort((a, b) => a - b);
+  const exact = CU_70C_R_PER_M_MOHM[cableSizeMm2];
+  const rPerM_mOhm =
+    exact ??
+    CU_70C_R_PER_M_MOHM[sizes.find((s) => s >= cableSizeMm2) ?? sizes[sizes.length - 1]] ??
+    0;
+  const totalLoopR = (2 * rPerM_mOhm * lengthM) / 1000; // mΩ → Ω
+  return totalLoopR / Math.max(1, parallelRuns);
+}
+
+/**
+ * Earthing conductor sizing per BS 7671 Table 54.7 (copper, same insulation
+ * as the phase conductor). Used for the main earthing conductor at the
+ * origin and submain earthing conductors that feed each board.
+ *
+ *   ≤ 16 mm²: same as phase
+ *   16 < phase ≤ 35: 16 mm²
+ *   > 35 mm²: phase / 2 (rounded up to next standard size)
+ *
+ * For SWA where the armour is the cpc, the armour itself is taken as
+ * sufficient (verified by manufacturer data); we still report a Cu
+ * equivalent here so the schedule has a value.
+ *
+ * For TT systems, BS 7671 542.1.5 + practical Approved Document advice
+ * recommends a 16 mm² Cu minimum on the main earthing conductor (or 25 mm² Cu
+ * if buried), because the earth electrode resistance is the dominant Zs
+ * contributor and you want to minimise voltage rise on the conductor itself.
+ */
+function sizeEarthingConductor(
+  phaseSizeMm2: number,
+  earthingSystem?: string
+): number {
+  const sys = String(earthingSystem ?? '').toUpperCase();
+  const isTT = sys === 'TT';
+  let size: number;
+  if (phaseSizeMm2 <= 16) size = phaseSizeMm2;
+  else if (phaseSizeMm2 <= 35) size = 16;
+  else {
+    const half = phaseSizeMm2 / 2;
+    size =
+      STANDARD_CABLE_SIZES_FOR_EARTHING.find((s) => s >= half) ?? Math.ceil(half);
+  }
+  // TT bump — minimum 16 mm² Cu for the main earthing conductor.
+  if (isTT && size < 16) size = 16;
+  return size;
+}
+
+const STANDARD_CABLE_SIZES_FOR_EARTHING = [
+  16, 25, 35, 50, 70, 95, 120, 150, 185, 240, 300, 400,
+];
+
+/**
+ * Main protective bonding conductor sizing per BS 7671 544.1.1 / Table 54.8.
+ *
+ *   TN-C-S (PME) — Table 54.8 (more onerous due to neutral-current loading):
+ *     phase ≤ 35 mm²        → 10 mm² Cu (was 6 mm² pre-A2)
+ *     35 < phase ≤ 50       → 16 mm²
+ *     50 < phase ≤ 95       → 25 mm²
+ *     95 < phase ≤ 150      → 35 mm²
+ *     > 150 mm²             → 50 mm²
+ *
+ *   TN-S / TT — half the phase size, with a 6 mm² minimum.
+ *
+ * A4:2026 reaffirms these for PME services and clarifies the 25 mm² minimum
+ * for the supplementary bonding in special locations (Section 7xx).
+ */
+function sizeMainBonding(
+  servicePhaseMm2: number,
+  earthingSystem: string
+): number {
+  const sys = String(earthingSystem ?? '').toUpperCase();
+  if (sys === 'TN-C-S' || sys === 'PME') {
+    if (servicePhaseMm2 <= 35) return 10;
+    if (servicePhaseMm2 <= 50) return 16;
+    if (servicePhaseMm2 <= 95) return 25;
+    if (servicePhaseMm2 <= 150) return 35;
+    return 50;
+  }
+  // TN-S / TT default
+  return Math.max(6, Math.ceil(servicePhaseMm2 / 2));
+}
+
+/**
+ * Estimate the service phase conductor size from the main switch rating —
+ * used when the user hasn't supplied a service cable size. Conservative:
+ * matches typical UK DNO service cable sizes for given main fuse / switch ratings.
+ */
+function estimateServicePhaseSize(mainSwitchA: number): number {
+  if (mainSwitchA <= 80) return 16;
+  if (mainSwitchA <= 100) return 25;
+  if (mainSwitchA <= 125) return 35;
+  if (mainSwitchA <= 160) return 50;
+  if (mainSwitchA <= 200) return 70;
+  if (mainSwitchA <= 250) return 95;
+  return 120;
+}
+
+/**
+ * Prospective fault current (kA) at a board's busbar, derived from Zdb.
+ *
+ * The fault we care about for breaking-capacity (Icn) selection is the
+ * phase-to-earth fault — single-phase MCBs / RCBOs see U₀ across the loop,
+ * NOT line-line voltage. UK supplies have U₀ = 230 V regardless of whether
+ * the system is single-phase 230 V or three-phase 400 V (line-line).
+ *
+ *   PSCC_pe = U₀ / Zdb       where U₀ ≈ 230 V (phase-to-earth)
+ *
+ * The line-line PSCC for 3φ faults is ~√3× higher but isn't the relevant
+ * figure for selecting single-phase device breaking capacity. We use the
+ * earth-fault PSCC and the user verifies on-site with the actual measurement.
+ */
+function pscckAAtBoard(zdbOhms: number): number {
+  if (zdbOhms <= 0) return 0;
+  const phaseToEarthVoltage = 230;
+  return phaseToEarthVoltage / zdbOhms / 1000;
+}
 
 function computeSubmainFeed(args: {
   parentBoardId: string;
@@ -706,6 +1296,9 @@ function computeSubmainFeed(args: {
       ? `L+N (off ${args.feedSourcePhase})`
       : 'L+N';
 
+  // Earth-fault loop impedance contributed by THIS feed.
+  const feedLoopOhms = feedLoopOhmsFor(chosen.size, lengthEstimate, parallelRuns);
+
   return {
     parentBoardId: args.parentBoardId,
     childBoardId: args.childBoardId,
@@ -726,11 +1319,13 @@ function computeSubmainFeed(args: {
     voltageDropPercent: vdPercent,
     voltageDropOk: vdPercent <= SUBMAIN_VD_TARGET_PERCENT,
     cableSizingNote: vdNote,
+    feedLoopOhms,
     rationale:
       `Submain to ${args.childBoardName} · ${loadKW} kW ${phaseDescriptor} = ${designCurrentA.toFixed(1)} A. ` +
       `${protectionRating}A ${protectionType}${protectionCurve ? ` Type ${protectionCurve}` : ''} ` +
       `${protectionKa} kA at parent feeds ${parallelDesc}${chosen.size} mm² ${coreCount} SWA over ~${lengthEstimate} m · ` +
-      `Iz ${chosen.iz * parallelRuns} A · Vd ${vdPercent.toFixed(2)}% (Tables 4D4A / 4D4B).`,
+      `Iz ${chosen.iz * parallelRuns} A · Vd ${vdPercent.toFixed(2)}% (Tables 4D4A / 4D4B). ` +
+      `Loop Z added: ${feedLoopOhms.toFixed(3)} Ω → propagates to child Zdb.`,
   };
 }
 
@@ -748,14 +1343,40 @@ function sumDiversifiedLoad(circuits: any[], indices: number[]): number {
  * Each single-phase circuit assigns to the currently least-loaded phase.
  * Three-phase circuits land across L1/L2/L3 simultaneously.
  *
+ * User overrides (e.g. "force this 1φ circuit onto L2") are honoured first,
+ * then the greedy LPT algorithm balances the remaining circuits around them.
+ *
  * Returns aggregate phase loads + per-circuit phase assignments so the
  * board schedule can label each way.
  */
-function balancePhases(circuits: any[], indices: number[], voltage: number): PhaseBalance {
+function balancePhases(
+  circuits: any[],
+  indices: number[],
+  voltage: number,
+  overrides?: Record<number, 'L1' | 'L2' | 'L3'>
+): PhaseBalance {
   const phases = { L1_W: 0, L2_W: 0, L3_W: 0 };
   const assignments: Record<number, 'L1' | 'L2' | 'L3' | 'L1L2L3'> = {};
-  // Sort by load DESC for greedy LPT (longest processing time) balancing
-  const sorted = [...indices].sort(
+
+  // Apply user overrides first — they pin where they belong regardless of balance
+  const overriddenIndices = new Set<number>();
+  if (overrides) {
+    for (const idx of indices) {
+      const c = circuits[idx];
+      if (c?.phases === 'three') continue; // 3φ circuits cannot be overridden
+      const override = overrides[idx];
+      if (override === 'L1' || override === 'L2' || override === 'L3') {
+        const load = Number(c?.calculations?.diversifiedLoad ?? c?.loadPower ?? 0);
+        phases[`${override}_W` as keyof typeof phases] += load;
+        assignments[idx] = override;
+        overriddenIndices.add(idx);
+      }
+    }
+  }
+
+  // Sort the rest by load DESC for greedy LPT (longest processing time) balancing
+  const remaining = indices.filter((i) => !overriddenIndices.has(i));
+  const sorted = remaining.sort(
     (a, b) => Number(circuits[b]?.loadPower ?? 0) - Number(circuits[a]?.loadPower ?? 0)
   );
   for (const idx of sorted) {
@@ -768,7 +1389,6 @@ function balancePhases(circuits: any[], indices: number[], voltage: number): Pha
       phases.L3_W += per;
       assignments[idx] = 'L1L2L3';
     } else {
-      // Pick the least-loaded phase
       const least =
         phases.L1_W <= phases.L2_W && phases.L1_W <= phases.L3_W
           ? 'L1'
@@ -793,10 +1413,19 @@ function balancePhases(circuits: any[], indices: number[], voltage: number): Pha
  * Decide the phase configuration for a submain feed.
  *
  *   1φ parent  →  always 1φ submain (no choice)
- *   3φ parent + child has any 3φ load  →  TP+N
- *   3φ parent + child < 11.5 kW + only 1φ loads  →  L+N (single-phase submain)
- *                                                    saves cable cost vs 4-core SWA
- *   3φ parent + child ≥ 11.5 kW  →  TP+N (lets you balance internally)
+ *   3φ parent  →  TP+N submain (consistent + future-proof)
+ *
+ * Why default TP+N rather than mix L+N for small loads:
+ *   - The whole installation has been designed on a 3φ basis (either user
+ *     chose 3φ explicitly, or we auto-converted because total load demanded
+ *     it). Mixing L+N for small submains introduces phase-balancing decisions
+ *     the user didn't ask for, and silently surprises them when the schedule
+ *     shows L+N where they expected TP+N.
+ *   - Cable-cost saving (3-core vs 4-core SWA) is a real trade-off, but the
+ *     user can opt into it manually per submain in a future pass — the safe
+ *     default is uniform TP+N.
+ *   - Future-proofs each child board for any future 3φ load (heat pump, EV
+ *     upgrade, etc.) without re-running the cable.
  */
 function decideSubmainPhases(
   parentSupplyPhases: string,
@@ -805,10 +1434,10 @@ function decideSubmainPhases(
   childDiversifiedW: number
 ): 'three' | 'single' {
   if (parentSupplyPhases !== 'three') return 'single';
-  const hasThreePhaseChild = childIndices.some((i) => childCircuits[i]?.phases === 'three');
-  if (hasThreePhaseChild) return 'three';
-  if (childDiversifiedW > 11500) return 'three';
-  return 'single';
+  void childCircuits;
+  void childIndices;
+  void childDiversifiedW;
+  return 'three';
 }
 
 /**

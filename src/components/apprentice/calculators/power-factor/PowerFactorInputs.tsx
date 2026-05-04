@@ -48,14 +48,22 @@ const PowerFactorInputs = ({
         <Button
           variant={calculationMethod === 'power' ? 'default' : 'outline'}
           onClick={() => setCalculationMethod('power')}
-          className="flex-1"
+          className={
+            calculationMethod === 'power'
+              ? 'flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation'
+              : 'flex-1 h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation'
+          }
         >
           Using Power Values
         </Button>
         <Button
           variant={calculationMethod === 'currentVoltage' ? 'default' : 'outline'}
           onClick={() => setCalculationMethod('currentVoltage')}
-          className="flex-1"
+          className={
+            calculationMethod === 'currentVoltage'
+              ? 'flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation'
+              : 'flex-1 h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation'
+          }
         >
           Using I & V
         </Button>
@@ -70,7 +78,7 @@ const PowerFactorInputs = ({
               type="text"
               inputMode="decimal"
               placeholder="Enter active power"
-              className="bg-white/10 border-elec-yellow/20"
+              className="bg-white/[0.04] border-white/10 focus:border-yellow-500 focus:ring-yellow-500"
               value={activePower}
               onChange={(e) => {
                 setActivePower(e.target.value);
@@ -93,7 +101,7 @@ const PowerFactorInputs = ({
               type="text"
               inputMode="decimal"
               placeholder="Enter apparent power"
-              className="bg-white/10 border-elec-yellow/20"
+              className="bg-white/[0.04] border-white/10 focus:border-yellow-500 focus:ring-yellow-500"
               value={apparentPower}
               onChange={(e) => {
                 setApparentPower(e.target.value);
@@ -119,7 +127,7 @@ const PowerFactorInputs = ({
               type="text"
               inputMode="decimal"
               placeholder="Enter active power"
-              className="bg-white/10 border-elec-yellow/20"
+              className="bg-white/[0.04] border-white/10 focus:border-yellow-500 focus:ring-yellow-500"
               value={activePower}
               onChange={(e) => {
                 setActivePower(e.target.value);
@@ -141,7 +149,7 @@ const PowerFactorInputs = ({
               type="text"
               inputMode="decimal"
               placeholder="Enter voltage"
-              className="bg-white/10 border-elec-yellow/20"
+              className="bg-white/[0.04] border-white/10 focus:border-yellow-500 focus:ring-yellow-500"
               value={voltage}
               onChange={(e) => {
                 setVoltage(e.target.value);
@@ -163,7 +171,7 @@ const PowerFactorInputs = ({
               type="text"
               inputMode="decimal"
               placeholder="Enter current"
-              className="bg-white/10 border-elec-yellow/20"
+              className="bg-white/[0.04] border-white/10 focus:border-yellow-500 focus:ring-yellow-500"
               value={current}
               onChange={(e) => {
                 setCurrent(e.target.value);
@@ -200,10 +208,17 @@ const PowerFactorInputs = ({
       </div>
 
       <div className="flex space-x-3 pt-2">
-        <Button onClick={calculatePowerFactor} className="flex-1">
+        <Button
+          onClick={calculatePowerFactor}
+          className="flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98]"
+        >
           Calculate
         </Button>
-        <Button variant="outline" onClick={resetCalculator} className="flex-1">
+        <Button
+          variant="outline"
+          onClick={resetCalculator}
+          className="flex-1 h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+        >
           Reset
         </Button>
       </div>

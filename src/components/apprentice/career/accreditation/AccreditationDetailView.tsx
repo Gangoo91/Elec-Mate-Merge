@@ -1,20 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
-  ArrowLeft,
-  ExternalLink,
-  Clock,
-  PoundSterling,
-  Award,
-  CheckCircle,
-  AlertCircle,
-  TrendingUp,
-  MapPin,
-  RefreshCw,
-  Star,
-} from 'lucide-react';
+import { ArrowLeft, ExternalLink, Star } from 'lucide-react';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { AccreditationOption } from './enhancedAccreditationData';
 
@@ -23,970 +9,656 @@ interface AccreditationDetailViewProps {
   onBack: () => void;
 }
 
+const Section = ({ eyebrow, children }: { eyebrow: string; children: React.ReactNode }) => (
+  <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      {eyebrow}
+    </span>
+    <div>{children}</div>
+  </div>
+);
+
+const Pill = ({ children }: { children: React.ReactNode }) => (
+  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+    {children}
+  </span>
+);
+
+const Bullets = ({ items }: { items: string[] }) => (
+  <ul className="space-y-1.5">
+    {items.map((item, idx) => (
+      <li
+        key={idx}
+        className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+      >
+        <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+        <span>{item}</span>
+      </li>
+    ))}
+  </ul>
+);
+
 const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailViewProps) => {
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case 'Entry Level':
-        return 'bg-green-500/10 text-green-400 border-green-500/30';
-      case 'Intermediate':
-        return 'bg-amber-500/10 text-amber-400 border-amber-500/30';
-      case 'Advanced':
-        return 'bg-red-500/10 text-red-400 border-red-500/30';
-      case 'Expert':
-        return 'bg-purple-500/10 text-purple-400 border-purple-500/30';
-      default:
-        return 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30';
-    }
-  };
-
-  const getPopularityStars = (popularity: number) => {
-    const stars = Math.round(popularity / 20);
-    return Array.from({ length: 5 }, (_, i) => (
-      <Star
-        key={i}
-        className={`h-4 w-4 ${i < stars ? 'text-elec-yellow fill-current' : 'text-white'}`}
-      />
-    ));
-  };
-
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-5 animate-fade-in">
       {/* Header */}
-      <div className="flex items-center gap-4">
-        <Button
-          variant="outline"
-          onClick={onBack}
-          className="h-11 border-white/20 hover:bg-white/10 hover:border-elec-yellow/30 touch-manipulation active:scale-95 transition-all"
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Accreditations
-        </Button>
+      <Button
+        variant="ghost"
+        onClick={onBack}
+        className="text-white hover:text-white hover:bg-white/[0.05] -ml-2 h-11 touch-manipulation"
+      >
+        <ArrowLeft className="mr-2 h-5 w-5" />
+        Back to accreditations
+      </Button>
+
+      <div className="space-y-3">
+        <div className="flex flex-wrap items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span>{accreditation.level}</span>
+          <span className="text-white/25">·</span>
+          <span>{accreditation.category}</span>
+          {accreditation.onlineAvailable && (
+            <>
+              <span className="text-white/25">·</span>
+              <span>Online available</span>
+            </>
+          )}
+        </div>
+        <h2 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
+          {accreditation.title}
+        </h2>
+        <p className="text-[14px] text-white/70">{accreditation.provider}</p>
+        <p className="text-[14px] text-white/85 leading-relaxed">{accreditation.description}</p>
       </div>
 
-      {/* Main Details Card */}
-      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-        <CardHeader className="relative">
-          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-            <div className="flex-1">
-              <CardTitle className="text-2xl font-bold text-white mb-2">
-                {accreditation.title}
-              </CardTitle>
-              <p className="text-lg text-elec-yellow mb-3">{accreditation.provider}</p>
-              <p className="text-white leading-relaxed">{accreditation.description}</p>
-            </div>
-            <div className="flex flex-col gap-3">
-              <Badge variant="outline" className={getDifficultyColor(accreditation.difficulty)}>
-                {accreditation.level}
-              </Badge>
-              <Badge
-                variant="outline"
-                className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30"
-              >
-                {accreditation.category}
-              </Badge>
-              {accreditation.onlineAvailable && (
-                <Badge
-                  variant="outline"
-                  className="bg-blue-500/10 text-blue-400 border-blue-500/30"
-                >
-                  Online Available
-                </Badge>
-              )}
-            </div>
+      {/* Quick info grid */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        {[
+          { label: 'Duration', value: accreditation.duration },
+          { label: 'Investment', value: accreditation.cost },
+          {
+            label: 'Locations',
+            value:
+              accreditation.locations.length > 1 ? 'Multiple' : accreditation.locations[0],
+          },
+          { label: 'Popularity', value: `${accreditation.popularity}%` },
+        ].map((item) => (
+          <div
+            key={item.label}
+            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
+          >
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              {item.label}
+            </span>
+            <div className="text-[14px] text-white/85">{item.value}</div>
           </div>
-        </CardHeader>
-        <CardContent className="relative">
-          {/* Quick Info Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            <div className="flex items-center gap-3 p-4 bg-white/5 rounded-xl border border-white/10">
-              <div className="p-2 rounded-lg bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
-                <Clock className="h-4 w-4 text-elec-yellow" />
-              </div>
-              <div>
-                <div className="text-sm font-medium text-white">{accreditation.duration}</div>
-                <div className="text-xs text-white">Duration</div>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 p-4 bg-white/5 rounded-xl border border-white/10">
-              <div className="p-2 rounded-lg bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30">
-                <PoundSterling className="h-4 w-4 text-green-400" />
-              </div>
-              <div>
-                <div className="text-sm font-medium text-white">{accreditation.cost}</div>
-                <div className="text-xs text-white">Investment</div>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 p-4 bg-white/5 rounded-xl border border-white/10">
-              <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30">
-                <MapPin className="h-4 w-4 text-blue-400" />
-              </div>
-              <div>
-                <div className="text-sm font-medium text-white">
-                  {accreditation.locations.length > 1 ? 'Multiple' : accreditation.locations[0]}
-                </div>
-                <div className="text-xs text-white">Locations</div>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 p-4 bg-white/5 rounded-xl border border-white/10">
-              <div className="flex">{getPopularityStars(accreditation.popularity)}</div>
-              <div>
-                <div className="text-sm font-medium text-white">{accreditation.popularity}%</div>
-                <div className="text-xs text-white">Popularity</div>
-              </div>
-            </div>
-          </div>
+        ))}
+      </div>
 
-          {/* Career Impact */}
-          <div className="p-4 rounded-xl bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/30">
-            <div className="flex items-start gap-3">
-              <div className="p-2 rounded-lg bg-elec-yellow/20 border border-elec-yellow/30">
-                <TrendingUp className="h-4 w-4 text-elec-yellow" />
-              </div>
-              <div>
-                <h4 className="font-medium text-elec-yellow mb-1">Career Impact</h4>
-                <p className="text-sm text-white">{accreditation.careerImpact}</p>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      <Section eyebrow="Career impact">
+        <p className="text-[14px] text-white/85 leading-relaxed">{accreditation.careerImpact}</p>
+      </Section>
 
-      {/* Detailed Information Tabs */}
+      {/* Tabs */}
       <Tabs defaultValue="benefits" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 gap-1 bg-white/5 border border-white/10 p-1 rounded-xl">
+        <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 gap-1 bg-white/[0.02] border border-white/[0.06] p-1 rounded-xl">
           <TabsTrigger
             value="benefits"
-            className="text-xs md:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+            className="text-[12px] data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
           >
             Benefits
           </TabsTrigger>
           <TabsTrigger
             value="requirements"
-            className="text-xs md:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+            className="text-[12px] data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
           >
             Requirements
           </TabsTrigger>
           <TabsTrigger
             value="process"
-            className="text-xs md:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+            className="text-[12px] data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
           >
             Process
           </TabsTrigger>
           <TabsTrigger
             value="getting-started"
-            className="text-xs md:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+            className="text-[12px] data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
           >
-            Get Started
+            Get started
           </TabsTrigger>
           <TabsTrigger
             value="details"
-            className="text-xs md:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+            className="text-[12px] data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
           >
             Details
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="benefits">
-          <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-            <CardHeader className="relative">
-              <CardTitle className="flex items-center gap-3 text-white">
-                <div className="p-2 rounded-lg bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
-                  <Award className="h-5 w-5 text-elec-yellow" />
-                </div>
-                Comprehensive Benefits Package
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6 relative">
-              {/* Professional Recognition */}
-              <div className="space-y-3">
-                <h4 className="text-lg font-semibold text-elec-yellow">Professional Recognition</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="p-4 bg-white/5 rounded-xl border border-elec-yellow/20">
-                    <h5 className="font-medium text-elec-yellow mb-2">Industry Standing</h5>
-                    <p className="text-sm text-white">
-                      Gain instant credibility and recognition within the electrical industry,
-                      setting you apart from non-accredited professionals.
-                    </p>
-                  </div>
-                  <div className="p-4 bg-white/5 rounded-xl border border-elec-yellow/20">
-                    <h5 className="font-medium text-elec-yellow mb-2">Consumer Trust</h5>
-                    <p className="text-sm text-white">
-                      Customers actively seek accredited professionals, providing immediate
-                      confidence in your services and expertise.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Business Benefits */}
-              <div className="space-y-3">
-                <h4 className="text-lg font-semibold text-elec-yellow">Business Advantages</h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="p-4 bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/20 rounded-xl">
-                    <h5 className="font-medium text-green-400 mb-2">Higher Rates</h5>
-                    <p className="text-sm text-white">
-                      Command premium pricing - accredited professionals typically charge 15-25%
-                      more than non-accredited competitors.
-                    </p>
-                  </div>
-                  <div className="p-4 bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/20 rounded-xl">
-                    <h5 className="font-medium text-blue-400 mb-2">Marketing Edge</h5>
-                    <p className="text-sm text-white">
-                      Use accreditation logos and marketing materials to win more contracts and
-                      build trust with potential clients.
-                    </p>
-                  </div>
-                  <div className="p-4 bg-gradient-to-br from-purple-500/10 to-purple-500/5 border border-purple-500/20 rounded-xl">
-                    <h5 className="font-medium text-purple-400 mb-2">Insurance Discounts</h5>
-                    <p className="text-sm text-white">
-                      Access reduced insurance premiums and preferred rates through accreditation
-                      body partnerships.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Technical Support */}
-              <div className="space-y-3">
-                <h4 className="text-lg font-semibold text-elec-yellow">Professional Support</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {accreditation.benefits.map((benefit, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-start gap-3 p-3 bg-white/5 rounded-xl border border-white/10"
-                    >
-                      <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-sm text-white">{benefit}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Financial Benefits */}
-              <div className="p-4 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/30 rounded-xl">
-                <h4 className="text-lg font-semibold text-elec-yellow mb-3">
-                  Return on Investment
-                </h4>
-                <p className="text-white mb-3">
-                  Most professionals recoup their annual membership costs within the first 2-3
-                  contracts through:
+        <TabsContent value="benefits" className="space-y-4">
+          <Section eyebrow="Professional recognition">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div>
+                <h5 className="text-[14px] text-white mb-1">Industry standing</h5>
+                <p className="text-[14px] text-white/85 leading-relaxed">
+                  Gain credibility within the electrical industry, setting you apart from non-accredited
+                  professionals.
                 </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                      <span className="text-sm text-white">Premium rate justification</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                      <span className="text-sm text-white">Increased customer confidence</span>
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                      <span className="text-sm text-white">Access to larger contracts</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                      <span className="text-sm text-white">Insurance savings</span>
-                    </div>
-                  </div>
-                </div>
               </div>
-            </CardContent>
-          </Card>
+              <div>
+                <h5 className="text-[14px] text-white mb-1">Consumer trust</h5>
+                <p className="text-[14px] text-white/85 leading-relaxed">
+                  Customers actively seek accredited professionals, providing immediate confidence in
+                  your services.
+                </p>
+              </div>
+            </div>
+          </Section>
+
+          <Section eyebrow="Business advantages">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div>
+                <h5 className="text-[14px] text-white mb-1">Pricing</h5>
+                <p className="text-[14px] text-white/85 leading-relaxed">
+                  Many accredited professionals are able to charge a premium relative to non-accredited
+                  competitors.
+                </p>
+              </div>
+              <div>
+                <h5 className="text-[14px] text-white mb-1">Marketing</h5>
+                <p className="text-[14px] text-white/85 leading-relaxed">
+                  Use accreditation logos and marketing materials to win contracts and build trust with
+                  potential clients.
+                </p>
+              </div>
+              <div>
+                <h5 className="text-[14px] text-white mb-1">Insurance</h5>
+                <p className="text-[14px] text-white/85 leading-relaxed">
+                  Access reduced premiums through accreditation body partnerships.
+                </p>
+              </div>
+            </div>
+          </Section>
+
+          <Section eyebrow="Professional support">
+            <Bullets items={accreditation.benefits} />
+          </Section>
+
+          <Section eyebrow="Return on investment">
+            <p className="text-[14px] text-white/85 leading-relaxed mb-2">
+              Most professionals recoup their annual membership costs within the first few contracts
+              through:
+            </p>
+            <Bullets
+              items={[
+                'Premium rate justification',
+                'Increased customer confidence',
+                'Access to larger contracts',
+                'Insurance savings',
+              ]}
+            />
+          </Section>
         </TabsContent>
 
-        <TabsContent value="requirements">
-          <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-            <CardHeader className="relative">
-              <CardTitle className="flex items-center gap-3 text-white">
-                <div className="p-2 rounded-lg bg-gradient-to-br from-amber-500/20 to-amber-500/5 border border-amber-500/30">
-                  <AlertCircle className="h-5 w-5 text-amber-400" />
-                </div>
-                Detailed Requirements & Eligibility
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6 relative">
-              {/* Essential Qualifications */}
-              <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-elec-yellow">Essential Qualifications</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="p-4 bg-white/5 rounded-xl border border-amber-500/20">
-                    <h5 className="font-medium text-amber-400 mb-2">Minimum Qualifications</h5>
-                    <div className="space-y-2">
-                      {accreditation.requirements.map((requirement, idx) => (
-                        <div key={idx} className="flex items-start gap-3">
-                          <CheckCircle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-sm text-white">{requirement}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="p-4 bg-white/5 rounded-xl border border-green-500/20">
-                    <h5 className="font-medium text-green-400 mb-2">Alternative Pathways</h5>
-                    <div className="space-y-2 text-sm text-white">
-                      <p>• Equivalent overseas qualifications may be accepted</p>
-                      <p>• Apprenticeship completion with appropriate level</p>
-                      <p>• Combination of experience and portfolio assessment</p>
-                      <p>• Recognition of Prior Learning (RPL) available</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        <TabsContent value="requirements" className="space-y-4">
+          <Section eyebrow="Minimum qualifications">
+            <Bullets items={accreditation.requirements} />
+          </Section>
 
-              {/* Experience Requirements */}
-              <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-elec-yellow">Experience Requirements</h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="p-4 bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/20 rounded-xl">
-                    <h5 className="font-medium text-blue-400 mb-2">Years Required</h5>
-                    <p className="text-sm text-white">
-                      Minimum 2-4 years post-qualification experience in electrical installation,
-                      testing, or design work.
-                    </p>
-                  </div>
-                  <div className="p-4 bg-gradient-to-br from-purple-500/10 to-purple-500/5 border border-purple-500/20 rounded-xl">
-                    <h5 className="font-medium text-purple-400 mb-2">Type of Work</h5>
-                    <p className="text-sm text-white">
-                      Domestic, commercial, or industrial electrical work with evidence of
-                      competence across multiple areas.
-                    </p>
-                  </div>
-                  <div className="p-4 bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/20 rounded-xl">
-                    <h5 className="font-medium text-green-400 mb-2">Portfolio</h5>
-                    <p className="text-sm text-white">
-                      Documented evidence of completed projects, installations, and ongoing
-                      professional development.
-                    </p>
-                  </div>
-                </div>
-              </div>
+          <Section eyebrow="Alternative pathways">
+            <Bullets
+              items={[
+                'Equivalent overseas qualifications may be accepted',
+                'Apprenticeship completion with appropriate level',
+                'Combination of experience and portfolio assessment',
+                'Recognition of Prior Learning (RPL) available',
+              ]}
+            />
+          </Section>
 
-              {/* Technical Competencies */}
-              <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-elec-yellow">Technical Competencies</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="p-4 bg-white/5 rounded-xl border border-elec-yellow/20">
-                    <h5 className="font-medium text-elec-yellow mb-3">Core Skills Required</h5>
-                    <div className="space-y-2 text-sm text-white">
-                      <p>• Electrical installation to BS 7671 standards</p>
-                      <p>• Testing and inspection procedures</p>
-                      <p>• Fault diagnosis and remedial work</p>
-                      <p>• Understanding of Building Regulations</p>
-                      <p>• Health and safety compliance</p>
-                    </div>
-                  </div>
-                  <div className="p-4 bg-white/5 rounded-xl border border-elec-yellow/20">
-                    <h5 className="font-medium text-elec-yellow mb-3">Assessment Areas</h5>
-                    <div className="space-y-2 text-sm text-white">
-                      <p>• Practical installation assessment</p>
-                      <p>• Testing and inspection competence</p>
-                      <p>• Knowledge of current regulations</p>
-                      <p>• Understanding of safety procedures</p>
-                      <p>• Business and customer service skills</p>
-                    </div>
-                  </div>
-                </div>
+          <Section eyebrow="Experience requirements">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div>
+                <h5 className="text-[14px] text-white mb-1">Years required</h5>
+                <p className="text-[14px] text-white/85 leading-relaxed">
+                  Typically 2-4 years post-qualification experience in installation, testing, or
+                  design.
+                </p>
               </div>
-
-              {/* Business Requirements */}
-              <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-elec-yellow">Business Requirements</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="p-4 bg-gradient-to-br from-red-500/10 to-red-500/5 border border-red-500/20 rounded-xl">
-                    <h5 className="font-medium text-red-400 mb-2">Insurance & Legal</h5>
-                    <div className="space-y-2 text-sm text-white">
-                      <p>• Public liability insurance (minimum £2m)</p>
-                      <p>• Professional indemnity cover</p>
-                      <p>• Valid business registration</p>
-                      <p>• Compliance with relevant legislation</p>
-                    </div>
-                  </div>
-                  <div className="p-4 bg-white/5 rounded-xl border border-elec-yellow/20">
-                    <h5 className="font-medium text-elec-yellow mb-2">Documentation</h5>
-                    <div className="space-y-2 text-sm text-white">
-                      <p>• Qualification certificates</p>
-                      <p>• Work portfolio and references</p>
-                      <p>• CPD records and training evidence</p>
-                      <p>• Character references</p>
-                    </div>
-                  </div>
-                </div>
+              <div>
+                <h5 className="text-[14px] text-white mb-1">Type of work</h5>
+                <p className="text-[14px] text-white/85 leading-relaxed">
+                  Domestic, commercial, or industrial work with evidence of competence across multiple
+                  areas.
+                </p>
               </div>
+              <div>
+                <h5 className="text-[14px] text-white mb-1">Portfolio</h5>
+                <p className="text-[14px] text-white/85 leading-relaxed">
+                  Documented evidence of completed projects, installations, and ongoing development.
+                </p>
+              </div>
+            </div>
+          </Section>
 
-              {accreditation.prerequisites && accreditation.prerequisites.length > 0 && (
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-red-400">Critical Prerequisites</h4>
-                  <div className="space-y-2">
-                    {accreditation.prerequisites.map((prerequisite, idx) => (
-                      <div
-                        key={idx}
-                        className="flex items-start gap-3 p-4 bg-gradient-to-br from-red-500/10 to-red-500/5 border border-red-500/30 rounded-xl"
-                      >
-                        <AlertCircle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-sm text-white font-medium">{prerequisite}</span>
-                      </div>
-                    ))}
-                  </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <Section eyebrow="Core skills required">
+              <Bullets
+                items={[
+                  'Electrical installation to BS 7671 standards',
+                  'Testing and inspection procedures',
+                  'Fault diagnosis and remedial work',
+                  'Understanding of Building Regulations',
+                  'Health and safety compliance',
+                ]}
+              />
+            </Section>
+            <Section eyebrow="Assessment areas">
+              <Bullets
+                items={[
+                  'Practical installation assessment',
+                  'Testing and inspection competence',
+                  'Knowledge of current regulations',
+                  'Understanding of safety procedures',
+                  'Business and customer service skills',
+                ]}
+              />
+            </Section>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <Section eyebrow="Insurance and legal">
+              <Bullets
+                items={[
+                  'Public liability insurance (minimum £2m)',
+                  'Professional indemnity cover',
+                  'Valid business registration',
+                  'Compliance with relevant legislation',
+                ]}
+              />
+            </Section>
+            <Section eyebrow="Documentation">
+              <Bullets
+                items={[
+                  'Qualification certificates',
+                  'Work portfolio and references',
+                  'CPD records and training evidence',
+                  'Character references',
+                ]}
+              />
+            </Section>
+          </div>
+
+          {accreditation.prerequisites && accreditation.prerequisites.length > 0 && (
+            <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+                Critical prerequisites
+              </span>
+              <ul className="space-y-1.5">
+                {accreditation.prerequisites.map((p, idx) => (
+                  <li key={idx} className="text-[14px] text-white/85 leading-relaxed">
+                    {p}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </TabsContent>
+
+        <TabsContent value="process" className="space-y-4">
+          <Section eyebrow="Phase 1: Preparation (2-4 weeks)">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div>
+                <h5 className="text-[14px] text-white mb-1">Self-assessment</h5>
+                <Bullets
+                  items={[
+                    'Review qualification requirements against your certificates',
+                    'Assess work experience against competency standards',
+                    'Check insurance coverage and business documentation',
+                    'Evaluate readiness for technical assessment',
+                  ]}
+                />
+              </div>
+              <div>
+                <h5 className="text-[14px] text-white mb-1">Document gathering</h5>
+                <Bullets
+                  items={[
+                    'Collect all qualification certificates',
+                    'Prepare work portfolio with photos and descriptions',
+                    'Obtain character and professional references',
+                    'Gather insurance certificates and business documents',
+                  ]}
+                />
+              </div>
+            </div>
+          </Section>
+
+          <Section eyebrow="Phase 2: Application (1-2 weeks)">
+            <div className="space-y-2">
+              {accreditation.nextSteps.map((step, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-start gap-3 text-[14px] text-white/85 leading-relaxed"
+                >
+                  <span className="flex-shrink-0 w-6 h-6 rounded-md border border-white/10 bg-white/[0.03] flex items-center justify-center text-[12px] text-white/85 font-mono">
+                    {idx + 1}
+                  </span>
+                  <span>{step}</span>
+                </div>
+              ))}
+            </div>
+          </Section>
+
+          <Section eyebrow="Phase 3: Assessment (2-6 weeks)">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div>
+                <h5 className="text-[14px] text-white mb-1">Technical assessment</h5>
+                <Bullets
+                  items={[
+                    'On-site practical assessment',
+                    'Review of work portfolio',
+                    'Testing and inspection demonstration',
+                    'Knowledge interview',
+                  ]}
+                />
+              </div>
+              <div>
+                <h5 className="text-[14px] text-white mb-1">What to expect</h5>
+                <Bullets
+                  items={[
+                    '2-4 hour assessment duration',
+                    'Friendly, supportive assessor',
+                    'Real-world scenarios',
+                    'Opportunity to demonstrate skills',
+                  ]}
+                />
+              </div>
+              <div>
+                <h5 className="text-[14px] text-white mb-1">Common challenges</h5>
+                <Bullets
+                  items={[
+                    'Nervousness affecting performance',
+                    'Incomplete documentation',
+                    'Outdated regulation knowledge',
+                    'Limited testing experience',
+                  ]}
+                />
+              </div>
+            </div>
+          </Section>
+
+          <Section eyebrow="Phase 4: Approval and setup (1-2 weeks)">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div>
+                <h5 className="text-[14px] text-white mb-1">After approval</h5>
+                <Bullets
+                  items={[
+                    'Receive accreditation certificate and materials',
+                    'Set up online account and access to resources',
+                    'Download marketing materials and logos',
+                    'Schedule ongoing assessment dates',
+                  ]}
+                />
+              </div>
+              <div>
+                <h5 className="text-[14px] text-white mb-1">Getting started</h5>
+                <Bullets
+                  items={[
+                    'Update business materials with accreditation',
+                    'Contact existing clients about new status',
+                    'Register for CPD and training events',
+                    'Begin building regulatory compliance history',
+                  ]}
+                />
+              </div>
+            </div>
+          </Section>
+
+          <Section eyebrow="Total timeline">
+            <p className="text-[14px] text-white/85 leading-relaxed">
+              Approximately 6-12 weeks from start to finish, broken down across the four phases above.
+            </p>
+          </Section>
+        </TabsContent>
+
+        <TabsContent value="getting-started" className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <Section eyebrow="Ready to apply">
+              <Bullets
+                items={[
+                  'Hold relevant electrical qualifications',
+                  'Have 2+ years post-qualification experience',
+                  'Current public liability insurance',
+                  'Portfolio of completed electrical work',
+                  'Up-to-date with BS 7671:2018+A4:2026 regulations',
+                ]}
+              />
+            </Section>
+            <Section eyebrow="Need preparation">
+              <Bullets
+                items={[
+                  'Missing key qualifications',
+                  'Limited electrical experience',
+                  'No insurance or business setup',
+                  'Outdated regulation knowledge',
+                  'Insufficient work portfolio',
+                ]}
+              />
+            </Section>
+          </div>
+
+          <Section eyebrow="Months 1-2: Foundation building">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div>
+                <h5 className="text-[14px] text-white mb-1">Qualifications</h5>
+                <Bullets
+                  items={[
+                    'Complete any missing electrical qualifications',
+                    'Update BS 7671:2018+A4:2026 certification',
+                    'Consider additional testing qualifications',
+                  ]}
+                />
+              </div>
+              <div>
+                <h5 className="text-[14px] text-white mb-1">Business setup</h5>
+                <Bullets
+                  items={[
+                    'Arrange appropriate insurance coverage',
+                    'Register business if not already done',
+                    'Set up basic business documentation',
+                  ]}
+                />
+              </div>
+            </div>
+          </Section>
+
+          <Section eyebrow="Months 3-4: Experience and portfolio">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div>
+                <h5 className="text-[14px] text-white mb-1">Gain experience</h5>
+                <Bullets
+                  items={[
+                    'Focus on diverse electrical projects',
+                    'Develop testing and inspection skills',
+                    'Work on different types of installations',
+                  ]}
+                />
+              </div>
+              <div>
+                <h5 className="text-[14px] text-white mb-1">Build portfolio</h5>
+                <Bullets
+                  items={[
+                    'Document completed projects with photos',
+                    'Collect client testimonials',
+                    'Gather work certificates and references',
+                  ]}
+                />
+              </div>
+            </div>
+          </Section>
+
+          <Section eyebrow="Months 5-6: Final preparation">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div>
+                <h5 className="text-[14px] text-white mb-1">Knowledge review</h5>
+                <Bullets
+                  items={[
+                    'Refresh understanding of current regulations',
+                    'Practice testing and inspection procedures',
+                    'Review certification requirements',
+                  ]}
+                />
+              </div>
+              <div>
+                <h5 className="text-[14px] text-white mb-1">Application ready</h5>
+                <Bullets
+                  items={[
+                    'Complete all required documentation',
+                    'Schedule assessment appointment',
+                    'Prepare for technical evaluation',
+                  ]}
+                />
+              </div>
+            </div>
+          </Section>
+
+          <Section eyebrow="Cost overview">
+            <p className="text-[14px] text-white/85 leading-relaxed">
+              Initial investment includes the application fee ({accreditation.cost.split(' ')[0]}),
+              an assessment fee, and documentation costs. Most professionals see a return through
+              higher rates and reduced insurance premiums over the first year.
+            </p>
+          </Section>
+
+          <Section eyebrow="Avoid these common mistakes">
+            <Bullets
+              items={[
+                'Rushing the application — take time to prepare properly',
+                'Incomplete documentation — gather all required evidence',
+                'Outdated knowledge — update regulation understanding',
+                'Insufficient experience — build a diverse work portfolio',
+                'Poor preparation for assessment — practice and review',
+                'Inadequate insurance — ensure proper coverage',
+              ]}
+            />
+          </Section>
+        </TabsContent>
+
+        <TabsContent value="details" className="space-y-4">
+          <Section eyebrow="Industry recognition and standing">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div>
+                <h5 className="text-[14px] text-white mb-1">Market recognition</h5>
+                <p className="text-[14px] text-white/85 leading-relaxed">
+                  Recognised by {accreditation.popularity}% of UK electrical professionals and trusted
+                  by major contractors nationwide.
+                </p>
+              </div>
+              <div>
+                <h5 className="text-[14px] text-white mb-1">Consumer awareness</h5>
+                <p className="text-[14px] text-white/85 leading-relaxed">
+                  Promoted through government and industry channels.
+                </p>
+              </div>
+              <div>
+                <h5 className="text-[14px] text-white mb-1">Regulatory standing</h5>
+                <p className="text-[14px] text-white/85 leading-relaxed">
+                  Recognised for Building Regulations compliance and notification rights where
+                  applicable.
+                </p>
+              </div>
+            </div>
+          </Section>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <Section eyebrow="Career progression">
+              <Bullets
+                items={[
+                  'Progress to senior contractor status',
+                  'Develop specialist expertise areas',
+                  'Become approved instructor or assessor',
+                  'Expand into related electrical disciplines',
+                  'Consider professional engineering registration',
+                ]}
+              />
+            </Section>
+            <Section eyebrow="Earning potential">
+              <Bullets
+                items={[
+                  'Premium pricing on accredited work',
+                  'Access to commercial contracts',
+                  'Insurance savings',
+                  'Long-term career value',
+                  'Business expansion opportunities',
+                ]}
+              />
+            </Section>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <Section eyebrow="Annual requirements">
+              <Bullets
+                items={[
+                  `Renewal fee: ${accreditation.cost}`,
+                  'Annual assessment or surveillance visit',
+                  'CPD evidence: 20-30 hours annually',
+                  'Insurance maintenance and updates',
+                  'Regulation knowledge updates',
+                ]}
+              />
+            </Section>
+            <Section eyebrow="Time investment">
+              <Bullets
+                items={[
+                  'Assessment preparation: 2-4 hours monthly',
+                  'CPD activities: 2-3 hours monthly',
+                  'Documentation updates: 1 hour monthly',
+                  'Total commitment: 5-8 hours monthly',
+                ]}
+              />
+            </Section>
+          </div>
+
+          <Section eyebrow="Accreditation specifications">
+            <div className="space-y-2 text-[14px] text-white/85 leading-relaxed">
+              <div>
+                <span className="text-white/55">Accrediting body: </span>
+                {accreditation.accreditationBody}
+              </div>
+              <div>
+                <span className="text-white/55">Coverage areas: </span>
+                {accreditation.locations.join(', ')}
+              </div>
+              <div>
+                <span className="text-white/55">Difficulty: </span>
+                {accreditation.difficulty} — suitable for experienced professionals
+              </div>
+              {accreditation.renewalPeriod && (
+                <div>
+                  <span className="text-white/55">Renewal: </span>
+                  {accreditation.renewalPeriod}
                 </div>
               )}
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="process">
-          <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-            <CardHeader className="relative">
-              <CardTitle className="flex items-center gap-3 text-white">
-                <div className="p-2 rounded-lg bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30">
-                  <CheckCircle className="h-5 w-5 text-green-400" />
-                </div>
-                Complete Application Roadmap
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6 relative">
-              {/* Preparation Phase */}
-              <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-elec-yellow">
-                  Phase 1: Preparation (2-4 weeks)
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="p-4 bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/20 rounded-xl">
-                    <h5 className="font-medium text-blue-400 mb-3">Self-Assessment</h5>
-                    <div className="space-y-2 text-sm text-white">
-                      <p>• Review qualification requirements against your certificates</p>
-                      <p>• Assess work experience against competency standards</p>
-                      <p>• Check insurance coverage and business documentation</p>
-                      <p>• Evaluate readiness for technical assessment</p>
-                    </div>
-                  </div>
-                  <div className="p-4 bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/20 rounded-xl">
-                    <h5 className="font-medium text-green-400 mb-3">Document Gathering</h5>
-                    <div className="space-y-2 text-sm text-white">
-                      <p>• Collect all qualification certificates</p>
-                      <p>• Prepare work portfolio with photos and descriptions</p>
-                      <p>• Obtain character and professional references</p>
-                      <p>• Gather insurance certificates and business documents</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Application Process */}
-              <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-elec-yellow">
-                  Phase 2: Application Process (1-2 weeks)
-                </h4>
-                <div className="space-y-3">
-                  {accreditation.nextSteps.map((step, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-start gap-4 p-4 bg-white/5 rounded-xl border border-elec-yellow/20"
-                    >
-                      <div className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-elec-dark rounded-full flex items-center justify-center text-sm font-bold">
-                        {idx + 1}
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-sm text-white font-medium">{step}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Assessment Stage */}
-              <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-elec-yellow">
-                  Phase 3: Assessment (2-6 weeks)
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="p-4 bg-gradient-to-br from-purple-500/10 to-purple-500/5 border border-purple-500/20 rounded-xl">
-                    <h5 className="font-medium text-purple-400 mb-3">Technical Assessment</h5>
-                    <div className="space-y-2 text-sm text-white">
-                      <p>• On-site practical assessment</p>
-                      <p>• Review of work portfolio</p>
-                      <p>• Testing and inspection demonstration</p>
-                      <p>• Knowledge interview</p>
-                    </div>
-                  </div>
-                  <div className="p-4 bg-gradient-to-br from-amber-500/10 to-amber-500/5 border border-amber-500/20 rounded-xl">
-                    <h5 className="font-medium text-amber-400 mb-3">What to Expect</h5>
-                    <div className="space-y-2 text-sm text-white">
-                      <p>• 2-4 hour assessment duration</p>
-                      <p>• Friendly, supportive assessor</p>
-                      <p>• Real-world scenarios</p>
-                      <p>• Opportunity to demonstrate skills</p>
-                    </div>
-                  </div>
-                  <div className="p-4 bg-gradient-to-br from-red-500/10 to-red-500/5 border border-red-500/20 rounded-xl">
-                    <h5 className="font-medium text-red-400 mb-3">Common Challenges</h5>
-                    <div className="space-y-2 text-sm text-white">
-                      <p>• Nervousness affecting performance</p>
-                      <p>• Incomplete documentation</p>
-                      <p>• Outdated regulation knowledge</p>
-                      <p>• Limited testing experience</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Success & Setup */}
-              <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-elec-yellow">
-                  Phase 4: Approval & Setup (1-2 weeks)
-                </h4>
-                <div className="p-4 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/30 rounded-xl">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <h5 className="font-medium text-elec-yellow mb-3">After Approval</h5>
-                      <div className="space-y-2 text-sm text-white">
-                        <p>• Receive accreditation certificate and materials</p>
-                        <p>• Set up online account and access to resources</p>
-                        <p>• Download marketing materials and logos</p>
-                        <p>• Schedule ongoing assessment dates</p>
-                      </div>
-                    </div>
-                    <div>
-                      <h5 className="font-medium text-elec-yellow mb-3">Getting Started</h5>
-                      <div className="space-y-2 text-sm text-white">
-                        <p>• Update business materials with accreditation</p>
-                        <p>• Contact existing clients about new status</p>
-                        <p>• Register for CPD and training events</p>
-                        <p>• Begin building regulatory compliance history</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Timeline Overview */}
-              <div className="p-4 bg-white/5 border border-elec-yellow/20 rounded-xl">
-                <h5 className="font-medium text-elec-yellow mb-3">
-                  Total Timeline: 6-12 weeks from start to finish
-                </h5>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm text-white">
-                  <div className="text-center p-3 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 rounded-lg border border-elec-yellow/20">
-                    <p className="font-medium text-white">Preparation</p>
-                    <p className="text-xs text-elec-yellow">2-4 weeks</p>
-                  </div>
-                  <div className="text-center p-3 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 rounded-lg border border-elec-yellow/20">
-                    <p className="font-medium text-white">Application</p>
-                    <p className="text-xs text-elec-yellow">1-2 weeks</p>
-                  </div>
-                  <div className="text-center p-3 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 rounded-lg border border-elec-yellow/20">
-                    <p className="font-medium text-white">Assessment</p>
-                    <p className="text-xs text-elec-yellow">2-6 weeks</p>
-                  </div>
-                  <div className="text-center p-3 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 rounded-lg border border-elec-yellow/20">
-                    <p className="font-medium text-white">Setup</p>
-                    <p className="text-xs text-elec-yellow">1-2 weeks</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="getting-started">
-          <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-            <CardHeader className="relative">
-              <CardTitle className="flex items-center gap-3 text-white">
-                <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30">
-                  <TrendingUp className="h-5 w-5 text-blue-400" />
-                </div>
-                Getting Started Roadmap
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6 relative">
-              {/* Readiness Assessment */}
-              <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-elec-yellow">
-                  Readiness Assessment Checklist
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="p-4 bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/20 rounded-xl">
-                    <h5 className="font-medium text-green-400 mb-3">✅ Ready to Apply</h5>
-                    <div className="space-y-2 text-sm text-white">
-                      <p>• Hold relevant electrical qualifications</p>
-                      <p>• Have 2+ years post-qualification experience</p>
-                      <p>• Current public liability insurance</p>
-                      <p>• Portfolio of completed electrical work</p>
-                      <p>• Up-to-date with BS 7671 regulations</p>
-                    </div>
-                  </div>
-                  <div className="p-4 bg-gradient-to-br from-amber-500/10 to-amber-500/5 border border-amber-500/20 rounded-xl">
-                    <h5 className="font-medium text-amber-400 mb-3">⚠️ Need Preparation</h5>
-                    <div className="space-y-2 text-sm text-white">
-                      <p>• Missing key qualifications</p>
-                      <p>• Limited electrical experience</p>
-                      <p>• No insurance or business setup</p>
-                      <p>• Outdated regulation knowledge</p>
-                      <p>• Insufficient work portfolio</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Preparation Timeline */}
-              <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-elec-yellow">
-                  3-6 Month Preparation Plan
-                </h4>
-                <div className="space-y-4">
-                  <div className="p-4 bg-white/5 border border-blue-500/20 rounded-xl">
-                    <h5 className="font-medium text-blue-400 mb-3">
-                      Months 1-2: Foundation Building
-                    </h5>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white">
-                      <div>
-                        <p className="font-medium text-white mb-2">Qualifications</p>
-                        <p>• Complete any missing electrical qualifications</p>
-                        <p>• Update 18th Edition BS 7671 certification</p>
-                        <p>• Consider additional testing qualifications</p>
-                      </div>
-                      <div>
-                        <p className="font-medium text-white mb-2">Business Setup</p>
-                        <p>• Arrange appropriate insurance coverage</p>
-                        <p>• Register business if not already done</p>
-                        <p>• Set up basic business documentation</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-4 bg-white/5 border border-green-500/20 rounded-xl">
-                    <h5 className="font-medium text-green-400 mb-3">
-                      Months 3-4: Experience & Portfolio
-                    </h5>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white">
-                      <div>
-                        <p className="font-medium text-white mb-2">Gain Experience</p>
-                        <p>• Focus on diverse electrical projects</p>
-                        <p>• Develop testing and inspection skills</p>
-                        <p>• Work on different types of installations</p>
-                      </div>
-                      <div>
-                        <p className="font-medium text-white mb-2">Build Portfolio</p>
-                        <p>• Document completed projects with photos</p>
-                        <p>• Collect client testimonials</p>
-                        <p>• Gather work certificates and references</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-4 bg-white/5 border border-purple-500/20 rounded-xl">
-                    <h5 className="font-medium text-purple-400 mb-3">
-                      Months 5-6: Final Preparation
-                    </h5>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white">
-                      <div>
-                        <p className="font-medium text-white mb-2">Knowledge Review</p>
-                        <p>• Refresh understanding of current regulations</p>
-                        <p>• Practice testing and inspection procedures</p>
-                        <p>• Review certification requirements</p>
-                      </div>
-                      <div>
-                        <p className="font-medium text-white mb-2">Application Ready</p>
-                        <p>• Complete all required documentation</p>
-                        <p>• Schedule assessment appointment</p>
-                        <p>• Prepare for technical evaluation</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Cost Breakdown */}
-              <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-elec-yellow">Complete Cost Analysis</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="p-4 bg-white/5 border border-elec-yellow/20 rounded-xl">
-                    <h5 className="font-medium text-elec-yellow mb-3">Initial Investment</h5>
-                    <div className="space-y-2 text-sm text-white">
-                      <div className="flex justify-between">
-                        <span>Application fee:</span>
-                        <span className="font-medium text-white">
-                          {accreditation.cost.split(' ')[0]}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Assessment cost:</span>
-                        <span className="font-medium text-white">£200-400</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Documentation:</span>
-                        <span className="font-medium text-white">£50-100</span>
-                      </div>
-                      <div className="border-t border-elec-yellow/20 pt-2 mt-2">
-                        <div className="flex justify-between font-bold">
-                          <span className="text-white">Total Year 1:</span>
-                          <span className="text-elec-yellow">£650-1,700</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="p-4 bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/20 rounded-xl">
-                    <h5 className="font-medium text-green-400 mb-3">Return on Investment</h5>
-                    <div className="space-y-2 text-sm text-white">
-                      <div className="flex justify-between">
-                        <span>Average rate increase:</span>
-                        <span className="font-medium text-white">15-25%</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Insurance savings:</span>
-                        <span className="font-medium text-white">£200-500/year</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Typical payback:</span>
-                        <span className="font-medium text-white">2-3 contracts</span>
-                      </div>
-                      <div className="border-t border-green-500/20 pt-2 mt-2">
-                        <div className="flex justify-between font-bold">
-                          <span className="text-white">ROI Timeline:</span>
-                          <span className="text-green-400">3-6 months</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Common Mistakes */}
-              <div className="p-4 bg-gradient-to-br from-red-500/10 to-red-500/5 border border-red-500/20 rounded-xl">
-                <h4 className="text-lg font-semibold text-red-400 mb-3">
-                  Avoid These Common Mistakes
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2 text-sm text-white">
-                    <p>
-                      • <span className="font-medium text-red-400">Rushing the application</span> -
-                      Take time to prepare properly
-                    </p>
-                    <p>
-                      • <span className="font-medium text-red-400">Incomplete documentation</span> -
-                      Gather all required evidence
-                    </p>
-                    <p>
-                      • <span className="font-medium text-red-400">Outdated knowledge</span> -
-                      Update regulation understanding
-                    </p>
-                  </div>
-                  <div className="space-y-2 text-sm text-white">
-                    <p>
-                      • <span className="font-medium text-red-400">Insufficient experience</span> -
-                      Build diverse work portfolio
-                    </p>
-                    <p>
-                      •{' '}
-                      <span className="font-medium text-red-400">
-                        Poor preparation for assessment
-                      </span>{' '}
-                      - Practice and review
-                    </p>
-                    <p>
-                      • <span className="font-medium text-red-400">Inadequate insurance</span> -
-                      Ensure proper coverage
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="details">
-          <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-            <CardHeader className="relative">
-              <CardTitle className="flex items-center gap-3 text-white">
-                <div className="p-2 rounded-lg bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/30">
-                  <Award className="h-5 w-5 text-purple-400" />
-                </div>
-                Comprehensive Details & Insights
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6 relative">
-              {/* Industry Recognition */}
-              <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-elec-yellow">
-                  Industry Recognition & Standing
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="p-4 bg-white/5 rounded-xl border border-blue-500/20">
-                    <h5 className="font-medium text-blue-400 mb-2">Market Recognition</h5>
-                    <p className="text-sm text-white">
-                      Recognised by {accreditation.popularity}% of UK electrical professionals and
-                      trusted by major contractors nationwide.
-                    </p>
-                  </div>
-                  <div className="p-4 bg-white/5 rounded-xl border border-green-500/20">
-                    <h5 className="font-medium text-green-400 mb-2">Consumer Awareness</h5>
-                    <p className="text-sm text-white">
-                      High consumer recognition with active promotion through government and
-                      industry channels.
-                    </p>
-                  </div>
-                  <div className="p-4 bg-white/5 rounded-xl border border-purple-500/20">
-                    <h5 className="font-medium text-purple-400 mb-2">Regulatory Standing</h5>
-                    <p className="text-sm text-white">
-                      Full government recognition for Building Regulations compliance and
-                      notification rights.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Career Progression */}
-              <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-elec-yellow">
-                  Career Progression Opportunities
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="p-4 bg-white/5 rounded-xl border border-elec-yellow/20">
-                    <h5 className="font-medium text-elec-yellow mb-3">Next Steps</h5>
-                    <div className="space-y-2 text-sm text-white">
-                      <p>• Progress to senior contractor status</p>
-                      <p>• Develop specialist expertise areas</p>
-                      <p>• Become approved instructor or assessor</p>
-                      <p>• Expand into related electrical disciplines</p>
-                      <p>• Consider professional engineering registration</p>
-                    </div>
-                  </div>
-                  <div className="p-4 bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/20 rounded-xl">
-                    <h5 className="font-medium text-green-400 mb-3">Earning Potential</h5>
-                    <div className="space-y-2 text-sm text-white">
-                      <p>• Immediate rate increase: 15-25%</p>
-                      <p>• Access to premium commercial contracts</p>
-                      <p>• Insurance savings: £200-500 annually</p>
-                      <p>• Long-term career value: £10,000+ annually</p>
-                      <p>• Business expansion opportunities</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Time Commitment */}
-              <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-elec-yellow">
-                  Ongoing Commitment & Maintenance
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="p-4 bg-gradient-to-br from-amber-500/10 to-amber-500/5 border border-amber-500/20 rounded-xl">
-                    <h5 className="font-medium text-amber-400 mb-3">Annual Requirements</h5>
-                    <div className="space-y-2 text-sm text-white">
-                      <p>• Renewal fee: {accreditation.cost}</p>
-                      <p>• Annual assessment or surveillance visit</p>
-                      <p>• CPD evidence: 20-30 hours annually</p>
-                      <p>• Insurance maintenance and updates</p>
-                      <p>• Regulation knowledge updates</p>
-                    </div>
-                  </div>
-                  <div className="p-4 bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/20 rounded-xl">
-                    <h5 className="font-medium text-blue-400 mb-3">Time Investment</h5>
-                    <div className="space-y-2 text-sm text-white">
-                      <p>• Assessment preparation: 2-4 hours monthly</p>
-                      <p>• CPD activities: 2-3 hours monthly</p>
-                      <p>• Documentation updates: 1 hour monthly</p>
-                      <p>• Total time commitment: 5-8 hours monthly</p>
-                      <p>• Additional benefits outweigh time investment</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Accreditation Details */}
-              <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-elec-yellow">
-                  Accreditation Specifications
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="p-4 bg-white/5 rounded-xl border border-elec-yellow/20">
-                    <h5 className="font-medium text-elec-yellow mb-2">Accrediting Body</h5>
-                    <p className="text-sm text-white mb-3">{accreditation.accreditationBody}</p>
-
-                    <h5 className="font-medium text-elec-yellow mb-2">Coverage Areas</h5>
-                    <p className="text-sm text-white mb-3">
-                      {accreditation.locations.join(', ')}
-                    </p>
-
-                    <h5 className="font-medium text-elec-yellow mb-2">Difficulty Assessment</h5>
-                    <p className="text-sm text-white">
-                      {accreditation.difficulty} - suitable for experienced electrical professionals
-                    </p>
-                  </div>
-
-                  {accreditation.renewalPeriod && (
-                    <div className="p-4 bg-white/5 rounded-xl border border-elec-yellow/20">
-                      <h5 className="font-medium text-elec-yellow mb-2 flex items-center gap-2">
-                        <RefreshCw className="h-4 w-4" />
-                        Renewal Schedule
-                      </h5>
-                      <p className="text-sm text-white mb-3">{accreditation.renewalPeriod}</p>
-
-                      <h5 className="font-medium text-elec-yellow mb-2">Member Support</h5>
-                      <p className="text-sm text-white">
-                        24/7 technical helpline, online resources, member forums, and regular
-                        updates on regulation changes.
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Success Stories */}
-              <div className="p-4 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/30 rounded-xl">
-                <h4 className="text-lg font-semibold text-elec-yellow mb-4">Success Stories</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="p-3 bg-white/5 rounded-xl border border-green-500/20">
-                    <p className="text-sm text-white italic mb-2">
-                      "Within 6 months of gaining accreditation, I increased my rates by 20% and
-                      secured three major commercial contracts that I wouldn't have been considered
-                      for previously."
-                    </p>
-                    <p className="text-xs text-green-400">
-                      - Sarah M., Electrical Contractor, Manchester
-                    </p>
-                  </div>
-                  <div className="p-3 bg-white/5 rounded-xl border border-blue-500/20">
-                    <p className="text-sm text-white italic mb-2">
-                      "The credibility this accreditation gives me with clients is invaluable.
-                      Customers trust me immediately, and I've seen a 40% increase in repeat
-                      business."
-                    </p>
-                    <p className="text-xs text-blue-400">
-                      - James T., Independent Electrician, Birmingham
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+            </div>
+          </Section>
         </TabsContent>
       </Tabs>
 
       {/* Action Buttons */}
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap gap-3">
         {accreditation.website !== 'Various providers' && (
           <Button
-            className="h-11 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 touch-manipulation active:scale-95 transition-all"
+            className="h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
             onClick={() => openExternalUrl(accreditation.website)}
           >
             <ExternalLink className="mr-2 h-4 w-4" />
-            Visit Provider Website
+            Visit provider website
           </Button>
         )}
         <Button
           variant="outline"
-          className="h-11 border-white/20 hover:bg-white/10 hover:border-elec-yellow/30 touch-manipulation active:scale-95 transition-all"
+          className="h-11 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
         >
           <Star className="mr-2 h-4 w-4" />
-          Save to Favourites
+          Save to favourites
         </Button>
       </div>
     </div>

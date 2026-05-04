@@ -15,44 +15,48 @@ const QuestionComponent: React.FC<QuestionProps> = ({
 
   return (
     <div className="space-y-6">
-      <div className="p-6 bg-white/5 border border-elec-yellow/20 rounded-lg">
-        <h3 className="text-lg font-semibold mb-6 border-b border-elec-yellow/20 pb-3">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5">
+        <h3 className="text-[18px] sm:text-[20px] font-semibold text-white leading-snug pb-3 border-b border-white/[0.06]">
           {question.question}
         </h3>
 
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           {question.options.map((option, index) => {
             const isSelected = selectedAnswer === index;
             const isCorrect = question.correctAnswer === index && isAnswered;
             const isIncorrect = isSelected && isAnswered && !isCorrect;
 
-            let optionClasses = 'p-4 border rounded-md transition-all relative';
-
-            if (isSelected) {
-              optionClasses += ' border-elec-yellow bg-elec-yellow/10';
-            } else {
-              optionClasses +=
-                ' border-white/10/30 hover:border-elec-yellow/50 hover:bg-elec-yellow/5';
-            }
+            let optionClasses =
+              'p-4 min-h-[52px] rounded-md border text-[14px] leading-relaxed transition-all touch-manipulation cursor-pointer';
 
             if (isAnswered) {
               if (isCorrect) {
-                optionClasses = 'p-4 border border-green-500 bg-green-500/10 rounded-md';
+                optionClasses += ' border-green-500/30 bg-green-500/[0.04] text-white';
               } else if (isIncorrect) {
-                optionClasses = 'p-4 border border-red-500 bg-red-500/10 rounded-md';
+                optionClasses += ' border-red-500/30 bg-red-500/[0.04] text-white';
               } else {
-                optionClasses += ' opacity-70';
+                optionClasses += ' border-white/[0.06] bg-white/[0.02] text-white/55';
               }
+            } else if (isSelected) {
+              optionClasses += ' border-elec-yellow bg-elec-yellow/[0.06] text-white';
+            } else {
+              optionClasses +=
+                ' border-white/[0.06] bg-white/[0.02] text-white/85 hover:border-white/15';
             }
 
             return (
               <div key={index} className={optionClasses} onClick={() => handleOptionClick(index)}>
-                <div className="flex items-center">
+                <div className="flex items-center gap-3">
                   <div
-                    className={`w-6 h-6 mr-3 rounded-full border flex items-center justify-center
-                      ${isSelected ? 'bg-elec-yellow/90 border-elec-yellow' : 'border-elec-light/30'}`}
+                    className={`w-6 h-6 rounded-full border flex items-center justify-center flex-shrink-0 ${
+                      isSelected || isCorrect
+                        ? 'bg-elec-yellow/[0.06] border-elec-yellow text-elec-yellow'
+                        : isIncorrect
+                          ? 'border-red-400 text-red-400'
+                          : 'border-white/15 text-white/55'
+                    }`}
                   >
-                    <span className="text-xs">{String.fromCharCode(65 + index)}</span>
+                    <span className="text-[11px] font-mono">{String.fromCharCode(65 + index)}</span>
                   </div>
                   <span>{option}</span>
                 </div>

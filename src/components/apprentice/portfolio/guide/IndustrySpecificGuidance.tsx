@@ -1,11 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Zap, Building, Home, Factory, Wrench, Shield } from 'lucide-react';
-
 const IndustrySpecificGuidance = () => {
   const sectors = [
     {
-      name: 'Domestic Electrical',
-      icon: Home,
+      name: 'Domestic electrical',
       description: 'Residential electrical installations and maintenance',
       keyAreas: [
         'Consumer unit installations and upgrades',
@@ -30,8 +26,7 @@ const IndustrySpecificGuidance = () => {
       ],
     },
     {
-      name: 'Commercial Electrical',
-      icon: Building,
+      name: 'Commercial electrical',
       description: 'Office buildings, shops, and commercial installations',
       keyAreas: [
         'Three-phase distribution systems',
@@ -56,8 +51,7 @@ const IndustrySpecificGuidance = () => {
       ],
     },
     {
-      name: 'Industrial Electrical',
-      icon: Factory,
+      name: 'Industrial electrical',
       description: 'Manufacturing plants and heavy industrial installations',
       keyAreas: [
         'Motor control and automation',
@@ -85,8 +79,7 @@ const IndustrySpecificGuidance = () => {
 
   const universalRequirements = [
     {
-      category: 'Health & Safety',
-      icon: Shield,
+      category: 'Health & safety',
       requirements: [
         'Risk assessment completion',
         'Method statement preparation',
@@ -96,8 +89,7 @@ const IndustrySpecificGuidance = () => {
       ],
     },
     {
-      category: 'Testing & Inspection',
-      icon: Wrench,
+      category: 'Testing & inspection',
       requirements: [
         'Initial verification testing',
         'Periodic inspection and testing',
@@ -107,8 +99,7 @@ const IndustrySpecificGuidance = () => {
       ],
     },
     {
-      category: 'Regulations & Standards',
-      icon: Zap,
+      category: 'Regulations & standards',
       requirements: [
         'BS 7671 18th Edition knowledge',
         'IET Guidance Note understanding',
@@ -119,136 +110,130 @@ const IndustrySpecificGuidance = () => {
     },
   ];
 
+  const renderList = (items: string[]) => (
+    <ul className="space-y-1.5">
+      {items.map((item, i) => (
+        <li
+          key={i}
+          className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+        >
+          <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  );
+
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow">Industry-Specific Portfolio Guidance</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-white">
-            Tailored guidance for building portfolios specific to different electrical industry
-            sectors. Each sector has unique requirements, regulations, and evidence types that must
-            be demonstrated for competency assessment.
-          </p>
-        </CardContent>
-      </Card>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Industry-specific portfolio guidance
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Tailored guidance for building portfolios specific to different electrical industry
+          sectors. Each sector has unique requirements, regulations, and evidence types that must be
+          demonstrated for competency assessment.
+        </p>
+      </div>
 
-      {/* Sector-Specific Guidance */}
       <div className="space-y-6">
         {sectors.map((sector) => (
-          <Card key={sector.name} className="border-elec-yellow/20 bg-white/5">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-elec-yellow/10">
-                  <sector.icon className="h-6 w-6 text-elec-yellow" />
-                </div>
-                <div>
-                  <CardTitle className="text-white">{sector.name}</CardTitle>
-                  <p className="text-sm text-white">{sector.description}</p>
-                </div>
+          <div
+            key={sector.name}
+            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
+          >
+            <div>
+              <h3 className="text-[18px] sm:text-[20px] font-semibold text-white leading-tight">
+                {sector.name}
+              </h3>
+              <p className="text-[14px] text-white/70 leading-relaxed mt-1">{sector.description}</p>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="space-y-2">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Key work areas
+                </span>
+                {renderList(sector.keyAreas)}
               </div>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div>
-                  <h4 className="text-elec-yellow font-medium mb-3">Key Work Areas</h4>
-                  <ul className="space-y-1">
-                    {sector.keyAreas.map((area, index) => (
-                      <li key={index} className="text-sm text-white flex items-start">
-                        <span className="w-1 h-1 bg-elec-yellow rounded-full mt-2 mr-2 flex-shrink-0"></span>
-                        {area}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="text-blue-400 font-medium mb-3">Evidence Types</h4>
-                  <ul className="space-y-1">
-                    {sector.evidenceTypes.map((evidence, index) => (
-                      <li key={index} className="text-sm text-blue-200 flex items-start">
-                        <span className="w-1 h-1 bg-blue-400 rounded-full mt-2 mr-2 flex-shrink-0"></span>
-                        {evidence}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="text-green-400 font-medium mb-3">Key Regulations</h4>
-                  <ul className="space-y-1">
-                    {sector.regulations.map((regulation, index) => (
-                      <li key={index} className="text-sm text-green-200 flex items-start">
-                        <span className="w-1 h-1 bg-green-400 rounded-full mt-2 mr-2 flex-shrink-0"></span>
-                        {regulation}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              <div className="space-y-2">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Evidence types
+                </span>
+                {renderList(sector.evidenceTypes)}
               </div>
-            </CardContent>
-          </Card>
+              <div className="space-y-2">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Key regulations
+                </span>
+                {renderList(sector.regulations)}
+              </div>
+            </div>
+          </div>
         ))}
       </div>
 
-      {/* Universal Requirements */}
-      <Card className="border-purple-500/20 bg-purple-500/10">
-        <CardHeader>
-          <CardTitle className="text-purple-300">Universal Requirements (All Sectors)</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {universalRequirements.map((requirement) => (
-              <div key={requirement.category}>
-                <div className="flex items-center gap-2 mb-3">
-                  <requirement.icon className="h-5 w-5 text-purple-400" />
-                  <h4 className="text-purple-300 font-medium">{requirement.category}</h4>
-                </div>
-                <ul className="space-y-1">
-                  {requirement.requirements.map((req, index) => (
-                    <li key={index} className="text-sm text-purple-200 flex items-start">
-                      <span className="w-1 h-1 bg-purple-400 rounded-full mt-2 mr-2 flex-shrink-0"></span>
-                      {req}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Universal requirements (all sectors)
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {universalRequirements.map((requirement) => (
+            <div key={requirement.category} className="space-y-2">
+              <h4 className="text-[14px] font-semibold text-white">{requirement.category}</h4>
+              {renderList(requirement.requirements)}
+            </div>
+          ))}
+        </div>
+      </div>
 
-      {/* Portfolio Assessment Tips */}
-      <Card className="border-orange-500/20 bg-orange-500/10">
-        <CardHeader>
-          <CardTitle className="text-orange-300">Portfolio Assessment Tips</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <h4 className="text-orange-300 font-medium mb-3">For Assessors:</h4>
-              <ul className="text-orange-200 text-sm space-y-1">
-                <li>• Evidence must be authentic and verifiable</li>
-                <li>• Check dates and witness signatures</li>
-                <li>• Look for progression and development</li>
-                <li>• Ensure coverage of all required competencies</li>
-                <li>• Quality over quantity in evidence selection</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-orange-300 font-medium mb-3">For Apprentices:</h4>
-              <ul className="text-orange-200 text-sm space-y-1">
-                <li>• Map evidence to assessment criteria clearly</li>
-                <li>• Include reflective commentary on learning</li>
-                <li>• Show understanding of why tasks were performed</li>
-                <li>• Demonstrate problem-solving abilities</li>
-                <li>• Include evidence of professional development</li>
-              </ul>
-            </div>
+      <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+          Portfolio assessment tips
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <h4 className="text-[14px] font-semibold text-white">For assessors</h4>
+            <ul className="space-y-1.5">
+              {[
+                'Evidence must be authentic and verifiable',
+                'Check dates and witness signatures',
+                'Look for progression and development',
+                'Ensure coverage of all required competencies',
+                'Quality over quantity in evidence selection',
+              ].map((item, i) => (
+                <li
+                  key={i}
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-        </CardContent>
-      </Card>
+          <div className="space-y-2">
+            <h4 className="text-[14px] font-semibold text-white">For apprentices</h4>
+            <ul className="space-y-1.5">
+              {[
+                'Map evidence to assessment criteria clearly',
+                'Include reflective commentary on learning',
+                'Show understanding of why tasks were performed',
+                'Demonstrate problem-solving abilities',
+                'Include evidence of professional development',
+              ].map((item, i) => (
+                <li
+                  key={i}
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

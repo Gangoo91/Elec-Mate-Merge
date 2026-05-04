@@ -272,17 +272,15 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
                     key={a.value}
                     type="button"
                     onClick={() => setForm((f) => ({ ...f, activity_type: a.value }))}
-                    className={cn(
-                      'h-auto py-2 px-3 rounded-lg border text-left transition-colors touch-manipulation',
+                    className={cn('h-auto py-2 px-3 rounded-lg border text-left transition-colors touch-manipulation',
                       form.activity_type === a.value
-                        ? 'border-emerald-400/40 bg-emerald-500/[0.08] text-white'
+                        ? 'border-white/[0.06] bg-white/[0.02] text-white'
                         : 'border-white/[0.07] bg-white/[0.02] text-white/95 hover:text-white hover:border-white/[0.18]'
                     )}
                   >
                     <div className="text-[12.5px] font-medium leading-tight">{a.label}</div>
                     <div
-                      className={cn(
-                        'mt-0.5 text-[10.5px] leading-snug',
+                      className={cn('mt-0.5 text-[10.5px] leading-snug',
                         form.activity_type === a.value ? 'text-emerald-100/75' : 'text-white/95'
                       )}
                     >
@@ -414,10 +412,9 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
               type="button"
               onClick={handleSubmit}
               disabled={!valid || saving}
-              className={cn(
-                'flex-1 h-11 rounded-lg text-[13px] font-semibold transition-colors touch-manipulation',
+              className={cn('flex-1 h-11 rounded-lg text-[13px] font-semibold transition-colors touch-manipulation',
                 valid && !saving
-                  ? 'bg-emerald-500 text-black hover:bg-emerald-400'
+                  ? 'bg-white/[0.02] text-black hover:bg-white/[0.02]'
                   : 'bg-white/[0.05] text-white/40'
               )}
             >
@@ -431,10 +428,10 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
 }
 
 const inputClass =
-  'w-full h-11 px-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[13.5px] text-white placeholder:text-white/50 focus:outline-none focus:border-emerald-400/40 focus:ring-1 focus:ring-emerald-400/20 touch-manipulation';
+  'w-full h-11 px-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[13.5px] text-white placeholder:text-white/50 focus:outline-none focus:border-white/[0.06] focus:ring-1 focus:ring-white/10 touch-manipulation';
 
 const textareaClass =
-  'w-full px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[13px] text-white placeholder:text-white/50 leading-relaxed focus:outline-none focus:border-emerald-400/40 focus:ring-1 focus:ring-emerald-400/20 touch-manipulation resize-none';
+  'w-full px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[13px] text-white placeholder:text-white/50 leading-relaxed focus:outline-none focus:border-white/[0.06] focus:ring-1 focus:ring-white/10 touch-manipulation resize-none';
 
 function Field({
   label,

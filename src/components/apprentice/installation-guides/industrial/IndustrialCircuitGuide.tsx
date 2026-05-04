@@ -793,11 +793,11 @@ const IndustrialCircuitGuide = () => {
 
         {/* Motor Starting Methods */}
         <TabsContent value="starting" className="space-y-4">
-          <Card className="border-blue-500/30 bg-white/5">
+          <Card className="border-white/[0.06] bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <Cog className="h-6 w-6 text-blue-400" />
-                <CardTitle className="text-blue-300">Motor Starting Methods</CardTitle>
+                <Cog className="h-6 w-6 text-white/55" />
+                <CardTitle className="text-white">Motor Starting Methods</CardTitle>
               </div>
               <p className="text-white">
                 Selection of starting method depends on motor size, supply capacity, and application
@@ -808,44 +808,44 @@ const IndustrialCircuitGuide = () => {
               {motorStartingMethods.map((method, index) => (
                 <div
                   key={index}
-                  className="bg-blue-500/10 p-5 rounded-lg border border-blue-500/20"
+                  className="bg-white/[0.02] p-5 rounded-lg border border-white/[0.06]"
                 >
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 mb-4">
-                    <h3 className="font-bold text-blue-300 text-lg">{method.method}</h3>
+                    <h3 className="font-bold text-white text-lg">{method.method}</h3>
                     <div className="flex flex-wrap gap-2">
-                      <Badge variant="outline" className="border-blue-400 text-blue-300">
+                      <Badge variant="outline" className="border-white/10 text-white">
                         {method.maxPower}
                       </Badge>
-                      <Badge variant="outline" className="border-green-500 text-green-400">
+                      <Badge variant="outline" className="border-white/10 text-white/55">
                         Start Current: {method.startingCurrent}
                       </Badge>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div className="bg-blue-500/5 p-3 rounded border border-blue-500/10">
-                      <h4 className="font-medium text-blue-200 mb-2 flex items-center gap-2">
-                        <CheckCircle className="h-4 w-4 text-green-400" />
+                    <div className="bg-white/[0.02] p-3 rounded border border-white/[0.06]">
+                      <h4 className="font-medium text-white/85 mb-2 flex items-center gap-2">
+                        <CheckCircle className="h-4 w-4 text-white/55" />
                         Advantages
                       </h4>
                       <ul className="space-y-1">
                         {method.advantages.map((adv, i) => (
                           <li key={i} className="text-sm text-white flex items-start gap-2">
-                            <span className="text-green-400 mt-1">+</span>
+                            <span className="text-white/55 mt-1">+</span>
                             {adv}
                           </li>
                         ))}
                       </ul>
                     </div>
-                    <div className="bg-orange-500/5 p-3 rounded border border-orange-500/10">
-                      <h4 className="font-medium text-orange-200 mb-2 flex items-center gap-2">
-                        <AlertTriangle className="h-4 w-4 text-orange-400" />
+                    <div className="bg-white/[0.02] p-3 rounded border border-white/[0.06]">
+                      <h4 className="font-medium text-white/85 mb-2 flex items-center gap-2">
+                        <AlertTriangle className="h-4 w-4 text-white/55" />
                         Disadvantages
                       </h4>
                       <ul className="space-y-1">
                         {method.disadvantages.map((dis, i) => (
                           <li key={i} className="text-sm text-white flex items-start gap-2">
-                            <span className="text-orange-400 mt-1">-</span>
+                            <span className="text-white/55 mt-1">-</span>
                             {dis}
                           </li>
                         ))}
@@ -855,15 +855,15 @@ const IndustrialCircuitGuide = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                     <div>
-                      <span className="text-blue-300 font-medium">Starting Torque: </span>
+                      <span className="text-white font-medium">Starting Torque: </span>
                       <span className="text-white">{method.startingTorque}</span>
                     </div>
                     <div>
-                      <span className="text-blue-300 font-medium">Components: </span>
+                      <span className="text-white font-medium">Components: </span>
                       <span className="text-white">{method.components}</span>
                     </div>
                     <div className="md:col-span-2">
-                      <span className="text-blue-300 font-medium">Application: </span>
+                      <span className="text-white font-medium">Application: </span>
                       <span className="text-white">{method.application}</span>
                     </div>
                   </div>
@@ -873,38 +873,38 @@ const IndustrialCircuitGuide = () => {
           </Card>
 
           {/* Comparison Table */}
-          <Card className="border-purple-500/30 bg-white/5">
+          <Card className="border-white/[0.06] bg-white/5">
             <CardHeader>
-              <CardTitle className="text-purple-300">Quick Comparison Table</CardTitle>
+              <CardTitle className="text-white">Quick Comparison Table</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-purple-500/30">
-                      <th className="text-left py-3 px-2 text-purple-300">Method</th>
-                      <th className="text-left py-3 px-2 text-purple-300">Starting Current</th>
-                      <th className="text-left py-3 px-2 text-purple-300">Starting Torque</th>
-                      <th className="text-left py-3 px-2 text-purple-300">Cost</th>
-                      <th className="text-left py-3 px-2 text-purple-300">Best For</th>
+                    <tr className="border-b border-white/[0.06]">
+                      <th className="text-left py-3 px-2 text-white">Method</th>
+                      <th className="text-left py-3 px-2 text-white">Starting Current</th>
+                      <th className="text-left py-3 px-2 text-white">Starting Torque</th>
+                      <th className="text-left py-3 px-2 text-white">Cost</th>
+                      <th className="text-left py-3 px-2 text-white">Best For</th>
                     </tr>
                   </thead>
                   <tbody className="text-white">
-                    <tr className="border-b border-purple-500/20">
+                    <tr className="border-b border-white/[0.06]">
                       <td className="py-2 px-2 font-medium">DOL</td>
                       <td className="py-2 px-2">6-8x FLC</td>
                       <td className="py-2 px-2">100%</td>
-                      <td className="py-2 px-2 text-green-400">Lowest</td>
+                      <td className="py-2 px-2 text-white/55">Lowest</td>
                       <td className="py-2 px-2">Small motors, strong supply</td>
                     </tr>
-                    <tr className="border-b border-purple-500/20">
+                    <tr className="border-b border-white/[0.06]">
                       <td className="py-2 px-2 font-medium">Star-Delta</td>
                       <td className="py-2 px-2">2-3x FLC</td>
                       <td className="py-2 px-2">33%</td>
-                      <td className="py-2 px-2 text-blue-400">Low-Medium</td>
+                      <td className="py-2 px-2 text-white/55">Low-Medium</td>
                       <td className="py-2 px-2">Light loads, fans, pumps</td>
                     </tr>
-                    <tr className="border-b border-purple-500/20">
+                    <tr className="border-b border-white/[0.06]">
                       <td className="py-2 px-2 font-medium">Soft Starter</td>
                       <td className="py-2 px-2">2-4x FLC</td>
                       <td className="py-2 px-2">Variable</td>
@@ -915,7 +915,7 @@ const IndustrialCircuitGuide = () => {
                       <td className="py-2 px-2 font-medium">VFD</td>
                       <td className="py-2 px-2">1-1.5x FLC</td>
                       <td className="py-2 px-2">Up to 150%</td>
-                      <td className="py-2 px-2 text-orange-400">Highest</td>
+                      <td className="py-2 px-2 text-white/55">Highest</td>
                       <td className="py-2 px-2">Speed control required</td>
                     </tr>
                   </tbody>
@@ -927,11 +927,11 @@ const IndustrialCircuitGuide = () => {
 
         {/* Motor Protection */}
         <TabsContent value="protection" className="space-y-4">
-          <Card className="border-green-500/30 bg-white/5">
+          <Card className="border-white/[0.06] bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <Shield className="h-6 w-6 text-green-400" />
-                <CardTitle className="text-green-300">Motor Protection Systems</CardTitle>
+                <Shield className="h-6 w-6 text-white/55" />
+                <CardTitle className="text-white">Motor Protection Systems</CardTitle>
               </div>
               <p className="text-white">
                 Comprehensive motor protection prevents costly damage and downtime
@@ -941,11 +941,11 @@ const IndustrialCircuitGuide = () => {
               {motorProtection.map((protection, index) => (
                 <div
                   key={index}
-                  className="bg-green-500/10 p-4 rounded-lg border border-green-500/20"
+                  className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]"
                 >
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 mb-3">
-                    <h3 className="font-bold text-green-300">{protection.type}</h3>
-                    <Badge variant="outline" className="border-green-400 text-green-300 w-fit">
+                    <h3 className="font-bold text-white">{protection.type}</h3>
+                    <Badge variant="outline" className="border-white/10 text-white w-fit">
                       {protection.tripClass}
                     </Badge>
                   </div>
@@ -954,21 +954,21 @@ const IndustrialCircuitGuide = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
                     <div>
-                      <span className="text-green-200 font-medium text-sm">Mechanism: </span>
+                      <span className="text-white/85 font-medium text-sm">Mechanism: </span>
                       <span className="text-white text-sm">{protection.mechanism}</span>
                     </div>
                     <div>
-                      <span className="text-green-200 font-medium text-sm">Settings: </span>
+                      <span className="text-white/85 font-medium text-sm">Settings: </span>
                       <span className="text-white text-sm">{protection.settings}</span>
                     </div>
                   </div>
 
-                  <div className="bg-green-500/5 p-3 rounded">
-                    <h4 className="text-green-200 font-medium text-sm mb-2">Features:</h4>
+                  <div className="bg-white/[0.02] p-3 rounded">
+                    <h4 className="text-white/85 font-medium text-sm mb-2">Features:</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
                       {protection.features.map((feature, i) => (
                         <div key={i} className="flex items-start gap-2 text-sm">
-                          <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
+                          <CheckCircle className="h-3 w-3 text-white/55 mt-1 flex-shrink-0" />
                           <span className="text-white">{feature}</span>
                         </div>
                       ))}
@@ -982,9 +982,9 @@ const IndustrialCircuitGuide = () => {
           </Card>
 
           {/* Protection Coordination Notice */}
-          <Card className="border-orange-500/30 bg-orange-500/10">
+          <Card className="border-white/[0.06] bg-white/[0.02]">
             <CardHeader>
-              <CardTitle className="text-orange-300 flex items-center gap-2">
+              <CardTitle className="text-white flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5" />
                 Protection Coordination
               </CardTitle>
@@ -995,24 +995,24 @@ const IndustrialCircuitGuide = () => {
               </p>
               <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
-                  <Zap className="h-4 w-4 text-orange-400 mt-0.5" />
+                  <Zap className="h-4 w-4 text-white/55 mt-0.5" />
                   <span>
-                    <strong className="text-orange-300">Discrimination:</strong> Motor overload
-                    trips before upstream MCB/fuse
+                    <strong className="text-white">Discrimination:</strong> Motor overload trips
+                    before upstream MCB/fuse
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Zap className="h-4 w-4 text-orange-400 mt-0.5" />
+                  <Zap className="h-4 w-4 text-white/55 mt-0.5" />
                   <span>
-                    <strong className="text-orange-300">Starting Current:</strong> Protection allows
-                    for motor starting current (typically up to 30 seconds)
+                    <strong className="text-white">Starting Current:</strong> Protection allows for
+                    motor starting current (typically up to 30 seconds)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Zap className="h-4 w-4 text-orange-400 mt-0.5" />
+                  <Zap className="h-4 w-4 text-white/55 mt-0.5" />
                   <span>
-                    <strong className="text-orange-300">Fault Current:</strong> Short circuit
-                    protection clears faults before motor/cable damage
+                    <strong className="text-white">Fault Current:</strong> Short circuit protection
+                    clears faults before motor/cable damage
                   </span>
                 </li>
               </ul>
@@ -1022,44 +1022,44 @@ const IndustrialCircuitGuide = () => {
 
         {/* Control Circuits */}
         <TabsContent value="control" className="space-y-4">
-          <Card className="border-purple-500/30 bg-white/5">
+          <Card className="border-white/[0.06] bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <Settings className="h-6 w-6 text-purple-400" />
-                <CardTitle className="text-purple-300">Control Circuit Voltages</CardTitle>
+                <Settings className="h-6 w-6 text-white/55" />
+                <CardTitle className="text-white">Control Circuit Voltages</CardTitle>
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
               {controlCircuits.map((circuit, index) => (
                 <div
                   key={index}
-                  className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20"
+                  className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]"
                 >
                   <div className="flex items-center justify-between gap-3 mb-3">
-                    <h3 className="font-bold text-purple-300 text-lg">{circuit.voltage}</h3>
-                    <Badge variant="outline" className="border-purple-400 text-purple-300">
+                    <h3 className="font-bold text-white text-lg">{circuit.voltage}</h3>
+                    <Badge variant="outline" className="border-white/10 text-white">
                       {circuit.application}
                     </Badge>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div>
-                      <h4 className="text-purple-200 font-medium text-sm mb-2">Advantages:</h4>
+                      <h4 className="text-white/85 font-medium text-sm mb-2">Advantages:</h4>
                       <ul className="space-y-1">
                         {circuit.advantages.map((adv, i) => (
                           <li key={i} className="text-sm text-white flex items-start gap-2">
-                            <CheckCircle className="h-3 w-3 text-green-400 mt-1" />
+                            <CheckCircle className="h-3 w-3 text-white/55 mt-1" />
                             {adv}
                           </li>
                         ))}
                       </ul>
                     </div>
                     <div>
-                      <h4 className="text-purple-200 font-medium text-sm mb-2">Typical Uses:</h4>
+                      <h4 className="text-white/85 font-medium text-sm mb-2">Typical Uses:</h4>
                       <ul className="space-y-1">
                         {circuit.typicalUse.map((use, i) => (
                           <li key={i} className="text-sm text-white flex items-start gap-2">
-                            <Zap className="h-3 w-3 text-purple-400 mt-1" />
+                            <Zap className="h-3 w-3 text-white/55 mt-1" />
                             {use}
                           </li>
                         ))}
@@ -1067,13 +1067,13 @@ const IndustrialCircuitGuide = () => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm bg-purple-500/5 p-3 rounded">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm bg-white/[0.02] p-3 rounded">
                     <div>
-                      <span className="text-purple-300 font-medium">Cable: </span>
+                      <span className="text-white font-medium">Cable: </span>
                       <span className="text-white">{circuit.cableRequirements}</span>
                     </div>
                     <div>
-                      <span className="text-purple-300 font-medium">Protection: </span>
+                      <span className="text-white font-medium">Protection: </span>
                       <span className="text-white">{circuit.protection}</span>
                     </div>
                   </div>
@@ -1083,11 +1083,11 @@ const IndustrialCircuitGuide = () => {
           </Card>
 
           {/* Interlock Circuits */}
-          <Card className="border-blue-500/30 bg-white/5">
+          <Card className="border-white/[0.06] bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <Lock className="h-6 w-6 text-blue-400" />
-                <CardTitle className="text-blue-300">Interlock Circuits</CardTitle>
+                <Lock className="h-6 w-6 text-white/55" />
+                <CardTitle className="text-white">Interlock Circuits</CardTitle>
               </div>
               <p className="text-white">
                 Interlocks prevent unsafe or undesired equipment operation sequences
@@ -1097,22 +1097,22 @@ const IndustrialCircuitGuide = () => {
               {interlockCircuits.map((interlock, index) => (
                 <div
                   key={index}
-                  className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20"
+                  className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]"
                 >
-                  <h3 className="font-bold text-blue-300 mb-2">{interlock.type}</h3>
+                  <h3 className="font-bold text-white mb-2">{interlock.type}</h3>
                   <p className="text-white text-sm mb-3">{interlock.description}</p>
 
                   <div className="mb-3">
-                    <span className="text-blue-200 font-medium text-sm">Example: </span>
+                    <span className="text-white/85 font-medium text-sm">Example: </span>
                     <span className="text-white text-sm">{interlock.example}</span>
                   </div>
 
-                  <div className="bg-blue-500/5 p-3 rounded">
-                    <h4 className="text-blue-200 font-medium text-sm mb-2">Implementation:</h4>
+                  <div className="bg-white/[0.02] p-3 rounded">
+                    <h4 className="text-white/85 font-medium text-sm mb-2">Implementation:</h4>
                     <ul className="space-y-1">
                       {interlock.implementation.map((impl, i) => (
                         <li key={i} className="text-sm text-white flex items-start gap-2">
-                          <span className="text-blue-400">{i + 1}.</span>
+                          <span className="text-white/55">{i + 1}.</span>
                           {impl}
                         </li>
                       ))}
@@ -1214,11 +1214,11 @@ const IndustrialCircuitGuide = () => {
           </Card>
 
           {/* Lockout/Tagout */}
-          <Card className="border-orange-500/30 bg-white/5">
+          <Card className="border-white/[0.06] bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <Lock className="h-6 w-6 text-orange-400" />
-                <CardTitle className="text-orange-300">Lockout/Tagout (LOTO) Procedures</CardTitle>
+                <Lock className="h-6 w-6 text-white/55" />
+                <CardTitle className="text-white">Lockout/Tagout (LOTO) Procedures</CardTitle>
               </div>
               <p className="text-white">
                 Safe isolation procedures to protect workers during maintenance
@@ -1228,18 +1228,18 @@ const IndustrialCircuitGuide = () => {
               {lockoutTagout.principles.map((step, index) => (
                 <div
                   key={index}
-                  className="bg-orange-500/10 p-4 rounded-lg border border-orange-500/20"
+                  className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]"
                 >
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-full bg-orange-500/20 flex items-center justify-center">
-                      <span className="text-orange-300 font-bold">{step.step}</span>
+                    <div className="w-10 h-10 rounded-full bg-white/[0.02] flex items-center justify-center">
+                      <span className="text-white font-bold">{step.step}</span>
                     </div>
-                    <h3 className="font-bold text-orange-300">{step.action}</h3>
+                    <h3 className="font-bold text-white">{step.action}</h3>
                   </div>
                   <ul className="space-y-2 ml-13">
                     {step.details.map((detail, i) => (
                       <li key={i} className="text-sm text-white flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
                         {detail}
                       </li>
                     ))}
@@ -1248,15 +1248,15 @@ const IndustrialCircuitGuide = () => {
               ))}
 
               {/* Lock Types */}
-              <div className="bg-orange-500/10 p-4 rounded-lg border border-orange-500/20">
-                <h3 className="font-bold text-orange-300 mb-3">Lock Types</h3>
+              <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+                <h3 className="font-bold text-white mb-3">Lock Types</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   {lockoutTagout.lockTypes.map((lock, index) => (
                     <div
                       key={index}
-                      className="bg-orange-500/5 p-3 rounded border border-orange-500/10"
+                      className="bg-white/[0.02] p-3 rounded border border-white/[0.06]"
                     >
-                      <h4 className="text-orange-200 font-medium mb-1">{lock.type}</h4>
+                      <h4 className="text-white/85 font-medium mb-1">{lock.type}</h4>
                       <p className="text-white text-sm mb-2">{lock.description}</p>
                       <p className="text-white text-xs italic">{lock.use}</p>
                     </div>
@@ -1300,22 +1300,22 @@ const IndustrialCircuitGuide = () => {
         {/* Cables & Sizing */}
         <TabsContent value="cables" className="space-y-4">
           {/* Cable Types */}
-          <Card className="border-blue-500/30 bg-white/5">
+          <Card className="border-white/[0.06] bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <Cable className="h-6 w-6 text-blue-400" />
-                <CardTitle className="text-blue-300">Industrial Cable Types</CardTitle>
+                <Cable className="h-6 w-6 text-white/55" />
+                <CardTitle className="text-white">Industrial Cable Types</CardTitle>
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
               {industrialCables.map((cable, index) => (
                 <div
                   key={index}
-                  className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20"
+                  className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]"
                 >
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2 mb-3">
-                    <h3 className="font-bold text-blue-300">{cable.type}</h3>
-                    <Badge variant="outline" className="border-blue-400 text-blue-300 w-fit">
+                    <h3 className="font-bold text-white">{cable.type}</h3>
+                    <Badge variant="outline" className="border-white/10 text-white w-fit">
                       {cable.voltageRating}
                     </Badge>
                   </div>
@@ -1324,31 +1324,31 @@ const IndustrialCircuitGuide = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                      <h4 className="text-blue-200 font-medium text-sm mb-2">Applications:</h4>
+                      <h4 className="text-white/85 font-medium text-sm mb-2">Applications:</h4>
                       <ul className="space-y-1">
                         {cable.applications.map((app, i) => (
                           <li key={i} className="text-sm text-white flex items-start gap-1">
-                            <span className="text-blue-400">-</span> {app}
+                            <span className="text-white/55">-</span> {app}
                           </li>
                         ))}
                       </ul>
                     </div>
                     <div>
-                      <h4 className="text-green-200 font-medium text-sm mb-2">Advantages:</h4>
+                      <h4 className="text-white/85 font-medium text-sm mb-2">Advantages:</h4>
                       <ul className="space-y-1">
                         {cable.advantages.map((adv, i) => (
                           <li key={i} className="text-sm text-white flex items-start gap-1">
-                            <span className="text-green-400">+</span> {adv}
+                            <span className="text-white/55">+</span> {adv}
                           </li>
                         ))}
                       </ul>
                     </div>
                     <div>
-                      <h4 className="text-orange-200 font-medium text-sm mb-2">Installation:</h4>
+                      <h4 className="text-white/85 font-medium text-sm mb-2">Installation:</h4>
                       <ul className="space-y-1">
                         {cable.installation.map((inst, i) => (
                           <li key={i} className="text-sm text-white flex items-start gap-1">
-                            <span className="text-orange-400">!</span> {inst}
+                            <span className="text-white/55">!</span> {inst}
                           </li>
                         ))}
                       </ul>
@@ -1360,11 +1360,11 @@ const IndustrialCircuitGuide = () => {
           </Card>
 
           {/* Derating Factors */}
-          <Card className="border-purple-500/30 bg-white/5">
+          <Card className="border-white/[0.06] bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <Gauge className="h-6 w-6 text-purple-400" />
-                <CardTitle className="text-purple-300">Cable Sizing Derating Factors</CardTitle>
+                <Gauge className="h-6 w-6 text-white/55" />
+                <CardTitle className="text-white">Cable Sizing Derating Factors</CardTitle>
               </div>
               <p className="text-white">
                 Apply these factors to reduce cable current capacity in industrial environments
@@ -1372,18 +1372,18 @@ const IndustrialCircuitGuide = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               {/* Grouping Factor */}
-              <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
-                <h3 className="font-bold text-purple-300 mb-3">Grouping Factor (Cg)</h3>
+              <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+                <h3 className="font-bold text-white mb-3">Grouping Factor (Cg)</h3>
                 <p className="text-white text-sm mb-3">
                   When multiple cables are installed together, heat dissipation is reduced
                 </p>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="border-b border-purple-500/30">
-                        <th className="text-left py-2 px-3 text-purple-300">Number of Circuits</th>
+                      <tr className="border-b border-white/[0.06]">
+                        <th className="text-left py-2 px-3 text-white">Number of Circuits</th>
                         {cableDeratingFactors.grouping.map((g, i) => (
-                          <th key={i} className="text-center py-2 px-2 text-purple-300">
+                          <th key={i} className="text-center py-2 px-2 text-white">
                             {g.cables}
                           </th>
                         ))}
@@ -1404,8 +1404,8 @@ const IndustrialCircuitGuide = () => {
               </div>
 
               {/* Ambient Temperature */}
-              <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
-                <h3 className="font-bold text-purple-300 mb-3">Ambient Temperature Factor (Ca)</h3>
+              <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+                <h3 className="font-bold text-white mb-3">Ambient Temperature Factor (Ca)</h3>
                 <p className="text-white text-sm mb-3">
                   Higher ambient temperatures reduce current capacity. Standard ratings assume 30C
                   ambient.
@@ -1413,15 +1413,15 @@ const IndustrialCircuitGuide = () => {
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="border-b border-purple-500/30">
-                        <th className="text-left py-2 px-3 text-purple-300">Ambient Temp</th>
-                        <th className="text-center py-2 px-3 text-purple-300">PVC Factor</th>
-                        <th className="text-center py-2 px-3 text-purple-300">XLPE Factor</th>
+                      <tr className="border-b border-white/[0.06]">
+                        <th className="text-left py-2 px-3 text-white">Ambient Temp</th>
+                        <th className="text-center py-2 px-3 text-white">PVC Factor</th>
+                        <th className="text-center py-2 px-3 text-white">XLPE Factor</th>
                       </tr>
                     </thead>
                     <tbody className="text-white">
                       {cableDeratingFactors.ambientTemperature.map((t, i) => (
-                        <tr key={i} className="border-b border-purple-500/20">
+                        <tr key={i} className="border-b border-white/[0.06]">
                           <td className="py-2 px-3 font-medium">{t.temp}</td>
                           <td className="text-center py-2 px-3">{t.pvc}</td>
                           <td className="text-center py-2 px-3">{t.xlpe}</td>
@@ -1433,16 +1433,16 @@ const IndustrialCircuitGuide = () => {
               </div>
 
               {/* Thermal Insulation */}
-              <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
-                <h3 className="font-bold text-purple-300 mb-3">Thermal Insulation Factor (Ci)</h3>
+              <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+                <h3 className="font-bold text-white mb-3">Thermal Insulation Factor (Ci)</h3>
                 <div className="space-y-2">
                   {cableDeratingFactors.thermalInsulation.map((t, i) => (
                     <div
                       key={i}
-                      className="flex justify-between items-center py-2 border-b border-purple-500/20 last:border-0"
+                      className="flex justify-between items-center py-2 border-b border-white/[0.06] last:border-0"
                     >
                       <span className="text-white text-sm">{t.condition}</span>
-                      <Badge variant="outline" className="border-purple-400 text-purple-300">
+                      <Badge variant="outline" className="border-white/10 text-white">
                         {t.factor}
                       </Badge>
                     </div>
@@ -1465,22 +1465,22 @@ const IndustrialCircuitGuide = () => {
           </Card>
 
           {/* Busbar Systems */}
-          <Card className="border-green-500/30 bg-white/5">
+          <Card className="border-white/[0.06] bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <Power className="h-6 w-6 text-green-400" />
-                <CardTitle className="text-green-300">Busbar Systems & Rising Mains</CardTitle>
+                <Power className="h-6 w-6 text-white/55" />
+                <CardTitle className="text-white">Busbar Systems & Rising Mains</CardTitle>
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
               {busbarSystems.map((busbar, index) => (
                 <div
                   key={index}
-                  className="bg-green-500/10 p-4 rounded-lg border border-green-500/20"
+                  className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]"
                 >
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2 mb-3">
-                    <h3 className="font-bold text-green-300">{busbar.type}</h3>
-                    <Badge variant="outline" className="border-green-400 text-green-300 w-fit">
+                    <h3 className="font-bold text-white">{busbar.type}</h3>
+                    <Badge variant="outline" className="border-white/10 text-white w-fit">
                       {busbar.ratings}
                     </Badge>
                   </div>
@@ -1488,7 +1488,7 @@ const IndustrialCircuitGuide = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                      <h4 className="text-green-200 font-medium text-sm mb-2">Applications:</h4>
+                      <h4 className="text-white/85 font-medium text-sm mb-2">Applications:</h4>
                       <ul className="space-y-1">
                         {busbar.applications.map((app, i) => (
                           <li key={i} className="text-sm text-white">
@@ -1498,7 +1498,7 @@ const IndustrialCircuitGuide = () => {
                       </ul>
                     </div>
                     <div>
-                      <h4 className="text-green-200 font-medium text-sm mb-2">Features:</h4>
+                      <h4 className="text-white/85 font-medium text-sm mb-2">Features:</h4>
                       <ul className="space-y-1">
                         {busbar.features.map((feat, i) => (
                           <li key={i} className="text-sm text-white">
@@ -1508,7 +1508,7 @@ const IndustrialCircuitGuide = () => {
                       </ul>
                     </div>
                     <div>
-                      <h4 className="text-green-200 font-medium text-sm mb-2">Installation:</h4>
+                      <h4 className="text-white/85 font-medium text-sm mb-2">Installation:</h4>
                       <ul className="space-y-1">
                         {busbar.installation.map((inst, i) => (
                           <li key={i} className="text-sm text-white">
@@ -1586,11 +1586,11 @@ const IndustrialCircuitGuide = () => {
                       </p>
                       <div className="grid grid-cols-2 gap-2 text-xs">
                         <div>
-                          <span className="text-green-400">Advantages: </span>
+                          <span className="text-white/55">Advantages: </span>
                           <span className="text-white">{sol.advantages.join(', ')}</span>
                         </div>
                         <div>
-                          <span className="text-orange-400">Disadvantages: </span>
+                          <span className="text-white/55">Disadvantages: </span>
                           <span className="text-white">{sol.disadvantages.join(', ')}</span>
                         </div>
                       </div>
@@ -1602,40 +1602,40 @@ const IndustrialCircuitGuide = () => {
           </Card>
 
           {/* Harmonic Filtering */}
-          <Card className="border-orange-500/30 bg-white/5">
+          <Card className="border-white/[0.06] bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <Thermometer className="h-6 w-6 text-orange-400" />
-                <CardTitle className="text-orange-300">Harmonic Filtering Basics</CardTitle>
+                <Thermometer className="h-6 w-6 text-white/55" />
+                <CardTitle className="text-white">Harmonic Filtering Basics</CardTitle>
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
               {/* Basics */}
-              <div className="bg-orange-500/10 p-4 rounded-lg border border-orange-500/20">
-                <h3 className="font-bold text-orange-300 mb-3">What are Harmonics?</h3>
+              <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+                <h3 className="font-bold text-white mb-3">What are Harmonics?</h3>
                 <div className="space-y-2 text-sm text-white">
                   <p>
-                    <strong className="text-orange-200">Definition:</strong>{' '}
+                    <strong className="text-white/85">Definition:</strong>{' '}
                     {harmonicFiltering.basics.definition}
                   </p>
                   <p>
-                    <strong className="text-orange-200">Common:</strong>{' '}
+                    <strong className="text-white/85">Common:</strong>{' '}
                     {harmonicFiltering.basics.commonHarmonics}
                   </p>
                   <p>
-                    <strong className="text-orange-200">Sources:</strong>{' '}
+                    <strong className="text-white/85">Sources:</strong>{' '}
                     {harmonicFiltering.basics.sources}
                   </p>
                 </div>
               </div>
 
               {/* Effects */}
-              <div className="bg-orange-500/10 p-4 rounded-lg border border-orange-500/20">
-                <h3 className="font-bold text-orange-300 mb-3">Effects of Harmonics</h3>
+              <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+                <h3 className="font-bold text-white mb-3">Effects of Harmonics</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {harmonicFiltering.effects.map((effect, i) => (
                     <div key={i} className="flex items-start gap-2 text-sm text-white">
-                      <AlertTriangle className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
+                      <AlertTriangle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
                       {effect}
                     </div>
                   ))}
@@ -1643,20 +1643,20 @@ const IndustrialCircuitGuide = () => {
               </div>
 
               {/* Solutions */}
-              <div className="bg-orange-500/10 p-4 rounded-lg border border-orange-500/20">
-                <h3 className="font-bold text-orange-300 mb-3">Filtering Solutions</h3>
+              <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+                <h3 className="font-bold text-white mb-3">Filtering Solutions</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {harmonicFiltering.solutions.map((sol, index) => (
                     <div
                       key={index}
-                      className="bg-orange-500/5 p-3 rounded border border-orange-500/10"
+                      className="bg-white/[0.02] p-3 rounded border border-white/[0.06]"
                     >
-                      <h4 className="text-orange-200 font-medium mb-1">{sol.type}</h4>
+                      <h4 className="text-white/85 font-medium mb-1">{sol.type}</h4>
                       <p className="text-white text-sm mb-2">{sol.description}</p>
                       <p className="text-white text-xs">
                         <strong>Use:</strong> {sol.application}
                       </p>
-                      <p className="text-green-400 text-xs mt-1">
+                      <p className="text-white/55 text-xs mt-1">
                         <strong>Pros:</strong> {sol.pros}
                       </p>
                       <p className="text-red-400 text-xs">

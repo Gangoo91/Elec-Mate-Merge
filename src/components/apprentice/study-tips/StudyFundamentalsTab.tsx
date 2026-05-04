@@ -1,14 +1,38 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Lightbulb, Brain, Target, Clock, BookOpen, Users, Zap, CheckCircle } from 'lucide-react';
+
+const Section = ({
+  eyebrow,
+  description,
+  children,
+}: {
+  eyebrow: string;
+  description?: string;
+  children: React.ReactNode;
+}) => (
+  <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+    <div className="space-y-1">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        {eyebrow}
+      </span>
+      {description && (
+        <p className="text-[14px] text-white/70 leading-relaxed">{description}</p>
+      )}
+    </div>
+    {children}
+  </div>
+);
+
+const Pill = ({ children }: { children: React.ReactNode }) => (
+  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+    {children}
+  </span>
+);
 
 const StudyFundamentalsTab = () => {
   const learningPrinciples = [
     {
-      principle: 'Active Learning',
-      icon: Brain,
-      description: 'Engage with material rather than passively reading',
+      principle: 'Active learning',
+      description: 'Engage with material rather than passively reading.',
       techniques: [
         'Summarise in your own words',
         'Teach concepts to others',
@@ -16,12 +40,11 @@ const StudyFundamentalsTab = () => {
         'Ask questions while reading',
       ],
       effectiveness: 90,
-      timeInvestment: 'Same as passive, 3x results',
+      timeInvestment: 'Same as passive reading, much stronger results',
     },
     {
-      principle: 'Spaced Repetition',
-      icon: Clock,
-      description: 'Review material at increasing intervals for long-term retention',
+      principle: 'Spaced repetition',
+      description: 'Review material at increasing intervals for long-term retention.',
       techniques: [
         'Use flashcard apps',
         'Schedule regular reviews',
@@ -29,12 +52,11 @@ const StudyFundamentalsTab = () => {
         'Focus on difficult concepts',
       ],
       effectiveness: 85,
-      timeInvestment: '20% of initial study time',
+      timeInvestment: 'About 20% of initial study time',
     },
     {
       principle: 'Interleaving',
-      icon: Zap,
-      description: 'Mix different topics in study sessions rather than blocking',
+      description: 'Mix different topics in study sessions rather than blocking.',
       techniques: [
         'Alternate between subjects',
         'Mix theory and practical',
@@ -45,9 +67,8 @@ const StudyFundamentalsTab = () => {
       timeInvestment: 'No extra time needed',
     },
     {
-      principle: 'Elaborative Interrogation',
-      icon: Target,
-      description: "Ask 'why' and 'how' questions to deepen understanding",
+      principle: 'Elaborative interrogation',
+      description: "Ask 'why' and 'how' questions to deepen understanding.",
       techniques: [
         'Explain why formulas work',
         'Connect concepts to real applications',
@@ -55,12 +76,11 @@ const StudyFundamentalsTab = () => {
         'Explore relationships',
       ],
       effectiveness: 75,
-      timeInvestment: '15% additional time',
+      timeInvestment: 'About 15% additional time',
     },
     {
-      principle: 'Dual Coding',
-      icon: BookOpen,
-      description: 'Combine visual and verbal information for better retention',
+      principle: 'Dual coding',
+      description: 'Combine visual and verbal information for better retention.',
       techniques: [
         'Draw diagrams while reading',
         'Use visual mnemonics',
@@ -68,12 +88,11 @@ const StudyFundamentalsTab = () => {
         'Watch demonstration videos',
       ],
       effectiveness: 85,
-      timeInvestment: '25% additional time',
+      timeInvestment: 'About 25% additional time',
     },
     {
-      principle: 'Distributed Practice',
-      icon: Users,
-      description: 'Spread learning sessions over time rather than cramming',
+      principle: 'Distributed practice',
+      description: 'Spread learning sessions over time rather than cramming.',
       techniques: [
         'Study little and often',
         'Plan long-term schedules',
@@ -81,24 +100,24 @@ const StudyFundamentalsTab = () => {
         'Build consistent habits',
       ],
       effectiveness: 95,
-      timeInvestment: 'Better time efficiency',
+      timeInvestment: 'Better time efficiency overall',
     },
   ];
 
   const studyEnvironment = [
     {
-      factor: 'Physical Environment',
+      factor: 'Physical environment',
       importance: 'Critical',
       elements: [
         'Consistent study location with minimal distractions',
-        'Good lighting - preferably natural light from the left',
+        'Good lighting — preferably natural light from the left',
         'Comfortable temperature (18-22°C optimal)',
         'Quiet space or consistent background noise',
         'Organised desk with all materials within reach',
       ],
     },
     {
-      factor: 'Digital Environment',
+      factor: 'Digital environment',
       importance: 'High',
       elements: [
         'Fast, reliable internet connection',
@@ -109,7 +128,7 @@ const StudyFundamentalsTab = () => {
       ],
     },
     {
-      factor: 'Mental Environment',
+      factor: 'Mental environment',
       importance: 'Critical',
       elements: [
         'Clear learning objectives for each session',
@@ -120,7 +139,7 @@ const StudyFundamentalsTab = () => {
       ],
     },
     {
-      factor: 'Social Environment',
+      factor: 'Social environment',
       importance: 'Medium',
       elements: [
         'Family understanding of study commitments',
@@ -134,8 +153,8 @@ const StudyFundamentalsTab = () => {
 
   const studyTechniques = [
     {
-      technique: 'The Feynman Technique',
-      description: 'Explain concepts simply to identify knowledge gaps',
+      technique: 'The Feynman technique',
+      description: 'Explain concepts simply to identify knowledge gaps.',
       steps: [
         'Choose a concept you want to understand',
         'Explain it in simple terms as if teaching a child',
@@ -147,8 +166,8 @@ const StudyFundamentalsTab = () => {
       timeRequired: '15-30 minutes per concept',
     },
     {
-      technique: 'Active Recall Testing',
-      description: 'Test yourself without looking at notes or answers',
+      technique: 'Active recall testing',
+      description: 'Test yourself without looking at notes or answers.',
       steps: [
         'Cover your notes after reading a section',
         'Write down everything you remember',
@@ -160,8 +179,8 @@ const StudyFundamentalsTab = () => {
       timeRequired: '5-10 minutes per topic',
     },
     {
-      technique: 'Mind Mapping',
-      description: 'Visual representation of information and connections',
+      technique: 'Mind mapping',
+      description: 'Visual representation of information and connections.',
       steps: [
         'Start with main topic in the centre',
         'Add major branches for key subtopics',
@@ -173,8 +192,8 @@ const StudyFundamentalsTab = () => {
       timeRequired: '20-45 minutes per map',
     },
     {
-      technique: 'Problem-Solution Pairing',
-      description: 'Connect every concept to real-world applications',
+      technique: 'Problem-solution pairing',
+      description: 'Connect every concept to real-world applications.',
       steps: [
         'Learn the theoretical concept thoroughly',
         'Find or create practical examples',
@@ -189,306 +208,270 @@ const StudyFundamentalsTab = () => {
 
   const motivationStrategies = [
     {
-      strategy: 'Goal Hierarchy',
-      description: 'Break long-term goals into manageable steps',
+      strategy: 'Goal hierarchy',
+      description: 'Break long-term goals into manageable steps.',
       implementation:
-        'Set daily, weekly, monthly, and yearly learning objectives with clear success criteria',
+        'Set daily, weekly, monthly, and yearly learning objectives with clear success criteria.',
     },
     {
-      strategy: 'Progress Visualisation',
-      description: 'Make learning progress visible and tangible',
+      strategy: 'Progress visualisation',
+      description: 'Make learning progress visible and tangible.',
       implementation:
-        'Use progress bars, checklists, or charts to show advancement toward qualification',
+        'Use progress bars, checklists, or charts to show advancement toward qualification.',
     },
     {
-      strategy: 'Reward Systems',
-      description: 'Celebrate achievements to maintain motivation',
+      strategy: 'Reward systems',
+      description: 'Celebrate achievements to maintain motivation.',
       implementation:
-        'Set up small rewards for study milestones and bigger rewards for major achievements',
+        'Set up small rewards for study milestones and bigger rewards for major achievements.',
     },
     {
-      strategy: 'Social Accountability',
-      description: 'Share goals with others for external motivation',
-      implementation: 'Tell family, friends, or study partners about your commitments and progress',
-    },
-    {
-      strategy: 'Purpose Connection',
-      description: 'Connect daily study to long-term career vision',
-      implementation: "Regularly remind yourself why you're pursuing electrical qualifications",
-    },
-    {
-      strategy: 'Habit Stacking',
-      description: 'Attach new study habits to existing routines',
+      strategy: 'Social accountability',
+      description: 'Share goals with others for external motivation.',
       implementation:
-        'Study immediately after established activities like morning coffee or lunch break',
+        'Tell family, friends, or study partners about your commitments and progress.',
+    },
+    {
+      strategy: 'Purpose connection',
+      description: 'Connect daily study to long-term career vision.',
+      implementation: "Regularly remind yourself why you're pursuing electrical qualifications.",
+    },
+    {
+      strategy: 'Habit stacking',
+      description: 'Attach new study habits to existing routines.',
+      implementation:
+        'Study immediately after established activities like morning coffee or lunch break.',
     },
   ];
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Lightbulb className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">
-              Study Fundamentals: Building Strong Learning Foundations
-            </CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <p className="text-white mb-4">
-            Master the core principles of effective learning. These evidence-based fundamentals form
-            the foundation of successful study practices for electrical apprenticeships and beyond.
-          </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center p-3 border border-elec-yellow/20 rounded-lg">
-              <Brain className="h-8 w-8 text-blue-400 mx-auto mb-2" />
-              <p className="text-lg font-bold text-white">6</p>
-              <p className="text-xs text-white">Key Principles</p>
+    <div className="space-y-5">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Study fundamentals
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Master the core principles of effective learning. These evidence-based fundamentals form
+          the foundation of successful study practices for electrical apprenticeships and beyond.
+        </p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {[
+            { label: 'Key principles', value: '6' },
+            { label: 'Study techniques', value: '4' },
+            { label: 'Daily minimum', value: '30 min' },
+            { label: 'Consistency wins', value: 'Daily' },
+          ].map((s) => (
+            <div
+              key={s.label}
+              className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
+            >
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                {s.label}
+              </span>
+              <p className="text-[16px] font-semibold text-white">{s.value}</p>
             </div>
-            <div className="text-center p-3 border border-elec-yellow/20 rounded-lg">
-              <Target className="h-8 w-8 text-green-400 mx-auto mb-2" />
-              <p className="text-lg font-bold text-white">4</p>
-              <p className="text-xs text-white">Study Techniques</p>
-            </div>
-            <div className="text-center p-3 border border-elec-yellow/20 rounded-lg">
-              <Clock className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
-              <p className="text-lg font-bold text-white">30min</p>
-              <p className="text-xs text-white">Daily Minimum</p>
-            </div>
-            <div className="text-center p-3 border border-elec-yellow/20 rounded-lg">
-              <CheckCircle className="h-8 w-8 text-purple-400 mx-auto mb-2" />
-              <p className="text-lg font-bold text-white">95%</p>
-              <p className="text-xs text-white">Success Rate</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+          ))}
+        </div>
+      </div>
 
-      {/* Learning Principles */}
-      <Card className="border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-cyan-500/10">
-        <CardHeader>
-          <CardTitle className="text-blue-400">Evidence-Based Learning Principles</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            {learningPrinciples.map((principle, index) => {
-              const IconComponent = principle.icon;
-              return (
-                <div key={index} className="border border-blue-500/20 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-3">
-                      <IconComponent className="h-6 w-6 text-blue-400" />
-                      <h4 className="font-semibold text-white text-lg">{principle.principle}</h4>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-sm text-blue-400 font-medium">
-                        {principle.effectiveness}% effective
+      <Section eyebrow="Evidence-based learning principles">
+        <div className="space-y-3">
+          {learningPrinciples.map((principle, index) => (
+            <div
+              key={index}
+              className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <h4 className="text-[16px] font-semibold text-white">{principle.principle}</h4>
+                <div className="text-right space-y-1">
+                  <div className="text-[12px] text-white/85 font-mono">
+                    {principle.effectiveness}%
+                  </div>
+                  <Progress value={principle.effectiveness} className="w-20 h-1 bg-white/5" />
+                </div>
+              </div>
+              <p className="text-[13px] text-white/70 leading-relaxed">{principle.description}</p>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Implementation techniques
+                  </span>
+                  <ul className="space-y-1">
+                    {principle.techniques.map((technique, techIndex) => (
+                      <li
+                        key={techIndex}
+                        className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                      >
+                        <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                        <span>{technique}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Time investment
+                  </span>
+                  <p className="text-[13px] text-white/85 leading-relaxed">
+                    {principle.timeInvestment}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section eyebrow="Optimal study environment setup">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {studyEnvironment.map((env, index) => (
+            <div
+              key={index}
+              className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
+            >
+              <div className="flex items-baseline justify-between gap-2">
+                <h4 className="text-[14px] font-semibold text-white">{env.factor}</h4>
+                <Pill>{env.importance}</Pill>
+              </div>
+              <ul className="space-y-1.5">
+                {env.elements.map((element, elementIndex) => (
+                  <li
+                    key={elementIndex}
+                    className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                  >
+                    <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                    <span>{element}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section eyebrow="Core study techniques">
+        <div className="space-y-3">
+          {studyTechniques.map((technique, index) => (
+            <div
+              key={index}
+              className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <h4 className="text-[14px] font-semibold text-white">{technique.technique}</h4>
+                  <p className="text-[13px] text-white/70 leading-relaxed">
+                    {technique.description}
+                  </p>
+                </div>
+                <Pill>{technique.timeRequired}</Pill>
+              </div>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Step-by-step process
+                  </span>
+                  <ol className="space-y-1.5">
+                    {technique.steps.map((step, stepIndex) => (
+                      <li
+                        key={stepIndex}
+                        className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                      >
+                        <span className="w-5 flex-shrink-0 text-white/55 font-mono">
+                          {stepIndex + 1}.
+                        </span>
+                        <span>{step}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+                <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Best used for
+                  </span>
+                  <p className="text-[13px] text-white/85 leading-relaxed">{technique.bestFor}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section eyebrow="Maintaining study motivation">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          {motivationStrategies.map((strategy, index) => (
+            <div
+              key={index}
+              className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
+            >
+              <h4 className="text-[14px] font-semibold text-white">{strategy.strategy}</h4>
+              <p className="text-[13px] text-white/70 leading-relaxed">{strategy.description}</p>
+              <div className="space-y-1">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  How to implement
+                </span>
+                <p className="text-[13px] text-white/85 leading-relaxed">
+                  {strategy.implementation}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section eyebrow="Foundational study schedule template">
+        <div className="grid grid-cols-1 md:grid-cols-7 gap-3">
+          {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(
+            (day, index) => (
+              <div
+                key={day}
+                className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-2"
+              >
+                <h4 className="text-[12px] font-semibold text-white">{day}</h4>
+                <div className="space-y-2 text-[12px] text-white/85 leading-relaxed">
+                  {index < 5 ? (
+                    <>
+                      <div>
+                        <div className="text-white/55 font-mono">6:30-7:00</div>
+                        Quick review
                       </div>
-                      <Progress value={principle.effectiveness} className="w-20 mt-1" />
-                    </div>
-                  </div>
-
-                  <p className="text-sm text-white mb-3">{principle.description}</p>
-
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div>
-                      <h5 className="font-medium text-blue-300 mb-2">Implementation Techniques:</h5>
-                      <ul className="space-y-1">
-                        {principle.techniques.map((technique, techIndex) => (
-                          <li key={techIndex} className="text-sm text-white flex items-start gap-2">
-                            <CheckCircle className="h-3 w-3 text-blue-400 mt-1 flex-shrink-0" />
-                            {technique}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
-                      <h5 className="font-medium text-blue-400 mb-1">Time Investment</h5>
-                      <p className="text-sm text-white">{principle.timeInvestment}</p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Study Environment */}
-      <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/10">
-        <CardHeader>
-          <CardTitle className="text-green-400">Optimal Study Environment Setup</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {studyEnvironment.map((env, index) => (
-              <div key={index} className="border border-green-500/20 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-semibold text-white">{env.factor}</h4>
-                  <Badge
-                    variant="outline"
-                    className={`text-xs ${
-                      env.importance === 'Critical'
-                        ? 'border-red-400 text-red-400'
-                        : env.importance === 'High'
-                          ? 'border-orange-400 text-orange-400'
-                          : 'border-blue-400 text-blue-400'
-                    }`}
-                  >
-                    {env.importance}
-                  </Badge>
-                </div>
-                <ul className="space-y-2">
-                  {env.elements.map((element, elementIndex) => (
-                    <li key={elementIndex} className="text-sm text-white flex items-start gap-2">
-                      <div className="w-1 h-1 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
-                      {element}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Study Techniques */}
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow">Core Study Techniques</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            {studyTechniques.map((technique, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <div className="flex items-start justify-between mb-3">
-                  <div>
-                    <h4 className="font-semibold text-white mb-1">{technique.technique}</h4>
-                    <p className="text-sm text-white">{technique.description}</p>
-                  </div>
-                  <Badge
-                    variant="outline"
-                    className="text-xs border-elec-yellow/30 text-elec-yellow"
-                  >
-                    {technique.timeRequired}
-                  </Badge>
-                </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  <div>
-                    <h5 className="font-medium text-elec-yellow mb-2">Step-by-Step Process:</h5>
-                    <ol className="space-y-1">
-                      {technique.steps.map((step, stepIndex) => (
-                        <li key={stepIndex} className="text-sm text-white flex items-start gap-2">
-                          <span className="text-elec-yellow font-medium">{stepIndex + 1}.</span>
-                          {step}
-                        </li>
-                      ))}
-                    </ol>
-                  </div>
-
-                  <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-3">
-                    <h5 className="font-medium text-elec-yellow mb-1">Best Used For:</h5>
-                    <p className="text-sm text-white">{technique.bestFor}</p>
-                  </div>
+                      <div>
+                        <div className="text-white/55 font-mono">19:00-20:30</div>
+                        Main study
+                      </div>
+                      <div>
+                        <div className="text-white/55 font-mono">21:00-21:15</div>
+                        Tomorrow prep
+                      </div>
+                    </>
+                  ) : index === 5 ? (
+                    <>
+                      <div>
+                        <div className="text-white/55 font-mono">9:00-11:00</div>
+                        Deep study
+                      </div>
+                      <div>
+                        <div className="text-white/55 font-mono">14:00-15:00</div>
+                        Practice tests
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div>
+                        <div className="text-white/55 font-mono">10:00-11:00</div>
+                        Week review
+                      </div>
+                      <div>
+                        <div className="text-white/55 font-mono">15:00-16:00</div>
+                        Next week plan
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Motivation Strategies */}
-      <Card className="border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-pink-500/10">
-        <CardHeader>
-          <CardTitle className="text-purple-400">Maintaining Study Motivation</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {motivationStrategies.map((strategy, index) => (
-              <div key={index} className="border border-purple-500/20 rounded-lg p-4">
-                <h4 className="font-semibold text-white mb-2">{strategy.strategy}</h4>
-                <p className="text-sm text-white mb-3">{strategy.description}</p>
-                <div className="bg-purple-500/10 rounded-lg p-3">
-                  <h5 className="font-medium text-purple-300 mb-1">How to Implement:</h5>
-                  <p className="text-xs text-white">{strategy.implementation}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Study Schedule Template */}
-      <Card className="border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-red-500/10">
-        <CardHeader>
-          <CardTitle className="text-orange-400">Foundational Study Schedule Template</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-7 gap-4">
-            {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(
-              (day, index) => (
-                <div key={index} className="border border-orange-500/20 rounded-lg p-3">
-                  <h4 className="font-semibold text-white text-sm mb-2">{day}</h4>
-                  <div className="space-y-2">
-                    {index < 5 ? (
-                      // Weekdays
-                      <>
-                        <div className="text-xs text-white">
-                          <strong className="text-orange-400">6:30-7:00</strong>
-                          <br />
-                          Quick review
-                        </div>
-                        <div className="text-xs text-white">
-                          <strong className="text-orange-400">19:00-20:30</strong>
-                          <br />
-                          Main study
-                        </div>
-                        <div className="text-xs text-white">
-                          <strong className="text-orange-400">21:00-21:15</strong>
-                          <br />
-                          Tomorrow prep
-                        </div>
-                      </>
-                    ) : index === 5 ? (
-                      // Saturday
-                      <>
-                        <div className="text-xs text-white">
-                          <strong className="text-orange-400">9:00-11:00</strong>
-                          <br />
-                          Deep study
-                        </div>
-                        <div className="text-xs text-white">
-                          <strong className="text-orange-400">14:00-15:00</strong>
-                          <br />
-                          Practice tests
-                        </div>
-                      </>
-                    ) : (
-                      // Sunday
-                      <>
-                        <div className="text-xs text-white">
-                          <strong className="text-orange-400">10:00-11:00</strong>
-                          <br />
-                          Week review
-                        </div>
-                        <div className="text-xs text-white">
-                          <strong className="text-orange-400">15:00-16:00</strong>
-                          <br />
-                          Next week plan
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </div>
-              )
-            )}
-          </div>
-        </CardContent>
-      </Card>
+            )
+          )}
+        </div>
+      </Section>
     </div>
   );
 };

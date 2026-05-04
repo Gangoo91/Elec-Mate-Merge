@@ -1,8 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
-import { Badge } from '@/components/ui/badge';
 import { PortfolioCategory, PortfolioEntry } from '@/types/portfolio';
-import { Wrench, Shield, Search, Users, GraduationCap } from 'lucide-react';
 
 interface PortfolioCategoriesOverviewProps {
   categories: PortfolioCategory[];
@@ -10,47 +6,8 @@ interface PortfolioCategoriesOverviewProps {
 }
 
 const PortfolioCategoriesOverview = ({ categories, entries }: PortfolioCategoriesOverviewProps) => {
-  const getIcon = (iconName: string) => {
-    switch (iconName) {
-      case 'wrench':
-        return <Wrench className="h-5 w-5" />;
-      case 'shield':
-        return <Shield className="h-5 w-5" />;
-      case 'search':
-        return <Search className="h-5 w-5" />;
-      case 'users':
-        return <Users className="h-5 w-5" />;
-      case 'graduation-cap':
-        return <GraduationCap className="h-5 w-5" />;
-      default:
-        return <Wrench className="h-5 w-5" />;
-    }
-  };
-
-  const getColorClasses = (color: string) => {
-    switch (color) {
-      case 'blue':
-        return { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/20' };
-      case 'green':
-        return { bg: 'bg-green-500/10', text: 'text-green-400', border: 'border-green-500/20' };
-      case 'yellow':
-        return { bg: 'bg-yellow-500/10', text: 'text-yellow-400', border: 'border-yellow-500/20' };
-      case 'purple':
-        return { bg: 'bg-purple-500/10', text: 'text-purple-400', border: 'border-purple-500/20' };
-      case 'orange':
-        return { bg: 'bg-orange-500/10', text: 'text-orange-400', border: 'border-orange-500/20' };
-      default:
-        return {
-          bg: 'bg-elec-yellow/10',
-          text: 'text-elec-yellow',
-          border: 'border-elec-yellow/20',
-        };
-    }
-  };
-
   return (
     <div className="space-y-4">
-      {/* Portfolio Categories Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {categories.map((category) => {
           const categoryEntries = entries.filter((entry) => entry.category.id === category.id);
@@ -58,109 +15,101 @@ const PortfolioCategoriesOverview = ({ categories, entries }: PortfolioCategorie
             (entry) => entry.status === 'completed'
           ).length;
           const progress = Math.min((completedEntries / category.requiredEntries) * 100, 100);
-          const colorClasses = getColorClasses(category.color);
 
           return (
-            <Card
+            <div
               key={category.id}
-              className={`bg-white/5 border-elec-yellow/20 ${colorClasses.border}`}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
             >
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <div className={colorClasses.text}>{getIcon(category.icon)}</div>
-                    <CardTitle className="text-base sm:text-lg truncate">{category.name}</CardTitle>
-                  </div>
-                  <Badge
-                    variant={progress >= 100 ? 'success' : 'outline'}
-                    className="flex-shrink-0 text-xs"
-                  >
-                    {completedEntries}/{category.requiredEntries}
-                  </Badge>
-                </div>
-              </CardHeader>
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 truncate">
+                  {category.name}
+                </span>
+                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono flex-shrink-0">
+                  {completedEntries}/{category.requiredEntries}
+                </span>
+              </div>
 
-              <CardContent className="space-y-3 pt-0">
-                <p className="text-xs sm:text-sm text-white line-clamp-2">{category.description}</p>
+              <p className="text-[13px] text-white/70 leading-relaxed line-clamp-2">
+                {category.description}
+              </p>
 
-                <div className="space-y-2">
-                  <div className="flex justify-between text-xs sm:text-sm">
-                    <span>Progress</span>
-                    <span className="font-medium">{Math.round(progress)}%</span>
-                  </div>
-                  <Progress value={progress} className="h-1.5 sm:h-2" />
+              <div className="space-y-2">
+                <div className="flex justify-between text-[12px]">
+                  <span className="text-white/55">Progress</span>
+                  <span className="text-white/85 font-mono">{Math.round(progress)}%</span>
                 </div>
+                <div className="h-1 rounded-full bg-white/5 overflow-hidden">
+                  <div
+                    className="h-full bg-elec-yellow transition-all duration-500"
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+              </div>
 
-                <div className="pt-2 border-t border-elec-yellow/10">
-                  <div className="grid grid-cols-3 gap-2 text-center">
-                    <div>
-                      <p className="text-sm sm:text-lg font-semibold">{categoryEntries.length}</p>
-                      <p className="text-xs text-white">Total</p>
-                    </div>
-                    <div>
-                      <p className="text-sm sm:text-lg font-semibold">{completedEntries}</p>
-                      <p className="text-xs text-white">Complete</p>
-                    </div>
-                    <div>
-                      <p className="text-sm sm:text-lg font-semibold">
-                        {categoryEntries.filter((e) => e.status === 'in-progress').length}
-                      </p>
-                      <p className="text-xs text-white">Progress</p>
-                    </div>
+              <div className="pt-2 border-t border-white/[0.06]">
+                <div className="grid grid-cols-3 gap-2 text-center">
+                  <div>
+                    <p className="text-[16px] font-mono text-white">{categoryEntries.length}</p>
+                    <p className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">
+                      Total
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[16px] font-mono text-white">{completedEntries}</p>
+                    <p className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">
+                      Complete
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[16px] font-mono text-white">
+                      {categoryEntries.filter((e) => e.status === 'in-progress').length}
+                    </p>
+                    <p className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">
+                      Progress
+                    </p>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           );
         })}
       </div>
 
-      {/* Recent Activity */}
-      <Card className="bg-white/5 border-elec-yellow/20">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg">Recent Activity</CardTitle>
-        </CardHeader>
-        <CardContent className="pt-0">
-          {entries.length === 0 ? (
-            <p className="text-white text-center py-6 text-sm">
-              No portfolio entries yet. Start by adding your first entry!
-            </p>
-          ) : (
-            <div className="space-y-2">
-              {entries
-                .sort(
-                  (a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime()
-                )
-                .slice(0, 3)
-                .map((entry) => (
-                  <div
-                    key={entry.id}
-                    className="flex items-center justify-between p-3 bg-black/20 rounded-lg border border-elec-yellow/10"
-                  >
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className={getColorClasses(entry.category.color).text}>
-                        {getIcon(entry.category.icon)}
-                      </div>
-                      <div className="min-w-0">
-                        <p className="font-medium text-sm truncate">{entry.title}</p>
-                        <p className="text-xs text-white">
-                          {entry.category.name} •{' '}
-                          {new Date(entry.dateCreated).toLocaleDateString('en-GB')}
-                        </p>
-                      </div>
-                    </div>
-                    <Badge
-                      variant={entry.status === 'completed' ? 'success' : 'outline'}
-                      className="flex-shrink-0 text-xs"
-                    >
-                      {entry.status}
-                    </Badge>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Recent activity
+        </span>
+
+        {entries.length === 0 ? (
+          <p className="text-[14px] text-white/55 leading-relaxed text-center py-6">
+            No portfolio entries yet. Start by adding your first entry.
+          </p>
+        ) : (
+          <div className="space-y-2">
+            {entries
+              .sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime())
+              .slice(0, 3)
+              .map((entry) => (
+                <div
+                  key={entry.id}
+                  className="flex items-center justify-between gap-3 p-3 rounded-lg border border-white/[0.06] bg-white/[0.02]"
+                >
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[14px] text-white truncate">{entry.title}</p>
+                    <p className="text-[11px] text-white/55 mt-0.5 font-mono">
+                      {entry.category.name} ·{' '}
+                      {new Date(entry.dateCreated).toLocaleDateString('en-GB')}
+                    </p>
                   </div>
-                ))}
-            </div>
-          )}
-        </CardContent>
-      </Card>
+                  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] flex-shrink-0">
+                    {entry.status}
+                  </span>
+                </div>
+              ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

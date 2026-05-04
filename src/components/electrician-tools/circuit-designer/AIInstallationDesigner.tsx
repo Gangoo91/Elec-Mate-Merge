@@ -10,7 +10,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useCircuitDesignGeneration } from '@/hooks/useCircuitDesignGeneration';
 import { ImportedContextBanner } from '@/components/electrician-tools/shared/ImportedContextBanner';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { SaveCustomerPrompt } from '@/components/electrician/shared/SaveCustomerPrompt';
 import { trackFeatureUse } from '@/components/ActivityTracker';
 import { useAuth } from '@/contexts/AuthContext';
@@ -456,6 +456,138 @@ export const AIInstallationDesigner = () => {
     sessionStorage.removeItem('circuit-design-data');
   };
 
+  /**
+   * Force-flip to results from whatever circuit_design_partials we have.
+   * Used when the job's stuck on a slow/failed circuit but most are designed.
+   * Missing circuits are kept as placeholder entries so the user knows what
+   * needs re-designing.
+   */
+  const handleForceResults = async () => {
+    if (!jobId || !activeInputs) {
+      toast.error('Cannot view results — design state lost.');
+      return;
+    }
+    try {
+      const { data: partials, error: partialsErr } = await supabase
+        .from('circuit_design_partials' as any)
+        .select('*')
+        .eq('job_id', jobId)
+        .order('circuit_index');
+      if (partialsErr) throw partialsErr;
+      if (!partials || partials.length === 0) {
+        toast.error('No circuits ready yet — give it another moment.');
+        return;
+      }
+
+      const partialsByIdx = new Map<number, any>();
+      (partials as any[]).forEach((p) => partialsByIdx.set(p.circuit_index, p.circuit_data));
+
+      // Build a circuit array indexed by the wizard's input order.
+      // Where we have a real designed circuit → use it. Where we don't →
+      // mark with failedToDesign flag so the results page surfaces it.
+      const wizardCircuits = activeInputs.circuits;
+      const merged = wizardCircuits.map((wc, i) => {
+        const p = partialsByIdx.get(i);
+        if (p) return p;
+        return {
+          name: wc.name ?? `Circuit ${i + 1}`,
+          loadType: wc.loadType,
+          loadPower: wc.loadPower,
+          phases: wc.phases ?? 'single',
+          voltage: 230,
+          circuitNumber: i + 1,
+          failedToDesign: true,
+          ungrounded_choices: ['Circuit not designed — re-run to complete this way.'],
+          calculations: {},
+          warnings: ['Circuit not designed'],
+        };
+      });
+
+      const totalLoad = merged.reduce((s, c) => s + Number(c?.loadPower ?? 0), 0);
+      const designed = merged.filter((c) => !(c as any).failedToDesign);
+      const diversifiedLoad = designed.reduce(
+        (s, c) =>
+          s + Number(c?.calculations?.diversifiedLoad ?? c?.loadPower ?? 0),
+        0
+      );
+      const diversityFactor = totalLoad > 0 ? diversifiedLoad / totalLoad : 0.65;
+
+      const designWithMetadata: any = {
+        circuits: merged,
+        projectInfo: {
+          projectName: activeInputs.projectName ?? 'Untitled Project',
+          location: activeInputs.location ?? 'Not specified',
+          clientName: activeInputs.clientName,
+          electricianName: activeInputs.electricianName,
+          installationType: activeInputs.propertyType ?? 'domestic',
+        },
+        supply: {
+          voltage: activeInputs.voltage ?? 230,
+          phases: activeInputs.phases ?? 'single',
+          pfc: activeInputs.pscc ?? 16000,
+          ze: activeInputs.ze ?? 0.35,
+          earthingSystem: activeInputs.earthingSystem ?? 'TN-C-S',
+        },
+        consumerUnit: {
+          type: 'split-load' as const,
+          mainSwitchRating: activeInputs.mainSwitchRating ?? 100,
+          ways: merged.length,
+          incomingSupply: {
+            voltage: activeInputs.voltage ?? 230,
+            phases: (activeInputs.phases ?? 'single') as 'single' | 'three',
+            incomingPFC: activeInputs.pscc ?? 16,
+            Ze: activeInputs.ze ?? 0.35,
+            earthingSystem: (activeInputs.earthingSystem ?? 'TN-C-S') as 'TN-S' | 'TN-C-S' | 'TT',
+          },
+        },
+        projectName: activeInputs.projectName ?? 'Untitled Project',
+        location: activeInputs.location ?? 'Not specified',
+        clientName: activeInputs.clientName,
+        electricianName: activeInputs.electricianName,
+        installationType: activeInputs.propertyType ?? 'domestic',
+        totalLoad,
+        diversifiedLoad,
+        diversityFactor,
+        totalDesignCurrent: designed.reduce(
+          (s, c) => s + Number(c?.calculations?.Ib ?? 0),
+          0
+        ),
+        diversityBreakdown: {
+          totalConnectedLoad: totalLoad,
+          diversifiedLoad,
+          overallDiversityFactor: diversityFactor,
+          byCategory: [],
+          reasoning: 'Calculated from streamed partials (job did not fully complete)',
+        },
+        diversityApplied: false,
+        materials: [],
+        validationPassed: false,
+        validationIssues: [
+          {
+            severity: 'warn',
+            message: `${merged.length - designed.length} of ${merged.length} circuits did not finish designing — re-run to complete.`,
+          },
+        ],
+        autoFixSuggestions: [],
+        partialResults: true,
+      };
+
+      setDesignData(designWithMetadata);
+      sessionStorage.setItem('circuit-design-data', JSON.stringify(designWithMetadata));
+      setCurrentView('results');
+
+      toast.warning(`${designed.length} of ${merged.length} circuits ready`, {
+        description: 'Showing partial results — re-run to complete the missing circuits.',
+        duration: 6000,
+      });
+    } catch (err: any) {
+      console.error('Force results failed:', err);
+      toast.error('Could not load partial results', {
+        description: err?.message ?? 'Try waiting a moment longer.',
+      });
+    }
+  };
+
   const handleTaskAccept = (contextData: any, instruction: string | null) => {
     console.log('Task accepted from agent:', contextData, instruction);
 
@@ -545,21 +677,40 @@ export const AIInstallationDesigner = () => {
         </>
       )}
 
-      {currentView === 'processing' && (
-        <CircuitDesignStream
-          jobId={jobId}
-          inputs={activeInputs ?? undefined}
-          userRequest={userRequest}
-          jobProgress={progress}
-          jobStatus={status}
-          currentStep={currentStep}
-          onCancel={handleCancel}
-        />
-      )}
+      <AnimatePresence mode="wait">
+        {currentView === 'processing' && (
+          <motion.div
+            key="processing"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.18, ease: 'easeOut' }}
+          >
+            <CircuitDesignStream
+              jobId={jobId}
+              inputs={activeInputs ?? undefined}
+              userRequest={userRequest}
+              jobProgress={progress}
+              jobStatus={status}
+              currentStep={currentStep}
+              onCancel={handleCancel}
+              onForceResults={handleForceResults}
+            />
+          </motion.div>
+        )}
 
-      {currentView === 'results' && designData && (
-        <EditorialDesignResults design={designData} onReset={handleRetry} />
-      )}
+        {currentView === 'results' && designData && (
+          <motion.div
+            key="results"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.24, ease: 'easeOut' }}
+          >
+            <EditorialDesignResults design={designData} onReset={handleRetry} />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

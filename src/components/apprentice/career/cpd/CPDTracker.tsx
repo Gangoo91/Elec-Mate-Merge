@@ -56,24 +56,18 @@ const CPDTracker = () => {
     setActiveTab('history');
   };
 
-  // Mobile-first responsive design
   if (isMobile) {
     return (
       <div className="min-h-screen bg-elec-dark animate-fade-in">
-        {/* Header */}
-        <div className="sticky top-0 z-20 bg-gradient-to-r from-elec-gray to-elec-card backdrop-blur-sm border-b border-elec-yellow/20 p-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
-              <Clock className="h-5 w-5 text-elec-yellow" />
-            </div>
-            <div>
-              <h1 className="text-lg font-bold text-white">CPD Tracker</h1>
-              <p className="text-xs text-white">Professional Development</p>
-            </div>
+        <div className="sticky top-0 z-20 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.06] p-4">
+          <div className="space-y-1">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Professional development
+            </span>
+            <h1 className="text-[18px] font-semibold text-white leading-tight">CPD tracker</h1>
           </div>
         </div>
 
-        {/* Mobile Content */}
         <div className="p-4">
           {activeTab === 'overview' && (
             <MobileCPDTracker
@@ -85,12 +79,12 @@ const CPDTracker = () => {
           {activeTab === 'log-activity' && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-white">Add CPD Entry</h2>
+                <h2 className="text-[16px] font-semibold text-white">Add CPD entry</h2>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => setActiveTab('overview')}
-                  className="h-10 text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation"
+                  className="h-10 text-white hover:bg-white/[0.05] touch-manipulation"
                 >
                   <ArrowLeft className="h-4 w-4 mr-1" />
                   Back
@@ -102,12 +96,12 @@ const CPDTracker = () => {
           {activeTab === 'history' && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-white">CPD History</h2>
+                <h2 className="text-[16px] font-semibold text-white">CPD history</h2>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => setActiveTab('overview')}
-                  className="h-10 text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation"
+                  className="h-10 text-white hover:bg-white/[0.05] touch-manipulation"
                 >
                   <ArrowLeft className="h-4 w-4 mr-1" />
                   Back
@@ -119,12 +113,12 @@ const CPDTracker = () => {
           {activeTab === 'goals' && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-white">CPD Goals</h2>
+                <h2 className="text-[16px] font-semibold text-white">CPD goals</h2>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => setActiveTab('overview')}
-                  className="h-10 text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation"
+                  className="h-10 text-white hover:bg-white/[0.05] touch-manipulation"
                 >
                   <ArrowLeft className="h-4 w-4 mr-1" />
                   Back
@@ -171,24 +165,21 @@ const CPDTracker = () => {
     },
   ];
 
-  // Desktop layout
   return (
     <div className="space-y-6 animate-fade-in">
-      {/* Header */}
-      <div className="text-center space-y-4">
-        <div className="flex items-center justify-center gap-4">
-          <div className="p-3 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
-            <Clock className="h-7 w-7 text-elec-yellow" />
-          </div>
-          <h1 className="text-3xl font-bold text-white">CPD Tracker</h1>
-        </div>
-        <p className="text-white max-w-2xl mx-auto">
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Professional development
+        </span>
+        <h1 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
+          CPD tracker
+        </h1>
+        <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
           Track your Continuing Professional Development activities and maintain compliance with
-          professional body requirements. Set goals, log activities, and monitor your progress.
+          professional body requirements. Set goals, log activities and monitor your progress.
         </p>
       </div>
 
-      {/* Main Content */}
       <DropdownTabs
         tabs={cpdTabs}
         defaultValue={activeTab}

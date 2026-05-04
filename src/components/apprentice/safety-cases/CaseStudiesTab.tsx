@@ -1,18 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import {
-  BookOpen,
-  FileText,
-  AlertTriangle,
-  Users,
-  Calendar,
-  MapPin,
-  Clock,
-  Eye,
-  Download,
-  Share2,
-} from 'lucide-react';
+import { Calendar, MapPin, Clock, Eye, Download, Share2 } from 'lucide-react';
 import { useState } from 'react';
 
 const CaseStudiesTab = () => {
@@ -611,32 +598,6 @@ const CaseStudiesTab = () => {
     },
   ];
 
-  const getSeverityColor = (severity: string) => {
-    switch (severity) {
-      case 'Fatal':
-        return 'bg-red-500/20 text-red-400 border-red-500/30';
-      case 'Serious':
-        return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
-      case 'Near Miss':
-        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
-      default:
-        return 'bg-white/10 text-white border-white/20';
-    }
-  };
-
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case 'Beginner':
-        return 'bg-green-500/20 text-green-400 border-green-500/30';
-      case 'Intermediate':
-        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
-      case 'Advanced':
-        return 'bg-red-500/20 text-red-400 border-red-500/30';
-      default:
-        return 'bg-white/10 text-white border-white/20';
-    }
-  };
-
   const filteredCaseStudies = caseStudies.filter((study) => {
     const severityMatch = filterSeverity === 'all' || study.severity === filterSeverity;
     const categoryMatch = filterCategory === 'all' || study.category === filterCategory;
@@ -645,236 +606,233 @@ const CaseStudiesTab = () => {
 
   const handleViewCase = (caseId: string) => {
     setSelectedCase(caseId);
-    // Here you would typically navigate to detailed case view
     console.log(`Viewing case: ${caseId}`);
   };
 
-  return (
-    <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-white/5 to-white/10/50">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <BookOpen className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Interactive Case Studies Library</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <p className="text-white mb-4">
-            Learn from real incidents and near-misses in the electrical industry. Each case study
-            includes detailed analysis, interactive elements, downloadable reports, and practical
-            learning outcomes.
-          </p>
+  const filterButtonClass = (active: boolean) =>
+    `h-9 px-3 rounded-lg border text-[12px] touch-manipulation transition-all ${
+      active
+        ? 'bg-elec-yellow text-black font-semibold border-elec-yellow'
+        : 'bg-white/[0.02] text-white/85 border-white/10 hover:bg-white/[0.05]'
+    }`;
 
-          {/* Filters */}
-          <div className="flex flex-wrap gap-2 mb-4">
-            <div className="flex gap-2">
-              <Button
-                variant={filterSeverity === 'all' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setFilterSeverity('all')}
-              >
-                All Severity
-              </Button>
-              <Button
-                variant={filterSeverity === 'Fatal' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setFilterSeverity('Fatal')}
-              >
-                Fatal
-              </Button>
-              <Button
-                variant={filterSeverity === 'Serious' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setFilterSeverity('Serious')}
-              >
-                Serious
-              </Button>
-              <Button
-                variant={filterSeverity === 'Near Miss' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setFilterSeverity('Near Miss')}
-              >
-                Near Miss
-              </Button>
+  return (
+    <div className="space-y-6 animate-fade-in text-left">
+      {/* Header */}
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Case studies library
+        </span>
+        <h2 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
+          Real incident case studies
+        </h2>
+        <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
+          Learn from real incidents and near-misses in the electrical industry. Each case study
+          includes detailed analysis, downloadable reports, and practical learning outcomes.
+        </p>
+      </div>
+
+      {/* Filters */}
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Filter by severity
+        </span>
+        <div className="flex flex-wrap gap-2">
+          <button onClick={() => setFilterSeverity('all')} className={filterButtonClass(filterSeverity === 'all')}>
+            All
+          </button>
+          <button onClick={() => setFilterSeverity('Fatal')} className={filterButtonClass(filterSeverity === 'Fatal')}>
+            Fatal
+          </button>
+          <button onClick={() => setFilterSeverity('Serious')} className={filterButtonClass(filterSeverity === 'Serious')}>
+            Serious
+          </button>
+          <button onClick={() => setFilterSeverity('Near Miss')} className={filterButtonClass(filterSeverity === 'Near Miss')}>
+            Near Miss
+          </button>
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        {filteredCaseStudies.map((study) => (
+          <div
+            key={study.id}
+            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4"
+          >
+            {/* Title + meta */}
+            <div className="space-y-2">
+              <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 flex-wrap">
+                <span>{study.severity}</span>
+                <span className="text-white/25">·</span>
+                <span>{study.category}</span>
+                <span className="text-white/25">·</span>
+                <span>{study.difficulty}</span>
+              </div>
+              <h3 className="text-[16px] sm:text-[18px] font-medium text-white leading-snug">
+                {study.title}
+              </h3>
+              <div className="flex items-center gap-4 text-[12px] text-white/55 flex-wrap">
+                <span className="flex items-center gap-1">
+                  <Calendar className="h-3 w-3" />
+                  {study.date}
+                </span>
+                <span className="flex items-center gap-1">
+                  <MapPin className="h-3 w-3" />
+                  {study.location}
+                </span>
+                <span className="flex items-center gap-1">
+                  <Clock className="h-3 w-3" />
+                  {study.investigationDuration}
+                </span>
+                <span className="flex items-center gap-1">
+                  <Eye className="h-3 w-3" />
+                  {study.views}
+                </span>
+              </div>
+            </div>
+
+            <p className="text-[14px] text-white/85 leading-relaxed">{study.detailedDescription}</p>
+
+            {/* Causes & prevention */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Root causes
+                </span>
+                <ul className="space-y-1.5">
+                  {study.rootCauses.slice(0, 3).map((cause, causeIndex) => (
+                    <li
+                      key={causeIndex}
+                      className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                      <span>{cause}</span>
+                    </li>
+                  ))}
+                  {study.rootCauses.length > 3 && (
+                    <li className="text-[12px] text-white/55">
+                      +{study.rootCauses.length - 3} more
+                    </li>
+                  )}
+                </ul>
+              </div>
+
+              <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Prevention measures
+                </span>
+                <ul className="space-y-1.5">
+                  {study.preventiveMeasures.slice(0, 3).map((measure, measureIndex) => (
+                    <li
+                      key={measureIndex}
+                      className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                      <span>{measure}</span>
+                    </li>
+                  ))}
+                  {study.preventiveMeasures.length > 3 && (
+                    <li className="text-[12px] text-white/55">
+                      +{study.preventiveMeasures.length - 3} more
+                    </li>
+                  )}
+                </ul>
+              </div>
+            </div>
+
+            {/* Lesson learned */}
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Key lesson
+              </span>
+              <p className="text-[14px] text-white/85 leading-relaxed italic">
+                &ldquo;{study.lessonsLearned}&rdquo;
+              </p>
+            </div>
+
+            {/* Regulations + actions */}
+            <div className="flex items-center justify-between gap-3 flex-wrap pt-2 border-t border-white/[0.06]">
+              <div className="flex flex-wrap gap-1.5">
+                {study.regulations.slice(0, 2).map((regulation, regIndex) => (
+                  <span
+                    key={regIndex}
+                    className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+                  >
+                    {regulation}
+                  </span>
+                ))}
+                {study.regulations.length > 2 && (
+                  <span className="text-[12px] text-white/55 px-2 py-0.5">
+                    +{study.regulations.length - 2}
+                  </span>
+                )}
+              </div>
+
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                >
+                  <Download className="h-3 w-3 mr-1" />
+                  Report
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                >
+                  <Share2 className="h-3 w-3" />
+                </Button>
+                <Button
+                  size="sm"
+                  onClick={() => handleViewCase(study.id)}
+                  className="h-9 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98]"
+                >
+                  <Eye className="mr-1 h-3 w-3" />
+                  View
+                </Button>
+              </div>
             </div>
           </div>
-        </CardContent>
-      </Card>
-
-      <div className="space-y-6">
-        {filteredCaseStudies.map((study, index) => (
-          <Card
-            key={study.id}
-            className="border-elec-yellow/20 bg-white/5 hover:bg-white/5 transition-colors"
-          >
-            <CardHeader>
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <CardTitle className="text-white text-lg mb-3">{study.title}</CardTitle>
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    <Badge className={getSeverityColor(study.severity)}>
-                      <AlertTriangle className="h-3 w-3 mr-1" />
-                      {study.severity}
-                    </Badge>
-                    <Badge variant="outline" className="text-white">
-                      {study.category}
-                    </Badge>
-                    <Badge className={getDifficultyColor(study.difficulty)}>
-                      {study.difficulty}
-                    </Badge>
-                    <Badge variant="outline" className="text-blue-400">
-                      <Calendar className="h-3 w-3 mr-1" />
-                      {study.date}
-                    </Badge>
-                    <Badge variant="outline" className="text-green-400">
-                      {study.industry}
-                    </Badge>
-                  </div>
-                  <div className="flex items-center gap-4 text-sm text-white mb-2">
-                    <span className="flex items-center gap-1">
-                      <MapPin className="h-3 w-3" />
-                      {study.location}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Clock className="h-3 w-3" />
-                      {study.investigationDuration} investigation
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Eye className="h-3 w-3" />
-                      {study.views} views
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-white mb-4 text-sm">{study.detailedDescription}</p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <h4 className="text-sm font-medium text-white mb-2 flex items-center gap-2">
-                    <FileText className="h-4 w-4 text-red-400" />
-                    Root Causes:
-                  </h4>
-                  <ul className="space-y-1">
-                    {study.rootCauses.slice(0, 3).map((cause, causeIndex) => (
-                      <li key={causeIndex} className="text-xs text-white flex items-center gap-2">
-                        <span className="w-1 h-1 bg-red-400 rounded-full"></span>
-                        {cause}
-                      </li>
-                    ))}
-                    {study.rootCauses.length > 3 && (
-                      <li className="text-xs text-elec-yellow">
-                        +{study.rootCauses.length - 3} more causes
-                      </li>
-                    )}
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="text-sm font-medium text-white mb-2 flex items-center gap-2">
-                    <FileText className="h-4 w-4 text-green-400" />
-                    Prevention Measures:
-                  </h4>
-                  <ul className="space-y-1">
-                    {study.preventiveMeasures.slice(0, 3).map((measure, measureIndex) => (
-                      <li key={measureIndex} className="text-xs text-white flex items-center gap-2">
-                        <span className="w-1 h-1 bg-green-400 rounded-full"></span>
-                        {measure}
-                      </li>
-                    ))}
-                    {study.preventiveMeasures.length > 3 && (
-                      <li className="text-xs text-elec-yellow">
-                        +{study.preventiveMeasures.length - 3} more measures
-                      </li>
-                    )}
-                  </ul>
-                </div>
-              </div>
-
-              <div className="mb-4">
-                <h4 className="text-sm font-medium text-white mb-2">Key Learning Outcome:</h4>
-                <p className="text-xs text-white italic bg-white/10 p-3 rounded">
-                  "{study.lessonsLearned}"
-                </p>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <div className="flex flex-wrap gap-1">
-                  {study.regulations.slice(0, 2).map((regulation, regIndex) => (
-                    <Badge key={regIndex} variant="outline" className="text-blue-400 text-xs">
-                      {regulation}
-                    </Badge>
-                  ))}
-                  {study.regulations.length > 2 && (
-                    <Badge variant="outline" className="text-white text-xs">
-                      +{study.regulations.length - 2} more
-                    </Badge>
-                  )}
-                </div>
-
-                <div className="flex gap-2">
-                  <Button variant="outline" size="sm">
-                    <Download className="h-3 w-3 mr-1" />
-                    Report
-                  </Button>
-                  <Button variant="outline" size="sm">
-                    <Share2 className="h-3 w-3" />
-                  </Button>
-                  <Button size="sm" onClick={() => handleViewCase(study.id)}>
-                    <Eye className="mr-2 h-3 w-3" />
-                    View Full Analysis
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
         ))}
       </div>
 
-      <Card className="border-orange-500/50 bg-orange-500/10">
-        <CardHeader>
-          <CardTitle className="text-orange-300 flex items-center gap-2">
-            <AlertTriangle className="h-5 w-5" />
-            Case Studies Analytics & Impact
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-white mb-4">
+      {/* Analytics summary */}
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+        <div className="space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Analytics
+          </span>
+          <p className="text-[14px] text-white/85 leading-relaxed">
             These case studies are based on real incidents reported to the HSE and other safety
             organisations. They represent valuable learning opportunities that have shaped current
-            safety practices and regulations.
+            safety practices.
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-orange-400 mb-1">{caseStudies.length}</div>
-              <div className="text-sm text-white">Case Studies</div>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+          {[
+            { label: 'Case studies', value: caseStudies.length },
+            {
+              label: 'Fatal',
+              value: caseStudies.filter((c) => c.severity === 'Fatal').length,
+            },
+            { label: 'Preventable', value: '100%' },
+            { label: 'Total views', value: caseStudies.reduce((acc, c) => acc + c.views, 0) },
+            {
+              label: 'Advanced',
+              value: caseStudies.filter((c) => c.difficulty === 'Advanced').length,
+            },
+          ].map((m) => (
+            <div key={m.label} className="space-y-1">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                {m.label}
+              </span>
+              <p className="text-[20px] font-semibold text-white font-mono">{m.value}</p>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-red-400 mb-1">
-                {caseStudies.filter((c) => c.severity === 'Fatal').length}
-              </div>
-              <div className="text-sm text-white">Fatal Incidents</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-yellow-400 mb-1">100%</div>
-              <div className="text-sm text-white">Preventable</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-blue-400 mb-1">
-                {caseStudies.reduce((acc, c) => acc + c.views, 0)}
-              </div>
-              <div className="text-sm text-white">Total Views</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-green-400 mb-1">
-                {caseStudies.filter((c) => c.difficulty === 'Advanced').length}
-              </div>
-              <div className="text-sm text-white">Advanced Cases</div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

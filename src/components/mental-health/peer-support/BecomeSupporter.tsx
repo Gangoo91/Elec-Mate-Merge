@@ -95,11 +95,11 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack }) 
       </div>
 
       {/* Info Card */}
-      <Card className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border-purple-500/30">
+      <Card className="bg-white/[0.02] border-white/[0.06]">
         <CardContent className="p-4">
           <div className="flex items-start gap-3">
-            <div className="p-2 rounded-lg bg-purple-500/20">
-              <Heart className="h-5 w-5 text-purple-400" />
+            <div className="p-2 rounded-lg bg-white/[0.02]">
+              <Heart className="h-5 w-5 text-white/85" />
             </div>
             <div className="space-y-1">
               <h4 className="font-medium text-white">What is a Mental Health Mate?</h4>
@@ -166,19 +166,19 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack }) 
                 <SelectContent>
                   <SelectItem value="peer">
                     <div className="flex items-center gap-2">
-                      <Award className="h-4 w-4 text-blue-400" />
+                      <Award className="h-4 w-4 text-white/85" />
                       <span>{trainingLevelLabels.peer}</span>
                     </div>
                   </SelectItem>
                   <SelectItem value="trained">
                     <div className="flex items-center gap-2">
-                      <Award className="h-4 w-4 text-green-400" />
+                      <Award className="h-4 w-4 text-white/85" />
                       <span>{trainingLevelLabels.trained}</span>
                     </div>
                   </SelectItem>
                   <SelectItem value="mhfa_certified">
                     <div className="flex items-center gap-2">
-                      <Award className="h-4 w-4 text-purple-400" />
+                      <Award className="h-4 w-4 text-white/85" />
                       <span>{trainingLevelLabels.mhfa_certified}</span>
                     </div>
                   </SelectItem>
@@ -205,7 +205,7 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack }) 
                         px-3 py-1.5 rounded-full text-sm border transition-all
                         ${
                           isSelected
-                            ? 'bg-purple-500/30 border-purple-500/50 text-purple-200'
+                            ? 'bg-white/[0.02] border-white/[0.06] text-white/85'
                             : 'bg-white/5 border-white/20 text-white hover:bg-white/10'
                         }
                       `}
@@ -219,12 +219,12 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack }) 
             </div>
 
             {/* Guidelines Notice */}
-            <Card className="bg-amber-500/10 border-amber-500/30">
+            <Card className="bg-white/[0.02] border-white/[0.06]">
               <CardContent className="p-4">
                 <div className="flex items-start gap-3">
-                  <Shield className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                  <Shield className="h-5 w-5 text-white/85 flex-shrink-0 mt-0.5" />
                   <div className="space-y-2 text-sm">
-                    <p className="font-medium text-amber-300">Important Guidelines</p>
+                    <p className="font-medium text-white/85">Important Guidelines</p>
                     <ul className="text-white space-y-1 list-disc list-inside">
                       <li>You're here to listen, not to give professional advice</li>
                       <li>If someone is in crisis, direct them to professional help</li>
@@ -240,7 +240,7 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack }) 
             <Button
               type="submit"
               disabled={isSubmitting || !displayName.trim()}
-              className="w-full bg-purple-500 hover:bg-purple-600 text-white shadow-lg shadow-purple-500/25"
+              className="w-full bg-white/[0.02] hover:bg-white/[0.02] text-white shadow-lg"
             >
               {isSubmitting ? (
                 <>

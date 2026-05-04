@@ -252,7 +252,7 @@ Review and update it regularly, especially when you're feeling well.
             <IconButton
               onClick={() => setIsEditing(!isEditing)}
               aria-label={isEditing ? 'Done editing' : 'Edit'}
-              className={isEditing ? 'text-emerald-400' : ''}
+              className={isEditing ? 'text-white/85' : ''}
             >
               {isEditing ? <CheckCircle className="h-5 w-5" /> : <Edit2 className="h-5 w-5" />}
             </IconButton>
@@ -457,7 +457,7 @@ Review and update it regularly, especially when you're feeling well.
       {/* Cloud Sync Status */}
       <div className="flex items-center justify-center gap-2 text-[12px]">
         {user ? (
-          <span className="flex items-center gap-1 text-emerald-400">
+          <span className="flex items-center gap-1 text-white/85">
             <Cloud className="h-3 w-3" />
             Synced to cloud
           </span>
@@ -487,13 +487,13 @@ Review and update it regularly, especially when you're feeling well.
 
       {/* Completion Celebration */}
       {isComplete && (
-        <FormCard className="border-emerald-500/30">
+        <FormCard className="border-white/[0.06]">
           <div className="flex items-start gap-3">
-            <div className="w-12 h-12 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center flex-shrink-0">
-              <Award className="h-6 w-6 text-emerald-400" />
+            <div className="w-12 h-12 rounded-full bg-white/[0.02] border border-white/[0.06] flex items-center justify-center flex-shrink-0">
+              <Award className="h-6 w-6 text-white/85" />
             </div>
             <div className="flex-1">
-              <Eyebrow className="text-emerald-400">Plan complete</Eyebrow>
+              <Eyebrow className="text-white/85">Plan complete</Eyebrow>
               <h3 className="mt-1 text-lg font-semibold text-white">Well done</h3>
               <p className="mt-1 text-[13px] text-white leading-relaxed">
                 Well done for completing your personal safety plan. This is an important step in
@@ -504,15 +504,15 @@ Review and update it regularly, especially when you're feeling well.
 
           <div className="space-y-3">
             <div className="flex items-start gap-2 text-[13px]">
-              <CheckCircle className="h-4 w-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+              <CheckCircle className="h-4 w-4 text-white/85 flex-shrink-0 mt-0.5" />
               <span className="text-white">Save a copy to share with someone you trust</span>
             </div>
             <div className="flex items-start gap-2 text-[13px]">
-              <CheckCircle className="h-4 w-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+              <CheckCircle className="h-4 w-4 text-white/85 flex-shrink-0 mt-0.5" />
               <span className="text-white">Keep it accessible for when you need it</span>
             </div>
             <div className="flex items-start gap-2 text-[13px]">
-              <CheckCircle className="h-4 w-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+              <CheckCircle className="h-4 w-4 text-white/85 flex-shrink-0 mt-0.5" />
               <span className="text-white">Review and update it regularly</span>
             </div>
           </div>
@@ -528,7 +528,7 @@ Review and update it regularly, especially when you're feeling well.
       )}
 
       {/* Important Note */}
-      <div className="bg-[hsl(0_0%_12%)] border border-red-500/25 rounded-2xl p-5">
+      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
         <div className="flex items-start gap-3">
           <Phone className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
           <div>
@@ -560,7 +560,7 @@ Review and update it regularly, especially when you're feeling well.
               title={
                 <div className="flex items-center gap-2">
                   <span>{section.title}</span>
-                  {itemCount > 0 && <CheckCircle className="h-4 w-4 text-emerald-400" />}
+                  {itemCount > 0 && <CheckCircle className="h-4 w-4 text-white/85" />}
                 </div>
               }
               subtitle={

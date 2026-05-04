@@ -245,8 +245,7 @@ export function SmartCaptureFlow({
       <div
         onDrop={handleDrop}
         onDragOver={(e) => e.preventDefault()}
-        className={cn(
-          'relative border-2 border-dashed rounded-xl p-8 text-center transition-all',
+        className={cn('relative border-2 border-dashed rounded-xl p-8 text-center transition-all',
           'border-elec-yellow/30 hover:border-elec-yellow/50 bg-muted/30'
         )}
       >
@@ -307,7 +306,7 @@ export function SmartCaptureFlow({
             }
           }}
         >
-          <ImageIcon className="h-6 w-6 text-blue-500" />
+          <ImageIcon className="h-6 w-6 text-white/85" />
           <span className="text-xs">Gallery</span>
         </Button>
 
@@ -337,7 +336,7 @@ export function SmartCaptureFlow({
             }
           }}
         >
-          <Video className="h-6 w-6 text-purple-500" />
+          <Video className="h-6 w-6 text-white/85" />
           <span className="text-xs">Video</span>
         </Button>
       </div>
@@ -559,8 +558,7 @@ export function SmartCaptureFlow({
           {(['capture', 'details', 'analyze', 'review'] as CaptureStep[]).map((s, i) => (
             <div key={s} className="flex items-center gap-2 flex-1">
               <div
-                className={cn(
-                  'h-2 flex-1 rounded-full transition-colors',
+                className={cn('h-2 flex-1 rounded-full transition-colors',
                   step === s
                     ? 'bg-elec-yellow'
                     : ['capture', 'details', 'analyze', 'review'].indexOf(step) > i

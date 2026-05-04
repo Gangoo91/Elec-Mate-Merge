@@ -244,13 +244,13 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
     switch (status) {
       case 'ready':
       case 'complete':
-        return 'bg-green-500/10 text-green-500 border-green-500/20';
+        return 'bg-white/[0.02] text-white/85 border-white/[0.06]';
       case 'almost':
       case 'in_progress':
         return 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20';
       case 'needs_work':
       case 'not_started':
-        return 'bg-amber-500/10 text-amber-500 border-amber-500/20';
+        return 'bg-white/[0.02] text-white/85 border-white/[0.06]';
       case 'at_risk':
         return 'bg-red-500/10 text-red-500 border-red-500/20';
       default:
@@ -291,13 +291,13 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
   const getCategoryColor = (category: string) => {
     switch (category) {
       case 'knowledge':
-        return 'text-blue-500';
+        return 'text-white/85';
       case 'behaviours':
-        return 'text-pink-500';
+        return 'text-white/85';
       case 'portfolio':
-        return 'text-purple-500';
+        return 'text-white/85';
       case 'offjob':
-        return 'text-amber-500';
+        return 'text-white/85';
       default:
         return 'text-white';
     }
@@ -310,7 +310,7 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
 
         <SheetHeader className="px-4 pb-4">
           <SheetTitle className="flex items-center gap-2">
-            <GraduationCap className="h-5 w-5 text-green-500" />
+            <GraduationCap className="h-5 w-5 text-white/85" />
             EPA Gateway Status
           </SheetTitle>
           <SheetDescription>Track your End-Point Assessment readiness</SheetDescription>
@@ -324,11 +324,11 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
         ) : (
           <ScrollArea className="h-[calc(85vh-8rem)] px-4 pb-8">
             {/* Overall Readiness Header */}
-            <div className="p-4 rounded-xl bg-gradient-to-r from-green-500/10 to-emerald-600/10 border border-green-500/20 mb-4">
+            <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] mb-4">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-green-500/20">
-                    <Award className="h-6 w-6 text-green-500" />
+                  <div className="p-2.5 rounded-xl bg-white/[0.02]">
+                    <Award className="h-6 w-6 text-white/85" />
                   </div>
                   <div>
                     <p className="font-semibold text-foreground">Gateway Readiness</p>
@@ -384,14 +384,14 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
             {gaps.length > 0 && (
               <div className="mb-6">
                 <h3 className="text-sm font-medium text-white flex items-center gap-2 mb-3">
-                  <AlertTriangle className="h-4 w-4 text-amber-500" />
+                  <AlertTriangle className="h-4 w-4 text-white/85" />
                   Gaps to Address
                 </h3>
                 <div className="space-y-2">
                   {gaps.map((gap, idx) => (
                     <div
                       key={idx}
-                      className="flex items-center gap-2 text-sm p-2.5 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400"
+                      className="flex items-center gap-2 text-sm p-2.5 rounded-lg bg-white/[0.02] text-white/85 dark:text-amber-400"
                     >
                       <AlertCircle className="h-4 w-4 shrink-0" />
                       {gap}

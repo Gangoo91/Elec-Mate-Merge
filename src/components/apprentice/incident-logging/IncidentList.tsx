@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Eye, Edit, Trash2, Calendar, MapPin, AlertTriangle } from 'lucide-react';
+import { Eye, Edit, Trash2, Calendar, MapPin } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
@@ -100,38 +98,26 @@ const IncidentList = ({
     }
   };
 
-  const getStatusBadge = (status: string) => {
-    const statusConfig = {
-      draft: { color: 'bg-white/10 text-white', label: 'Draft' },
-      submitted: { color: 'bg-blue-500/20 text-blue-400', label: 'Submitted' },
-      under_review: { color: 'bg-yellow-500/20 text-yellow-400', label: 'Under Review' },
-      investigating: { color: 'bg-orange-500/20 text-orange-400', label: 'Investigating' },
-      resolved: { color: 'bg-green-500/20 text-green-400', label: 'Resolved' },
-      closed: { color: 'bg-slate-500/20 text-slate-400', label: 'Closed' },
+  const getStatusLabel = (status: string) => {
+    const map: Record<string, string> = {
+      draft: 'Draft',
+      submitted: 'Submitted',
+      under_review: 'Under review',
+      investigating: 'Investigating',
+      resolved: 'Resolved',
+      closed: 'Closed',
     };
-
-    const config = statusConfig[status as keyof typeof statusConfig] || statusConfig.draft;
-    return (
-      <Badge className={config.color} variant="outline">
-        {config.label}
-      </Badge>
-    );
+    return map[status] || 'Draft';
   };
 
-  const getSeverityBadge = (severity: string) => {
-    const severityConfig = {
-      low: { color: 'bg-green-500/20 text-green-400', label: 'Low' },
-      medium: { color: 'bg-yellow-500/20 text-yellow-400', label: 'Medium' },
-      high: { color: 'bg-orange-500/20 text-orange-400', label: 'High' },
-      critical: { color: 'bg-red-500/20 text-red-400', label: 'Critical' },
+  const getSeverityLabel = (severity: string) => {
+    const map: Record<string, string> = {
+      low: 'Low',
+      medium: 'Medium',
+      high: 'High',
+      critical: 'Critical',
     };
-
-    const config = severityConfig[severity as keyof typeof severityConfig] || severityConfig.medium;
-    return (
-      <Badge className={config.color} variant="outline">
-        {config.label}
-      </Badge>
-    );
+    return map[severity] || 'Medium';
   };
 
   const getIncidentTypeLabel = (type: string) => {
@@ -164,14 +150,15 @@ const IncidentList = ({
 
   if (isLoading) {
     return (
-      <div className="space-y-4">
+      <div className="space-y-3">
         {[1, 2, 3].map((i) => (
-          <Card key={i} className="border-elec-yellow/20 bg-white/5 animate-pulse">
-            <CardContent className="p-6">
-              <div className="h-4 bg-white/10 rounded w-3/4 mb-2"></div>
-              <div className="h-3 bg-white/10 rounded w-1/2"></div>
-            </CardContent>
-          </Card>
+          <div
+            key={i}
+            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 animate-pulse"
+          >
+            <div className="h-4 bg-white/10 rounded w-3/4 mb-2"></div>
+            <div className="h-3 bg-white/10 rounded w-1/2"></div>
+          </div>
         ))}
       </div>
     );
@@ -179,83 +166,97 @@ const IncidentList = ({
 
   if (filteredIncidents.length === 0) {
     return (
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardContent className="p-8 text-center">
-          <AlertTriangle className="h-12 w-12 mx-auto mb-4 text-white opacity-50" />
-          <p className="text-white">
-            {incidents.length === 0
-              ? "No incidents reported yet. Click 'New Incident' to create your first report."
-              : 'No incidents match your current filters.'}
-          </p>
-        </CardContent>
-      </Card>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-8 text-center">
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          {incidents.length === 0
+            ? "No incidents reported yet. Click 'New Incident' to create your first report."
+            : 'No incidents match your current filters.'}
+        </p>
+      </div>
     );
   }
 
   return (
-    <div className="space-y-4">
-      {filteredIncidents.map((incident) => (
-        <Card
-          key={incident.id}
-          className="border-elec-yellow/20 bg-white/5 hover:bg-white/5 transition-colors"
-        >
-          <CardHeader className="pb-3">
-            <div className="flex items-start justify-between">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <CardTitle className="text-lg">{incident.title}</CardTitle>
-                  {getStatusBadge(incident.status)}
-                  {getSeverityBadge(incident.severity)}
+    <div className="space-y-3">
+      {filteredIncidents.map((incident) => {
+        const isCritical = incident.severity === 'critical' || incident.severity === 'high';
+        const containerClass = isCritical
+          ? 'rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-3'
+          : 'rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3';
+
+        return (
+          <div key={incident.id} className={containerClass}>
+            <div className="flex items-start justify-between gap-3 flex-wrap">
+              <div className="space-y-2 flex-1 min-w-0">
+                <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 flex-wrap">
+                  <span>{getStatusLabel(incident.status)}</span>
+                  <span className="text-white/25">·</span>
+                  <span>{getSeverityLabel(incident.severity)}</span>
+                  <span className="text-white/25">·</span>
+                  <span>{getIncidentTypeLabel(incident.incident_type)}</span>
                 </div>
-                <div className="flex items-center gap-4 text-sm text-white">
-                  <div className="flex items-center gap-1">
-                    <Calendar className="h-4 w-4" />
+                <h3 className="text-[16px] font-semibold text-white leading-snug">
+                  {incident.title}
+                </h3>
+                <div className="flex items-baseline gap-3 text-[12px] text-white/55 font-mono flex-wrap">
+                  <span className="flex items-center gap-1">
+                    <Calendar className="h-3 w-3" />
                     {format(new Date(incident.date_occurred), 'MMM dd, yyyy HH:mm')}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <MapPin className="h-4 w-4" />
+                  </span>
+                  <span className="flex items-center gap-1 normal-case font-sans">
+                    <MapPin className="h-3 w-3" />
                     {incident.location}
-                  </div>
-                  <Badge variant="outline" className="text-xs">
-                    {getIncidentTypeLabel(incident.incident_type)}
-                  </Badge>
+                  </span>
                 </div>
               </div>
 
-              <div className="flex gap-2">
-                <Button variant="outline" size="sm" onClick={() => onView(incident.id)}>
+              <div className="flex gap-1.5 flex-shrink-0">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => onView(incident.id)}
+                  className="h-9 w-9 p-0 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                >
                   <Eye className="h-4 w-4" />
                 </Button>
                 {incident.status === 'draft' && (
                   <>
-                    <Button variant="outline" size="sm" onClick={() => onEdit(incident.id)}>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => onEdit(incident.id)}
+                      className="h-9 w-9 p-0 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                    >
                       <Edit className="h-4 w-4" />
                     </Button>
-                    <Button variant="outline" size="sm" onClick={() => handleDelete(incident.id)}>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleDelete(incident.id)}
+                      className="h-9 w-9 p-0 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                    >
                       <Trash2 className="h-4 w-4" />
                     </Button>
                   </>
                 )}
               </div>
             </div>
-          </CardHeader>
 
-          <CardContent>
-            <p className="text-sm text-white line-clamp-2">{incident.description}</p>
+            <p className="text-[14px] text-white/85 leading-relaxed line-clamp-2">
+              {incident.description}
+            </p>
 
-            <div className="flex items-center justify-between mt-3 pt-3 border-t border-elec-yellow/10">
-              <div className="text-xs text-white">
-                Created: {format(new Date(incident.created_at), 'MMM dd, yyyy')}
-                {incident.submitted_at && (
-                  <span className="ml-2">
-                    • Submitted: {format(new Date(incident.submitted_at), 'MMM dd, yyyy')}
-                  </span>
-                )}
-              </div>
+            <div className="text-[11px] text-white/55 font-mono pt-2 border-t border-white/[0.06]">
+              Created {format(new Date(incident.created_at), 'MMM dd, yyyy')}
+              {incident.submitted_at && (
+                <span className="ml-3">
+                  Submitted {format(new Date(incident.submitted_at), 'MMM dd, yyyy')}
+                </span>
+              )}
             </div>
-          </CardContent>
-        </Card>
-      ))}
+          </div>
+        );
+      })}
     </div>
   );
 };

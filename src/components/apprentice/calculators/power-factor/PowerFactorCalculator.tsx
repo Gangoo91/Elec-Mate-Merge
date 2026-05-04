@@ -1,5 +1,3 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Zap } from 'lucide-react';
 import { useCalculator } from './useCalculator';
 import PowerFactorInputs from './PowerFactorInputs';
 import PowerFactorResult from './PowerFactorResult';
@@ -127,94 +125,91 @@ const PowerFactorCalculator = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Zap className="h-5 w-5 text-elec-yellow" />
-            <CardTitle>Power Factor Calculator</CardTitle>
-          </div>
-          <CardDescription>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Power factor calculator
+          </span>
+          <p className="text-[14px] text-white/85 leading-relaxed">
             Calculate power factor using active/apparent power or current/voltage measurements with
             BS 7671 validation.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Input Section */}
-            <div className="space-y-4">
-              <PowerFactorInputs
-                calculationMethod={calculationMethod}
-                setCalculationMethod={setCalculationMethod}
-                activePower={activePower}
-                setActivePower={setActivePower}
-                apparentPower={apparentPower}
-                setApparentPower={setApparentPower}
-                current={current}
-                setCurrent={setCurrent}
-                voltage={voltage}
-                setVoltage={setVoltage}
-                targetPF={targetPF}
-                setTargetPF={setTargetPF}
-                errors={errors}
-                clearError={clearError}
-                calculatePowerFactor={handleCalculate}
-                resetCalculator={handleReset}
-              />
+          </p>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Input Section */}
+          <div className="space-y-4">
+            <PowerFactorInputs
+              calculationMethod={calculationMethod}
+              setCalculationMethod={setCalculationMethod}
+              activePower={activePower}
+              setActivePower={setActivePower}
+              apparentPower={apparentPower}
+              setApparentPower={setApparentPower}
+              current={current}
+              setCurrent={setCurrent}
+              voltage={voltage}
+              setVoltage={setVoltage}
+              targetPF={targetPF}
+              setTargetPF={setTargetPF}
+              errors={errors}
+              clearError={clearError}
+              calculatePowerFactor={handleCalculate}
+              resetCalculator={handleReset}
+            />
 
-              {/* Smart Input Suggestions */}
-              {calculationMethod === 'power' && (
-                <>
-                  <SmartInputSuggestions
-                    fieldType="power"
-                    currentValue={activePower}
-                    onSuggestionSelect={setActivePower}
-                    calculatorType="power-factor"
-                  />
-                  <SmartInputSuggestions
-                    fieldType="power"
-                    currentValue={apparentPower}
-                    onSuggestionSelect={setApparentPower}
-                    calculatorType="power-factor"
-                  />
-                </>
-              )}
+            {/* Smart Input Suggestions */}
+            {calculationMethod === 'power' && (
+              <>
+                <SmartInputSuggestions
+                  fieldType="power"
+                  currentValue={activePower}
+                  onSuggestionSelect={setActivePower}
+                  calculatorType="power-factor"
+                />
+                <SmartInputSuggestions
+                  fieldType="power"
+                  currentValue={apparentPower}
+                  onSuggestionSelect={setApparentPower}
+                  calculatorType="power-factor"
+                />
+              </>
+            )}
 
-              {calculationMethod === 'currentVoltage' && (
-                <>
-                  <SmartInputSuggestions
-                    fieldType="voltage"
-                    currentValue={voltage}
-                    onSuggestionSelect={setVoltage}
-                    calculatorType="power-factor"
-                  />
-                  <SmartInputSuggestions
-                    fieldType="current"
-                    currentValue={current}
-                    onSuggestionSelect={setCurrent}
-                    calculatorType="power-factor"
-                  />
-                </>
-              )}
-            </div>
-
-            {/* Result Section */}
-            <div className="space-y-4">
-              <div className="rounded-md bg-white/10 p-6 min-h-[200px] flex items-center justify-center">
-                <PowerFactorResult powerFactor={powerFactor} />
-              </div>
-              <PowerFactorInfo />
-            </div>
-
-            {/* Quick Presets */}
-            <div className="space-y-4">
-              <QuickCalculationPresets
-                calculatorType="power-factor"
-                onPresetSelect={handlePresetSelect}
-              />
-            </div>
+            {calculationMethod === 'currentVoltage' && (
+              <>
+                <SmartInputSuggestions
+                  fieldType="voltage"
+                  currentValue={voltage}
+                  onSuggestionSelect={setVoltage}
+                  calculatorType="power-factor"
+                />
+                <SmartInputSuggestions
+                  fieldType="current"
+                  currentValue={current}
+                  onSuggestionSelect={setCurrent}
+                  calculatorType="power-factor"
+                />
+              </>
+            )}
           </div>
-        </CardContent>
-      </Card>
+
+          {/* Result Section */}
+          <div className="space-y-4">
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-6 min-h-[200px] flex items-center justify-center">
+              <PowerFactorResult powerFactor={powerFactor} />
+            </div>
+            <PowerFactorInfo />
+          </div>
+
+          {/* Quick Presets */}
+          <div className="space-y-4">
+            <QuickCalculationPresets
+              calculatorType="power-factor"
+              onPresetSelect={handlePresetSelect}
+            />
+          </div>
+        </div>
+      </div>
 
       {/* Validation Results */}
       <ValidationIndicator validation={validation} calculationType="Power Factor" />

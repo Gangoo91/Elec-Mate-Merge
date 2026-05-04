@@ -242,7 +242,7 @@ export function MyTimetableCard() {
 function AgendaRow({ item }: { item: AgendaItem }) {
   // start_time is a `time` column (HH:MM:SS). Trim to HH:MM for display.
   const time = item.start_time ? item.start_time.slice(0, 5) : null;
-  const tone = item.kind === 'lesson' ? 'text-emerald-300' : 'text-purple-300';
+  const tone = item.kind === 'lesson' ? 'text-white/85' : 'text-white/85';
   const kindLabel = item.kind === 'lesson' ? 'Lesson' : 'ILP target';
   return (
     <li className="px-1 py-2.5 flex items-baseline justify-between gap-3">

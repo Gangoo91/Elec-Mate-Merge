@@ -1,12 +1,11 @@
 import React from 'react';
 import { TimeEntry } from '@/types/time-tracking';
-import { Card, CardContent } from '@/components/ui/card';
 import TimeEntryCard from './TimeEntryCard';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export interface EntriesListProps {
   entries: TimeEntry[];
-  isLoading?: boolean; // Add optional isLoading prop
+  isLoading?: boolean;
 }
 
 const EntriesList = ({ entries, isLoading = false }: EntriesListProps) => {
@@ -14,15 +13,16 @@ const EntriesList = ({ entries, isLoading = false }: EntriesListProps) => {
     return (
       <div className="space-y-2">
         {Array.from({ length: 3 }).map((_, i) => (
-          <Card key={i} className="bg-white/5 overflow-hidden">
-            <CardContent className="p-4">
-              <div className="flex justify-between">
-                <Skeleton className="h-6 w-24" />
-                <Skeleton className="h-6 w-16" />
-              </div>
-              <Skeleton className="h-4 mt-2 w-full" />
-            </CardContent>
-          </Card>
+          <div
+            key={i}
+            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4"
+          >
+            <div className="flex justify-between">
+              <Skeleton className="h-6 w-24" />
+              <Skeleton className="h-6 w-16" />
+            </div>
+            <Skeleton className="h-4 mt-2 w-full" />
+          </div>
         ))}
       </div>
     );
@@ -30,11 +30,9 @@ const EntriesList = ({ entries, isLoading = false }: EntriesListProps) => {
 
   if (entries.length === 0) {
     return (
-      <Card className="bg-white/5 overflow-hidden">
-        <CardContent className="p-4 text-center">
-          <p className="text-white">No entries found</p>
-        </CardContent>
-      </Card>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 text-center">
+        <p className="text-[14px] text-white/85 leading-relaxed">No entries found</p>
+      </div>
     );
   }
 

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
 import {
   BarChart,
@@ -141,11 +140,11 @@ const WeeklyOverview = () => {
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white/5 p-3 border border-elec-yellow/20 rounded-md shadow-lg">
-          <p className="font-medium">{`${label} (${payload[0]?.payload.date})`}</p>
-          <p className="text-sm text-elec-yellow">{`Manual: ${payload[0]?.value} hrs`}</p>
-          <p className="text-sm text-elec-yellow/70">{`Automatic: ${payload[1]?.value} hrs`}</p>
-          <p className="text-sm font-medium mt-1">{`Total: ${(payload[0]?.value + payload[1]?.value).toFixed(1)} hrs`}</p>
+        <div className="rounded-lg border border-white/[0.06] bg-background p-3 shadow-lg">
+          <p className="text-[12px] text-white">{`${label} (${payload[0]?.payload.date})`}</p>
+          <p className="text-[12px] text-white/85 font-mono mt-1">{`Manual: ${payload[0]?.value} hrs`}</p>
+          <p className="text-[12px] text-white/55 font-mono">{`Automatic: ${payload[1]?.value} hrs`}</p>
+          <p className="text-[12px] text-white font-mono mt-1">{`Total: ${(payload[0]?.value + payload[1]?.value).toFixed(1)} hrs`}</p>
         </div>
       );
     }
@@ -155,11 +154,13 @@ const WeeklyOverview = () => {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h3 className="text-lg font-semibold">Weekly Time Overview</h3>
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Weekly time overview
+        </span>
         <div className="flex items-center gap-2">
-          <span className="text-sm whitespace-nowrap">Select week:</span>
+          <span className="text-[12px] text-white/55 whitespace-nowrap">Select week:</span>
           <Select value={selectedWeek} onValueChange={handleWeekChange}>
-            <SelectTrigger className="w-[220px]">
+            <SelectTrigger className="w-[220px] h-11 touch-manipulation">
               <SelectValue placeholder="Select week" />
             </SelectTrigger>
             <SelectContent>
@@ -173,63 +174,55 @@ const WeeklyOverview = () => {
         </div>
       </div>
 
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardContent className="pt-6">
-          <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#444" />
-                <XAxis dataKey="name" stroke="#888" />
-                <YAxis
-                  stroke="#888"
-                  label={{
-                    value: 'Hours',
-                    angle: -90,
-                    position: 'insideLeft',
-                    style: { textFill: '#888' },
-                  }}
-                />
-                <Tooltip content={<CustomTooltip />} />
-                <Legend wrapperStyle={{ paddingTop: '10px' }} />
-                <Bar dataKey="manual" name="Manual Entries" fill="#f7c948" />
-                <Bar dataKey="automatic" name="Automatic Tracking" fill="#f7c94870" />
-              </BarChart>
-            </ResponsiveContainer>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5">
+        <div className="h-80">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={chartData} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+              <XAxis dataKey="name" stroke="rgba(255,255,255,0.55)" />
+              <YAxis
+                stroke="rgba(255,255,255,0.55)"
+                label={{
+                  value: 'Hours',
+                  angle: -90,
+                  position: 'insideLeft',
+                  style: { textFill: 'rgba(255,255,255,0.55)' },
+                }}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend wrapperStyle={{ paddingTop: '10px' }} />
+              <Bar dataKey="manual" name="Manual entries" fill="#f7c948" />
+              <Bar dataKey="automatic" name="Automatic tracking" fill="rgba(255,255,255,0.4)" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="mt-4 text-[12px] text-white/55 text-center">
+          Weekly summary for {formatDateRange(selectedWeek)}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
+          <div className="text-2xl font-mono text-white">
+            {chartData.reduce((sum, day) => sum + day.manual + day.automatic, 0).toFixed(1)}
           </div>
+          <p className="text-[11px] text-white/55 mt-1">Total hours this week</p>
+        </div>
 
-          <div className="mt-4 text-sm text-white text-center">
-            <p>Weekly summary for {formatDateRange(selectedWeek)}</p>
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
+          <div className="text-2xl font-mono text-white">
+            {chartData.reduce((sum, day) => sum + day.manual, 0).toFixed(1)}
           </div>
-        </CardContent>
-      </Card>
+          <p className="text-[11px] text-white/55 mt-1">Manual hours</p>
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="bg-white/10 border-elec-yellow/10">
-          <CardContent className="p-4 flex flex-col items-center justify-center text-center">
-            <div className="text-2xl font-bold text-elec-yellow">
-              {chartData.reduce((sum, day) => sum + day.manual + day.automatic, 0).toFixed(1)}
-            </div>
-            <p className="text-sm text-white mt-1">Total Hours This Week</p>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-white/10 border-elec-yellow/10">
-          <CardContent className="p-4 flex flex-col items-center justify-center text-center">
-            <div className="text-2xl font-bold text-elec-yellow">
-              {chartData.reduce((sum, day) => sum + day.manual, 0).toFixed(1)}
-            </div>
-            <p className="text-sm text-white mt-1">Manual Hours</p>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-white/10 border-elec-yellow/10">
-          <CardContent className="p-4 flex flex-col items-center justify-center text-center">
-            <div className="text-2xl font-bold text-elec-yellow">
-              {chartData.reduce((sum, day) => sum + day.automatic, 0).toFixed(1)}
-            </div>
-            <p className="text-sm text-white mt-1">Automatic Hours</p>
-          </CardContent>
-        </Card>
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
+          <div className="text-2xl font-mono text-white">
+            {chartData.reduce((sum, day) => sum + day.automatic, 0).toFixed(1)}
+          </div>
+          <p className="text-[11px] text-white/55 mt-1">Automatic hours</p>
+        </div>
       </div>
     </div>
   );

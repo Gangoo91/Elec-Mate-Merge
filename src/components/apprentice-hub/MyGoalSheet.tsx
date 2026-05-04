@@ -154,8 +154,7 @@ export function MyGoalSheet({
               College plan goal
             </div>
             <h2
-              className={cn(
-                'mt-1.5 text-[20px] font-semibold leading-tight',
+              className={cn('mt-1.5 text-[20px] font-semibold leading-tight',
                 isComplete ? 'text-white/85 line-through' : 'text-white'
               )}
             >
@@ -174,7 +173,7 @@ export function MyGoalSheet({
                     : goal.status === 'overdue'
                       ? 'text-red-300'
                       : goal.status === 'blocked'
-                        ? 'text-amber-300'
+                        ? 'text-white/85'
                         : 'text-white/90'
                 )}
               >
@@ -219,11 +218,10 @@ export function MyGoalSheet({
             {/* Tutor comment */}
             {goal.tutor_comment && (
               <div
-                className={cn(
-                  'rounded-2xl border px-4 py-3',
+                className={cn('rounded-2xl border px-4 py-3',
                   hasNewTutor
-                    ? 'border-blue-500/30 bg-blue-500/[0.06]'
-                    : 'border-blue-500/[0.18] bg-blue-500/[0.03]'
+                    ? 'border-white/[0.06] bg-white/[0.02]'
+                    : 'border-white/[0.06] bg-white/[0.02]'
                 )}
               >
                 <div className="flex items-baseline justify-between gap-2 mb-1.5">
@@ -278,7 +276,7 @@ export function MyGoalSheet({
                 }}
                 placeholder="Let your tutor know how it's going, ask a question, or share progress."
                 rows={4}
-                className="w-full px-3 py-2.5 text-[13px] text-white bg-white/[0.04] border border-white/[0.1] rounded-xl resize-none touch-manipulation focus:border-purple-400/50 focus:outline-none focus:ring-1 focus:ring-purple-400/30"
+                className="w-full px-3 py-2.5 text-[13px] text-white bg-white/[0.04] border border-white/[0.1] rounded-xl resize-none touch-manipulation focus:border-white/[0.06] focus:outline-none focus:ring-1 focus:ring-white/10"
               />
               <div className="mt-1 text-[10.5px] text-white/40">⌘ + Enter to send</div>
             </div>
@@ -291,11 +289,10 @@ export function MyGoalSheet({
               onClick={handleTick}
               disabled={busy !== null}
               variant="outline"
-              className={cn(
-                'flex-1 h-11 rounded-full border touch-manipulation transition-colors',
+              className={cn('flex-1 h-11 rounded-full border touch-manipulation transition-colors',
                 isComplete
                   ? 'border-white/[0.15] text-white/95 hover:bg-white/[0.06]'
-                  : 'border-emerald-400/40 bg-emerald-500/[0.08] text-emerald-200 hover:bg-emerald-500/[0.16]'
+                  : 'border-white/[0.06] bg-white/[0.02] text-white/85 hover:bg-white/[0.02]'
               )}
             >
               <Check className="h-4 w-4 mr-1.5" strokeWidth={3} />

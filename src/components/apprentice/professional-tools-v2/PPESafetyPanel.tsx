@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronDown, ChevronRight, Lightbulb } from 'lucide-react';
+import { ChevronDown, ChevronRight } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ppeItems, ppeTip } from '@/data/professional-tools/ppeData';
 
@@ -38,11 +38,13 @@ const PPESafetyPanel = () => {
 
   return (
     <div className="space-y-3 animate-fade-in">
-      <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20">
-        <p className="text-sm text-white">
-          <span className="font-semibold text-red-300">PPE & Safety</span> — Your PPE is
-          non-negotiable. Every item on this list exists because someone was seriously injured
-          without it. Wear it properly, every single time.
+      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+          PPE & Safety
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Your PPE is non-negotiable. Every item on this list exists because someone was seriously
+          injured without it. Wear it properly, every single time.
         </p>
       </div>
 
@@ -51,23 +53,17 @@ const PPESafetyPanel = () => {
         return (
           <Collapsible key={group.id} open={isOpen} onOpenChange={() => toggleSection(group.id)}>
             <CollapsibleTrigger asChild>
-              <button
-                className={`w-full flex items-center justify-between p-3 rounded-lg transition-all touch-manipulation active:scale-[0.99] ${
-                  isOpen
-                    ? 'bg-red-500/10 border border-red-500/20'
-                    : 'bg-white/5 border border-white/10 hover:border-white/20'
-                }`}
-              >
+              <button className="w-full flex items-center justify-between p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] transition-all touch-manipulation active:scale-[0.99] hover:bg-white/[0.04] min-h-[44px]">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-semibold text-white">{group.title}</span>
-                  <span className="text-xs text-white px-2 py-0.5 rounded-full bg-white/10">
+                  <span className="text-[14px] font-semibold text-white">{group.title}</span>
+                  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                     {group.count}
                   </span>
                 </div>
                 {isOpen ? (
-                  <ChevronDown className="h-4 w-4 text-white" />
+                  <ChevronDown className="h-4 w-4 text-white/55" />
                 ) : (
-                  <ChevronRight className="h-4 w-4 text-white" />
+                  <ChevronRight className="h-4 w-4 text-white/55" />
                 )}
               </button>
             </CollapsibleTrigger>
@@ -76,16 +72,16 @@ const PPESafetyPanel = () => {
                 {group.items.map((item) => (
                   <div
                     key={item.name}
-                    className="p-3 rounded-lg bg-white/[0.02] border border-white/5 space-y-2"
+                    className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2"
                   >
                     <div className="flex items-start justify-between gap-2">
-                      <h4 className="text-sm font-semibold text-white">{item.name}</h4>
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-red-500/20 text-red-300 border border-red-500/30 whitespace-nowrap">
+                      <h4 className="text-[14px] font-semibold text-white">{item.name}</h4>
+                      <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
                         {item.price}
                       </span>
                     </div>
-                    <p className="text-xs text-white leading-relaxed">{item.description}</p>
-                    <div className="text-xs text-white space-y-1">
+                    <p className="text-[14px] text-white/85 leading-relaxed">{item.description}</p>
+                    <div className="text-[13px] text-white/85 space-y-1">
                       <div>
                         <span className="font-medium">Standard:</span> {item.standard}
                       </div>
@@ -94,9 +90,11 @@ const PPESafetyPanel = () => {
                       </div>
                     </div>
                     {item.apprenticeTip && (
-                      <div className="p-2 rounded-md bg-amber-500/10 border border-amber-500/20">
-                        <p className="text-xs text-white">
-                          <span className="font-semibold text-amber-300">Tip: </span>
+                      <div className="rounded-lg border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1">
+                        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+                          Tip
+                        </span>
+                        <p className="text-[14px] text-white/85 leading-relaxed">
                           {item.apprenticeTip}
                         </p>
                       </div>
@@ -109,12 +107,11 @@ const PPESafetyPanel = () => {
         );
       })}
 
-      <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 flex gap-2">
-        <Lightbulb className="h-4 w-4 text-amber-300 flex-shrink-0 mt-0.5" />
-        <p className="text-xs text-white leading-relaxed">
-          <span className="font-semibold text-amber-300">Remember: </span>
-          {ppeTip}
-        </p>
+      <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+          Remember
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">{ppeTip}</p>
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -9,7 +8,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Calculator } from 'lucide-react';
 import { useState } from 'react';
 
 const PayCalculator = () => {
@@ -129,15 +127,11 @@ const PayCalculator = () => {
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-white/5">
-      <CardHeader>
-        <div className="flex items-center gap-2">
-          <Calculator className="h-5 w-5 text-elec-yellow" />
-          <CardTitle className="text-elec-yellow">Interactive Pay Calculator</CardTitle>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        Pay calculator
+      </span>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-4">
             <div>
               <Label htmlFor="apprentice-year">Apprenticeship Stage</Label>
@@ -208,102 +202,105 @@ const PayCalculator = () => {
 
           {results && (
             <div className="space-y-4">
-              <h4 className="font-semibold text-white mb-3">Your Pay Breakdown</h4>
+              <h4 className="text-[14px] font-semibold text-white">Your pay breakdown</h4>
 
-              {/* Gross Pay Section */}
               <div className="space-y-2">
-                <h5 className="text-sm font-medium text-elec-yellow mb-2">
-                  Gross Pay (Before Tax)
-                </h5>
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Gross pay (before tax)
+                </span>
 
-                <div className="flex justify-between items-center p-2 bg-elec-yellow/10 rounded-lg">
-                  <span className="text-xs text-white">Hourly Rate:</span>
-                  <span className="font-bold text-elec-yellow text-sm">£{results.hourlyRate}</span>
+                <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+                  <span className="text-[13px] text-white/85">Hourly rate</span>
+                  <span className="font-mono text-elec-yellow text-[13px]">£{results.hourlyRate}</span>
                 </div>
 
-                <div className="flex justify-between items-center p-2 bg-blue-500/10 rounded-lg">
-                  <span className="text-xs text-white">Monthly Gross:</span>
-                  <span className="font-bold text-blue-400 text-sm">£{results.monthlyGross}</span>
+                <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+                  <span className="text-[13px] text-white/85">Monthly gross</span>
+                  <span className="font-mono text-white text-[13px]">£{results.monthlyGross}</span>
                 </div>
 
-                <div className="flex justify-between items-center p-2 bg-purple-500/10 rounded-lg">
-                  <span className="text-xs text-white">Annual Gross:</span>
-                  <span className="font-bold text-purple-400 text-sm">£{results.annualGross}</span>
+                <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+                  <span className="text-[13px] text-white/85">Annual gross</span>
+                  <span className="font-mono text-white text-[13px]">£{results.annualGross}</span>
                 </div>
               </div>
 
-              {/* Tax Deductions Section */}
               <div className="space-y-2">
-                <h5 className="text-sm font-medium text-red-400 mb-2">Monthly Deductions</h5>
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Monthly deductions
+                </span>
 
-                <div className="flex justify-between items-center p-2 bg-red-500/10 rounded-lg">
-                  <span className="text-xs text-white">Income Tax:</span>
-                  <span className="font-medium text-red-400 text-sm">-£{results.incomeTax}</span>
+                <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+                  <span className="text-[13px] text-white/85">Income tax</span>
+                  <span className="font-mono text-white/85 text-[13px]">-£{results.incomeTax}</span>
                 </div>
 
-                <div className="flex justify-between items-center p-2 bg-red-500/10 rounded-lg">
-                  <span className="text-xs text-white">National Insurance:</span>
-                  <span className="font-medium text-red-400 text-sm">
+                <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+                  <span className="text-[13px] text-white/85">National Insurance</span>
+                  <span className="font-mono text-white/85 text-[13px]">
                     -£{results.nationalInsurance}
                   </span>
                 </div>
 
-                <div className="flex justify-between items-center p-2 bg-red-500/10 rounded-lg">
-                  <span className="text-xs text-white">Pension ({pensionContribution}%):</span>
-                  <span className="font-medium text-red-400 text-sm">-£{results.pension}</span>
+                <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+                  <span className="text-[13px] text-white/85">Pension ({pensionContribution}%)</span>
+                  <span className="font-mono text-white/85 text-[13px]">-£{results.pension}</span>
                 </div>
 
                 {hasStudentLoan && (
-                  <div className="flex justify-between items-center p-2 bg-red-500/10 rounded-lg">
-                    <span className="text-xs text-white">Student Loan:</span>
-                    <span className="font-medium text-red-400 text-sm">
+                  <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+                    <span className="text-[13px] text-white/85">Student loan</span>
+                    <span className="font-mono text-white/85 text-[13px]">
                       -£{results.studentLoan}
                     </span>
                   </div>
                 )}
 
-                <div className="flex justify-between items-center p-2 bg-red-500/20 rounded-lg border border-red-500/30">
-                  <span className="text-xs font-medium text-red-300">Total Deductions:</span>
-                  <span className="font-bold text-red-300 text-sm">
+                <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.04]">
+                  <span className="text-[13px] font-semibold text-white">Total deductions</span>
+                  <span className="font-mono text-white text-[13px] font-semibold">
                     -£{results.totalDeductions}
                   </span>
                 </div>
               </div>
 
-              {/* Net Pay Section */}
               <div className="space-y-2">
-                <h5 className="text-sm font-medium text-green-400 mb-2">
-                  Take-Home Pay (After Tax)
-                </h5>
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+                  Take-home pay (after tax)
+                </span>
 
-                <div className="flex justify-between items-center p-3 bg-green-500/10 rounded-lg border border-green-500/30">
-                  <span className="text-sm font-medium text-green-300">Monthly Net Pay:</span>
-                  <span className="font-bold text-green-400 text-lg">£{results.monthlyNet}</span>
+                <div className="flex justify-between items-center p-3 rounded-lg border border-elec-yellow/20 bg-elec-yellow/[0.04]">
+                  <span className="text-[14px] font-semibold text-white">Monthly net pay</span>
+                  <span className="font-mono text-elec-yellow text-[18px] font-semibold">
+                    £{results.monthlyNet}
+                  </span>
                 </div>
 
-                <div className="flex justify-between items-center p-2 bg-green-500/10 rounded-lg">
-                  <span className="text-xs text-white">Weekly Net Pay:</span>
-                  <span className="font-medium text-green-400 text-sm">£{results.weeklyNet}</span>
+                <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+                  <span className="text-[13px] text-white/85">Weekly net pay</span>
+                  <span className="font-mono text-white text-[13px]">£{results.weeklyNet}</span>
                 </div>
 
-                <div className="flex justify-between items-center p-2 bg-orange-500/10 rounded-lg border border-orange-500/30">
-                  <span className="text-xs text-orange-400">With Overtime (Net):</span>
-                  <span className="font-bold text-orange-400 text-sm">
+                <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+                  <span className="text-[13px] text-white/85">With overtime (net)</span>
+                  <span className="font-mono text-white text-[13px]">
                     £{results.monthlyNetWithOvertime}/month
                   </span>
                 </div>
               </div>
 
-              <div className="text-xs text-white mt-3 space-y-1">
-                <p>* Tax and NI calculations based on 2025/26 UK rates (8% employee NI). Wage defaults are current 2025/26 minimums.</p>
-                <p>* Overtime assumes 5 hours/week at time-and-a-half rate</p>
-                <p>* Student loan deduction applies to Plan 2 (earnings over £27,295)</p>
+              <div className="text-[12px] text-white/55 leading-relaxed space-y-1">
+                <p>
+                  Tax and NI based on 2025/26 UK rates (8% employee NI). Wage defaults are current
+                  2025/26 minimums.
+                </p>
+                <p>Overtime assumes 5 hours/week at time-and-a-half rate.</p>
+                <p>Student loan deduction applies to Plan 2 (earnings over £27,295).</p>
               </div>
             </div>
           )}
         </div>
-      </CardContent>
-    </Card>
+      </div>
   );
 };
 

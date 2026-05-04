@@ -361,9 +361,11 @@ const OhmsLawCalculator = () => {
 
           {/* Calculated Values */}
           <div className="space-y-4 animate-fade-in">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/20">
-              <span className="text-xs font-semibold text-amber-300">Formula</span>
-              <span className="text-sm text-white">{result.formula}</span>
+            <div className="space-y-1">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Formula
+              </span>
+              <p className="text-[13px] text-white/85 font-mono">{result.formula}</p>
             </div>
 
             <ResultsGrid columns={2}>
@@ -408,11 +410,10 @@ const OhmsLawCalculator = () => {
             )}
 
             {result.protectionGuidance && (
-              <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
-                <div className="flex items-start gap-2">
-                  <Info className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
-                  <p className="text-sm text-blue-300">{result.protectionGuidance}</p>
-                </div>
+              <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 sm:p-4">
+                <p className="text-[13px] text-white/85 leading-relaxed">
+                  {result.protectionGuidance}
+                </p>
               </div>
             )}
           </div>
@@ -432,27 +433,27 @@ const OhmsLawCalculator = () => {
 
                 {/* Input Values Summary */}
                 <div className="space-y-2">
-                  <p className="text-sm text-white">Your input values:</p>
-                  <div className="flex flex-wrap gap-2">
+                  <p className="text-[13px] text-white/85">Your input values:</p>
+                  <div className="flex flex-wrap gap-1.5">
                     {result.inputValues?.V && (
-                      <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30">
+                      <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
                         V = {result.inputValues.V} V
-                      </Badge>
+                      </span>
                     )}
                     {result.inputValues?.I && (
-                      <Badge className="bg-green-500/20 text-green-300 border-green-500/30">
+                      <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
                         I = {result.inputValues.I} A
-                      </Badge>
+                      </span>
                     )}
                     {result.inputValues?.R && (
-                      <Badge className="bg-amber-500/20 text-amber-300 border-amber-500/30">
+                      <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
                         R = {result.inputValues.R} Ω
-                      </Badge>
+                      </span>
                     )}
                     {result.inputValues?.P && (
-                      <Badge className="bg-red-500/20 text-red-300 border-red-500/30">
+                      <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
                         P = {result.inputValues.P} W
-                      </Badge>
+                      </span>
                     )}
                   </div>
                 </div>
@@ -585,14 +586,13 @@ const OhmsLawCalculator = () => {
           </Collapsible>
 
           {/* Quick Formula Reference */}
-          <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
-            <div className="flex items-start gap-2">
-              <Info className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
-              <p className="text-sm text-white">
-                <strong>Ohm's Law:</strong> V = I{'×'}R, I = V/R, R = V/I, P = V{'×'}I = I{'²×'}R =
-                V{'²'}/R
-              </p>
-            </div>
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 sm:p-4 space-y-1">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Ohm's law
+            </span>
+            <p className="text-[13px] text-white/85 leading-relaxed font-mono">
+              V = I{'×'}R, I = V/R, R = V/I, P = V{'×'}I = I{'²×'}R = V{'²'}/R
+            </p>
           </div>
         </>
       )}

@@ -1,16 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import {
-  BookOpen,
-  Target,
-  Users,
-  Award,
-  Clock,
-  FileText,
-  CheckCircle,
-  AlertCircle,
-} from 'lucide-react';
-
 const PortfolioIntroduction = () => {
   const portfolioPurpose = [
     'Demonstrate your learning and skill development throughout your apprenticeship',
@@ -22,161 +9,115 @@ const PortfolioIntroduction = () => {
 
   const keyBenefits = [
     {
-      icon: Target,
-      title: 'Clear Learning Objectives',
+      title: 'Clear learning objectives',
       description: 'Structured approach to meeting apprenticeship requirements',
     },
     {
-      icon: Award,
-      title: 'Professional Recognition',
+      title: 'Professional recognition',
       description: 'Demonstrates competency to employers and industry bodies',
     },
     {
-      icon: Users,
-      title: 'Career Development',
+      title: 'Career development',
       description: 'Valuable asset for job applications and career progression',
     },
     {
-      icon: FileText,
-      title: 'Evidence Collection',
+      title: 'Evidence collection',
       description: 'Systematic documentation of skills and knowledge',
     },
   ];
 
+  const modules = [
+    'Module 1: Planning & structure',
+    'Module 2: Evidence collection',
+    'Module 3: Reflection & analysis',
+    'Module 4: Industry standards',
+    'Module 5: Assessment preparation',
+    'Module 6: Digital portfolio tools',
+  ];
+
   return (
     <div className="space-y-6">
-      {/* Welcome Section */}
-      <Card className="border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-cyan-500/10">
-        <CardHeader>
-          <CardTitle className="text-blue-400 flex items-center gap-2">
-            <BookOpen className="h-6 w-6" />
-            Welcome to Portfolio Building
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-white text-lg leading-relaxed">
-            Your apprenticeship portfolio is one of the most important documents you'll create
-            during your training. It's not just a collection of evidence - it's a comprehensive
-            record of your professional development, skills acquisition, and journey towards
-            becoming a qualified electrician.
-          </p>
-        </CardContent>
-      </Card>
-
-      {/* What is a Portfolio */}
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow">What is an Apprenticeship Portfolio?</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <p className="text-white">
-            An apprenticeship portfolio is a structured collection of evidence that demonstrates
-            your competency against the standards required for your electrical qualification. It
-            includes:
-          </p>
-
-          <div className="space-y-3">
-            {portfolioPurpose.map((purpose, index) => (
-              <div key={index} className="flex items-start gap-3">
-                <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-white">{purpose}</p>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Key Benefits Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {keyBenefits.map((benefit, index) => {
-          const IconComponent = benefit.icon;
-          return (
-            <Card
-              key={index}
-              className="border-green-500/20 hover:border-green-500/40 transition-colors"
-            >
-              <CardHeader className="pb-3">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-green-500/10 rounded-lg">
-                    <IconComponent className="h-5 w-5 text-green-400" />
-                  </div>
-                  <CardTitle className="text-lg">{benefit.title}</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-white">{benefit.description}</p>
-              </CardContent>
-            </Card>
-          );
-        })}
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Welcome to portfolio building
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Your apprenticeship portfolio is one of the most important documents you'll create during
+          your training. It's not just a collection of evidence — it's a comprehensive record of
+          your professional development, skills acquisition, and journey towards becoming a
+          qualified electrician.
+        </p>
       </div>
 
-      {/* Important Note */}
-      <Card className="border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-red-500/10">
-        <CardHeader>
-          <CardTitle className="text-orange-400 flex items-center gap-2">
-            <AlertCircle className="h-5 w-5" />
-            Important: Start Early and Stay Consistent
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            <p className="text-white">
-              The most successful apprentices start building their portfolio from day one and
-              maintain it consistently throughout their training. Don't wait until the end of your
-              apprenticeship to begin collecting evidence.
-            </p>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          What is an apprenticeship portfolio?
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          An apprenticeship portfolio is a structured collection of evidence that demonstrates your
+          competency against the standards required for your electrical qualification. It includes:
+        </p>
+        <ul className="space-y-1.5">
+          {portfolioPurpose.map((purpose, index) => (
+            <li
+              key={index}
+              className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+            >
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>{purpose}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-orange-400" />
-                <span className="text-sm text-white">Start from week 1</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <FileText className="h-4 w-4 text-orange-400" />
-                <span className="text-sm text-white">Document everything</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Target className="h-4 w-4 text-orange-400" />
-                <span className="text-sm text-white">Review regularly</span>
-              </div>
-            </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {keyBenefits.map((benefit, index) => (
+          <div
+            key={index}
+            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2"
+          >
+            <h4 className="text-[14px] font-semibold text-white">{benefit.title}</h4>
+            <p className="text-[14px] text-white/85 leading-relaxed">{benefit.description}</p>
           </div>
-        </CardContent>
-      </Card>
+        ))}
+      </div>
 
-      {/* Learning Outcomes */}
-      <Card className="border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-pink-500/10">
-        <CardHeader>
-          <CardTitle className="text-purple-400">What You'll Learn in This Guide</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div className="space-y-2">
-              <Badge variant="outline" className="text-purple-400 border-purple-400/30">
-                Module 1: Planning & Structure
-              </Badge>
-              <Badge variant="outline" className="text-purple-400 border-purple-400/30">
-                Module 2: Evidence Collection
-              </Badge>
-              <Badge variant="outline" className="text-purple-400 border-purple-400/30">
-                Module 3: Reflection & Analysis
-              </Badge>
-            </div>
-            <div className="space-y-2">
-              <Badge variant="outline" className="text-purple-400 border-purple-400/30">
-                Module 4: Industry Standards
-              </Badge>
-              <Badge variant="outline" className="text-purple-400 border-purple-400/30">
-                Module 5: Assessment Preparation
-              </Badge>
-              <Badge variant="outline" className="text-purple-400 border-purple-400/30">
-                Module 6: Digital Portfolio Tools
-              </Badge>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+          Start early, stay consistent
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          The most successful apprentices start building their portfolio from day one and maintain
+          it consistently throughout their training. Don't wait until the end of your apprenticeship
+          to begin collecting evidence.
+        </p>
+        <div className="flex flex-wrap gap-1.5">
+          {['Start from week 1', 'Document everything', 'Review regularly'].map((tag) => (
+            <span
+              key={tag}
+              className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          What you'll learn in this guide
+        </span>
+        <div className="flex flex-wrap gap-1.5">
+          {modules.map((m) => (
+            <span
+              key={m}
+              className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+            >
+              {m}
+            </span>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

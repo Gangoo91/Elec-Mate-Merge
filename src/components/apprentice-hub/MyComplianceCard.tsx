@@ -30,23 +30,23 @@ const STATUS_LABEL: Record<Status, string> = {
 };
 
 const STATUS_TONE: Record<Status, string> = {
-  green: 'text-emerald-200',
-  amber: 'text-amber-200',
-  red: 'text-rose-300',
+  green: 'text-white/85',
+  amber: 'text-white/85',
+  red: 'text-white/85',
   unknown: 'text-white/85',
 };
 
 const STATUS_BG: Record<Status, string> = {
-  green: 'bg-emerald-500/[0.05] border-emerald-400/20',
-  amber: 'bg-amber-500/[0.05] border-amber-400/25',
-  red: 'bg-rose-500/[0.05] border-rose-400/25',
+  green: 'bg-white/[0.02] border-white/[0.06]',
+  amber: 'bg-white/[0.02] border-white/[0.06]',
+  red: 'bg-white/[0.02] border-white/[0.06]',
   unknown: 'bg-white/[0.02] border-white/[0.06]',
 };
 
 const STATUS_BAR: Record<Status, string> = {
-  green: 'bg-emerald-400',
-  amber: 'bg-amber-400',
-  red: 'bg-rose-400',
+  green: 'bg-white/[0.02]',
+  amber: 'bg-white/[0.02]',
+  red: 'bg-white/[0.02]',
   unknown: 'bg-white/[0.10]',
 };
 
@@ -214,8 +214,7 @@ export function MyComplianceCard() {
       <div className="px-4 sm:px-5 py-4 sm:py-5">
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
           <div
-            className={cn(
-              'text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em]',
+            className={cn('text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em]',
               STATUS_TONE[status]
             )}
           >
@@ -255,8 +254,7 @@ export function MyComplianceCard() {
         </div>
 
         <p
-          className={cn(
-            'mt-3 text-[12px] leading-snug',
+          className={cn('mt-3 text-[12px] leading-snug',
             status === 'green'
               ? 'text-emerald-200/85'
               : status === 'amber'

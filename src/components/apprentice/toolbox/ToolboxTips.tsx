@@ -8,20 +8,25 @@ const ToolboxTips = () => {
   }
 
   return (
-    <div className="bg-white/5 border border-elec-yellow/20 rounded-lg p-4 mt-6">
-      <h3 className="text-lg font-medium text-elec-yellow mb-2">
-        Essential Guidance for Apprentices
-      </h3>
-      <ul className="list-disc list-inside space-y-2 text-sm">
-        <li>Use the chat feature to get instant help with electrical questions and problems</li>
-        <li>
-          Refer to the safety fundamentals regularly - safety should always be your top priority
-        </li>
-        <li>Explore career progression options early to plan your professional development</li>
-        <li>
-          Take advantage of the calculators to understand practical applications of electrical
-          theory
-        </li>
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 mt-6 space-y-3">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        Essential guidance for apprentices
+      </span>
+      <ul className="space-y-1.5">
+        {[
+          'Use the chat feature to get instant help with electrical questions and problems',
+          'Refer to the safety fundamentals regularly — safety should always be your top priority',
+          'Explore career progression options early to plan your professional development',
+          'Take advantage of the calculators to understand practical applications of electrical theory',
+        ].map((item, i) => (
+          <li
+            key={i}
+            className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+          >
+            <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+            <span>{item}</span>
+          </li>
+        ))}
       </ul>
     </div>
   );

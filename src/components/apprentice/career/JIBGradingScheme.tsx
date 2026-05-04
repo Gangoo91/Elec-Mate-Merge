@@ -1,30 +1,10 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import {
   MobileAccordion,
   MobileAccordionItem,
   MobileAccordionTrigger,
   MobileAccordionContent,
 } from '@/components/ui/mobile-accordion';
-import {
-  Award,
-  Clock,
-  BookOpen,
-  CheckCircle,
-  Shield,
-  Briefcase,
-  MapPin,
-  TrendingUp,
-  Users,
-  Banknote,
-  Calculator,
-  Target,
-  DollarSign,
-  Building,
-  Zap,
-  Settings,
-  Lightbulb,
-} from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 import { useState } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -35,8 +15,7 @@ const JIBGradingScheme = () => {
   const jibGrades = [
     {
       grade: 'Apprentice',
-      color: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-      hourlyRate: '£8.00 minimum (2026)',
+      hourlyRate: '£8.00/hr minimum (April 2026)',
       dayRate: '£60-65/day typical',
       requirements: [
         'Enrolled on approved Level 3 apprenticeship programme',
@@ -50,7 +29,7 @@ const JIBGradingScheme = () => {
         'Apprentice minimum wage protection (£8.00/hr minimum)',
         'Structured 4-year training pathway with portfolio building',
         'Industry recognition and ECS Apprentice card eligibility',
-        'Government funding support (up to £18,000 per apprentice)',
+        'Government funding support for employers',
         'Clear progression route to Improver status',
         'Access to JTL/NICEIC/ECA apprentice support networks',
         'Career development guidance and mentorship',
@@ -78,8 +57,7 @@ const JIBGradingScheme = () => {
     },
     {
       grade: 'Improver',
-      color: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
-      hourlyRate: '£16-22/hr typical (2026)',
+      hourlyRate: '£16-22/hr typical',
       dayRate: '£160-220/day London premium',
       requirements: [
         'Level 3 NVQ Diploma (2357/5357) completed',
@@ -90,13 +68,13 @@ const JIBGradingScheme = () => {
         'Evidence portfolio demonstrating practical competence',
       ],
       benefits: [
-        'Higher pay rates (£15-20/hr typical, £160-220/day)',
-        'More complex work opportunities and reduced supervision',
-        'Preparation pathway for ECS Gold Card application',
-        'Access to specialist training courses (EV, Solar PV, Smart Buildings)',
+        'Higher pay rates and reduced supervision',
+        'More complex work opportunities',
+        'Pathway to ECS Gold Card application',
+        'Access to specialist training (EV, Solar PV, Smart Buildings)',
         'Career development discussions with senior electricians',
         'Opportunity to work on renewable energy projects',
-        'Access to manufacturer training programs (Schneider, ABB, Siemens)',
+        'Access to manufacturer training programmes',
       ],
       responsibilities: [
         'Installation and commissioning of electrical circuits',
@@ -121,8 +99,7 @@ const JIBGradingScheme = () => {
     },
     {
       grade: 'Electrician (Gold Card)',
-      color: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
-      hourlyRate: '£24-30/hr base (2026)',
+      hourlyRate: '£24-30/hr base',
       dayRate: '£200-320/day + regional premiums',
       requirements: [
         'Level 3 NVQ Diploma (2357/5357) completed',
@@ -133,9 +110,9 @@ const JIBGradingScheme = () => {
         'Evidence of competent person status',
       ],
       benefits: [
-        'ECS Gold Card recognition UK-wide (industry standard)',
-        'Skilled worker rates (£22-28/hr base, £200-320/day)',
-        'Industry-wide acceptance for site access and security clearance',
+        'ECS Gold Card recognition UK-wide',
+        'Skilled worker rates',
+        'Industry-wide acceptance for site access',
         'Independent working authority on complex installations',
         'Pathway to specialist roles and further qualifications',
         'Access to NICEIC/NAPIT contractor schemes',
@@ -151,27 +128,19 @@ const JIBGradingScheme = () => {
         'Supervision of junior electricians and apprentices',
       ],
       cpd: [
-        '18th Edition Amendment 3 (A3:2024) - Current Standard',
+        'BS 7671:2018 + A4:2026 (current standard)',
         '2391-52 Inspection, Testing and Certification (essential)',
-        'Specialist manufacturer training (Schneider, ABB, Legrand, Hager)',
+        'Specialist manufacturer training',
         'Smart building systems, IoT integration and BMS',
         'Customer service and communication skills',
         'EV charging installation and maintenance (City & Guilds 2919)',
         'Solar PV design and installation with battery storage',
       ],
       duration: 'Career level with ongoing development',
-      specialisations: [
-        'EV Charging',
-        'Solar PV',
-        'Industrial Automation',
-        'Data Centres',
-        'Fire & Security',
-      ],
     },
     {
       grade: 'Approved Electrician (JIB)',
-      color: 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30',
-      hourlyRate: '£25-32/hr enhanced (2026)',
+      hourlyRate: '£25-32/hr enhanced',
       requirements: [
         'All Electrician (Gold Card) requirements met',
         '2391-52 Inspection & Testing qualification',
@@ -180,7 +149,7 @@ const JIBGradingScheme = () => {
         'JIB membership and annual CPD compliance',
       ],
       benefits: [
-        'Enhanced recognition and premium rates (£23-28/hr)',
+        'Enhanced recognition and premium rates',
         'Access to JIB member resources and support',
         'Priority consideration for senior roles',
         'Pathway to supervision and management positions',
@@ -204,8 +173,7 @@ const JIBGradingScheme = () => {
     },
     {
       grade: 'Technician Electrician (JIB)',
-      color: 'bg-green-500/20 text-green-400 border-green-500/30',
-      hourlyRate: '£28-36/hr premium (2026)',
+      hourlyRate: '£28-36/hr premium',
       requirements: [
         'Approved Electrician status established',
         'HNC/HND Electrical Engineering preferred',
@@ -214,7 +182,7 @@ const JIBGradingScheme = () => {
         'Minimum 5 years advanced electrical experience',
       ],
       benefits: [
-        'Technical leadership authority and premium rates (£26-32/hr)',
+        'Technical leadership authority and premium rates',
         'Complex project design and specification responsibility',
         'Advanced testing and commissioning authority',
         'Professional mentoring and development role',
@@ -238,8 +206,7 @@ const JIBGradingScheme = () => {
     },
     {
       grade: 'Supervisor',
-      color: 'bg-red-500/20 text-red-400 border-red-500/30',
-      hourlyRate: '£32-45/hr management (2026)',
+      hourlyRate: '£32-45/hr management',
       requirements: [
         'Approved Electrician or Technician Electrician status',
         'SSSTS/SMSTS (Site Supervisor/Manager Training Scheme)',
@@ -248,7 +215,7 @@ const JIBGradingScheme = () => {
         'Current First Aid at Work and emergency response training',
       ],
       benefits: [
-        'Management responsibility and enhanced rates (£30-40/hr)',
+        'Management responsibility and enhanced rates',
         'Project oversight and strategic planning involvement',
         'Staff development and career progression authority',
         'Budget management and resource allocation',
@@ -276,938 +243,848 @@ const JIBGradingScheme = () => {
     <div className="space-y-6">
       <section aria-labelledby="jib-heading" className="space-y-4">
         <header className="space-y-2">
-          <h2 id="jib-heading" className="flex items-center gap-2 text-2xl font-bold">
-            <Award className="h-5 w-5 text-elec-yellow" />
-            JIB Grading Scheme & ECS Cards
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            JIB grading
+          </span>
+          <h2 id="jib-heading" className="text-[20px] sm:text-[24px] font-bold text-white leading-tight">
+            JIB grading scheme & ECS cards
           </h2>
-          <p className="text-sm text-white">
+          <p className="text-[14px] text-white/70 leading-relaxed">
             The Joint Industry Board (JIB) grading scheme is the UK standard for electrical worker
-            classification and pay scales
+            classification and pay scales.
           </p>
         </header>
-        <div>
-          {/* 2025 Market Insights Banner */}
-          <div className="bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/20 rounded-xl p-4 mb-6">
-            <div className="text-center space-y-3">
-              <h3 className="text-lg font-semibold text-elec-yellow flex items-center justify-center gap-2">
-                <TrendingUp className="h-5 w-5" />
-                2026 Industry Update
-              </h3>
-              <p className="text-white text-sm max-w-4xl mx-auto leading-relaxed">
-                Record skills shortage pushing rates up 15-20% year-on-year. Net Zero targets
-                creating unprecedented demand for EV charging, heat pump, and data centre
-                specialists. Prime time for career advancement.
+
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Industry update
+          </span>
+          <p className="text-[14px] text-white/85 leading-relaxed">
+            Skills shortages continue to push rates upward year-on-year. Net Zero targets are
+            driving demand for EV charging, heat pump and data centre specialists.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                High demand
+              </span>
+              <p className="text-[13px] text-white/85">
+                EV charging · Data centres · Heat pumps · Smart buildings
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
-                <div className="bg-white/5 rounded-lg p-3 border border-elec-yellow/10">
-                  <div className="text-green-400 font-semibold text-sm flex items-center gap-1">
-                    <Zap className="h-3 w-3" /> High Demand 2026
-                  </div>
-                  <div className="text-white text-xs">
-                    EV Charging • Data Centres • Heat Pumps • Smart Buildings
+            </div>
+            <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Rate premiums
+              </span>
+              <p className="text-[13px] text-white/85">
+                Specialists earn meaningful premiums over base rates
+              </p>
+            </div>
+            <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Skills gap
+              </span>
+              <p className="text-[13px] text-white/85">
+                Strong demand for qualified electricians across the UK
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Grades
+            </span>
+            <div className="text-[16px] font-semibold text-white">6</div>
+            <p className="text-[12px] text-white/55">Progression pathway</p>
+          </div>
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              To Gold Card
+            </span>
+            <div className="text-[16px] font-semibold text-white">4-5 yrs</div>
+            <p className="text-[12px] text-white/55">Typical pathway</p>
+          </div>
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              ECS renewal
+            </span>
+            <div className="text-[16px] font-semibold text-white">3-year</div>
+            <p className="text-[12px] text-white/55">Card validity</p>
+          </div>
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Coverage
+            </span>
+            <div className="text-[16px] font-semibold text-white">UK-wide</div>
+            <p className="text-[12px] text-white/55">Employer recognition</p>
+          </div>
+        </div>
+
+        <MobileAccordion type="multiple" className="space-y-3">
+          <MobileAccordionItem value="calculator">
+            <MobileAccordionTrigger className="bg-white/[0.02] border-white/[0.06]">
+              Quick rate calculator
+            </MobileAccordionTrigger>
+            <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Estimate your day rate
+                  </span>
+                  <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+                    <p className="text-[13px] text-white">Gold Card Electrician (base)</p>
+                    <div className="space-y-1 text-[12px] text-white/85">
+                      <div className="flex justify-between">
+                        <span>Regional</span>
+                        <span className="font-mono">£200-280/day</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>London</span>
+                        <span className="font-mono">£220-340/day</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>+ EV specialist</span>
+                        <span className="font-mono">+£30-50/day</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>+ 2391 testing</span>
+                        <span className="font-mono">+£20-40/day</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="bg-white/5 rounded-lg p-3 border border-elec-yellow/10">
-                  <div className="text-blue-400 font-semibold text-sm flex items-center gap-1">
-                    <DollarSign className="h-3 w-3" /> Rate Premiums
+                <div className="space-y-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Progression target
+                  </span>
+                  <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1 text-[13px] text-white/85">
+                    <div>Current: Improver (£180/day)</div>
+                    <div>Next: Gold Card (+£40-80/day)</div>
+                    <div>Required: AM2 + 2 years experience</div>
+                    <div className="text-white">Potential increase: £8,000-16,000/year</div>
                   </div>
-                  <div className="text-white text-xs">
-                    +£25-50/day vs 2025 • Specialists +£100/day
-                  </div>
-                </div>
-                <div className="bg-white/5 rounded-lg p-3 border border-elec-yellow/10">
-                  <div className="text-purple-400 font-semibold text-sm flex items-center gap-1">
-                    <Target className="h-3 w-3" /> Skills Gap
-                  </div>
-                  <div className="text-white text-xs">
-                    50,000+ unfilled positions • Fast progression opportunities
+                  <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 text-[12px] text-white/85">
+                    Self-employment bonus: add 25-40% to employee rates to cover benefits, tax and
+                    profit margin.
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
 
-          {/* Top metrics grid: 2x2 on mobile, 4 cols on desktop; square tiles with coloured icons */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <div className="aspect-square rounded-lg border border-elec-yellow/20 bg-white/5 p-4 flex flex-col items-center justify-center text-center">
-              <Award className="h-8 w-8 text-purple-400 mb-3" aria-hidden="true" />
-              <div className="font-semibold text-base text-white">6 Grades</div>
-              <div className="text-xs text-white">Progression pathway</div>
-            </div>
-            <div className="aspect-square rounded-lg border border-elec-yellow/20 bg-white/5 p-4 flex flex-col items-center justify-center text-center">
-              <Clock className="h-8 w-8 text-elec-yellow mb-3" aria-hidden="true" />
-              <div className="font-semibold text-base text-white">4–5 yrs</div>
-              <div className="text-xs text-white">To Gold Card</div>
-            </div>
-            <div className="aspect-square rounded-lg border border-elec-yellow/20 bg-white/5 p-4 flex flex-col items-center justify-center text-center">
-              <Shield className="h-8 w-8 text-green-400 mb-3" aria-hidden="true" />
-              <div className="font-semibold text-base text-white">3‑year</div>
-              <div className="text-xs text-white">ECS renewal</div>
-            </div>
-            <div className="aspect-square rounded-lg border border-elec-yellow/20 bg-white/5 p-4 flex flex-col items-center justify-center text-center">
-              <Briefcase className="h-8 w-8 text-blue-400 mb-3" aria-hidden="true" />
-              <div className="font-semibold text-base text-white">UK‑wide</div>
-              <div className="text-xs text-white">Employer recognition</div>
-            </div>
-          </div>
-
-          {/* Structured content like Skills Development (mobile‑first accordion) */}
-          <MobileAccordion type="multiple" className="space-y-4">
-            {/* Quick Rate Calculator */}
-            <MobileAccordionItem value="calculator">
-              <MobileAccordionTrigger
-                className="bg-white/5 border-elec-yellow/20"
-                icon={<Calculator className="h-4 w-4 text-blue-400" />}
-              >
-                Quick Rate Calculator (2026)
-              </MobileAccordionTrigger>
-              <MobileAccordionContent className="bg-white/5 border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-3">
-                    <h4 className="font-medium text-elec-yellow">Estimate Your Day Rate</h4>
-                    <div className="space-y-2 text-xs">
-                      <div className="bg-white/5 p-3 rounded border border-elec-yellow/10">
-                        <div className="font-medium text-white mb-2">
-                          Gold Card Electrician (Base)
-                        </div>
-                        <div className="space-y-1">
-                          <div className="flex justify-between">
-                            <span className="text-white">Regional:</span>
-                            <span className="text-elec-yellow">£200-280/day</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-white">London:</span>
-                            <span className="text-elec-yellow">£220-340/day</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-white">+ EV Specialist:</span>
-                            <span className="text-green-400">+£30-50/day</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-white">+ 2391 Testing:</span>
-                            <span className="text-green-400">+£20-40/day</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="space-y-3">
-                    <h4 className="font-medium text-elec-yellow">Progression Target Calculator</h4>
-                    <div className="bg-white/5 p-3 rounded border border-elec-yellow/10 text-xs">
-                      <div className="space-y-2">
-                        <div className="text-white">Current: Improver (£180/day)</div>
-                        <div className="text-white">Next: Gold Card (+£40-80/day)</div>
-                        <div className="text-white">Required: AM2 + 2 years experience</div>
-                        <div className="text-green-400 font-medium">
-                          Potential increase: £8,000-16,000/year
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-blue-500/10 p-3 rounded border border-blue-400/20 text-xs">
-                      <div className="text-white">
-                        <strong className="text-blue-400">Self-employment bonus:</strong> Add 25-40%
-                        to employee rates to cover benefits, tax, and profit margin.
-                      </div>
-                    </div>
-                  </div>
+          <MobileAccordionItem value="trends">
+            <MobileAccordionTrigger className="bg-white/[0.02] border-white/[0.06]">
+              Industry trends & opportunities
+            </MobileAccordionTrigger>
+            <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1.5">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Net Zero impact
+                  </span>
+                  <ul className="text-[13px] text-white/85 space-y-1">
+                    <li>Strong growth in green jobs through 2030</li>
+                    <li>Heat pump installations scaling up</li>
+                    <li>EV charging infrastructure expanding</li>
+                    <li>Solar PV growth across domestic and commercial</li>
+                  </ul>
+                  <p className="text-[12px] text-white/55 pt-1">
+                    Skills premium for certified specialists
+                  </p>
                 </div>
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-
-            {/* Industry Trends 2025 */}
-            <MobileAccordionItem value="trends">
-              <MobileAccordionTrigger
-                className="bg-white/5 border-elec-yellow/20"
-                icon={<TrendingUp className="h-4 w-4 text-green-400" />}
-              >
-                2026 Industry Trends & Opportunities
-              </MobileAccordionTrigger>
-              <MobileAccordionContent className="bg-white/5 border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="rounded border border-green-400/20 bg-green-500/5 p-3">
-                    <div className="text-base font-medium mb-2 text-green-400 flex items-center gap-2">
-                      <Zap className="h-4 w-4" />
-                      Net Zero Impact
-                    </div>
-                    <div className="text-xs space-y-1 text-white">
-                      <div>• 175,000+ new green jobs by 2030</div>
-                      <div>• Heat pump installations: 600,000/year target</div>
-                      <div>• EV charging: 300,000 public points needed</div>
-                      <div>• Solar PV growth: 40GW target by 2030</div>
-                      <div className="text-green-400 font-medium mt-2">
-                        Skills premium: £50-100/day for certified specialists
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="rounded border border-blue-400/20 bg-blue-500/5 p-3">
-                    <div className="text-base font-medium mb-2 text-blue-400 flex items-center gap-2">
-                      <Building className="h-4 w-4" />
-                      AI & Data Infrastructure
-                    </div>
-                    <div className="text-xs space-y-1 text-white">
-                      <div>• Data centre boom: £25bn investment</div>
-                      <div>• Smart building integration expanding</div>
-                      <div>• IoT and BMS specialists in demand</div>
-                      <div>• Critical power systems growth</div>
-                      <div className="text-blue-400 font-medium mt-2">
-                        Specialist roles: £300-500+/day
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="rounded border border-purple-400/20 bg-purple-500/5 p-3">
-                    <div className="text-base font-medium mb-2 text-purple-400 flex items-center gap-2">
-                      <Target className="h-4 w-4" />
-                      Skills Gap Crisis
-                    </div>
-                    <div className="text-xs space-y-1 text-white">
-                      <div>• 50,000+ unfilled positions nationally</div>
-                      <div>• Apprentice applications down 15%</div>
-                      <div>• Aging workforce: 40% over 50</div>
-                      <div>• Regional shortages acute in South East</div>
-                      <div className="text-purple-400 font-medium mt-2">
-                        Fast progression opportunities available
-                      </div>
-                    </div>
-                  </div>
+                <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1.5">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    AI & data infrastructure
+                  </span>
+                  <ul className="text-[13px] text-white/85 space-y-1">
+                    <li>Data centre investment growing</li>
+                    <li>Smart building integration expanding</li>
+                    <li>IoT and BMS specialists in demand</li>
+                    <li>Critical power systems growth</li>
+                  </ul>
+                  <p className="text-[12px] text-white/55 pt-1">Specialist roles command premium rates</p>
                 </div>
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-            {/* JIB Grades (moved existing content) */}
-            <MobileAccordionItem value="grades">
-              <MobileAccordionTrigger
-                className="bg-white/5 border-elec-yellow/20"
-                icon={<Award className="h-4 w-4 text-purple-400" />}
-              >
-                JIB Grades & Requirements
-              </MobileAccordionTrigger>
-              <MobileAccordionContent className="bg-white/5 border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
-                {isMobile ? (
-                  <>
-                    <div className="grid grid-cols-2 gap-3">
-                      {jibGrades.map((grade, index) => (
+                <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1.5">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Skills gap
+                  </span>
+                  <ul className="text-[13px] text-white/85 space-y-1">
+                    <li>Strong demand across the country</li>
+                    <li>Aging workforce in many regions</li>
+                    <li>Regional shortages acute in South East</li>
+                  </ul>
+                  <p className="text-[12px] text-white/55 pt-1">
+                    Fast progression opportunities available
+                  </p>
+                </div>
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+
+          <MobileAccordionItem value="grades">
+            <MobileAccordionTrigger className="bg-white/[0.02] border-white/[0.06]">
+              JIB grades & requirements
+            </MobileAccordionTrigger>
+            <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
+              {isMobile ? (
+                <>
+                  <div className="grid grid-cols-2 gap-3">
+                    {jibGrades.map((grade, index) => {
+                      const isSelected = selectedGradeIndex === index;
+                      return (
                         <button
                           key={grade.grade}
                           onClick={() => setSelectedGradeIndex(index)}
-                          className="aspect-square rounded-lg border border-elec-yellow/20 bg-white/5 p-3 flex flex-col items-center justify-center text-center hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-elec-yellow/40"
+                          className={`rounded-xl border p-3 flex flex-col items-center justify-center text-center touch-manipulation min-h-[88px] transition-colors ${
+                            isSelected
+                              ? 'border-elec-yellow/40 bg-elec-yellow/[0.04]'
+                              : 'border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04]'
+                          }`}
                         >
-                          <div className="text-sm font-semibold">{grade.grade}</div>
-                          <Badge className={`mt-1 ${grade.color}`}>Grade {index + 1}</Badge>
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                            Grade {index + 1}
+                          </span>
+                          <span className="text-[14px] font-semibold text-white mt-1">
+                            {grade.grade}
+                          </span>
                         </button>
-                      ))}
-                    </div>
+                      );
+                    })}
+                  </div>
 
-                    {selectedGradeIndex !== null &&
-                      (() => {
-                        const grade = jibGrades[selectedGradeIndex];
-                        return (
-                          <div className="mt-4 rounded border border-elec-yellow/20 bg-white/5 p-3">
-                            <div className="flex items-center justify-between mb-2">
-                              <div className="text-base font-semibold text-white">
-                                {grade.grade}
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <div className="text-xs text-elec-yellow font-medium">
-                                  {grade.hourlyRate}
-                                </div>
-                                <Badge className={grade.color}>
-                                  Grade {selectedGradeIndex + 1}
-                                </Badge>
-                              </div>
-                            </div>
-                            <div className="space-y-6">
-                              <div className="space-y-3">
-                                <h4 className="text-base font-semibold mb-3 text-elec-yellow flex items-center gap-2">
-                                  <BookOpen className="h-4 w-4" /> Requirements
-                                </h4>
-                                <div className="space-y-2">
-                                  {grade.requirements.map((req, idx) => (
-                                    <div
-                                      key={idx}
-                                      className="text-sm text-white flex items-start gap-3 leading-relaxed"
-                                    >
-                                      <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                                      <span>{req}</span>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-
-                              <div className="space-y-3">
-                                <h4 className="text-base font-semibold mb-3 text-elec-yellow flex items-center gap-2">
-                                  <Award className="h-4 w-4" /> Benefits
-                                </h4>
-                                <div className="space-y-2">
-                                  {grade.benefits.map((benefit, idx) => (
-                                    <div
-                                      key={idx}
-                                      className="text-sm text-white flex items-start gap-3 leading-relaxed"
-                                    >
-                                      <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                                      <span>{benefit}</span>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-
-                              <div className="space-y-3">
-                                <h4 className="text-base font-semibold mb-3 text-elec-yellow flex items-center gap-2">
-                                  <Clock className="h-4 w-4" /> Duration & Timeline
-                                </h4>
-                                <div className="text-sm text-white leading-relaxed">
-                                  {grade.duration}
-                                </div>
-                                {grade.fastTrack && (
-                                  <div className="text-sm text-blue-400 leading-relaxed">
-                                    <strong>Fast Track:</strong> {grade.fastTrack}
-                                  </div>
-                                )}
-                              </div>
-
-                              <div className="space-y-3">
-                                <h4 className="text-base font-semibold mb-3 text-elec-yellow flex items-center gap-2">
-                                  <Briefcase className="h-4 w-4" /> Typical Responsibilities
-                                </h4>
-                                <div className="space-y-2">
-                                  {grade.responsibilities.map((resp, idx) => (
-                                    <div
-                                      key={idx}
-                                      className="text-sm text-white flex items-start gap-3 leading-relaxed"
-                                    >
-                                      <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2 flex-shrink-0" />
-                                      <span>{resp}</span>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-
-                              <div className="space-y-3">
-                                <h4 className="text-base font-semibold mb-3 text-elec-yellow flex items-center gap-2">
-                                  <BookOpen className="h-4 w-4" /> Recommended CPD/Courses
-                                </h4>
-                                <div className="space-y-2">
-                                  {grade.cpd.map((course, idx) => (
-                                    <div
-                                      key={idx}
-                                      className="text-sm text-white flex items-start gap-3 leading-relaxed"
-                                    >
-                                      <div className="w-1.5 h-1.5 rounded-full bg-purple-400 mt-2 flex-shrink-0" />
-                                      <span>{course}</span>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })()}
-                  </>
-                ) : (
-                  <div className="space-y-4">
-                    {jibGrades.map((grade, index) => (
-                      <div
-                        key={grade.grade}
-                        className="rounded border border-elec-yellow/20 bg-white/5 p-3 md:p-4"
-                      >
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="text-lg font-semibold text-white">{grade.grade}</div>
-                          <div className="flex items-center gap-2">
-                            <div className="text-sm text-elec-yellow font-medium">
+                  {selectedGradeIndex !== null &&
+                    (() => {
+                      const grade = jibGrades[selectedGradeIndex];
+                      return (
+                        <div className="mt-4 rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-4">
+                          <div className="flex items-baseline justify-between gap-2">
+                            <h4 className="text-[16px] font-semibold text-white">{grade.grade}</h4>
+                            <span className="text-[12px] text-white/85 font-mono">
                               {grade.hourlyRate}
-                            </div>
-                            <Badge className={grade.color}>Grade {index + 1}</Badge>
+                            </span>
+                          </div>
+
+                          <div className="space-y-2">
+                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                              Requirements
+                            </span>
+                            <ul className="space-y-1.5">
+                              {grade.requirements.map((req, idx) => (
+                                <li
+                                  key={idx}
+                                  className="flex items-start gap-2 text-[13px] text-white/85"
+                                >
+                                  <CheckCircle className="h-3.5 w-3.5 text-white/55 mt-0.5 flex-shrink-0" />
+                                  <span>{req}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          <div className="space-y-2">
+                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                              Benefits
+                            </span>
+                            <ul className="space-y-1.5">
+                              {grade.benefits.map((benefit, idx) => (
+                                <li
+                                  key={idx}
+                                  className="flex items-start gap-2 text-[13px] text-white/85"
+                                >
+                                  <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                                  <span>{benefit}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          <div className="space-y-2">
+                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                              Duration
+                            </span>
+                            <p className="text-[13px] text-white/85">{grade.duration}</p>
+                            {grade.fastTrack && (
+                              <p className="text-[13px] text-white/70">
+                                <span className="text-white">Fast track:</span> {grade.fastTrack}
+                              </p>
+                            )}
+                          </div>
+
+                          <div className="space-y-2">
+                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                              Typical responsibilities
+                            </span>
+                            <ul className="space-y-1.5">
+                              {grade.responsibilities.map((resp, idx) => (
+                                <li
+                                  key={idx}
+                                  className="flex items-start gap-2 text-[13px] text-white/85"
+                                >
+                                  <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                                  <span>{resp}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          <div className="space-y-2">
+                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                              Recommended CPD
+                            </span>
+                            <ul className="space-y-1.5">
+                              {grade.cpd.map((course, idx) => (
+                                <li
+                                  key={idx}
+                                  className="flex items-start gap-2 text-[13px] text-white/85"
+                                >
+                                  <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                                  <span>{course}</span>
+                                </li>
+                              ))}
+                            </ul>
                           </div>
                         </div>
-                        <div className="space-y-6">
-                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <div className="space-y-3">
-                              <h4 className="text-base font-semibold text-elec-yellow flex items-center gap-2">
-                                <BookOpen className="h-4 w-4" /> Requirements
-                              </h4>
-                              <div className="space-y-2">
-                                {grade.requirements.map((req, idx) => (
-                                  <div
-                                    key={idx}
-                                    className="text-sm text-white flex items-start gap-3 leading-relaxed"
-                                  >
-                                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                                    <span>{req}</span>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
+                      );
+                    })()}
+                </>
+              ) : (
+                <div className="space-y-3">
+                  {jibGrades.map((grade, index) => (
+                    <div
+                      key={grade.grade}
+                      className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-4"
+                    >
+                      <div className="flex items-baseline justify-between gap-2">
+                        <div>
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                            Grade {index + 1}
+                          </span>
+                          <h4 className="text-[16px] font-semibold text-white mt-1">
+                            {grade.grade}
+                          </h4>
+                        </div>
+                        <span className="text-[13px] text-white/85 font-mono">
+                          {grade.hourlyRate}
+                        </span>
+                      </div>
 
-                            <div className="space-y-3">
-                              <h4 className="text-base font-semibold text-elec-yellow flex items-center gap-2">
-                                <Award className="h-4 w-4" /> Benefits
-                              </h4>
-                              <div className="space-y-2">
-                                {grade.benefits.map((benefit, idx) => (
-                                  <div
-                                    key={idx}
-                                    className="text-sm text-white flex items-start gap-3 leading-relaxed"
-                                  >
-                                    <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                                    <span>{benefit}</span>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div className="space-y-2">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                            Requirements
+                          </span>
+                          <ul className="space-y-1.5">
+                            {grade.requirements.map((req, idx) => (
+                              <li
+                                key={idx}
+                                className="flex items-start gap-2 text-[13px] text-white/85"
+                              >
+                                <CheckCircle className="h-3.5 w-3.5 text-white/55 mt-0.5 flex-shrink-0" />
+                                <span>{req}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
 
-                            <div className="space-y-3">
-                              <h4 className="text-base font-semibold text-elec-yellow flex items-center gap-2">
-                                <Clock className="h-4 w-4" /> Duration & Timeline
-                              </h4>
-                              <div className="text-sm text-white leading-relaxed">
-                                {grade.duration}
-                              </div>
-                              {grade.fastTrack && (
-                                <div className="text-sm text-blue-400 leading-relaxed">
-                                  <strong>Fast Track:</strong> {grade.fastTrack}
-                                </div>
-                              )}
-                            </div>
-                          </div>
+                        <div className="space-y-2">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                            Benefits
+                          </span>
+                          <ul className="space-y-1.5">
+                            {grade.benefits.map((benefit, idx) => (
+                              <li
+                                key={idx}
+                                className="flex items-start gap-2 text-[13px] text-white/85"
+                              >
+                                <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                                <span>{benefit}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
 
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="space-y-3">
-                              <h4 className="text-base font-semibold text-elec-yellow flex items-center gap-2">
-                                <Briefcase className="h-4 w-4" /> Typical Responsibilities
-                              </h4>
-                              <div className="space-y-2">
-                                {grade.responsibilities.map((resp, idx) => (
-                                  <div
-                                    key={idx}
-                                    className="text-sm text-white flex items-start gap-3 leading-relaxed"
-                                  >
-                                    <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2 flex-shrink-0" />
-                                    <span>{resp}</span>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-
-                            <div className="space-y-3">
-                              <h4 className="text-base font-semibold text-elec-yellow flex items-center gap-2">
-                                <BookOpen className="h-4 w-4" /> Recommended CPD/Courses
-                              </h4>
-                              <div className="space-y-2">
-                                {grade.cpd.map((course, idx) => (
-                                  <div
-                                    key={idx}
-                                    className="text-sm text-white flex items-start gap-3 leading-relaxed"
-                                  >
-                                    <div className="w-1.5 h-1.5 rounded-full bg-purple-400 mt-2 flex-shrink-0" />
-                                    <span>{course}</span>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
+                        <div className="space-y-2">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                            Duration
+                          </span>
+                          <p className="text-[13px] text-white/85">{grade.duration}</p>
+                          {grade.fastTrack && (
+                            <p className="text-[13px] text-white/70">
+                              <span className="text-white">Fast track:</span> {grade.fastTrack}
+                            </p>
+                          )}
                         </div>
                       </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                            Typical responsibilities
+                          </span>
+                          <ul className="space-y-1.5">
+                            {grade.responsibilities.map((resp, idx) => (
+                              <li
+                                key={idx}
+                                className="flex items-start gap-2 text-[13px] text-white/85"
+                              >
+                                <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                                <span>{resp}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        <div className="space-y-2">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                            Recommended CPD
+                          </span>
+                          <ul className="space-y-1.5">
+                            {grade.cpd.map((course, idx) => (
+                              <li
+                                key={idx}
+                                className="flex items-start gap-2 text-[13px] text-white/85"
+                              >
+                                <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                                <span>{course}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+
+          <MobileAccordionItem value="ecs">
+            <MobileAccordionTrigger className="bg-white/[0.02] border-white/[0.06]">
+              ECS cards & categories
+            </MobileAccordionTrigger>
+            <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
+              <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2 mb-4">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Application fees (current)
+                </span>
+                <div className="grid grid-cols-2 gap-2 text-[13px] text-white/85">
+                  <div>Apprentice: £36</div>
+                  <div>Gold Card: £42</div>
+                  <div>Approved: £70</div>
+                  <div>Supervisor: £126</div>
+                </div>
+                <p className="text-[12px] text-white/55">
+                  3-year validity · digital cards issued immediately · physical cards posted within
+                  5 working days.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Core electrical
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {[
+                      'Apprentice',
+                      'Trainee/Improver',
+                      'Electrician (Gold)',
+                      'Approved Electrician',
+                      'Technician Electrician',
+                      'Site Supervisor/Manager',
+                    ].map((t) => (
+                      <span
+                        key={t}
+                        className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+                      >
+                        {t}
+                      </span>
                     ))}
                   </div>
-                )}
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-
-            {/* ECS cards */}
-            <MobileAccordionItem value="ecs">
-              <MobileAccordionTrigger
-                className="bg-white/5 border-elec-yellow/20"
-                icon={<Shield className="h-4 w-4 text-green-400" />}
-              >
-                ECS Cards & Categories (2026)
-              </MobileAccordionTrigger>
-              <MobileAccordionContent className="bg-white/5 border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
-                <div className="mb-4 p-3 bg-elec-yellow/10 rounded border border-elec-yellow/20">
-                  <h4 className="text-sm font-medium text-elec-yellow mb-2">
-                    2026 Application Fees (Current)
-                  </h4>
-                  <div className="grid grid-cols-2 gap-2 text-xs text-white">
-                    <div>• Apprentice: £36</div>
-                    <div>• Gold Card: £42</div>
-                    <div>• Approved: £70</div>
-                    <div>• Supervisor: £126</div>
+                  <p className="text-[12px] text-white/55">
+                    Cards verify competence, qualifications and health & safety knowledge.
+                  </p>
+                </div>
+                <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Specialist categories
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {[
+                      'EV Charging',
+                      'Smart Buildings',
+                      'Data Centres',
+                      'Fire & Security',
+                      'Network Cabling',
+                      'Solar PV',
+                      'Heat Pumps',
+                      'H.V. Authorised',
+                      'Energy Storage',
+                    ].map((t) => (
+                      <span
+                        key={t}
+                        className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+                      >
+                        {t}
+                      </span>
+                    ))}
                   </div>
-                  <p className="text-xs text-white mt-2">
-                    3-year validity • Digital cards issued immediately • Physical cards posted
-                    within 5 working days
+                  <p className="text-[12px] text-white/55">
+                    High-demand specialisations requiring additional certifications and
+                    manufacturer approvals.
+                  </p>
+                </div>
+                <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Application process
+                  </span>
+                  <ul className="text-[13px] text-white/85 space-y-1.5">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="h-3.5 w-3.5 text-white/55 mt-0.5 flex-shrink-0" />
+                      <span>Create MyECS account</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="h-3.5 w-3.5 text-white/55 mt-0.5 flex-shrink-0" />
+                      <span>Upload qualifications (PDF)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="h-3.5 w-3.5 text-white/55 mt-0.5 flex-shrink-0" />
+                      <span>Passport-style photo (mobile upload)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="h-3.5 w-3.5 text-white/55 mt-0.5 flex-shrink-0" />
+                      <span>Book H&S test online (if required)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="h-3.5 w-3.5 text-white/55 mt-0.5 flex-shrink-0" />
+                      <span>Instant digital card upon approval</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+
+          <MobileAccordionItem value="pay">
+            <MobileAccordionTrigger className="bg-white/[0.02] border-white/[0.06]">
+              Pay rates & regional breakdown
+            </MobileAccordionTrigger>
+            <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Day rates by region
+                  </span>
+                  <div className="space-y-2 text-[13px] text-white/85">
+                    <div>
+                      <p className="text-white">London & M25</p>
+                      <p>Electrician: £220-340/day</p>
+                      <p>Approved: £280-420/day</p>
+                      <p>Supervisor: £350-500+/day</p>
+                    </div>
+                    <div>
+                      <p className="text-white">Regional (England/Wales)</p>
+                      <p>Electrician: £180-280/day</p>
+                      <p>Approved: £220-350/day</p>
+                      <p>Supervisor: £280-420/day</p>
+                    </div>
+                    <div>
+                      <p className="text-white">Scotland (SJIB)</p>
+                      <p>Similar to regional + 5-10%</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Project type premiums
+                  </span>
+                  <div className="text-[13px] text-white/85 space-y-1">
+                    <div className="flex justify-between">
+                      <span>Data centres</span>
+                      <span className="font-mono">+20-25%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Nuclear/Power</span>
+                      <span className="font-mono">+25-30%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>EV infrastructure</span>
+                      <span className="font-mono">+15-20%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Smart buildings</span>
+                      <span className="font-mono">+10-15%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Domestic/small commercial</span>
+                      <span className="font-mono">Base</span>
+                    </div>
+                  </div>
+                  <p className="text-[12px] text-white/55 pt-1 border-t border-white/[0.06]">
+                    Overtime rates: 1.5x after 8hrs weekdays, 2x Sundays/bank holidays.
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="rounded border border-elec-yellow/20 bg-white/5 p-3">
-                    <div className="text-base font-medium mb-1">Core Electrical</div>
-                    <div className="text-sm space-y-2">
-                      <div className="flex flex-wrap gap-2">
-                        {[
-                          'Apprentice',
-                          'Trainee/Improver',
-                          'Electrician (Gold)',
-                          'Approved Electrician',
-                          'Technician Electrician',
-                          'Site Supervisor/Manager',
-                        ].map((t) => (
-                          <Badge
-                            key={t}
-                            variant="outline"
-                            className="border-elec-yellow/30 text-elec-yellow"
-                          >
-                            {t}
-                          </Badge>
-                        ))}
-                      </div>
-                      <p className="text-xs text-white">
-                        Cards verify competence, qualifications and health & safety knowledge.
-                      </p>
+                <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Allowances & benefits
+                  </span>
+                  <div className="text-[13px] text-white/85 space-y-1.5">
+                    <div>
+                      <p className="text-white">Travel & accommodation</p>
+                      <p>Mileage: £0.45-0.65/mile</p>
+                      <p>Lodging: £35-55/night (tax-free)</p>
+                      <p>Subsistence: £10-25/day</p>
+                    </div>
+                    <div>
+                      <p className="text-white">JIB benefits package</p>
+                      <p>Pension: 8% employer contribution</p>
+                      <p>Annual leave: 22+ days</p>
+                      <p>Sick pay: statutory + enhanced</p>
                     </div>
                   </div>
-                  <div className="rounded border border-elec-yellow/20 bg-white/5 p-3">
-                    <div className="text-base font-medium mb-1">2026 Specialist Categories</div>
-                    <div className="text-sm space-y-2">
-                      <div className="flex flex-wrap gap-2">
-                        {[
-                          'EV Charging',
-                          'Smart Buildings',
-                          'Data Centres',
-                          'Fire & Security',
-                          'Network Cabling',
-                          'Solar PV',
-                          'Heat Pumps',
-                          'H.V. Authorised',
-                          'Energy Storage',
-                        ].map((t) => (
-                          <Badge
-                            key={t}
-                            variant="outline"
-                            className="border-green-400/30 text-green-400"
-                          >
-                            {t}
-                          </Badge>
-                        ))}
-                      </div>
-                      <p className="text-xs text-white">
-                        High-demand specialisations requiring additional certifications and
-                        manufacturer approvals.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="rounded border border-elec-yellow/20 bg-white/5 p-3">
-                    <div className="text-base font-medium mb-1">Digital-First Process (2026)</div>
-                    <div className="text-xs space-y-1">
-                      <div className="flex items-center gap-2">
-                        <CheckCircle className="h-3 w-3 text-green-400" /> Create MyECS account
-                        (digital verification)
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <CheckCircle className="h-3 w-3 text-green-400" /> Upload qualifications
-                        (PDF format accepted)
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <CheckCircle className="h-3 w-3 text-green-400" /> Passport-style photo
-                        (mobile upload)
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Clock className="h-3 w-3 text-elec-yellow" /> Book H&S test online (if
-                        required)
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <CheckCircle className="h-3 w-3 text-green-400" /> Instant digital card upon
-                        approval
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-
-            {/* Pay & allowances */}
-            <MobileAccordionItem value="pay">
-              <MobileAccordionTrigger
-                className="bg-white/5 border-elec-yellow/20"
-                icon={<Banknote className="h-4 w-4 text-green-400" />}
-              >
-                2026 Pay Rates & Regional Breakdown
-              </MobileAccordionTrigger>
-              <MobileAccordionContent className="bg-white/5 border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
-                <div className="mb-4 p-3 bg-green-500/10 rounded border border-green-400/20">
-                  <h4 className="text-sm font-medium text-green-400 mb-2 flex items-center gap-2">
-                    <TrendingUp className="h-3 w-3" />
-                    2026 Rate Increases: +10-15% YoY
-                  </h4>
-                  <p className="text-xs text-white">
-                    Skills shortage driving unprecedented rate growth. Specialist roles commanding
-                    significant premiums.
+                  <p className="text-[12px] text-white/55 pt-1 border-t border-white/[0.06]">
+                    Self-employed rates typically 25-40% higher to cover benefits/pension.
                   </p>
                 </div>
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                  <div className="rounded border border-elec-yellow/20 bg-white/5 p-3">
-                    <div className="text-base font-medium mb-1 flex items-center gap-2">
-                      <Calculator className="h-4 w-4 text-elec-yellow" />
-                      2026 Day Rates by Region
-                    </div>
-                    <div className="space-y-2 text-xs">
-                      <div className="bg-white/5 p-2 rounded">
-                        <div className="font-medium text-elec-yellow">London & M25</div>
-                        <div className="text-white">Electrician: £220-340/day</div>
-                        <div className="text-white">Approved: £280-420/day</div>
-                        <div className="text-white">Supervisor: £350-500+/day</div>
-                      </div>
-                      <div className="bg-white/5 p-2 rounded">
-                        <div className="font-medium text-blue-400">Regional (England/Wales)</div>
-                        <div className="text-white">Electrician: £180-280/day</div>
-                        <div className="text-white">Approved: £220-350/day</div>
-                        <div className="text-white">Supervisor: £280-420/day</div>
-                      </div>
-                      <div className="bg-white/5 p-2 rounded">
-                        <div className="font-medium text-purple-400">Scotland (SJIB)</div>
-                        <div className="text-white">Similar to regional + 5-10%</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="rounded border border-elec-yellow/20 bg-white/5 p-3">
-                    <div className="text-base font-medium mb-1 flex items-center gap-2">
-                      <Building className="h-4 w-4 text-blue-400" />
-                      Project Type Premiums (2026)
-                    </div>
-                    <div className="text-xs space-y-2">
-                      <div className="flex justify-between">
-                        <span className="text-white">Data Centres:</span>
-                        <span className="text-green-400">+20-25%</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-white">Nuclear/Power:</span>
-                        <span className="text-green-400">+25-30%</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-white">EV Infrastructure:</span>
-                        <span className="text-green-400">+15-20%</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-white">Smart Buildings:</span>
-                        <span className="text-green-400">+10-15%</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-white">Domestic/Small Commercial:</span>
-                        <span className="text-white">Base rate</span>
-                      </div>
-                      <div className="mt-2 p-2 bg-elec-yellow/10 rounded">
-                        <div className="text-xs text-white">
-                          Overtime rates: 1.5x after 8hrs weekdays, 2x Sundays/Bank holidays
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="rounded border border-elec-yellow/20 bg-white/5 p-3">
-                    <div className="text-base font-medium mb-1 flex items-center gap-2">
-                      <DollarSign className="h-4 w-4 text-purple-400" />
-                      Allowances & Benefits
-                    </div>
-                    <div className="text-xs space-y-1">
-                      <div className="font-medium text-elec-yellow">Travel & Accommodation</div>
-                      <div className="text-white">• Mileage: £0.45-0.65/mile</div>
-                      <div className="text-white">• Lodging: £35-55/night (tax-free)</div>
-                      <div className="text-white">• Subsistence: £10-25/day</div>
-
-                      <div className="font-medium text-elec-yellow mt-2">JIB Benefits Package</div>
-                      <div className="text-white">• Pension: 8% employer contribution</div>
-                      <div className="text-white">• Annual leave: 22+ days</div>
-                      <div className="text-white">• Sick pay: Statutory + enhanced</div>
-                      <div className="text-white">• Training allowances</div>
-
-                      <div className="mt-2 p-2 bg-blue-500/10 rounded">
-                        <div className="text-xs text-white">
-                          Self-employed rates typically 25-40% higher to cover benefits/pension
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-
-            {/* Upgrade pathway */}
-            <MobileAccordionItem value="pathway">
-              <MobileAccordionTrigger
-                className="bg-white/5 border-elec-yellow/20"
-                icon={<TrendingUp className="h-4 w-4 text-green-400" />}
-              >
-                Upgrade Pathways
-              </MobileAccordionTrigger>
-              <MobileAccordionContent className="bg-white/5 border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="space-y-4 p-4 rounded-lg border border-elec-yellow/20 bg-white/5">
-                    <div className="flex items-center gap-2">
-                      <TrendingUp className="h-5 w-5 text-green-400" />
-                      <h4 className="text-base font-semibold text-elec-yellow">Standard Route</h4>
-                    </div>
-                    <div className="space-y-3">
-                      <div className="text-sm text-white leading-relaxed">
-                        Apprentice → Improver → Electrician (Gold) → Approved → Technician
-                      </div>
-                      <div className="text-sm text-white leading-relaxed">
-                        Typical 6–10 years to Technician depending on experience and qualifications.
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-4 p-4 rounded-lg border border-elec-yellow/20 bg-white/5">
-                    <div className="flex items-center gap-2">
-                      <Users className="h-5 w-5 text-blue-400" />
-                      <h4 className="text-base font-semibold text-elec-yellow">
-                        Supervisor/Manager Route
-                      </h4>
-                    </div>
-                    <div className="space-y-3">
-                      <div className="text-sm text-white leading-relaxed">
-                        Approved/Technician → Chargehand → Site Supervisor → Manager
-                      </div>
-                      <div className="text-sm text-white leading-relaxed">
-                        Add leadership (SSSTS/SMSTS/IOSH) and project delivery experience.
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-4 p-4 rounded-lg border border-elec-yellow/20 bg-white/5">
-                    <div className="flex items-center gap-2">
-                      <Zap className="h-5 w-5 text-purple-400" />
-                      <h4 className="text-base font-semibold text-elec-yellow">Fast‑Track / APL</h4>
-                    </div>
-                    <div className="space-y-3">
-                      <div className="text-sm text-white leading-relaxed">
-                        Experienced workers scheme with evidence portfolio
-                      </div>
-                      <div className="text-sm text-white leading-relaxed">
-                        Recognition of prior learning can reduce time to Gold/Approved.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-
-            {/* CPD & renewals */}
-            <MobileAccordionItem value="cpd">
-              <MobileAccordionTrigger
-                className="bg-white/5 border-elec-yellow/20"
-                icon={<Clock className="h-4 w-4 text-elec-yellow" />}
-              >
-                CPD & Renewals
-              </MobileAccordionTrigger>
-              <MobileAccordionContent className="bg-white/5 border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                  <div className="rounded border border-elec-yellow/20 bg-white/5 p-3">
-                    <div className="text-base font-medium mb-1">ECS Renewal</div>
-                    <div className="text-xs space-y-1">
-                      <div className="flex items-center gap-2">
-                        <Shield className="h-3 w-3 text-elec-yellow" /> Renew every 3 years
-                      </div>
-                      <div>• Current H&S assessment</div>
-                      <div>• Up‑to‑date qualifications</div>
-                      <div className="text-[11px] text-white">
-                        Digital card updates first; physical card follows by post.
-                      </div>
-                    </div>
-                  </div>
-                  <div className="rounded border border-elec-yellow/20 bg-white/5 p-3">
-                    <div className="text-base font-medium mb-1">BS 7671 Updates</div>
-                    <div className="text-xs space-y-1">
-                      <div>• Keep current with 18th Edition (A3:2024) and amendments</div>
-                      <div>• CPD on changes and application</div>
-                      <div className="text-[11px] text-white">
-                        Amendments typically every 2–3 years. Stay subscribed.
-                      </div>
-                    </div>
-                  </div>
-                  <div className="rounded border border-elec-yellow/20 bg-white/5 p-3">
-                    <div className="text-base font-medium mb-1">Professional CPD</div>
-                    <div className="text-xs space-y-1">
-                      <div>• Testing (2391), EV, Solar, Fire/Alarm, BMS</div>
-                      <div>• Scheme assessments (NICEIC/NAPIT) if contracting</div>
-                      <div className="text-[11px] text-white">
-                        Recommended: 20–30 hours CPD per year logged in the CPD Tracker.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-
-            {/* Evidence checklist */}
-            <MobileAccordionItem value="evidence">
-              <MobileAccordionTrigger
-                className="bg-white/5 border-elec-yellow/20"
-                icon={<CheckCircle className="h-4 w-4 text-green-400" />}
-              >
-                Evidence Checklist (Upgrades)
-              </MobileAccordionTrigger>
-              <MobileAccordionContent className="bg-white/5 border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-                  <ul className="space-y-1">
-                    <li>• Level 3 NVQ Diploma (2357/5357)</li>
-                    <li>• AM2/AM2S certificate</li>
-                    <li>• 18th Edition BS 7671 (2382-22)</li>
-                    <li>• Inspection & Testing (2391‑52) for Approved/Technician</li>
-                  </ul>
-                  <ul className="space-y-1">
-                    <li>• Employer references/logbook evidence</li>
-                    <li>• ECS H&S assessment</li>
-                    <li>• ID and recent photo</li>
-                    <li>• CPD record (recommended)</li>
-                  </ul>
-                  <ul className="space-y-1">
-                    <li>• Evidence of design/verification (Technician)</li>
-                    <li>• Manufacturer training certificates (EV/Solar)</li>
-                    <li>• Site supervisor tickets (SSSTS/SMSTS) if applicable</li>
-                  </ul>
-                </div>
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-
-            {/* Application process */}
-            <MobileAccordionItem value="apply">
-              <MobileAccordionTrigger
-                className="bg-white/5 border-elec-yellow/20"
-                icon={<CheckCircle className="h-4 w-4 text-purple-400" />}
-              >
-                Application Process (Typical)
-              </MobileAccordionTrigger>
-              <MobileAccordionContent className="bg-white/5 border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
-                <ol className="list-decimal pl-5 space-y-2 text-xs">
-                  <li>Confirm eligibility and gather evidence (NVQ, AM2, 18th, references)</li>
-                  <li>Create or log into your MyECS account and start a new application</li>
-                  <li>Upload documents and pay the applicable fee</li>
-                  <li>Book and pass the ECS Health & Safety assessment (if required)</li>
-                  <li>
-                    Await verification; your digital ECS card updates first, physical card follows
-                  </li>
-                </ol>
-                <p className="mt-2 text-[11px] text-white">
-                  Typical timeframe: 3–10 working days depending on volume and checks.
-                </p>
-                <p className="text-[11px] text-white">
-                  Fees vary by card type and renewal vs upgrade.
-                </p>
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-
-            {/* H&S topics */}
-            <MobileAccordionItem value="hs-topics">
-              <MobileAccordionTrigger
-                className="bg-white/5 border-elec-yellow/20"
-                icon={<Shield className="h-4 w-4 text-blue-400" />}
-              >
-                ECS Health & Safety Test Topics
-              </MobileAccordionTrigger>
-              <MobileAccordionContent className="bg-white/5 border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                  <ul className="space-y-1">
-                    <li>• Site access, permits to work</li>
-                    <li>• Safe isolation and lock-off</li>
-                    <li>• Working at height and manual handling</li>
-                    <li>• Fire safety and emergency procedures</li>
-                  </ul>
-                  <ul className="space-y-1">
-                    <li>• Asbestos awareness & COSHH</li>
-                    <li>• Electrical shock risk and first aid basics</li>
-                    <li>• Environmental considerations</li>
-                    <li>• Reporting near misses and incidents</li>
-                  </ul>
-                </div>
-                <div className="mt-2 text-[11px] text-white">
-                  Pass mark typically ~85%. Tip: focus on safe isolation, permits and emergency
-                  procedures.
-                </div>
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-
-            {/* SJIB mapping */}
-            <MobileAccordionItem value="sjib">
-              <MobileAccordionTrigger
-                className="bg-white/5 border-elec-yellow/20"
-                icon={<MapPin className="h-4 w-4 text-blue-400" />}
-              >
-                SJIB Equivalence (Scotland)
-              </MobileAccordionTrigger>
-              <MobileAccordionContent className="bg-white/5 border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
-                <div className="text-xs space-y-2">
-                  <p className="text-white">
-                    SJIB mirrors JIB grading for Scotland. Typical mappings:
+          <MobileAccordionItem value="pathway">
+            <MobileAccordionTrigger className="bg-white/[0.02] border-white/[0.06]">
+              Upgrade pathways
+            </MobileAccordionTrigger>
+            <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Standard route
+                  </span>
+                  <p className="text-[13px] text-white/85 leading-relaxed">
+                    Apprentice → Improver → Electrician (Gold) → Approved → Technician
                   </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div className="rounded border border-elec-yellow/20 bg-white/5 p-3">
-                      <div className="font-medium">JIB Electrician ⇄ SJIB Electrician</div>
-                      <div className="text-white">NVQ3 + AM2 + 18th Edition</div>
-                    </div>
-                    <div className="rounded border border-elec-yellow/20 bg-white/5 p-3">
-                      <div className="font-medium">JIB Approved ⇄ SJIB Approved</div>
-                      <div className="text-white">Add 2391 and experience</div>
-                    </div>
-                  </div>
-                  <p className="mt-2 text-[11px] text-white">
-                    Check SJIB for local rules, evidence and rates which can differ from JIB.
+                  <p className="text-[12px] text-white/55">
+                    Typical 6-10 years to Technician depending on experience and qualifications.
                   </p>
                 </div>
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-
-            {/* FAQs */}
-            <MobileAccordionItem value="faqs">
-              <MobileAccordionTrigger
-                className="bg-white/5 border-elec-yellow/20"
-                icon={<Users className="h-4 w-4 text-purple-400" />}
-              >
-                FAQs
-              </MobileAccordionTrigger>
-              <MobileAccordionContent className="bg-white/5 border-x border-b border-elec-yellow/20 rounded-b-lg p-3">
-                <div className="space-y-3 text-sm">
-                  <div>
-                    <div className="font-medium text-elec-yellow">Is JIB grading mandatory?</div>
-                    <p className="text-xs text-white">
-                      Not legally, but widely required by employers and sites for proof of
-                      competence.
-                    </p>
-                  </div>
-                  <div>
-                    <div className="font-medium text-elec-yellow">Do I need 2391 for Approved?</div>
-                    <p className="text-xs text-white">
-                      Yes, Inspection & Testing (2391-52) is typically required for JIB Approved
-                      Electrician status.
-                    </p>
-                  </div>
-                  <div>
-                    <div className="font-medium text-elec-yellow">What about Scotland?</div>
-                    <p className="text-xs text-white">
-                      Scotland follows SJIB which mirrors JIB; check SJIB for local details and
-                      rates.
-                    </p>
-                  </div>
-                  <div>
-                    <div className="font-medium text-elec-yellow">
-                      How long does verification take?
-                    </div>
-                    <p className="text-xs text-white">
-                      Usually 3–10 working days once all evidence is uploaded and validated.
-                    </p>
-                  </div>
-                  <div>
-                    <div className="font-medium text-elec-yellow">Do I need a physical card?</div>
-                    <p className="text-xs text-white">
-                      The digital card is available immediately after approval; physical cards are
-                      posted and may take a few days.
-                    </p>
-                  </div>
+                <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Supervisor/Manager route
+                  </span>
+                  <p className="text-[13px] text-white/85 leading-relaxed">
+                    Approved/Technician → Chargehand → Site Supervisor → Manager
+                  </p>
+                  <p className="text-[12px] text-white/55">
+                    Add leadership (SSSTS/SMSTS/IOSH) and project delivery experience.
+                  </p>
                 </div>
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-          </MobileAccordion>
-        </div>
+                <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Fast-track / APL
+                  </span>
+                  <p className="text-[13px] text-white/85 leading-relaxed">
+                    Experienced workers scheme with evidence portfolio.
+                  </p>
+                  <p className="text-[12px] text-white/55">
+                    Recognition of prior learning can reduce time to Gold/Approved.
+                  </p>
+                </div>
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+
+          <MobileAccordionItem value="cpd">
+            <MobileAccordionTrigger className="bg-white/[0.02] border-white/[0.06]">
+              CPD & renewals
+            </MobileAccordionTrigger>
+            <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    ECS renewal
+                  </span>
+                  <ul className="text-[13px] text-white/85 space-y-1">
+                    <li>Renew every 3 years</li>
+                    <li>Current H&S assessment</li>
+                    <li>Up-to-date qualifications</li>
+                  </ul>
+                  <p className="text-[12px] text-white/55">
+                    Digital card updates first; physical card follows by post.
+                  </p>
+                </div>
+                <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    BS 7671 updates
+                  </span>
+                  <ul className="text-[13px] text-white/85 space-y-1">
+                    <li>Current standard: BS 7671:2018 + A4:2026</li>
+                    <li>CPD on changes and application</li>
+                  </ul>
+                  <p className="text-[12px] text-white/55">
+                    Amendments typically every 2-3 years. Stay subscribed.
+                  </p>
+                </div>
+                <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Professional CPD
+                  </span>
+                  <ul className="text-[13px] text-white/85 space-y-1">
+                    <li>Testing (2391), EV, Solar, Fire/Alarm, BMS</li>
+                    <li>Scheme assessments (NICEIC/NAPIT) if contracting</li>
+                  </ul>
+                  <p className="text-[12px] text-white/55">
+                    Recommended: 20-30 hours CPD per year logged in the CPD Tracker.
+                  </p>
+                </div>
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+
+          <MobileAccordionItem value="evidence">
+            <MobileAccordionTrigger className="bg-white/[0.02] border-white/[0.06]">
+              Evidence checklist (upgrades)
+            </MobileAccordionTrigger>
+            <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-[13px] text-white/85">
+                <ul className="space-y-1">
+                  <li>Level 3 NVQ Diploma (2357/5357)</li>
+                  <li>AM2/AM2S certificate</li>
+                  <li>BS 7671:2018 + A4:2026 (2382-22)</li>
+                  <li>Inspection & Testing (2391-52) for Approved/Technician</li>
+                </ul>
+                <ul className="space-y-1">
+                  <li>Employer references/logbook evidence</li>
+                  <li>ECS H&S assessment</li>
+                  <li>ID and recent photo</li>
+                  <li>CPD record (recommended)</li>
+                </ul>
+                <ul className="space-y-1">
+                  <li>Evidence of design/verification (Technician)</li>
+                  <li>Manufacturer training certificates (EV/Solar)</li>
+                  <li>Site supervisor tickets (SSSTS/SMSTS) if applicable</li>
+                </ul>
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+
+          <MobileAccordionItem value="apply">
+            <MobileAccordionTrigger className="bg-white/[0.02] border-white/[0.06]">
+              Application process (typical)
+            </MobileAccordionTrigger>
+            <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
+              <ol className="list-decimal pl-5 space-y-2 text-[13px] text-white/85">
+                <li>Confirm eligibility and gather evidence (NVQ, AM2, 18th, references)</li>
+                <li>Create or log into your MyECS account and start a new application</li>
+                <li>Upload documents and pay the applicable fee</li>
+                <li>Book and pass the ECS Health & Safety assessment (if required)</li>
+                <li>
+                  Await verification; your digital ECS card updates first, physical card follows
+                </li>
+              </ol>
+              <p className="mt-3 text-[12px] text-white/55">
+                Typical timeframe: 3-10 working days depending on volume and checks. Fees vary by
+                card type and renewal vs upgrade.
+              </p>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+
+          <MobileAccordionItem value="hs-topics">
+            <MobileAccordionTrigger className="bg-white/[0.02] border-white/[0.06]">
+              ECS Health & Safety test topics
+            </MobileAccordionTrigger>
+            <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[13px] text-white/85">
+                <ul className="space-y-1">
+                  <li>Site access, permits to work</li>
+                  <li>Safe isolation and lock-off</li>
+                  <li>Working at height and manual handling</li>
+                  <li>Fire safety and emergency procedures</li>
+                </ul>
+                <ul className="space-y-1">
+                  <li>Asbestos awareness & COSHH</li>
+                  <li>Electrical shock risk and first aid basics</li>
+                  <li>Environmental considerations</li>
+                  <li>Reporting near misses and incidents</li>
+                </ul>
+              </div>
+              <p className="mt-3 text-[12px] text-white/55">
+                Pass mark typically ~85%. Focus on safe isolation, permits and emergency
+                procedures.
+              </p>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+
+          <MobileAccordionItem value="sjib">
+            <MobileAccordionTrigger className="bg-white/[0.02] border-white/[0.06]">
+              SJIB equivalence (Scotland)
+            </MobileAccordionTrigger>
+            <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
+              <p className="text-[13px] text-white/85 mb-3">
+                SJIB mirrors JIB grading for Scotland. Typical mappings:
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+                  <p className="text-[13px] text-white">JIB Electrician ⇄ SJIB Electrician</p>
+                  <p className="text-[12px] text-white/85">NVQ3 + AM2 + BS 7671</p>
+                </div>
+                <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+                  <p className="text-[13px] text-white">JIB Approved ⇄ SJIB Approved</p>
+                  <p className="text-[12px] text-white/85">Add 2391 and experience</p>
+                </div>
+              </div>
+              <p className="mt-3 text-[12px] text-white/55">
+                Check SJIB for local rules, evidence and rates which can differ from JIB.
+              </p>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+
+          <MobileAccordionItem value="faqs">
+            <MobileAccordionTrigger className="bg-white/[0.02] border-white/[0.06]">
+              FAQs
+            </MobileAccordionTrigger>
+            <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
+              <div className="space-y-3">
+                <div className="space-y-1">
+                  <p className="text-[13px] text-white">Is JIB grading mandatory?</p>
+                  <p className="text-[12px] text-white/70">
+                    Not legally, but widely required by employers and sites for proof of
+                    competence.
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-[13px] text-white">Do I need 2391 for Approved?</p>
+                  <p className="text-[12px] text-white/70">
+                    Yes — Inspection & Testing (2391-52) is typically required for JIB Approved
+                    Electrician status.
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-[13px] text-white">What about Scotland?</p>
+                  <p className="text-[12px] text-white/70">
+                    Scotland follows SJIB which mirrors JIB; check SJIB for local details and rates.
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-[13px] text-white">How long does verification take?</p>
+                  <p className="text-[12px] text-white/70">
+                    Usually 3-10 working days once all evidence is uploaded and validated.
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-[13px] text-white">Do I need a physical card?</p>
+                  <p className="text-[12px] text-white/70">
+                    The digital card is available immediately after approval; physical cards are
+                    posted and may take a few days.
+                  </p>
+                </div>
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+        </MobileAccordion>
       </section>
     </div>
   );

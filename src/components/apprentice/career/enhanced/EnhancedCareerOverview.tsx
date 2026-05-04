@@ -1,6 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import {
   MobileAccordion,
   MobileAccordionItem,
@@ -9,109 +6,109 @@ import {
 } from '@/components/ui/mobile-accordion';
 import { useIsMobile } from '@/hooks/use-mobile';
 import {
-  Eye,
   TrendingUp,
   Target,
-  Award,
-  CheckCircle,
-  Clock,
-  Users,
-  Lightbulb,
   BookOpen,
   GraduationCap,
   Building,
-  Zap,
-  Star,
-  ArrowRight,
   Briefcase,
   Sparkles,
-  TreePine,
-  DollarSign,
   Network,
-  Compass,
 } from 'lucide-react';
+
+const Eyebrow = ({ children }: { children: React.ReactNode }) => (
+  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+    {children}
+  </span>
+);
+
+const Pill = ({ children }: { children: React.ReactNode }) => (
+  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+    {children}
+  </span>
+);
+
+const Bullets = ({ items }: { items: string[] }) => (
+  <ul className="space-y-1.5">
+    {items.map((item, idx) => (
+      <li
+        key={idx}
+        className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+      >
+        <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+        <span>{item}</span>
+      </li>
+    ))}
+  </ul>
+);
+
+const Section = ({ children }: { children: React.ReactNode }) => (
+  <div className="rounded-b-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+    {children}
+  </div>
+);
 
 const EnhancedCareerOverview = () => {
   const isMobile = useIsMobile();
 
   const careerMetrics = [
-    {
-      metric: 'Average Progression Time',
-      data: '3-5 years to senior level',
-      icon: <Clock className="h-5 w-5 text-elec-yellow" />,
-      detail: 'From apprentice to fully qualified electrician',
-    },
-    {
-      metric: 'Salary Growth Potential',
-      data: '£18K to £45K+ per year',
-      icon: <TrendingUp className="h-5 w-5 text-green-400" />,
-      detail: 'Based on experience and specialisation',
-    },
-    {
-      metric: 'Job Market Outlook',
-      data: '15% growth by 2030',
-      icon: <Target className="h-5 w-5 text-blue-400" />,
-      detail: 'Above average growth in electrical trades',
-    },
-    {
-      metric: 'Career Paths Available',
-      data: '12+ distinct pathways',
-      icon: <Award className="h-5 w-5 text-purple-400" />,
-      detail: 'From installation to engineering roles',
-    },
+    { metric: 'Average progression', data: '3-5 years to senior level' },
+    { metric: 'Salary growth', data: 'Significant range available' },
+    { metric: 'Job market outlook', data: 'Above-average growth' },
+    { metric: 'Career paths', data: '12+ distinct pathways' },
   ];
 
   const progressionStages = [
     {
-      stage: 'Foundation Stage',
+      stage: 'Foundation stage',
       duration: '6-18 months',
-      level: 'Entry Level',
-      description: 'Building core electrical knowledge and safety practices',
+      level: 'Entry level',
+      description: 'Building core electrical knowledge and safety practices.',
       keyMilestones: [
         'Complete Level 2 Electrical Installation course',
         "Understand basic circuit theory and Ohm's Law",
         'Master safe isolation procedures',
         'Learn fundamental wiring techniques',
-        'Achieve 18th Edition BS 7671 certification',
+        'Achieve BS 7671:2018+A4:2026 certification',
       ],
       salaryRange: '£16,000 - £20,000',
-      nextSteps: 'Progress to apprenticeship or continue with Level 3 qualification',
+      nextSteps: 'Progress to apprenticeship or continue with Level 3 qualification.',
     },
     {
-      stage: 'Development Stage',
+      stage: 'Development stage',
       duration: '2-3 years',
       level: 'Intermediate',
-      description: 'Gaining practical experience and advanced installation skills',
+      description: 'Gaining practical experience and advanced installation skills.',
       keyMilestones: [
         'Complete Level 3 Electrical Installation NVQ',
         'Pass AM2 practical assessment',
         'Gain 2+ years post-qualification experience',
-        'Complete Inspection & Testing (2391) qualification',
+        'Complete Inspection and Testing (2391) qualification',
         'Develop fault diagnosis skills',
       ],
       salaryRange: '£22,000 - £32,000',
-      nextSteps: 'Choose specialisation path or pursue supervisory roles',
+      nextSteps: 'Choose specialisation path or pursue supervisory roles.',
     },
     {
-      stage: 'Specialisation Stage',
+      stage: 'Specialisation stage',
       duration: '2-4 years',
       level: 'Advanced',
-      description: 'Developing expertise in specific electrical disciplines',
+      description: 'Developing expertise in specific electrical disciplines.',
       keyMilestones: [
         'Complete specialist training courses',
         'Gain manufacturer certifications',
         'Build portfolio of complex projects',
         'Develop leadership and mentoring skills',
-        'Register with professional scheme (NICEIC/NAPIT)',
+        'Register with professional scheme (NICEIC / NAPIT)',
       ],
       salaryRange: '£30,000 - £42,000',
-      nextSteps: 'Advance to senior specialist, management, or contractor roles',
+      nextSteps: 'Advance to senior specialist, management, or contractor roles.',
     },
     {
-      stage: 'Mastery Stage',
+      stage: 'Mastery stage',
       duration: '3-5 years',
       level: 'Expert',
-      description: 'Leading projects and developing others in the field',
+      description: 'Leading projects and developing others in the field.',
       keyMilestones: [
         'Achieve senior electrician or supervisor status',
         'Complete management or business qualifications',
@@ -120,41 +117,39 @@ const EnhancedCareerOverview = () => {
         'Contribute to industry standards development',
       ],
       salaryRange: '£35,000 - £55,000+',
-      nextSteps: 'Electrical contractor, project management, or engineering roles',
+      nextSteps: 'Electrical contractor, project management, or engineering roles.',
     },
   ];
 
   const industryContext = [
     {
-      title: 'Digital Transformation',
+      title: 'Digital transformation',
       description:
-        'Smart buildings, IoT systems, and automated controls are reshaping electrical work',
-      impact: 'High demand for tech-savvy electricians',
-      icon: <Zap className="h-5 w-5 text-blue-400" />,
+        'Smart buildings, IoT systems, and automated controls are reshaping electrical work.',
+      impact: 'High demand for tech-savvy electricians.',
     },
     {
-      title: 'Sustainability Focus',
+      title: 'Sustainability focus',
       description:
-        'Net-zero targets driving renewable energy adoption and energy efficiency measures',
-      impact: 'Growing opportunities in green technology',
-      icon: <Lightbulb className="h-5 w-5 text-green-400" />,
+        'Net-zero targets driving renewable energy adoption and energy efficiency measures.',
+      impact: 'Growing opportunities in green technology.',
     },
     {
-      title: 'Infrastructure Investment',
-      description: 'Major investment in EV charging networks, grid modernisation, and housing',
-      impact: 'Sustained job creation across sectors',
-      icon: <Building className="h-5 w-5 text-orange-400" />,
+      title: 'Infrastructure investment',
+      description:
+        'Major investment in EV charging networks, grid modernisation, and housing.',
+      impact: 'Sustained job creation across sectors.',
     },
   ];
 
   const qualificationPathways = [
     {
-      pathway: 'Traditional Apprenticeship Route',
+      pathway: 'Traditional apprenticeship route',
       duration: '3-4 years',
       structure: [
         'Level 2 Electrical Installation (18 months)',
         'Level 3 Electrical Installation NVQ (24 months)',
-        'AM2 Assessment and Portfolio completion',
+        'AM2 assessment and portfolio completion',
         'End Point Assessment (EPA)',
       ],
       advantages: [
@@ -165,10 +160,10 @@ const EnhancedCareerOverview = () => {
       ],
     },
     {
-      pathway: 'Adult Career Change Route',
+      pathway: 'Adult career change route',
       duration: '12-24 months',
       structure: [
-        'Intensive Level 2 & 3 courses (12 months)',
+        'Intensive Level 2 and 3 courses (12 months)',
         'Work experience placement (6 months)',
         'Assessment and certification',
         'Job placement support',
@@ -181,11 +176,11 @@ const EnhancedCareerOverview = () => {
       ],
     },
     {
-      pathway: 'Higher Education Route',
+      pathway: 'Higher education route',
       duration: '3-4 years',
       structure: [
-        'HNC/HND in Electrical Engineering',
-        'Degree Apprenticeship options',
+        'HNC / HND in Electrical Engineering',
+        'Degree apprenticeship options',
         'Professional registration pathway',
         'Management development track',
       ],
@@ -200,8 +195,8 @@ const EnhancedCareerOverview = () => {
 
   const professionalDevelopment = [
     {
-      stage: 'Early Career',
-      focus: 'Technical Competence',
+      stage: 'Early career',
+      focus: 'Technical competence',
       activities: [
         'Complete mandatory certifications (BS 7671, 2391)',
         'Gain experience across different electrical systems',
@@ -210,8 +205,8 @@ const EnhancedCareerOverview = () => {
       ],
     },
     {
-      stage: 'Mid Career',
-      focus: 'Specialisation & Leadership',
+      stage: 'Mid career',
+      focus: 'Specialisation and leadership',
       activities: [
         'Choose specialisation area (renewable energy, industrial, etc.)',
         'Pursue advanced certifications and manufacturer training',
@@ -220,8 +215,8 @@ const EnhancedCareerOverview = () => {
       ],
     },
     {
-      stage: 'Senior Career',
-      focus: 'Innovation & Mentorship',
+      stage: 'Senior career',
+      focus: 'Innovation and mentorship',
       activities: [
         'Lead complex projects and initiatives',
         'Mentor next generation of electricians',
@@ -233,7 +228,7 @@ const EnhancedCareerOverview = () => {
 
   const industrySectors = [
     {
-      sector: 'Residential & Domestic',
+      sector: 'Residential and domestic',
       growth: 'Steady',
       opportunities: [
         'Smart home installations',
@@ -244,7 +239,7 @@ const EnhancedCareerOverview = () => {
       salaryRange: '£25K - £40K',
     },
     {
-      sector: 'Commercial & Office',
+      sector: 'Commercial and office',
       growth: 'Growing',
       opportunities: [
         'Energy management systems',
@@ -255,7 +250,7 @@ const EnhancedCareerOverview = () => {
       salaryRange: '£30K - £45K',
     },
     {
-      sector: 'Industrial & Manufacturing',
+      sector: 'Industrial and manufacturing',
       growth: 'High',
       opportunities: [
         'Automation and robotics',
@@ -266,8 +261,8 @@ const EnhancedCareerOverview = () => {
       salaryRange: '£35K - £55K',
     },
     {
-      sector: 'Renewable Energy',
-      growth: 'Very High',
+      sector: 'Renewable energy',
+      growth: 'Very high',
       opportunities: [
         'Solar farm installations',
         'Wind turbine maintenance',
@@ -280,9 +275,9 @@ const EnhancedCareerOverview = () => {
 
   const entrepreneurshipGuide = [
     {
-      path: 'Self-Employed Electrician',
+      path: 'Self-employed electrician',
       requirements: [
-        'Minimum 3 years post-qualification experience (with relevant certifications)',
+        'Minimum 3 years post-qualification experience',
         'Comprehensive public liability insurance cover',
         'Professional scheme membership (NICEIC, NAPIT, or equivalent)',
         'Business registration with HMRC and proper accounting systems',
@@ -291,12 +286,12 @@ const EnhancedCareerOverview = () => {
       considerations: [
         'Variable income during initial establishment period',
         'Personal responsibility for client acquisition and retention',
-        'Essential business development and marketing capabilities required',
+        'Essential business development and marketing capabilities',
         'Significant initial investment in professional equipment and transport',
       ],
     },
     {
-      path: 'Electrical Contracting Business',
+      path: 'Electrical contracting business',
       requirements: [
         'Extensive industry experience with proven track record',
         'Business management qualifications or demonstrable skills',
@@ -315,38 +310,34 @@ const EnhancedCareerOverview = () => {
 
   const careerPathHighlights = [
     {
-      path: 'Domestic Installation Specialist',
+      path: 'Domestic installation specialist',
       growth: 'High demand',
       earning: '£25K - £40K',
       speciality: 'Residential electrical systems, smart home technology',
-      icon: <Building className="h-5 w-5 text-blue-400" />,
     },
     {
-      path: 'Industrial Maintenance Engineer',
+      path: 'Industrial maintenance engineer',
       growth: 'Very high demand',
       earning: '£35K - £55K',
       speciality: 'Complex machinery, PLC systems, fault diagnosis',
-      icon: <Zap className="h-5 w-5 text-orange-400" />,
     },
     {
-      path: 'Renewable Energy Technician',
+      path: 'Renewable energy technician',
       growth: 'Rapidly growing',
       earning: '£30K - £50K',
       speciality: 'Solar PV, wind systems, battery storage',
-      icon: <Lightbulb className="h-5 w-5 text-green-400" />,
     },
     {
-      path: 'Electrical Design Engineer',
+      path: 'Electrical design engineer',
       growth: 'Stable growth',
       earning: '£40K - £65K',
       speciality: 'System design, CAD, project engineering',
-      icon: <BookOpen className="h-5 w-5 text-purple-400" />,
     },
   ];
 
   const advancementTips = [
     {
-      category: 'Skills Development',
+      category: 'Skills development',
       tips: [
         'Continuously update skills through courses and certifications',
         'Consider specialising in growth areas like renewable energy or smart systems',
@@ -355,7 +346,7 @@ const EnhancedCareerOverview = () => {
       ],
     },
     {
-      category: 'Professional Development',
+      category: 'Professional development',
       tips: [
         'Join professional organisations like IET, ECA, or NICEIC',
         'Attend industry events and trade shows for networking',
@@ -364,7 +355,7 @@ const EnhancedCareerOverview = () => {
       ],
     },
     {
-      category: 'Business Skills',
+      category: 'Business skills',
       tips: [
         'Develop project management and leadership abilities',
         'Learn business fundamentals if considering self-employment',
@@ -376,747 +367,458 @@ const EnhancedCareerOverview = () => {
 
   return (
     <div className="space-y-4">
-      <Alert className="border-blue-500/50 bg-blue-500/10">
-        <Eye className="h-4 w-4 text-blue-400" />
-        <AlertDescription className="text-blue-200">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5">
+        <p className="text-[14px] text-white/85 leading-relaxed">
           The UK electrical industry offers diverse career paths with strong job security,
           competitive salaries, and opportunities for continuous professional growth.
-        </AlertDescription>
-      </Alert>
+        </p>
+      </div>
 
       <div
         className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-2 xl:grid-cols-4'}`}
       >
         {careerMetrics.map((metric, index) => (
-          <Card
+          <div
             key={index}
-            className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 p-3 text-center space-y-2"
+            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
           >
-            <div className="flex justify-center">{metric.icon}</div>
-            <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>
-              {metric.metric}
-            </div>
-            <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{metric.data}</div>
-          </Card>
+            <Eyebrow>{metric.metric}</Eyebrow>
+            <div className="text-[14px] text-white/85">{metric.data}</div>
+          </div>
         ))}
       </div>
 
       <MobileAccordion type="single" collapsible className="space-y-2">
         <MobileAccordionItem value="career-stages">
-          <MobileAccordionTrigger icon={<TrendingUp className="h-5 w-5 text-green-400" />}>
-            Career Progression Stages
+          <MobileAccordionTrigger icon={<TrendingUp className="h-5 w-5 text-white/55" />}>
+            Career progression stages
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-6">
-            {progressionStages.map((stage, index) => (
-              <div key={index} className="space-y-3">
-                <div className="space-y-2">
-                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                    {stage.stage}
-                  </h4>
-                  <div className="flex gap-2">
-                    <Badge
-                      variant="outline"
-                      className={`text-green-300 border-green-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}
-                    >
-                      {stage.duration}
-                    </Badge>
-                    <Badge
-                      variant="outline"
-                      className={`text-blue-300 border-blue-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}
-                    >
-                      {stage.level}
-                    </Badge>
+          <MobileAccordionContent>
+            <Section>
+              {progressionStages.map((stage, index) => (
+                <div key={index} className="space-y-3">
+                  <div className="space-y-2">
+                    <h4 className="text-[16px] text-white">{stage.stage}</h4>
+                    <div className="flex gap-2">
+                      <Pill>{stage.duration}</Pill>
+                      <Pill>{stage.level}</Pill>
+                    </div>
                   </div>
-                </div>
-
-                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                  {stage.description}
-                </p>
-
-                <div>
-                  <h6
-                    className={`font-medium text-green-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}
-                  >
-                    Key Milestones
-                  </h6>
-                  <ul className="space-y-1">
-                    {stage.keyMilestones.map((milestone, milestoneIndex) => (
-                      <li
-                        key={milestoneIndex}
-                        className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200 flex items-center gap-2`}
-                      >
-                        <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
-                        {milestone}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="space-y-2">
-                  <span
-                    className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-300 font-medium`}
-                  >
-                    Salary Range:{' '}
-                  </span>
-                  <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>
+                  <p className="text-[14px] text-white/85 leading-relaxed">{stage.description}</p>
+                  <div className="space-y-2">
+                    <Eyebrow>Key milestones</Eyebrow>
+                    <Bullets items={stage.keyMilestones} />
+                  </div>
+                  <div className="text-[14px] text-white/85">
+                    <span className="text-white/55">Salary range: </span>
                     {stage.salaryRange}
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <ArrowRight className="h-4 w-4 text-blue-400" />
-                  <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200`}>
+                  </div>
+                  <div className="text-[14px] text-white/85">
+                    <span className="text-white/55">Next steps: </span>
                     {stage.nextSteps}
-                  </span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
 
-            <div className="pt-2 border-t border-elec-yellow/10 space-y-4">
-              <div>
-                <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                  UK Compliance & Best Practice
-                </h6>
-                <ul className="mt-2 space-y-1">
-                  <li
-                    className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200 flex items-start gap-2`}
-                  >
-                    <CheckCircle className="h-3 w-3 text-blue-400 flex-shrink-0 mt-0.5" />
-                    Apply BS 7671 (18th Edition) selection and erection principles and keep up with
-                    latest amendments
-                  </li>
-                  <li
-                    className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200 flex items-start gap-2`}
-                  >
-                    <CheckCircle className="h-3 w-3 text-blue-400 flex-shrink-0 mt-0.5" />
-                    Follow Safe Isolation and live working avoidance (HSE GS38) at all times
-                  </li>
-                  <li
-                    className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200 flex items-start gap-2`}
-                  >
-                    <CheckCircle className="h-3 w-3 text-blue-400 flex-shrink-0 mt-0.5" />
-                    Record EIC/EICR correctly; store certificates securely for at least 6 years
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                  Typical Roles by Stage
-                </h6>
-                <div className="mt-2 grid grid-cols-2 gap-2">
-                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                    Foundation: Electrical Mate, Trainee Installer
-                  </div>
-                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                    Development: Improver, Installation Electrician
-                  </div>
-                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                    Specialisation: Testing & Inspection, EV Installer, Industrial Maintenance
-                  </div>
-                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                    Mastery: Supervisor, Qualified Supervisor (QS), Project Manager
+              <div className="pt-3 border-t border-white/[0.06] space-y-3">
+                <div className="space-y-2">
+                  <Eyebrow>UK compliance and best practice</Eyebrow>
+                  <Bullets
+                    items={[
+                      'Apply BS 7671:2018+A4:2026 selection and erection principles, keeping current with amendments',
+                      'Follow safe isolation and live working avoidance (HSE GS38) at all times',
+                      'Record EIC / EICR correctly and store certificates securely for at least 6 years',
+                    ]}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Eyebrow>Typical roles by stage</Eyebrow>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-[14px] text-white/85">
+                    <div>Foundation: Electrical Mate, Trainee Installer</div>
+                    <div>Development: Improver, Installation Electrician</div>
+                    <div>Specialisation: Testing and Inspection, EV Installer, Industrial Maintenance</div>
+                    <div>Mastery: Supervisor, Qualified Supervisor (QS), Project Manager</div>
                   </div>
                 </div>
+                <div className="space-y-2">
+                  <Eyebrow>Recommended CPD</Eyebrow>
+                  <Bullets
+                    items={[
+                      '10-25 CPD hours per year aligned to IET guidance depending on career stage',
+                      'Quarterly manufacturer training and product updates (RCD / AFDD, EV, controls)',
+                      'Monthly toolbox talks and site safety refreshers',
+                    ]}
+                  />
+                </div>
               </div>
-              <div>
-                <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                  Recommended CPD
-                </h6>
-                <ul className="mt-2 space-y-1">
-                  <li
-                    className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200 flex items-start gap-2`}
-                  >
-                    <Star className="h-3 w-3 text-green-400 flex-shrink-0 mt-0.5" />
-                    10–25 CPD hours/year aligned to IET guidance depending on career stage
-                  </li>
-                  <li
-                    className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200 flex items-start gap-2`}
-                  >
-                    <Star className="h-3 w-3 text-green-400 flex-shrink-0 mt-0.5" />
-                    Quarterly manufacturer training and product updates (RCD/AFDD, EV, controls)
-                  </li>
-                  <li
-                    className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200 flex items-start gap-2`}
-                  >
-                    <Star className="h-3 w-3 text-green-400 flex-shrink-0 mt-0.5" />
-                    Monthly toolbox talks and site safety refreshers
-                  </li>
-                </ul>
-              </div>
-            </div>
+            </Section>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
         <MobileAccordionItem value="career-paths">
-          <MobileAccordionTrigger icon={<Target className="h-5 w-5 text-blue-400" />}>
-            Popular Career Pathways
+          <MobileAccordionTrigger icon={<Target className="h-5 w-5 text-white/55" />}>
+            Popular career pathways
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-            {careerPathHighlights.map((path, index) => (
-              <div key={index} className="space-y-2">
-                <div className="flex items-center gap-3">
-                  {path.icon}
-                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                    {path.path}
-                  </h4>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <span
-                      className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-300 font-medium`}
-                    >
-                      Growth:{' '}
-                    </span>
-                    <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200`}>
+          <MobileAccordionContent>
+            <Section>
+              {careerPathHighlights.map((path, index) => (
+                <div key={index} className="space-y-2">
+                  <h4 className="text-[16px] text-white">{path.path}</h4>
+                  <div className="grid grid-cols-2 gap-3 text-[14px] text-white/85">
+                    <div>
+                      <span className="text-white/55">Growth: </span>
                       {path.growth}
-                    </span>
-                  </div>
-                  <div>
-                    <span
-                      className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-300 font-medium`}
-                    >
-                      Earning:{' '}
-                    </span>
-                    <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>
+                    </div>
+                    <div>
+                      <span className="text-white/55">Earning: </span>
                       {path.earning}
-                    </span>
+                    </div>
                   </div>
+                  <p className="text-[14px] text-white/85 leading-relaxed">{path.speciality}</p>
                 </div>
+              ))}
 
-                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                  {path.speciality}
-                </p>
+              <div className="pt-3 border-t border-white/[0.06] space-y-3">
+                <div className="space-y-2">
+                  <Eyebrow>Typical certifications</Eyebrow>
+                  <Bullets
+                    items={[
+                      'BS 7671:2018+A4:2026, ECS / JIB card, 2391 (Inspection and Testing)',
+                      'Domestic Part P (where applicable), EV charging (e.g. C&G 2919)',
+                    ]}
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Eyebrow>Common employers</Eyebrow>
+                  <p className="text-[14px] text-white/85 leading-relaxed">
+                    Electrical contractors, facilities management, housebuilders, local authorities,
+                    utilities and DNOs.
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  <Eyebrow>Salary benchmarks</Eyebrow>
+                  <p className="text-[14px] text-white/85 leading-relaxed">
+                    Entry £24-28k, experienced £35-45k, specialist £45-60k+ (London weighting
+                    typically adds 10-20%).
+                  </p>
+                </div>
               </div>
-            ))}
-
-            <div className="pt-2 border-t border-elec-yellow/10 space-y-3">
-              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                Typical Certifications
-              </h6>
-              <ul className="space-y-1">
-                <li
-                  className={`${isMobile ? 'text-xs' : 'text-sm'} text-indigo-200 flex items-start gap-2`}
-                >
-                  <CheckCircle className="h-3 w-3 text-indigo-400 flex-shrink-0 mt-0.5" />
-                  BS 7671 (18th Edition), ECS/JIB card, 2391 (Inspection & Testing)
-                </li>
-                <li
-                  className={`${isMobile ? 'text-xs' : 'text-sm'} text-indigo-200 flex items-start gap-2`}
-                >
-                  <CheckCircle className="h-3 w-3 text-indigo-400 flex-shrink-0 mt-0.5" />
-                  Domestic Part P (where applicable), EV charging (e.g., C&G 2919)
-                </li>
-              </ul>
-              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                Common Employers
-              </h6>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                Electrical contractors, facilities management, housebuilders, local authorities,
-                utilities/DNOs
-              </p>
-              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                Salary Benchmarks
-              </h6>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                Entry £24–28k · Experienced £35–45k · Specialist £45–60k+ (London weighting +10–20%)
-              </p>
-            </div>
+            </Section>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
         <MobileAccordionItem value="advancement-tips">
-          <MobileAccordionTrigger icon={<GraduationCap className="h-5 w-5 text-purple-400" />}>
-            Career Advancement Tips
+          <MobileAccordionTrigger icon={<GraduationCap className="h-5 w-5 text-white/55" />}>
+            Career advancement tips
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-            {advancementTips.map((section, index) => (
-              <div key={index} className="space-y-3">
-                <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                  {section.category}
-                </h4>
-                <ul className="space-y-2">
-                  {section.tips.map((tip, tipIndex) => (
-                    <li
-                      key={tipIndex}
-                      className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200 flex items-start gap-2`}
-                    >
-                      <Star className="h-3 w-3 text-purple-400 flex-shrink-0 mt-0.5" />
-                      {tip}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          <MobileAccordionContent>
+            <Section>
+              {advancementTips.map((section, index) => (
+                <div key={index} className="space-y-2">
+                  <h4 className="text-[16px] text-white">{section.category}</h4>
+                  <Bullets items={section.tips} />
+                </div>
+              ))}
 
-            <div className="pt-2 border-t border-elec-yellow/10 space-y-3">
-              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                Quick Wins
-              </h6>
-              <ul className="space-y-1">
-                <li
-                  className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200 flex items-start gap-2`}
-                >
-                  <Star className="h-3 w-3 text-purple-400 flex-shrink-0 mt-0.5" />
-                  Keep a simple CPD log and update it weekly (photos of certs, brief notes)
-                </li>
-                <li
-                  className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200 flex items-start gap-2`}
-                >
-                  <Star className="h-3 w-3 text-purple-400 flex-shrink-0 mt-0.5" />
-                  Ask for manufacturer tool-box sessions on-site to upskill the team
-                </li>
-              </ul>
-              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                Avoid These Pitfalls
-              </h6>
-              <ul className="space-y-1">
-                <li
-                  className={`${isMobile ? 'text-xs' : 'text-sm'} text-red-200 flex items-start gap-2`}
-                >
-                  <CheckCircle className="h-3 w-3 text-red-400 flex-shrink-0 mt-0.5" />
-                  Letting qualifications lapse; schedule reminders 3–6 months before expiry
-                </li>
-                <li
-                  className={`${isMobile ? 'text-xs' : 'text-sm'} text-red-200 flex items-start gap-2`}
-                >
-                  <CheckCircle className="h-3 w-3 text-red-400 flex-shrink-0 mt-0.5" />
-                  Ignoring paperwork (EIC/EICR); build templates and stick to them
-                </li>
-              </ul>
-            </div>
+              <div className="pt-3 border-t border-white/[0.06] space-y-3">
+                <div className="space-y-2">
+                  <Eyebrow>Quick wins</Eyebrow>
+                  <Bullets
+                    items={[
+                      'Keep a simple CPD log and update it weekly (photos of certs, brief notes)',
+                      'Ask for manufacturer toolbox sessions on-site to upskill the team',
+                    ]}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Eyebrow>Avoid these pitfalls</Eyebrow>
+                  <Bullets
+                    items={[
+                      'Letting qualifications lapse — schedule reminders 3-6 months before expiry',
+                      'Ignoring paperwork (EIC / EICR) — build templates and stick to them',
+                    ]}
+                  />
+                </div>
+              </div>
+            </Section>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
         <MobileAccordionItem value="industry-context">
-          <MobileAccordionTrigger icon={<Sparkles className="h-5 w-5 text-orange-400" />}>
-            Industry Context & Trends
+          <MobileAccordionTrigger icon={<Sparkles className="h-5 w-5 text-white/55" />}>
+            Industry context and trends
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-            {industryContext.map((context, index) => (
-              <div key={index} className="space-y-3">
-                <div className="flex items-center gap-3">
-                  {context.icon}
-                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                    {context.title}
-                  </h4>
-                </div>
-                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                  {context.description}
-                </p>
-                <div className="space-y-2">
-                  <span
-                    className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-300 font-medium`}
-                  >
-                    Impact:{' '}
-                  </span>
-                  <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-200`}>
+          <MobileAccordionContent>
+            <Section>
+              {industryContext.map((context, index) => (
+                <div key={index} className="space-y-2">
+                  <h4 className="text-[16px] text-white">{context.title}</h4>
+                  <p className="text-[14px] text-white/85 leading-relaxed">{context.description}</p>
+                  <div className="text-[14px] text-white/85">
+                    <span className="text-white/55">Impact: </span>
                     {context.impact}
-                  </span>
+                  </div>
+                </div>
+              ))}
+
+              <div className="pt-3 border-t border-white/[0.06] space-y-3">
+                <div className="space-y-2">
+                  <Eyebrow>What this means for you</Eyebrow>
+                  <Bullets
+                    items={[
+                      'Prioritise digital skills (smart systems, basic networking, controls)',
+                      'Build renewable / energy efficiency competencies to align with net-zero demand',
+                    ]}
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Eyebrow>Skills to focus on</Eyebrow>
+                  <p className="text-[14px] text-white/85 leading-relaxed">
+                    Testing and verification, commissioning, data cabling, basic PLC awareness,
+                    safe systems of work.
+                  </p>
                 </div>
               </div>
-            ))}
-
-            <div className="pt-2 border-t border-elec-yellow/10 space-y-3">
-              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                What this means for you
-              </h6>
-              <ul className="space-y-1">
-                <li
-                  className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-200 flex items-start gap-2`}
-                >
-                  <Compass className="h-3 w-3 text-orange-400 flex-shrink-0 mt-0.5" />
-                  Prioritise digital skills (smart systems, basic networking, controls)
-                </li>
-                <li
-                  className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-200 flex items-start gap-2`}
-                >
-                  <Compass className="h-3 w-3 text-orange-400 flex-shrink-0 mt-0.5" />
-                  Build renewable/energy efficiency competencies to align with net‑zero demand
-                </li>
-              </ul>
-              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                Skills to focus on
-              </h6>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                Testing & verification, commissioning, data cabling, basic PLC awareness, safe
-                systems of work
-              </p>
-            </div>
+            </Section>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
         <MobileAccordionItem value="qualification-pathways">
-          <MobileAccordionTrigger icon={<BookOpen className="h-5 w-5 text-indigo-400" />}>
-            Qualification Pathways
+          <MobileAccordionTrigger icon={<BookOpen className="h-5 w-5 text-white/55" />}>
+            Qualification pathways
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-6">
-            {qualificationPathways.map((pathway, index) => (
-              <div key={index} className="space-y-4">
-                <div className="space-y-2">
-                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                    {pathway.pathway}
-                  </h4>
-                  <Badge
-                    variant="outline"
-                    className={`text-indigo-300 border-indigo-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}
-                  >
-                    Duration: {pathway.duration}
-                  </Badge>
+          <MobileAccordionContent>
+            <Section>
+              {qualificationPathways.map((pathway, index) => (
+                <div key={index} className="space-y-3">
+                  <div className="space-y-2">
+                    <h4 className="text-[16px] text-white">{pathway.pathway}</h4>
+                    <Pill>Duration: {pathway.duration}</Pill>
+                  </div>
+                  <div className="space-y-2">
+                    <Eyebrow>Structure</Eyebrow>
+                    <Bullets items={pathway.structure} />
+                  </div>
+                  <div className="space-y-2">
+                    <Eyebrow>Advantages</Eyebrow>
+                    <Bullets items={pathway.advantages} />
+                  </div>
                 </div>
+              ))}
 
-                <div>
-                  <h6
-                    className={`font-medium text-indigo-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}
-                  >
-                    Structure
-                  </h6>
-                  <ul className="space-y-1">
-                    {pathway.structure.map((step, stepIndex) => (
-                      <li
-                        key={stepIndex}
-                        className={`${isMobile ? 'text-xs' : 'text-sm'} text-indigo-200 flex items-center gap-2`}
-                      >
-                        <CheckCircle className="h-3 w-3 text-indigo-400 flex-shrink-0" />
-                        {step}
-                      </li>
-                    ))}
-                  </ul>
+              <div className="pt-3 border-t border-white/[0.06] space-y-3">
+                <div className="space-y-1">
+                  <Eyebrow>Entry requirements</Eyebrow>
+                  <p className="text-[14px] text-white/85 leading-relaxed">
+                    GCSEs (or equivalent) typically in Maths and English, aptitude for practical
+                    work, health and safety awareness.
+                  </p>
                 </div>
-
-                <div>
-                  <h6
-                    className={`font-medium text-green-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}
-                  >
-                    Advantages
-                  </h6>
-                  <ul className="space-y-1">
-                    {pathway.advantages.map((advantage, advantageIndex) => (
-                      <li
-                        key={advantageIndex}
-                        className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200 flex items-center gap-2`}
-                      >
-                        <Star className="h-3 w-3 text-green-400 flex-shrink-0" />
-                        {advantage}
-                      </li>
-                    ))}
-                  </ul>
+                <div className="space-y-1">
+                  <Eyebrow>Assessment methods</Eyebrow>
+                  <p className="text-[14px] text-white/85 leading-relaxed">
+                    Portfolio evidence, on-site observations, written and practical exams,
+                    AM2 / EPA as applicable.
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  <Eyebrow>Funding routes</Eyebrow>
+                  <p className="text-[14px] text-white/85 leading-relaxed">
+                    Employer apprenticeship levy, adult learning loans, regional grants — check
+                    local colleges and providers.
+                  </p>
                 </div>
               </div>
-            ))}
-
-            <div className="pt-2 border-t border-elec-yellow/10 space-y-3">
-              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                Entry requirements
-              </h6>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                GCSEs (or equivalent) typically in Maths and English; aptitude for practical work;
-                health & safety awareness.
-              </p>
-              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                Assessment methods
-              </h6>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                Portfolio evidence, on‑site observations, written/practical exams, AM2/EPA as
-                applicable.
-              </p>
-              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                Funding routes
-              </h6>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                Employer apprenticeship levy, adult learning loans, regional grants; check local
-                colleges/providers.
-              </p>
-            </div>
+            </Section>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
         <MobileAccordionItem value="professional-development">
-          <MobileAccordionTrigger icon={<Network className="h-5 w-5 text-cyan-400" />}>
-            Professional Development Journey
+          <MobileAccordionTrigger icon={<Network className="h-5 w-5 text-white/55" />}>
+            Professional development journey
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-            {professionalDevelopment.map((stage, index) => (
-              <div key={index} className="space-y-3">
-                <div className="space-y-2">
-                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                    {stage.stage}
-                  </h4>
-                  <Badge
-                    variant="outline"
-                    className={`text-cyan-300 border-cyan-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}
-                  >
-                    Focus: {stage.focus}
-                  </Badge>
+          <MobileAccordionContent>
+            <Section>
+              {professionalDevelopment.map((stage, index) => (
+                <div key={index} className="space-y-2">
+                  <div className="space-y-2">
+                    <h4 className="text-[16px] text-white">{stage.stage}</h4>
+                    <Pill>Focus: {stage.focus}</Pill>
+                  </div>
+                  <div className="space-y-2">
+                    <Eyebrow>Key activities</Eyebrow>
+                    <Bullets items={stage.activities} />
+                  </div>
                 </div>
+              ))}
 
-                <div>
-                  <h6
-                    className={`font-medium text-cyan-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}
-                  >
-                    Key Activities
-                  </h6>
-                  <ul className="space-y-1">
-                    {stage.activities.map((activity, activityIndex) => (
-                      <li
-                        key={activityIndex}
-                        className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-200 flex items-start gap-2`}
-                      >
-                        <ArrowRight className="h-3 w-3 text-cyan-400 flex-shrink-0 mt-0.5" />
-                        {activity}
-                      </li>
-                    ))}
-                  </ul>
+              <div className="pt-3 border-t border-white/[0.06] space-y-3">
+                <div className="space-y-1">
+                  <Eyebrow>CPD targets</Eyebrow>
+                  <p className="text-[14px] text-white/85 leading-relaxed">
+                    Early 10-15 hours / year, mid 15-25 hours / year, senior 25+ hours / year (mix
+                    of formal, informal, and on-the-job learning).
+                  </p>
+                </div>
+                <div className="space-y-2">
+                  <Eyebrow>Simple learning plan</Eyebrow>
+                  <Bullets
+                    items={[
+                      'One certification, one manufacturer course, one soft skill per quarter',
+                      'Track evidence with dates, reflections, and outcomes',
+                    ]}
+                  />
                 </div>
               </div>
-            ))}
-
-            <div className="pt-2 border-t border-elec-yellow/10 space-y-3">
-              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                CPD Targets
-              </h6>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                Early 10–15h/yr · Mid 15–25h/yr · Senior 25h+/yr (mix of formal, informal, and
-                on‑the‑job learning)
-              </p>
-              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                Simple Learning Plan
-              </h6>
-              <ul className="space-y-1">
-                <li
-                  className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-200 flex items-start gap-2`}
-                >
-                  <ArrowRight className="h-3 w-3 text-cyan-400 flex-shrink-0 mt-0.5" />
-                  One certification, one manufacturer course, one soft‑skill per quarter
-                </li>
-                <li
-                  className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-200 flex items-start gap-2`}
-                >
-                  <ArrowRight className="h-3 w-3 text-cyan-400 flex-shrink-0 mt-0.5" />
-                  Track evidence with dates, reflections, and outcomes
-                </li>
-              </ul>
-            </div>
+            </Section>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
         <MobileAccordionItem value="industry-sectors">
-          <MobileAccordionTrigger icon={<Building className="h-5 w-5 text-teal-400" />}>
-            Industry Sectors & Opportunities
+          <MobileAccordionTrigger icon={<Building className="h-5 w-5 text-white/55" />}>
+            Industry sectors and opportunities
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-            {industrySectors.map((sector, index) => (
-              <div key={index} className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                    {sector.sector}
-                  </h4>
-                  <Badge
-                    variant="outline"
-                    className={`text-teal-300 border-teal-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}
-                  >
-                    {sector.growth}
-                  </Badge>
-                </div>
-
-                <div>
-                  <h6
-                    className={`font-medium text-teal-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}
-                  >
-                    Growth Opportunities
-                  </h6>
-                  <ul className="space-y-1">
-                    {sector.opportunities.map((opportunity, oppIndex) => (
-                      <li
-                        key={oppIndex}
-                        className={`${isMobile ? 'text-xs' : 'text-sm'} text-teal-200 flex items-center gap-2`}
-                      >
-                        <Lightbulb className="h-3 w-3 text-teal-400 flex-shrink-0" />
-                        {opportunity}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="space-y-2">
-                  <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-teal-300 font-medium`}>
-                    Salary Range:{' '}
-                  </span>
-                  <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-teal-200`}>
+          <MobileAccordionContent>
+            <Section>
+              {industrySectors.map((sector, index) => (
+                <div key={index} className="space-y-2">
+                  <div className="flex items-baseline justify-between gap-2">
+                    <h4 className="text-[16px] text-white">{sector.sector}</h4>
+                    <Pill>{sector.growth}</Pill>
+                  </div>
+                  <div className="space-y-2">
+                    <Eyebrow>Growth opportunities</Eyebrow>
+                    <Bullets items={sector.opportunities} />
+                  </div>
+                  <div className="text-[14px] text-white/85">
+                    <span className="text-white/55">Salary range: </span>
                     {sector.salaryRange}
-                  </span>
+                  </div>
+                </div>
+              ))}
+
+              <div className="pt-3 border-t border-white/[0.06] space-y-3">
+                <div className="space-y-1">
+                  <Eyebrow>Mandatory certifications</Eyebrow>
+                  <p className="text-[14px] text-white/85 leading-relaxed">
+                    BS 7671:2018+A4:2026, ECS / JIB, site inductions; sector-specific may include
+                    IPAF, PASMA, confined spaces.
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  <Eyebrow>Key risks</Eyebrow>
+                  <p className="text-[14px] text-white/85 leading-relaxed">
+                    Live work exposure, working at height, isolation errors — mitigate via SSOW,
+                    permits, and competency checks.
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  <Eyebrow>Essential tools</Eyebrow>
+                  <p className="text-[14px] text-white/85 leading-relaxed">
+                    Calibrated testers, lock-off kits, voltage indicators (GS38), appropriate PPE
+                    per task and environment.
+                  </p>
                 </div>
               </div>
-            ))}
-
-            <div className="pt-2 border-t border-elec-yellow/10 space-y-3">
-              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                Mandatory certs
-              </h6>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                BS 7671, ECS/JIB, site inductions; sector‑specific may include IPAF, PASMA, confined
-                spaces.
-              </p>
-              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                Key risks
-              </h6>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                Live work exposure, working at height, isolation errors—mitigate via SSOW, permits,
-                and competency checks.
-              </p>
-              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                Essential tools
-              </h6>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                Calibrated testers, lock‑off kits, voltage indicators (GS38), appropriate PPE per
-                task and environment.
-              </p>
-            </div>
+            </Section>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
         <MobileAccordionItem value="entrepreneurship">
-          <MobileAccordionTrigger icon={<Briefcase className="h-5 w-5 text-amber-400" />}>
-            Entrepreneurship & Self-Employment
+          <MobileAccordionTrigger icon={<Briefcase className="h-5 w-5 text-white/55" />}>
+            Entrepreneurship and self-employment
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-6">
-            {entrepreneurshipGuide.map((path, index) => (
-              <div key={index} className="space-y-4">
-                <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                  {path.path}
-                </h4>
-
-                <div>
-                  <h6
-                    className={`font-medium text-amber-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}
-                  >
-                    Requirements
-                  </h6>
-                  <ul className="space-y-1">
-                    {path.requirements.map((requirement, reqIndex) => (
-                      <li
-                        key={reqIndex}
-                        className={`${isMobile ? 'text-xs' : 'text-sm'} text-amber-200 flex items-center gap-2`}
-                      >
-                        <CheckCircle className="h-3 w-3 text-amber-400 flex-shrink-0" />
-                        {requirement}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="space-y-2">
-                  <span
-                    className={`${isMobile ? 'text-xs' : 'text-sm'} text-amber-300 font-medium`}
-                  >
-                    Potential Earnings:{' '}
-                  </span>
-                  <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-amber-200`}>
+          <MobileAccordionContent>
+            <Section>
+              {entrepreneurshipGuide.map((path, index) => (
+                <div key={index} className="space-y-3">
+                  <h4 className="text-[16px] text-white">{path.path}</h4>
+                  <div className="space-y-2">
+                    <Eyebrow>Requirements</Eyebrow>
+                    <Bullets items={path.requirements} />
+                  </div>
+                  <div className="text-[14px] text-white/85">
+                    <span className="text-white/55">Potential earnings: </span>
                     {path.earnings}
-                  </span>
+                  </div>
+                  <div className="space-y-2">
+                    <Eyebrow>Key considerations</Eyebrow>
+                    <Bullets items={path.considerations} />
+                  </div>
                 </div>
+              ))}
 
-                <div>
-                  <h6
-                    className={`font-medium text-orange-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}
-                  >
-                    Key Considerations
-                  </h6>
-                  <ul className="space-y-1">
-                    {path.considerations.map((consideration, consIndex) => (
-                      <li
-                        key={consIndex}
-                        className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-200 flex items-start gap-2`}
+              <div className="pt-3 border-t border-white/[0.06] space-y-3">
+                <div className="space-y-1">
+                  <Eyebrow>Start-up costs (indicative)</Eyebrow>
+                  <p className="text-[14px] text-white/85 leading-relaxed">
+                    Insurance, test equipment, van and tools, scheme fees, marketing, accounting
+                    software — typically £5k-£15k+ depending on scope.
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  <Eyebrow>Day rates and pricing</Eyebrow>
+                  <p className="text-[14px] text-white/85 leading-relaxed">
+                    Typical day rate £180-£350+ depending on region. Price by value with
+                    allowances for testing, certification, and warranty.
+                  </p>
+                </div>
+                <div className="space-y-2">
+                  <Eyebrow>Compliance checklist</Eyebrow>
+                  <Bullets
+                    items={[
+                      'HMRC registration, public and professional liability insurance, waste carrier (if needed), contracts and T&Cs',
+                      'Scheme membership (NICEIC / NAPIT) where required, calibration and document control process',
+                    ]}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Eyebrow>Useful UK links</Eyebrow>
+                  <ul className="space-y-1 text-[14px] text-white/85">
+                    <li>
+                      <a
+                        href="https://www.gov.uk/set-up-business"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="underline hover:text-elec-yellow"
                       >
-                        <Compass className="h-3 w-3 text-orange-400 flex-shrink-0 mt-0.5" />
-                        {consideration}
-                      </li>
-                    ))}
+                        GOV.UK — Set up a business
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.niceic.com/"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="underline hover:text-elec-yellow"
+                      >
+                        NICEIC — Certification schemes
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.napit.org.uk/"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="underline hover:text-elec-yellow"
+                      >
+                        NAPIT — Competent Person scheme
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.hse.gov.uk/electricity/index.htm"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="underline hover:text-elec-yellow"
+                      >
+                        HSE — Electrical safety
+                      </a>
+                    </li>
                   </ul>
                 </div>
               </div>
-            ))}
-
-            <div className="pt-2 border-t border-elec-yellow/10 space-y-3">
-              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                Start‑up costs (indicative)
-              </h6>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                Insurance, test equipment, van/tools, scheme fees, marketing, accounting software:
-                £5k–£15k+ depending on scope.
-              </p>
-              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                Day rates & pricing
-              </h6>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                Typical day rate £180–£350+ region dependent. Price by value with allowances for
-                testing, certification, and warranty.
-              </p>
-              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                Compliance checklist
-              </h6>
-              <ul className="space-y-1">
-                <li
-                  className={`${isMobile ? 'text-xs' : 'text-sm'} text-amber-200 flex items-start gap-2`}
-                >
-                  <CheckCircle className="h-3 w-3 text-amber-400 flex-shrink-0 mt-0.5" />
-                  HMRC registration, public/professional liability insurance, waste carrier (if
-                  needed), contracts and T&Cs
-                </li>
-                <li
-                  className={`${isMobile ? 'text-xs' : 'text-sm'} text-amber-200 flex items-start gap-2`}
-                >
-                  <CheckCircle className="h-3 w-3 text-amber-400 flex-shrink-0 mt-0.5" />
-                  Scheme membership (NICEIC/NAPIT) where required; calibration and document control
-                  process
-                </li>
-              </ul>
-              <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                Useful UK links
-              </h6>
-              <ul className="space-y-1">
-                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                  <a
-                    href="https://www.gov.uk/set-up-business"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="underline"
-                  >
-                    GOV.UK — Set up a business
-                  </a>
-                </li>
-                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                  <a
-                    href="https://www.niceic.com/"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="underline"
-                  >
-                    NICEIC — Certification schemes
-                  </a>
-                </li>
-                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                  <a
-                    href="https://www.napit.org.uk/"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="underline"
-                  >
-                    NAPIT — Competent Person scheme
-                  </a>
-                </li>
-                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                  <a
-                    href="https://www.hse.gov.uk/electricity/index.htm"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="underline"
-                  >
-                    HSE — Electrical safety
-                  </a>
-                </li>
-              </ul>
-            </div>
+            </Section>
           </MobileAccordionContent>
         </MobileAccordionItem>
       </MobileAccordion>

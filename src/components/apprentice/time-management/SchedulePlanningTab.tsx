@@ -1,7 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Calendar, Clock, CheckSquare, AlertCircle, Target } from 'lucide-react';
 import { useState } from 'react';
 
 const SchedulePlanningTab = () => {
@@ -10,10 +7,8 @@ const SchedulePlanningTab = () => {
   const scheduleTemplates = [
     {
       id: 'early-bird',
-      title: 'Early Bird Schedule',
+      title: 'Early bird schedule',
       description: 'For apprentices who prefer starting early',
-      icon: Clock,
-      color: 'border-blue-500/20 bg-blue-500/10',
       schedule: {
         '5:30': 'Wake up, light breakfast',
         '6:00': 'Travel to site',
@@ -29,10 +24,8 @@ const SchedulePlanningTab = () => {
     },
     {
       id: 'standard',
-      title: 'Standard Schedule',
+      title: 'Standard schedule',
       description: 'Balanced approach for most apprentices',
-      icon: Target,
-      color: 'border-green-500/20 bg-green-500/10',
       schedule: {
         '6:30': 'Wake up, breakfast',
         '7:30': 'Travel to site',
@@ -48,10 +41,8 @@ const SchedulePlanningTab = () => {
     },
     {
       id: 'flexible',
-      title: 'Flexible Schedule',
+      title: 'Flexible schedule',
       description: 'For apprentices with varying site times',
-      icon: Calendar,
-      color: 'border-purple-500/20 bg-purple-500/10',
       schedule: {
         Variable: 'Adjust wake-up based on site start time',
         'Site-1h': 'Travel buffer',
@@ -67,7 +58,7 @@ const SchedulePlanningTab = () => {
 
   const planningTools = [
     {
-      title: 'Weekly Planning Session',
+      title: 'Weekly planning session',
       description: 'Sunday evening review and planning',
       steps: [
         "Review previous week's achievements",
@@ -79,7 +70,7 @@ const SchedulePlanningTab = () => {
       time: '30-45 minutes',
     },
     {
-      title: 'Daily Planning Routine',
+      title: 'Daily planning routine',
       description: 'Morning or evening preparation',
       steps: [
         "Check tomorrow's site location and start time",
@@ -94,136 +85,148 @@ const SchedulePlanningTab = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Calendar className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Schedule Templates</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {scheduleTemplates.map((template) => {
-              const IconComponent = template.icon;
-
-              return (
-                <div
-                  key={template.id}
-                  className={`border rounded-lg p-6 ${template.color} transition-all duration-200 hover:scale-[1.02] cursor-pointer ${selectedTemplate === template.id ? 'ring-2 ring-elec-yellow' : ''}`}
-                  onClick={() =>
-                    setSelectedTemplate(selectedTemplate === template.id ? null : template.id)
-                  }
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Schedule templates
+        </span>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          {scheduleTemplates.map((template) => {
+            const active = selectedTemplate === template.id;
+            return (
+              <div
+                key={template.id}
+                className={`rounded-xl border p-4 transition-all duration-200 cursor-pointer touch-manipulation ${
+                  active
+                    ? 'border-elec-yellow/30 bg-elec-yellow/[0.04]'
+                    : 'border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04]'
+                }`}
+                onClick={() => setSelectedTemplate(active ? null : template.id)}
+              >
+                <h3 className="text-[16px] font-semibold text-white leading-tight">
+                  {template.title}
+                </h3>
+                <p className="text-[14px] text-white/70 leading-relaxed mt-1">
+                  {template.description}
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full border-white/15 text-white hover:bg-white/[0.05] touch-manipulation mt-3"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedTemplate(template.id);
+                  }}
                 >
-                  <div className="flex items-center gap-3 mb-4">
-                    <IconComponent className="h-6 w-6 text-white" />
-                    <div>
-                      <h3 className="text-lg font-semibold text-white">{template.title}</h3>
-                      <p className="text-sm text-white">{template.description}</p>
-                    </div>
-                  </div>
+                  {active ? 'Hide details' : 'View schedule'}
+                </Button>
+              </div>
+            );
+          })}
+        </div>
 
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="w-full border-white/20 text-white hover:bg-white/10"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedTemplate(template.id);
-                    }}
-                  >
-                    {selectedTemplate === template.id ? 'Hide Details' : 'View Schedule'}
-                  </Button>
+        {selectedTemplate && (
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              {scheduleTemplates.find((t) => t.id === selectedTemplate)?.title} — sample day
+            </span>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {Object.entries(
+                scheduleTemplates.find((t) => t.id === selectedTemplate)?.schedule || {}
+              ).map(([time, activity]) => (
+                <div
+                  key={time}
+                  className="flex items-center gap-3 rounded-lg border border-white/[0.06] bg-white/[0.02] p-3"
+                >
+                  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono whitespace-nowrap">
+                    {time}
+                  </span>
+                  <span className="text-[14px] text-white/85 leading-relaxed">{activity}</span>
                 </div>
-              );
-            })}
+              ))}
+            </div>
           </div>
+        )}
+      </div>
 
-          {selectedTemplate && (
-            <div className="mt-6 border border-elec-yellow/20 rounded-lg p-6 bg-white/5">
-              <h4 className="font-semibold text-elec-yellow mb-4">
-                {scheduleTemplates.find((t) => t.id === selectedTemplate)?.title} - Sample Day
-              </h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {Object.entries(
-                  scheduleTemplates.find((t) => t.id === selectedTemplate)?.schedule || {}
-                ).map(([time, activity]) => (
-                  <div
-                    key={time}
-                    className="flex items-center gap-3 p-3 border border-elec-yellow/10 rounded"
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Planning routines
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {planningTools.map((tool, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
+            >
+              <div className="flex items-start justify-between gap-2">
+                <h4 className="text-[14px] font-semibold text-white">{tool.title}</h4>
+                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
+                  {tool.time}
+                </span>
+              </div>
+              <p className="text-[14px] text-white/85 leading-relaxed">{tool.description}</p>
+              <ul className="space-y-1.5">
+                {tool.steps.map((step, stepIndex) => (
+                  <li
+                    key={stepIndex}
+                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
                   >
-                    <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30">
-                      {time}
-                    </Badge>
-                    <span className="text-sm text-white">{activity}</span>
-                  </div>
+                    <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                    <span>{step}</span>
+                  </li>
                 ))}
-              </div>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <CheckSquare className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Planning Routines</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {planningTools.map((tool, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-6">
-                <div className="flex items-start justify-between mb-4">
-                  <h4 className="font-semibold text-white">{tool.title}</h4>
-                  <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30">
-                    {tool.time}
-                  </Badge>
-                </div>
-                <p className="text-sm text-white mb-4">{tool.description}</p>
-
-                <ul className="space-y-2">
-                  {tool.steps.map((step, stepIndex) => (
-                    <li key={stepIndex} className="text-sm text-white flex items-start gap-2">
-                      <div className="w-1 h-1 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                      {step}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow">Site-Specific Planning</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="border border-elec-yellow/20 rounded-lg p-4">
-              <h4 className="font-semibold text-white mb-3">🏠 Domestic Sites</h4>
-              <ul className="space-y-2 text-sm text-white">
-                <li>• Usually 8:00-16:30 working hours</li>
-                <li>• More predictable schedule</li>
-                <li>• Plan study time for 17:30-19:30</li>
-                <li>• Use travel time for audio learning</li>
               </ul>
             </div>
+          ))}
+        </div>
+      </div>
 
-            <div className="border border-elec-yellow/20 rounded-lg p-4">
-              <h4 className="font-semibold text-white mb-3">🏢 Commercial Sites</h4>
-              <ul className="space-y-2 text-sm text-white">
-                <li>• May require early starts (6:00-7:00)</li>
-                <li>• Longer days possible</li>
-                <li>• Plan study for evenings or early mornings</li>
-                <li>• Consider batch cooking on weekends</li>
-              </ul>
-            </div>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Site-specific planning
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+            <h4 className="text-[14px] font-semibold text-white">Domestic sites</h4>
+            <ul className="space-y-1.5">
+              {[
+                'Usually 8:00-16:30 working hours',
+                'More predictable schedule',
+                'Plan study time for 17:30-19:30',
+                'Use travel time for audio learning',
+              ].map((item, i) => (
+                <li
+                  key={i}
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-        </CardContent>
-      </Card>
+
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+            <h4 className="text-[14px] font-semibold text-white">Commercial sites</h4>
+            <ul className="space-y-1.5">
+              {[
+                'May require early starts (6:00-7:00)',
+                'Longer days possible',
+                'Plan study for evenings or early mornings',
+                'Consider batch cooking on weekends',
+              ].map((item, i) => (
+                <li
+                  key={i}
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

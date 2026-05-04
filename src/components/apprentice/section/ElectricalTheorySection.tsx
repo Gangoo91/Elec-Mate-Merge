@@ -2,11 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { storageGetSync } from '@/utils/storage';
 import { Button } from '@/components/ui/button';
-import { Book, CheckCircle, FileText, Award } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { CheckCircle } from 'lucide-react';
 import { legislationSection } from '@/data/electricalTheory/section1-legislation';
-import SectionHeader from '@/components/apprentice/SectionHeader';
-import { Badge } from '@/components/ui/badge';
 
 interface ElectricalTheorySectionProps {
   sectionId: string;
@@ -35,114 +32,87 @@ const ElectricalTheorySection: React.FC<ElectricalTheorySectionProps> = ({
   };
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      {/* Section Introduction */}
-      <div className="bg-gradient-to-r from-white/10 to-white/5 border border-elec-yellow/30 rounded-lg p-6 shadow-lg relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-32 h-32 opacity-10">
-          <FileText className="w-full h-full text-elec-yellow" />
-        </div>
-
-        <div className="flex items-center gap-4 mb-4">
-          <div className="bg-elec-yellow rounded-full p-2 flex items-center justify-center">
-            <Book className="h-5 w-5 text-elec-dark" />
-          </div>
-          <h1 className="text-2xl font-bold text-elec-yellow">{legislationSection.title}</h1>
-
+    <div className="space-y-6 animate-fade-in">
+      <div className="space-y-2">
+        <div className="flex items-baseline justify-between gap-3">
+          <h1 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
+            {legislationSection.title}
+          </h1>
           {isCompleted && (
-            <Badge
-              variant="outline"
-              className="ml-auto bg-green-500/10 text-green-400 border-green-500/30"
-            >
-              <CheckCircle className="h-3.5 w-3.5 mr-1" />
-              Completed
-            </Badge>
+            <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0" />
           )}
         </div>
-
-        <p className="text-white ml-12 mb-6">{legislationSection.description}</p>
-
-        <div className="ml-12 pl-4 border-l-2 border-elec-yellow/30 text-sm text-white">
-          <p>{legislationSection.content.introduction}</p>
-        </div>
+        <p className="text-[14px] text-white/70 leading-relaxed">{legislationSection.description}</p>
+        <p className="text-[14px] text-white/85 leading-relaxed pt-2 border-t border-white/[0.06]">
+          {legislationSection.content.introduction}
+        </p>
       </div>
 
-      {/* Subsections Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {legislationSection.content.subsections.map((subsection) => {
           const isSubsectionCompleted = getCompletionStatus(subsection.id);
 
           return (
-            <Card
+            <button
               key={subsection.id}
-              className={`border border-elec-yellow/20 hover:border-elec-yellow/40 transition-all cursor-pointer group ${
-                isSubsectionCompleted
-                  ? 'bg-gradient-to-br from-elec-dark to-green-950/30'
-                  : 'bg-white/10'
-              }`}
               onClick={() => handleNavigateToSubsection(subsection.id)}
+              className="text-left rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 active:bg-white/[0.04] transition-colors touch-manipulation space-y-2"
             >
-              <CardHeader className="pb-2">
-                <div className="flex justify-between items-center">
-                  <Badge
-                    variant="outline"
-                    className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30"
+              <div className="flex justify-between items-baseline gap-2">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 font-mono">
+                  {subsection.id}
+                </span>
+                {isSubsectionCompleted && (
+                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                )}
+              </div>
+              <h3 className="text-[16px] font-semibold text-white leading-tight">
+                {subsection.title}
+              </h3>
+              <p className="text-[14px] text-white/70 leading-relaxed line-clamp-2">
+                {subsection.content}
+              </p>
+              <ul className="space-y-1 pt-1">
+                {subsection.keyPoints.slice(0, 2).map((point, idx) => (
+                  <li
+                    key={idx}
+                    className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
                   >
-                    {subsection.id}
-                  </Badge>
-                  {isSubsectionCompleted && <CheckCircle className="h-4 w-4 text-green-500" />}
-                </div>
-                <CardTitle className="text-lg mt-2 group-hover:text-elec-yellow transition-colors">
-                  {subsection.title}
-                </CardTitle>
-                <CardDescription className="text-sm text-white line-clamp-2">
-                  {subsection.content}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ul className="list-disc list-inside text-sm text-white space-y-1">
-                  {subsection.keyPoints.slice(0, 2).map((point, idx) => (
-                    <li key={idx} className="truncate">
-                      {point}
-                    </li>
-                  ))}
-                  {subsection.keyPoints.length > 2 && (
-                    <li className="text-elec-yellow/70">
-                      + {subsection.keyPoints.length - 2} more topics
-                    </li>
-                  )}
-                </ul>
-              </CardContent>
-            </Card>
+                    <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                    <span className="truncate">{point}</span>
+                  </li>
+                ))}
+                {subsection.keyPoints.length > 2 && (
+                  <li className="text-[12px] text-white/55 pl-3">
+                    + {subsection.keyPoints.length - 2} more topics
+                  </li>
+                )}
+              </ul>
+            </button>
           );
         })}
       </div>
 
-      {/* Completion Button */}
-      <div className="flex items-center justify-between pt-6 border-t border-elec-yellow/20 mt-8">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-4 border-t border-white/[0.06]">
         <Button
           variant="outline"
-          className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+          className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
           onClick={() => {
-            // Navigate back to unit
             const pathParts = window.location.pathname.split('/');
             const unitPath = pathParts.slice(0, pathParts.indexOf('section')).join('/');
             navigate(unitPath);
           }}
         >
-          Back to Unit
+          Back to unit
         </Button>
 
         <Button
           onClick={markAsComplete}
           disabled={isCompleted}
-          className={`${
-            isCompleted
-              ? 'bg-green-600/20 border-green-500/50 text-green-400'
-              : 'bg-elec-yellow/10 border border-elec-yellow/30 hover:bg-elec-yellow hover:text-elec-dark'
-          } flex items-center gap-2`}
+          className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-40"
         >
-          {isCompleted ? 'Section Completed' : 'Mark Section as Complete'}
-          {isCompleted && <CheckCircle className="h-4 w-4" />}
+          {isCompleted ? 'Section completed' : 'Mark section as complete'}
+          {isCompleted && <CheckCircle className="ml-2 h-4 w-4" />}
         </Button>
       </div>
     </div>

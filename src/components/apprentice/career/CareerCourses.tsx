@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { DropdownTabs, DropdownTab } from '@/components/ui/dropdown-tabs';
+import { useState } from 'react';
+import { DropdownTabs } from '@/components/ui/dropdown-tabs';
 import EnhancedCourseCard from './courses/EnhancedCourseCard';
 import EnhancedTrainingCenterCard from './courses/EnhancedTrainingCenterCard';
 import CourseDetailsModal from './courses/CourseDetailsModal';
@@ -20,9 +20,7 @@ import {
   EnhancedTrainingCenter,
 } from './courses/enhancedCoursesData';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { MapPin, X, Filter, TrendingUp, BookOpen, Users } from 'lucide-react';
+import { MapPin, X, BookOpen, Users } from 'lucide-react';
 
 const CareerCourses = () => {
   const [showLocationSearch, setShowLocationSearch] = useState(false);
@@ -40,7 +38,6 @@ const CareerCourses = () => {
     isLocationFiltered,
   } = useLocationBasedCourses(enhancedCareerCourses as any, enhancedTrainingCenters);
 
-  // Apply location and category filters
   const filteredCourses = enhancedCareerCourses.filter((course) => {
     const categoryMatch =
       selectedCategory === 'All Categories' || course.category === selectedCategory;
@@ -61,7 +58,6 @@ const CareerCourses = () => {
   });
 
   const handleSearchWithLocation = (values: { location: string; searchQuery: string }) => {
-    // Search functionality implementation would go here
     console.log('Search values:', values);
   };
 
@@ -87,84 +83,69 @@ const CareerCourses = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header Section */}
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-xl sm:text-2xl">
-            <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
-            UK Electrical Career Courses & Training
-          </CardTitle>
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <p className="text-sm sm:text-base text-white">
-              Comprehensive professional development courses to advance your electrical career in
-              the UK market
-            </p>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <div className="space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Training & courses
+          </span>
+          <h2 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-white leading-tight">
+            UK electrical career courses
+          </h2>
+          <p className="text-[14px] text-white/70 leading-relaxed">
+            Professional development courses to advance your electrical career.
+          </p>
+        </div>
 
-            <div className="flex gap-2">
-              <Button
-                variant={showLocationSearch ? 'default' : 'outline'}
-                onClick={() => setShowLocationSearch(!showLocationSearch)}
-                className="flex items-center gap-2"
-              >
-                <MapPin className="h-4 w-4" />
-                Location Search
-              </Button>
+        <div className="flex flex-wrap gap-2">
+          <Button
+            variant={showLocationSearch ? 'default' : 'outline'}
+            onClick={() => setShowLocationSearch(!showLocationSearch)}
+            className="h-11 border-white/15 text-white hover:bg-white/[0.05] flex items-center gap-2 touch-manipulation"
+          >
+            <MapPin className="h-4 w-4" />
+            Location search
+          </Button>
 
-              {(isLocationFiltered ||
-                selectedCategory !== 'All Categories' ||
-                showLocationSearch) && (
-                <Button
-                  variant="outline"
-                  onClick={handleResetAll}
-                  className="flex items-center gap-2"
-                >
-                  <X className="h-4 w-4" />
-                  Clear Filters
-                </Button>
-              )}
-            </div>
-          </div>
-        </CardHeader>
-      </Card>
+          {(isLocationFiltered ||
+            selectedCategory !== 'All Categories' ||
+            showLocationSearch) && (
+            <Button
+              variant="outline"
+              onClick={handleResetAll}
+              className="h-11 border-white/15 text-white hover:bg-white/[0.05] flex items-center gap-2 touch-manipulation"
+            >
+              <X className="h-4 w-4" />
+              Clear filters
+            </Button>
+          )}
+        </div>
+      </div>
 
-      {/* Course Analytics Dashboard */}
       <CourseAnalyticsDashboard />
 
-      {/* Active Filters Display */}
       {(isLocationFiltered || selectedCategory !== 'All Categories') && (
-        <Card className="border-elec-yellow/20 bg-white/5">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 flex-wrap">
-              <Filter className="h-4 w-4 text-elec-yellow" />
-              <span className="text-sm font-medium">Active Filters:</span>
-
-              {isLocationFiltered && (
-                <Badge
-                  variant="outline"
-                  className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30"
-                >
-                  {locationState.location} ({locationState.searchRadius} miles)
-                </Badge>
-              )}
-
-              {selectedCategory !== 'All Categories' && (
-                <Badge
-                  variant="outline"
-                  className="bg-blue-500/10 text-blue-400 border-blue-500/30"
-                >
-                  {selectedCategory}
-                </Badge>
-              )}
-
-              <Badge variant="outline" className="ml-auto">
-                {filteredCourses.length + filteredCenters.length} results
-              </Badge>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Active filters
+          </span>
+          <div className="flex flex-wrap items-center gap-1.5">
+            {isLocationFiltered && (
+              <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                {locationState.location} ({locationState.searchRadius} miles)
+              </span>
+            )}
+            {selectedCategory !== 'All Categories' && (
+              <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                {selectedCategory}
+              </span>
+            )}
+            <span className="text-[12px] text-white/55 ml-auto">
+              {filteredCourses.length + filteredCenters.length} results
+            </span>
+          </div>
+        </div>
       )}
 
-      {/* Location-based search */}
       {showLocationSearch && (
         <LocationBasedCourseSearch
           onLocationSelect={handleLocationSelect}
@@ -174,42 +155,39 @@ const CareerCourses = () => {
         />
       )}
 
-      {/* Category Filter */}
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardContent className="p-4">
-          <div className="flex items-center gap-3 mb-3">
-            <TrendingUp className="h-4 w-4 text-elec-yellow" />
-            <span className="text-sm font-medium">Filter by Category:</span>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {courseCategories.map((category) => (
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Filter by category
+        </span>
+        <div className="flex flex-wrap gap-2">
+          {courseCategories.map((category) => {
+            const isActive = selectedCategory === category;
+            return (
               <Button
                 key={category}
-                variant={selectedCategory === category ? 'default' : 'outline'}
+                variant={isActive ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setSelectedCategory(category)}
                 className={
-                  selectedCategory === category
-                    ? 'bg-elec-yellow text-elec-dark'
-                    : 'border-elec-yellow/30 hover:bg-elec-yellow/10'
+                  isActive
+                    ? 'bg-elec-yellow text-black font-semibold h-9 touch-manipulation'
+                    : 'border-white/15 text-white hover:bg-white/[0.05] h-9 touch-manipulation'
                 }
               >
                 {category}
                 {category !== 'All Categories' && (
-                  <Badge variant="secondary" className="ml-2 h-4 px-1">
+                  <span className="ml-2 text-[11px] opacity-70">
                     {enhancedCareerCourses.filter((c) => c.category === category).length}
-                  </Badge>
+                  </span>
                 )}
               </Button>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+            );
+          })}
+        </div>
+      </div>
 
-      {/* Search Form */}
       <CourseSearchForm locations={ukLocations} onSearch={handleSearchWithLocation} />
 
-      {/* Dropdown Navigation */}
       <DropdownTabs
         tabs={[
           {
@@ -219,7 +197,7 @@ const CareerCourses = () => {
             content: (
               <div className="space-y-6">
                 {filteredCourses.length > 0 ? (
-                  <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
                     {filteredCourses.map((course) => (
                       <EnhancedCourseCard
                         key={course.id}
@@ -236,12 +214,12 @@ const CareerCourses = () => {
           },
           {
             value: 'centers',
-            label: `Training Centres (${filteredCenters.length})`,
+            label: `Training centres (${filteredCenters.length})`,
             icon: Users,
             content: (
               <div className="space-y-6">
                 {filteredCenters.length > 0 ? (
-                  <div className="space-y-6">
+                  <div className="space-y-4">
                     {filteredCenters.map((center) => (
                       <EnhancedTrainingCenterCard
                         key={center.id}
@@ -263,15 +241,11 @@ const CareerCourses = () => {
         className="w-full"
       />
 
-      {/* Course Details Modal */}
       {selectedCourse && <CourseDetailsModal course={selectedCourse} onClose={handleClose} />}
-
-      {/* Training Centre Details Modal */}
       {selectedCenter && (
         <TrainingCentreDetailsModal center={selectedCenter} onClose={handleClose} />
       )}
 
-      {/* Course Selection Tips */}
       <CourseSelectionTips />
     </div>
   );

@@ -42,8 +42,8 @@ const TimeEntryForm = ({ onAddEntry, onCancel }: TimeEntryFormProps) => {
   };
 
   return (
-    <div className="bg-white/5 p-4 rounded-lg">
-      <form onSubmit={handleSubmit} className="space-y-6">
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <MobileInputWrapper
             label="Duration"
@@ -58,7 +58,7 @@ const TimeEntryForm = ({ onAddEntry, onCancel }: TimeEntryFormProps) => {
             icon={<Clock className="h-4 w-4" />}
           />
           <MobileSelectWrapper
-            label="Activity Type"
+            label="Activity type"
             placeholder="Select activity type"
             value={activity}
             onValueChange={setActivity}
@@ -67,29 +67,26 @@ const TimeEntryForm = ({ onAddEntry, onCancel }: TimeEntryFormProps) => {
         </div>
 
         <div className="space-y-2">
-          <Label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-            <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-            Training Notes (Optional)
-          </Label>
+          <Label className="text-[13px] text-white/85">Training notes (optional)</Label>
           <Textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder="Describe what you learned, activities completed, or reflection notes..."
             rows={4}
-            className="bg-elec-card border-2 border-elec-gray/50 text-elec-light placeholder:text-elec-light/60 resize-none"
+            className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 resize-none"
           />
-          <p className="text-xs text-elec-light/60">
+          <p className="text-[11px] text-white/55">
             Good practice: Note key learning points, skills developed, or areas for improvement
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-3 pt-4">
+        <div className="flex flex-col sm:flex-row gap-3">
           {onCancel && (
             <Button
               variant="outline"
               onClick={onCancel}
               type="button"
-              className="w-full sm:w-auto border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10"
+              className="w-full sm:w-auto h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
             >
               Cancel
             </Button>
@@ -97,10 +94,10 @@ const TimeEntryForm = ({ onAddEntry, onCancel }: TimeEntryFormProps) => {
           <Button
             type="submit"
             disabled={!activity.trim()}
-            className="w-full sm:w-auto bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold"
+            className="w-full sm:w-auto h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:opacity-40"
           >
             <Plus className="h-4 w-4 mr-2" />
-            Log Training Hours
+            Log training hours
           </Button>
         </div>
       </form>

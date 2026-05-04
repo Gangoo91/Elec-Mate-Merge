@@ -378,11 +378,11 @@ const DomesticCircuitGuide = () => {
                   <Badge variant="outline" className="border-elec-yellow text-elec-yellow text-xs">
                     {circuit.cable}
                   </Badge>
-                  <Badge variant="outline" className="border-green-500 text-green-400 text-xs">
+                  <Badge variant="outline" className="border-white/10 text-white/55 text-xs">
                     {circuit.protection}
                   </Badge>
                   {circuit.maxFloorArea !== 'N/A' && circuit.maxFloorArea !== 'Unlimited' && (
-                    <Badge variant="outline" className="border-blue-500 text-blue-400 text-xs">
+                    <Badge variant="outline" className="border-white/10 text-white/55 text-xs">
                       Max {circuit.maxFloorArea}
                     </Badge>
                   )}
@@ -391,22 +391,22 @@ const DomesticCircuitGuide = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
                 <div>
-                  <h5 className="text-sm font-medium text-green-300 mb-2">Advantages</h5>
+                  <h5 className="text-sm font-medium text-white mb-2">Advantages</h5>
                   <ul className="space-y-1">
                     {circuit.advantages.map((advantage, idx) => (
-                      <li key={idx} className="text-xs text-green-200 flex items-start gap-2">
-                        <span className="w-1 h-1 bg-green-400 rounded-full mt-1.5 flex-shrink-0"></span>
+                      <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
+                        <span className="w-1 h-1 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                         {advantage}
                       </li>
                     ))}
                   </ul>
                 </div>
                 <div>
-                  <h5 className="text-sm font-medium text-orange-300 mb-2">Considerations</h5>
+                  <h5 className="text-sm font-medium text-white mb-2">Considerations</h5>
                   <ul className="space-y-1">
                     {circuit.disadvantages.map((disadvantage, idx) => (
-                      <li key={idx} className="text-xs text-orange-200 flex items-start gap-2">
-                        <span className="w-1 h-1 bg-orange-400 rounded-full mt-1.5 flex-shrink-0"></span>
+                      <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
+                        <span className="w-1 h-1 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                         {disadvantage}
                       </li>
                     ))}
@@ -419,20 +419,20 @@ const DomesticCircuitGuide = () => {
       </Card>
 
       {/* Circuit Diagrams */}
-      <Card className="border-cyan-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Cable className="h-6 w-6 text-cyan-400" />
-            <CardTitle className="text-cyan-300">{circuitDiagrams.title}</CardTitle>
+            <Cable className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">{circuitDiagrams.title}</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
           {circuitDiagrams.diagrams.map((diagram, index) => (
-            <div key={index} className="bg-cyan-500/10 p-4 rounded-lg border border-cyan-500/20">
+            <div key={index} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
               <h4 className="font-medium text-white mb-2">{diagram.name}</h4>
-              <p className="text-sm text-cyan-200 mb-3">{diagram.description}</p>
+              <p className="text-sm text-white/85 mb-3">{diagram.description}</p>
 
-              <div className="bg-cyan-900/30 p-3 rounded font-mono text-xs text-cyan-100 mb-3 overflow-x-auto">
+              <div className="bg-white/[0.02] p-3 rounded font-mono text-xs text-white/85 mb-3 overflow-x-auto">
                 {diagram.layout.map((line, idx) => (
                   <div key={idx} className="whitespace-pre">
                     {line}
@@ -441,11 +441,11 @@ const DomesticCircuitGuide = () => {
               </div>
 
               <div className="space-y-1">
-                <h5 className="text-sm font-medium text-cyan-200">Key Points:</h5>
+                <h5 className="text-sm font-medium text-white/85">Key Points:</h5>
                 <ul className="space-y-1">
                   {diagram.keyPoints.map((point, idx) => (
                     <li key={idx} className="text-xs text-white flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full mt-1.5 flex-shrink-0"></span>
+                      <span className="w-1.5 h-1.5 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                       {point}
                     </li>
                   ))}
@@ -457,42 +457,42 @@ const DomesticCircuitGuide = () => {
       </Card>
 
       {/* Cable Sizing Reference */}
-      <Card className="border-amber-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Gauge className="h-6 w-6 text-amber-400" />
-            <CardTitle className="text-amber-300">{cableSizingTable.title}</CardTitle>
+            <Gauge className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">{cableSizingTable.title}</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Alert className="border-amber-500/50 bg-amber-500/10">
-            <Info className="h-4 w-4 text-amber-400" />
-            <AlertDescription className="text-amber-200 text-sm">
+          <Alert className="border-white/[0.06] bg-white/[0.02]">
+            <Info className="h-4 w-4 text-white/55" />
+            <AlertDescription className="text-white/85 text-sm">
               {cableSizingTable.description}
             </AlertDescription>
           </Alert>
 
-          <div className="bg-amber-500/10 p-4 rounded-lg border border-amber-500/20">
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
             <h4 className="font-medium text-white mb-3">
               Current-Carrying Capacity (Twin & Earth)
             </h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-amber-500/30">
-                    <th className="text-left py-2 text-amber-200">Cable Size</th>
-                    <th className="text-left py-2 text-amber-200">Method C</th>
-                    <th className="text-left py-2 text-amber-200">Method A</th>
-                    <th className="text-left py-2 text-amber-200">mV/A/m</th>
-                    <th className="text-left py-2 text-amber-200">Typical Use</th>
+                  <tr className="border-b border-white/[0.06]">
+                    <th className="text-left py-2 text-white/85">Cable Size</th>
+                    <th className="text-left py-2 text-white/85">Method C</th>
+                    <th className="text-left py-2 text-white/85">Method A</th>
+                    <th className="text-left py-2 text-white/85">mV/A/m</th>
+                    <th className="text-left py-2 text-white/85">Typical Use</th>
                   </tr>
                 </thead>
                 <tbody>
                   {cableSizingTable.cables.map((cable, idx) => (
-                    <tr key={idx} className="border-b border-amber-500/20">
+                    <tr key={idx} className="border-b border-white/[0.06]">
                       <td className="py-2 text-white font-medium">{cable.size}</td>
-                      <td className="py-2 text-amber-300">{cable.method_c}</td>
-                      <td className="py-2 text-orange-300">{cable.method_a}</td>
+                      <td className="py-2 text-white">{cable.method_c}</td>
+                      <td className="py-2 text-white">{cable.method_a}</td>
                       <td className="py-2 text-white">{cable.vd_per_m}</td>
                       <td className="py-2 text-white">{cable.typical_use}</td>
                     </tr>
@@ -502,14 +502,14 @@ const DomesticCircuitGuide = () => {
             </div>
           </div>
 
-          <div className="bg-amber-500/10 p-4 rounded-lg border border-amber-500/20">
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
             <h4 className="font-medium text-white mb-3">Installation Methods</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {cableSizingTable.installationMethods.map((method, idx) => (
                 <div key={idx} className="text-sm flex items-start gap-2">
                   <Badge
                     variant="outline"
-                    className="border-amber-400 text-amber-300 text-xs flex-shrink-0"
+                    className="border-white/10 text-white text-xs flex-shrink-0"
                   >
                     {method.method}
                   </Badge>
@@ -522,38 +522,38 @@ const DomesticCircuitGuide = () => {
       </Card>
 
       {/* Maximum Cable Lengths */}
-      <Card className="border-purple-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Ruler className="h-6 w-6 text-purple-400" />
-            <CardTitle className="text-purple-300">{maxCableLengths.title}</CardTitle>
+            <Ruler className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">{maxCableLengths.title}</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Alert className="border-purple-500/50 bg-purple-500/10">
-            <Info className="h-4 w-4 text-purple-400" />
-            <AlertDescription className="text-purple-200 text-sm">
+          <Alert className="border-white/[0.06] bg-white/[0.02]">
+            <Info className="h-4 w-4 text-white/55" />
+            <AlertDescription className="text-white/85 text-sm">
               {maxCableLengths.description}
             </AlertDescription>
           </Alert>
 
-          <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-purple-500/30">
-                    <th className="text-left py-2 text-purple-200">Circuit Type</th>
-                    <th className="text-left py-2 text-purple-200">Lighting (3%)</th>
-                    <th className="text-left py-2 text-purple-200">Power (5%)</th>
-                    <th className="text-left py-2 text-purple-200">Notes</th>
+                  <tr className="border-b border-white/[0.06]">
+                    <th className="text-left py-2 text-white/85">Circuit Type</th>
+                    <th className="text-left py-2 text-white/85">Lighting (3%)</th>
+                    <th className="text-left py-2 text-white/85">Power (5%)</th>
+                    <th className="text-left py-2 text-white/85">Notes</th>
                   </tr>
                 </thead>
                 <tbody>
                   {maxCableLengths.limits.map((limit, idx) => (
-                    <tr key={idx} className="border-b border-purple-500/20">
+                    <tr key={idx} className="border-b border-white/[0.06]">
                       <td className="py-2 text-white">{limit.circuit}</td>
-                      <td className="py-2 text-purple-300">{limit.lighting}</td>
-                      <td className="py-2 text-purple-300">{limit.power}</td>
+                      <td className="py-2 text-white">{limit.lighting}</td>
+                      <td className="py-2 text-white">{limit.power}</td>
                       <td className="py-2 text-white">{limit.notes}</td>
                     </tr>
                   ))}
@@ -562,13 +562,13 @@ const DomesticCircuitGuide = () => {
             </div>
           </div>
 
-          <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
             <h4 className="font-medium text-white mb-2">Calculation Formula</h4>
-            <p className="text-purple-300 font-mono text-sm mb-3">{maxCableLengths.formula}</p>
+            <p className="text-white font-mono text-sm mb-3">{maxCableLengths.formula}</p>
             <ul className="space-y-1">
               {maxCableLengths.notes.map((note, idx) => (
                 <li key={idx} className="text-xs text-white flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 bg-purple-400 rounded-full mt-1.5 flex-shrink-0"></span>
+                  <span className="w-1.5 h-1.5 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                   {note}
                 </li>
               ))}
@@ -578,21 +578,21 @@ const DomesticCircuitGuide = () => {
       </Card>
 
       {/* Voltage Drop Calculations */}
-      <Card className="border-teal-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Calculator className="h-6 w-6 text-teal-400" />
-            <CardTitle className="text-teal-300">{voltageDrop.title}</CardTitle>
+            <Calculator className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">{voltageDrop.title}</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="bg-teal-500/10 p-4 rounded-lg border border-teal-500/20">
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
             <h4 className="font-medium text-white mb-2">Formula</h4>
-            <p className="text-teal-300 font-mono text-lg mb-3">{voltageDrop.formula}</p>
+            <p className="text-white font-mono text-lg mb-3">{voltageDrop.formula}</p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
               {voltageDrop.terms.map((term, idx) => (
                 <div key={idx} className="text-sm">
-                  <span className="text-teal-300 font-mono">{term.term}</span>
+                  <span className="text-white font-mono">{term.term}</span>
                   <span className="text-white"> = {term.definition}</span>
                 </div>
               ))}
@@ -600,25 +600,25 @@ const DomesticCircuitGuide = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-teal-500/10 p-4 rounded-lg border border-teal-500/20">
+            <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
               <h4 className="font-medium text-white mb-3">Permitted Limits</h4>
               {voltageDrop.limits.map((limit, idx) => (
                 <div key={idx} className="flex justify-between text-sm mb-2">
                   <span className="text-white">{limit.type}</span>
-                  <span className="text-teal-300">
+                  <span className="text-white">
                     {limit.limit} ({limit.voltage})
                   </span>
                 </div>
               ))}
             </div>
 
-            <div className="bg-teal-500/10 p-4 rounded-lg border border-teal-500/20">
+            <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
               <h4 className="font-medium text-white mb-3">Worked Examples</h4>
               {voltageDrop.examples.map((example, idx) => (
                 <div key={idx} className="mb-3 last:mb-0">
                   <p className="text-sm text-white mb-1">{example.scenario}</p>
-                  <p className="text-xs text-teal-200 font-mono mb-1">{example.calculation}</p>
-                  <p className="text-xs text-green-300">{example.result}</p>
+                  <p className="text-xs text-white/85 font-mono mb-1">{example.calculation}</p>
+                  <p className="text-xs text-white">{example.result}</p>
                 </div>
               ))}
             </div>
@@ -627,30 +627,30 @@ const DomesticCircuitGuide = () => {
       </Card>
 
       {/* Diversity Calculations */}
-      <Card className="border-rose-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Calculator className="h-6 w-6 text-rose-400" />
-            <CardTitle className="text-rose-300">{diversityCalculations.title}</CardTitle>
+            <Calculator className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">{diversityCalculations.title}</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Alert className="border-rose-500/50 bg-rose-500/10">
-            <Info className="h-4 w-4 text-rose-400" />
-            <AlertDescription className="text-rose-200 text-sm">
+          <Alert className="border-white/[0.06] bg-white/[0.02]">
+            <Info className="h-4 w-4 text-white/55" />
+            <AlertDescription className="text-white/85 text-sm">
               {diversityCalculations.description}
             </AlertDescription>
           </Alert>
 
-          <div className="bg-rose-500/10 p-4 rounded-lg border border-rose-500/20">
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
             <h4 className="font-medium text-white mb-3">Diversity Factors by Load Type</h4>
             <div className="space-y-3">
               {diversityCalculations.currentDemand.map((item, idx) => (
-                <div key={idx} className="bg-rose-600/10 p-3 rounded border border-rose-500/30">
+                <div key={idx} className="bg-white/[0.02] p-3 rounded border border-white/[0.06]">
                   <div className="flex items-start justify-between gap-2 mb-1">
-                    <h5 className="font-medium text-rose-200 text-sm">{item.load}</h5>
+                    <h5 className="font-medium text-white/85 text-sm">{item.load}</h5>
                   </div>
-                  <p className="text-xs text-rose-100 mb-1">
+                  <p className="text-xs text-white/85 mb-1">
                     <strong>Factor:</strong> {item.factor}
                   </p>
                   <p className="text-xs text-white mb-1">
@@ -662,34 +662,34 @@ const DomesticCircuitGuide = () => {
             </div>
           </div>
 
-          <div className="bg-rose-500/10 p-4 rounded-lg border border-rose-500/20">
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
             <h4 className="font-medium text-white mb-3">
               {diversityCalculations.exampleCalculation.title}
             </h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-rose-500/30">
-                    <th className="text-left py-2 text-rose-200">Load Item</th>
-                    <th className="text-left py-2 text-rose-200">Calculation</th>
-                    <th className="text-left py-2 text-rose-200">Result</th>
+                  <tr className="border-b border-white/[0.06]">
+                    <th className="text-left py-2 text-white/85">Load Item</th>
+                    <th className="text-left py-2 text-white/85">Calculation</th>
+                    <th className="text-left py-2 text-white/85">Result</th>
                   </tr>
                 </thead>
                 <tbody>
                   {diversityCalculations.exampleCalculation.loads.map((load, idx) => (
-                    <tr key={idx} className="border-b border-rose-500/20">
+                    <tr key={idx} className="border-b border-white/[0.06]">
                       <td className="py-2 text-white">{load.item}</td>
                       <td className="py-2 text-white font-mono text-xs">{load.calculation}</td>
-                      <td className="py-2 text-rose-300">{load.result}</td>
+                      <td className="py-2 text-white">{load.result}</td>
                     </tr>
                   ))}
                 </tbody>
                 <tfoot>
-                  <tr className="border-t-2 border-rose-500/50">
+                  <tr className="border-t-2 border-white/[0.06]">
                     <td colSpan={2} className="py-2 text-white font-medium">
                       Total Maximum Demand
                     </td>
-                    <td className="py-2 text-rose-300 font-bold">
+                    <td className="py-2 text-white font-bold">
                       {diversityCalculations.exampleCalculation.total}
                     </td>
                   </tr>
@@ -707,37 +707,37 @@ const DomesticCircuitGuide = () => {
       </Card>
 
       {/* Earthing & CPC */}
-      <Card className="border-green-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Shield className="h-6 w-6 text-green-400" />
-            <CardTitle className="text-green-300">{earthingConsiderations.title}</CardTitle>
+            <Shield className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">{earthingConsiderations.title}</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Alert className="border-green-500/50 bg-green-500/10">
-            <Info className="h-4 w-4 text-green-400" />
-            <AlertDescription className="text-green-200 text-sm">
+          <Alert className="border-white/[0.06] bg-white/[0.02]">
+            <Info className="h-4 w-4 text-white/55" />
+            <AlertDescription className="text-white/85 text-sm">
               {earthingConsiderations.description}
             </AlertDescription>
           </Alert>
 
-          <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
             <h4 className="font-medium text-white mb-3">Minimum CPC Sizes</h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-green-500/30">
-                    <th className="text-left py-2 text-green-200">Line Conductor</th>
-                    <th className="text-left py-2 text-green-200">Min CPC (Table 54.7)</th>
-                    <th className="text-left py-2 text-green-200">In T&E Cable</th>
+                  <tr className="border-b border-white/[0.06]">
+                    <th className="text-left py-2 text-white/85">Line Conductor</th>
+                    <th className="text-left py-2 text-white/85">Min CPC (Table 54.7)</th>
+                    <th className="text-left py-2 text-white/85">In T&E Cable</th>
                   </tr>
                 </thead>
                 <tbody>
                   {earthingConsiderations.cpcSizes.map((size, idx) => (
-                    <tr key={idx} className="border-b border-green-500/20">
+                    <tr key={idx} className="border-b border-white/[0.06]">
                       <td className="py-2 text-white">{size.lineSize}</td>
-                      <td className="py-2 text-green-300">{size.cpcMin}</td>
+                      <td className="py-2 text-white">{size.cpcMin}</td>
                       <td className="py-2 text-white">{size.twinAndEarth}</td>
                     </tr>
                   ))}
@@ -746,9 +746,9 @@ const DomesticCircuitGuide = () => {
             </div>
           </div>
 
-          <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
             <h4 className="font-medium text-white mb-2">Adiabatic Equation</h4>
-            <p className="text-green-300 font-mono text-lg mb-2">
+            <p className="text-white font-mono text-lg mb-2">
               {earthingConsiderations.adiabatic.formula}
             </p>
             <p className="text-sm text-white mb-3">
@@ -757,7 +757,7 @@ const DomesticCircuitGuide = () => {
             <div className="grid grid-cols-2 gap-2">
               {earthingConsiderations.adiabatic.terms.map((term, idx) => (
                 <div key={idx} className="text-xs">
-                  <span className="text-green-300 font-mono">{term.term}</span>
+                  <span className="text-white font-mono">{term.term}</span>
                   <span className="text-white"> = {term.definition}</span>
                 </div>
               ))}
@@ -767,18 +767,18 @@ const DomesticCircuitGuide = () => {
       </Card>
 
       {/* Design Considerations Summary */}
-      <Card className="border-blue-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Calculator className="h-6 w-6 text-blue-400" />
-            <CardTitle className="text-blue-300">Design Considerations Summary</CardTitle>
+            <Calculator className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">Design Considerations Summary</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
           <ul className="space-y-2">
             {designConsiderations.map((consideration, index) => (
               <li key={index} className="text-sm text-white flex items-start gap-2">
-                <Shield className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                <Shield className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
                 {consideration}
               </li>
             ))}

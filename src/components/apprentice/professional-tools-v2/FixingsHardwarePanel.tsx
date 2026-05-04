@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronDown, ChevronRight, Lightbulb } from 'lucide-react';
+import { ChevronDown, ChevronRight } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import FixingsReferenceTable from './FixingsReferenceTable';
 import {
@@ -44,12 +44,11 @@ const sections: SectionConfig[] = [
 ];
 
 const TipBox = ({ tip }: { tip: string }) => (
-  <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 flex gap-2">
-    <Lightbulb className="h-4 w-4 text-amber-300 flex-shrink-0 mt-0.5" />
-    <p className="text-xs text-white leading-relaxed">
-      <span className="font-semibold text-amber-300">Tip: </span>
-      {tip}
-    </p>
+  <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2">
+    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+      Tip
+    </span>
+    <p className="text-[14px] text-white/85 leading-relaxed">{tip}</p>
   </div>
 );
 
@@ -147,16 +146,16 @@ const FixingsHardwarePanel = () => {
             {boltTypes.map((bolt) => (
               <div
                 key={bolt.name}
-                className="p-3 rounded-lg bg-white/[0.02] border border-white/5 space-y-2"
+                className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2"
               >
                 <div className="flex items-start justify-between gap-2">
-                  <h4 className="text-sm font-semibold text-white">{bolt.name}</h4>
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-white/10 text-white whitespace-nowrap">
+                  <h4 className="text-[14px] font-semibold text-white">{bolt.name}</h4>
+                  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
                     {bolt.headType}
                   </span>
                 </div>
-                <p className="text-xs text-white leading-relaxed">{bolt.description}</p>
-                <div className="text-xs text-white space-y-1">
+                <p className="text-[14px] text-white/85 leading-relaxed">{bolt.description}</p>
+                <div className="text-[13px] text-white/85 space-y-1">
                   <div>
                     <span className="font-medium">When to use:</span> {bolt.whenToUse}
                   </div>
@@ -209,20 +208,20 @@ const FixingsHardwarePanel = () => {
             {surfaceFixings.map((surface) => (
               <div
                 key={surface.surface}
-                className="p-3 rounded-lg bg-white/[0.02] border border-white/5 space-y-2"
+                className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2"
               >
-                <h4 className={`text-sm font-semibold ${surface.colour}`}>{surface.surface}</h4>
+                <h4 className="text-[14px] font-semibold text-white">{surface.surface}</h4>
                 <div className="space-y-2">
                   {surface.methods.map((method) => (
                     <div key={method.name} className="pl-3 border-l-2 border-white/10 space-y-1">
                       <div className="flex items-center justify-between gap-2">
-                        <span className="text-xs font-semibold text-white">{method.name}</span>
-                        <span className="text-xs text-white px-2 py-0.5 rounded-full bg-white/10 whitespace-nowrap">
+                        <span className="text-[13px] font-semibold text-white">{method.name}</span>
+                        <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
                           {method.maxLoad}
                         </span>
                       </div>
-                      <p className="text-xs text-white leading-relaxed">{method.description}</p>
-                      <p className="text-xs text-amber-300">{method.tip}</p>
+                      <p className="text-[14px] text-white/85 leading-relaxed">{method.description}</p>
+                      <p className="text-[13px] text-elec-yellow">{method.tip}</p>
                     </div>
                   ))}
                 </div>
@@ -238,11 +237,11 @@ const FixingsHardwarePanel = () => {
             {screwHeadTypes.map((head) => (
               <div
                 key={head.name}
-                className="p-3 rounded-lg bg-white/[0.02] border border-white/5 space-y-2"
+                className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2"
               >
-                <h4 className="text-sm font-semibold text-white">{head.name}</h4>
-                <p className="text-xs text-white leading-relaxed">{head.identificationTip}</p>
-                <div className="text-xs text-white space-y-1">
+                <h4 className="text-[14px] font-semibold text-white">{head.name}</h4>
+                <p className="text-[14px] text-white/85 leading-relaxed">{head.identificationTip}</p>
+                <div className="text-[13px] text-white/85 space-y-1">
                   <div>
                     <span className="font-medium">Driver sizes:</span> {head.driverSizes}
                   </div>
@@ -262,11 +261,11 @@ const FixingsHardwarePanel = () => {
             {screwCategories.map((cat) => (
               <div
                 key={cat.name}
-                className="p-3 rounded-lg bg-white/[0.02] border border-white/5 space-y-2"
+                className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2"
               >
-                <h4 className="text-sm font-semibold text-white">{cat.name}</h4>
-                <p className="text-xs text-white leading-relaxed">{cat.description}</p>
-                <div className="text-xs text-white space-y-1">
+                <h4 className="text-[14px] font-semibold text-white">{cat.name}</h4>
+                <p className="text-[14px] text-white/85 leading-relaxed">{cat.description}</p>
+                <div className="text-[13px] text-white/85 space-y-1">
                   <div>
                     <span className="font-medium">When to use:</span> {cat.whenToUse}
                   </div>
@@ -283,26 +282,26 @@ const FixingsHardwarePanel = () => {
       case 'van-stock':
         return (
           <div className="space-y-3">
-            <p className="text-xs text-white leading-relaxed">
+            <p className="text-[14px] text-white/85 leading-relaxed">
               Keep these items stocked in your van at all times. Running out on site means a trip to
               the wholesaler and wasted time.
             </p>
             {vanStockEssentials.map((item) => (
               <div
                 key={item.item}
-                className="p-3 rounded-lg bg-white/[0.02] border border-white/5 flex items-start gap-3"
+                className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 flex items-start gap-3"
               >
                 <div className="flex-1 space-y-1">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="text-xs font-semibold text-white">{item.item}</span>
-                    <span className="text-xs text-white px-2 py-0.5 rounded-full bg-white/10 whitespace-nowrap">
+                    <span className="text-[14px] font-semibold text-white">{item.item}</span>
+                    <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
                       {item.approxCost}
                     </span>
                   </div>
-                  <div className="text-xs text-white">
+                  <div className="text-[13px] text-white/85">
                     <span className="font-medium">Qty:</span> {item.quantity}
                   </div>
-                  <p className="text-xs text-white">{item.notes}</p>
+                  <p className="text-[13px] text-white/85">{item.notes}</p>
                 </div>
               </div>
             ))}
@@ -317,9 +316,11 @@ const FixingsHardwarePanel = () => {
 
   return (
     <div className="space-y-3 animate-fade-in">
-      <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
-        <p className="text-sm text-white">
-          <span className="font-semibold text-amber-300">Fixings & Hardware Quick Reference</span> —
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Fixings & hardware quick reference
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
           Everything you need to know about rawl plugs, bolts, glands, conduit, trunking, and
           screws. The practical knowledge that separates a good sparky from a great one.
         </p>
@@ -334,23 +335,17 @@ const FixingsHardwarePanel = () => {
             onOpenChange={() => toggleSection(section.id)}
           >
             <CollapsibleTrigger asChild>
-              <button
-                className={`w-full flex items-center justify-between p-3 rounded-lg transition-all touch-manipulation active:scale-[0.99] ${
-                  isOpen
-                    ? 'bg-amber-500/10 border border-amber-500/20'
-                    : 'bg-white/5 border border-white/10 hover:border-white/20'
-                }`}
-              >
+              <button className="w-full flex items-center justify-between p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] transition-all touch-manipulation active:scale-[0.99] hover:bg-white/[0.04] min-h-[44px]">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-semibold text-white">{section.title}</span>
-                  <span className="text-xs text-white px-2 py-0.5 rounded-full bg-white/10">
+                  <span className="text-[14px] font-semibold text-white">{section.title}</span>
+                  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                     {section.count}
                   </span>
                 </div>
                 {isOpen ? (
-                  <ChevronDown className="h-4 w-4 text-white" />
+                  <ChevronDown className="h-4 w-4 text-white/55" />
                 ) : (
-                  <ChevronRight className="h-4 w-4 text-white" />
+                  <ChevronRight className="h-4 w-4 text-white/55" />
                 )}
               </button>
             </CollapsibleTrigger>

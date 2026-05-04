@@ -85,7 +85,7 @@ export function EvidenceComments({
         </div>
         <div className="flex items-center gap-2">
           {actionRequiredCount > 0 && (
-            <Badge variant="outline" className="bg-amber-500/10 text-amber-500 border-amber-500/20">
+            <Badge variant="outline" className="bg-white/[0.02] text-white/85 border-white/[0.06]">
               <AlertCircle className="h-3 w-3 mr-1" />
               {actionRequiredCount} action{actionRequiredCount > 1 ? 's' : ''} needed
             </Badge>
@@ -178,10 +178,9 @@ export function EvidenceCommentsIndicator({
   return (
     <button
       onClick={onClick}
-      className={cn(
-        'flex items-center gap-1.5 px-2 py-1 rounded-full text-xs transition-colors',
+      className={cn('flex items-center gap-1.5 px-2 py-1 rounded-full text-xs transition-colors',
         actionRequired
-          ? 'bg-amber-500/20 text-amber-500 hover:bg-amber-500/30'
+          ? 'bg-white/[0.02] text-white/85 hover:bg-white/[0.02]'
           : unreadCount > 0
             ? 'bg-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/30'
             : 'bg-muted text-muted-foreground hover:bg-muted/80',
@@ -191,7 +190,7 @@ export function EvidenceCommentsIndicator({
       <MessageSquare className="h-3 w-3" />
       <span>{totalComments}</span>
       {unreadCount > 0 && (
-        <span className="h-4 min-w-[16px] px-1 bg-red-500 rounded-full text-[10px] text-white font-bold flex items-center justify-center">
+        <span className="h-4 min-w-[16px] px-1 bg-white/[0.02] rounded-full text-[10px] text-white font-bold flex items-center justify-center">
           {unreadCount}
         </span>
       )}
@@ -227,10 +226,9 @@ export function CommentsSummary({ onViewAll }: CommentsSummaryProps) {
             {(unreadCount > 0 || actionRequiredCount > 0) && (
               <Badge
                 variant="outline"
-                className={cn(
-                  'text-[10px]',
+                className={cn('text-[10px]',
                   actionRequiredCount > 0
-                    ? 'bg-amber-500/10 text-amber-500 border-amber-500/20'
+                    ? 'bg-white/[0.02] text-white/85 border-white/[0.06]'
                     : 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20'
                 )}
               >
@@ -265,9 +263,8 @@ export function CommentsSummary({ onViewAll }: CommentsSummaryProps) {
             return (
               <div
                 key={rootComment.id}
-                className={cn(
-                  'p-3 rounded-lg border transition-colors cursor-pointer hover:border-elec-yellow/30',
-                  needsAction ? 'border-amber-500/20 bg-amber-500/5' : 'border-border bg-card'
+                className={cn('p-3 rounded-lg border transition-colors cursor-pointer hover:border-elec-yellow/30',
+                  needsAction ? 'border-white/[0.06] bg-white/[0.02]' : 'border-border bg-card'
                 )}
               >
                 <div className="flex items-start justify-between gap-2 mb-1">
@@ -282,7 +279,7 @@ export function CommentsSummary({ onViewAll }: CommentsSummaryProps) {
                 {needsAction && (
                   <Badge
                     variant="outline"
-                    className="mt-2 text-[10px] bg-amber-500/10 text-amber-500 border-amber-500/20"
+                    className="mt-2 text-[10px] bg-white/[0.02] text-white/85 border-white/[0.06]"
                   >
                     <AlertCircle className="h-3 w-3 mr-1" />
                     Response needed

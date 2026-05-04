@@ -1,5 +1,4 @@
 import {
-  siteAssessmentChecklist,
   sectionLabels,
   getCategoriesBySection,
 } from './data/siteAssessmentChecklist';
@@ -18,12 +17,6 @@ const SiteAssessmentWizard = ({ progress }: SiteAssessmentWizardProps) => {
     'electrical',
   ];
 
-  const sectionColors: Record<string, string> = {
-    'pre-job': 'bg-green-400',
-    'site-condition': 'bg-blue-400',
-    electrical: 'bg-elec-yellow',
-  };
-
   return (
     <div className="space-y-6">
       {sections.map((section) => {
@@ -32,10 +25,9 @@ const SiteAssessmentWizard = ({ progress }: SiteAssessmentWizardProps) => {
 
         return (
           <div key={section} className="space-y-3">
-            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-              <span className={`w-1.5 h-1.5 rounded-full ${sectionColors[section]}`} />
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
               {sectionConfig.label}
-            </h3>
+            </span>
 
             {categories.map((category) => {
               const itemIds = category.items.map((i) => i.id);

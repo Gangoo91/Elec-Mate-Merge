@@ -42,7 +42,7 @@ const BalanceChecklist = ({ initialChecklist }: BalanceChecklistProps) => {
           {completedItems} of {totalItems} complete
         </span>
       </div>
-      <Card className="border-green-500/20">
+      <Card className="border-white/[0.06]">
         <CardContent className="p-4 space-y-4">
           <div className="space-y-3">
             <div className="flex items-start space-x-3">
@@ -117,7 +117,7 @@ const BalanceChecklist = ({ initialChecklist }: BalanceChecklistProps) => {
           </div>
 
           <Button
-            className="w-full bg-green-500 hover:bg-green-600 text-white"
+            className="w-full bg-white/[0.02] hover:bg-white/[0.02] text-white"
             size="sm"
             onClick={() => toast.success('Your balance checklist has been saved')}
           >

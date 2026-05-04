@@ -12,10 +12,10 @@ const StatusIndicator = ({ isActive, activeIcon, text, className }: StatusIndica
 
   return (
     <span
-      className={`text-xs bg-amber-950/30 px-2 py-1 rounded-full flex items-center gap-1 ${className}`}
+      className={`text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] flex items-center gap-1 ${className}`}
     >
       {activeIcon}
-      <span className="text-amber-500">{text}</span>
+      <span>{text}</span>
     </span>
   );
 };

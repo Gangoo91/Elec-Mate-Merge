@@ -1,14 +1,10 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Star, Award, Shield, TrendingUp, Wrench, Zap, Eye, HardHat } from 'lucide-react';
 
 const RecommendedBrands = () => {
   const handToolBrands = [
     {
       name: 'Wiha',
-      category: 'Premium Screwdrivers & Hand Tools',
+      category: 'Premium screwdrivers & hand tools',
       rating: 5,
       priceRange: '££££',
       strengths: ['VDE certified', 'Ergonomic design', 'Lifetime warranty'],
@@ -18,7 +14,7 @@ const RecommendedBrands = () => {
     },
     {
       name: 'Knipex',
-      category: 'Pliers & Cutters',
+      category: 'Pliers & cutters',
       rating: 5,
       priceRange: '£££',
       strengths: ['German engineering', 'Precise cutting', 'Ergonomic handles'],
@@ -28,7 +24,7 @@ const RecommendedBrands = () => {
     },
     {
       name: 'Bahco',
-      category: 'General Hand Tools',
+      category: 'General hand tools',
       rating: 4,
       priceRange: '£££',
       strengths: ['Swedish quality', 'Wide range', 'Good value'],
@@ -38,7 +34,7 @@ const RecommendedBrands = () => {
     },
     {
       name: 'Stanley',
-      category: 'Measuring & Marking',
+      category: 'Measuring & marking',
       rating: 4,
       priceRange: '££',
       strengths: ['Reliable', 'Widely available', 'Good warranty'],
@@ -51,7 +47,7 @@ const RecommendedBrands = () => {
   const powerToolBrands = [
     {
       name: 'Makita',
-      category: 'Cordless Power Tools',
+      category: 'Cordless power tools',
       rating: 5,
       priceRange: '£££',
       strengths: ['18V LXT system', 'Reliable batteries', 'Wide tool range'],
@@ -61,7 +57,7 @@ const RecommendedBrands = () => {
     },
     {
       name: 'DeWalt',
-      category: 'Construction Power Tools',
+      category: 'Construction power tools',
       rating: 5,
       priceRange: '£££',
       strengths: ['XR battery range', 'Tough construction', 'Good service'],
@@ -71,7 +67,7 @@ const RecommendedBrands = () => {
     },
     {
       name: 'Milwaukee',
-      category: 'Professional Power Tools',
+      category: 'Professional power tools',
       rating: 5,
       priceRange: '££££',
       strengths: ['M18 FUEL system', 'Innovation', 'Professional focus'],
@@ -81,7 +77,7 @@ const RecommendedBrands = () => {
     },
     {
       name: 'Bosch Professional',
-      category: 'Power Tools & Measuring',
+      category: 'Power tools & measuring',
       rating: 4,
       priceRange: '£££',
       strengths: ['German engineering', 'Measuring tools', 'Reliability'],
@@ -94,7 +90,7 @@ const RecommendedBrands = () => {
   const testEquipmentBrands = [
     {
       name: 'Fluke',
-      category: 'Professional Test Equipment',
+      category: 'Professional test equipment',
       rating: 5,
       priceRange: '££££',
       strengths: ['Industry standard', 'Accuracy', 'Build quality'],
@@ -104,7 +100,7 @@ const RecommendedBrands = () => {
     },
     {
       name: 'Megger',
-      category: 'Electrical Testing',
+      category: 'Electrical testing',
       rating: 5,
       priceRange: '£££',
       strengths: ['UK heritage', 'Testing expertise', 'Compliance'],
@@ -114,7 +110,7 @@ const RecommendedBrands = () => {
     },
     {
       name: 'Kewtech',
-      category: 'UK Testing Specialists',
+      category: 'UK testing specialists',
       rating: 4,
       priceRange: '£££',
       strengths: ['UK focused', 'Good value', '18th Edition compliant'],
@@ -124,7 +120,7 @@ const RecommendedBrands = () => {
     },
     {
       name: 'Martindale',
-      category: 'Basic Test Equipment',
+      category: 'Basic test equipment',
       rating: 4,
       priceRange: '££',
       strengths: ['GS38 compliant', 'Affordable', 'UK company'],
@@ -147,7 +143,7 @@ const RecommendedBrands = () => {
     },
     {
       name: '3M',
-      category: 'Respiratory & Eye Protection',
+      category: 'Respiratory & eye protection',
       rating: 5,
       priceRange: '£££',
       strengths: ['Innovation', 'Comfort', 'Effective protection'],
@@ -157,7 +153,7 @@ const RecommendedBrands = () => {
     },
     {
       name: 'Dickies',
-      category: 'Workwear & Boots',
+      category: 'Workwear & boots',
       rating: 4,
       priceRange: '££',
       strengths: ['Durability', 'Comfort', 'Value'],
@@ -167,7 +163,7 @@ const RecommendedBrands = () => {
     },
     {
       name: 'Site',
-      category: 'Safety Footwear',
+      category: 'Safety footwear',
       rating: 4,
       priceRange: '££',
       strengths: ['UK brand', 'Comfort', 'Good value'],
@@ -179,21 +175,21 @@ const RecommendedBrands = () => {
 
   const budgetAlternatives = [
     {
-      category: 'Hand Tools',
+      category: 'Hand tools',
       premiumBrand: 'Wiha',
       budgetAlternative: 'Wera',
       savings: '30-40%',
       tradeOff: 'Slightly less ergonomic but still VDE certified',
     },
     {
-      category: 'Power Tools',
+      category: 'Power tools',
       premiumBrand: 'Milwaukee',
       budgetAlternative: 'Ryobi ONE+',
       savings: '40-50%',
       tradeOff: 'Less power but adequate for most electrical work',
     },
     {
-      category: 'Test Equipment',
+      category: 'Test equipment',
       premiumBrand: 'Fluke',
       budgetAlternative: 'UniT',
       savings: '50-60%',
@@ -208,320 +204,143 @@ const RecommendedBrands = () => {
     },
   ];
 
-  const getRatingStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <Star
-        key={i}
-        className={`h-4 w-4 ${i < rating ? 'text-yellow-400 fill-current' : 'text-white'}`}
-      />
-    ));
-  };
+  const renderBrandCard = (brand: typeof handToolBrands[0], index: number) => (
+    <div
+      key={index}
+      className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
+    >
+      <div className="space-y-1">
+        <div className="flex items-baseline justify-between gap-3">
+          <h3 className="text-[18px] font-semibold text-white leading-tight">{brand.name}</h3>
+          <span className="text-[12px] text-white/85 font-mono flex-shrink-0">
+            {brand.rating}/5
+          </span>
+        </div>
+        <p className="text-[13px] text-white/85">{brand.category}</p>
+      </div>
 
-  const getPriceColor = (priceRange: string) => {
-    switch (priceRange) {
-      case '££££':
-        return 'text-red-400';
-      case '£££':
-        return 'text-orange-400';
-      case '££':
-        return 'text-green-400';
-      default:
-        return 'text-blue-400';
-    }
-  };
+      <div className="flex items-baseline justify-between gap-3 text-[13px]">
+        <span className="font-mono text-white/85">{brand.priceRange}</span>
+        <span className="text-[12px] text-white/55">{brand.ukAvailability} UK availability</span>
+      </div>
+
+      <div className="space-y-1">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Strengths
+        </span>
+        <div className="flex flex-wrap gap-1.5">
+          {brand.strengths.map((strength, i) => (
+            <span
+              key={i}
+              className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+            >
+              {strength}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="space-y-1">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Best for
+        </span>
+        <p className="text-[13px] text-white/85 leading-relaxed">{brand.bestFor}</p>
+      </div>
+
+      <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Apprentice tip
+        </span>
+        <p className="text-[13px] text-white/85 leading-relaxed">{brand.apprenticeTip}</p>
+      </div>
+    </div>
+  );
 
   return (
     <div className="space-y-6">
-      <Alert className="border-blue-500/50 bg-blue-500/10">
-        <Award className="h-4 w-4 text-blue-400" />
-        <AlertDescription className="text-blue-200">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Trusted brands
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
           These brands are trusted by UK electrical professionals. Quality tools are an investment -
           they'll serve you throughout your career.
-        </AlertDescription>
-      </Alert>
+        </p>
+      </div>
 
       <Tabs defaultValue="hand-tools" className="w-full">
         <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="hand-tools" className="flex items-center gap-1">
-            <Wrench className="h-4 w-4" />
-            Hand Tools
-          </TabsTrigger>
-          <TabsTrigger value="power-tools" className="flex items-center gap-1">
-            <Zap className="h-4 w-4" />
-            Power Tools
-          </TabsTrigger>
-          <TabsTrigger value="test-equipment" className="flex items-center gap-1">
-            <Eye className="h-4 w-4" />
-            Test Equipment
-          </TabsTrigger>
-          <TabsTrigger value="ppe" className="flex items-center gap-1">
-            <HardHat className="h-4 w-4" />
-            PPE
-          </TabsTrigger>
-          <TabsTrigger value="budget" className="flex items-center gap-1">
-            <TrendingUp className="h-4 w-4" />
-            Budget Options
-          </TabsTrigger>
+          <TabsTrigger value="hand-tools">Hand</TabsTrigger>
+          <TabsTrigger value="power-tools">Power</TabsTrigger>
+          <TabsTrigger value="test-equipment">Test</TabsTrigger>
+          <TabsTrigger value="ppe">PPE</TabsTrigger>
+          <TabsTrigger value="budget">Budget</TabsTrigger>
         </TabsList>
 
         <TabsContent value="hand-tools">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {handToolBrands.map((brand, index) => (
-              <Card key={index} className="border-elec-yellow/20 bg-white/5">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-elec-yellow">{brand.name}</CardTitle>
-                    <div className="flex items-center gap-2">{getRatingStars(brand.rating)}</div>
-                  </div>
-                  <p className="text-sm text-white">{brand.category}</p>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className={`font-medium ${getPriceColor(brand.priceRange)}`}>
-                      {brand.priceRange}
-                    </span>
-                    <Badge variant="outline" className="text-xs border-green-500/40 text-green-400">
-                      {brand.ukAvailability} UK availability
-                    </Badge>
-                  </div>
-
-                  <div>
-                    <h4 className="text-sm font-medium text-white mb-2">Strengths:</h4>
-                    <div className="flex flex-wrap gap-1">
-                      {brand.strengths.map((strength, i) => (
-                        <Badge
-                          key={i}
-                          variant="outline"
-                          className="text-xs border-blue-500/40 text-blue-400"
-                        >
-                          {strength}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="text-sm font-medium text-white mb-1">Best for:</h4>
-                    <p className="text-sm text-white">{brand.bestFor}</p>
-                  </div>
-
-                  <Alert className="border-elec-yellow/50 bg-elec-yellow/10">
-                    <Shield className="h-4 w-4 text-elec-yellow" />
-                    <AlertDescription className="text-elec-yellow/90 text-sm">
-                      <strong>Apprentice tip:</strong> {brand.apprenticeTip}
-                    </AlertDescription>
-                  </Alert>
-                </CardContent>
-              </Card>
-            ))}
+            {handToolBrands.map(renderBrandCard)}
           </div>
         </TabsContent>
 
         <TabsContent value="power-tools">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {powerToolBrands.map((brand, index) => (
-              <Card key={index} className="border-elec-yellow/20 bg-white/5">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-elec-yellow">{brand.name}</CardTitle>
-                    <div className="flex items-center gap-2">{getRatingStars(brand.rating)}</div>
-                  </div>
-                  <p className="text-sm text-white">{brand.category}</p>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className={`font-medium ${getPriceColor(brand.priceRange)}`}>
-                      {brand.priceRange}
-                    </span>
-                    <Badge variant="outline" className="text-xs border-green-500/40 text-green-400">
-                      {brand.ukAvailability} UK availability
-                    </Badge>
-                  </div>
-
-                  <div>
-                    <h4 className="text-sm font-medium text-white mb-2">Strengths:</h4>
-                    <div className="flex flex-wrap gap-1">
-                      {brand.strengths.map((strength, i) => (
-                        <Badge
-                          key={i}
-                          variant="outline"
-                          className="text-xs border-blue-500/40 text-blue-400"
-                        >
-                          {strength}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="text-sm font-medium text-white mb-1">Best for:</h4>
-                    <p className="text-sm text-white">{brand.bestFor}</p>
-                  </div>
-
-                  <Alert className="border-elec-yellow/50 bg-elec-yellow/10">
-                    <Shield className="h-4 w-4 text-elec-yellow" />
-                    <AlertDescription className="text-elec-yellow/90 text-sm">
-                      <strong>Apprentice tip:</strong> {brand.apprenticeTip}
-                    </AlertDescription>
-                  </Alert>
-                </CardContent>
-              </Card>
-            ))}
+            {powerToolBrands.map(renderBrandCard)}
           </div>
         </TabsContent>
 
         <TabsContent value="test-equipment">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {testEquipmentBrands.map((brand, index) => (
-              <Card key={index} className="border-elec-yellow/20 bg-white/5">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-elec-yellow">{brand.name}</CardTitle>
-                    <div className="flex items-center gap-2">{getRatingStars(brand.rating)}</div>
-                  </div>
-                  <p className="text-sm text-white">{brand.category}</p>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className={`font-medium ${getPriceColor(brand.priceRange)}`}>
-                      {brand.priceRange}
-                    </span>
-                    <Badge variant="outline" className="text-xs border-green-500/40 text-green-400">
-                      {brand.ukAvailability} UK availability
-                    </Badge>
-                  </div>
-
-                  <div>
-                    <h4 className="text-sm font-medium text-white mb-2">Strengths:</h4>
-                    <div className="flex flex-wrap gap-1">
-                      {brand.strengths.map((strength, i) => (
-                        <Badge
-                          key={i}
-                          variant="outline"
-                          className="text-xs border-blue-500/40 text-blue-400"
-                        >
-                          {strength}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="text-sm font-medium text-white mb-1">Best for:</h4>
-                    <p className="text-sm text-white">{brand.bestFor}</p>
-                  </div>
-
-                  <Alert className="border-elec-yellow/50 bg-elec-yellow/10">
-                    <Shield className="h-4 w-4 text-elec-yellow" />
-                    <AlertDescription className="text-elec-yellow/90 text-sm">
-                      <strong>Apprentice tip:</strong> {brand.apprenticeTip}
-                    </AlertDescription>
-                  </Alert>
-                </CardContent>
-              </Card>
-            ))}
+            {testEquipmentBrands.map(renderBrandCard)}
           </div>
         </TabsContent>
 
         <TabsContent value="ppe">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {ppeBrands.map((brand, index) => (
-              <Card key={index} className="border-elec-yellow/20 bg-white/5">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-elec-yellow">{brand.name}</CardTitle>
-                    <div className="flex items-center gap-2">{getRatingStars(brand.rating)}</div>
-                  </div>
-                  <p className="text-sm text-white">{brand.category}</p>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className={`font-medium ${getPriceColor(brand.priceRange)}`}>
-                      {brand.priceRange}
-                    </span>
-                    <Badge variant="outline" className="text-xs border-green-500/40 text-green-400">
-                      {brand.ukAvailability} UK availability
-                    </Badge>
-                  </div>
-
-                  <div>
-                    <h4 className="text-sm font-medium text-white mb-2">Strengths:</h4>
-                    <div className="flex flex-wrap gap-1">
-                      {brand.strengths.map((strength, i) => (
-                        <Badge
-                          key={i}
-                          variant="outline"
-                          className="text-xs border-blue-500/40 text-blue-400"
-                        >
-                          {strength}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="text-sm font-medium text-white mb-1">Best for:</h4>
-                    <p className="text-sm text-white">{brand.bestFor}</p>
-                  </div>
-
-                  <Alert className="border-elec-yellow/50 bg-elec-yellow/10">
-                    <Shield className="h-4 w-4 text-elec-yellow" />
-                    <AlertDescription className="text-elec-yellow/90 text-sm">
-                      <strong>Apprentice tip:</strong> {brand.apprenticeTip}
-                    </AlertDescription>
-                  </Alert>
-                </CardContent>
-              </Card>
-            ))}
+            {ppeBrands.map(renderBrandCard)}
           </div>
         </TabsContent>
 
         <TabsContent value="budget">
-          <Card className="border-green-500/20 bg-green-500/10">
-            <CardHeader>
-              <CardTitle className="text-green-300 flex items-center gap-2">
-                <TrendingUp className="h-5 w-5" />
-                Budget-Friendly Alternatives
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {budgetAlternatives.map((alt, index) => (
-                  <div key={index} className="border border-green-500/20 rounded-lg p-4">
-                    <h4 className="font-medium text-white mb-3">{alt.category}</h4>
-
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-white">Premium:</span>
-                        <span className="text-sm text-red-400">{alt.premiumBrand}</span>
-                      </div>
-
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-white">Budget:</span>
-                        <span className="text-sm text-green-400">{alt.budgetAlternative}</span>
-                      </div>
-
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-white">Savings:</span>
-                        <Badge
-                          variant="outline"
-                          className="text-xs border-green-500/40 text-green-400"
-                        >
-                          {alt.savings}
-                        </Badge>
-                      </div>
-
-                      <div className="pt-2 border-t border-green-500/20">
-                        <p className="text-xs text-white">
-                          <strong>Trade-off:</strong> {alt.tradeOff}
-                        </p>
-                      </div>
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+            <div className="space-y-1">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Budget-friendly alternatives
+              </span>
+              <h3 className="text-[18px] font-semibold text-white leading-tight">
+                Save without compromising
+              </h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {budgetAlternatives.map((alt, index) => (
+                <div
+                  key={index}
+                  className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2"
+                >
+                  <h4 className="text-[14px] font-medium text-white">{alt.category}</h4>
+                  <div className="space-y-1 text-[13px] text-white/85">
+                    <div className="flex justify-between">
+                      <span className="text-white/55">Premium</span>
+                      <span>{alt.premiumBrand}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-white/55">Budget</span>
+                      <span>{alt.budgetAlternative}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-white/55">Savings</span>
+                      <span className="font-mono text-white">{alt.savings}</span>
+                    </div>
+                    <div className="pt-2 border-t border-white/[0.06]">
+                      <p className="text-[12px] text-white/55 leading-relaxed">
+                        <strong>Trade-off:</strong> {alt.tradeOff}
+                      </p>
                     </div>
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+                </div>
+              ))}
+            </div>
+          </div>
         </TabsContent>
       </Tabs>
     </div>

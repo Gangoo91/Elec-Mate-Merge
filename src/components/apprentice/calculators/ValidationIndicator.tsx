@@ -1,7 +1,5 @@
 import React from 'react';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Badge } from '@/components/ui/badge';
-import { CheckCircle, AlertTriangle, XCircle, Shield } from 'lucide-react';
+import { CheckCircle, XCircle } from 'lucide-react';
 import { ValidationResult } from '@/services/calculatorValidation';
 
 interface ValidationIndicatorProps {
@@ -17,110 +15,83 @@ const ValidationIndicator: React.FC<ValidationIndicatorProps> = ({
     return null;
   }
 
+  const Pill = ({ label, ok }: { label: string; ok: boolean }) => (
+    <span
+      className={`inline-flex items-center gap-1.5 text-[11px] px-2 py-0.5 rounded-md border ${
+        ok ? 'border-white/10 bg-white/[0.03] text-white/85' : 'border-red-500/30 bg-red-500/[0.04] text-red-300'
+      }`}
+    >
+      {ok ? <CheckCircle className="h-3 w-3" /> : <XCircle className="h-3 w-3" />}
+      {label}
+    </span>
+  );
+
   return (
     <div className="space-y-3">
-      {/* Standards Compliance Badges */}
+      {/* Standards Compliance */}
       <div className="flex flex-wrap gap-2">
-        <Badge
-          variant={validation.standardsCompliance.bs7671 ? 'default' : 'destructive'}
-          className="flex items-center gap-1"
-        >
-          {validation.standardsCompliance.bs7671 ? (
-            <CheckCircle className="h-3 w-3" />
-          ) : (
-            <XCircle className="h-3 w-3" />
-          )}
-          BS 7671
-        </Badge>
-
-        <Badge
-          variant={validation.standardsCompliance.iet ? 'default' : 'destructive'}
-          className="flex items-center gap-1"
-        >
-          {validation.standardsCompliance.iet ? (
-            <CheckCircle className="h-3 w-3" />
-          ) : (
-            <XCircle className="h-3 w-3" />
-          )}
-          IET
-        </Badge>
-
-        <Badge
-          variant={validation.standardsCompliance.safety ? 'default' : 'destructive'}
-          className="flex items-center gap-1"
-        >
-          {validation.standardsCompliance.safety ? (
-            <Shield className="h-3 w-3" />
-          ) : (
-            <XCircle className="h-3 w-3" />
-          )}
-          Safety
-        </Badge>
+        <Pill label="BS 7671" ok={validation.standardsCompliance.bs7671} />
+        <Pill label="IET" ok={validation.standardsCompliance.iet} />
+        <Pill label="Safety" ok={validation.standardsCompliance.safety} />
       </div>
 
       {/* Validation Status */}
-      <Alert
-        className={
-          validation.isValid
-            ? 'border-green-500/50 bg-green-500/10'
-            : 'border-red-500/50 bg-red-500/10'
-        }
-      >
-        <div className="flex items-center gap-2">
-          {validation.isValid ? (
-            <CheckCircle className="h-4 w-4 text-green-500" />
-          ) : (
-            <XCircle className="h-4 w-4 text-red-500" />
-          )}
-          <AlertDescription className="font-medium">
-            {validation.isValid ? 'Calculation Valid' : 'Validation Issues Detected'}
-          </AlertDescription>
-        </div>
-      </Alert>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          {validation.isValid ? 'Calculation valid' : 'Validation issues detected'}
+        </span>
+      </div>
 
       {/* Errors */}
       {validation.errors.length > 0 && (
-        <Alert className="border-red-500/50 bg-red-500/10">
-          <XCircle className="h-4 w-4 text-red-500" />
-          <AlertDescription>
-            <div className="font-medium text-red-300 mb-1">Errors:</div>
-            <ul className="list-disc list-inside space-y-1 text-sm">
-              {validation.errors.map((error, index) => (
-                <li key={index} className="text-red-200">
-                  {error}
-                </li>
-              ))}
-            </ul>
-          </AlertDescription>
-        </Alert>
+        <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+            Errors
+          </span>
+          <ul className="space-y-1.5">
+            {validation.errors.map((error, index) => (
+              <li
+                key={index}
+                className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+              >
+                <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                <span>{error}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
 
       {/* Warnings */}
       {validation.warnings.length > 0 && (
-        <Alert className="border-amber-500/50 bg-amber-500/10">
-          <AlertTriangle className="h-4 w-4 text-amber-500" />
-          <AlertDescription>
-            <div className="font-medium text-amber-300 mb-1">Warnings:</div>
-            <ul className="list-disc list-inside space-y-1 text-sm">
-              {validation.warnings.map((warning, index) => (
-                <li key={index} className="text-amber-200">
-                  {warning}
-                </li>
-              ))}
-            </ul>
-          </AlertDescription>
-        </Alert>
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Warnings
+          </span>
+          <ul className="space-y-1.5">
+            {validation.warnings.map((warning, index) => (
+              <li
+                key={index}
+                className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+              >
+                <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                <span>{warning}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
 
       {/* Professional Notice */}
-      <Alert className="border-blue-500/50 bg-blue-500/10">
-        <Shield className="h-4 w-4 text-blue-500" />
-        <AlertDescription className="text-xs text-blue-200">
-          <strong>Professional Notice:</strong> This {calculationType} calculation has been
-          validated against BS 7671 and IET standards. Always verify critical calculations with a
-          qualified electrician before implementation.
-        </AlertDescription>
-      </Alert>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Professional notice
+        </span>
+        <p className="text-[13px] text-white/85 leading-relaxed">
+          This {calculationType} calculation has been validated against BS 7671 and IET standards.
+          Always verify critical calculations with a qualified electrician before implementation.
+        </p>
+      </div>
     </div>
   );
 };

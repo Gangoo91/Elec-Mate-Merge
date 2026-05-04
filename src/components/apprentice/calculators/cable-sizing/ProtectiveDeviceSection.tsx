@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Shield, CheckCircle2, XCircle, AlertTriangle, Info, ChevronDown } from 'lucide-react';
+import { CheckCircle2, XCircle, ChevronDown } from 'lucide-react';
 import {
   Select,
   SelectContent,
@@ -74,21 +74,20 @@ const ProtectiveDeviceSection = ({
     <Collapsible
       open={isOpen}
       onOpenChange={setIsOpen}
-      className="mt-8 pt-8 border-t border-elec-yellow/30"
+      className="mt-8 pt-8 border-t border-white/[0.06]"
     >
-      <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-        <div className="flex items-center gap-2 sm:gap-3">
-          <Shield className="h-5 w-5 text-elec-yellow flex-shrink-0" />
-          <span className="font-semibold text-sm sm:text-base text-white">
-            Protective Device Check
+      <CollapsibleTrigger className="w-full flex items-center justify-between touch-manipulation min-h-[44px]">
+        <div className="flex items-baseline gap-3">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Protective device check
           </span>
-          <span className="text-xs text-white font-normal hidden sm:inline">
-            (BS 7671 Reg 433.1)
+          <span className="text-[11px] text-white/55 font-mono hidden sm:inline">
+            BS 7671 Reg 433.1
           </span>
         </div>
         <ChevronDown
           className={cn(
-            'h-4 w-4 text-white flex-shrink-0 transition-transform duration-200',
+            'h-4 w-4 text-white/55 flex-shrink-0 transition-transform duration-200',
             isOpen && 'rotate-180'
           )}
         />
@@ -98,12 +97,12 @@ const ProtectiveDeviceSection = ({
         {/* Device Selection */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-white flex items-center gap-1">
+            <label className="text-[13px] font-medium text-white flex items-center gap-1">
               Device Type
               <RequiredFieldTooltip content="Select the type of protective device for overload protection" />
             </label>
             <Select value={deviceType} onValueChange={(v) => setDeviceType(v as DeviceType)}>
-              <SelectTrigger className="bg-white/[0.04] border-elec-yellow/30 min-h-[48px] text-base">
+              <SelectTrigger className="h-11 bg-white/[0.04] border-white/10 focus:border-yellow-500 focus:ring-yellow-500 touch-manipulation">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -111,26 +110,26 @@ const ProtectiveDeviceSection = ({
                   <SelectItem key={option.value} value={option.value} className="py-3">
                     <div className="flex flex-col">
                       <span className="text-white">{option.label}</span>
-                      <span className="text-xs text-white">{option.standard}</span>
+                      <span className="text-xs text-white/55">{option.standard}</span>
                     </div>
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
             {deviceInfo && (
-              <p className="text-xs text-white">
+              <p className="text-[12px] text-white/55 font-mono">
                 I₂ = {i2Multiplier} × In ({deviceInfo.standard})
               </p>
             )}
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-white flex items-center gap-1">
+            <label className="text-[13px] font-medium text-white flex items-center gap-1">
               Rating (In)
               <RequiredFieldTooltip content="Nominal current rating of the protective device" />
             </label>
             <Select value={rating.toString()} onValueChange={(v) => setRating(parseInt(v))}>
-              <SelectTrigger className="bg-white/[0.04] border-elec-yellow/30 min-h-[48px] text-base">
+              <SelectTrigger className="h-11 bg-white/[0.04] border-white/10 focus:border-yellow-500 focus:ring-yellow-500 touch-manipulation">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="max-h-60">
@@ -149,44 +148,35 @@ const ProtectiveDeviceSection = ({
           <div className="space-y-4">
             {/* Overall Status */}
             <div
-              className={`p-4 rounded-lg border ${
+              className={`rounded-xl border p-4 ${
                 validation.allPassed
-                  ? 'bg-green-900/20 border-green-500/30'
-                  : 'bg-red-900/20 border-red-500/30'
+                  ? 'border-white/[0.06] bg-white/[0.02]'
+                  : 'border-red-500/30 bg-red-500/[0.04]'
               }`}
             >
-              <div className="flex items-center gap-2">
-                {validation.allPassed ? (
-                  <CheckCircle2 className="h-6 w-6 text-green-400" />
-                ) : (
-                  <AlertTriangle className="h-6 w-6 text-red-400" />
-                )}
-                <span
-                  className={`font-semibold ${validation.allPassed ? 'text-green-400' : 'text-red-400'}`}
-                >
-                  {validation.allPassed
-                    ? 'All BS 7671 Coordination Checks Passed'
-                    : 'Coordination Check Failed'}
-                </span>
-              </div>
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                {validation.allPassed
+                  ? 'All BS 7671 coordination checks passed'
+                  : 'Coordination check failed'}
+              </span>
             </div>
 
             {/* Individual Checks */}
             <div className="space-y-3">
               {/* Check 1: Ib ≤ In */}
-              <div className="p-4 bg-white/[0.04] rounded-lg border-l-2 border-l-elec-yellow">
+              <div className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02]">
                 <div className="flex items-start gap-3 text-left">
                   <CheckIcon passed={validation.checks.ibLessEqualIn.passed} />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="font-semibold text-white text-base">Check 1: Ib ≤ In</span>
+                      <span className="text-[14px] font-medium text-white">Check 1: Ib ≤ In</span>
                       <span
-                        className={`text-sm font-bold flex-shrink-0 ${validation.checks.ibLessEqualIn.passed ? 'text-green-400' : 'text-red-400'}`}
+                        className={`text-[11px] font-medium uppercase tracking-[0.18em] flex-shrink-0 ${validation.checks.ibLessEqualIn.passed ? 'text-white/85' : 'text-red-300'}`}
                       >
-                        {validation.checks.ibLessEqualIn.passed ? 'PASS' : 'FAIL'}
+                        {validation.checks.ibLessEqualIn.passed ? 'Pass' : 'Fail'}
                       </span>
                     </div>
-                    <p className="text-sm text-white mt-1">
+                    <p className="text-[13px] text-white/85 leading-relaxed mt-1 font-mono">
                       Design current ({validation.checks.ibLessEqualIn.ib}A){' '}
                       {validation.checks.ibLessEqualIn.passed ? '≤' : '>'} Device rating (
                       {validation.checks.ibLessEqualIn.in_}A)
@@ -196,19 +186,19 @@ const ProtectiveDeviceSection = ({
               </div>
 
               {/* Check 2: In ≤ Iz */}
-              <div className="p-4 bg-white/[0.04] rounded-lg border-l-2 border-l-elec-yellow">
+              <div className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02]">
                 <div className="flex items-start gap-3 text-left">
                   <CheckIcon passed={validation.checks.inLessEqualIz.passed} />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="font-semibold text-white text-base">Check 2: In ≤ Iz</span>
+                      <span className="text-[14px] font-medium text-white">Check 2: In ≤ Iz</span>
                       <span
-                        className={`text-sm font-bold flex-shrink-0 ${validation.checks.inLessEqualIz.passed ? 'text-green-400' : 'text-red-400'}`}
+                        className={`text-[11px] font-medium uppercase tracking-[0.18em] flex-shrink-0 ${validation.checks.inLessEqualIz.passed ? 'text-white/85' : 'text-red-300'}`}
                       >
-                        {validation.checks.inLessEqualIz.passed ? 'PASS' : 'FAIL'}
+                        {validation.checks.inLessEqualIz.passed ? 'Pass' : 'Fail'}
                       </span>
                     </div>
-                    <p className="text-sm text-white mt-1">
+                    <p className="text-[13px] text-white/85 leading-relaxed mt-1 font-mono">
                       Device rating ({validation.checks.inLessEqualIz.in_}A){' '}
                       {validation.checks.inLessEqualIz.passed ? '≤' : '>'} Effective capacity (
                       {validation.checks.inLessEqualIz.iz}A)
@@ -218,21 +208,21 @@ const ProtectiveDeviceSection = ({
               </div>
 
               {/* Check 3: I2 ≤ 1.45 × Iz */}
-              <div className="p-4 bg-white/[0.04] rounded-lg border-l-2 border-l-elec-yellow">
+              <div className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02]">
                 <div className="flex items-start gap-3 text-left">
                   <CheckIcon passed={validation.checks.i2LessEqual145Iz.passed} />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="font-semibold text-white text-base">
+                      <span className="text-[14px] font-medium text-white">
                         Check 3: I₂ ≤ 1.45 × Iz
                       </span>
                       <span
-                        className={`text-sm font-bold flex-shrink-0 ${validation.checks.i2LessEqual145Iz.passed ? 'text-green-400' : 'text-red-400'}`}
+                        className={`text-[11px] font-medium uppercase tracking-[0.18em] flex-shrink-0 ${validation.checks.i2LessEqual145Iz.passed ? 'text-white/85' : 'text-red-300'}`}
                       >
-                        {validation.checks.i2LessEqual145Iz.passed ? 'PASS' : 'FAIL'}
+                        {validation.checks.i2LessEqual145Iz.passed ? 'Pass' : 'Fail'}
                       </span>
                     </div>
-                    <p className="text-sm text-white mt-1">
+                    <p className="text-[13px] text-white/85 leading-relaxed mt-1 font-mono">
                       Overload trip ({validation.checks.i2LessEqual145Iz.i2}A){' '}
                       {validation.checks.i2LessEqual145Iz.passed ? '≤' : '>'} 1.45 × Iz (
                       {validation.checks.i2LessEqual145Iz.limit}A)
@@ -244,16 +234,18 @@ const ProtectiveDeviceSection = ({
 
             {/* Suggestions if failed */}
             {validation.suggestions.length > 0 && (
-              <div className="p-4 bg-amber-900/20 border border-amber-500/30 rounded-lg">
-                <div className="flex items-center gap-2 mb-2">
-                  <Info className="h-5 w-5 text-amber-400" />
-                  <span className="font-medium text-amber-400">Suggestions</span>
-                </div>
-                <ul className="space-y-2">
+              <div className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] space-y-2">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Suggestions
+                </span>
+                <ul className="space-y-1.5">
                   {validation.suggestions.map((suggestion, idx) => (
-                    <li key={idx} className="text-sm text-white flex items-start gap-2">
-                      <span className="text-amber-400">•</span>
-                      {suggestion}
+                    <li
+                      key={idx}
+                      className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                      <span>{suggestion}</span>
                     </li>
                   ))}
                 </ul>
@@ -261,27 +253,26 @@ const ProtectiveDeviceSection = ({
             )}
 
             {/* Device Reference Info */}
-            <div className="p-4 bg-white/[0.04] rounded-lg border border-white/5">
-              <div className="flex items-center gap-2 mb-3 text-left">
-                <Info className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                <span className="text-sm font-medium text-white">Device I₂ Values</span>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-white">
-                <div className="flex justify-between p-2 bg-white/[0.04] rounded">
-                  <span>MCB/RCBO</span>
-                  <span className="font-mono">1.45 × In</span>
+            <div className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] space-y-3">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Device I₂ values
+              </span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
+                <div className="flex items-baseline justify-between p-2 text-[13px]">
+                  <span className="text-white/85">MCB / RCBO</span>
+                  <span className="font-mono text-white">1.45 × In</span>
                 </div>
-                <div className="flex justify-between p-2 bg-white/[0.04] rounded">
-                  <span>BS 88 gG</span>
-                  <span className="font-mono">1.6 × In</span>
+                <div className="flex items-baseline justify-between p-2 text-[13px]">
+                  <span className="text-white/85">BS 88 gG</span>
+                  <span className="font-mono text-white">1.6 × In</span>
                 </div>
-                <div className="flex justify-between p-2 bg-white/[0.04] rounded">
-                  <span>BS 3036</span>
-                  <span className="font-mono">2.0 × In</span>
+                <div className="flex items-baseline justify-between p-2 text-[13px]">
+                  <span className="text-white/85">BS 3036</span>
+                  <span className="font-mono text-white">2.0 × In</span>
                 </div>
-                <div className="flex justify-between p-2 bg-white/[0.04] rounded">
-                  <span>MCCB</span>
-                  <span className="font-mono">1.3 × In</span>
+                <div className="flex items-baseline justify-between p-2 text-[13px]">
+                  <span className="text-white/85">MCCB</span>
+                  <span className="font-mono text-white">1.3 × In</span>
                 </div>
               </div>
             </div>

@@ -18,9 +18,9 @@ const RecordingIndicator = ({ className, showText = false }: RecordingIndicatorP
   return (
     <div className={cn('flex items-center gap-1.5', className)}>
       <Circle
-        className={cn('h-2.5 w-2.5 fill-green-500 text-green-500', isTracking && 'animate-pulse')}
+        className={cn('h-2 w-2 fill-elec-yellow text-elec-yellow', isTracking && 'animate-pulse')}
       />
-      {showText && <span className="text-xs text-green-400 font-medium">Recording</span>}
+      {showText && <span className="text-[12px] text-white/85 font-medium">Recording</span>}
     </div>
   );
 };

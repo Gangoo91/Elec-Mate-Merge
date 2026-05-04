@@ -19,14 +19,14 @@ export function CollegeAiCard() {
     <button
       type="button"
       onClick={() => navigate('/apprentice/college-ai')}
-      className="group w-full text-left rounded-2xl border border-cyan-400/25 bg-gradient-to-br from-cyan-500/[0.10] via-cyan-500/[0.04] to-transparent hover:border-cyan-400/45 hover:from-cyan-500/[0.14] transition-colors overflow-hidden touch-manipulation"
+      className="group w-full text-left rounded-2xl border border-white/[0.06] bg-white/[0.02] hover:border-white/[0.06] hover:from-cyan-500/[0.14] transition-colors overflow-hidden touch-manipulation"
     >
       <div className="px-4 sm:px-5 py-4 sm:py-5">
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
           <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-cyan-300/85">
             College AI
           </div>
-          <span className="text-[10.5px] tabular-nums text-cyan-200">grounded in your data</span>
+          <span className="text-[10.5px] tabular-nums text-white/85">grounded in your data</span>
         </div>
         <h3 className="mt-2 text-[18px] sm:text-[20px] font-semibold text-white leading-tight tracking-tight">
           Ask your AI study mentor anything
@@ -45,7 +45,7 @@ export function CollegeAiCard() {
             </li>
           ))}
         </ul>
-        <div className="mt-4 inline-flex items-center h-10 px-4 rounded-lg bg-cyan-500 text-black text-[13px] font-semibold group-hover:bg-cyan-400 transition-colors">
+        <div className="mt-4 inline-flex items-center h-10 px-4 rounded-lg bg-white/[0.02] text-black text-[13px] font-semibold group-hover:bg-white/[0.02] transition-colors">
           Open College AI →
         </div>
       </div>

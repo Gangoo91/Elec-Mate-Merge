@@ -3,7 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 
 const EmergencyBanner = () => {
   return (
-    <Card className="border-red-500/40 bg-red-500/5 shadow-md">
+    <Card className="border-white/[0.06] bg-white/[0.02] shadow-md">
       <CardContent className="p-4">
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
           <AlertTriangle className="h-10 w-10 text-red-500 flex-shrink-0" />

@@ -78,7 +78,7 @@ const InteractiveStressAssessment = () => {
     const total = answers.reduce((sum, answer) => sum + answer, 0);
     const average = total / answers.length;
 
-    if (average <= 2) return { level: 'Low', color: 'text-green-400', icon: CheckCircle };
+    if (average <= 2) return { level: 'Low', color: 'text-white/85', icon: CheckCircle };
     if (average <= 3.5) return { level: 'Moderate', color: 'text-yellow-400', icon: AlertTriangle };
     return { level: 'High', color: 'text-red-400', icon: XCircle };
   };

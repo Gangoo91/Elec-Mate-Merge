@@ -20,6 +20,11 @@ import {
 } from '@/utils/circuit-calculations';
 import { cn } from '@/lib/utils';
 import { Eyebrow } from '@/components/college/primitives';
+import { DesignVisionUpload, type VisionExtractionResult } from '../DesignVisionUpload';
+import {
+  floorPlanToCircuitSuggestions,
+  scheduleToCircuits,
+} from '../vision-to-wizard';
 
 interface StructuredDesignWizardProps {
   onGenerate: (inputs: DesignInputs) => Promise<void>;
@@ -115,6 +120,79 @@ export const StructuredDesignWizard = ({
       }
     }
   }, [initialData]);
+
+  // ── Vision input ─────────────────────────────────────────────────────
+  // The vision picker (file upload + scope-paste) lives on the Circuits
+  // step (step 3). This handler receives the extraction result from there
+  // and pushes the right state into the wizard — installation type, supply
+  // hints, location, and the suggested circuits list.
+  const handleVisionExtracted = (result: VisionExtractionResult) => {
+    const e: any = result.extraction ?? {};
+    if (result.kind === 'floor-plan') {
+      // Building type → installation type heuristic.
+      const bt = String(e.buildingType ?? '').toLowerCase();
+      if (/office|shop|reception|retail|kitchen|restaurant|cafe|bar|salon|clinic|gym|hotel|warehouse(?!.*industrial)/.test(bt)) {
+        setInstallationType('commercial');
+      } else if (/factory|industrial|workshop|production/.test(bt)) {
+        setInstallationType('industrial');
+      } else if (/house|flat|residential|domestic|apartment|bungalow/.test(bt)) {
+        setInstallationType('domestic');
+      }
+      // CU position → wizard location field if blank.
+      const cuRoom = e?.cuPosition?.roomName;
+      if (cuRoom && !location.trim()) setLocation(cuRoom);
+      // Suggest circuits — appended to whatever's already in the list.
+      const suggestions = floorPlanToCircuitSuggestions(e);
+      if (suggestions.length > 0) {
+        setCircuits([...circuits, ...suggestions]);
+        toast.success(
+          `${suggestions.length} circuit${suggestions.length === 1 ? '' : 's'} added from floor plan`,
+          {
+            description: 'Review each one and edit as needed before generating.',
+            duration: 6000,
+          }
+        );
+      }
+      return;
+    }
+
+    if (result.kind === 'schedule') {
+      // Schedule extractions carry supply hints — apply where present.
+      if (typeof e.supplyVoltage === 'number') setVoltage(e.supplyVoltage);
+      if (e.supplyPhases === 'single' || e.supplyPhases === 'three') setPhases(e.supplyPhases);
+      if (typeof e.ze === 'number') setZe(e.ze);
+      if (typeof e.mainSwitchRating === 'number') setMainSwitchRating(e.mainSwitchRating);
+      // Map circuits 1:1 — appended to the existing list.
+      const mapped = scheduleToCircuits(e);
+      if (mapped.length > 0) {
+        setCircuits([...circuits, ...mapped]);
+        toast.success(
+          `${mapped.length} circuit${mapped.length === 1 ? '' : 's'} imported from schedule`,
+          {
+            description: 'Verify cable + protection sizes before generating.',
+            duration: 6000,
+          }
+        );
+      }
+      return;
+    }
+
+    if (result.kind === 'bom') {
+      const items = Array.isArray(e.items) ? e.items.length : 0;
+      toast.message('BoQ recorded', {
+        description: `${items} line items extracted — these are reference for the cost engineer step. Add circuits manually below.`,
+      });
+      return;
+    }
+
+    if (result.kind === 'photo') {
+      const findings = Array.isArray(e.findings) ? e.findings.length : 0;
+      toast.message('Photo notes captured', {
+        description: `${findings} finding${findings === 1 ? '' : 's'} — informational only, no auto-fill applied.`,
+      });
+      return;
+    }
+  };
 
   // Update defaults when installation type or phases change
   useEffect(() => {
@@ -307,6 +385,7 @@ export const StructuredDesignWizard = ({
             circuits={circuits}
             setCircuits={setCircuits}
             installationType={installationType}
+            onVisionExtracted={handleVisionExtracted}
           />
         );
       case 3:

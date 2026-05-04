@@ -1,7 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Check, X, AlertCircle } from 'lucide-react';
-
 interface ToolSpec {
   name: string;
   description: string;
@@ -25,110 +21,92 @@ interface ToolSpecificationCardProps {
 }
 
 const ToolSpecificationCard = ({ tool }: ToolSpecificationCardProps) => {
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case 'essential':
-        return 'bg-red-500/20 text-red-400 border-red-500/30';
-      case 'recommended':
-        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
-      case 'optional':
-        return 'bg-green-500/20 text-green-400 border-green-500/30';
-      default:
-        return 'bg-white/10 text-white border-white/20';
-    }
-  };
-
   return (
-    <Card className="border-elec-yellow/20 bg-white/5">
-      <CardHeader className="pb-4">
-        <div className="flex items-start justify-between">
-          <div>
-            <CardTitle className="text-elec-yellow text-lg">{tool.name}</CardTitle>
-            <p className="text-sm text-white mt-1">{tool.description}</p>
-          </div>
-          <Badge className={getPriorityColor(tool.priority)} variant="outline">
-            {tool.priority}
-          </Badge>
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className="flex items-start justify-between gap-3">
+        <div className="space-y-1">
+          <h3 className="text-[18px] font-semibold text-white leading-tight">{tool.name}</h3>
+          <p className="text-[14px] text-white/85 leading-relaxed">{tool.description}</p>
         </div>
-      </CardHeader>
+        <span className="text-[10px] uppercase tracking-[0.18em] text-white/55 flex-shrink-0">
+          {tool.priority}
+        </span>
+      </div>
 
-      <CardContent className="space-y-4">
-        {/* Specifications */}
-        <div>
-          <h4 className="font-medium text-white mb-2">Specifications</h4>
-          <div className="grid grid-cols-2 gap-2 text-sm">
-            {Object.entries(tool.specifications).map(
-              ([key, value]) =>
-                value && (
-                  <div key={key} className="flex justify-between">
-                    <span className="text-white capitalize">{key}:</span>
-                    <span className="text-white">{value}</span>
-                  </div>
-                )
-            )}
-            <div className="flex justify-between col-span-2 pt-2 border-t border-elec-yellow/20">
-              <span className="text-white">Price Range:</span>
-              <span className="text-elec-yellow font-medium">{tool.priceRange}</span>
-            </div>
+      <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Specifications
+        </span>
+        <div className="grid grid-cols-2 gap-2 text-[13px] text-white/85">
+          {Object.entries(tool.specifications).map(
+            ([key, value]) =>
+              value && (
+                <div key={key} className="flex justify-between">
+                  <span className="capitalize text-white/55">{key}</span>
+                  <span>{value}</span>
+                </div>
+              )
+          )}
+          <div className="flex justify-between col-span-2 pt-2 border-t border-white/[0.06]">
+            <span className="text-white/55">Price range</span>
+            <span className="font-mono text-white">{tool.priceRange}</span>
           </div>
         </div>
+      </div>
 
-        {/* Pros and Cons */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <h4 className="font-medium text-green-300 mb-2 flex items-center gap-2">
-              <Check className="h-4 w-4" />
-              Advantages
-            </h4>
-            <ul className="space-y-1">
-              {tool.pros.map((pro, index) => (
-                <li key={index} className="text-sm text-white flex items-start gap-2">
-                  <Check className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                  {pro}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-medium text-red-300 mb-2 flex items-center gap-2">
-              <X className="h-4 w-4" />
-              Considerations
-            </h4>
-            <ul className="space-y-1">
-              {tool.cons.map((con, index) => (
-                <li key={index} className="text-sm text-white flex items-start gap-2">
-                  <X className="h-3 w-3 text-red-400 mt-0.5 flex-shrink-0" />
-                  {con}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {/* Buying Tips */}
-        <div>
-          <h4 className="font-medium text-blue-300 mb-2 flex items-center gap-2">
-            <AlertCircle className="h-4 w-4" />
-            Buying Tips
-          </h4>
-          <ul className="space-y-1">
-            {tool.buyingTips.map((tip, index) => (
-              <li key={index} className="text-sm text-white">
-                • {tip}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Advantages
+          </span>
+          <ul className="space-y-1 text-[13px] text-white/85 leading-relaxed">
+            {tool.pros.map((pro, index) => (
+              <li key={index} className="flex items-start gap-2">
+                <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                <span>{pro}</span>
               </li>
             ))}
           </ul>
         </div>
 
-        {tool.maintenanceNotes && (
-          <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-3">
-            <h4 className="font-medium text-elec-yellow mb-1">Maintenance Notes</h4>
-            <p className="text-sm text-white">{tool.maintenanceNotes}</p>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+        <div className="space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Considerations
+          </span>
+          <ul className="space-y-1 text-[13px] text-white/85 leading-relaxed">
+            {tool.cons.map((con, index) => (
+              <li key={index} className="flex items-start gap-2">
+                <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                <span>{con}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Buying tips
+        </span>
+        <ul className="space-y-1 text-[13px] text-white/85 leading-relaxed">
+          {tool.buyingTips.map((tip, index) => (
+            <li key={index} className="flex items-start gap-2">
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>{tip}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {tool.maintenanceNotes && (
+        <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Maintenance notes
+          </span>
+          <p className="text-[13px] text-white/85 leading-relaxed">{tool.maintenanceNotes}</p>
+        </div>
+      )}
+    </div>
   );
 };
 

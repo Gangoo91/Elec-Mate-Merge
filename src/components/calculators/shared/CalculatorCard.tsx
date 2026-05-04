@@ -25,38 +25,26 @@ export const CalculatorCard = ({
   children,
   className,
 }: CalculatorCardProps) => {
-  const config = CALCULATOR_CONFIG[category] ?? CALCULATOR_CONFIG[FALLBACK_CATEGORY];
-  const Icon = config.icon;
+  // Resolve category for fallback safety; chrome stays neutral regardless.
+  const _config = CALCULATOR_CONFIG[category] ?? CALCULATOR_CONFIG[FALLBACK_CATEGORY];
+  void _config;
 
   return (
-    <div className={cn('relative rounded-2xl overflow-hidden bg-card', className)}>
-      {/* Top accent gradient line */}
-      <div
-        className="h-1 w-full"
-        style={{
-          background: `linear-gradient(90deg, ${config.gradientFrom}, ${config.gradientTo})`,
-        }}
-      />
-
-      {/* Header */}
-      <div className="px-4 sm:px-6 pt-5 pb-3">
-        <div className="flex items-center gap-3">
-          <div
-            className="p-2 rounded-xl shrink-0"
-            style={{
-              background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}10)`,
-            }}
-          >
-            <Icon className="h-5 w-5" style={{ color: config.gradientFrom }} />
-          </div>
-          <div className="min-w-0">
-            <h2 className="text-lg sm:text-xl font-bold text-white">{title}</h2>
-            {description && <p className="text-sm text-white mt-0.5">{description}</p>}
-          </div>
-        </div>
+    <div
+      className={cn(
+        'rounded-2xl border border-white/[0.06] bg-white/[0.02] overflow-hidden',
+        className
+      )}
+    >
+      <div className="px-4 sm:px-6 pt-5 pb-4 space-y-1">
+        <h2 className="text-[18px] sm:text-[20px] font-medium text-white leading-tight">
+          {title}
+        </h2>
+        {description && (
+          <p className="text-[13px] text-white/70 leading-relaxed">{description}</p>
+        )}
       </div>
 
-      {/* Content */}
       <div className="px-4 sm:px-6 pb-5 sm:pb-6 space-y-4">{children}</div>
     </div>
   );
@@ -69,16 +57,8 @@ interface CalculatorDividerProps {
 }
 
 export const CalculatorDivider = ({ category, className }: CalculatorDividerProps) => {
-  const config = CALCULATOR_CONFIG[category] ?? CALCULATOR_CONFIG[FALLBACK_CATEGORY];
-
-  return (
-    <div
-      className={cn('h-px w-full my-1', className)}
-      style={{
-        background: `linear-gradient(90deg, transparent, ${config.gradientFrom}40, transparent)`,
-      }}
-    />
-  );
+  void category;
+  return <div className={cn('h-px w-full my-1 bg-white/[0.06]', className)} />;
 };
 
 // Section component for grouping inputs within a calculator
@@ -91,7 +71,11 @@ interface CalculatorSectionProps {
 export const CalculatorSection = ({ title, children, className }: CalculatorSectionProps) => {
   return (
     <div className={cn('space-y-3', className)}>
-      {title && <h3 className="text-sm font-semibold text-white">{title}</h3>}
+      {title && (
+        <h3 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          {title}
+        </h3>
+      )}
       {children}
     </div>
   );

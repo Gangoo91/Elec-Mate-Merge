@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
-import { GraduationCap, ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 interface CareerPageHeaderProps {
   activeSection: string | null;
@@ -9,31 +8,34 @@ interface CareerPageHeaderProps {
 }
 
 const CareerPageHeader = ({ activeSection, onBackToSections }: CareerPageHeaderProps) => {
-  const isMobile = useIsMobile();
-
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight flex items-center gap-2">
-          <GraduationCap className="h-7 w-7 sm:h-8 sm:w-8 text-elec-yellow" />
-          Career Progression
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Apprentice
+        </span>
+        <h1 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
+          Career progression
         </h1>
-        <p className="text-sm sm:text-base text-white">
-          Resources and guidance for advancing your electrical career
+        <p className="text-[14px] text-white/70 leading-relaxed">
+          Resources and guidance for advancing your electrical career.
         </p>
       </div>
       {activeSection ? (
         <Button
           variant="outline"
-          className="flex items-center gap-2 w-full sm:w-auto"
+          className="h-11 border-white/15 text-white hover:bg-white/[0.05] flex items-center gap-2 w-full sm:w-auto touch-manipulation"
           onClick={onBackToSections}
         >
-          <ArrowLeft className="h-4 w-4" /> Back to Career Path Sections
+          <ArrowLeft className="h-4 w-4" /> Back to sections
         </Button>
       ) : (
         <Link to="/apprentice/hub" className="w-full sm:w-auto">
-          <Button variant="outline" className="flex items-center gap-2 w-full">
-            <ArrowLeft className="h-4 w-4" /> Back to Apprentice Hub
+          <Button
+            variant="outline"
+            className="h-11 border-white/15 text-white hover:bg-white/[0.05] flex items-center gap-2 w-full touch-manipulation"
+          >
+            <ArrowLeft className="h-4 w-4" /> Back to apprentice hub
           </Button>
         </Link>
       )}

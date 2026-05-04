@@ -17,22 +17,24 @@ const CertificatesManager = () => {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h3 className="text-lg font-semibold">Certificates & Qualifications</h3>
-          <p className="text-sm text-white">
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Certificates and qualifications
+          </span>
+          <p className="text-[14px] text-white/85 leading-relaxed">
             Keep track of your professional certificates, qualifications and achievements
           </p>
         </div>
         <Dialog>
           <DialogTrigger asChild>
-            <Button className="gap-2">
+            <Button className="gap-2 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation">
               <Upload className="h-4 w-4" />
-              Upload New Certificate
+              Upload new certificate
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
-              <DialogTitle>Upload Certificate</DialogTitle>
+              <DialogTitle>Upload certificate</DialogTitle>
             </DialogHeader>
             <CertificateForm onSubmit={addCertificate} isUploading={isUploading} />
           </DialogContent>

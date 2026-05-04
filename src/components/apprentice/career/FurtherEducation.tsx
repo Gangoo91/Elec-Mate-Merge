@@ -1,6 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { GraduationCap, BookOpen, Clock, Building, MapPin } from 'lucide-react';
-
 const educationOptions = [
   {
     id: 1,
@@ -78,116 +75,123 @@ const educationOptions = [
 const FurtherEducation = () => {
   return (
     <div className="space-y-6">
-      <div className="space-y-4">
-        <h2 className="text-2xl font-semibold">Further Education</h2>
-        <p className="text-white">
-          Advancing your academic qualifications can open doors to higher-level positions and
-          specialisations in the electrical industry. Below are key educational pathways that can
-          enhance your career prospects and technical expertise.
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Further education
+        </span>
+        <h2 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-white leading-tight">
+          Advancing your qualifications
+        </h2>
+        <p className="text-[14px] text-white/70 leading-relaxed">
+          Higher academic qualifications can open doors to senior roles and specialisations in the
+          electrical industry. Below are key educational pathways that can enhance your career
+          prospects and technical expertise.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {educationOptions.map((option) => (
-          <Card key={option.id} className="border-elec-yellow/20 bg-white/5 h-full flex flex-col">
-            <CardHeader className="pb-2">
-              <div className="flex items-start justify-between">
+          <div
+            key={option.id}
+            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 h-full flex flex-col gap-3"
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div className="space-y-1">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  {option.institution} · {option.level}
+                </span>
+                <h3 className="text-[17px] font-semibold text-white leading-tight">
+                  {option.title}
+                </h3>
+              </div>
+            </div>
+
+            <p className="text-[14px] text-white/85 leading-relaxed">{option.description}</p>
+
+            <div className="space-y-3 mt-auto">
+              <div className="space-y-2 text-[13px]">
                 <div>
-                  <CardTitle className="text-xl">{option.title}</CardTitle>
-                  <p className="text-sm text-amber-400">{option.institution}</p>
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Duration
+                  </span>
+                  <p className="text-white/85 mt-0.5">{option.duration}</p>
                 </div>
-                <div className="text-sm bg-white/10 px-2 py-1 rounded-md inline-block">
-                  {option.level}
+                <div>
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Entry requirements
+                  </span>
+                  <p className="text-white/85 mt-0.5">{option.entryRequirements}</p>
+                </div>
+                <div>
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Progression
+                  </span>
+                  <p className="text-white/85 mt-0.5">{option.progressionOptions}</p>
                 </div>
               </div>
-            </CardHeader>
-            <CardContent className="pt-2 flex-grow flex flex-col">
-              <p className="text-sm mb-4">{option.description}</p>
 
-              <div className="space-y-4 mt-auto">
-                <div className="grid grid-cols-1 gap-2 text-sm">
-                  <div className="flex items-center gap-2 text-xs">
-                    <Clock className="h-4 w-4 text-elec-yellow" />
-                    <span>
-                      <span className="text-elec-yellow/80">Duration:</span> {option.duration}
+              <div className="pt-3 border-t border-white/[0.06] space-y-2">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Key topics
+                </span>
+                <div className="flex flex-wrap gap-1.5">
+                  {option.keyTopics.map((topic, idx) => (
+                    <span
+                      key={idx}
+                      className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+                    >
+                      {topic}
                     </span>
-                  </div>
-
-                  <div className="text-xs">
-                    <p className="text-elec-yellow/80 mb-1">Entry Requirements:</p>
-                    <p>{option.entryRequirements}</p>
-                  </div>
-
-                  <div className="text-xs">
-                    <p className="text-elec-yellow/80 mb-1">Progression:</p>
-                    <p>{option.progressionOptions}</p>
-                  </div>
-                </div>
-
-                <div className="border-t border-elec-yellow/10 pt-3">
-                  <h4 className="text-xs text-elec-yellow mb-2">Key Topics:</h4>
-                  <div className="flex flex-wrap gap-1.5">
-                    {option.keyTopics.map((topic, idx) => (
-                      <span key={idx} className="text-xs bg-white/10 px-2 py-0.5 rounded">
-                        {topic}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="border-t border-elec-yellow/10 pt-3">
-                  <div className="flex items-start gap-1.5">
-                    <MapPin className="h-3.5 w-3.5 text-elec-yellow mt-0.5" />
-                    <div>
-                      <h4 className="text-xs text-elec-yellow mb-1">Example Locations:</h4>
-                      <p className="text-xs">{option.locations.join(', ')}</p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
 
-      <Card className="border-elec-yellow/20 bg-white/5 p-4">
-        <div className="flex gap-3 items-start">
-          <GraduationCap className="h-6 w-6 text-elec-yellow mt-1" />
-          <div>
-            <h3 className="font-medium text-lg mb-1">Education Funding Options</h3>
-            <div className="space-y-4 text-sm">
-              <div>
-                <h4 className="text-amber-400 font-medium">Advanced Learner Loan</h4>
-                <p className="text-xs mt-1">
-                  Available for Level 3-6 qualifications. You don't pay back until you earn over
-                  £25,000 per year.
-                </p>
-              </div>
-              <div>
-                <h4 className="text-amber-400 font-medium">Employer Sponsorship</h4>
-                <p className="text-xs mt-1">
-                  Many employers will fund further education that benefits their business. Speak to
-                  your line manager or HR department.
-                </p>
-              </div>
-              <div>
-                <h4 className="text-amber-400 font-medium">Part-time Study</h4>
-                <p className="text-xs mt-1">
-                  Many courses offer evening and weekend options that allow you to continue working
-                  while studying.
-                </p>
-              </div>
-              <div>
-                <h4 className="text-amber-400 font-medium">Professional Association Grants</h4>
-                <p className="text-xs mt-1">
-                  Organisations like IET offer grants and scholarships for electrical engineering
-                  studies.
-                </p>
+              <div className="pt-3 border-t border-white/[0.06] space-y-1">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Example locations
+                </span>
+                <p className="text-[12px] text-white/70">{option.locations.join(', ')}</p>
               </div>
             </div>
           </div>
+        ))}
+      </div>
+
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Education funding options
+        </span>
+        <div className="space-y-3">
+          <div className="space-y-1">
+            <p className="text-[13px] text-white">Advanced Learner Loan</p>
+            <p className="text-[12px] text-white/70">
+              Available for Level 3-6 qualifications. You don&apos;t pay back until you earn over
+              £25,000 per year.
+            </p>
+          </div>
+          <div className="space-y-1">
+            <p className="text-[13px] text-white">Employer sponsorship</p>
+            <p className="text-[12px] text-white/70">
+              Many employers will fund further education that benefits their business. Speak to your
+              line manager or HR department.
+            </p>
+          </div>
+          <div className="space-y-1">
+            <p className="text-[13px] text-white">Part-time study</p>
+            <p className="text-[12px] text-white/70">
+              Many courses offer evening and weekend options that allow you to continue working
+              while studying.
+            </p>
+          </div>
+          <div className="space-y-1">
+            <p className="text-[13px] text-white">Professional association grants</p>
+            <p className="text-[12px] text-white/70">
+              Organisations like IET offer grants and scholarships for electrical engineering
+              studies.
+            </p>
+          </div>
         </div>
-      </Card>
+      </div>
     </div>
   );
 };

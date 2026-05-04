@@ -21,33 +21,36 @@ const ElectricalTheorySubsection = ({
 }: ElectricalTheorySubsectionProps) => {
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-4 mb-6">
-        <h1 className="text-xl md:text-2xl font-bold text-elec-yellow">{title}</h1>
-      </div>
+      <h1 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">{title}</h1>
 
-      <div className="prose prose-invert max-w-none">
-        <p className="text-base md:text-lg leading-relaxed">{content}</p>
+      <p className="text-[14px] text-white/85 leading-relaxed">{content}</p>
 
-        <h2 className="text-lg md:text-xl font-semibold mt-6 mb-3 text-white">Key Points</h2>
-        <ul className="space-y-2">
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Key points
+        </span>
+        <ul className="space-y-1.5">
           {keyPoints.map((point, index) => (
-            <li key={index} className="flex items-start gap-2 text-base">
-              <span className="text-elec-yellow mt-1">•</span>
-              <span className="leading-relaxed">{point}</span>
+            <li
+              key={index}
+              className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+            >
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>{point}</span>
             </li>
           ))}
         </ul>
+      </div>
 
-        <div className="mt-8 pt-5 border-t border-elec-yellow/30">
-          <Button
-            onClick={markAsComplete}
-            disabled={isCompleted}
-            className={`w-full py-2 h-auto text-base ${isCompleted ? 'bg-green-600/20 border-green-500/50 text-green-400' : 'hover:bg-elec-yellow hover:text-elec-dark'}`}
-          >
-            {isCompleted ? 'Subsection Completed' : 'Mark as Complete'}
-            {isCompleted && <CheckCircle className="ml-2 h-5 w-5" />}
-          </Button>
-        </div>
+      <div className="pt-4 border-t border-white/[0.06]">
+        <Button
+          onClick={markAsComplete}
+          disabled={isCompleted}
+          className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-40"
+        >
+          {isCompleted ? 'Subsection completed' : 'Mark as complete'}
+          {isCompleted && <CheckCircle className="ml-2 h-4 w-4" />}
+        </Button>
       </div>
     </div>
   );

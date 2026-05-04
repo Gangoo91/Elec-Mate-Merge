@@ -1,17 +1,12 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { FileText, Camera, Download, Upload, CheckCircle, AlertCircle, Eye } from 'lucide-react';
 
 const EvidenceCollectionCard = () => {
   const [selectedEvidenceType, setSelectedEvidenceType] = useState<string | null>(null);
 
   const evidenceTypes = [
     {
-      type: 'Digital Evidence',
-      icon: <Upload className="h-5 w-5 text-blue-400" />,
+      type: 'Digital evidence',
       description: 'Electronic documentation and digital files',
       examples: [
         'Screenshots of completed online modules',
@@ -29,8 +24,7 @@ const EvidenceCollectionCard = () => {
       tools: ['Google Drive', 'OneDrive', 'Dropbox', 'Portfolio platforms'],
     },
     {
-      type: 'Physical Evidence',
-      icon: <Camera className="h-5 w-5 text-green-400" />,
+      type: 'Physical evidence',
       description: 'Tangible documentation and physical artefacts',
       examples: [
         'Printed certificates and awards',
@@ -48,8 +42,7 @@ const EvidenceCollectionCard = () => {
       tools: ['Scanner apps', 'Digital cameras', 'Filing systems', 'Protective sleeves'],
     },
     {
-      type: 'Observational Evidence',
-      icon: <Eye className="h-5 w-5 text-purple-400" />,
+      type: 'Observational evidence',
       description: 'Evidence gathered through direct observation',
       examples: [
         'Supervisor observation forms',
@@ -67,8 +60,7 @@ const EvidenceCollectionCard = () => {
       tools: ['Observation forms', 'Recording devices', 'Assessment apps', 'Feedback platforms'],
     },
     {
-      type: 'Reflective Evidence',
-      icon: <FileText className="h-5 w-5 text-orange-400" />,
+      type: 'Reflective evidence',
       description: 'Personal reflection and learning documentation',
       examples: [
         'Learning diaries and journals',
@@ -132,162 +124,182 @@ const EvidenceCollectionCard = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-pink-500/10">
-        <CardHeader>
-          <CardTitle className="text-purple-400">Evidence Collection & Quality</CardTitle>
-          <p className="text-sm text-white">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Evidence collection and quality
+          </span>
+          <p className="text-[14px] text-white/85 leading-relaxed">
             Best practices for collecting and maintaining high-quality training evidence
           </p>
-        </CardHeader>
-        <CardContent>
-          <Tabs defaultValue="types" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="types">Evidence Types</TabsTrigger>
-              <TabsTrigger value="quality">Quality Standards</TabsTrigger>
-              <TabsTrigger value="organisation">Organisation</TabsTrigger>
-            </TabsList>
+        </div>
 
-            <TabsContent value="types" className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {evidenceTypes.map((evidence, index) => (
+        <Tabs defaultValue="types" className="w-full">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="types">Types</TabsTrigger>
+            <TabsTrigger value="quality">Quality</TabsTrigger>
+            <TabsTrigger value="organisation">Organisation</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="types" className="space-y-4 mt-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {evidenceTypes.map((evidence, index) => {
+                const active = selectedEvidenceType === evidence.type;
+                return (
                   <div
                     key={index}
-                    className={`p-4 rounded-lg border cursor-pointer transition-all ${
-                      selectedEvidenceType === evidence.type
-                        ? 'border-purple-500/50 bg-purple-500/20'
-                        : 'border-purple-500/20 bg-white/5 hover:border-purple-500/30'
+                    className={`rounded-xl border p-4 cursor-pointer transition-all touch-manipulation ${
+                      active
+                        ? 'border-elec-yellow/30 bg-elec-yellow/[0.04]'
+                        : 'border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04]'
                     }`}
                     onClick={() =>
-                      setSelectedEvidenceType(
-                        selectedEvidenceType === evidence.type ? null : evidence.type
-                      )
+                      setSelectedEvidenceType(active ? null : evidence.type)
                     }
                   >
-                    <div className="flex items-center gap-3 mb-3">
-                      {evidence.icon}
-                      <h4 className="font-medium text-white">{evidence.type}</h4>
-                    </div>
-                    <p className="text-sm text-white mb-3">{evidence.description}</p>
+                    <h4 className="text-[14px] font-semibold text-white">{evidence.type}</h4>
+                    <p className="text-[14px] text-white/85 leading-relaxed mt-1">
+                      {evidence.description}
+                    </p>
 
-                    {selectedEvidenceType === evidence.type && (
-                      <div className="space-y-3 animate-fade-in">
-                        <div>
-                          <span className="text-xs font-medium text-purple-400">Examples:</span>
-                          <ul className="text-xs text-white mt-1 space-y-1">
+                    {active && (
+                      <div className="space-y-3 animate-fade-in mt-3">
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                            Examples
+                          </span>
+                          <ul className="space-y-1">
                             {evidence.examples.map((example, idx) => (
-                              <li key={idx} className="flex items-start gap-1">
-                                <span className="text-purple-400">•</span>
-                                {example}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-
-                        <div>
-                          <span className="text-xs font-medium text-green-400">
-                            Best Practices:
-                          </span>
-                          <ul className="text-xs text-white mt-1 space-y-1">
-                            {evidence.bestPractices.map((practice, idx) => (
-                              <li key={idx} className="flex items-start gap-1">
-                                <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                                {practice}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-
-                        <div>
-                          <span className="text-xs font-medium text-blue-400">
-                            Recommended Tools:
-                          </span>
-                          <div className="flex flex-wrap gap-1 mt-1">
-                            {evidence.tools.map((tool, idx) => (
-                              <Badge
+                              <li
                                 key={idx}
-                                className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs"
+                                className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                              >
+                                <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                                <span>{example}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+                            Best practices
+                          </span>
+                          <ul className="space-y-1">
+                            {evidence.bestPractices.map((practice, idx) => (
+                              <li
+                                key={idx}
+                                className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                              >
+                                <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                                <span>{practice}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                            Recommended tools
+                          </span>
+                          <div className="flex flex-wrap gap-1.5">
+                            {evidence.tools.map((tool, idx) => (
+                              <span
+                                key={idx}
+                                className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
                               >
                                 {tool}
-                              </Badge>
+                              </span>
                             ))}
                           </div>
                         </div>
                       </div>
                     )}
                   </div>
-                ))}
-              </div>
-            </TabsContent>
+                );
+              })}
+            </div>
+          </TabsContent>
 
-            <TabsContent value="quality" className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {qualityStandards.map((standard, index) => (
-                  <div
-                    key={index}
-                    className="p-4 bg-white/5 rounded-lg border border-purple-500/20"
-                  >
-                    <h4 className="font-medium text-white mb-2">{standard.standard}</h4>
-                    <p className="text-sm text-white mb-3">{standard.description}</p>
-
-                    <div>
-                      <span className="text-xs font-medium text-purple-400">Key Checkpoints:</span>
-                      <ul className="text-xs text-white mt-1 space-y-1">
-                        {standard.checkpoints.map((checkpoint, idx) => (
-                          <li key={idx} className="flex items-start gap-1">
-                            <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                            {checkpoint}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="organisation" className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h4 className="font-medium text-white">Digital Organisation Structure</h4>
-                  <div className="p-4 bg-white/5 rounded-lg border border-purple-500/20">
-                    <div className="space-y-2 text-sm font-mono">
-                      <div className="text-purple-400">📁 Off-the-Job Training Evidence/</div>
-                      <div className="ml-4 text-blue-400">📁 2024-2025/</div>
-                      <div className="ml-8 text-green-400">📁 Month-01-September/</div>
-                      <div className="ml-12 text-white">📄 College-Attendance-Record.pdf</div>
-                      <div className="ml-12 text-white">📄 Online-Module-Certificate.pdf</div>
-                      <div className="ml-8 text-green-400">📁 Month-02-October/</div>
-                      <div className="ml-12 text-white">📄 Workshop-Photos.jpg</div>
-                      <div className="ml-12 text-white">📄 Reflection-Log.docx</div>
-                    </div>
+          <TabsContent value="quality" className="space-y-4 mt-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {qualityStandards.map((standard, index) => (
+                <div
+                  key={index}
+                  className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
+                >
+                  <h4 className="text-[14px] font-semibold text-white">{standard.standard}</h4>
+                  <p className="text-[14px] text-white/85 leading-relaxed">
+                    {standard.description}
+                  </p>
+                  <div className="space-y-1">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                      Key checkpoints
+                    </span>
+                    <ul className="space-y-1">
+                      {standard.checkpoints.map((checkpoint, idx) => (
+                        <li
+                          key={idx}
+                          className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                        >
+                          <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                          <span>{checkpoint}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
+              ))}
+            </div>
+          </TabsContent>
 
-                <div className="space-y-4">
-                  <h4 className="font-medium text-white">Evidence Checklist</h4>
-                  <div className="space-y-2">
-                    {[
-                      'Date and time recorded',
-                      'Learning outcome mapped',
-                      'Duration documented',
-                      'Supervisor/tutor signature',
-                      'Personal reflection included',
-                      'Files properly named',
-                      'Backup copies created',
-                      'Portfolio updated',
-                    ].map((item, index) => (
-                      <div key={index} className="flex items-center gap-2 text-sm">
-                        <CheckCircle className="h-4 w-4 text-green-400" />
-                        <span className="text-white">{item}</span>
-                      </div>
-                    ))}
+          <TabsContent value="organisation" className="space-y-4 mt-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-3">
+                <h4 className="text-[14px] font-semibold text-white">
+                  Digital organisation structure
+                </h4>
+                <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
+                  <div className="space-y-2 text-[13px] font-mono text-white/85">
+                    <div>Off-the-Job Training Evidence/</div>
+                    <div className="ml-4">2024-2025/</div>
+                    <div className="ml-8">Month-01-September/</div>
+                    <div className="ml-12">College-Attendance-Record.pdf</div>
+                    <div className="ml-12">Online-Module-Certificate.pdf</div>
+                    <div className="ml-8">Month-02-October/</div>
+                    <div className="ml-12">Workshop-Photos.jpg</div>
+                    <div className="ml-12">Reflection-Log.docx</div>
                   </div>
                 </div>
               </div>
-            </TabsContent>
-          </Tabs>
-        </CardContent>
-      </Card>
+
+              <div className="space-y-3">
+                <h4 className="text-[14px] font-semibold text-white">Evidence checklist</h4>
+                <ul className="space-y-1.5">
+                  {[
+                    'Date and time recorded',
+                    'Learning outcome mapped',
+                    'Duration documented',
+                    'Supervisor/tutor signature',
+                    'Personal reflection included',
+                    'Files properly named',
+                    'Backup copies created',
+                    'Portfolio updated',
+                  ].map((item, index) => (
+                    <li
+                      key={index}
+                      className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   );
 };

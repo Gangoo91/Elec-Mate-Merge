@@ -2,10 +2,8 @@ import { useState, useRef, useCallback } from 'react';
 import { Capacitor } from '@capacitor/core';
 import { Camera as CapCamera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import {
-  Upload,
   X,
   File,
   Image,
@@ -54,12 +52,12 @@ const ACCEPTED_TYPES = [
 const MAX_FILE_SIZE_MB = 10;
 
 const getFileIcon = (type: string) => {
-  if (type.startsWith('image/')) return <Image className="h-5 w-5 text-blue-400" />;
-  if (type.startsWith('video/')) return <Video className="h-5 w-5 text-purple-400" />;
-  if (type.includes('pdf')) return <FileText className="h-5 w-5 text-red-400" />;
+  if (type.startsWith('image/')) return <Image className="h-4 w-4 text-white/70" />;
+  if (type.startsWith('video/')) return <Video className="h-4 w-4 text-white/70" />;
+  if (type.includes('pdf')) return <FileText className="h-4 w-4 text-white/70" />;
   if (type.includes('word') || type.includes('document'))
-    return <FileText className="h-5 w-5 text-blue-500" />;
-  return <File className="h-5 w-5 text-white" />;
+    return <FileText className="h-4 w-4 text-white/70" />;
+  return <File className="h-4 w-4 text-white/70" />;
 };
 
 const formatFileSize = (bytes: number) => {
@@ -296,11 +294,11 @@ export const EvidenceUploader = ({
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         className={`
-          relative border-2 border-dashed rounded-xl p-6 text-center transition-all duration-200
+          relative border border-dashed rounded-xl p-5 text-center transition-colors duration-200
           ${
             isDragging
-              ? 'border-elec-yellow bg-elec-yellow/10'
-              : 'border-elec-yellow/30 hover:border-elec-yellow/50 bg-elec-card/50'
+              ? 'border-elec-yellow bg-elec-yellow/[0.04]'
+              : 'border-white/15 bg-white/[0.02]'
           }
         `}
       >
@@ -314,18 +312,9 @@ export const EvidenceUploader = ({
         />
 
         <div className="space-y-3">
-          <div className="flex justify-center">
-            <div className="p-3 rounded-full bg-elec-yellow/10">
-              <Upload className="h-8 w-8 text-elec-yellow" />
-            </div>
-          </div>
-
-          <div>
-            <p className="text-base font-medium text-elec-light">
-              {isDragging ? 'Drop files here' : 'Drag and drop files'}
-            </p>
-            <p className="text-sm text-elec-light/60 mt-1">or click to browse</p>
-          </div>
+          <p className="text-[14px] text-white/85 leading-relaxed">
+            {isDragging ? 'Drop files here' : 'Drag and drop files, or browse'}
+          </p>
 
           <div className="flex flex-wrap justify-center gap-2">
             <Button
@@ -333,24 +322,24 @@ export const EvidenceUploader = ({
               variant="outline"
               size="sm"
               onClick={() => fileInputRef.current?.click()}
-              className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+              className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
             >
               <File className="h-4 w-4 mr-2" />
-              Browse Files
+              Browse files
             </Button>
             <Button
               type="button"
               variant="outline"
               size="sm"
               onClick={handleCameraCapture}
-              className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+              className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
             >
               <Camera className="h-4 w-4 mr-2" />
-              Take Photo
+              Take photo
             </Button>
           </div>
 
-          <p className="text-xs text-elec-light/50">
+          <p className="text-[12px] text-white/55">
             Max {maxFileSize}MB per file. Supports images, PDFs, Word docs, and videos.
           </p>
         </div>
@@ -360,23 +349,28 @@ export const EvidenceUploader = ({
       {uploadingFiles.length > 0 && (
         <div className="space-y-2">
           {uploadingFiles.map((uf) => (
-            <Card key={uf.id} className="p-3 bg-elec-card border-elec-yellow/20">
+            <div
+              key={uf.id}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3"
+            >
               <div className="flex items-center gap-3">
                 {uf.status === 'uploading' && (
-                  <Loader2 className="h-5 w-5 text-elec-yellow animate-spin" />
+                  <Loader2 className="h-4 w-4 text-white/55 animate-spin" />
                 )}
-                {uf.status === 'success' && <CheckCircle className="h-5 w-5 text-green-400" />}
-                {uf.status === 'error' && <AlertCircle className="h-5 w-5 text-red-400" />}
+                {uf.status === 'success' && <CheckCircle className="h-4 w-4 text-elec-yellow" />}
+                {uf.status === 'error' && <AlertCircle className="h-4 w-4 text-red-300" />}
 
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-elec-light truncate">{uf.file.name}</p>
+                  <p className="text-[13px] text-white/85 truncate">{uf.file.name}</p>
                   {uf.status === 'uploading' && (
-                    <Progress value={uf.progress} className="h-1 mt-1" />
+                    <Progress value={uf.progress} className="h-1 mt-1.5" />
                   )}
-                  {uf.status === 'error' && <p className="text-xs text-red-400 mt-1">{uf.error}</p>}
+                  {uf.status === 'error' && (
+                    <p className="text-[12px] text-red-300 mt-1">{uf.error}</p>
+                  )}
                 </div>
               </div>
-            </Card>
+            </div>
           ))}
         </div>
       )}
@@ -384,35 +378,37 @@ export const EvidenceUploader = ({
       {/* Uploaded Files */}
       {files.length > 0 && (
         <div className="space-y-2">
-          <p className="text-sm font-medium text-elec-light/80">
-            Uploaded Files ({files.length}/{maxFiles})
-          </p>
+          <div className="flex items-baseline justify-between">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Uploaded files
+            </span>
+            <span className="text-[12px] text-white/55 font-mono">
+              {files.length}/{maxFiles}
+            </span>
+          </div>
 
           <div className="grid gap-2">
             {files.map((file) => (
-              <Card
+              <div
                 key={file.id}
-                className="p-3 bg-elec-card border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors"
+                className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3"
               >
                 <div className="flex items-center gap-3">
-                  {/* Thumbnail or Icon */}
                   {file.type.startsWith('image/') && file.url ? (
-                    <div className="w-10 h-10 rounded overflow-hidden bg-white/5 shrink-0">
+                    <div className="w-10 h-10 rounded overflow-hidden bg-white/[0.03] shrink-0">
                       <img src={file.url} alt={file.name} className="w-full h-full object-cover" />
                     </div>
                   ) : (
-                    <div className="w-10 h-10 rounded bg-white/5 flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded bg-white/[0.03] flex items-center justify-center shrink-0">
                       {getFileIcon(file.type)}
                     </div>
                   )}
 
-                  {/* File Info */}
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-elec-light truncate">{file.name}</p>
-                    <p className="text-xs text-elec-light/60">{formatFileSize(file.size)}</p>
+                    <p className="text-[13px] text-white/85 truncate">{file.name}</p>
+                    <p className="text-[12px] text-white/55">{formatFileSize(file.size)}</p>
                   </div>
 
-                  {/* Actions */}
                   <div className="flex items-center gap-1 shrink-0">
                     {file.url && (
                       <Button
@@ -420,9 +416,9 @@ export const EvidenceUploader = ({
                         variant="ghost"
                         size="sm"
                         onClick={() => handlePreview(file)}
-                        className="h-8 w-8 p-0 hover:bg-elec-yellow/10"
+                        className="h-9 w-9 p-0 hover:bg-white/[0.05] touch-manipulation"
                       >
-                        <Eye className="h-4 w-4 text-elec-light/60" />
+                        <Eye className="h-4 w-4 text-white/55" />
                       </Button>
                     )}
                     <Button
@@ -430,13 +426,13 @@ export const EvidenceUploader = ({
                       variant="ghost"
                       size="sm"
                       onClick={() => handleDelete(file)}
-                      className="h-8 w-8 p-0 hover:bg-red-500/10"
+                      className="h-9 w-9 p-0 hover:bg-red-500/[0.08] touch-manipulation"
                     >
-                      <Trash2 className="h-4 w-4 text-red-400" />
+                      <Trash2 className="h-4 w-4 text-red-300" />
                     </Button>
                   </div>
                 </div>
-              </Card>
+              </div>
             ))}
           </div>
         </div>

@@ -36,8 +36,7 @@ export function PortfolioHubNav({
 
   return (
     <nav
-      className={cn(
-        'fixed bottom-0 left-0 right-0 z-50',
+      className={cn('fixed bottom-0 left-0 right-0 z-50',
         'bg-card/95 backdrop-blur-lg border-t border-border',
         'safe-area-inset-bottom',
         className
@@ -53,8 +52,7 @@ export function PortfolioHubNav({
             <button
               key={item.id}
               onClick={() => onSectionChange(item.id)}
-              className={cn(
-                'flex flex-col items-center justify-center flex-1 h-full relative',
+              className={cn('flex flex-col items-center justify-center flex-1 h-full relative',
                 'transition-all duration-200 ease-out',
                 'active:scale-95 touch-manipulation'
               )}
@@ -63,14 +61,12 @@ export function PortfolioHubNav({
             >
               {/* Icon Container */}
               <div
-                className={cn(
-                  'relative flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-200',
+                className={cn('relative flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-200',
                   isActive ? 'bg-elec-yellow/15' : 'bg-transparent'
                 )}
               >
                 <Icon
-                  className={cn(
-                    'h-5 w-5 transition-colors duration-200',
+                  className={cn('h-5 w-5 transition-colors duration-200',
                     isActive ? 'text-elec-yellow' : 'text-muted-foreground'
                   )}
                   strokeWidth={isActive ? 2.5 : 2}
@@ -78,7 +74,7 @@ export function PortfolioHubNav({
 
                 {/* Notification Badge */}
                 {showBadge && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold rounded-full h-4 min-w-[16px] flex items-center justify-center px-1">
+                  <span className="absolute -top-1 -right-1 bg-white/[0.02] text-white text-[10px] font-bold rounded-full h-4 min-w-[16px] flex items-center justify-center px-1">
                     {tutorBadge > 9 ? '9+' : tutorBadge}
                   </span>
                 )}
@@ -86,8 +82,7 @@ export function PortfolioHubNav({
 
               {/* Label */}
               <span
-                className={cn(
-                  'text-[10px] font-medium mt-0.5 transition-colors duration-200',
+                className={cn('text-[10px] font-medium mt-0.5 transition-colors duration-200',
                   isActive ? 'text-elec-yellow' : 'text-muted-foreground'
                 )}
               >

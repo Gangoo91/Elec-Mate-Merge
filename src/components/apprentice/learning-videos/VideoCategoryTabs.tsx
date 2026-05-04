@@ -22,10 +22,10 @@ export function VideoCategoryTabs({
     <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
       <button
         onClick={() => onCategoryChange('all')}
-        className={`flex-shrink-0 px-4 h-11 text-sm rounded-full border font-medium touch-manipulation transition-colors ${
+        className={`flex-shrink-0 px-4 h-11 text-[13px] rounded-full border font-medium touch-manipulation transition-colors ${
           activeCategory === 'all'
-            ? 'bg-elec-yellow/20 border-elec-yellow/50 text-elec-yellow'
-            : 'bg-white/[0.04] border-white/10 text-white active:bg-white/10'
+            ? 'bg-elec-yellow text-black border-elec-yellow'
+            : 'bg-white/[0.02] border-white/10 text-white/85 active:bg-white/[0.05]'
         }`}
       >
         All
@@ -34,10 +34,10 @@ export function VideoCategoryTabs({
         <button
           key={cat}
           onClick={() => onCategoryChange(cat)}
-          className={`flex-shrink-0 px-4 h-11 text-sm rounded-full border font-medium touch-manipulation transition-colors whitespace-nowrap ${
+          className={`flex-shrink-0 px-4 h-11 text-[13px] rounded-full border font-medium touch-manipulation transition-colors whitespace-nowrap ${
             activeCategory === cat
-              ? 'bg-elec-yellow/20 border-elec-yellow/50 text-elec-yellow'
-              : 'bg-white/[0.04] border-white/10 text-white active:bg-white/10'
+              ? 'bg-elec-yellow text-black border-elec-yellow'
+              : 'bg-white/[0.02] border-white/10 text-white/85 active:bg-white/[0.05]'
           }`}
         >
           {categoryLabels[cat]}

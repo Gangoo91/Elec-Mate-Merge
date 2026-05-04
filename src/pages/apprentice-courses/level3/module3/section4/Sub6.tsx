@@ -147,20 +147,23 @@ export default function Sub6() {
           />
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 710.413.1.2 (Medical locations)"
-            clause="In group 2 medical locations, in the case of a single fault to earth ... an IT system shall be used. The IT system shall include an insulation monitoring device complying with BS EN 61557-8. The supply transformer shall comply with BS EN 61558-2-15."
+            source="BS 7671:2018+A4:2026 — Section 710 (Medical locations) — Regulations 710.411.5.201, 710.411.6 and 710.411.6.3.101"
+            clause={`710.411.5.201: In medical locations of group 1 and group 2, RCDs shall be used as protective devices, except for circuits of a medical IT system specified in Regulation 710.411.6.
+
+710.411.6.3.101: For each group of rooms serving the same function, at least one medical IT system shall be provided. Each medical IT transformer shall be equipped with a medical insulation monitoring device (MED-IMD) in accordance with Annex A and Annex B of BS EN 61557-8. For each medical IT transformer an audible and visual alarm system shall be provided, including (a) a green signal lamp to indicate normal operation and (b) a yellow signal lamp which lights when the minimum value set for the insulation resistance is reached.`}
             meaning={
               <>
                 Section 710 is why hospitals use medical IT (isolation) transformers in group 2
                 locations (operating theatres, intensive care, areas where intracardiac catheters
                 are used). The single-fault tolerance — a single line-to-earth fault doesn&apos;t
                 energise patient-touchable parts — is what protects the patient connected to
-                monitoring equipment. The transformer specification (BS EN 61558-2-15), the
-                insulation monitoring device (BS EN 61557-8) and the alarm scheme together
-                discharge the regulation.
+                monitoring equipment. The MED-IMD (BS EN 61557-8) plus the green / yellow alarm
+                scheme are how the system tells theatre staff that the first fault has occurred,
+                so the work can be completed and the fault investigated without losing supply
+                mid-procedure. The medical IT transformer itself is to BS EN 61558-2-15.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026, Regulation 710.413.1.2 — medical locations."
+            cite="Source: BS 7671:2018+A4:2026 Part 7, Section 710, Regulations 710.411.5.201, 710.411.6 and 710.411.6.3.101."
           />
           <SectionRule />
           <CommonMistake title="Buying a domestic isolation transformer for a 'sensitive' bench" whatHappens={<>Customer wants 'isolation' for a hi-fi bench. Buys a £40 230/230 V toroidal transformer. Loads it with a 1.5 kW amplifier. Transformer was rated 500 W; saturates and overheats; insulation fails to earth. Hi-fi destroyed.</>}
@@ -479,7 +482,7 @@ export default function Sub6() {
             'CT secondaries must be shorted before disconnecting meter or relay; never open-circuit a live CT.',
             'EV rapid chargers need K-rated transformers (K-13 typical) and 30-50 % rating margin for future bays.',
             'Outdoor oil-filled transformers need bunding to 110 % of oil contents under Control of Pollution Regulations 2001.',
-            'Reg 132.1 places transformer-type selection on a skilled person; Reg 710.413.1.2 governs medical IT supply transformers.',
+            'Reg 132.1 places transformer-type selection on a skilled person; Section 710 (Regs 710.411.5.201, 710.411.6 and 710.411.6.3.101) governs medical IT systems and the MED-IMD alarm scheme.',
             'Indoor substation rooms need ventilation calc (~1 m² inlet, 1.5 m² outlet per MVA), fire separation, acoustic limits.',
           ]} />
           <Quiz title="Transformer types and grid knowledge check" questions={quizQuestions} />

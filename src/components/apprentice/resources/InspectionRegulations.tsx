@@ -5,17 +5,23 @@ import { Link } from 'react-router-dom';
 
 const InspectionRegulations = () => {
   return (
-    <div className="max-w-4xl mx-auto p-6 animate-fade-in">
-      <div className="text-center py-12">
-        <h1 className="text-2xl md:text-3xl font-bold text-elec-yellow mb-4">
-          Content Being Updated
+    <div className="max-w-4xl mx-auto p-4 sm:p-6 animate-fade-in">
+      <div className="text-center py-12 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Coming soon
+        </span>
+        <h1 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
+          Content being updated
         </h1>
-        <p className="text-elec-light/80 max-w-2xl mx-auto mb-8">
+        <p className="text-[14px] text-white/85 leading-relaxed max-w-2xl mx-auto">
           This resource is currently being redeveloped. Please check back soon for updated content.
         </p>
         <Link to="/apprentice/study/eal/level-2-diploma-in-electrical-installation">
-          <Button variant="outline" className="border-elec-yellow/30 hover:bg-elec-yellow/10">
-            <ArrowLeft className="mr-2 h-4 w-4" /> Back to Course
+          <Button
+            variant="outline"
+            className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" /> Back to course
           </Button>
         </Link>
       </div>

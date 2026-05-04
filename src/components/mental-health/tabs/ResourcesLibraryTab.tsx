@@ -118,8 +118,7 @@ const ResourcesLibraryTab = () => {
                         aria-label={isFav ? 'Remove from favourites' : 'Add to favourites'}
                       >
                         <Star
-                          className={cn(
-                            'h-4 w-4',
+                          className={cn('h-4 w-4',
                             isFav ? 'fill-elec-yellow text-elec-yellow' : 'text-white'
                           )}
                         />

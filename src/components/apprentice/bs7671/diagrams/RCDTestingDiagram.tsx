@@ -1,178 +1,223 @@
-import { Shield, Timer, Zap, CheckCircle } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-
 interface RCDTestingDiagramProps {
   systemType?: string;
 }
 
 const RCDTestingDiagram = ({ systemType }: RCDTestingDiagramProps) => {
+  void systemType;
+
+  const Pill = ({ children }: { children: React.ReactNode }) => (
+    <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+      {children}
+    </span>
+  );
+
   return (
     <div className="space-y-4">
-      <div className="text-sm text-indigo-200 mb-4">RCD testing procedure and requirements</div>
+      <p className="text-[14px] text-white/85 leading-relaxed">
+        RCD testing procedure and requirements.
+      </p>
 
-      {/* Test Button Check */}
-      <div className="bg-green-600/20 p-4 rounded border border-green-500/30">
-        <h4 className="font-medium text-green-200 mb-3 flex items-center gap-2">
-          <CheckCircle className="h-4 w-4" />
-          Initial Functional Test
-        </h4>
-        <div className="space-y-2 text-xs text-green-100">
-          <div className="flex items-start gap-2">
-            <span className="text-green-400 mt-1">1.</span>
-            <span>Press RCD test button - should trip immediately</span>
-          </div>
-          <div className="flex items-start gap-2">
-            <span className="text-green-400 mt-1">2.</span>
-            <span>Reset RCD by switching back on</span>
-          </div>
-          <div className="flex items-start gap-2">
-            <span className="text-green-400 mt-1">3.</span>
-            <span>If test button fails, RCD requires replacement</span>
-          </div>
-        </div>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Initial functional test
+        </span>
+        <ol className="space-y-1.5">
+          {[
+            'Press RCD test button — should trip immediately',
+            'Reset RCD by switching back on',
+            'If test button fails, RCD requires replacement',
+          ].map((item, i) => (
+            <li key={i} className="flex items-start gap-3">
+              <span className="text-[12px] font-mono text-white/55 flex-shrink-0 w-5 mt-0.5">
+                {i + 1}.
+              </span>
+              <span className="text-[14px] text-white/85 leading-relaxed">{item}</span>
+            </li>
+          ))}
+        </ol>
       </div>
 
-      {/* RCD Test Sequence */}
-      <div className="bg-blue-600/20 p-4 rounded border border-blue-500/30">
-        <h4 className="font-medium text-blue-200 mb-3 flex items-center gap-2">
-          <Zap className="h-4 w-4" />
-          Electrical Test Sequence
-        </h4>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Electrical test sequence
+        </span>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div className="bg-blue-500/20 p-3 rounded">
-            <h5 className="font-medium text-blue-300 mb-2">Step 1: ½×In Test</h5>
-            <ul className="space-y-1 text-xs text-blue-100">
-              <li>• 50% of rated current</li>
-              <li>• Should NOT trip</li>
-              <li>• Tests for nuisance tripping</li>
+          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Step 1 — ½×In test
+            </span>
+            <ul className="space-y-1">
+              {['50% of rated current', 'Should NOT trip', 'Tests for nuisance tripping'].map(
+                (item, i) => (
+                  <li
+                    key={i}
+                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  >
+                    <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                )
+              )}
             </ul>
           </div>
-          <div className="bg-blue-500/20 p-3 rounded">
-            <h5 className="font-medium text-blue-300 mb-2">Step 2: 1×In Test</h5>
-            <ul className="space-y-1 text-xs text-blue-100">
-              <li>• 100% of rated current</li>
-              <li>• Should trip</li>
-              <li>• Record trip time</li>
+          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Step 2 — 1×In test
+            </span>
+            <ul className="space-y-1">
+              {['100% of rated current', 'Should trip', 'Record trip time'].map((item, i) => (
+                <li
+                  key={i}
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
             </ul>
           </div>
-          <div className="bg-blue-500/20 p-3 rounded">
-            <h5 className="font-medium text-blue-300 mb-2">Step 3: 5×In Test</h5>
-            <ul className="space-y-1 text-xs text-blue-100">
-              <li>• 500% of rated current</li>
-              <li>• Fast disconnection</li>
-              <li>• Record trip time</li>
+          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Step 3 — 5×In test
+            </span>
+            <ul className="space-y-1">
+              {['500% of rated current', 'Fast disconnection', 'Record trip time'].map(
+                (item, i) => (
+                  <li
+                    key={i}
+                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  >
+                    <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                )
+              )}
             </ul>
           </div>
         </div>
       </div>
 
-      {/* Trip Time Requirements */}
-      <div className="bg-purple-600/20 p-4 rounded border border-purple-500/30">
-        <h4 className="font-medium text-purple-200 mb-3 flex items-center gap-2">
-          <Timer className="h-4 w-4" />
-          Maximum Disconnection Times
-        </h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Maximum disconnection times
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <h5 className="font-medium text-purple-300">General Purpose RCDs</h5>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              General purpose RCDs
+            </span>
             <div className="space-y-1">
-              <div className="flex justify-between">
-                <span className="text-purple-100">1×In (30mA):</span>
-                <span className="text-purple-200">≤300ms</span>
+              <div className="flex justify-between text-[13px] text-white/85">
+                <span>1×In (30mA)</span>
+                <span className="font-mono text-white">≤300ms</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-purple-100">5×In (30mA):</span>
-                <span className="text-purple-200">≤40ms</span>
+              <div className="flex justify-between text-[13px] text-white/85">
+                <span>5×In (30mA)</span>
+                <span className="font-mono text-white">≤40ms</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-purple-100">1×In (100mA):</span>
-                <span className="text-purple-200">≤300ms</span>
+              <div className="flex justify-between text-[13px] text-white/85">
+                <span>1×In (100mA)</span>
+                <span className="font-mono text-white">≤300ms</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-purple-100">5×In (100mA):</span>
-                <span className="text-purple-200">≤40ms</span>
+              <div className="flex justify-between text-[13px] text-white/85">
+                <span>5×In (100mA)</span>
+                <span className="font-mono text-white">≤40ms</span>
               </div>
             </div>
           </div>
           <div className="space-y-2">
-            <h5 className="font-medium text-purple-300">Time Delayed RCDs</h5>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Time delayed RCDs
+            </span>
             <div className="space-y-1">
-              <div className="flex justify-between">
-                <span className="text-purple-100">1×In (S-Type):</span>
-                <span className="text-purple-200">130-500ms</span>
+              <div className="flex justify-between text-[13px] text-white/85">
+                <span>1×In (S-Type)</span>
+                <span className="font-mono text-white">130-500ms</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-purple-100">5×In (S-Type):</span>
-                <span className="text-purple-200">≤150ms</span>
+              <div className="flex justify-between text-[13px] text-white/85">
+                <span>5×In (S-Type)</span>
+                <span className="font-mono text-white">≤150ms</span>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* RCD Types and Applications */}
-      <div className="bg-amber-500/10 p-4 rounded border border-amber-500/30">
-        <h4 className="font-medium text-amber-300 mb-3 flex items-center gap-2">
-          <Shield className="h-4 w-4" />
-          RCD Types and Applications
-        </h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-          <div className="space-y-2">
-            <h5 className="font-medium text-amber-200">Type AC</h5>
-            <ul className="text-amber-100 space-y-1">
-              <li>• Detects AC residual currents</li>
-              <li>• General purpose applications</li>
-              <li>• Most common type</li>
-            </ul>
-          </div>
-          <div className="space-y-2">
-            <h5 className="font-medium text-amber-200">Type A</h5>
-            <ul className="text-amber-100 space-y-1">
-              <li>• Detects AC and pulsating DC</li>
-              <li>• Required for IT equipment</li>
-              <li>• Electronic loads</li>
-            </ul>
-          </div>
-          <div className="space-y-2">
-            <h5 className="font-medium text-amber-200">Type B</h5>
-            <ul className="text-amber-100 space-y-1">
-              <li>• Detects all residual currents</li>
-              <li>• Required for variable speed drives</li>
-              <li>• Solar inverters</li>
-            </ul>
-          </div>
-          <div className="space-y-2">
-            <h5 className="font-medium text-amber-200">Type S (Selective)</h5>
-            <ul className="text-amber-100 space-y-1">
-              <li>• Time delayed operation</li>
-              <li>• Discrimination with downstream RCDs</li>
-              <li>• Main switch applications</li>
-            </ul>
-          </div>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          RCD types and applications
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {[
+            {
+              type: 'Type AC',
+              items: [
+                'Detects AC residual currents',
+                'General purpose applications',
+                'Most common type',
+              ],
+            },
+            {
+              type: 'Type A',
+              items: [
+                'Detects AC and pulsating DC',
+                'Required for IT equipment',
+                'Electronic loads',
+              ],
+            },
+            {
+              type: 'Type B',
+              items: [
+                'Detects all residual currents',
+                'Required for variable speed drives',
+                'Solar inverters',
+              ],
+            },
+            {
+              type: 'Type S (selective)',
+              items: [
+                'Time delayed operation',
+                'Discrimination with downstream RCDs',
+                'Main switch applications',
+              ],
+            },
+          ].map((rcd, i) => (
+            <div key={i} className="space-y-1.5">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                {rcd.type}
+              </span>
+              <ul className="space-y-1.5">
+                {rcd.items.map((item, j) => (
+                  <li
+                    key={j}
+                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  >
+                    <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Test Points */}
-      <div className="bg-red-500/10 p-4 rounded border border-red-500/30">
-        <h4 className="font-medium text-red-300 mb-2">Test Connection Points</h4>
-        <div className="space-y-2 text-xs text-red-200">
-          <div className="flex items-center justify-between">
-            <span>Line test lead:</span>
-            <Badge variant="outline" className="text-red-300 border-red-400/30">
-              Downstream of RCD
-            </Badge>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Test connection points
+        </span>
+        <div className="space-y-2">
+          <div className="flex items-center justify-between gap-2 flex-wrap">
+            <span className="text-[14px] text-white/85 leading-relaxed">Line test lead</span>
+            <Pill>Downstream of RCD</Pill>
           </div>
-          <div className="flex items-center justify-between">
-            <span>Neutral test lead:</span>
-            <Badge variant="outline" className="text-red-300 border-red-400/30">
-              Downstream of RCD
-            </Badge>
+          <div className="flex items-center justify-between gap-2 flex-wrap">
+            <span className="text-[14px] text-white/85 leading-relaxed">Neutral test lead</span>
+            <Pill>Downstream of RCD</Pill>
           </div>
-          <div className="flex items-center justify-between">
-            <span>Earth reference:</span>
-            <Badge variant="outline" className="text-red-300 border-red-400/30">
-              Installation earth
-            </Badge>
+          <div className="flex items-center justify-between gap-2 flex-wrap">
+            <span className="text-[14px] text-white/85 leading-relaxed">Earth reference</span>
+            <Pill>Installation earth</Pill>
           </div>
         </div>
       </div>

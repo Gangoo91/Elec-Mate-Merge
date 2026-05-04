@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, CheckCircle, ChevronDown } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { BS7671Test } from '@/data/bs7671-testing/allBS7671Tests';
 import type { useBS7671Progress } from './hooks/useBS7671Progress';
+import StepDiagram from './StepDiagrams';
 
 interface InteractiveTestingGuideProps {
   guide: BS7671Test;
@@ -182,6 +183,8 @@ const InteractiveTestingGuide = ({
             <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0" />
           )}
         </div>
+
+        <StepDiagram test={guide} step={currentStepData} />
 
         {currentStepData.apprenticeTip && (
           <Section eyebrow="Why this matters">{currentStepData.apprenticeTip}</Section>

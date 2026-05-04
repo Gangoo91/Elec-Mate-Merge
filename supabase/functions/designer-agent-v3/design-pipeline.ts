@@ -11,6 +11,7 @@ import { applyZsTripwire } from './zs-table-validator.ts';
 import { applyCableTypeTripwire } from './cable-type-validator.ts';
 import { applyRingVdTripwire } from './vd-ring-validator.ts';
 import { applyVoltageTripwire } from './circuit-voltage-validator.ts';
+import { runCritiquePass } from './critique-pass.ts';
 import { CacheManager } from './cache-manager.ts';
 import {
   searchDesignIntelligence,
@@ -152,6 +153,22 @@ export class DesignPipeline {
         issues: cableCapacityIssues,
       });
       (design as any).cableCapacityIssues = cableCapacityIssues;
+    }
+
+    // Phase 7: Multi-pass critique loop. AI reviews the whole design as a system,
+    // catches concerns per-circuit checks miss (discrimination, phase imbalance,
+    // grouping, A4 considerations). Findings are advisory — they don't mutate
+    // circuits, just surface as a "Design audit" panel on the results page.
+    try {
+      const openAiKey = Deno.env.get('OPENAI_API_KEY');
+      if (openAiKey) {
+        const critique = await runCritiquePass(design, openAiKey, this.logger);
+        (design as any).criticReview = critique;
+      }
+    } catch (err) {
+      this.logger.warn('Critique pass threw; continuing without audit', {
+        error: err instanceof Error ? err.message : String(err),
+      });
     }
 
     await this.cache.set(cacheKey, design);

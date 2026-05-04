@@ -21,11 +21,11 @@ const CrisisHelplines = ({ emergencyContacts }: CrisisHelplinesProps) => {
       case 'emergency':
         return 'bg-red-500/20 text-red-400 border-red-500/30';
       case 'crisis':
-        return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
+        return 'bg-white/[0.02] text-white/85 border-white/[0.06]';
       case 'support':
-        return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+        return 'bg-white/[0.02] text-white/85 border-white/[0.06]';
       case 'specialty':
-        return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
+        return 'bg-white/[0.02] text-white/85 border-white/[0.06]';
       default:
         return 'bg-gray-500/20 text-white border-gray-500/30';
     }
@@ -47,7 +47,7 @@ const CrisisHelplines = ({ emergencyContacts }: CrisisHelplinesProps) => {
   };
 
   return (
-    <Card className="border-red-500/50 bg-red-500/10">
+    <Card className="border-white/[0.06] bg-red-500/10">
       <CardHeader>
         <CardTitle className="text-red-300 flex items-center gap-2">
           <Phone className="h-5 w-5" />
@@ -101,7 +101,7 @@ const CrisisHelplines = ({ emergencyContacts }: CrisisHelplinesProps) => {
               </div>
 
               {contact.type === 'emergency' && (
-                <div className="mt-3 p-2 bg-red-500/10 rounded border-l-4 border-red-500">
+                <div className="mt-3 p-2 bg-red-500/10 rounded border-l-4 border-white/[0.06]">
                   <p className="text-xs text-red-200 flex items-center gap-1">
                     <Heart className="h-3 w-3" />
                     For immediate danger to life - call 999 first
@@ -112,16 +112,16 @@ const CrisisHelplines = ({ emergencyContacts }: CrisisHelplinesProps) => {
           ))}
         </div>
 
-        <div className="mt-6 p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
-          <h4 className="font-medium text-blue-300 mb-2">Text Support Options</h4>
+        <div className="mt-6 p-4 bg-white/[0.02] rounded-lg border border-white/[0.06]">
+          <h4 className="font-medium text-white/85 mb-2">Text Support Options</h4>
           <div className="space-y-2 text-sm">
             <div className="flex items-center justify-between">
               <span className="text-white">Text SHOUT to 85258</span>
-              <Badge className="bg-blue-500/20 text-blue-400">Free 24/7</Badge>
+              <Badge className="bg-white/[0.02] text-white/85">Free 24/7</Badge>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-white">Crisis Text Line - trained volunteers</span>
-              <Badge className="bg-green-500/20 text-green-400">Confidential</Badge>
+              <Badge className="bg-white/[0.02] text-white/85">Confidential</Badge>
             </div>
           </div>
         </div>

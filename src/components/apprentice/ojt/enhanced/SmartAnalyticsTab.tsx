@@ -30,27 +30,32 @@ const SmartAnalyticsTab = () => {
     refresh,
   } = useOJTAnalytics();
 
+  const pillClass = (kind: 'yellow' | 'neutral') =>
+    kind === 'yellow'
+      ? 'text-[12px] text-elec-yellow px-2 py-0.5 rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04]'
+      : 'text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]';
+
   const getPerformanceBadge = (performance: string) => {
     switch (performance) {
       case 'excellent':
-        return <Badge className="bg-green-600 text-white">Excellent</Badge>;
+        return <span className={pillClass('yellow')}>Excellent</span>;
       case 'good':
-        return <Badge className="bg-blue-600 text-white">Good</Badge>;
+        return <span className={pillClass('neutral')}>Good</span>;
       case 'needs-improvement':
-        return <Badge className="bg-orange-600 text-white">Needs Focus</Badge>;
+        return <span className={pillClass('neutral')}>Needs focus</span>;
       default:
-        return <Badge className="bg-white/15 text-white">Average</Badge>;
+        return <span className={pillClass('neutral')}>Average</span>;
     }
   };
 
   const getTrendIcon = (trend: string) => {
     switch (trend) {
       case 'up':
-        return <TrendingUp className="h-4 w-4 text-green-500" />;
+        return <TrendingUp className="h-4 w-4 text-elec-yellow" />;
       case 'slow':
-        return <AlertTriangle className="h-4 w-4 text-orange-500" />;
+        return <AlertTriangle className="h-4 w-4 text-white/55" />;
       default:
-        return <Target className="h-4 w-4 text-blue-500" />;
+        return <Target className="h-4 w-4 text-white/85" />;
     }
   };
 
@@ -138,7 +143,7 @@ const SmartAnalyticsTab = () => {
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center p-12">
-        <AlertTriangle className="h-8 w-8 text-orange-500 mb-4" />
+        <AlertTriangle className="h-8 w-8 text-white/55 mb-4" />
         <p className="text-white mb-4">{error}</p>
         <Button
           onClick={refresh}
@@ -179,7 +184,7 @@ const SmartAnalyticsTab = () => {
           </CardHeader>
           <CardContent className="px-3 sm:px-6">
             <div
-              className={`text-xl sm:text-2xl font-bold ${thisWeekHours >= weeklyTarget ? 'text-green-500' : 'text-blue-500'}`}
+              className={`text-xl sm:text-2xl font-bold ${thisWeekHours >= weeklyTarget ? 'text-elec-yellow' : 'text-white'}`}
             >
               {thisWeekHours.toFixed(1)}h
             </div>
@@ -193,7 +198,7 @@ const SmartAnalyticsTab = () => {
             <BarChart3 className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent className="px-3 sm:px-6">
-            <div className="text-xl sm:text-2xl font-bold text-purple-500">
+            <div className="text-xl sm:text-2xl font-bold text-white">
               {completionPercentage}%
             </div>
             <p className="text-xs text-white">Of OJT complete</p>
@@ -206,7 +211,7 @@ const SmartAnalyticsTab = () => {
             <Target className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent className="px-3 sm:px-6">
-            <div className="text-xl sm:text-2xl font-bold text-amber-500">
+            <div className="text-xl sm:text-2xl font-bold text-elec-yellow">
               {remainingHours > 0 ? `${monthsToCompletion}mo` : 'Done!'}
             </div>
             <p className="text-xs text-white">
@@ -276,10 +281,10 @@ const SmartAnalyticsTab = () => {
                         <AlertTriangle className="h-4 w-4 text-red-500 shrink-0" />
                       )}
                       {rec.type === 'opportunity' && (
-                        <TrendingUp className="h-4 w-4 text-blue-500 shrink-0" />
+                        <TrendingUp className="h-4 w-4 text-white/85 shrink-0" />
                       )}
                       {rec.type === 'strength' && (
-                        <CheckCircle className="h-4 w-4 text-green-500 shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-elec-yellow shrink-0" />
                       )}
                       <h4 className="font-medium text-sm sm:text-base">{rec.title}</h4>
                     </div>

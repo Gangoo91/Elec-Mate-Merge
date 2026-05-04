@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { Loader2, User, Mail, Phone, Calendar, MessageSquare } from 'lucide-react';
+import { Loader2, Mail } from 'lucide-react';
 
 const enquirySchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -90,92 +90,87 @@ export default function CourseEnquiryForm({ course, onSuccess }: CourseEnquiryFo
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="name" className="text-white flex items-center gap-2">
-            <User className="h-3.5 w-3.5 text-elec-yellow" />
-            Full Name *
+          <Label htmlFor="name" className="text-[12px] text-white/70">
+            Full name *
           </Label>
           <Input
             id="name"
             {...register('name')}
             placeholder="Enter your full name"
-            className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white"
+            className="h-11 text-base touch-manipulation bg-white/[0.03] border-white/10 text-white placeholder:text-white/40 focus:border-yellow-500 focus:ring-yellow-500"
           />
-          {errors.name && <p className="text-sm text-red-400">{errors.name.message}</p>}
+          {errors.name && <p className="text-[12px] text-red-400">{errors.name.message}</p>}
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="email" className="text-white flex items-center gap-2">
-            <Mail className="h-3.5 w-3.5 text-elec-yellow" />
-            Email Address *
+          <Label htmlFor="email" className="text-[12px] text-white/70">
+            Email address *
           </Label>
           <Input
             id="email"
             type="email"
             {...register('email')}
             placeholder="Enter your email address"
-            className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white"
+            className="h-11 text-base touch-manipulation bg-white/[0.03] border-white/10 text-white placeholder:text-white/40 focus:border-yellow-500 focus:ring-yellow-500"
           />
-          {errors.email && <p className="text-sm text-red-400">{errors.email.message}</p>}
+          {errors.email && <p className="text-[12px] text-red-400">{errors.email.message}</p>}
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="phone" className="text-white flex items-center gap-2">
-            <Phone className="h-3.5 w-3.5 text-elec-yellow" />
-            Phone Number (Optional)
+          <Label htmlFor="phone" className="text-[12px] text-white/70">
+            Phone number (optional)
           </Label>
           <Input
             id="phone"
             type="tel"
             {...register('phone')}
             placeholder="Enter your phone number"
-            className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white"
+            className="h-11 text-base touch-manipulation bg-white/[0.03] border-white/10 text-white placeholder:text-white/40 focus:border-yellow-500 focus:ring-yellow-500"
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="preferredStartDate" className="text-white flex items-center gap-2">
-            <Calendar className="h-3.5 w-3.5 text-elec-yellow" />
-            Preferred Start Date
+          <Label htmlFor="preferredStartDate" className="text-[12px] text-white/70">
+            Preferred start date
           </Label>
           <Input
             id="preferredStartDate"
             type="date"
             {...register('preferredStartDate')}
-            className="h-11 bg-white/5 border-white/20 text-white"
+            className="h-11 text-base touch-manipulation bg-white/[0.03] border-white/10 text-white focus:border-yellow-500 focus:ring-yellow-500"
           />
         </div>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="message" className="text-white flex items-center gap-2">
-          <MessageSquare className="h-3.5 w-3.5 text-elec-yellow" />
-          Message (Optional)
+        <Label htmlFor="message" className="text-[12px] text-white/70">
+          Message (optional)
         </Label>
         <textarea
           id="message"
           {...register('message')}
           rows={4}
           placeholder="Any specific questions or requirements..."
-          className="w-full px-3 py-3 border border-white/20 bg-white/5 rounded-lg text-sm text-white placeholder:text-white focus:outline-none focus:ring-2 focus:ring-elec-yellow/50 focus:border-elec-yellow/50 transition-all"
+          className="w-full px-3 py-3 border border-white/10 bg-white/[0.03] rounded-lg text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-yellow-500/20 focus:border-yellow-500 transition-colors"
         />
       </div>
 
       <Button
         type="submit"
         disabled={isSubmitting}
-        className="w-full h-11 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 touch-manipulation active:scale-95 transition-all font-medium"
+        className="w-full h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
       >
         {isSubmitting ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Sending Enquiry...
+            Sending enquiry...
           </>
         ) : (
           <>
             <Mail className="mr-2 h-4 w-4" />
-            Send Enquiry
+            Send enquiry
           </>
         )}
       </Button>

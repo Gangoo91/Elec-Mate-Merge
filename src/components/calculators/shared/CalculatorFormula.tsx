@@ -1,7 +1,7 @@
 import { ReactNode, useState } from 'react';
-import { ChevronDown, BookOpen, Hash } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { CALCULATOR_CONFIG, CalculatorCategory } from './CalculatorConfig';
+import { CalculatorCategory } from './CalculatorConfig';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 interface FormulaStep {
@@ -22,45 +22,39 @@ interface CalculatorFormulaProps {
 export const CalculatorFormula = ({
   category,
   steps,
-  title = 'Calculation Steps',
+  title = 'Calculation steps',
   defaultOpen = false,
   className,
 }: CalculatorFormulaProps) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
-  const config = CALCULATOR_CONFIG[category];
+  void category;
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className={className}>
       <CollapsibleTrigger
         className={cn(
           'flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg',
-          'text-sm font-medium text-white',
-          'hover:bg-white/5 transition-all touch-manipulation'
+          'hover:bg-white/[0.04] transition-colors touch-manipulation'
         )}
       >
-        <div className="flex items-center gap-2">
-          <BookOpen className="h-4 w-4" />
-          <span>{title}</span>
-        </div>
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          {title}
+        </span>
         <ChevronDown
-          className={cn('h-4 w-4 transition-transform duration-200', isOpen && 'rotate-180')}
+          className={cn(
+            'h-4 w-4 text-white/55 transition-transform duration-200',
+            isOpen && 'rotate-180'
+          )}
         />
       </CollapsibleTrigger>
 
       <CollapsibleContent className="pt-2">
-        <div
-          className="rounded-xl border p-3 space-y-3"
-          style={{
-            borderColor: `${config.gradientFrom}15`,
-            background: `${config.gradientFrom}05`,
-          }}
-        >
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
           {steps.map((step, index) => (
             <FormulaStepItem
               key={index}
               step={step}
               stepNumber={index + 1}
-              category={category}
               isLast={index === steps.length - 1}
             />
           ))}
@@ -73,62 +67,41 @@ export const CalculatorFormula = ({
 interface FormulaStepItemProps {
   step: FormulaStep;
   stepNumber: number;
-  category: CalculatorCategory;
   isLast?: boolean;
 }
 
-const FormulaStepItem = ({ step, stepNumber, category, isLast = false }: FormulaStepItemProps) => {
-  const config = CALCULATOR_CONFIG[category];
-
+const FormulaStepItem = ({ step, stepNumber, isLast = false }: FormulaStepItemProps) => {
   return (
     <div className={cn('relative', !isLast && 'pb-3')}>
-      {/* Step connector line */}
-      {!isLast && (
-        <div
-          className="absolute left-3 top-7 bottom-0 w-px"
-          style={{ background: `${config.gradientFrom}30` }}
-        />
-      )}
+      {!isLast && <div className="absolute left-3 top-7 bottom-0 w-px bg-white/[0.06]" />}
 
       <div className="flex gap-3">
-        {/* Step number */}
-        <div
-          className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-xs font-bold"
-          style={{
-            background: `${config.gradientFrom}20`,
-            color: config.gradientFrom,
-          }}
-        >
+        <div className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-[11px] font-mono bg-white/[0.04] text-white/85">
           {stepNumber}
         </div>
 
-        <div className="flex-1 min-w-0 space-y-1">
-          {/* Step label */}
-          <p className="text-sm font-medium text-white">{step.label}</p>
+        <div className="flex-1 min-w-0 space-y-1.5">
+          <p className="text-[14px] font-medium text-white">{step.label}</p>
 
-          {/* Formula (code-like display) */}
           {step.formula && (
-            <code className="block text-xs px-2.5 py-1.5 rounded-lg bg-black/30 text-white font-mono overflow-x-auto">
+            <code className="block text-[12px] px-2.5 py-1.5 rounded-lg bg-black/30 text-white/85 font-mono overflow-x-auto">
               {step.formula}
             </code>
           )}
 
-          {/* Calculated value */}
           {step.value && (
-            <p className="text-sm font-semibold" style={{ color: config.gradientFrom }}>
-              = {step.value}
-            </p>
+            <p className="text-[14px] font-mono font-semibold text-elec-yellow">= {step.value}</p>
           )}
 
-          {/* Description */}
-          {step.description && <p className="text-xs text-white">{step.description}</p>}
+          {step.description && (
+            <p className="text-[12px] text-white/70 leading-relaxed">{step.description}</p>
+          )}
         </div>
       </div>
     </div>
   );
 };
 
-// Simple inline formula display
 interface InlineFormulaProps {
   formula: string;
   className?: string;
@@ -138,18 +111,16 @@ export const InlineFormula = ({ formula, className }: InlineFormulaProps) => {
   return (
     <code
       className={cn(
-        'inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md',
-        'bg-white/10 text-white text-xs font-mono',
+        'inline-flex items-center px-2 py-0.5 rounded-md',
+        'bg-white/[0.04] text-white/85 text-[12px] font-mono',
         className
       )}
     >
-      <Hash className="h-3 w-3 opacity-50" />
       {formula}
     </code>
   );
 };
 
-// Formula reference card (for showing the main formula)
 interface FormulaReferenceProps {
   category: CalculatorCategory;
   name: string;
@@ -165,36 +136,31 @@ export const FormulaReference = ({
   variables,
   className,
 }: FormulaReferenceProps) => {
-  const config = CALCULATOR_CONFIG[category];
+  void category;
 
   return (
     <div
-      className={cn('rounded-xl border p-4 space-y-3', className)}
-      style={{
-        borderColor: `${config.gradientFrom}15`,
-        background: `${config.gradientFrom}05`,
-      }}
+      className={cn(
+        'rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3',
+        className
+      )}
     >
-      <div className="flex items-center gap-2">
-        <BookOpen className="h-4 w-4" style={{ color: config.gradientFrom }} />
-        <span className="text-sm font-medium text-white">{name}</span>
-      </div>
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        {name}
+      </span>
 
       <div className="text-center py-3 px-4 rounded-lg bg-black/30">
-        <code className="text-lg sm:text-xl font-mono text-white">{formula}</code>
+        <code className="text-[18px] sm:text-[20px] font-mono text-white">{formula}</code>
       </div>
 
       {variables && variables.length > 0 && (
         <div className="grid gap-1.5">
           {variables.map((variable, index) => (
-            <div key={index} className="flex items-center gap-2 text-xs">
-              <code
-                className="px-1.5 py-0.5 rounded bg-white/10 font-mono"
-                style={{ color: config.gradientFrom }}
-              >
+            <div key={index} className="flex items-baseline gap-2 text-[13px]">
+              <code className="px-1.5 py-0.5 rounded bg-white/[0.04] font-mono text-white">
                 {variable.symbol}
               </code>
-              <span className="text-white">= {variable.description}</span>
+              <span className="text-white/70">= {variable.description}</span>
             </div>
           ))}
         </div>

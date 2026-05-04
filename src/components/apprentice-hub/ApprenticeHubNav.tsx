@@ -49,8 +49,7 @@ export function ApprenticeHubNav({ activeTab, onTabChange, onCapture }: Apprenti
               <button
                 key={item.id}
                 onClick={() => onTabChange(item.id)}
-                className={cn(
-                  'px-4 h-9 rounded-full whitespace-nowrap text-[13px] font-semibold',
+                className={cn('px-4 h-9 rounded-full whitespace-nowrap text-[13px] font-semibold',
                   'touch-manipulation active:scale-95 transition-all',
                   isActive
                     ? 'bg-elec-yellow text-black'

@@ -40,16 +40,8 @@ const FeaturedPodcastHero = ({ podcast }: FeaturedPodcastHeroProps) => {
 
   return (
     <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl">
-      {/* Animated Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-orange-600/30 via-amber-500/20 to-orange-400/10" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-orange-500/20 via-transparent to-transparent" />
-
-      {/* Animated Glow Orbs */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/20 rounded-full blur-3xl animate-pulse" />
-      <div
-        className="absolute bottom-0 left-0 w-48 h-48 bg-amber-500/15 rounded-full blur-3xl animate-pulse"
-        style={{ animationDelay: '1s' }}
-      />
+      {/* Background */}
+      <div className="absolute inset-0 bg-white/[0.02] border border-white/[0.06] rounded-2xl sm:rounded-3xl" />
 
       {/* Grid Pattern Overlay */}
       <div
@@ -65,9 +57,9 @@ const FeaturedPodcastHero = ({ podcast }: FeaturedPodcastHeroProps) => {
       <div className="relative z-10 p-4 sm:p-6 md:p-8">
         {/* Featured Badge */}
         <div className="flex items-center gap-2 mb-6">
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-500/30 border border-orange-400/40 backdrop-blur-sm">
-            <Star className="h-4 w-4 text-orange-300 fill-orange-300" />
-            <span className="text-sm font-semibold text-orange-200 uppercase tracking-wide">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.02] border border-white/[0.06] backdrop-blur-sm">
+            <Star className="h-4 w-4 text-white/85 fill-white/55" />
+            <span className="text-sm font-semibold text-white/85 uppercase tracking-wide">
               Featured Podcast
             </span>
           </div>
@@ -78,11 +70,11 @@ const FeaturedPodcastHero = ({ podcast }: FeaturedPodcastHeroProps) => {
           {/* Podcast Icon/Visual */}
           <div className="flex-shrink-0">
             <div className="relative">
-              <div className="w-16 h-16 sm:w-28 sm:h-28 md:w-36 md:h-36 rounded-xl sm:rounded-2xl md:rounded-3xl bg-gradient-to-br from-orange-500/40 to-amber-600/30 border border-orange-400/30 backdrop-blur-sm flex items-center justify-center shadow-2xl shadow-orange-500/20">
-                <Mic className="w-8 h-8 sm:w-14 sm:h-14 md:w-16 md:h-16 text-orange-300" />
+              <div className="w-16 h-16 sm:w-28 sm:h-28 md:w-36 md:h-36 rounded-xl sm:rounded-2xl md:rounded-3xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-sm flex items-center justify-center shadow-2xl">
+                <Mic className="w-8 h-8 sm:w-14 sm:h-14 md:w-16 md:h-16 text-white/85" />
               </div>
               {/* Glow ring */}
-              <div className="absolute -inset-1 rounded-xl sm:rounded-2xl md:rounded-3xl bg-gradient-to-br from-orange-500/30 to-amber-500/20 blur-lg -z-10" />
+              <div className="absolute -inset-1 rounded-xl sm:rounded-2xl md:rounded-3xl bg-white/[0.02] blur-lg -z-10" />
             </div>
           </div>
 
@@ -129,7 +121,7 @@ const FeaturedPodcastHero = ({ podcast }: FeaturedPodcastHeroProps) => {
                 <Button
                   size="sm"
                   onClick={() => openLink(podcast.links.facebook!)}
-                  className="h-8 sm:h-10 px-2.5 sm:px-4 text-xs sm:text-sm bg-[#1877F2] hover:bg-[#1466D9] text-white border-0 gap-1.5 sm:gap-2 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300 hover:scale-105 active:scale-95"
+                  className="h-8 sm:h-10 px-2.5 sm:px-4 text-xs sm:text-sm bg-[#1877F2] hover:bg-[#1466D9] text-white border-0 gap-1.5 sm:gap-2 shadow-lg transition-all duration-300 hover:scale-105 active:scale-95"
                 >
                   <FacebookIcon />
                   <span className="hidden sm:inline">Facebook</span>
@@ -141,7 +133,7 @@ const FeaturedPodcastHero = ({ podcast }: FeaturedPodcastHeroProps) => {
                 <Button
                   size="sm"
                   onClick={() => openLink(podcast.links.spotify!)}
-                  className="h-8 sm:h-10 px-2.5 sm:px-4 text-xs sm:text-sm bg-[#1DB954] hover:bg-[#1AA34A] text-white border-0 gap-1.5 sm:gap-2 shadow-lg shadow-green-500/25 hover:shadow-green-500/40 transition-all duration-300 hover:scale-105 active:scale-95"
+                  className="h-8 sm:h-10 px-2.5 sm:px-4 text-xs sm:text-sm bg-[#1DB954] hover:bg-[#1AA34A] text-white border-0 gap-1.5 sm:gap-2 shadow-lg transition-all duration-300 hover:scale-105 active:scale-95"
                 >
                   <SpotifyIcon />
                   <span className="hidden sm:inline">Spotify</span>
@@ -153,7 +145,7 @@ const FeaturedPodcastHero = ({ podcast }: FeaturedPodcastHeroProps) => {
                 <Button
                   size="sm"
                   onClick={() => openLink(podcast.links.apple!)}
-                  className="h-8 sm:h-10 px-2.5 sm:px-4 text-xs sm:text-sm bg-[#9933FF] hover:bg-[#8822EE] text-white border-0 gap-1.5 sm:gap-2 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 hover:scale-105 active:scale-95"
+                  className="h-8 sm:h-10 px-2.5 sm:px-4 text-xs sm:text-sm bg-[#9933FF] hover:bg-[#8822EE] text-white border-0 gap-1.5 sm:gap-2 shadow-lg transition-all duration-300 hover:scale-105 active:scale-95"
                 >
                   <ApplePodcastIcon />
                   <span className="hidden sm:inline">Apple</span>

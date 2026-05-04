@@ -357,31 +357,9 @@ export const IntelligentAIPlanner = ({
     navigate(`/install-planner/results/${currentConversationId}`);
   };
 
-  // Auto-populate pricing embeddings if empty
-  useEffect(() => {
-    const checkAndPopulatePricing = async () => {
-      try {
-        const { count } = await supabase
-          .from('pricing_embeddings')
-          .select('*', { count: 'exact', head: true });
-
-        if (count === 0) {
-          console.log('🔄 Pricing embeddings empty, populating from materials cache...');
-          const { data, error } = await supabase.functions.invoke('populate-pricing-embeddings');
-
-          if (error) {
-            console.error('Failed to populate pricing embeddings:', error);
-          } else {
-            console.log('✅ Pricing embeddings populated:', data);
-          }
-        }
-      } catch (error) {
-        console.error('Error checking pricing embeddings:', error);
-      }
-    };
-
-    checkAndPopulatePricing();
-  }, []);
+  // Pricing embeddings have been sunset — Cost Engineer now reads
+  // marketplace_products directly via the elec-pipeline live data feed.
+  // The auto-populate self-heal that lived here is no longer needed.
 
   // Handle resume from results page and pre-selected agent
   useEffect(() => {

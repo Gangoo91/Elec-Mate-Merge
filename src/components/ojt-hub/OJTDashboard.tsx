@@ -98,15 +98,14 @@ export function OJTDashboard({
       <div className="grid grid-cols-2 gap-3 sm:gap-4">
         {/* Weekly Progress */}
         <Card
-          className={cn(
-            'border-2 transition-colors',
+          className={cn('border-2 transition-colors',
             weeklyStatus === 'complete'
-              ? 'border-green-500/30 bg-green-500/5'
+              ? 'border-white/[0.06] bg-white/[0.02]'
               : weeklyStatus === 'good'
                 ? 'border-elec-yellow/30 bg-elec-yellow/5'
                 : weeklyStatus === 'warning'
-                  ? 'border-amber-500/30 bg-amber-500/5'
-                  : 'border-red-500/30 bg-red-500/5'
+                  ? 'border-white/[0.06] bg-white/[0.02]'
+                  : 'border-red-500/30 bg-white/[0.02]'
           )}
         >
           <CardContent className="p-4">
@@ -114,7 +113,7 @@ export function OJTDashboard({
               <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
                 This Week
               </span>
-              {weeklyStatus === 'complete' && <CheckCircle2 className="h-4 w-4 text-green-500" />}
+              {weeklyStatus === 'complete' && <CheckCircle2 className="h-4 w-4 text-white/85" />}
             </div>
             <div className="flex items-end gap-1 mb-2">
               <span className="text-2xl sm:text-3xl font-bold text-foreground">
@@ -133,11 +132,10 @@ export function OJTDashboard({
 
         {/* Yearly Progress */}
         <Card
-          className={cn(
-            'border-2 transition-colors',
+          className={cn('border-2 transition-colors',
             yearlyStatus === 'on-track'
-              ? 'border-green-500/30 bg-green-500/5'
-              : 'border-amber-500/30 bg-amber-500/5'
+              ? 'border-white/[0.06] bg-white/[0.02]'
+              : 'border-white/[0.06] bg-white/[0.02]'
           )}
         >
           <CardContent className="p-4">
@@ -146,9 +144,9 @@ export function OJTDashboard({
                 Year Total
               </span>
               {yearlyStatus === 'on-track' ? (
-                <TrendingUp className="h-4 w-4 text-green-500" />
+                <TrendingUp className="h-4 w-4 text-white/85" />
               ) : (
-                <AlertCircle className="h-4 w-4 text-amber-500" />
+                <AlertCircle className="h-4 w-4 text-white/85" />
               )}
             </div>
             <div className="flex items-end gap-1 mb-2">
@@ -186,14 +184,14 @@ export function OJTDashboard({
 
       {/* Pending Tasks Summary */}
       {totalPending > 0 && (
-        <Card className="border-amber-500/20 bg-gradient-to-r from-amber-500/5 to-transparent">
+        <Card className="border-white/[0.06] bg-white/[0.02]">
           <CardHeader className="pb-2">
             <CardTitle className="text-base flex items-center gap-2">
-              <AlertCircle className="h-4 w-4 text-amber-500" />
+              <AlertCircle className="h-4 w-4 text-white/85" />
               Needs Attention
               <Badge
                 variant="outline"
-                className="bg-amber-500/10 text-amber-500 border-amber-500/20 text-xs"
+                className="bg-white/[0.02] text-white/85 border-white/[0.06] text-xs"
               >
                 {totalPending}
               </Badge>
@@ -215,7 +213,7 @@ export function OJTDashboard({
                 onClick={() => onNavigate('assessments')}
                 className="p-3 rounded-lg bg-background border border-border hover:border-elec-yellow/30 transition-colors text-center touch-manipulation active:scale-95"
               >
-                <Award className="h-5 w-5 text-blue-500 mx-auto mb-1" />
+                <Award className="h-5 w-5 text-white/85 mx-auto mb-1" />
                 <p className="text-lg font-bold text-foreground">{pendingTasks.assessments}</p>
                 <p className="text-[10px] text-muted-foreground">Assessments</p>
               </button>
@@ -225,7 +223,7 @@ export function OJTDashboard({
                 onClick={() => onNavigate('goals')}
                 className="p-3 rounded-lg bg-background border border-border hover:border-elec-yellow/30 transition-colors text-center touch-manipulation active:scale-95"
               >
-                <Target className="h-5 w-5 text-green-500 mx-auto mb-1" />
+                <Target className="h-5 w-5 text-white/85 mx-auto mb-1" />
                 <p className="text-lg font-bold text-foreground">{pendingTasks.goals}</p>
                 <p className="text-[10px] text-muted-foreground">Goals</p>
               </button>
@@ -304,7 +302,7 @@ export function OJTDashboard({
           onClick={() => onNavigate('assessments')}
           className="p-4 rounded-xl border border-border bg-card hover:border-elec-yellow/30 transition-colors text-left touch-manipulation active:scale-95"
         >
-          <Award className="h-6 w-6 text-blue-500 mb-2" />
+          <Award className="h-6 w-6 text-white/85 mb-2" />
           <p className="font-medium text-foreground text-sm">Assessments</p>
           <p className="text-xs text-muted-foreground">Track progress</p>
         </button>
@@ -312,7 +310,7 @@ export function OJTDashboard({
           onClick={() => onNavigate('goals')}
           className="p-4 rounded-xl border border-border bg-card hover:border-elec-yellow/30 transition-colors text-left touch-manipulation active:scale-95"
         >
-          <Target className="h-6 w-6 text-green-500 mb-2" />
+          <Target className="h-6 w-6 text-white/85 mb-2" />
           <p className="font-medium text-foreground text-sm">Goals</p>
           <p className="text-xs text-muted-foreground">Set & achieve</p>
         </button>
@@ -320,7 +318,7 @@ export function OJTDashboard({
           onClick={() => onNavigate('time')}
           className="p-4 rounded-xl border border-border bg-card hover:border-elec-yellow/30 transition-colors text-left touch-manipulation active:scale-95"
         >
-          <Calendar className="h-6 w-6 text-purple-500 mb-2" />
+          <Calendar className="h-6 w-6 text-white/85 mb-2" />
           <p className="font-medium text-foreground text-sm">Logbook</p>
           <p className="text-xs text-muted-foreground">View history</p>
         </button>

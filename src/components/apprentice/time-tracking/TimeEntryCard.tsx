@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { TimeEntry } from '@/types/time-tracking';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Activity, Plus, Zap, ShieldCheck } from 'lucide-react';
 import { useTimeToPortfolio } from '@/hooks/portfolio/useTimeToPortfolio';
@@ -39,29 +37,11 @@ const TimeEntryCard = ({ entry }: TimeEntryCardProps) => {
     });
   };
 
-  // Function to determine badge type based on entry properties
-  const getBadgeType = () => {
-    if (entry.isQuiz) {
-      return {
-        label: 'Quiz',
-        color: 'bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 hover:text-blue-400',
-      };
-    } else if (entry.isAutomatic) {
-      return {
-        label: 'Automatic',
-        color: 'bg-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/30 hover:text-elec-yellow',
-      };
-    } else if (entry.notes && entry.notes.includes('activity verification')) {
-      return {
-        label: 'Verified',
-        color: 'bg-green-500/20 text-green-400 hover:bg-green-500/30 hover:text-green-400',
-      };
-    } else {
-      return {
-        label: 'Manual',
-        color: 'bg-slate-500/20 text-white hover:bg-slate-500/30 hover:text-white',
-      };
-    }
+  const getBadgeLabel = () => {
+    if (entry.isQuiz) return 'Quiz';
+    if (entry.isAutomatic) return 'Automatic';
+    if (entry.notes && entry.notes.includes('activity verification')) return 'Verified';
+    return 'Manual';
   };
 
   const handleAddToPortfolio = async (portfolioData: any) => {
@@ -98,106 +78,93 @@ const TimeEntryCard = ({ entry }: TimeEntryCardProps) => {
     }
   };
 
-  const badgeType = getBadgeType();
+  const badgeLabel = getBadgeLabel();
   const hours = Math.floor(entry.duration / 60);
   const minutes = entry.duration % 60;
 
-  // Convert to universal format for the button
   const universalActivity = convertTimeEntryToUniversal(entry);
 
   return (
     <>
-      <Card
-        className={
-          entry.isAutomatic ||
-          entry.notes?.includes('verified') ||
-          entry.notes?.includes('activity verification')
-            ? 'bg-white/5 overflow-hidden border-elec-yellow/20'
-            : 'bg-white/5 overflow-hidden'
-        }
-      >
-        <CardContent className="p-4">
-          <div className="flex justify-between items-start">
-            <div className="flex-1">
-              <div className="flex items-center gap-2">
-                <h4 className="font-medium">{entry.activity}</h4>
-                <Badge className={badgeType.color}>{badgeType.label}</Badge>
-                {isVerified && (
-                  <Badge className="bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 hover:text-emerald-400">
-                    <ShieldCheck className="h-3 w-3 mr-0.5" />
-                    Verified
-                  </Badge>
-                )}
-              </div>
-
-              <p className="text-sm text-white mt-1 line-clamp-2">{entry.notes}</p>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
+        <div className="flex justify-between items-start gap-3">
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
+              <h4 className="text-[15px] font-medium text-white">{entry.activity}</h4>
+              <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                {badgeLabel}
+              </span>
+              {isVerified && (
+                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-flex items-center gap-1">
+                  <ShieldCheck className="h-3 w-3" />
+                  Verified
+                </span>
+              )}
             </div>
 
-            <div className="text-right">
-              <div className="text-lg font-semibold">
-                {hours > 0 ? `${hours}h ` : ''}
-                {minutes}m
-              </div>
-              <div className="text-xs text-white">{formatDate(entry.date)}</div>
-            </div>
+            {entry.notes && (
+              <p className="text-[13px] text-white/70 mt-1 line-clamp-2 leading-relaxed">
+                {entry.notes}
+              </p>
+            )}
           </div>
 
-          {entry.notes && entry.notes.includes('activity verification') && (
-            <div className="mt-2 flex items-center text-xs text-green-400">
-              <Activity className="h-3 w-3 mr-1" />
-              Activity verified
+          <div className="text-right flex-shrink-0">
+            <div className="text-[15px] font-mono text-white">
+              {hours > 0 ? `${hours}h ` : ''}
+              {minutes}m
             </div>
-          )}
-
-          {entry.isQuiz && entry.score !== undefined && entry.totalQuestions !== undefined && (
-            <div className="mt-2 text-xs text-blue-400">
-              Score: {entry.score}/{entry.totalQuestions} (
-              {Math.round((entry.score / entry.totalQuestions) * 100)}%)
-            </div>
-          )}
-
-          {/* Portfolio + Verification Buttons */}
-          <div className="mt-3 flex justify-between gap-2">
-            {/* Quick Add with Smart Features */}
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={handleQuickAdd}
-              disabled={isConverting}
-              className="gap-1 text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10 flex-1"
-            >
-              <Zap className="h-3 w-3" />
-              Quick Add
-            </Button>
-
-            {/* Verify */}
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={handleVerify}
-              className={`gap-1 flex-1 touch-manipulation ${
-                isVerified
-                  ? 'text-emerald-400 hover:text-emerald-400 hover:bg-emerald-500/10 border-emerald-500/30'
-                  : 'text-emerald-400 hover:text-emerald-400 hover:bg-emerald-500/10'
-              }`}
-            >
-              <ShieldCheck className="h-3 w-3" />
-              {isVerified ? 'Verified' : 'Verify'}
-            </Button>
-
-            {/* Custom Add */}
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() => setShowPortfolioDialog(true)}
-              className="gap-1 text-white hover:text-foreground"
-            >
-              <Plus className="h-3 w-3" />
-              Custom
-            </Button>
+            <div className="text-[11px] text-white/55 mt-0.5">{formatDate(entry.date)}</div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+
+        {entry.notes && entry.notes.includes('activity verification') && (
+          <div className="mt-2 flex items-center text-[11px] text-white/55">
+            <Activity className="h-3 w-3 mr-1" />
+            Activity verified
+          </div>
+        )}
+
+        {entry.isQuiz && entry.score !== undefined && entry.totalQuestions !== undefined && (
+          <div className="mt-2 text-[11px] text-white/55 font-mono">
+            Score: {entry.score}/{entry.totalQuestions} (
+            {Math.round((entry.score / entry.totalQuestions) * 100)}%)
+          </div>
+        )}
+
+        <div className="mt-3 flex justify-between gap-2">
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={handleQuickAdd}
+            disabled={isConverting}
+            className="gap-1 h-9 border-white/15 text-white hover:bg-white/[0.05] flex-1 touch-manipulation"
+          >
+            <Zap className="h-3 w-3" />
+            Quick add
+          </Button>
+
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={handleVerify}
+            className="gap-1 h-9 border-white/15 text-white hover:bg-white/[0.05] flex-1 touch-manipulation"
+          >
+            <ShieldCheck className="h-3 w-3" />
+            {isVerified ? 'Verified' : 'Verify'}
+          </Button>
+
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => setShowPortfolioDialog(true)}
+            className="gap-1 h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+          >
+            <Plus className="h-3 w-3" />
+            Custom
+          </Button>
+        </div>
+      </div>
 
       {/* Portfolio Dialog */}
       <TimeEntryToPortfolioDialog

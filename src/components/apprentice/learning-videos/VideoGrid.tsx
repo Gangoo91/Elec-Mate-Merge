@@ -7,7 +7,6 @@
 
 import { VideoCard } from './VideoCard';
 import type { CuratedVideo } from '@/data/apprentice/curatedVideos';
-import { Video } from 'lucide-react';
 
 interface VideoGridProps {
   videos: CuratedVideo[];
@@ -19,12 +18,9 @@ interface VideoGridProps {
 export function VideoGrid({ videos, isBookmarked, onVideoTap, onBookmarkToggle }: VideoGridProps) {
   if (videos.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 text-center">
-        <div className="p-4 rounded-full bg-white/[0.05] mb-3">
-          <Video className="h-8 w-8 text-white" />
-        </div>
-        <p className="text-sm text-white mb-1">No videos found</p>
-        <p className="text-xs text-white">Try a different search or category</p>
+      <div className="flex flex-col items-center justify-center py-12 text-center space-y-2">
+        <p className="text-[14px] text-white/85">No videos found</p>
+        <p className="text-[12px] text-white/55">Try a different search or category</p>
       </div>
     );
   }

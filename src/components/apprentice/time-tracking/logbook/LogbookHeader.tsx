@@ -87,17 +87,19 @@ const LogbookHeader = ({
   return (
     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div className="flex items-center gap-2">
-        <CalendarIcon className="h-5 w-5 text-white" />
-        <h2 className="text-xl font-semibold">Training Logbook</h2>
+        <CalendarIcon className="h-4 w-4 text-white/55" />
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Training logbook
+        </span>
       </div>
 
       <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-3">
         <Select value={filterMonth} onValueChange={setFilterMonth}>
-          <SelectTrigger className="w-full sm:w-[180px]">
+          <SelectTrigger className="w-full sm:w-[180px] h-11 touch-manipulation">
             <SelectValue placeholder="Filter by month" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Time</SelectItem>
+            <SelectItem value="all">All time</SelectItem>
             {months.map((month) => (
               <SelectItem key={month} value={month}>
                 {formatMonthDisplay(month)}
@@ -108,17 +110,19 @@ const LogbookHeader = ({
 
         <div className="flex gap-2">
           <Button
-            variant="default"
             onClick={() => setIsDialogOpen(true)}
-            className="flex-1 sm:flex-auto"
+            className="flex-1 sm:flex-auto h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
           >
-            <Plus className="mr-2 h-4 w-4" /> Add Entry
+            <Plus className="mr-2 h-4 w-4" /> Add entry
           </Button>
 
           {onClearAllEntries && (
             <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
               <AlertDialogTrigger asChild>
-                <Button variant="destructive" className="flex-1 sm:flex-auto">
+                <Button
+                  variant="outline"
+                  className="flex-1 sm:flex-auto h-11 border-red-500/30 text-red-300 hover:bg-red-500/[0.08] touch-manipulation"
+                >
                   <Trash2 className="mr-2 h-4 w-4" /> Clear
                 </Button>
               </AlertDialogTrigger>

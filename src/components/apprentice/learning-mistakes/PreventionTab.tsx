@@ -1,8 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Brain, Shield, CheckCircle, AlertTriangle, Users } from 'lucide-react';
 import { useState } from 'react';
 
 const PreventionTab = () => {
@@ -11,8 +7,6 @@ const PreventionTab = () => {
   const preventionStrategies = [
     {
       category: 'Planning & Preparation',
-      icon: Brain,
-      color: 'border-blue-500/20 bg-blue-500/10',
       description: 'Set yourself up for success before you start',
       strategies: [
         {
@@ -37,8 +31,6 @@ const PreventionTab = () => {
     },
     {
       category: 'Work Execution',
-      icon: Shield,
-      color: 'border-green-500/20 bg-green-500/10',
       description: 'Execute work with precision and safety',
       strategies: [
         {
@@ -63,8 +55,6 @@ const PreventionTab = () => {
     },
     {
       category: 'Communication & Documentation',
-      icon: Users,
-      color: 'border-purple-500/20 bg-purple-500/10',
       description: 'Keep everyone informed and records accurate',
       strategies: [
         {
@@ -135,106 +125,109 @@ const PreventionTab = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Brain className="h-6 w-6 text-elec-yellow" />
-              <CardTitle className="text-elec-yellow">Prevention Strategies</CardTitle>
-            </div>
-            <div className="text-right">
-              <div className="text-sm text-white">Progress</div>
-              <div className="text-2xl font-bold text-elec-yellow">{calculateProgress()}%</div>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            {preventionStrategies.map((category, categoryIndex) => {
-              const IconComponent = category.icon;
-              return (
-                <div key={categoryIndex} className={`border rounded-lg p-6 ${category.color}`}>
-                  <div className="flex items-center gap-3 mb-4">
-                    <IconComponent className="h-6 w-6 text-white" />
-                    <div>
-                      <h3 className="text-lg font-semibold text-white">{category.category}</h3>
-                      <p className="text-sm text-white">{category.description}</p>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5">
+        <div className="flex items-baseline justify-between gap-3">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Prevention strategies
+          </span>
+          <span className="text-2xl font-mono text-white">{calculateProgress()}%</span>
+        </div>
+
+        <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-elec-yellow transition-all duration-500"
+            style={{ width: `${calculateProgress()}%` }}
+          />
+        </div>
+
+        <div className="space-y-5">
+          {preventionStrategies.map((category, categoryIndex) => (
+            <div
+              key={categoryIndex}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
+            >
+              <div className="space-y-1">
+                <h3 className="text-[16px] font-semibold text-white">{category.category}</h3>
+                <p className="text-[13px] text-white/55">{category.description}</p>
+              </div>
+
+              <div className="space-y-2">
+                {category.strategies.map((strategy) => (
+                  <div
+                    key={strategy.id}
+                    className="flex items-start gap-3 p-3 rounded-lg border border-white/[0.06] bg-white/[0.02]"
+                  >
+                    <Checkbox
+                      id={strategy.id}
+                      checked={completedItems.includes(strategy.id)}
+                      onCheckedChange={() => toggleCompleted(strategy.id)}
+                      className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                    />
+                    <div className="flex-1 space-y-1">
+                      <label
+                        htmlFor={strategy.id}
+                        className="text-[14px] font-medium text-white cursor-pointer block"
+                      >
+                        {strategy.title}
+                      </label>
+                      <p className="text-[13px] text-white/85 leading-relaxed">
+                        {strategy.description}
+                      </p>
+                      <span className="inline-block text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] mt-1">
+                        {strategy.impact}
+                      </span>
                     </div>
                   </div>
-
-                  <div className="space-y-3">
-                    {category.strategies.map((strategy) => (
-                      <div
-                        key={strategy.id}
-                        className="flex items-start gap-3 p-4 bg-black/20 rounded-lg"
-                      >
-                        <Checkbox
-                          id={strategy.id}
-                          checked={completedItems.includes(strategy.id)}
-                          onCheckedChange={() => toggleCompleted(strategy.id)}
-                          className="mt-1"
-                        />
-                        <div className="flex-1">
-                          <label
-                            htmlFor={strategy.id}
-                            className="font-medium text-white cursor-pointer block"
-                          >
-                            {strategy.title}
-                          </label>
-                          <p className="text-sm text-white mt-1">{strategy.description}</p>
-                          <Badge variant="outline" className="mt-2 text-xs border-white/20">
-                            {strategy.impact}
-                          </Badge>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <AlertTriangle className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Risk Awareness & Mitigation</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              {commonRisks.map((riskCategory, index) => (
-                <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                  <h4 className="font-semibold text-white mb-3">{riskCategory.title}</h4>
-                  <ul className="space-y-2">
-                    {riskCategory.risks.map((risk, riskIndex) => (
-                      <li key={riskIndex} className="text-sm text-white flex items-start gap-2">
-                        <div className="w-1 h-1 bg-orange-400 rounded-full mt-2 flex-shrink-0"></div>
-                        {risk}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-
-            <div className="border border-elec-yellow/20 rounded-lg p-4">
-              <h4 className="font-semibold text-white mb-3">Mitigation Strategies</h4>
-              <ul className="space-y-2">
-                {mitigationStrategies.map((strategy, index) => (
-                  <li key={index} className="text-sm text-white flex items-start gap-2">
-                    <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
-                    {strategy}
-                  </li>
                 ))}
-              </ul>
+              </div>
             </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Risk awareness & mitigation
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-4">
+            {commonRisks.map((riskCategory, index) => (
+              <div
+                key={index}
+                className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
+              >
+                <h4 className="text-[14px] font-semibold text-white">{riskCategory.title}</h4>
+                <ul className="space-y-1.5">
+                  {riskCategory.risks.map((risk, riskIndex) => (
+                    <li
+                      key={riskIndex}
+                      className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                      <span>{risk}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
-        </CardContent>
-      </Card>
+
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+            <h4 className="text-[14px] font-semibold text-white">Mitigation strategies</h4>
+            <ul className="space-y-1.5">
+              {mitigationStrategies.map((strategy, index) => (
+                <li
+                  key={index}
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                  <span>{strategy}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

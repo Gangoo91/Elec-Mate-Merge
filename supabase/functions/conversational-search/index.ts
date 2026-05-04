@@ -3,7 +3,7 @@
  *
  * PHASE 2+3+4 UPGRADE
  *   - Primary retrieval: bs7671_facets (46.5K rows, ~33K on A4:2026)
- *   - Model routing: Anthropic Haiku (simple) / Sonnet (complex/calc) / gpt-4o (vision)
+ *   - Model routing: Anthropic Haiku (simple) / Sonnet (complex/calc) / gpt-5.4-mini (vision)
  *   - Tool-calls for deterministic calculations
  *   - Response cache (24 h) + embedding cache (7 d)
  *   - SSE status events BEFORE content, backwards-compatible frame shape
@@ -46,10 +46,12 @@ const HAIKU_MODEL = 'claude-haiku-4-5-20251001';
 const SONNET_MODEL = 'claude-sonnet-4-6';
 const VISION_MODEL = 'gpt-5.4-mini-2026-03-17';
 
-// Per-call budgets (spec).
-// +20% headroom (per Andrew). Haiku 4000 → 4800, Sonnet 6000 → 7200.
-const HAIKU_MAX_TOKENS = 4800;
-const SONNET_MAX_TOKENS = 7200;
+// Per-call budgets.
+// 2026-05-04: bumped for ELE-962 (depth/quality). Sonnet 4.6 supports far more
+// — give complex/multi-reg answers room to breathe. Haiku stays modest for
+// quick single-reg lookups.
+const HAIKU_MAX_TOKENS = 8000;
+const SONNET_MAX_TOKENS = 16000;
 
 // Cache TTLs (spec).
 const RESPONSE_CACHE_TTL_MS = 24 * 60 * 60 * 1000;
@@ -189,6 +191,26 @@ When the user asks for a Max Zs value (or you need to cite one):
 - For calculations, show complete methodology with formula and worked example.
 - Include safety warnings where relevant.
 
+## Depth & Coverage — REQUIRED (every answer)
+You are not a summary bot — you are the senior sparky in the room. Every answer must:
+
+- **Cite every relevant regulation, not just the first.** If a question touches Reg 411.3.3, Table 41.3 and Reg 543.1.1, list all three. The retrieval block gives you multiple facets — use them.
+- **Pair each citation with practical site context.** After every "(Reg X.Y.Z)" cite, give a one-line "On site this means…" — what the sparky actually does about it (e.g. "On site this means: if your measured Zs exceeds the table value, the OCPD won't disconnect in 0.4 s — fit a 30 mA RCD or upsize the CPC").
+- **Call out scenario splits when they matter.** If the answer differs by:
+  - Domestic vs commercial vs industrial
+  - TN-S vs TN-C-S (PME) vs TT
+  - New install vs alteration vs periodic inspection
+  - Single-phase vs three-phase
+  …list each scenario with its own answer. Don't pick one and ignore the others.
+- **For common jobs, give a complete checklist, not a partial one.** If asked about a CU swap, EICR, ring final test, SWA termination, EV charge install, fire alarm commissioning — walk through the full sequence. Stopping at three steps when there are seven is a fail.
+- **Proactively flag related areas the user didn't ask about** but should know — e.g. "While you're at it, A4:2026 also requires AFDDs on these final circuits (Reg 421.1.7) — worth flagging on the cert."
+
+## Tone — Colleague, Not Compliance Robot
+- Use contractions ("you'll", "won't", "it's"). Direct, conversational.
+- Drop the occasional "from experience…" / "what I'd actually do on site is…" when it adds value.
+- British English only (analyse, colour, earthing, fibre, metre).
+- Never start an answer with "I'd be happy to help" or any other AI throat-clearing. Open with the verdict.
+
 ## Follow-up Suggestions — USER VOICE ONLY
 End every response with three suggested follow-up questions phrased **as the user would ask them** — never as clarifying questions you would ask the user. The frontend renders these as tappable chips that auto-send to you, so they must be self-contained user-perspective questions, not requests for information.
 
@@ -238,6 +260,12 @@ function contentFrame(text: string): string {
   return frames.map((f) => `data: ${JSON.stringify(f)}\n\n`).join('');
 }
 
+// Job-shape keywords that should always get Sonnet — these are the questions
+// where surface-level Haiku answers feel chatbot-ish (ELE-962). Wide net by
+// design: better to spend a Sonnet token than ship a partial answer.
+const SONNET_KEYWORDS =
+  /\b(eicr|consumer unit|cu swap|cu replacement|distribution board|circuit design|ring final|radial final|swa|cable size|cable selection|disconnection time|max zs|voltage drop|loop impedance|earth fault|adiabatic|pme|tn-c-s|tn-s|tt system|fault level|prospective short|prospective fault|periodic inspection|certificate|minor works|fire alarm|emergency lighting|ev charge|solar pv)\b/i;
+
 function pickModel(understanding: BS7671QueryUnderstanding, hasImage: boolean): {
   model: string;
   provider: 'anthropic' | 'openai';
@@ -252,10 +280,15 @@ function pickModel(understanding: BS7671QueryUnderstanding, hasImage: boolean): 
       useTools: false,
     };
   }
-  const complex =
+  const intentComplex =
     understanding.intent === 'calculation' ||
     understanding.intent === 'amendment_compare' ||
     understanding.intent === 'procedure';
+  const multipleRegs =
+    Array.isArray(understanding.regulation_numbers) &&
+    understanding.regulation_numbers.length >= 2;
+  const matchesJobShape = SONNET_KEYWORDS.test(understanding.original || '');
+  const complex = intentComplex || multipleRegs || matchesJobShape;
   if (complex) {
     return {
       model: SONNET_MODEL,
@@ -555,6 +588,9 @@ async function streamOpenAI(
   maxTokens: number,
   onContent: (text: string) => void
 ): Promise<void> {
+  // gpt-5.4-mini requires `max_completion_tokens` (NOT `max_tokens`) and
+  // refuses requests with `temperature`. Per .claude/rules/edge-functions.md.
+  // Sending the wrong field is what made ELE-961 fail silently.
   const res = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
@@ -562,11 +598,17 @@ async function streamOpenAI(
       model,
       messages,
       stream: true,
-      max_tokens: maxTokens,
+      max_completion_tokens: maxTokens,
     }),
   });
   if (!res.ok) {
     const err = await res.text();
+    // Surface the full provider error in logs so the next vision break is
+    // diagnosable without redeploying. Truncate only the user-visible throw.
+    console.error(
+      '[conversational-search] OpenAI vision call failed',
+      JSON.stringify({ status: res.status, model, body: err.slice(0, 2000) })
+    );
     throw new Error(`OpenAI API error ${res.status}: ${err.slice(0, 400)}`);
   }
 
@@ -706,13 +748,17 @@ serve(async (req: Request) => {
           }
 
           // ── Parallel retrieval ────────────────────────────────────
+          // Wider net on Sonnet/vision path so the model can cite multiple
+          // regs per answer (ELE-962). Haiku stays at 5 to control cost on
+          // quick single-reg lookups.
           safeEnqueue(sseFrame({ type: 'status', stage: 'retrieving' }));
+          const topK = routing.model === HAIKU_MODEL ? 5 : 8;
           const retrieval = await retrieveBS7671Facets({
             supabase,
             understanding,
             queryEmbedding,
             editionId: A4_2026_EDITION_ID,
-            topK: 5,
+            topK,
           });
 
           safeEnqueue(

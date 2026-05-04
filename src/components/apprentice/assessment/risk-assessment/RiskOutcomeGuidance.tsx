@@ -1,15 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import {
-  AlertTriangle,
-  CheckCircle,
-  Clock,
-  Users,
-  FileText,
-  ShieldAlert,
-  Info,
-} from 'lucide-react';
-
 interface RiskOutcomeGuidanceProps {
   riskLevel: string;
   riskScore: number;
@@ -20,16 +8,12 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
     switch (riskLevel) {
       case 'Very High':
         return {
-          action: 'STOP WORK IMMEDIATELY',
+          action: 'Stop work immediately',
           timeframe: 'Immediate action required',
           authority: 'Senior management approval required',
           monitoring: 'Continuous monitoring required',
           documentation: 'Detailed risk assessment and SWMS mandatory',
-          bg: 'bg-red-500/20',
-          border: 'border-red-500/30',
-          text: 'text-red-400',
-          badgeBg: 'bg-red-500',
-          icon: AlertTriangle,
+          isDanger: true,
           recommendations: [
             'Work must not proceed until risk is reduced',
             'Implement multiple high-level controls immediately',
@@ -40,16 +24,12 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
         };
       case 'High':
         return {
-          action: 'CAUTION - Enhanced Controls Required',
+          action: 'Caution - Enhanced controls required',
           timeframe: 'Action required before work starts',
           authority: 'Supervisor approval required',
           monitoring: 'Regular monitoring required',
           documentation: 'Comprehensive risk assessment required',
-          bg: 'bg-red-500/15',
-          border: 'border-red-500/30',
-          text: 'text-red-400',
-          badgeBg: 'bg-red-500/80',
-          icon: AlertTriangle,
+          isDanger: true,
           recommendations: [
             'Implement high-level control measures',
             'Supervisor briefing mandatory',
@@ -60,16 +40,12 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
         };
       case 'Medium':
         return {
-          action: 'PROCEED WITH CONTROLS',
+          action: 'Proceed with controls',
           timeframe: 'Controls must be in place',
           authority: 'Team leader approval',
           monitoring: 'Periodic monitoring',
           documentation: 'Standard risk assessment',
-          bg: 'bg-elec-yellow/20',
-          border: 'border-elec-yellow/30',
-          text: 'text-elec-yellow',
-          badgeBg: 'bg-elec-yellow',
-          icon: Clock,
+          isDanger: false,
           recommendations: [
             'Implement appropriate control measures',
             'Toolbox talk before starting',
@@ -80,16 +56,12 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
         };
       case 'Low':
         return {
-          action: 'PROCEED WITH STANDARD CONTROLS',
+          action: 'Proceed with standard controls',
           timeframe: 'Standard precautions',
           authority: 'Self-managed with oversight',
           monitoring: 'Routine monitoring',
           documentation: 'Basic risk documentation',
-          bg: 'bg-green-500/20',
-          border: 'border-green-500/30',
-          text: 'text-green-400',
-          badgeBg: 'bg-green-500',
-          icon: CheckCircle,
+          isDanger: false,
           recommendations: [
             'Follow standard safety procedures',
             'Basic PPE requirements',
@@ -100,16 +72,12 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
         };
       case 'Very Low':
         return {
-          action: 'PROCEED WITH MINIMAL CONTROLS',
+          action: 'Proceed with minimal controls',
           timeframe: 'Basic precautions sufficient',
           authority: 'Self-managed',
           monitoring: 'As needed',
           documentation: 'Brief documentation',
-          bg: 'bg-green-500/15',
-          border: 'border-green-500/30',
-          text: 'text-green-400',
-          badgeBg: 'bg-green-400',
-          icon: CheckCircle,
+          isDanger: false,
           recommendations: [
             'Standard workplace safety',
             'Basic awareness required',
@@ -126,188 +94,120 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
   const guidance = getRiskGuidance();
   if (!guidance) return null;
 
-  const GuidanceIcon = guidance.icon;
-  const isHighRisk = riskLevel === 'Very High' || riskLevel === 'High';
+  const matrixRows = [
+    { level: 'Very High', score: '15-25', action: 'Stop Work', authority: 'Senior Mgmt', monitor: 'Continuous' },
+    { level: 'High', score: '10-14', action: 'Enhanced', authority: 'Supervisor', monitor: 'Regular' },
+    { level: 'Medium', score: '6-9', action: 'Standard', authority: 'Team Lead', monitor: 'Periodic' },
+    { level: 'Low', score: '3-5', action: 'Basic', authority: 'Self-managed', monitor: 'Routine' },
+    { level: 'Very Low', score: '1-2', action: 'Minimal', authority: 'Self-managed', monitor: 'As needed' },
+  ];
 
   return (
-    <Card className="bg-gradient-to-br from-white/5 to-elec-card border-white/10 overflow-hidden relative animate-fade-in">
+    <div className="space-y-5 animate-fade-in">
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Risk management guidance
+        </span>
+        <h3 className="text-[16px] sm:text-[18px] font-medium text-white">{guidance.action}</h3>
+      </div>
+
       <div
-        className={`absolute top-0 right-0 w-64 h-64 ${isHighRisk ? 'bg-red-500/5' : 'bg-green-500/5'} rounded-full blur-3xl -translate-y-1/2 translate-x-1/2`}
-      />
-      <CardHeader className="relative">
-        <CardTitle className="text-white flex items-center gap-3">
-          <div
-            className={`p-2.5 rounded-xl bg-gradient-to-br ${isHighRisk ? 'from-red-500/20 to-red-500/5 border-red-500/30' : 'from-green-500/20 to-green-500/5 border-green-500/30'} border`}
+        className={`rounded-xl border p-4 sm:p-5 space-y-3 ${
+          guidance.isDanger ? 'border-red-500/30 bg-red-500/[0.04]' : 'border-white/[0.06] bg-white/[0.02]'
+        }`}
+      >
+        <div className="flex items-baseline justify-between">
+          <span
+            className={`text-[10px] font-medium uppercase tracking-[0.18em] ${guidance.isDanger ? 'text-red-300' : 'text-white/55'}`}
           >
-            <ShieldAlert className={`h-5 w-5 ${isHighRisk ? 'text-red-400' : 'text-green-400'}`} />
-          </div>
-          Risk Management Guidance
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-6 relative">
-        {/* Primary Action Banner */}
-        <div className={`p-4 rounded-xl ${guidance.bg} border ${guidance.border}`}>
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-white/10">
-                <GuidanceIcon className={`h-5 w-5 ${guidance.text}`} />
-              </div>
-              <div>
-                <h4 className={`font-bold ${guidance.text}`}>{guidance.action}</h4>
-                <p className="text-xs text-white">Risk Score: {riskScore}</p>
-              </div>
-            </div>
-            <Badge
-              className={`${guidance.badgeBg} ${riskLevel === 'Medium' || riskLevel === 'Very Low' ? 'text-black' : 'text-white'} px-3 py-1`}
+            {riskLevel}
+          </span>
+          <span className="text-[12px] text-white/85 font-mono">Score: {riskScore}</span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+          {[
+            { label: 'Timeframe', value: guidance.timeframe },
+            { label: 'Authority', value: guidance.authority },
+            { label: 'Monitoring', value: guidance.monitoring },
+            { label: 'Documentation', value: guidance.documentation },
+          ].map((item) => (
+            <div
+              key={item.label}
+              className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
             >
-              {riskLevel}
-            </Badge>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
-              <div className="p-2 rounded-lg bg-blue-500/20">
-                <Clock className="h-4 w-4 text-blue-400" />
-              </div>
-              <div>
-                <p className="text-xs text-white">Timeframe</p>
-                <p className="text-sm font-medium text-white">{guidance.timeframe}</p>
-              </div>
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                {item.label}
+              </span>
+              <p className="text-[13px] text-white/85 leading-relaxed">{item.value}</p>
             </div>
-            <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
-              <div className="p-2 rounded-lg bg-purple-500/20">
-                <Users className="h-4 w-4 text-purple-400" />
-              </div>
-              <div>
-                <p className="text-xs text-white">Authority Level</p>
-                <p className="text-sm font-medium text-white">{guidance.authority}</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
-              <div className="p-2 rounded-lg bg-orange-500/20">
-                <AlertTriangle className="h-4 w-4 text-orange-400" />
-              </div>
-              <div>
-                <p className="text-xs text-white">Monitoring</p>
-                <p className="text-sm font-medium text-white">{guidance.monitoring}</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
-              <div className="p-2 rounded-lg bg-green-500/20">
-                <FileText className="h-4 w-4 text-green-400" />
-              </div>
-              <div>
-                <p className="text-xs text-white">Documentation</p>
-                <p className="text-sm font-medium text-white">{guidance.documentation}</p>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
+      </div>
 
-        {/* Detailed Recommendations */}
-        <div className="space-y-3">
-          <h4 className="font-semibold text-white flex items-center gap-2">
-            <span className={`w-6 h-6 ${guidance.bg} rounded-lg flex items-center justify-center`}>
-              <CheckCircle className={`h-3.5 w-3.5 ${guidance.text}`} />
-            </span>
-            Required Actions & Recommendations
-          </h4>
-          <div className="space-y-2">
-            {guidance.recommendations.map((recommendation, index) => (
-              <div
-                key={index}
-                className="flex items-start gap-3 p-3 rounded-xl bg-white/10 border border-white/10 hover:border-white/20 transition-colors"
-              >
-                <div
-                  className={`w-5 h-5 rounded-lg ${guidance.bg} flex items-center justify-center flex-shrink-0 mt-0.5`}
-                >
-                  <CheckCircle className={`h-3 w-3 ${guidance.text}`} />
-                </div>
-                <span className="text-sm text-white">{recommendation}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Required actions
+        </span>
+        <ul className="space-y-1.5">
+          {guidance.recommendations.map((recommendation, index) => (
+            <li
+              key={index}
+              className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+            >
+              <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+              <span>{recommendation}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
 
-        {/* Risk Matrix Reference */}
-        <div className="p-4 rounded-xl bg-white/10 border border-white/10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-blue-500/20">
-              <Info className="h-4 w-4 text-blue-400" />
-            </div>
-            <h4 className="font-semibold text-white">Risk Matrix Reference</h4>
-          </div>
-          <div className="overflow-x-auto -mx-2 px-2">
-            <table className="w-full text-xs min-w-[500px]">
-              <thead>
-                <tr className="border-b border-white/10">
-                  <th className="text-left py-2 px-2 text-white font-medium">Risk Level</th>
-                  <th className="text-left py-2 px-2 text-white font-medium">Score</th>
-                  <th className="text-left py-2 px-2 text-white font-medium">Action</th>
-                  <th className="text-left py-2 px-2 text-white font-medium">Authority</th>
-                  <th className="text-left py-2 px-2 text-white font-medium">Monitor</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  className={`border-b border-white/5 ${riskLevel === 'Very High' ? 'bg-red-500/10' : ''}`}
-                >
-                  <td className="py-2 px-2">
-                    <Badge className="bg-red-500 text-white text-[10px]">Very High</Badge>
-                  </td>
-                  <td className="py-2 px-2 text-white">15-25</td>
-                  <td className="py-2 px-2 text-white">Stop Work</td>
-                  <td className="py-2 px-2 text-white">Senior Mgmt</td>
-                  <td className="py-2 px-2 text-white">Continuous</td>
-                </tr>
-                <tr
-                  className={`border-b border-white/5 ${riskLevel === 'High' ? 'bg-red-500/10' : ''}`}
-                >
-                  <td className="py-2 px-2">
-                    <Badge className="bg-red-500/80 text-white text-[10px]">High</Badge>
-                  </td>
-                  <td className="py-2 px-2 text-white">10-14</td>
-                  <td className="py-2 px-2 text-white">Enhanced</td>
-                  <td className="py-2 px-2 text-white">Supervisor</td>
-                  <td className="py-2 px-2 text-white">Regular</td>
-                </tr>
-                <tr
-                  className={`border-b border-white/5 ${riskLevel === 'Medium' ? 'bg-elec-yellow/10' : ''}`}
-                >
-                  <td className="py-2 px-2">
-                    <Badge className="bg-elec-yellow text-black text-[10px]">Medium</Badge>
-                  </td>
-                  <td className="py-2 px-2 text-white">6-9</td>
-                  <td className="py-2 px-2 text-white">Standard</td>
-                  <td className="py-2 px-2 text-white">Team Lead</td>
-                  <td className="py-2 px-2 text-white">Periodic</td>
-                </tr>
-                <tr
-                  className={`border-b border-white/5 ${riskLevel === 'Low' ? 'bg-green-500/10' : ''}`}
-                >
-                  <td className="py-2 px-2">
-                    <Badge className="bg-green-500 text-white text-[10px]">Low</Badge>
-                  </td>
-                  <td className="py-2 px-2 text-white">3-5</td>
-                  <td className="py-2 px-2 text-white">Basic</td>
-                  <td className="py-2 px-2 text-white">Self-managed</td>
-                  <td className="py-2 px-2 text-white">Routine</td>
-                </tr>
-                <tr className={`${riskLevel === 'Very Low' ? 'bg-green-500/10' : ''}`}>
-                  <td className="py-2 px-2">
-                    <Badge className="bg-green-400 text-black text-[10px]">Very Low</Badge>
-                  </td>
-                  <td className="py-2 px-2 text-white">1-2</td>
-                  <td className="py-2 px-2 text-white">Minimal</td>
-                  <td className="py-2 px-2 text-white">Self-managed</td>
-                  <td className="py-2 px-2 text-white">As needed</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Risk matrix reference
+        </span>
+        <div className="overflow-x-auto -mx-2 px-2">
+          <table className="w-full text-[12px] min-w-[500px]">
+            <thead>
+              <tr className="border-b border-white/[0.06]">
+                <th className="text-left py-2 px-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Level
+                </th>
+                <th className="text-left py-2 px-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Score
+                </th>
+                <th className="text-left py-2 px-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Action
+                </th>
+                <th className="text-left py-2 px-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Authority
+                </th>
+                <th className="text-left py-2 px-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Monitor
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {matrixRows.map((row) => {
+                const isCurrent = riskLevel === row.level;
+                return (
+                  <tr
+                    key={row.level}
+                    className={`border-b border-white/[0.04] ${isCurrent ? 'bg-elec-yellow/[0.04]' : ''}`}
+                  >
+                    <td className="py-2 px-2 text-white">{row.level}</td>
+                    <td className="py-2 px-2 text-white/85 font-mono">{row.score}</td>
+                    <td className="py-2 px-2 text-white/85">{row.action}</td>
+                    <td className="py-2 px-2 text-white/85">{row.authority}</td>
+                    <td className="py-2 px-2 text-white/85">{row.monitor}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

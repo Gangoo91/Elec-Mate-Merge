@@ -1,28 +1,21 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Building, GraduationCap, Factory, Users, Globe, Award } from 'lucide-react';
-
 const TrainingProvidersCard = () => {
   const providerTypes = [
     {
-      type: 'Further Education Colleges',
-      icon: <GraduationCap className="h-5 w-5 text-blue-400" />,
+      type: 'Further education colleges',
       description: 'Traditional colleges offering apprenticeship programmes',
       characteristics: ['Established facilities', 'Qualified teaching staff', 'Broad curriculum'],
       examples: ['Local FE colleges', 'Sixth form colleges', 'Technical colleges'],
       considerations: ['Fixed timetables', 'Group-based learning', 'Academic focus'],
     },
     {
-      type: 'Private Training Providers',
-      icon: <Building className="h-5 w-5 text-green-400" />,
+      type: 'Private training providers',
       description: 'Commercial organisations specialising in apprenticeship training',
       characteristics: ['Industry-focused', 'Flexible delivery', 'Employer partnerships'],
       examples: ['JTL', 'NICEIC Training', 'ECITB providers'],
       considerations: ['Specialist expertise', 'Industry connections', 'Variable quality'],
     },
     {
-      type: 'University Technical Colleges',
-      icon: <Factory className="h-5 w-5 text-purple-400" />,
+      type: 'University technical colleges',
       description: 'Specialist institutions for 14-19 year olds with industry focus',
       characteristics: [
         'State-of-the-art facilities',
@@ -33,16 +26,14 @@ const TrainingProvidersCard = () => {
       considerations: ['Age-specific', 'Limited locations', 'High standards'],
     },
     {
-      type: 'Employer-Led Training',
-      icon: <Users className="h-5 w-5 text-orange-400" />,
+      type: 'Employer-led training',
       description: 'Large employers providing their own training programmes',
       characteristics: ['Company-specific', 'Career progression', 'Internal expertise'],
       examples: ['National Grid', 'BAE Systems', 'Rolls Royce'],
       considerations: ['Limited external recognition', 'Company culture', 'Career progression'],
     },
     {
-      type: 'Online Training Platforms',
-      icon: <Globe className="h-5 w-5 text-cyan-400" />,
+      type: 'Online training platforms',
       description: 'Digital-first training providers offering flexible learning',
       characteristics: ['24/7 access', 'Self-paced learning', 'Interactive content'],
       examples: ['Multiverse', 'Baltic Training', 'Digital platforms'],
@@ -53,8 +44,7 @@ const TrainingProvidersCard = () => {
       ],
     },
     {
-      type: 'Industry Bodies',
-      icon: <Award className="h-5 w-5 text-red-400" />,
+      type: 'Industry bodies',
       description: 'Professional organisations offering recognised training',
       characteristics: [
         'Industry credibility',
@@ -66,90 +56,110 @@ const TrainingProvidersCard = () => {
     },
   ];
 
+  const renderList = (items: string[]) => (
+    <ul className="space-y-1">
+      {items.map((item, idx) => (
+        <li
+          key={idx}
+          className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+        >
+          <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  );
+
   return (
-    <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/10">
-      <CardHeader>
-        <CardTitle className="text-green-400">Training Provider Types</CardTitle>
-        <p className="text-sm text-white">
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+      <div className="space-y-1">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Training provider types
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
           Understanding different organisations that deliver off-the-job training
         </p>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          {providerTypes.map((provider, index) => (
-            <div key={index} className="p-4 bg-white/5 rounded-lg border border-green-500/20">
-              <div className="flex items-center gap-3 mb-3">
-                {provider.icon}
-                <h4 className="font-medium text-white">{provider.type}</h4>
+      </div>
+
+      <div className="space-y-4">
+        {providerTypes.map((provider, index) => (
+          <div
+            key={index}
+            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
+          >
+            <h4 className="text-[14px] font-semibold text-white">{provider.type}</h4>
+            <p className="text-[14px] text-white/85 leading-relaxed">{provider.description}</p>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="space-y-1">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Key features
+                </span>
+                {renderList(provider.characteristics)}
               </div>
-              <p className="text-sm text-white mb-3">{provider.description}</p>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                  <span className="text-xs font-medium text-green-400">Key Features:</span>
-                  <ul className="text-xs text-white mt-1 space-y-1">
-                    {provider.characteristics.map((char, idx) => (
-                      <li key={idx} className="flex items-start gap-1">
-                        <span className="text-green-400">•</span>
-                        {char}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <span className="text-xs font-medium text-blue-400">Examples:</span>
-                  <ul className="text-xs text-white mt-1 space-y-1">
-                    {provider.examples.map((example, idx) => (
-                      <li key={idx} className="flex items-start gap-1">
-                        <span className="text-blue-400">•</span>
-                        {example}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <span className="text-xs font-medium text-yellow-400">Considerations:</span>
-                  <ul className="text-xs text-white mt-1 space-y-1">
-                    {provider.considerations.map((consideration, idx) => (
-                      <li key={idx} className="flex items-start gap-1">
-                        <span className="text-yellow-400">!</span>
-                        {consideration}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              <div className="space-y-1">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Examples
+                </span>
+                {renderList(provider.examples)}
               </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-6 p-4 bg-blue-500/20 rounded-lg border border-blue-500/30">
-          <h5 className="font-medium text-blue-400 mb-2">Choosing the Right Provider</h5>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white">
-            <div>
-              <span className="font-medium text-white">Consider:</span>
-              <ul className="mt-1 space-y-1">
-                <li>• Location and accessibility</li>
-                <li>• Delivery methods offered</li>
-                <li>• Industry reputation</li>
-                <li>• Pass rates and outcomes</li>
-              </ul>
-            </div>
-            <div>
-              <span className="font-medium text-white">Ask about:</span>
-              <ul className="mt-1 space-y-1">
-                <li>• Support services available</li>
-                <li>• Equipment and facilities</li>
-                <li>• Progression opportunities</li>
-                <li>• Employer feedback</li>
-              </ul>
+              <div className="space-y-1">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Considerations
+                </span>
+                {renderList(provider.considerations)}
+              </div>
             </div>
           </div>
+        ))}
+      </div>
+
+      <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+          Choosing the right provider
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <h4 className="text-[14px] font-semibold text-white">Consider</h4>
+            <ul className="space-y-1.5">
+              {[
+                'Location and accessibility',
+                'Delivery methods offered',
+                'Industry reputation',
+                'Pass rates and outcomes',
+              ].map((item, i) => (
+                <li
+                  key={i}
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="space-y-2">
+            <h4 className="text-[14px] font-semibold text-white">Ask about</h4>
+            <ul className="space-y-1.5">
+              {[
+                'Support services available',
+                'Equipment and facilities',
+                'Progression opportunities',
+                'Employer feedback',
+              ].map((item, i) => (
+                <li
+                  key={i}
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

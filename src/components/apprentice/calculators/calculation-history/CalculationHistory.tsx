@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import { History, RotateCcw, Trash2, Star, StarOff, Clock } from 'lucide-react';
 import { format } from 'date-fns';
 import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
@@ -106,70 +103,55 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
 
   if (history.length === 0) {
     return (
-      <Alert className="border-blue-500/20 bg-blue-500/10">
-        <History className="h-4 w-4 text-blue-500" />
-        <AlertDescription className="text-blue-200">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          History
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed mt-2">
           Your calculation history will appear here as you perform calculations.
-        </AlertDescription>
-      </Alert>
+        </p>
+      </div>
     );
   }
 
   return (
-    <Card className="border-elec-yellow/20 bg-white/5">
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2 text-sm">
-            <History className="h-4 w-4" />
-            Calculation History
-          </CardTitle>
-          <div className="flex gap-2">
-            {history.length > 5 && (
-              <Button variant="ghost" size="sm" onClick={() => setShowAll(!showAll)}>
-                {showAll ? 'Show Less' : `Show All (${history.length})`}
-              </Button>
-            )}
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className="flex items-center justify-between">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Calculation history
+        </span>
+        <div className="flex gap-2">
+          {history.length > 5 && (
             <Button
               variant="ghost"
               size="sm"
-              onClick={clearHistory}
-              className="text-red-400 hover:text-red-300"
+              onClick={() => setShowAll(!showAll)}
+              className="h-9 text-[12px] text-white/85 hover:bg-white/[0.05] touch-manipulation"
             >
-              <Trash2 className="h-3 w-3" />
+              {showAll ? 'Show less' : `Show all (${history.length})`}
             </Button>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-3">
-          {/* Bookmarked calculations */}
-          {bookmarkedHistory.length > 0 && (
-            <div>
-              <h4 className="text-xs font-medium text-elec-yellow mb-2 flex items-center gap-1">
-                <Star className="h-3 w-3" />
-                Bookmarked
-              </h4>
-              {bookmarkedHistory.map((entry) => (
-                <HistoryEntry
-                  key={`bookmarked-${entry.id}`}
-                  entry={entry}
-                  onRestore={() => onRestoreCalculation(entry)}
-                  onToggleBookmark={() => toggleBookmark(entry.id)}
-                  formatInputsDisplay={formatInputsDisplay}
-                />
-              ))}
-            </div>
           )}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={clearHistory}
+            className="h-9 text-white/55 hover:text-white hover:bg-white/[0.05] touch-manipulation"
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        </div>
+      </div>
 
-          {/* Recent calculations */}
-          <div>
-            <h4 className="text-xs font-medium text-white mb-2 flex items-center gap-1">
-              <Clock className="h-3 w-3" />
-              Recent
-            </h4>
-            {displayedHistory.map((entry) => (
+      <div className="space-y-4">
+        {bookmarkedHistory.length > 0 && (
+          <div className="space-y-2">
+            <div className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <Star className="h-3 w-3" />
+              <span>Bookmarked</span>
+            </div>
+            {bookmarkedHistory.map((entry) => (
               <HistoryEntry
-                key={entry.id}
+                key={`bookmarked-${entry.id}`}
                 entry={entry}
                 onRestore={() => onRestoreCalculation(entry)}
                 onToggleBookmark={() => toggleBookmark(entry.id)}
@@ -177,9 +159,25 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
               />
             ))}
           </div>
+        )}
+
+        <div className="space-y-2">
+          <div className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <Clock className="h-3 w-3" />
+            <span>Recent</span>
+          </div>
+          {displayedHistory.map((entry) => (
+            <HistoryEntry
+              key={entry.id}
+              entry={entry}
+              onRestore={() => onRestoreCalculation(entry)}
+              onToggleBookmark={() => toggleBookmark(entry.id)}
+              formatInputsDisplay={formatInputsDisplay}
+            />
+          ))}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 
@@ -190,26 +188,38 @@ const HistoryEntry: React.FC<{
   formatInputsDisplay: (inputs: any) => string;
 }> = ({ entry, onRestore, onToggleBookmark, formatInputsDisplay }) => {
   return (
-    <div className="flex items-center justify-between p-2 rounded border border-elec-yellow/10 bg-white/10">
+    <div className="flex items-center justify-between gap-3 p-3 rounded-lg border border-white/[0.06] bg-white/[0.02]">
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1">
-          <Badge variant={entry.isValid ? 'default' : 'destructive'} className="text-xs">
+          <span className="text-[11px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
             {entry.isValid ? 'Valid' : 'Invalid'}
-          </Badge>
-          <span className="text-xs text-white">{format(entry.timestamp, 'MMM dd, HH:mm')}</span>
+          </span>
+          <span className="text-[11px] text-white/55 font-mono">
+            {format(entry.timestamp, 'MMM dd, HH:mm')}
+          </span>
         </div>
-        <p className="text-xs text-white truncate">{formatInputsDisplay(entry.inputs)}</p>
+        <p className="text-[12px] text-white/85 truncate">{formatInputsDisplay(entry.inputs)}</p>
       </div>
-      <div className="flex gap-1 ml-2">
-        <Button variant="ghost" size="sm" onClick={onToggleBookmark} className="h-6 w-6 p-0">
+      <div className="flex gap-1">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={onToggleBookmark}
+          className="h-9 w-9 p-0 text-white/55 hover:text-white hover:bg-white/[0.05] touch-manipulation"
+        >
           {entry.isBookmarked ? (
-            <Star className="h-3 w-3 text-elec-yellow fill-current" />
+            <Star className="h-4 w-4 text-elec-yellow fill-current" />
           ) : (
-            <StarOff className="h-3 w-3" />
+            <StarOff className="h-4 w-4" />
           )}
         </Button>
-        <Button variant="ghost" size="sm" onClick={onRestore} className="h-6 w-6 p-0">
-          <RotateCcw className="h-3 w-3" />
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={onRestore}
+          className="h-9 w-9 p-0 text-white/55 hover:text-white hover:bg-white/[0.05] touch-manipulation"
+        >
+          <RotateCcw className="h-4 w-4" />
         </Button>
       </div>
     </div>

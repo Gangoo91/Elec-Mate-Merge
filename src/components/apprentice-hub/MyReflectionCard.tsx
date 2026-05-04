@@ -107,7 +107,7 @@ export function MyReflectionCard() {
               Reflection
             </div>
             {!loading && streak > 0 && (
-              <span className="text-[10.5px] tabular-nums text-cyan-300">{streak}-day streak</span>
+              <span className="text-[10.5px] tabular-nums text-white/85">{streak}-day streak</span>
             )}
           </div>
 
@@ -122,7 +122,7 @@ export function MyReflectionCard() {
           <button
             type="button"
             onClick={() => setCaptureOpen(true)}
-            className="mt-4 w-full h-11 rounded-lg bg-cyan-500 text-black text-[13px] font-semibold hover:bg-cyan-400 transition-colors touch-manipulation"
+            className="mt-4 w-full h-11 rounded-lg bg-white/[0.02] text-black text-[13px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
           >
             {reflectedToday ? 'Add another reflection' : 'Capture today'}
           </button>
@@ -162,7 +162,7 @@ export function MyReflectionCard() {
                 <button
                   type="button"
                   onClick={() => setShowAll((v) => !v)}
-                  className="mt-2 px-1 text-[11.5px] font-medium text-cyan-300 hover:text-cyan-200 transition-colors touch-manipulation"
+                  className="mt-2 px-1 text-[11.5px] font-medium text-white/85 hover:text-white/85 transition-colors touch-manipulation"
                 >
                   {showAll ? 'Show less' : `Show ${Math.min(17, rows.length - 3)} more`}
                 </button>

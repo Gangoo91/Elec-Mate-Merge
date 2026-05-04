@@ -1,4 +1,3 @@
-import { Card, CardContent } from '@/components/ui/card';
 import StepNavigation from '../../StepNavigation';
 import CommonIssuesCard from '../../CommonIssuesCard';
 import { useState } from 'react';
@@ -24,32 +23,30 @@ const R1R2TestingTab = () => {
 
   return (
     <div className="space-y-6">
-      <Card>
-        <CardContent className="pt-6">
-          <div className="mb-4">
-            <h2 className="text-xl font-semibold">
-              R1+R2 Testing (Continuity of Protective Conductors)
-            </h2>
-            <p className="text-sm text-white mt-1">
-              Tests the continuity of the circuit protective conductors, main and supplementary
-              bonding conductors.
-            </p>
-          </div>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+        <div className="space-y-1">
+          <h2 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
+            R1+R2 Testing
+          </h2>
+          <p className="text-[14px] text-white/70 leading-relaxed">
+            Continuity of protective conductors. Tests the continuity of the circuit protective
+            conductors, main and supplementary bonding conductors.
+          </p>
+        </div>
 
-          <div className="space-y-6 pb-4">
-            {currentStep === 1 && <R1R2Step1 />}
-            {currentStep === 2 && <R1R2Step2 />}
-            {currentStep === 3 && <R1R2Step3 />}
+        <div className="space-y-4">
+          {currentStep === 1 && <R1R2Step1 />}
+          {currentStep === 2 && <R1R2Step2 />}
+          {currentStep === 3 && <R1R2Step3 />}
 
-            <StepNavigation
-              currentStep={currentStep}
-              totalSteps={totalSteps}
-              handleNext={handleNext}
-              handlePrevious={handlePrevious}
-            />
-          </div>
-        </CardContent>
-      </Card>
+          <StepNavigation
+            currentStep={currentStep}
+            totalSteps={totalSteps}
+            handleNext={handleNext}
+            handlePrevious={handlePrevious}
+          />
+        </div>
+      </div>
 
       <CommonIssuesCard />
     </div>

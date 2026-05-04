@@ -204,25 +204,22 @@ const IndustrialReferenceGuide = () => {
 
         <TabsContent value="standards" className="space-y-4">
           {standardsAndRegulations.map((category, index) => (
-            <Card key={index} className="border-blue-500/30 bg-white/5">
+            <Card key={index} className="border-white/[0.06] bg-white/5">
               <CardHeader>
                 <div className="flex items-center gap-2">
-                  <Shield className="h-6 w-6 text-blue-400" />
-                  <CardTitle className="text-blue-300">{category.category}</CardTitle>
+                  <Shield className="h-6 w-6 text-white/55" />
+                  <CardTitle className="text-white">{category.category}</CardTitle>
                 </div>
               </CardHeader>
               <CardContent className="space-y-3">
                 {category.standards.map((standard, stdIndex) => (
                   <div
                     key={stdIndex}
-                    className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20"
+                    className="bg-white/[0.02] p-3 rounded-lg border border-white/[0.06]"
                   >
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2 mb-2">
-                      <h4 className="font-semibold text-blue-300">{standard.code}</h4>
-                      <Badge
-                        variant="outline"
-                        className="border-blue-400 text-blue-300 text-xs w-fit"
-                      >
+                      <h4 className="font-semibold text-white">{standard.code}</h4>
+                      <Badge variant="outline" className="border-white/10 text-white text-xs w-fit">
                         {standard.scope}
                       </Badge>
                     </div>
@@ -272,39 +269,39 @@ const IndustrialReferenceGuide = () => {
         </TabsContent>
 
         <TabsContent value="testing" className="space-y-4">
-          <Card className="border-green-500/30 bg-white/5">
+          <Card className="border-white/[0.06] bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <FileCheck className="h-6 w-6 text-green-400" />
-                <CardTitle className="text-green-300">Industrial Testing Procedures</CardTitle>
+                <FileCheck className="h-6 w-6 text-white/55" />
+                <CardTitle className="text-white">Industrial Testing Procedures</CardTitle>
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
               {testingProcedures.map((test, index) => (
                 <div
                   key={index}
-                  className="bg-green-500/10 p-4 rounded-lg border border-green-500/20"
+                  className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]"
                 >
-                  <h3 className="font-semibold text-green-300 mb-3">{test.test}</h3>
+                  <h3 className="font-semibold text-white mb-3">{test.test}</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
                     <div>
-                      <span className="text-green-300 font-medium">Method: </span>
+                      <span className="text-white font-medium">Method: </span>
                       <span className="text-white">
                         {test.voltage || test.method || test.testCurrent}
                       </span>
                     </div>
                     <div>
-                      <span className="text-green-300 font-medium">Criteria: </span>
+                      <span className="text-white font-medium">Criteria: </span>
                       <span className="text-white">
                         {test.minimumValue || test.maximumValue || test.tripTime}
                       </span>
                     </div>
                     <div>
-                      <span className="text-green-300 font-medium">Procedure: </span>
+                      <span className="text-white font-medium">Procedure: </span>
                       <span className="text-white">{test.procedure}</span>
                     </div>
                     <div>
-                      <span className="text-green-300 font-medium">Frequency: </span>
+                      <span className="text-white font-medium">Frequency: </span>
                       <span className="text-white">{test.frequency}</span>
                     </div>
                   </div>
@@ -315,36 +312,36 @@ const IndustrialReferenceGuide = () => {
         </TabsContent>
 
         <TabsContent value="protection" className="space-y-4">
-          <Card className="border-purple-500/30 bg-white/5">
+          <Card className="border-white/[0.06] bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <Settings className="h-6 w-6 text-purple-400" />
-                <CardTitle className="text-purple-300">Industrial Protection Devices</CardTitle>
+                <Settings className="h-6 w-6 text-white/55" />
+                <CardTitle className="text-white">Industrial Protection Devices</CardTitle>
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
               {protectionDevices.map((device, index) => (
                 <div
                   key={index}
-                  className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20"
+                  className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]"
                 >
                   <div className="flex items-center justify-between gap-3 mb-3">
-                    <h3 className="font-semibold text-purple-300">{device.device}</h3>
-                    <Badge variant="outline" className="border-purple-400 text-purple-300 text-xs">
+                    <h3 className="font-semibold text-white">{device.device}</h3>
+                    <Badge variant="outline" className="border-white/10 text-white text-xs">
                       {device.standard}
                     </Badge>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
                     <div>
-                      <span className="text-purple-300 font-medium">Rating: </span>
+                      <span className="text-white font-medium">Rating: </span>
                       <span className="text-white">{device.rating}</span>
                     </div>
                     <div>
-                      <span className="text-purple-300 font-medium">Application: </span>
+                      <span className="text-white font-medium">Application: </span>
                       <span className="text-white">{device.application}</span>
                     </div>
                     <div>
-                      <span className="text-purple-300 font-medium">Features: </span>
+                      <span className="text-white font-medium">Features: </span>
                       <span className="text-white">{device.features}</span>
                     </div>
                   </div>

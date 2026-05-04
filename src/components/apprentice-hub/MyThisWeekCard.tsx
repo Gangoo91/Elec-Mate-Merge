@@ -30,12 +30,12 @@ export function MyThisWeekCard() {
         </div>
         <p className="mt-1.5 text-[13px] text-white/85 leading-snug">
           Couldn't put together your weekly brief just now.{' '}
-          {error ? <span className="text-rose-200">{error}</span> : null}
+          {error ? <span className="text-white/85">{error}</span> : null}
         </p>
         <button
           type="button"
           onClick={regenerate}
-          className="mt-3 inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-cyan-300 hover:bg-cyan-200 text-black text-[12px] font-semibold transition-colors touch-manipulation"
+          className="mt-3 inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-white/[0.02] hover:bg-white/[0.02] text-black text-[12px] font-semibold transition-colors touch-manipulation"
         >
           <RefreshCw className="h-3.5 w-3.5" />
           Try again
@@ -49,14 +49,14 @@ export function MyThisWeekCard() {
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.22 }}
-      className="relative overflow-hidden rounded-2xl border border-cyan-300/20 bg-gradient-to-br from-cyan-500/[0.06] via-[hsl(0_0%_10%)] to-[hsl(0_0%_10%)]"
+      className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] via-[hsl(0_0%_10%)] to-[hsl(0_0%_10%)]"
     >
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300/40 to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-px bg-white/[0.02]" />
 
       <div className="px-4 sm:px-5 lg:px-6 py-4 sm:py-5">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <div className="flex items-center gap-2 text-[10.5px] font-medium uppercase tracking-[0.22em] text-cyan-300">
+            <div className="flex items-center gap-2 text-[10.5px] font-medium uppercase tracking-[0.22em] text-white/85">
               <Sparkles className="h-3 w-3" />
               This week
             </div>
@@ -71,7 +71,7 @@ export function MyThisWeekCard() {
             type="button"
             onClick={regenerate}
             disabled={generating}
-            className="shrink-0 inline-flex items-center gap-1 h-7 px-2 rounded-full text-[10.5px] font-medium text-cyan-200/85 hover:text-cyan-100 hover:bg-cyan-500/[0.08] transition-colors touch-manipulation disabled:opacity-50"
+            className="shrink-0 inline-flex items-center gap-1 h-7 px-2 rounded-full text-[10.5px] font-medium text-cyan-200/85 hover:text-white/85 hover:bg-white/[0.02] transition-colors touch-manipulation disabled:opacity-50"
             title="Regenerate this week's brief"
           >
             <RefreshCw className={cn('h-3 w-3', generating && 'animate-spin')} />
@@ -114,7 +114,7 @@ function ThisWeekBulletRow({ bullet, index }: { bullet: ThisWeekBullet; index: n
         <button
           type="button"
           onClick={() => navigate(bullet.action_href)}
-          className="shrink-0 inline-flex items-center h-7 px-2.5 rounded-md bg-cyan-300 hover:bg-cyan-200 text-black text-[11.5px] font-semibold transition-colors touch-manipulation"
+          className="shrink-0 inline-flex items-center h-7 px-2.5 rounded-md bg-white/[0.02] hover:bg-white/[0.02] text-black text-[11.5px] font-semibold transition-colors touch-manipulation"
         >
           {bullet.action_label} →
         </button>

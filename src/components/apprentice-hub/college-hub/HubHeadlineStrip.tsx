@@ -29,7 +29,7 @@ export function HubHeadlineStrip({ stats }: Props) {
       label: 'Verified hours',
       value: fmtHours(stats.verified_otj_minutes),
       sub: stats.pending_otj_minutes > 0 ? `${fmtHours(stats.pending_otj_minutes)} pending` : null,
-      tone: 'text-emerald-200',
+      tone: 'text-white/85',
       href: '#otj',
     },
     {
@@ -43,10 +43,10 @@ export function HubHeadlineStrip({ stats }: Props) {
             : null,
       tone:
         stats.overdue_goals > 0
-          ? 'text-amber-200'
+          ? 'text-white/85'
           : stats.blocked_goals > 0
-            ? 'text-rose-300'
-            : 'text-purple-200',
+            ? 'text-white/85'
+            : 'text-white/85',
       href: '#plan',
     },
     {
@@ -55,9 +55,9 @@ export function HubHeadlineStrip({ stats }: Props) {
       sub: stats.overdue_quizzes > 0 ? `${stats.overdue_quizzes} overdue` : null,
       tone:
         stats.overdue_quizzes > 0
-          ? 'text-amber-200'
+          ? 'text-white/85'
           : stats.pending_quizzes > 0
-            ? 'text-blue-200'
+            ? 'text-white/85'
             : 'text-white/85',
       href: '#activities',
     },
@@ -67,7 +67,7 @@ export function HubHeadlineStrip({ stats }: Props) {
       label: 'Portfolio',
       value: stats.unactioned_portfolio_comments.toString(),
       sub: stats.unactioned_portfolio_comments > 0 ? 'tutor needs reply' : 'all clear',
-      tone: stats.unactioned_portfolio_comments > 0 ? 'text-blue-200' : 'text-white/85',
+      tone: stats.unactioned_portfolio_comments > 0 ? 'text-white/85' : 'text-white/85',
       href: '#portfolio',
     },
   ];
@@ -84,8 +84,7 @@ export function HubHeadlineStrip({ stats }: Props) {
             {t.label}
           </div>
           <div
-            className={cn(
-              'mt-1 text-[20px] sm:text-[24px] lg:text-[28px] font-semibold tabular-nums leading-none',
+            className={cn('mt-1 text-[20px] sm:text-[24px] lg:text-[28px] font-semibold tabular-nums leading-none',
               t.tone
             )}
           >

@@ -1,6 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import {
   MobileAccordion,
   MobileAccordionItem,
@@ -8,58 +5,58 @@ import {
   MobileAccordionContent,
 } from '@/components/ui/mobile-accordion';
 import { useIsMobile } from '@/hooks/use-mobile';
-import {
-  TrendingUp,
-  BarChart3,
-  Zap,
-  Building,
-  Home,
-  Factory,
-  CheckCircle,
-  AlertTriangle,
-  PoundSterling,
-  Calendar,
-  Globe,
-  Lightbulb,
-} from 'lucide-react';
+import { TrendingUp, BarChart3, Zap, Building, Globe } from 'lucide-react';
+
+const Section = ({ children }: { children: React.ReactNode }) => (
+  <div className="rounded-b-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+    {children}
+  </div>
+);
+
+const Eyebrow = ({ children }: { children: React.ReactNode }) => (
+  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+    {children}
+  </span>
+);
+
+const Pill = ({ children }: { children: React.ReactNode }) => (
+  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+    {children}
+  </span>
+);
+
+const Bullets = ({ items }: { items: string[] }) => (
+  <ul className="space-y-1.5">
+    {items.map((item, idx) => (
+      <li
+        key={idx}
+        className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+      >
+        <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+        <span>{item}</span>
+      </li>
+    ))}
+  </ul>
+);
 
 const IndustryInsightsAnalysis = () => {
   const isMobile = useIsMobile();
 
   const industryMetrics = [
-    {
-      metric: 'Market Growth Rate',
-      data: '6.8% annually (2024-2029)',
-      icon: <TrendingUp className="h-5 w-5 text-blue-400" />,
-      detail: 'UK electrical services market expansion above GDP growth',
-    },
-    {
-      metric: 'Skills Shortage',
-      data: '50,000 additional electricians needed',
-      icon: <AlertTriangle className="h-5 w-5 text-elec-yellow" />,
-      detail: 'Critical shortage driving wage inflation and opportunities',
-    },
-    {
-      metric: 'Green Technology Impact',
-      data: '£12 billion market by 2030',
-      icon: <Zap className="h-5 w-5 text-green-400" />,
-      detail: 'EV charging, solar PV, and heat pump installations',
-    },
-    {
-      metric: 'Average Salary Growth',
-      data: '8.2% year-on-year increase',
-      icon: <PoundSterling className="h-5 w-5 text-purple-400" />,
-      detail: 'Outpacing inflation due to skills shortage',
-    },
+    { metric: 'Market growth', data: 'Above GDP growth annually' },
+    { metric: 'Skills shortage', data: 'Significant ongoing demand' },
+    { metric: 'Green technology', data: 'Major growth area to 2030' },
+    { metric: 'Salary growth', data: 'Outpacing inflation' },
   ];
 
   const marketTrends = [
     {
-      trend: 'Renewable Energy Integration',
+      trend: 'Renewable energy integration',
       timeline: '2024-2030 rapid expansion',
-      description: 'Massive growth in solar PV, battery storage, and EV charging infrastructure',
+      description:
+        'Growth in solar PV, battery storage, and EV charging infrastructure across the UK.',
       businessOpportunities: [
-        'Solar PV installation and maintenance contracts worth £8,000-25,000',
+        'Solar PV installation and maintenance contracts',
         'EV charging network installation across commercial and domestic sectors',
         'Battery storage system integration for energy independence',
         'Heat pump electrical connections and smart home integration',
@@ -70,13 +67,12 @@ const IndustryInsightsAnalysis = () => {
         'Energy management system programming and commissioning',
         'Grid connection procedures and DNO liaison',
       ],
-      marketValue: '£12 billion by 2030',
-      growthRate: '15-20% annually',
+      growthRate: 'Strong',
     },
     {
-      trend: 'Smart Building Technology',
+      trend: 'Smart building technology',
       timeline: '2024-2028 mainstream adoption',
-      description: 'Integration of IoT, building automation, and intelligent systems',
+      description: 'Integration of IoT, building automation, and intelligent systems.',
       businessOpportunities: [
         'Building Management System (BMS) installation and programming',
         'IoT sensor networks and wireless infrastructure deployment',
@@ -89,161 +85,148 @@ const IndustryInsightsAnalysis = () => {
         'Protocol understanding (BACnet, Modbus, KNX)',
         'Cybersecurity awareness for connected systems',
       ],
-      marketValue: '£4.2 billion by 2028',
-      growthRate: '12-15% annually',
+      growthRate: 'Steady',
     },
     {
-      trend: 'Retrofit and Energy Efficiency',
+      trend: 'Retrofit and energy efficiency',
       timeline: '2024-2035 government driven',
-      description: 'Massive retrofit programme for net-zero carbon targets',
+      description: 'Retrofit programmes for net-zero carbon targets.',
       businessOpportunities: [
-        'Social housing retrofit programmes worth millions',
-        'Commercial building energy efficiency upgrades',
-        'LED lighting replacement and smart control installation',
-        'Electrical infrastructure upgrades for heat pump installations',
+        'Social housing retrofit programmes',
+        'Public sector building decarbonisation',
+        'Domestic energy efficiency upgrades',
+        'Heat pump and renewable heating installations',
       ],
       skillsRequired: [
-        'Energy assessment and survey techniques',
-        'Retrofit planning and project management',
-        'Fabric-first approach understanding',
-        'Government funding scheme knowledge',
+        'Energy assessment and modelling',
+        'Heating system electrical integration',
+        'Insulation and building fabric understanding',
+        'Funding programme awareness',
       ],
-      marketValue: '£8.5 billion retrofit market',
-      growthRate: '10-12% annually',
+      growthRate: 'Long-term',
     },
   ];
 
   const sectorAnalysis = [
     {
-      sector: 'Domestic Electrical Services',
-      marketShare: '45% of total market',
-      averageProjectValue: '£500-5,000',
+      sector: 'Domestic / residential',
+      marketShare: 'Major share',
+      averageProjectValue: 'Variable per job',
       growthDrivers: [
-        'Home improvement boom post-pandemic',
-        'Smart home technology adoption',
-        'EV charging point installations',
-        'Kitchen and bathroom renovations',
+        'Housing stock improvements',
+        'Smart home adoption',
+        'EV charger installation',
+        'Renewable energy uptake',
       ],
       challenges: [
-        'Price-sensitive customers requiring competitive quotes',
-        'Seasonal fluctuations in demand',
-        'Competition from large national contractors',
-        'Managing customer expectations on pricing',
+        'Price competition from sole traders',
+        'Customer acquisition costs',
+        'Regulatory compliance burden',
       ],
       opportunities: [
-        'Specialise in smart home automation',
-        'Offer renewable energy solutions',
-        'Develop maintenance contract relationships',
         'Premium service positioning',
+        'Smart home specialisation',
+        'EV charging market entry',
       ],
-      profitMargins: '35-45% for quality contractors',
+      profitMargins: 'Healthy for established firms',
     },
     {
-      sector: 'Commercial & Industrial',
-      marketShare: '35% of total market',
-      averageProjectValue: '£10,000-100,000+',
+      sector: 'Commercial / industrial',
+      marketShare: 'Significant share',
+      averageProjectValue: 'Larger contracts',
       growthDrivers: [
-        'Industrial automation and modernisation',
-        'Data centre expansion and upgrades',
-        'Manufacturing reshoring initiatives',
-        'Compliance with updated regulations',
+        'Office refurbishments',
+        'Industrial automation',
+        'Energy management',
+        'Data centre growth',
       ],
       challenges: [
-        'Long procurement processes and payment terms',
-        'Complex tendering and qualification requirements',
-        'Higher insurance and bonding requirements',
-        'Skilled workforce shortages for specialist work',
+        'Long sales cycles',
+        'Tender complexity',
+        '24/7 service demands',
       ],
       opportunities: [
-        'Develop partnerships with main contractors',
-        'Specialise in high-value industrial systems',
-        'Offer 24/7 maintenance and emergency services',
-        'Focus on process improvement consultancy',
+        'Long-term maintenance contracts',
+        'Energy management consultancy',
+        'Process improvement work',
       ],
-      profitMargins: '25-35% for established contractors',
+      profitMargins: 'Strong for established contractors',
     },
     {
-      sector: 'New Build Construction',
-      marketShare: '20% of total market',
-      averageProjectValue: '£5,000-25,000 per plot',
+      sector: 'New build construction',
+      marketShare: 'Sizeable share',
+      averageProjectValue: 'Per-plot pricing',
       growthDrivers: [
-        'Government housing targets and initiatives',
-        'Commercial and industrial development',
-        'Infrastructure projects and regeneration',
-        'Modern Methods of Construction adoption',
+        'Government housing targets',
+        'Commercial development',
+        'Infrastructure projects',
       ],
       challenges: [
-        'Highly competitive tender processes',
-        'Tight margins and cost pressures',
-        'Programme-driven schedules with penalties',
-        'Material cost volatility and supply chain issues',
+        'Highly competitive tenders',
+        'Tight margins',
+        'Programme-driven schedules',
       ],
       opportunities: [
-        'Develop relationships with house builders',
-        'Specialise in off-site construction methods',
-        'Offer design and build packages',
-        'Focus on high-specification developments',
+        'Builder relationships',
+        'Off-site construction methods',
+        'Design and build packages',
       ],
-      profitMargins: '20-30% depending on project scale',
+      profitMargins: 'Variable by project scale',
     },
   ];
 
   const futureSkillsDemand = [
     {
-      category: 'Emerging Technologies',
+      category: 'Emerging technologies',
       timeframe: 'Next 2-5 years',
       skills: [
         {
-          skill: 'Electric Vehicle Infrastructure',
+          skill: 'Electric vehicle infrastructure',
           demandLevel: 'Critical',
-          salaryPremium: '15-25%',
-          description: 'Installation and maintenance of EV charging networks',
+          description: 'Installation and maintenance of EV charging networks.',
           learningPath:
-            'EV charging courses → Manufacturer certifications → Network installation experience',
+            'EV charging courses → manufacturer certifications → network installation experience',
         },
         {
-          skill: 'Energy Storage Systems',
+          skill: 'Energy storage systems',
           demandLevel: 'High',
-          salaryPremium: '20-30%',
-          description: 'Battery storage installation, commissioning, and maintenance',
-          learningPath: 'Battery safety training → System design courses → Practical installations',
+          description: 'Battery storage installation, commissioning, and maintenance.',
+          learningPath:
+            'Battery safety training → system design courses → practical installations',
         },
         {
-          skill: 'Smart Grid Technology',
+          skill: 'Smart grid technology',
           demandLevel: 'Emerging',
-          salaryPremium: '25-35%',
-          description: 'Grid integration, demand response, and distributed energy',
+          description: 'Grid integration, demand response, and distributed energy.',
           learningPath:
-            'Grid technology courses → DNO engagement → Advanced electrical engineering',
+            'Grid technology courses → DNO engagement → advanced electrical engineering',
         },
       ],
     },
     {
-      category: 'Digital Integration',
+      category: 'Digital integration',
       timeframe: 'Next 1-3 years',
       skills: [
         {
-          skill: 'IoT and Sensor Networks',
+          skill: 'IoT and sensor networks',
           demandLevel: 'High',
-          salaryPremium: '15-20%',
-          description: 'Installation and commissioning of connected building systems',
-          learningPath: 'IoT fundamentals → Network technology → Building automation systems',
+          description: 'Installation and commissioning of connected building systems.',
+          learningPath:
+            'IoT fundamentals → network technology → building automation systems',
         },
         {
-          skill: 'Cybersecurity for Electrical Systems',
+          skill: 'Cybersecurity for electrical systems',
           demandLevel: 'Critical',
-          salaryPremium: '20-30%',
-          description: 'Securing electrical systems and building networks',
+          description: 'Securing electrical systems and building networks.',
           learningPath:
-            'Cybersecurity awareness → Industrial control security → Certification programmes',
+            'Cybersecurity awareness → industrial control security → certification programmes',
         },
         {
-          skill: 'Data Analytics for Energy Management',
+          skill: 'Data analytics for energy management',
           demandLevel: 'Emerging',
-          salaryPremium: '25-35%',
-          description: 'Analysing energy consumption and optimising systems',
+          description: 'Analysing energy consumption and optimising systems.',
           learningPath:
-            'Data analysis training → Energy management systems → Business intelligence tools',
+            'Data analysis training → energy management systems → business intelligence tools',
         },
       ],
     },
@@ -251,289 +234,137 @@ const IndustryInsightsAnalysis = () => {
 
   return (
     <div className="space-y-4">
-      <Alert className="border-purple-500/50 bg-purple-500/10">
-        <BarChart3 className="h-4 w-4 text-purple-400" />
-        <AlertDescription className="text-purple-200">
-          Industry analysis shows unprecedented opportunities with skills shortage driving 40%
-          faster career progression and salary growth.
-        </AlertDescription>
-      </Alert>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 flex items-start gap-3">
+        <BarChart3 className="h-4 w-4 text-white/55 mt-1 flex-shrink-0" />
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Skills shortages across the industry are creating opportunities for faster career
+          progression in specialist areas.
+        </p>
+      </div>
 
       <div
         className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-2 xl:grid-cols-4'}`}
       >
         {industryMetrics.map((metric, index) => (
-          <Card
+          <div
             key={index}
-            className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 p-3"
+            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
           >
-            <div className="text-center space-y-2">
-              <div className="flex justify-center">{metric.icon}</div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>
-                {metric.metric}
-              </div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                {metric.data}
-              </div>
-            </div>
-          </Card>
+            <Eyebrow>{metric.metric}</Eyebrow>
+            <div className="text-[14px] text-white/85">{metric.data}</div>
+          </div>
         ))}
       </div>
 
       <MobileAccordion type="single" collapsible className="space-y-2">
         <MobileAccordionItem value="market-trends">
-          <MobileAccordionTrigger icon={<TrendingUp className="h-5 w-5 text-blue-400" />}>
-            Key Market Trends & Growth Areas
+          <MobileAccordionTrigger icon={<TrendingUp className="h-5 w-5 text-white/55" />}>
+            Key market trends and growth areas
           </MobileAccordionTrigger>
           <MobileAccordionContent>
-            <div className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+            <Section>
               {marketTrends.map((trend, index) => (
                 <div key={index} className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                      {trend.trend}
-                    </h4>
-                    <Badge
-                      variant="outline"
-                      className={`text-blue-300 border-blue-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}
-                    >
-                      {trend.growthRate}
-                    </Badge>
+                  <div className="flex items-baseline justify-between gap-2">
+                    <h4 className="text-[16px] text-white">{trend.trend}</h4>
+                    <Pill>{trend.growthRate}</Pill>
                   </div>
-                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
-                    {trend.description}
-                  </p>
+                  <p className="text-[14px] text-white/85 leading-relaxed">{trend.description}</p>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div>
-                      <h5
-                        className={`font-medium text-blue-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}
-                      >
-                        Business Opportunities
-                      </h5>
-                      <ul className="space-y-1">
-                        {trend.businessOpportunities.map((opportunity, oppIndex) => (
-                          <li
-                            key={oppIndex}
-                            className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200 flex items-center gap-1`}
-                          >
-                            <CheckCircle className="h-3 w-3 text-blue-400 flex-shrink-0" />
-                            {opportunity}
-                          </li>
-                        ))}
-                      </ul>
+                    <div className="space-y-2">
+                      <Eyebrow>Business opportunities</Eyebrow>
+                      <Bullets items={trend.businessOpportunities} />
                     </div>
-
-                    <div>
-                      <h5
-                        className={`font-medium text-green-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}
-                      >
-                        Required Skills
-                      </h5>
-                      <ul className="space-y-1">
-                        {trend.skillsRequired.map((skill, skillIndex) => (
-                          <li
-                            key={skillIndex}
-                            className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200 flex items-center gap-1`}
-                          >
-                            <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
-                            {skill}
-                          </li>
-                        ))}
-                      </ul>
+                    <div className="space-y-2">
+                      <Eyebrow>Required skills</Eyebrow>
+                      <Bullets items={trend.skillsRequired} />
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <h5
-                      className={`font-medium text-purple-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}
-                    >
-                      Market Value & Timeline
-                    </h5>
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200`}>
-                      {trend.marketValue} - {trend.timeline}
-                    </p>
+                  <div className="space-y-1">
+                    <Eyebrow>Timeline</Eyebrow>
+                    <p className="text-[14px] text-white/85 leading-relaxed">{trend.timeline}</p>
                   </div>
                 </div>
               ))}
-            </div>
+            </Section>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
         <MobileAccordionItem value="sector-analysis">
-          <MobileAccordionTrigger icon={<Building className="h-5 w-5 text-green-400" />}>
-            Sector Analysis & Market Opportunities
+          <MobileAccordionTrigger icon={<Building className="h-5 w-5 text-white/55" />}>
+            Sector analysis and market opportunities
           </MobileAccordionTrigger>
           <MobileAccordionContent>
-            <div className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+            <Section>
               {sectorAnalysis.map((sector, index) => (
                 <div key={index} className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                      {sector.sector}
-                    </h4>
-                    <Badge
-                      variant="outline"
-                      className={`text-green-300 border-green-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}
-                    >
-                      {sector.marketShare}
-                    </Badge>
+                  <div className="flex items-baseline justify-between gap-2">
+                    <h4 className="text-[16px] text-white">{sector.sector}</h4>
+                    <Pill>{sector.marketShare}</Pill>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                    <div className="space-y-2">
-                      <h5
-                        className={`font-medium text-blue-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}
-                      >
-                        Project Value
-                      </h5>
-                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200`}>
-                        {sector.averageProjectValue}
-                      </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-[14px] text-white/85">
+                    <div>
+                      <span className="text-white/55">Project value: </span>
+                      {sector.averageProjectValue}
                     </div>
-                    <div className="space-y-2">
-                      <h5
-                        className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}
-                      >
-                        Profit Margins
-                      </h5>
-                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>
-                        {sector.profitMargins}
-                      </p>
+                    <div>
+                      <span className="text-white/55">Profit margins: </span>
+                      {sector.profitMargins}
                     </div>
                   </div>
 
-                  <div>
-                    <h5
-                      className={`font-medium text-green-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}
-                    >
-                      Growth Drivers
-                    </h5>
-                    <ul className="space-y-1">
-                      {sector.growthDrivers.map((driver, driverIndex) => (
-                        <li
-                          key={driverIndex}
-                          className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200 flex items-center gap-1`}
-                        >
-                          <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
-                          {driver}
-                        </li>
-                      ))}
-                    </ul>
+                  <div className="space-y-2">
+                    <Eyebrow>Growth drivers</Eyebrow>
+                    <Bullets items={sector.growthDrivers} />
                   </div>
 
-                  <div>
-                    <h5
-                      className={`font-medium text-amber-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}
-                    >
-                      Key Challenges
-                    </h5>
-                    <ul className="space-y-1">
-                      {sector.challenges.map((challenge, challengeIndex) => (
-                        <li
-                          key={challengeIndex}
-                          className={`${isMobile ? 'text-xs' : 'text-sm'} text-amber-200 flex items-center gap-1`}
-                        >
-                          <AlertTriangle className="h-3 w-3 text-amber-400 flex-shrink-0" />
-                          {challenge}
-                        </li>
-                      ))}
-                    </ul>
+                  <div className="space-y-2">
+                    <Eyebrow>Key challenges</Eyebrow>
+                    <Bullets items={sector.challenges} />
                   </div>
 
-                  <div>
-                    <h5
-                      className={`font-medium text-purple-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}
-                    >
-                      Strategic Opportunities
-                    </h5>
-                    <ul className="space-y-1">
-                      {sector.opportunities.map((opportunity, oppIndex) => (
-                        <li
-                          key={oppIndex}
-                          className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200 flex items-center gap-1`}
-                        >
-                          <Lightbulb className="h-3 w-3 text-purple-400 flex-shrink-0" />
-                          {opportunity}
-                        </li>
-                      ))}
-                    </ul>
+                  <div className="space-y-2">
+                    <Eyebrow>Strategic opportunities</Eyebrow>
+                    <Bullets items={sector.opportunities} />
                   </div>
                 </div>
               ))}
-            </div>
+            </Section>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
         <MobileAccordionItem value="future-skills">
-          <MobileAccordionTrigger icon={<Zap className="h-5 w-5 text-purple-400" />}>
-            Future Skills Demand & Salary Premiums
+          <MobileAccordionTrigger icon={<Zap className="h-5 w-5 text-white/55" />}>
+            Future skills demand
           </MobileAccordionTrigger>
           <MobileAccordionContent>
-            <div className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+            <Section>
               {futureSkillsDemand.map((category, index) => (
                 <div key={index} className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>
-                      {category.category}
-                    </h4>
-                    <Badge
-                      variant="outline"
-                      className={`text-purple-300 border-purple-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}
-                    >
-                      {category.timeframe}
-                    </Badge>
+                  <div className="flex items-baseline justify-between gap-2">
+                    <h4 className="text-[16px] text-white">{category.category}</h4>
+                    <Pill>{category.timeframe}</Pill>
                   </div>
 
-                  <div className="space-y-6">
+                  <div className="space-y-3">
                     {category.skills.map((skill, skillIndex) => (
                       <div
                         key={skillIndex}
-                        className="space-y-3 p-4 border border-elec-yellow/10 rounded-lg bg-white/5"
+                        className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
                       >
-                        <div className="flex items-center justify-between">
-                          <h5
-                            className={`font-medium text-purple-300 ${isMobile ? 'text-sm' : 'text-base'}`}
-                          >
-                            {skill.skill}
-                          </h5>
-                          <div className="flex gap-2">
-                            <Badge
-                              variant="outline"
-                              className={`${
-                                skill.demandLevel === 'Critical'
-                                  ? 'text-red-300 border-red-400/30'
-                                  : skill.demandLevel === 'High'
-                                    ? 'text-orange-300 border-orange-400/30'
-                                    : 'text-yellow-300 border-yellow-400/30'
-                              } ${isMobile ? 'text-xs' : 'text-sm'}`}
-                            >
-                              {skill.demandLevel}
-                            </Badge>
-                            <Badge
-                              variant="outline"
-                              className={`text-green-300 border-green-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}
-                            >
-                              +{skill.salaryPremium}
-                            </Badge>
-                          </div>
+                        <div className="flex items-baseline justify-between gap-2">
+                          <h5 className="text-[14px] text-white">{skill.skill}</h5>
+                          <Pill>{skill.demandLevel}</Pill>
                         </div>
-
-                        <p
-                          className={`${isMobile ? 'text-xs' : 'text-sm'} text-white leading-relaxed`}
-                        >
+                        <p className="text-[14px] text-white/85 leading-relaxed">
                           {skill.description}
                         </p>
-
-                        <div className="pt-2 border-t border-elec-yellow/10">
-                          <h6
-                            className={`font-medium text-purple-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}
-                          >
-                            Learning Path
-                          </h6>
-                          <p
-                            className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200 leading-relaxed`}
-                          >
+                        <div className="pt-2 border-t border-white/[0.06]">
+                          <Eyebrow>Learning path</Eyebrow>
+                          <p className="mt-1 text-[14px] text-white/85 leading-relaxed">
                             {skill.learningPath}
                           </p>
                         </div>
@@ -542,96 +373,55 @@ const IndustryInsightsAnalysis = () => {
                   </div>
                 </div>
               ))}
-            </div>
+            </Section>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
         <MobileAccordionItem value="industry-outlook">
-          <MobileAccordionTrigger icon={<Globe className="h-5 w-5 text-orange-400" />}>
-            Industry Outlook & Strategic Recommendations
+          <MobileAccordionTrigger icon={<Globe className="h-5 w-5 text-white/55" />}>
+            Industry outlook and strategic recommendations
           </MobileAccordionTrigger>
           <MobileAccordionContent>
-            <div className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+            <Section>
+              <h4 className="text-[16px] text-white">Strategic career positioning</h4>
               <div className="space-y-3">
-                <h4 className={`font-medium text-orange-300 ${isMobile ? 'text-sm' : 'text-base'}`}>
-                  Strategic Career Positioning
-                </h4>
+                <div className="space-y-2">
+                  <Eyebrow>Immediate opportunities</Eyebrow>
+                  <Bullets
+                    items={[
+                      'Focus on EV charging installation to capture demand',
+                      'Develop renewable energy skills for solar and battery markets',
+                      'Specialise in retrofit work for government-funded programmes',
+                      'Build smart home automation expertise',
+                    ]}
+                  />
+                </div>
 
-                <div className="space-y-3">
-                  <div className="space-y-2">
-                    <h5
-                      className={`font-medium text-orange-300 mb-2 ${isMobile ? 'text-sm' : 'text-base'}`}
-                    >
-                      Immediate Opportunities (2024-2025)
-                    </h5>
-                    <ul className="space-y-1">
-                      {[
-                        'Focus on EV charging installation to capture immediate high-demand market',
-                        'Develop renewable energy skills for rapidly expanding solar and battery markets',
-                        'Specialise in retrofit work for government-funded programmes',
-                        'Build smart home automation expertise for affluent domestic market',
-                      ].map((item, index) => (
-                        <li
-                          key={index}
-                          className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-200 flex items-center gap-1`}
-                        >
-                          <CheckCircle className="h-3 w-3 text-orange-400 flex-shrink-0" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                <div className="space-y-2">
+                  <Eyebrow>Medium-term strategy</Eyebrow>
+                  <Bullets
+                    items={[
+                      'Develop digital integration skills as IoT becomes mainstream',
+                      'Position for commercial energy management opportunities',
+                      'Build expertise in industrial automation and process control',
+                      'Consider business ownership or partnership opportunities',
+                    ]}
+                  />
+                </div>
 
-                  <div className="space-y-2">
-                    <h5
-                      className={`font-medium text-blue-300 mb-2 ${isMobile ? 'text-sm' : 'text-base'}`}
-                    >
-                      Medium-term Strategy (2025-2028)
-                    </h5>
-                    <ul className="space-y-1">
-                      {[
-                        'Develop digital integration skills as IoT becomes mainstream',
-                        'Position for commercial energy management opportunities',
-                        'Build expertise in industrial automation and process control',
-                        'Consider business ownership or partnership opportunities',
-                      ].map((item, index) => (
-                        <li
-                          key={index}
-                          className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200 flex items-center gap-1`}
-                        >
-                          <CheckCircle className="h-3 w-3 text-blue-400 flex-shrink-0" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="space-y-2">
-                    <h5
-                      className={`font-medium text-green-300 mb-2 ${isMobile ? 'text-sm' : 'text-base'}`}
-                    >
-                      Long-term Vision (2028-2035)
-                    </h5>
-                    <ul className="space-y-1">
-                      {[
-                        'Lead on smart grid integration and distributed energy systems',
-                        'Specialise in cybersecurity for critical electrical infrastructure',
-                        'Develop consultancy services for energy efficiency and sustainability',
-                        'Consider executive roles in growing renewable energy companies',
-                      ].map((item, index) => (
-                        <li
-                          key={index}
-                          className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200 flex items-center gap-1`}
-                        >
-                          <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                <div className="space-y-2">
+                  <Eyebrow>Long-term vision</Eyebrow>
+                  <Bullets
+                    items={[
+                      'Lead on smart grid integration and distributed energy systems',
+                      'Specialise in cybersecurity for critical electrical infrastructure',
+                      'Develop consultancy services for energy efficiency and sustainability',
+                      'Consider executive roles in renewable energy companies',
+                    ]}
+                  />
                 </div>
               </div>
-            </div>
+            </Section>
           </MobileAccordionContent>
         </MobileAccordionItem>
       </MobileAccordion>

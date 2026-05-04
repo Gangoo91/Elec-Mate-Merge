@@ -1,30 +1,22 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Package, Shield, Truck, Home } from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
-
 const ToolStorage = () => {
-  const isMobile = useIsMobile();
-
   const storageOptions = [
     {
-      type: 'Portable Tool Storage',
-      icon: Package,
+      type: 'Portable tool storage',
       options: [
         {
-          name: 'Professional Tool Cases',
+          name: 'Professional tool cases',
           price: '£80-200',
           features: ['Weather resistant', 'Organised compartments', 'Professional appearance'],
           bestFor: 'Site work & client visits',
         },
         {
-          name: 'Modular Tool Systems',
+          name: 'Modular tool systems',
           price: '£60-150',
           features: ['Stackable design', 'Multiple configurations', 'Easy transport'],
           bestFor: 'Van storage & flexibility',
         },
         {
-          name: 'Tool Bags & Pouches',
+          name: 'Tool bags & pouches',
           price: '£25-80',
           features: ['Lightweight', 'Quick access', 'Belt mounting'],
           bestFor: 'Daily carry tools',
@@ -32,23 +24,22 @@ const ToolStorage = () => {
       ],
     },
     {
-      type: 'Vehicle Storage',
-      icon: Truck,
+      type: 'Vehicle storage',
       options: [
         {
-          name: 'Van Racking Systems',
+          name: 'Van racking systems',
           price: '£300-800',
           features: ['Custom fit', 'Maximises space', 'Secure mounting'],
           bestFor: 'Mobile electricians',
         },
         {
-          name: 'Secure Tool Cabinets',
+          name: 'Secure tool cabinets',
           price: '£200-500',
           features: ['Lockable storage', 'Weather protection', 'Organised drawers'],
           bestFor: 'Valuable equipment',
         },
         {
-          name: 'Cable & Material Racks',
+          name: 'Cable & material racks',
           price: '£50-150',
           features: ['Organised storage', 'Easy access', 'Space efficient'],
           bestFor: 'Cable management',
@@ -56,23 +47,22 @@ const ToolStorage = () => {
       ],
     },
     {
-      type: 'Workshop Storage',
-      icon: Home,
+      type: 'Workshop storage',
       options: [
         {
-          name: 'Tool Chests',
+          name: 'Tool chests',
           price: '£150-500',
           features: ['Large capacity', 'Multiple drawers', 'Secure locking'],
           bestFor: 'Home workshop base',
         },
         {
-          name: 'Wall Storage Systems',
+          name: 'Wall storage systems',
           price: '£50-200',
           features: ['Space saving', 'Visual organisation', 'Easy access'],
           bestFor: 'Workshop walls',
         },
         {
-          name: 'Mobile Tool Trolleys',
+          name: 'Mobile tool trolleys',
           price: '£100-300',
           features: ['Wheels for mobility', 'Multiple levels', 'Workspace top'],
           bestFor: 'Workshop flexibility',
@@ -80,23 +70,22 @@ const ToolStorage = () => {
       ],
     },
     {
-      type: 'Security & Protection',
-      icon: Shield,
+      type: 'Security & protection',
       options: [
         {
-          name: 'Tool Insurance',
+          name: 'Tool insurance',
           price: '£10-40/month',
           features: ['Theft protection', 'Replacement cover', 'Public liability'],
           bestFor: 'Financial protection',
         },
         {
-          name: 'Vehicle Security',
+          name: 'Vehicle security',
           price: '£100-300',
           features: ['Deadlocks', 'Alarms', 'Visible deterrents'],
           bestFor: 'Theft prevention',
         },
         {
-          name: 'Tool Marking',
+          name: 'Tool marking',
           price: '£10-30',
           features: ['UV marking', 'Postcode etching', 'Identification'],
           bestFor: 'Recovery assistance',
@@ -106,94 +95,132 @@ const ToolStorage = () => {
   ];
 
   return (
-    <div className="p-4 sm:p-6">
-      <div className="text-center mb-6">
-        <h2 className="text-xl sm:text-2xl font-semibold text-elec-yellow mb-2 flex items-center justify-center gap-2">
-          <Package className="h-6 w-6" />
-          Tool Storage Solutions
+    <div className="px-4 sm:px-6 py-4 sm:py-6 space-y-6">
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Storage
+        </span>
+        <h2 className="text-[22px] sm:text-[26px] font-semibold text-white leading-tight">
+          Tool storage solutions
         </h2>
-        <p className="text-sm sm:text-base text-white max-w-2xl mx-auto">
+        <p className="text-[14px] text-white/85 leading-relaxed max-w-2xl">
           Protect your investment with proper storage. Good organisation improves efficiency and
           maintains professional standards.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {storageOptions.map((category, index) => (
-          <Card
+          <div
             key={index}
-            className="border-elec-yellow/20 bg-white/10 hover:border-elec-yellow/40 transition-all duration-300"
+            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4"
           >
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg text-elec-yellow flex items-center gap-2">
-                <category.icon className="h-5 w-5" />
-                {category.type}
-              </CardTitle>
-            </CardHeader>
+            <h3 className="text-[16px] font-semibold text-white">{category.type}</h3>
 
-            <CardContent className="space-y-4">
+            <div className="space-y-3">
               {category.options.map((option, optionIndex) => (
                 <div
                   key={optionIndex}
-                  className="bg-white/5 border border-elec-yellow/20 rounded-lg p-3 space-y-2"
+                  className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2"
                 >
-                  <div className="flex items-start justify-between">
-                    <h4 className="font-medium text-sm text-white">{option.name}</h4>
-                    <Badge variant="outline" className="border-green-500/30 text-green-400 text-xs">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <h4 className="text-[14px] font-medium text-white">{option.name}</h4>
+                    <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] flex-shrink-0">
                       {option.price}
-                    </Badge>
+                    </span>
                   </div>
 
-                  <p className="text-xs text-white">
+                  <p className="text-[13px] text-white/85 leading-relaxed">
                     <strong>Best for:</strong> {option.bestFor}
                   </p>
 
-                  <div className="flex flex-wrap gap-1">
+                  <div className="flex flex-wrap gap-1.5">
                     {option.features.map((feature, featureIndex) => (
-                      <Badge
+                      <span
                         key={featureIndex}
-                        variant="secondary"
-                        className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 text-xs"
+                        className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
                       >
                         {feature}
-                      </Badge>
+                      </span>
                     ))}
                   </div>
                 </div>
               ))}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         ))}
       </div>
 
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="p-4 bg-gradient-to-r from-elec-yellow/5 to-green-500/5 border border-elec-yellow/20 rounded-lg">
-          <h3 className="font-medium text-elec-yellow mb-2">📋 Organisation Tips</h3>
-          <ul className="text-sm text-white space-y-1">
-            <li>• Label storage clearly</li>
-            <li>• Keep daily tools accessible</li>
-            <li>• Maintain tool inventories</li>
-            <li>• Regular condition checks</li>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Organisation tips
+          </span>
+          <ul className="space-y-1 text-[14px] text-white/85 leading-relaxed">
+            <li className="flex items-start gap-2">
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>Label storage clearly</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>Keep daily tools accessible</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>Maintain tool inventories</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>Regular condition checks</span>
+            </li>
           </ul>
         </div>
 
-        <div className="p-4 bg-gradient-to-r from-blue-500/5 to-elec-yellow/5 border border-blue-500/20 rounded-lg">
-          <h3 className="font-medium text-blue-400 mb-2">🔒 Security Essentials</h3>
-          <ul className="text-sm text-white space-y-1">
-            <li>• Never leave tools visible in vehicles</li>
-            <li>• Use multiple security measures</li>
-            <li>• Keep purchase receipts safe</li>
-            <li>• Mark tools for identification</li>
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Security essentials
+          </span>
+          <ul className="space-y-1 text-[14px] text-white/85 leading-relaxed">
+            <li className="flex items-start gap-2">
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>Never leave tools visible in vehicles</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>Use multiple security measures</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>Keep purchase receipts safe</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>Mark tools for identification</span>
+            </li>
           </ul>
         </div>
 
-        <div className="p-4 bg-gradient-to-r from-purple-500/5 to-elec-yellow/5 border border-purple-500/20 rounded-lg">
-          <h3 className="font-medium text-purple-400 mb-2">💡 Efficiency Tips</h3>
-          <ul className="text-sm text-white space-y-1">
-            <li>• Foam inserts for organisation</li>
-            <li>• Keep spare consumables</li>
-            <li>• Clean tools after use</li>
-            <li>• Schedule maintenance</li>
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Efficiency tips
+          </span>
+          <ul className="space-y-1 text-[14px] text-white/85 leading-relaxed">
+            <li className="flex items-start gap-2">
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>Foam inserts for organisation</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>Keep spare consumables</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>Clean tools after use</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>Schedule maintenance</span>
+            </li>
           </ul>
         </div>
       </div>

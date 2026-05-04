@@ -5,7 +5,6 @@
  */
 
 import { useState, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import {
   Activity,
   Layers,
@@ -92,57 +91,50 @@ export function RecentActivityFeed() {
   }, [user]);
 
   return (
-    <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-white/[0.06]">
-      <CardContent className="p-4">
-        <div className="flex items-center gap-2 mb-3">
-          <div className="p-1.5 rounded-lg bg-green-500/10">
-            <Activity className="h-4 w-4 text-green-400" />
-          </div>
-          <h3 className="font-semibold text-white text-sm">Recent Activity</h3>
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        Recent activity
+      </span>
+
+      {loading ? (
+        <div className="space-y-2">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="h-10 bg-white/[0.03] rounded-lg animate-pulse" />
+          ))}
         </div>
+      ) : activities.length === 0 ? (
+        <p className="text-[14px] text-white/55 leading-relaxed text-center py-4">
+          No activity yet. Complete a quiz or study flashcards to get started.
+        </p>
+      ) : (
+        <div className="space-y-1">
+          {activities.map((activity) => {
+            const Icon = ACTIVITY_ICONS[activity.activity_type] ?? Activity;
+            const label = ACTIVITY_LABELS[activity.activity_type] ?? activity.activity_type;
 
-        {loading ? (
-          <div className="space-y-3">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="h-10 bg-white/[0.03] rounded-lg animate-pulse" />
-            ))}
-          </div>
-        ) : activities.length === 0 ? (
-          <div className="text-center py-6">
-            <Activity className="h-8 w-8 text-white mx-auto mb-2" />
-            <p className="text-sm text-white">No activity yet</p>
-            <p className="text-xs text-white mt-1">
-              Complete a quiz or study flashcards to get started
-            </p>
-          </div>
-        ) : (
-          <div className="space-y-1">
-            {activities.map((activity) => {
-              const Icon = ACTIVITY_ICONS[activity.activity_type] ?? Activity;
-              const label = ACTIVITY_LABELS[activity.activity_type] ?? activity.activity_type;
-
-              return (
-                <div
-                  key={activity.id}
-                  className="flex items-center gap-3 px-2.5 py-3 min-h-[44px] rounded-lg hover:bg-white/[0.03] transition-colors touch-manipulation"
-                >
-                  <div className="p-1.5 rounded-lg bg-white/[0.04] flex-shrink-0">
-                    <Icon className="h-4 w-4 text-white" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm text-white truncate">{activity.source_title ?? label}</p>
-                    <p className="text-xs text-white">{timeAgo(activity.created_at)}</p>
-                  </div>
-                  <span className="text-sm font-semibold text-elec-yellow flex-shrink-0">
-                    +{activity.xp_earned} XP
-                  </span>
+            return (
+              <div
+                key={activity.id}
+                className="flex items-center gap-3 px-2.5 py-3 min-h-[44px] rounded-lg hover:bg-white/[0.04] transition-colors touch-manipulation"
+              >
+                <Icon className="h-4 w-4 text-white/55 flex-shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <p className="text-[14px] text-white truncate">
+                    {activity.source_title ?? label}
+                  </p>
+                  <p className="text-[11px] text-white/55 font-mono">
+                    {timeAgo(activity.created_at)}
+                  </p>
                 </div>
-              );
-            })}
-          </div>
-        )}
-      </CardContent>
-    </Card>
+                <span className="text-[13px] text-elec-yellow font-mono flex-shrink-0">
+                  +{activity.xp_earned} XP
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
   );
 }
 

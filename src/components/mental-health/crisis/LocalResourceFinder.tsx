@@ -62,7 +62,7 @@ const LocalResourceFinder = () => {
         <Button
           onClick={handleSearch}
           disabled={isLoading || !postcode.trim()}
-          className="h-11 px-4 bg-green-500 hover:bg-green-600"
+          className="h-11 px-4 bg-white/[0.02] hover:bg-white/[0.02]"
         >
           {isLoading ? (
             <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
@@ -75,15 +75,15 @@ const LocalResourceFinder = () => {
       {/* Results */}
       {searchResults.length > 0 && (
         <div className="space-y-2">
-          <p className="text-xs text-green-400 font-medium">
+          <p className="text-xs text-white/85 font-medium">
             Services near {postcode.toUpperCase()}
           </p>
           {searchResults.map((resource, index) => (
-            <div key={index} className="p-3 rounded-lg border border-green-500/20 bg-green-500/5">
+            <div key={index} className="p-3 rounded-lg border border-white/[0.06] bg-white/[0.02]">
               <div className="flex items-start justify-between gap-2 mb-2">
                 <div className="flex-1 min-w-0">
                   <h4 className="font-medium text-white text-sm truncate">{resource.name}</h4>
-                  <Badge className="bg-green-500/20 text-green-400 text-[10px] mt-0.5">
+                  <Badge className="bg-white/[0.02] text-white/85 text-[10px] mt-0.5">
                     {resource.type}
                   </Badge>
                 </div>
@@ -101,7 +101,7 @@ const LocalResourceFinder = () => {
               </div>
 
               <div className="flex gap-2">
-                <Button size="sm" className="flex-1 h-9 bg-green-500 hover:bg-green-600" asChild>
+                <Button size="sm" className="flex-1 h-9 bg-white/[0.02] hover:bg-white/[0.02]" asChild>
                   <a href={`tel:${resource.phone.replace(/\s/g, '')}`}>
                     <Phone className="h-3 w-3 mr-1" />
                     {resource.phone}
@@ -128,16 +128,16 @@ const LocalResourceFinder = () => {
           <MapPin className="h-10 w-10 text-green-400/50 mx-auto mb-3" />
           <p className="text-sm text-white mb-3">Enter your postcode to find local services</p>
           <div className="grid grid-cols-3 gap-2 text-xs">
-            <div className="p-2 rounded bg-green-500/5 border border-green-500/20">
-              <div className="text-green-400 font-medium">NHS</div>
+            <div className="p-2 rounded bg-white/[0.02] border border-white/[0.06]">
+              <div className="text-white/85 font-medium">NHS</div>
               <div className="text-white text-[10px]">Mental health trusts</div>
             </div>
-            <div className="p-2 rounded bg-green-500/5 border border-green-500/20">
-              <div className="text-green-400 font-medium">Charities</div>
+            <div className="p-2 rounded bg-white/[0.02] border border-white/[0.06]">
+              <div className="text-white/85 font-medium">Charities</div>
               <div className="text-white text-[10px]">Mind, Samaritans</div>
             </div>
-            <div className="p-2 rounded bg-green-500/5 border border-green-500/20">
-              <div className="text-green-400 font-medium">Crisis</div>
+            <div className="p-2 rounded bg-white/[0.02] border border-white/[0.06]">
+              <div className="text-white/85 font-medium">Crisis</div>
               <div className="text-white text-[10px]">24/7 support</div>
             </div>
           </div>

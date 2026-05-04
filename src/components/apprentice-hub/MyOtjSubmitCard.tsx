@@ -48,10 +48,10 @@ const STATUS_LABEL: Record<VerificationStatus, string> = {
 };
 
 const STATUS_TONE: Record<VerificationStatus, string> = {
-  pending: 'text-amber-300',
-  verified: 'text-emerald-300',
-  rejected: 'text-rose-300',
-  verified_by_employer: 'text-blue-300',
+  pending: 'text-white/85',
+  verified: 'text-white/85',
+  rejected: 'text-white/85',
+  verified_by_employer: 'text-white/85',
 };
 
 const ACTIVITY_LABEL: Record<string, string> = {
@@ -236,7 +236,7 @@ export function MyOtjSubmitCard() {
               Off-the-job training
             </div>
             {summary.pendingMin > 0 && (
-              <span className="text-[10.5px] tabular-nums text-amber-300">
+              <span className="text-[10.5px] tabular-nums text-white/85">
                 {fmtHours(summary.pendingMin)} awaiting tutor
               </span>
             )}
@@ -244,8 +244,8 @@ export function MyOtjSubmitCard() {
 
           {/* Headline numbers */}
           <div className="mt-3 grid grid-cols-3 gap-3 sm:gap-5">
-            <Stat value={fmtHours(summary.verifiedMin)} label="Verified" tone="text-emerald-200" />
-            <Stat value={fmtHours(summary.pendingMin)} label="Pending" tone="text-amber-200" />
+            <Stat value={fmtHours(summary.verifiedMin)} label="Verified" tone="text-white/85" />
+            <Stat value={fmtHours(summary.pendingMin)} label="Pending" tone="text-white/85" />
             <Stat value={fmtHours(summary.last7Min)} label="Last 7 days" tone="text-white" />
           </div>
 
@@ -267,18 +267,17 @@ export function MyOtjSubmitCard() {
                 setAiPrefill(null);
                 setOpen(true);
               }}
-              className="h-11 rounded-lg bg-emerald-500 text-black text-[13px] font-semibold hover:bg-emerald-400 transition-colors touch-manipulation"
+              className="h-11 rounded-lg bg-white/[0.02] text-black text-[13px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
             >
               Submit work activity
             </button>
             <button
               type="button"
               onClick={() => setAiPromptOpen((x) => !x)}
-              className={cn(
-                'inline-flex items-center justify-center gap-1.5 h-11 px-4 rounded-lg border text-[13px] font-semibold transition-colors touch-manipulation',
+              className={cn('inline-flex items-center justify-center gap-1.5 h-11 px-4 rounded-lg border text-[13px] font-semibold transition-colors touch-manipulation',
                 aiPromptOpen
-                  ? 'border-cyan-300/40 bg-cyan-300/[0.14] text-cyan-100'
-                  : 'border-cyan-300/30 bg-cyan-300/[0.08] text-cyan-200 hover:bg-cyan-300/[0.14]'
+                  ? 'border-white/[0.06] bg-white/[0.02] text-white/85'
+                  : 'border-white/[0.06] bg-white/[0.02] text-white/85 hover:bg-white/[0.02]'
               )}
             >
               <Sparkles className="h-3.5 w-3.5" />
@@ -290,8 +289,8 @@ export function MyOtjSubmitCard() {
               one-line description, AI returns a structured proposal, the
               SubmitWorkOtjSheet opens prefilled with it. Always editable. */}
           {aiPromptOpen && (
-            <div className="mt-3 rounded-xl border border-cyan-300/25 bg-cyan-500/[0.04] p-3.5 space-y-2.5">
-              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-cyan-200">
+            <div className="mt-3 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3.5 space-y-2.5">
+              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/85">
                 Tell me what you did
               </div>
               <textarea
@@ -300,7 +299,7 @@ export function MyOtjSubmitCard() {
                 placeholder="e.g. rewired a kitchen consumer unit with my supervisor, took 4 hours, learned how to terminate the SWA properly"
                 rows={3}
                 disabled={aiPromptLoading}
-                className="w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[12.5px] text-white placeholder:text-white/45 leading-snug focus:outline-none focus:border-cyan-300/50 focus:ring-1 focus:ring-cyan-300/25 touch-manipulation resize-none disabled:opacity-60"
+                className="w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[12.5px] text-white placeholder:text-white/45 leading-snug focus:outline-none focus:border-white/[0.06] focus:ring-1 focus:ring-white/10 touch-manipulation resize-none disabled:opacity-60"
               />
               <div className="flex items-center justify-between gap-2">
                 <p className="text-[10.5px] text-white/65 leading-snug">
@@ -310,13 +309,12 @@ export function MyOtjSubmitCard() {
                   type="button"
                   onClick={() => void handleGenerateProposal()}
                   disabled={aiPromptLoading || aiPromptText.trim().length < 8}
-                  className={cn(
-                    'shrink-0 inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg text-[12px] font-semibold transition-colors touch-manipulation',
+                  className={cn('shrink-0 inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg text-[12px] font-semibold transition-colors touch-manipulation',
                     aiPromptLoading
-                      ? 'bg-cyan-300/40 text-black/70'
+                      ? 'bg-white/[0.02] text-black/70'
                       : aiPromptText.trim().length < 8
                         ? 'bg-white/[0.05] text-white/40'
-                        : 'bg-cyan-300 text-black hover:bg-cyan-200'
+                        : 'bg-white/[0.02] text-black hover:bg-white/[0.02]'
                   )}
                 >
                   <Sparkles className="h-3 w-3" />
@@ -341,7 +339,7 @@ export function MyOtjSubmitCard() {
                 <button
                   type="button"
                   onClick={() => setExpanded((x) => !x)}
-                  className="mt-2 px-1 text-[11.5px] font-medium text-emerald-300 hover:text-emerald-200 transition-colors touch-manipulation"
+                  className="mt-2 px-1 text-[11.5px] font-medium text-white/85 hover:text-white/85 transition-colors touch-manipulation"
                 >
                   {expanded ? 'Show less' : `Show ${rows.length - 4} more`}
                 </button>
@@ -407,14 +405,13 @@ function RowItem({ row }: { row: OtjRow }) {
             )}
           </div>
           {row.verification_status === 'rejected' && row.verification_rationale && (
-            <div className="mt-1.5 border-l-2 border-rose-400/40 pl-2 text-[11px] text-rose-200/85 leading-snug">
+            <div className="mt-1.5 border-l-2 border-white/[0.06] pl-2 text-[11px] text-rose-200/85 leading-snug">
               {row.verification_rationale}
             </div>
           )}
         </div>
         <span
-          className={cn(
-            'shrink-0 text-[10.5px] font-medium tabular-nums tracking-tight uppercase',
+          className={cn('shrink-0 text-[10.5px] font-medium tabular-nums tracking-tight uppercase',
             STATUS_TONE[row.verification_status]
           )}
         >

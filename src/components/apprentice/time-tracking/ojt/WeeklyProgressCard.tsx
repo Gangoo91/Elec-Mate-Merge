@@ -1,7 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
-import { Clock, Book, PlusCircle, Upload } from 'lucide-react';
+import { PlusCircle, Upload } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -29,77 +27,72 @@ const WeeklyProgressCard = ({
   addTimeEntry,
   handleUploadEvidence,
 }: WeeklyProgressCardProps) => {
-  const progress = (weeklyHours / targetHours) * 100;
+  const progress = Math.min((weeklyHours / targetHours) * 100, 100);
 
   return (
-    <Card className="border-elec-yellow/20 bg-white/5 lg:col-span-1">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Clock className="h-5 w-5 text-elec-yellow" />
-          Weekly Progress
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          <div>
-            <div className="flex justify-between mb-2 text-sm">
-              <span>This week</span>
-              <span>
-                {weeklyHours} / {targetHours} hours
-              </span>
-            </div>
-            <Progress value={progress} className="h-2" />
-          </div>
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 lg:col-span-1">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        Weekly progress
+      </span>
 
-          <div className="mt-4 space-y-2">
-            <div className="flex justify-between text-sm">
-              <span className="flex items-center">
-                <Book className="h-4 w-4 text-elec-yellow mr-2" />
-                Course Learning
-              </span>
-              <span>{courseHours} hours</span>
-            </div>
-            <div className="text-xs text-white">
-              Time automatically tracked from online learning
-            </div>
-          </div>
-
-          <div className="mt-2 space-y-2">
-            <div className="flex justify-between text-sm">
-              <span className="flex items-center">
-                <Clock className="h-4 w-4 text-elec-yellow mr-2" />
-                Total Recorded Time
-              </span>
-              <span>
-                {totalTime.hours}h {totalTime.minutes}m
-              </span>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-2 mt-4">
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button className="w-full">
-                  <PlusCircle className="h-4 w-4 mr-2" />
-                  Log Manual Hours
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-md">
-                <DialogHeader>
-                  <DialogTitle>Log Training Hours</DialogTitle>
-                </DialogHeader>
-                <TimeEntryForm onAddEntry={addTimeEntry} />
-              </DialogContent>
-            </Dialog>
-
-            <Button variant="outline" className="w-full" onClick={handleUploadEvidence}>
-              <Upload className="h-4 w-4 mr-2" />
-              Upload Evidence
-            </Button>
-          </div>
+      <div className="space-y-2">
+        <div className="flex justify-between text-[12px]">
+          <span className="text-white/55">This week</span>
+          <span className="text-white/85 font-mono">
+            {weeklyHours} / {targetHours} hours
+          </span>
         </div>
-      </CardContent>
-    </Card>
+        <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-elec-yellow transition-all duration-500"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+      </div>
+
+      <div className="space-y-1">
+        <div className="flex justify-between text-[13px]">
+          <span className="text-white/85">Course learning</span>
+          <span className="text-white font-mono">{courseHours} hours</span>
+        </div>
+        <p className="text-[11px] text-white/55">
+          Time automatically tracked from online learning
+        </p>
+      </div>
+
+      <div className="flex justify-between text-[13px]">
+        <span className="text-white/85">Total recorded time</span>
+        <span className="text-white font-mono">
+          {totalTime.hours}h {totalTime.minutes}m
+        </span>
+      </div>
+
+      <div className="flex flex-col gap-2 pt-2">
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation">
+              <PlusCircle className="h-4 w-4 mr-2" />
+              Log manual hours
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Log training hours</DialogTitle>
+            </DialogHeader>
+            <TimeEntryForm onAddEntry={addTimeEntry} />
+          </DialogContent>
+        </Dialog>
+
+        <Button
+          variant="outline"
+          className="w-full h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+          onClick={handleUploadEvidence}
+        >
+          <Upload className="h-4 w-4 mr-2" />
+          Upload evidence
+        </Button>
+      </div>
+    </div>
   );
 };
 

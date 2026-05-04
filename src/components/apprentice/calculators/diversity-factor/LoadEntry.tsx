@@ -1,12 +1,6 @@
-import { Trash2, Zap } from 'lucide-react';
-import {
-  CalculatorInput,
-  CalculatorSelect,
-  CALCULATOR_CONFIG,
-} from '@/components/calculators/shared';
+import { Trash2 } from 'lucide-react';
+import { CalculatorInput, CalculatorSelect } from '@/components/calculators/shared';
 import { Checkbox } from '@/components/ui/checkbox';
-
-const config = CALCULATOR_CONFIG['power'];
 
 interface LoadEntryProps {
   load: {
@@ -113,22 +107,15 @@ export function LoadEntry({
   const loadLabel = isRingType ? 'Rating per Ring' : 'Connected Load';
 
   return (
-    <div className="p-4 rounded-xl bg-white/[0.04] border border-white/5 space-y-4">
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
       <div className="flex items-center justify-between">
-        <span
-          className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border"
-          style={{
-            background: `${config.gradientFrom}10`,
-            borderColor: `${config.gradientFrom}20`,
-            color: config.gradientFrom,
-          }}
-        >
-          Load #{index + 1}
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Load {index + 1}
         </span>
         {canRemove && (
           <button
             onClick={() => onRemove(load.id)}
-            className="h-8 w-8 flex items-center justify-center rounded-lg text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation"
+            className="h-9 w-9 flex items-center justify-center rounded-lg text-white/55 hover:text-white hover:bg-white/[0.05] transition-colors touch-manipulation"
           >
             <Trash2 className="h-4 w-4" />
           </button>
@@ -185,15 +172,17 @@ export function LoadEntry({
 
         {/* Cooker socket checkbox */}
         {showCookerSocket && (
-          <label className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/5 touch-manipulation cursor-pointer min-h-[44px]">
+          <label className="flex items-center gap-3 p-3 rounded-lg border border-white/[0.06] bg-white/[0.02] touch-manipulation cursor-pointer min-h-[44px]">
             <Checkbox
               checked={load.hasCookerSocket}
               onCheckedChange={(checked) => onUpdate(load.id, 'hasCookerSocket', !!checked)}
-              className="border-white/40 data-[state=checked]:bg-amber-400 data-[state=checked]:border-amber-400 data-[state=checked]:text-black"
+              className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
             />
             <div>
-              <span className="text-sm text-white font-medium">Cooker unit has socket outlet?</span>
-              <p className="text-xs text-white mt-0.5">
+              <span className="text-[14px] text-white/85 font-medium">
+                Cooker unit has socket outlet?
+              </span>
+              <p className="text-[12px] text-white/55 mt-0.5">
                 Adds 5A to diversified demand (Table 1B item 3)
               </p>
             </div>
@@ -202,17 +191,19 @@ export function LoadEntry({
 
         {/* Thermostatic control toggle */}
         {showThermostaticToggle && (
-          <label className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/5 touch-manipulation cursor-pointer min-h-[44px]">
+          <label className="flex items-center gap-3 p-3 rounded-lg border border-white/[0.06] bg-white/[0.02] touch-manipulation cursor-pointer min-h-[44px]">
             <Checkbox
               checked={load.thermostaticallyControlled}
               onCheckedChange={(checked) =>
                 onUpdate(load.id, 'thermostaticallyControlled', !!checked)
               }
-              className="border-white/40 data-[state=checked]:bg-amber-400 data-[state=checked]:border-amber-400 data-[state=checked]:text-black"
+              className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
             />
             <div>
-              <span className="text-sm text-white font-medium">Thermostatically controlled?</span>
-              <p className="text-xs text-white mt-0.5">
+              <span className="text-[14px] text-white/85 font-medium">
+                Thermostatically controlled?
+              </span>
+              <p className="text-[12px] text-white/55 mt-0.5">
                 {load.thermostaticallyControlled
                   ? '100% — no diversity for thermostatic heating (Table 1B item 4)'
                   : 'Largest 100% + 75% of remainder (Table 1B item 4)'}
@@ -222,20 +213,9 @@ export function LoadEntry({
         )}
 
         {load.power && (
-          <div
-            className="p-3 rounded-xl border"
-            style={{
-              background: `${config.gradientFrom}08`,
-              borderColor: `${config.gradientFrom}20`,
-            }}
-          >
-            <div className="flex items-center gap-2 text-sm">
-              <Zap className="h-4 w-4" style={{ color: config.gradientFrom }} />
-              <span className="text-white">Calculated Power:</span>
-              <span className="font-semibold" style={{ color: config.gradientFrom }}>
-                {load.power} kW
-              </span>
-            </div>
+          <div className="flex items-baseline justify-between p-3 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+            <span className="text-[12px] text-white/55">Calculated power</span>
+            <span className="font-mono text-white text-[14px]">{load.power} kW</span>
           </div>
         )}
       </div>

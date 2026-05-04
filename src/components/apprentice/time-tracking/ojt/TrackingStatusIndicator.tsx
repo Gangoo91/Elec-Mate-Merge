@@ -38,13 +38,16 @@ const TrackingStatusIndicator = () => {
   if (!isTracking) return null;
 
   return (
-    <Alert className="mb-4 border-green-500/30 bg-green-500/10">
-      <Timer className="h-5 w-5 text-green-500 animate-pulse" />
+    <Alert className="mb-4 rounded-xl border border-white/[0.06] bg-white/[0.02]">
+      <Timer className="h-5 w-5 text-elec-yellow animate-pulse" />
       <AlertDescription className="flex items-center justify-between">
-        <div>
-          <span className="font-medium text-green-500">Recording time:</span> {currentActivity}
+        <div className="text-[13px] text-white/85">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 mr-2">
+            Recording
+          </span>
+          {currentActivity}
         </div>
-        <div className="font-semibold text-green-500">{formatTime(sessionTime)}</div>
+        <div className="text-[14px] font-mono text-elec-yellow">{formatTime(sessionTime)}</div>
       </AlertDescription>
     </Alert>
   );

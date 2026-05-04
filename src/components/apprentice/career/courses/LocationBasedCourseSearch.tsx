@@ -1,10 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { MapPin, Search, Loader2, Compass } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { useLocationCache } from '@/hooks/useLocationCache';
 
@@ -108,111 +106,105 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
   const radiusOptions = [5, 10, 25, 50, 100];
 
   return (
-    <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
-      <div className="absolute top-0 right-0 w-48 h-48 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        Find courses near you
+      </span>
 
-      <CardHeader className="pb-4 relative">
-        <CardTitle className="text-lg flex items-center gap-3 text-white">
-          <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
-            <MapPin className="h-5 w-5 text-elec-yellow" />
+      <div className="space-y-2">
+        <Label htmlFor="location-search" className="text-[12px] text-white/70">
+          Location
+        </Label>
+        <div className="flex gap-2">
+          <div className="relative flex-1">
+            <MapPin className="absolute left-3 top-3.5 h-4 w-4 text-white/55" />
+            <Input
+              ref={inputRef}
+              id="location-search"
+              placeholder={
+                isAutoDetecting ? 'Detecting location...' : 'Enter your city or postcode...'
+              }
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleManualSearch()}
+              className="pl-10 h-11 bg-white/[0.03] border-white/10 text-white placeholder:text-white/40 touch-manipulation"
+              disabled={isAutoDetecting}
+            />
           </div>
-          Find Courses Near You
-        </CardTitle>
-      </CardHeader>
-
-      <CardContent className="space-y-4 relative">
-        <div className="space-y-2">
-          <Label htmlFor="location-search" className="text-white">
-            Location
-          </Label>
-          <div className="flex gap-2">
-            <div className="relative flex-1">
-              <MapPin className="absolute left-3 top-3.5 h-4 w-4 text-white" />
-              <Input
-                ref={inputRef}
-                id="location-search"
-                placeholder={
-                  isAutoDetecting ? 'Detecting location...' : 'Enter your city or postcode...'
-                }
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleManualSearch()}
-                className="pl-10 h-11 bg-white/5 border-white/20 text-white placeholder:text-white"
-                disabled={isAutoDetecting}
-              />
-            </div>
-            {onUseCurrentLocation && (
-              <Button
-                onClick={onUseCurrentLocation}
-                disabled={isAutoDetecting}
-                variant="outline"
-                size="sm"
-                className="h-11 w-11 border-elec-yellow/30 hover:bg-elec-yellow/10 touch-manipulation active:scale-95 transition-all"
-              >
-                {isAutoDetecting ? (
-                  <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />
-                ) : (
-                  <Compass className="h-4 w-4 text-elec-yellow" />
-                )}
-              </Button>
-            )}
+          {onUseCurrentLocation && (
             <Button
-              onClick={handleManualSearch}
-              disabled={isSearching || !searchInput.trim() || isAutoDetecting}
+              onClick={onUseCurrentLocation}
+              disabled={isAutoDetecting}
+              variant="outline"
               size="sm"
-              className="h-11 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 touch-manipulation active:scale-95 transition-all"
+              className="h-11 w-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
             >
-              {isSearching ? (
+              {isAutoDetecting ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
-                <Search className="h-4 w-4" />
+                <Compass className="h-4 w-4" />
               )}
             </Button>
-          </div>
+          )}
+          <Button
+            onClick={handleManualSearch}
+            disabled={isSearching || !searchInput.trim() || isAutoDetecting}
+            size="sm"
+            className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98]"
+          >
+            {isSearching ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Search className="h-4 w-4" />
+            )}
+          </Button>
         </div>
+      </div>
 
-        {isAutoDetecting && (
-          <div className="flex items-center gap-2 text-sm text-elec-yellow p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
-            <Loader2 className="h-4 w-4 animate-spin" />
-            <span>Detecting your location...</span>
-          </div>
-        )}
+      {isAutoDetecting && (
+        <div className="flex items-center gap-2 text-[13px] text-white/85 rounded-md border border-white/10 bg-white/[0.03] p-3">
+          <Loader2 className="h-4 w-4 animate-spin" />
+          <span>Detecting your location...</span>
+        </div>
+      )}
 
-        {currentLocation && !isAutoDetecting && (
-          <div className="flex items-center gap-2 text-sm text-white p-3 rounded-lg bg-white/5 border border-white/10">
-            <MapPin className="h-4 w-4 text-elec-yellow" />
-            <span>
-              Current location: <span className="text-elec-yellow">{currentLocation}</span>
-            </span>
-          </div>
-        )}
+      {currentLocation && !isAutoDetecting && (
+        <div className="flex items-center gap-2 text-[13px] text-white/85 rounded-md border border-white/10 bg-white/[0.03] p-3">
+          <MapPin className="h-4 w-4 text-white/55" />
+          <span>
+            Current location: <span className="text-white">{currentLocation}</span>
+          </span>
+        </div>
+      )}
 
-        <div className="space-y-3">
-          <Label className="text-white">Search Radius</Label>
-          <div className="flex flex-wrap gap-2">
-            {radiusOptions.map((radius) => (
-              <Badge
+      <div className="space-y-2">
+        <Label className="text-[12px] text-white/70">Search radius</Label>
+        <div className="flex flex-wrap gap-1.5">
+          {radiusOptions.map((radius) => {
+            const isActive = searchRadius === radius;
+            return (
+              <button
                 key={radius}
-                variant={searchRadius === radius ? 'default' : 'outline'}
-                className={`cursor-pointer transition-all touch-manipulation active:scale-95 ${
-                  searchRadius === radius
-                    ? 'bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90'
-                    : 'border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:border-elec-yellow/50'
-                }`}
+                type="button"
                 onClick={() => onRadiusChange(radius)}
+                className={`text-[12px] px-2.5 py-1 rounded-md border touch-manipulation min-h-[36px] active:scale-[0.98] ${
+                  isActive
+                    ? 'bg-elec-yellow text-black font-semibold border-elec-yellow'
+                    : 'text-white/85 border-white/10 bg-white/[0.03]'
+                }`}
               >
                 {radius} miles
-              </Badge>
-            ))}
-          </div>
+              </button>
+            );
+          })}
         </div>
+      </div>
 
-        <div className="text-xs text-white p-3 rounded-lg bg-white/5 border border-white/10">
-          Use the search above to find training courses and colleges near your location. Results
-          will be filtered based on your selected radius.
-        </div>
-      </CardContent>
-    </Card>
+      <p className="text-[12px] text-white/55 leading-relaxed">
+        Use the search above to find training courses and colleges near your location. Results
+        will be filtered based on your selected radius.
+      </p>
+    </div>
   );
 };
 

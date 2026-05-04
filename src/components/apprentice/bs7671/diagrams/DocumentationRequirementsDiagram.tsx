@@ -1,6 +1,3 @@
-import { FileText, Clock, CheckCircle, AlertTriangle } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-
 interface DocumentationRequirementsDiagramProps {
   installationType?: string;
 }
@@ -8,44 +5,40 @@ interface DocumentationRequirementsDiagramProps {
 const DocumentationRequirementsDiagram = ({
   installationType,
 }: DocumentationRequirementsDiagramProps) => {
-  const getRequiredDocuments = () => {
-    return [
-      {
-        document: 'Electrical Installation Certificate',
-        regulation: 'BS 7671:2018 Appendix 6',
-        purpose: 'Confirms new installation complies with BS 7671',
-        completedBy: 'Person responsible for design, construction, inspection and testing',
-        timing: 'Upon completion of new installation',
-        critical: true,
-      },
-      {
-        document: 'Schedule of Inspections',
-        regulation: 'BS 7671:2018 Appendix 6',
-        purpose: 'Records visual inspection items checked',
-        completedBy: 'Competent person carrying out inspection',
-        timing: 'During visual inspection phase',
-        critical: true,
-      },
-      {
-        document: 'Schedule of Test Results',
-        regulation: 'BS 7671:2018 Appendix 6',
-        purpose: 'Records all test measurements and results',
-        completedBy: 'Competent person carrying out testing',
-        timing: 'During testing phase',
-        critical: true,
-      },
-      {
-        document: 'Circuit Charts',
-        regulation: 'Regulation 514.9.1',
-        purpose: 'Identification of circuits and protective devices',
-        completedBy: 'Installation designer/contractor',
-        timing: 'Before energisation',
-        critical: true,
-      },
-    ];
-  };
-
-  const requiredDocuments = getRequiredDocuments();
+  const requiredDocuments = [
+    {
+      document: 'Electrical Installation Certificate',
+      regulation: 'BS 7671:2018 Appendix 6',
+      purpose: 'Confirms new installation complies with BS 7671',
+      completedBy: 'Person responsible for design, construction, inspection and testing',
+      timing: 'Upon completion of new installation',
+      critical: true,
+    },
+    {
+      document: 'Schedule of Inspections',
+      regulation: 'BS 7671:2018 Appendix 6',
+      purpose: 'Records visual inspection items checked',
+      completedBy: 'Competent person carrying out inspection',
+      timing: 'During visual inspection phase',
+      critical: true,
+    },
+    {
+      document: 'Schedule of Test Results',
+      regulation: 'BS 7671:2018 Appendix 6',
+      purpose: 'Records all test measurements and results',
+      completedBy: 'Competent person carrying out testing',
+      timing: 'During testing phase',
+      critical: true,
+    },
+    {
+      document: 'Circuit Charts',
+      regulation: 'Regulation 514.9.1',
+      purpose: 'Identification of circuits and protective devices',
+      completedBy: 'Installation designer / contractor',
+      timing: 'Before energisation',
+      critical: true,
+    },
+  ];
 
   const getAdditionalDocuments = () => {
     if (installationType === 'domestic') {
@@ -72,160 +65,173 @@ const DocumentationRequirementsDiagram = ({
 
   const additionalDocuments = getAdditionalDocuments();
 
-  return (
-    <div className="space-y-6">
-      <div className="text-sm text-indigo-200 mb-4">
-        BS 7671 Documentation Requirements for Initial Verification
-      </div>
+  const timeline = [
+    {
+      step: 'Before commencement',
+      description: 'Design documentation and calculations',
+    },
+    {
+      step: 'During inspection',
+      description: 'Schedule of Inspections completion',
+    },
+    {
+      step: 'During testing',
+      description: 'Schedule of Test Results completion',
+    },
+    {
+      step: 'Upon completion',
+      description: 'Electrical Installation Certificate issue',
+    },
+  ];
 
-      {/* Regulation Overview */}
-      <div className="bg-blue-600/20 p-4 rounded border border-blue-500/30">
-        <div className="flex items-center gap-2 mb-3">
-          <FileText className="h-5 w-5 text-blue-400" />
-          <h4 className="font-medium text-blue-200">
-            Regulation 631.1 - Documentation Requirements
-          </h4>
-        </div>
-        <p className="text-xs text-blue-100">
-          "Upon completion of the work, the person responsible for the construction of the
-          installation shall provide the person ordering the work with a certificate confirming that
-          the installation complies with BS 7671."
+  return (
+    <div className="space-y-4">
+      <p className="text-[14px] text-white/85 leading-relaxed">
+        BS 7671 documentation requirements for initial verification.
+      </p>
+
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Regulation 631.1 — documentation requirements
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Upon completion of the work, the person responsible for the construction of the
+          installation shall provide the person ordering the work with a certificate confirming
+          that the installation complies with BS 7671.
         </p>
       </div>
 
-      {/* Required Documents */}
-      <div className="space-y-4">
-        <h4 className="font-medium text-indigo-200 flex items-center gap-2">
-          <CheckCircle className="h-4 w-4" />
-          Mandatory Documentation
-        </h4>
+      <div className="space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Mandatory documentation
+        </span>
 
         {requiredDocuments.map((doc, index) => (
-          <div key={index} className="bg-green-600/20 p-4 rounded border border-green-500/30">
-            <div className="flex items-start justify-between mb-2">
-              <div className="flex-1">
-                <h5 className="font-medium text-green-200">{doc.document}</h5>
-                <p className="text-xs text-green-300">{doc.regulation}</p>
+          <div
+            key={index}
+            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div className="space-y-0.5">
+                <h5 className="text-[16px] font-semibold text-white leading-tight">
+                  {doc.document}
+                </h5>
+                <p className="text-[11px] text-white/55 font-mono">{doc.regulation}</p>
               </div>
               {doc.critical && (
-                <Badge variant="outline" className="text-red-300 border-red-400/30">
+                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                   Critical
-                </Badge>
+                </span>
               )}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-              <div>
-                <span className="text-green-300 font-medium">Purpose:</span>
-                <p className="text-green-100">{doc.purpose}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="space-y-0.5">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Purpose
+                </span>
+                <p className="text-[14px] text-white/85 leading-relaxed">{doc.purpose}</p>
               </div>
-              <div>
-                <span className="text-green-300 font-medium">Completed by:</span>
-                <p className="text-green-100">{doc.completedBy}</p>
+              <div className="space-y-0.5">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Completed by
+                </span>
+                <p className="text-[14px] text-white/85 leading-relaxed">{doc.completedBy}</p>
               </div>
             </div>
 
-            <div className="mt-2 flex items-center gap-2">
-              <Clock className="h-3 w-3 text-green-400" />
-              <span className="text-xs text-green-200">Timing: {doc.timing}</span>
+            <div className="space-y-0.5">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Timing
+              </span>
+              <p className="text-[14px] text-white/85 leading-relaxed">{doc.timing}</p>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Installation Type Specific Documents */}
       {additionalDocuments.length > 0 && (
-        <div className="space-y-3">
-          <h4 className="font-medium text-purple-200 flex items-center gap-2">
-            <FileText className="h-4 w-4" />
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
             {installationType?.charAt(0).toUpperCase()}
-            {installationType?.slice(1)} Installation Additional Requirements
-          </h4>
+            {installationType?.slice(1)} installation — additional requirements
+          </span>
+          <ul className="space-y-1.5">
+            {additionalDocuments.map((doc, index) => (
+              <li
+                key={index}
+                className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+              >
+                <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                <span>{doc}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
-          <div className="bg-purple-600/20 p-4 rounded border border-purple-500/30">
-            <ul className="space-y-2">
-              {additionalDocuments.map((doc, index) => (
-                <li key={index} className="flex items-start gap-2 text-xs text-purple-100">
-                  <CheckCircle className="h-3 w-3 text-purple-400 mt-0.5 flex-shrink-0" />
-                  <span>{doc}</span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Documentation timeline
+        </span>
+        <ol className="space-y-2">
+          {timeline.map((item, index) => (
+            <li key={index} className="flex items-start gap-3">
+              <span className="text-[12px] font-mono text-white/55 flex-shrink-0 w-5 mt-0.5">
+                {index + 1}.
+              </span>
+              <div className="space-y-0.5">
+                <span className="text-[14px] text-white font-medium">{item.step}</span>
+                <p className="text-[14px] text-white/85 leading-relaxed">{item.description}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Document retention & distribution
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-1.5">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Original copies
+            </span>
+            <ul className="space-y-1.5">
+              {[
+                'Person ordering the work (customer)',
+                'Installing contractor records',
+                'Building Control (where notifiable)',
+              ].map((item, i) => (
+                <li
+                  key={i}
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                  <span>{item}</span>
                 </li>
               ))}
             </ul>
           </div>
-        </div>
-      )}
-
-      {/* Documentation Timeline */}
-      <div className="bg-amber-500/10 p-4 rounded border border-amber-500/30">
-        <h4 className="font-medium text-amber-300 mb-3 flex items-center gap-2">
-          <Clock className="h-4 w-4" />
-          Documentation Timeline
-        </h4>
-
-        <div className="space-y-3">
-          <div className="flex items-center gap-3">
-            <span className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
-              1
+          <div className="space-y-1.5">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Retention period
             </span>
-            <div className="text-xs">
-              <span className="text-amber-200 font-medium">Before commencement:</span>
-              <span className="text-amber-100"> Design documentation and calculations</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <span className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
-              2
-            </span>
-            <div className="text-xs">
-              <span className="text-amber-200 font-medium">During inspection:</span>
-              <span className="text-amber-100"> Schedule of Inspections completion</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <span className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
-              3
-            </span>
-            <div className="text-xs">
-              <span className="text-amber-200 font-medium">During testing:</span>
-              <span className="text-amber-100"> Schedule of Test Results completion</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <span className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
-              4
-            </span>
-            <div className="text-xs">
-              <span className="text-amber-200 font-medium">Upon completion:</span>
-              <span className="text-amber-100"> Electrical Installation Certificate issue</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Retention Requirements */}
-      <div className="bg-red-500/10 p-4 rounded border border-red-500/30">
-        <h4 className="font-medium text-red-300 mb-2 flex items-center gap-2">
-          <AlertTriangle className="h-4 w-4" />
-          Document Retention & Distribution
-        </h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-          <div className="space-y-1">
-            <h5 className="font-medium text-red-200">Original Copies:</h5>
-            <ul className="text-red-100 space-y-1">
-              <li>• Person ordering the work (customer)</li>
-              <li>• Installing contractor records</li>
-              <li>• Building Control (where notifiable)</li>
-            </ul>
-          </div>
-          <div className="space-y-1">
-            <h5 className="font-medium text-red-200">Retention Period:</h5>
-            <ul className="text-red-100 space-y-1">
-              <li>• Minimum duration of installation</li>
-              <li>• Available for future inspection</li>
-              <li>• Transfer with property ownership</li>
+            <ul className="space-y-1.5">
+              {[
+                'Minimum duration of installation',
+                'Available for future inspection',
+                'Transfer with property ownership',
+              ].map((item, i) => (
+                <li
+                  key={i}
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
             </ul>
           </div>
         </div>

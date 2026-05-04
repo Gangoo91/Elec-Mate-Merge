@@ -1,22 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { MobileInput } from '@/components/ui/mobile-input';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import {
-  CheckSquare,
-  Shield,
-  AlertTriangle,
-  Download,
-  Clock,
-  FileText,
-  CheckCircle,
-  Zap,
-  HardHat,
-  Eye,
-  Wrench,
-  Phone,
-  Flame,
-} from 'lucide-react';
+import { Download, CheckCircle } from 'lucide-react';
 import { useState } from 'react';
 
 const PreJobSafetyTab = () => {
@@ -25,9 +9,7 @@ const PreJobSafetyTab = () => {
 
   const safetyChecklist = [
     {
-      category: 'Personal Protective Equipment',
-      icon: HardHat,
-      color: 'green',
+      category: 'Personal protective equipment',
       items: [
         'Hard hat - BS EN 397 compliant with electrical protection',
         'Safety glasses - BS EN 166 impact resistant',
@@ -39,9 +21,7 @@ const PreJobSafetyTab = () => {
       ],
     },
     {
-      category: 'Electrical Safety Equipment',
-      icon: Zap,
-      color: 'yellow',
+      category: 'Electrical safety equipment',
       items: [
         'Voltage indicator/tester calibrated and functioning',
         'Lock-off devices available and in good condition',
@@ -53,9 +33,7 @@ const PreJobSafetyTab = () => {
       ],
     },
     {
-      category: 'Work Environment Assessment',
-      icon: Eye,
-      color: 'blue',
+      category: 'Work environment assessment',
       items: [
         'Adequate lighting for the work area',
         'Weather conditions suitable for electrical work',
@@ -67,9 +45,7 @@ const PreJobSafetyTab = () => {
       ],
     },
     {
-      category: 'Documentation & Communication',
-      icon: FileText,
-      color: 'purple',
+      category: 'Documentation & communication',
       items: [
         'Method statement reviewed and understood',
         'Risk assessment completed and communicated',
@@ -81,9 +57,7 @@ const PreJobSafetyTab = () => {
       ],
     },
     {
-      category: 'Tool and Equipment Check',
-      icon: Wrench,
-      color: 'orange',
+      category: 'Tool and equipment check',
       items: [
         'All tools PAT tested and in date',
         'Extension leads and portable equipment checked',
@@ -98,69 +72,21 @@ const PreJobSafetyTab = () => {
 
   const safetyTips = [
     {
-      title: 'Safe Isolation Procedure',
+      title: 'Safe isolation procedure',
       content:
         'Always follow the 7-step safe isolation procedure: 1) Identify 2) Isolate 3) Secure 4) Test dead 5) Re-test tester 6) Issue permit 7) Begin work',
-      icon: Zap,
-      color: 'yellow',
     },
     {
-      title: 'Emergency Procedures',
+      title: 'Emergency procedures',
       content:
         'Know the emergency contact numbers, location of first aid equipment, and evacuation procedures. Report any incidents immediately.',
-      icon: Phone,
-      color: 'red',
     },
     {
-      title: 'Weather Considerations',
+      title: 'Weather considerations',
       content:
         'Do not work on outdoor electrical installations during wet weather, high winds, or electrical storms. Monitor weather conditions throughout the day.',
-      icon: AlertTriangle,
-      color: 'blue',
     },
   ];
-
-  const getColorConfig = (color: string) => {
-    const configs: Record<string, { bg: string; text: string; iconBg: string; border: string }> = {
-      green: {
-        bg: 'bg-green-500/10',
-        text: 'text-green-400',
-        iconBg: 'from-green-500/20 to-green-500/5',
-        border: 'border-green-500/30',
-      },
-      yellow: {
-        bg: 'bg-elec-yellow/10',
-        text: 'text-elec-yellow',
-        iconBg: 'from-elec-yellow/20 to-elec-yellow/5',
-        border: 'border-elec-yellow/30',
-      },
-      blue: {
-        bg: 'bg-blue-500/10',
-        text: 'text-blue-400',
-        iconBg: 'from-blue-500/20 to-blue-500/5',
-        border: 'border-blue-500/30',
-      },
-      purple: {
-        bg: 'bg-purple-500/10',
-        text: 'text-purple-400',
-        iconBg: 'from-purple-500/20 to-purple-500/5',
-        border: 'border-purple-500/30',
-      },
-      orange: {
-        bg: 'bg-orange-500/10',
-        text: 'text-orange-400',
-        iconBg: 'from-orange-500/20 to-orange-500/5',
-        border: 'border-orange-500/30',
-      },
-      red: {
-        bg: 'bg-red-500/10',
-        text: 'text-red-400',
-        iconBg: 'from-red-500/20 to-red-500/5',
-        border: 'border-red-500/30',
-      },
-    };
-    return configs[color] || configs.yellow;
-  };
 
   const toggleItem = (item: string) => {
     setCheckedItems((prev) =>
@@ -170,267 +96,173 @@ const PreJobSafetyTab = () => {
 
   const totalItems = safetyChecklist.reduce((total, cat) => total + cat.items.length, 0);
   const completionRate = (checkedItems.length / totalItems) * 100;
+  const allDone = completionRate === 100;
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      {/* Header Card */}
-      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-white/10 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-        <CardHeader className="relative">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
-              <div className="p-3 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
-                <Shield className="h-7 w-7 text-elec-yellow" />
-              </div>
-              <div>
-                <CardTitle className="text-xl sm:text-2xl font-bold text-white">
-                  Pre-Job <span className="text-elec-yellow">Safety Assessment</span>
-                </CardTitle>
-                <p className="text-sm text-white mt-1">
-                  Electricity at Work Regulations 1989 & CDM 2015
-                </p>
-              </div>
-            </div>
-            <Badge
-              className={`
-              ${completionRate === 100 ? 'bg-green-500/20 text-green-400 border-green-500/30' : 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30'}
-              text-sm px-3 py-1
-            `}
-            >
-              {Math.round(completionRate)}% Complete
-            </Badge>
-          </div>
-        </CardHeader>
-        <CardContent className="relative">
-          <p className="text-white mb-6">
-            Complete this comprehensive safety checklist before starting any electrical work. Each
-            item must be verified to ensure a safe working environment.
-          </p>
-          <div className="grid grid-cols-3 gap-4">
-            <div className="bg-white/10 rounded-xl p-4 border border-white/10 text-center">
-              <div className="text-2xl sm:text-3xl font-bold text-elec-yellow mb-1">
-                {checkedItems.length}
-              </div>
-              <div className="text-xs text-white">Checked</div>
-            </div>
-            <div className="bg-white/10 rounded-xl p-4 border border-white/10 text-center">
-              <div className="text-2xl sm:text-3xl font-bold text-green-400 mb-1">{totalItems}</div>
-              <div className="text-xs text-white">Total Items</div>
-            </div>
-            <div className="bg-white/10 rounded-xl p-4 border border-white/10 text-center">
-              <div className="flex items-center justify-center gap-1">
-                <Clock className="h-5 w-5 text-blue-400" />
-              </div>
-              <div className="text-xs text-white mt-1">15-20 mins</div>
-            </div>
-          </div>
+    <div className="space-y-5 animate-fade-in">
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Pre-job safety assessment
+        </span>
+        <h2 className="text-[20px] sm:text-[24px] font-semibold tracking-tight text-white leading-tight">
+          Electricity at Work Regulations 1989 & CDM 2015
+        </h2>
+        <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
+          Complete this comprehensive safety checklist before starting any electrical work. Each
+          item must be verified to ensure a safe working environment.
+        </p>
+      </div>
 
-          {/* Progress Bar */}
-          <div className="mt-6 space-y-2">
-            <div className="flex justify-between text-xs text-white">
-              <span>Progress</span>
-              <span>
-                {checkedItems.length} of {totalItems}
-              </span>
-            </div>
-            <div className="h-2.5 bg-white/10 rounded-full overflow-hidden">
-              <div
-                className={`h-full rounded-full transition-all duration-500 ${
-                  completionRate === 100
-                    ? 'bg-gradient-to-r from-green-500 to-green-400'
-                    : 'bg-gradient-to-r from-elec-yellow to-elec-yellow/70'
-                }`}
-                style={{ width: `${completionRate}%` }}
-              />
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
+        <div className="flex items-baseline justify-between">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Progress
+          </span>
+          <span className="text-[12px] text-white/85 font-mono">
+            {checkedItems.length}/{totalItems} · {Math.round(completionRate)}%
+          </span>
+        </div>
+        <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-elec-yellow transition-all duration-500"
+            style={{ width: `${completionRate}%` }}
+          />
+        </div>
+        <div className="grid grid-cols-3 gap-2 pt-1">
+          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-2 text-center">
+            <div className="text-[14px] font-medium text-white font-mono">{checkedItems.length}</div>
+            <div className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">
+              Checked
             </div>
           </div>
-        </CardContent>
-      </Card>
+          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-2 text-center">
+            <div className="text-[14px] font-medium text-white font-mono">{totalItems}</div>
+            <div className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">Total</div>
+          </div>
+          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-2 text-center">
+            <div className="text-[14px] font-medium text-white font-mono">15-20</div>
+            <div className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">Mins</div>
+          </div>
+        </div>
+      </div>
 
-      {/* Checklist Categories */}
       {safetyChecklist.map((category, index) => {
-        const colorConfig = getColorConfig(category.color);
-        const CategoryIcon = category.icon;
         const categoryChecked = category.items.filter((item) => checkedItems.includes(item)).length;
 
         return (
-          <Card
+          <div
             key={index}
-            className="bg-gradient-to-br from-elec-gray to-elec-card border-white/10 hover:border-white/20 transition-colors"
+            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
           >
-            <CardHeader className="pb-4">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-white flex items-center gap-3">
-                  <div
-                    className={`p-2.5 rounded-xl bg-gradient-to-br ${colorConfig.iconBg} border ${colorConfig.border}`}
+            <div className="flex items-baseline justify-between">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                {category.category}
+              </span>
+              <span className="text-[12px] text-white/85 font-mono">
+                {categoryChecked}/{category.items.length}
+              </span>
+            </div>
+            <div className="space-y-2">
+              {category.items.map((item, itemIndex) => {
+                const isChecked = checkedItems.includes(item);
+                return (
+                  <button
+                    key={itemIndex}
+                    onClick={() => toggleItem(item)}
+                    className={`
+                      w-full flex items-start gap-3 p-3 rounded-lg
+                      border transition-all duration-200
+                      touch-manipulation active:scale-[0.99] min-h-[44px]
+                      ${
+                        isChecked
+                          ? 'bg-white/[0.04] border-white/10'
+                          : 'bg-white/[0.02] border-white/[0.06] hover:border-white/10'
+                      }
+                    `}
                   >
-                    <CategoryIcon className={`h-5 w-5 ${colorConfig.text}`} />
-                  </div>
-                  <span className="text-base sm:text-lg">{category.category}</span>
-                </CardTitle>
-                <Badge className={`${colorConfig.bg} ${colorConfig.text} ${colorConfig.border}`}>
-                  {categoryChecked}/{category.items.length}
-                </Badge>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                {category.items.map((item, itemIndex) => {
-                  const isChecked = checkedItems.includes(item);
-                  return (
-                    <button
-                      key={itemIndex}
-                      onClick={() => toggleItem(item)}
+                    <div
                       className={`
-                        w-full flex items-start gap-3 p-3 sm:p-4 rounded-xl
-                        border transition-all duration-200
-                        touch-manipulation active:scale-[0.99]
-                        ${
-                          isChecked
-                            ? 'bg-green-500/10 border-green-500/30'
-                            : 'bg-white/10 border-white/10 hover:border-white/20'
-                        }
-                      `}
+                      flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center transition-all
+                      ${isChecked ? 'bg-elec-yellow' : 'border-2 border-white/30'}
+                    `}
                     >
-                      <div
-                        className={`
-                        flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center transition-all
-                        ${
-                          isChecked
-                            ? 'bg-green-500 border-green-500'
-                            : 'border-2 border-white/30 hover:border-elec-yellow'
-                        }
-                      `}
-                      >
-                        {isChecked && <CheckCircle className="h-4 w-4 text-white" />}
-                      </div>
-                      <span
-                        className={`text-sm text-left ${isChecked ? 'text-green-400' : 'text-white'}`}
-                      >
-                        {item}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </CardContent>
-          </Card>
+                      {isChecked && <CheckCircle className="h-4 w-4 text-black" />}
+                    </div>
+                    <span
+                      className={`text-[14px] text-left leading-relaxed ${isChecked ? 'text-white' : 'text-white/85'}`}
+                    >
+                      {item}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         );
       })}
 
-      {/* Safety Tips */}
-      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-blue-500/20">
-        <CardHeader>
-          <CardTitle className="text-white flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30">
-              <Shield className="h-5 w-5 text-blue-400" />
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Essential safety tips
+        </span>
+        <div className="space-y-3">
+          {safetyTips.map((tip, index) => (
+            <div key={index} className="space-y-1">
+              <p className="text-[14px] text-white">{tip.title}</p>
+              <p className="text-[13px] text-white/85 leading-relaxed">{tip.content}</p>
             </div>
-            Essential Safety Tips
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {safetyTips.map((tip, index) => {
-              const tipConfig = getColorConfig(tip.color);
-              const TipIcon = tip.icon;
-              return (
-                <div
-                  key={index}
-                  className={`p-4 rounded-xl ${tipConfig.bg} border ${tipConfig.border}`}
-                >
-                  <div className="flex items-start gap-3">
-                    <div
-                      className={`p-2 rounded-lg bg-gradient-to-br ${tipConfig.iconBg} flex-shrink-0`}
-                    >
-                      <TipIcon className={`h-4 w-4 ${tipConfig.text}`} />
-                    </div>
-                    <div>
-                      <h4 className={`font-semibold ${tipConfig.text} mb-1`}>{tip.title}</h4>
-                      <p className="text-sm text-white">{tip.content}</p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </CardContent>
-      </Card>
+          ))}
+        </div>
+      </div>
 
-      {/* Notes Section */}
-      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-white/10">
-        <CardHeader>
-          <CardTitle className="text-white flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/30">
-              <FileText className="h-5 w-5 text-purple-400" />
-            </div>
-            Additional Notes & Observations
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <MobileInput
-            label="Safety Notes"
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            placeholder="Record any specific site conditions, hazards identified, or additional safety measures required..."
-            multiline
-            rows={4}
-            className="mb-4"
-          />
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Button className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-95 transition-all">
-              <Download className="mr-2 h-5 w-5" />
-              Export Assessment
-            </Button>
-            <Button
-              variant="outline"
-              className="flex-1 h-12 border-white/20 hover:bg-white/5 hover:border-elec-yellow/50 font-semibold touch-manipulation active:scale-95 transition-all"
-            >
-              Save Progress
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Notes & observations
+        </span>
+        <MobileInput
+          label="Safety notes"
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          placeholder="Record any specific site conditions, hazards identified, or additional safety measures required..."
+          multiline
+          rows={4}
+        />
+        <div className="flex flex-col sm:flex-row gap-2">
+          <Button className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]">
+            <Download className="mr-2 h-4 w-4" />
+            Export assessment
+          </Button>
+          <Button
+            variant="outline"
+            className="flex-1 h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+          >
+            Save progress
+          </Button>
+        </div>
+      </div>
 
-      {/* Warning Banner */}
-      {completionRate < 100 && (
-        <Card className="bg-gradient-to-r from-red-500/10 via-red-500/5 to-transparent border-red-500/30">
-          <CardContent className="p-4 sm:p-5">
-            <div className="flex items-start gap-3">
-              <div className="p-2 rounded-lg bg-red-500/20 flex-shrink-0">
-                <AlertTriangle className="h-5 w-5 text-red-400" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-red-300 mb-1">Assessment Incomplete</h3>
-                <p className="text-sm text-white">
-                  You must complete all safety checks before proceeding with electrical work.{' '}
-                  <span className="font-medium text-red-300">
-                    {totalItems - checkedItems.length} items remaining.
-                  </span>
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+      {!allDone && (
+        <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+            Assessment incomplete
+          </span>
+          <p className="text-[14px] text-white/85 leading-relaxed">
+            You must complete all safety checks before proceeding with electrical work.{' '}
+            {totalItems - checkedItems.length} items remaining.
+          </p>
+        </div>
       )}
 
-      {/* Success Banner */}
-      {completionRate === 100 && (
-        <Card className="bg-gradient-to-r from-green-500/10 via-green-500/5 to-transparent border-green-500/30">
-          <CardContent className="p-4 sm:p-5">
-            <div className="flex items-start gap-3">
-              <div className="p-2 rounded-lg bg-green-500/20 flex-shrink-0">
-                <CheckCircle className="h-5 w-5 text-green-400" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-green-300 mb-1">Assessment Complete</h3>
-                <p className="text-sm text-white">
-                  All safety checks have been verified. You may proceed with work while maintaining{' '}
-                  <span className="font-medium text-green-300">continuous vigilance</span>.
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+      {allDone && (
+        <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+            Assessment complete
+          </span>
+          <p className="text-[14px] text-white/85 leading-relaxed">
+            All safety checks have been verified. You may proceed with work while maintaining
+            continuous vigilance.
+          </p>
+        </div>
       )}
     </div>
   );

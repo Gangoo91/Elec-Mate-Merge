@@ -118,46 +118,53 @@ const AssessmentComplianceTracker = () => {
     },
   ];
 
+  const pillYellow =
+    'text-[12px] text-elec-yellow px-2 py-0.5 rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04]';
+  const pillNeutral =
+    'text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]';
+  const pillRed =
+    'text-[12px] text-red-300 px-2 py-0.5 rounded-md border border-red-500/30 bg-red-500/[0.04]';
+
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'Completed':
-        return <Badge className="bg-green-500">Completed</Badge>;
+        return <span className={pillYellow}>Completed</span>;
       case 'In Progress':
-        return <Badge className="bg-blue-500">In Progress</Badge>;
+        return <span className={pillNeutral}>In progress</span>;
       case 'Not Started':
-        return <Badge className="bg-white/15">Not Started</Badge>;
+        return <span className={pillNeutral}>Not started</span>;
       case 'Overdue':
-        return <Badge className="bg-red-500">Overdue</Badge>;
+        return <span className={pillRed}>Overdue</span>;
       default:
-        return <Badge variant="secondary">{status}</Badge>;
+        return <span className={pillNeutral}>{status}</span>;
     }
   };
 
   const getComplianceStatusBadge = (status: string) => {
     switch (status) {
       case 'On Track':
-        return <Badge className="bg-green-500">On Track</Badge>;
+        return <span className={pillYellow}>On track</span>;
       case 'Ahead':
-        return <Badge className="bg-blue-500">Ahead</Badge>;
+        return <span className={pillNeutral}>Ahead</span>;
       case 'Behind':
-        return <Badge className="bg-orange-500">Behind</Badge>;
+        return <span className={pillNeutral}>Behind</span>;
       case 'At Risk':
-        return <Badge className="bg-red-500">At Risk</Badge>;
+        return <span className={pillRed}>At risk</span>;
       default:
-        return <Badge variant="secondary">{status}</Badge>;
+        return <span className={pillNeutral}>{status}</span>;
     }
   };
 
   const getMilestoneStatusBadge = (status: string) => {
     switch (status) {
       case 'Completed':
-        return <Badge className="bg-green-500">Completed</Badge>;
+        return <span className={pillYellow}>Completed</span>;
       case 'Upcoming':
-        return <Badge className="bg-orange-500">Upcoming</Badge>;
+        return <span className={pillNeutral}>Upcoming</span>;
       case 'Planned':
-        return <Badge className="bg-blue-500">Planned</Badge>;
+        return <span className={pillNeutral}>Planned</span>;
       default:
-        return <Badge variant="secondary">{status}</Badge>;
+        return <span className={pillNeutral}>{status}</span>;
     }
   };
 
@@ -170,7 +177,7 @@ const AssessmentComplianceTracker = () => {
       <Card>
         <CardContent className="p-4">
           <div className="text-center">
-            <div className="text-2xl font-bold text-green-600">8</div>
+            <div className="text-2xl font-bold text-elec-yellow">8</div>
             <p className="text-sm text-white">Completed</p>
           </div>
         </CardContent>
@@ -179,7 +186,7 @@ const AssessmentComplianceTracker = () => {
       <Card>
         <CardContent className="p-4">
           <div className="text-center">
-            <div className="text-2xl font-bold text-blue-600">3</div>
+            <div className="text-2xl font-bold text-white">3</div>
             <p className="text-sm text-white">In Progress</p>
           </div>
         </CardContent>
@@ -188,7 +195,7 @@ const AssessmentComplianceTracker = () => {
       <Card>
         <CardContent className="p-4">
           <div className="text-center">
-            <div className="text-2xl font-bold text-orange-600">4</div>
+            <div className="text-2xl font-bold text-white">4</div>
             <p className="text-sm text-white">Upcoming</p>
           </div>
         </CardContent>
@@ -197,7 +204,7 @@ const AssessmentComplianceTracker = () => {
       <Card>
         <CardContent className="p-4">
           <div className="text-center">
-            <div className="text-2xl font-bold text-purple-600">75%</div>
+            <div className="text-2xl font-bold text-elec-yellow">75%</div>
             <p className="text-sm text-white">Overall Progress</p>
           </div>
         </CardContent>
@@ -252,7 +259,7 @@ const AssessmentComplianceTracker = () => {
                       <div className="flex items-center gap-2">
                         {getStatusBadge(assessment.status)}
                         {assessment.grade && (
-                          <Badge className="bg-purple-500">{assessment.grade}</Badge>
+                          <span className={pillNeutral}>{assessment.grade}</span>
                         )}
                       </div>
                     </div>
@@ -382,15 +389,15 @@ const AssessmentComplianceTracker = () => {
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
                     <span>Average Grade</span>
-                    <Badge className="bg-blue-500">Merit</Badge>
+                    <span className={pillNeutral}>Merit</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span>Pass Rate</span>
-                    <span className="font-bold text-green-600">100%</span>
+                    <span className="font-bold text-elec-yellow">100%</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span>On-Time Submissions</span>
-                    <span className="font-bold text-blue-600">95%</span>
+                    <span className="font-bold text-white">95%</span>
                   </div>
                 </div>
               </CardContent>
@@ -404,15 +411,15 @@ const AssessmentComplianceTracker = () => {
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
                     <span>Overall Compliance</span>
-                    <span className="font-bold text-green-600">85%</span>
+                    <span className="font-bold text-elec-yellow">85%</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span>Training Hours</span>
-                    <span className="font-bold text-orange-600">29%</span>
+                    <span className="font-bold text-white/55">29%</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span>Portfolio Items</span>
-                    <span className="font-bold text-green-600">75%</span>
+                    <span className="font-bold text-elec-yellow">75%</span>
                   </div>
                 </div>
               </CardContent>

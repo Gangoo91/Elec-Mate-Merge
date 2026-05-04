@@ -372,15 +372,13 @@ export function ProfileSection() {
             className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation"
           >
             <div
-              className={cn(
-                'p-2 rounded-lg',
-                actionRequiredCount > 0 ? 'bg-orange-500/10' : 'bg-green-500/10'
+              className={cn('p-2 rounded-lg',
+                actionRequiredCount > 0 ? 'bg-white/[0.02]' : 'bg-white/[0.02]'
               )}
             >
               <AlertCircle
-                className={cn(
-                  'h-4 w-4',
-                  actionRequiredCount > 0 ? 'text-orange-500' : 'text-green-500'
+                className={cn('h-4 w-4',
+                  actionRequiredCount > 0 ? 'text-white/85' : 'text-white/85'
                 )}
               />
             </div>
@@ -405,8 +403,8 @@ export function ProfileSection() {
             onClick={() => setShowMessages(true)}
             className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation"
           >
-            <div className="p-2 rounded-lg bg-blue-500/10">
-              <Bell className="h-4 w-4 text-blue-500" />
+            <div className="p-2 rounded-lg bg-white/[0.02]">
+              <Bell className="h-4 w-4 text-white/85" />
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium text-foreground">Unread Messages</p>
@@ -416,7 +414,7 @@ export function ProfileSection() {
                   : 'No new messages'}
               </p>
             </div>
-            {unreadCount > 0 && <Badge className="text-xs bg-blue-500">{unreadCount}</Badge>}
+            {unreadCount > 0 && <Badge className="text-xs bg-white/[0.02]">{unreadCount}</Badge>}
             <ChevronRight className="h-4 w-4 text-white" />
           </button>
 
@@ -425,8 +423,8 @@ export function ProfileSection() {
             onClick={() => setShowDirectMessages(true)}
             className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation"
           >
-            <div className="p-2 rounded-lg bg-purple-500/10">
-              <MessageSquare className="h-4 w-4 text-purple-500" />
+            <div className="p-2 rounded-lg bg-white/[0.02]">
+              <MessageSquare className="h-4 w-4 text-white/85" />
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium text-foreground">Message Tutor</p>
@@ -437,7 +435,7 @@ export function ProfileSection() {
               </p>
             </div>
             {messageUnreadCount > 0 && (
-              <Badge className="bg-purple-500 text-white text-xs">{messageUnreadCount}</Badge>
+              <Badge className="bg-white/[0.02] text-white text-xs">{messageUnreadCount}</Badge>
             )}
             <ChevronRight className="h-4 w-4 text-white" />
           </button>
@@ -473,8 +471,8 @@ export function ProfileSection() {
             onClick={() => setShowEPAStatus(true)}
             className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation"
           >
-            <div className="p-2 rounded-lg bg-green-500/10">
-              <GraduationCap className="h-4 w-4 text-green-500" />
+            <div className="p-2 rounded-lg bg-white/[0.02]">
+              <GraduationCap className="h-4 w-4 text-white/85" />
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium text-foreground">EPA Gateway Status</p>
@@ -498,8 +496,8 @@ export function ProfileSection() {
             onClick={() => setShowShare(true)}
             className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation"
           >
-            <div className="p-2 rounded-lg bg-blue-500/10">
-              <Link2 className="h-4 w-4 text-blue-500" />
+            <div className="p-2 rounded-lg bg-white/[0.02]">
+              <Link2 className="h-4 w-4 text-white/85" />
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium text-foreground">Share Portfolio Link</p>
@@ -698,7 +696,7 @@ export function ProfileSection() {
                         className="shrink-0"
                       >
                         {copiedToken === share.token ? (
-                          <Check className="h-4 w-4 text-green-500" />
+                          <Check className="h-4 w-4 text-white/85" />
                         ) : (
                           <Copy className="h-4 w-4" />
                         )}
@@ -741,8 +739,7 @@ export function ProfileSection() {
                 {comments.map((comment) => (
                   <div
                     key={comment.id}
-                    className={cn(
-                      'p-3 rounded-xl border border-border bg-muted/30',
+                    className={cn('p-3 rounded-xl border border-border bg-muted/30',
                       comment.requiresAction &&
                         !comment.isResolved &&
                         'border-l-2 border-l-orange-500'
@@ -752,12 +749,11 @@ export function ProfileSection() {
                       <div className="flex items-center gap-2">
                         <Badge
                           variant="outline"
-                          className={cn(
-                            'text-[10px]',
+                          className={cn('text-[10px]',
                             comment.authorRole === 'tutor'
-                              ? 'border-blue-500/30 text-blue-400'
+                              ? 'border-white/[0.06] text-white/85'
                               : comment.authorRole === 'assessor'
-                                ? 'border-purple-500/30 text-purple-400'
+                                ? 'border-white/[0.06] text-white/85'
                                 : 'border-border'
                           )}
                         >
@@ -771,9 +767,9 @@ export function ProfileSection() {
                       </div>
                       <div className="flex items-center gap-2">
                         {comment.requiresAction && !comment.isResolved && (
-                          <div className="w-2 h-2 rounded-full bg-orange-500" />
+                          <div className="w-2 h-2 rounded-full bg-white/[0.02]" />
                         )}
-                        {comment.isResolved && <Check className="h-3.5 w-3.5 text-green-500" />}
+                        {comment.isResolved && <Check className="h-3.5 w-3.5 text-white/85" />}
                         <span className="text-xs text-white">
                           {formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}
                         </span>

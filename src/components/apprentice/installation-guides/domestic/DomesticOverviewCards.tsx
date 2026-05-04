@@ -305,23 +305,23 @@ const DomesticOverviewCards = () => {
       </div>
 
       {/* Project Complexity Guide */}
-      <Card className="border-blue-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Zap className="h-6 w-6 text-blue-400" />
-            <CardTitle className="text-blue-300">Project Complexity Guide</CardTitle>
+            <Zap className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">Project Complexity Guide</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
           {projectComplexity.map((project, index) => (
-            <div key={index} className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+            <div key={index} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 mb-3">
                 <h4 className="font-medium text-white">{project.type}</h4>
                 <div className="flex flex-wrap gap-2">
-                  <Badge variant="outline" className="border-blue-400 text-blue-300 text-xs">
+                  <Badge variant="outline" className="border-white/10 text-white text-xs">
                     {project.duration}
                   </Badge>
-                  <Badge variant="outline" className="border-green-500 text-green-400 text-xs">
+                  <Badge variant="outline" className="border-white/10 text-white/55 text-xs">
                     {project.cost}
                   </Badge>
                 </div>
@@ -329,7 +329,7 @@ const DomesticOverviewCards = () => {
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-white">Complexity Level</span>
-                  <span className="text-blue-300">{project.complexity}%</span>
+                  <span className="text-white">{project.complexity}%</span>
                 </div>
                 <Progress value={project.complexity} className="h-2" />
               </div>
@@ -339,45 +339,45 @@ const DomesticOverviewCards = () => {
       </Card>
 
       {/* Kitchen Installations */}
-      <Card className="border-amber-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <kitchenRequirements.icon className="h-6 w-6 text-amber-400" />
-            <CardTitle className="text-amber-300">{kitchenRequirements.title}</CardTitle>
+            <kitchenRequirements.icon className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">{kitchenRequirements.title}</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Alert className="border-amber-500/50 bg-amber-500/10">
-            <Info className="h-4 w-4 text-amber-400" />
-            <AlertDescription className="text-amber-200 text-sm">
+          <Alert className="border-white/[0.06] bg-white/[0.02]">
+            <Info className="h-4 w-4 text-white/55" />
+            <AlertDescription className="text-white/85 text-sm">
               Kitchens are high-demand areas requiring careful circuit design and RCD protection for
               all socket outlets.
             </AlertDescription>
           </Alert>
 
-          <div className="bg-amber-500/10 p-4 rounded-lg border border-amber-500/20">
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
             <h4 className="font-medium text-white mb-3">Key Regulations</h4>
             <ul className="space-y-2">
               {kitchenRequirements.regulations.map((reg, idx) => (
-                <li key={idx} className="text-sm text-amber-100 flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                <li key={idx} className="text-sm text-white/85 flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
                   {reg}
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="bg-amber-500/10 p-4 rounded-lg border border-amber-500/20">
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
             <h4 className="font-medium text-white mb-3">Typical Kitchen Circuits</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {kitchenRequirements.circuits.map((circuit, idx) => (
-                <div key={idx} className="bg-amber-600/10 p-3 rounded border border-amber-500/30">
-                  <h5 className="font-medium text-amber-200 text-sm mb-2">{circuit.name}</h5>
+                <div key={idx} className="bg-white/[0.02] p-3 rounded border border-white/[0.06]">
+                  <h5 className="font-medium text-white/85 text-sm mb-2">{circuit.name}</h5>
                   <div className="flex flex-wrap gap-2">
-                    <Badge variant="outline" className="border-amber-400 text-amber-300 text-xs">
+                    <Badge variant="outline" className="border-white/10 text-white text-xs">
                       {circuit.cable}
                     </Badge>
-                    <Badge variant="outline" className="border-green-500 text-green-400 text-xs">
+                    <Badge variant="outline" className="border-white/10 text-white/55 text-xs">
                       {circuit.protection}
                     </Badge>
                   </div>
@@ -386,12 +386,12 @@ const DomesticOverviewCards = () => {
             </div>
           </div>
 
-          <div className="bg-amber-500/10 p-4 rounded-lg border border-amber-500/20">
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
             <h4 className="font-medium text-white mb-3">Installation Tips</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {kitchenRequirements.tips.map((tip, idx) => (
-                <div key={idx} className="text-sm text-amber-100 flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                <div key={idx} className="text-sm text-white/85 flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 bg-white/55 rounded-full mt-2 flex-shrink-0"></span>
                   {tip}
                 </div>
               ))}
@@ -401,17 +401,17 @@ const DomesticOverviewCards = () => {
       </Card>
 
       {/* Bathroom Zones */}
-      <Card className="border-cyan-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <bathroomZones.icon className="h-6 w-6 text-cyan-400" />
-            <CardTitle className="text-cyan-300">{bathroomZones.title}</CardTitle>
+            <bathroomZones.icon className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">{bathroomZones.title}</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Alert className="border-cyan-500/50 bg-cyan-500/10">
-            <AlertTriangle className="h-4 w-4 text-cyan-400" />
-            <AlertDescription className="text-cyan-200 text-sm">
+          <Alert className="border-white/[0.06] bg-white/[0.02]">
+            <AlertTriangle className="h-4 w-4 text-white/55" />
+            <AlertDescription className="text-white/85 text-sm">
               <strong>BS 7671 Section 701:</strong> Special requirements apply to bathroom
               installations due to increased risk of electric shock.
             </AlertDescription>
@@ -425,10 +425,10 @@ const DomesticOverviewCards = () => {
                   zone.color === 'red'
                     ? 'bg-red-500/10 border-red-500/30'
                     : zone.color === 'orange'
-                      ? 'bg-orange-500/10 border-orange-500/30'
+                      ? 'bg-white/[0.02] border-white/[0.06]'
                       : zone.color === 'yellow'
                         ? 'bg-yellow-500/10 border-yellow-500/30'
-                        : 'bg-green-500/10 border-green-500/30'
+                        : 'bg-white/[0.02] border-white/[0.06]'
                 }`}
               >
                 <div className="flex items-center gap-2 mb-2">
@@ -438,10 +438,10 @@ const DomesticOverviewCards = () => {
                       zone.color === 'red'
                         ? 'border-red-400 text-red-300'
                         : zone.color === 'orange'
-                          ? 'border-orange-400 text-orange-300'
+                          ? 'border-white/10 text-white'
                           : zone.color === 'yellow'
                             ? 'border-yellow-400 text-yellow-300'
-                            : 'border-green-400 text-green-300'
+                            : 'border-white/10 text-white'
                     }`}
                   >
                     {zone.zone}
@@ -452,10 +452,10 @@ const DomesticOverviewCards = () => {
                     zone.color === 'red'
                       ? 'text-red-200'
                       : zone.color === 'orange'
-                        ? 'text-orange-200'
+                        ? 'text-white/85'
                         : zone.color === 'yellow'
                           ? 'text-yellow-200'
-                          : 'text-green-200'
+                          : 'text-white/85'
                   }`}
                 >
                   {zone.description}
@@ -468,10 +468,10 @@ const DomesticOverviewCards = () => {
                           zone.color === 'red'
                             ? 'bg-red-400'
                             : zone.color === 'orange'
-                              ? 'bg-orange-400'
+                              ? 'bg-white/55'
                               : zone.color === 'yellow'
                                 ? 'bg-yellow-400'
-                                : 'bg-green-400'
+                                : 'bg-white/55'
                         }`}
                       ></span>
                       {req}
@@ -482,12 +482,12 @@ const DomesticOverviewCards = () => {
             ))}
           </div>
 
-          <div className="bg-cyan-500/10 p-4 rounded-lg border border-cyan-500/20">
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
             <h4 className="font-medium text-white mb-3">General Bathroom Requirements</h4>
             <ul className="space-y-2">
               {bathroomZones.generalRequirements.map((req, idx) => (
-                <li key={idx} className="text-sm text-cyan-100 flex items-start gap-2">
-                  <Shield className="h-4 w-4 text-cyan-400 mt-0.5 flex-shrink-0" />
+                <li key={idx} className="text-sm text-white/85 flex items-start gap-2">
+                  <Shield className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
                   {req}
                 </li>
               ))}
@@ -497,17 +497,17 @@ const DomesticOverviewCards = () => {
       </Card>
 
       {/* Consumer Unit Requirements */}
-      <Card className="border-violet-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <consumerUnitRequirements.icon className="h-6 w-6 text-violet-400" />
-            <CardTitle className="text-violet-300">{consumerUnitRequirements.title}</CardTitle>
+            <consumerUnitRequirements.icon className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">{consumerUnitRequirements.title}</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Alert className="border-violet-500/50 bg-violet-500/10">
-            <Info className="h-4 w-4 text-violet-400" />
-            <AlertDescription className="text-violet-200 text-sm">
+          <Alert className="border-white/[0.06] bg-white/[0.02]">
+            <Info className="h-4 w-4 text-white/55" />
+            <AlertDescription className="text-white/85 text-sm">
               The 18th Edition (Amendment 3) introduced significant changes to consumer unit
               requirements in domestic premises.
             </AlertDescription>
@@ -515,43 +515,40 @@ const DomesticOverviewCards = () => {
 
           <div className="space-y-3">
             {consumerUnitRequirements.keyChanges.map((change, idx) => (
-              <div
-                key={idx}
-                className="bg-violet-500/10 p-4 rounded-lg border border-violet-500/20"
-              >
+              <div key={idx} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
                 <div className="flex items-start justify-between gap-3 mb-2">
                   <h4 className="font-medium text-white text-sm">{change.requirement}</h4>
                   <Badge
                     variant="outline"
-                    className="border-violet-400 text-violet-300 text-xs flex-shrink-0"
+                    className="border-white/10 text-white text-xs flex-shrink-0"
                   >
                     {change.regulation}
                   </Badge>
                 </div>
-                <p className="text-sm text-violet-100">{change.details}</p>
+                <p className="text-sm text-white/85">{change.details}</p>
               </div>
             ))}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-violet-500/10 p-4 rounded-lg border border-violet-500/20">
+            <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
               <h4 className="font-medium text-white mb-3">CU Specifications</h4>
               <div className="space-y-2">
                 {consumerUnitRequirements.specifications.map((spec, idx) => (
                   <div key={idx} className="flex justify-between text-sm">
                     <span className="text-white">{spec.item}</span>
-                    <span className="text-violet-300">{spec.value}</span>
+                    <span className="text-white">{spec.value}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="bg-violet-500/10 p-4 rounded-lg border border-violet-500/20">
+            <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
               <h4 className="font-medium text-white mb-3">Typical CU Layout</h4>
               <ul className="space-y-1">
                 {consumerUnitRequirements.layout.map((item, idx) => (
-                  <li key={idx} className="text-sm text-violet-100 flex items-start gap-2">
-                    <span className="text-violet-400 font-medium">{idx + 1}.</span>
+                  <li key={idx} className="text-sm text-white/85 flex items-start gap-2">
+                    <span className="text-white/55 font-medium">{idx + 1}.</span>
                     {item}
                   </li>
                 ))}
@@ -562,29 +559,23 @@ const DomesticOverviewCards = () => {
       </Card>
 
       {/* Outdoor Installations */}
-      <Card className="border-emerald-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <outdoorInstallations.icon className="h-6 w-6 text-emerald-400" />
-            <CardTitle className="text-emerald-300">{outdoorInstallations.title}</CardTitle>
+            <outdoorInstallations.icon className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">{outdoorInstallations.title}</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="bg-emerald-500/10 p-4 rounded-lg border border-emerald-500/20">
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
             <h4 className="font-medium text-white mb-3">IP Ratings Guide</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
               {outdoorInstallations.ipRatings.map((ip, idx) => (
-                <div
-                  key={idx}
-                  className="bg-emerald-600/10 p-3 rounded border border-emerald-500/30"
-                >
-                  <Badge
-                    variant="outline"
-                    className="border-emerald-400 text-emerald-300 text-xs mb-2"
-                  >
+                <div key={idx} className="bg-white/[0.02] p-3 rounded border border-white/[0.06]">
+                  <Badge variant="outline" className="border-white/10 text-white text-xs mb-2">
                     {ip.rating}
                   </Badge>
-                  <p className="text-xs text-emerald-100 mb-1">{ip.description}</p>
+                  <p className="text-xs text-white/85 mb-1">{ip.description}</p>
                   <p className="text-xs text-white">
                     <strong>Use:</strong> {ip.use}
                   </p>
@@ -593,24 +584,18 @@ const DomesticOverviewCards = () => {
             </div>
           </div>
 
-          <div className="bg-emerald-500/10 p-4 rounded-lg border border-emerald-500/20">
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
             <h4 className="font-medium text-white mb-3">Cable Installation Methods</h4>
             <div className="space-y-3">
               {outdoorInstallations.cableRequirements.map((cable, idx) => (
-                <div
-                  key={idx}
-                  className="bg-emerald-600/10 p-3 rounded border border-emerald-500/30"
-                >
+                <div key={idx} className="bg-white/[0.02] p-3 rounded border border-white/[0.06]">
                   <div className="flex items-center gap-2 mb-2">
-                    <Badge
-                      variant="outline"
-                      className="border-emerald-400 text-emerald-300 text-xs"
-                    >
+                    <Badge variant="outline" className="border-white/10 text-white text-xs">
                       {cable.location}
                     </Badge>
                     <span className="text-sm text-white">{cable.cable}</span>
                   </div>
-                  <p className="text-xs text-emerald-100 mb-1">
+                  <p className="text-xs text-white/85 mb-1">
                     <strong>Depth/Clearance:</strong> {cable.depth}
                   </p>
                   <p className="text-xs text-white">{cable.notes}</p>
@@ -619,37 +604,37 @@ const DomesticOverviewCards = () => {
             </div>
           </div>
 
-          <div className="bg-emerald-500/10 p-4 rounded-lg border border-emerald-500/20">
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
             <h4 className="font-medium text-white mb-3">RCD Protection Requirements</h4>
             <ul className="space-y-2">
               {outdoorInstallations.rcdRequirements.map((req, idx) => (
-                <li key={idx} className="text-sm text-emerald-100 flex items-start gap-2">
-                  <Shield className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                <li key={idx} className="text-sm text-white/85 flex items-start gap-2">
+                  <Shield className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
                   {req}
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="bg-emerald-500/10 p-4 rounded-lg border border-emerald-500/20">
+          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
             <h4 className="font-medium text-white mb-3">Common Outdoor Applications</h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-emerald-500/30">
-                    <th className="text-left py-2 text-emerald-200">Application</th>
-                    <th className="text-left py-2 text-emerald-200">Circuit Type</th>
-                    <th className="text-left py-2 text-emerald-200">Cable</th>
-                    <th className="text-left py-2 text-emerald-200">Protection</th>
+                  <tr className="border-b border-white/[0.06]">
+                    <th className="text-left py-2 text-white/85">Application</th>
+                    <th className="text-left py-2 text-white/85">Circuit Type</th>
+                    <th className="text-left py-2 text-white/85">Cable</th>
+                    <th className="text-left py-2 text-white/85">Protection</th>
                   </tr>
                 </thead>
                 <tbody>
                   {outdoorInstallations.commonApplications.map((app, idx) => (
-                    <tr key={idx} className="border-b border-emerald-500/20">
+                    <tr key={idx} className="border-b border-white/[0.06]">
                       <td className="py-2 text-white">{app.application}</td>
                       <td className="py-2 text-white">{app.circuit}</td>
                       <td className="py-2 text-white">{app.cable}</td>
-                      <td className="py-2 text-emerald-300">{app.protection}</td>
+                      <td className="py-2 text-white">{app.protection}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -660,22 +645,19 @@ const DomesticOverviewCards = () => {
       </Card>
 
       {/* Safety Priorities */}
-      <Card className="border-orange-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Shield className="h-6 w-6 text-orange-400" />
-            <CardTitle className="text-orange-300">Safety Priorities</CardTitle>
+            <Shield className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">Safety Priorities</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-3">
           {safetyPriorities.map((safety, index) => (
-            <div
-              key={index}
-              className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20"
-            >
+            <div key={index} className="bg-white/[0.02] p-3 rounded-lg border border-white/[0.06]">
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1">
-                  <h4 className="font-medium text-orange-200 mb-1">{safety.priority}</h4>
+                  <h4 className="font-medium text-white/85 mb-1">{safety.priority}</h4>
                   <p className="text-sm text-white">{safety.description}</p>
                 </div>
                 <Badge
@@ -684,8 +666,8 @@ const DomesticOverviewCards = () => {
                     safety.level === 'Critical'
                       ? 'border-red-500 text-red-400'
                       : safety.level === 'Legal'
-                        ? 'border-purple-500 text-purple-400'
-                        : 'border-orange-500 text-orange-400'
+                        ? 'border-white/10 text-white/55'
+                        : 'border-white/10 text-white/55'
                   }`}
                 >
                   {safety.level}
@@ -697,11 +679,11 @@ const DomesticOverviewCards = () => {
       </Card>
 
       {/* Getting Started Checklist */}
-      <Card className="border-green-500/30 bg-white/5">
+      <Card className="border-white/[0.06] bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <CheckCircle className="h-6 w-6 text-green-400" />
-            <CardTitle className="text-green-300">Before You Start Checklist</CardTitle>
+            <CheckCircle className="h-6 w-6 text-white/55" />
+            <CardTitle className="text-white">Before You Start Checklist</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-2">
@@ -714,7 +696,7 @@ const DomesticOverviewCards = () => {
             'Plan waste disposal and material deliveries',
           ].map((item, index) => (
             <div key={index} className="flex items-center gap-2 text-sm">
-              <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
+              <CheckCircle className="h-4 w-4 text-white/55 flex-shrink-0" />
               <span className="text-white">{item}</span>
             </div>
           ))}

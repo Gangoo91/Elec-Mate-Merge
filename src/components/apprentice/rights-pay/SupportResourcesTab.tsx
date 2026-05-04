@@ -1,16 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import {
-  Phone,
-  Mail,
-  Globe,
-  MessageCircle,
-  Shield,
-  Users,
-  FileText,
-  AlertTriangle,
-} from 'lucide-react';
+import { Phone, Mail, Globe } from 'lucide-react';
 
 const SupportResourcesTab = () => {
   const emergencyContacts = [
@@ -290,286 +278,274 @@ const SupportResourcesTab = () => {
     },
   ];
 
+  const Section = ({
+    eyebrow,
+    children,
+    accent = 'neutral',
+  }: {
+    eyebrow: string;
+    children: React.ReactNode;
+    accent?: 'neutral' | 'red';
+  }) => (
+    <div
+      className={`${
+        accent === 'red'
+          ? 'rounded-xl border border-red-500/30 bg-red-500/[0.04]'
+          : 'rounded-xl border border-white/[0.06] bg-white/[0.02]'
+      } p-4 sm:p-5 space-y-3`}
+    >
+      <span
+        className={`text-[10px] font-medium uppercase tracking-[0.18em] ${
+          accent === 'red' ? 'text-red-300' : 'text-white/55'
+        }`}
+      >
+        {eyebrow}
+      </span>
+      {children}
+    </div>
+  );
+
+  const ContactLine = ({ icon, text }: { icon: React.ReactNode; text: string }) => (
+    <div className="flex items-center gap-1 text-[12px] text-white/85">
+      {icon}
+      <span className="truncate">{text}</span>
+    </div>
+  );
+
   return (
     <div className="space-y-6">
-      <Card className="border-red-500/30 bg-red-500/10">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-red-400">
-            <AlertTriangle className="h-5 w-5" />
-            Emergency & Priority Contacts
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {emergencyContacts.map((contact, index) => (
-              <div key={index} className="border border-red-500/20 rounded-lg p-4">
-                <div className="flex items-start justify-between mb-2">
-                  <h4 className="font-medium text-red-300">{contact.service}</h4>
-                  <Badge className="bg-red-500/20 text-red-400 text-xs">{contact.urgency}</Badge>
-                </div>
-                <p className="text-sm text-white mb-3">{contact.description}</p>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs">
-                  <div className="flex items-center gap-1">
-                    <Phone className="h-3 w-3" />
-                    <span>{contact.phone}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Mail className="h-3 w-3" />
-                    <span className="truncate">{contact.email}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Globe className="h-3 w-3" />
-                    <span className="truncate">{contact.website}</span>
-                  </div>
+      <Section eyebrow="Emergency & priority contacts" accent="red">
+        <div className="space-y-3">
+          {emergencyContacts.map((contact, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
+            >
+              <div className="flex items-start justify-between gap-2">
+                <h4 className="text-[14px] font-semibold text-white">{contact.service}</h4>
+                <span className="text-[12px] text-red-300 px-2 py-0.5 rounded-md border border-red-500/30 bg-red-500/[0.04] whitespace-nowrap">
+                  {contact.urgency}
+                </span>
+              </div>
+              <p className="text-[14px] text-white/85 leading-relaxed">{contact.description}</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                <ContactLine icon={<Phone className="h-3 w-3" />} text={contact.phone} />
+                <ContactLine icon={<Mail className="h-3 w-3" />} text={contact.email} />
+                <ContactLine icon={<Globe className="h-3 w-3" />} text={contact.website} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section eyebrow="Support organisations">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {supportOrganisations.map((org, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
+            >
+              <h4 className="text-[14px] font-semibold text-white">{org.name}</h4>
+              <p className="text-[13px] text-white/85 leading-relaxed">{org.description}</p>
+              <div className="space-y-1">
+                <ContactLine icon={<Phone className="h-3 w-3" />} text={org.contact} />
+                <ContactLine icon={<Globe className="h-3 w-3" />} text={org.website} />
+              </div>
+              <div className="space-y-1">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Services
+                </span>
+                <ul className="space-y-1">
+                  {org.services.map((service, serviceIndex) => (
+                    <li
+                      key={serviceIndex}
+                      className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                      <span>{service}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section eyebrow="Trade union support">
+        <div className="space-y-3">
+          {tradeUnions.map((union, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
+            >
+              <div className="flex items-start justify-between gap-2 flex-wrap">
+                <h4 className="text-[14px] font-semibold text-white">{union.name}</h4>
+                <div className="flex gap-1.5 flex-wrap">
+                  {union.sectors.map((sector, sectorIndex) => (
+                    <span
+                      key={sectorIndex}
+                      className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+                    >
+                      {sector}
+                    </span>
+                  ))}
                 </div>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-blue-500/30 bg-blue-500/10">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-blue-400">
-            <Shield className="h-5 w-5" />
-            Support Organisations
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {supportOrganisations.map((org, index) => (
-              <div key={index} className="border border-blue-500/20 rounded-lg p-4">
-                <h4 className="font-medium text-blue-300 mb-2">{org.name}</h4>
-                <p className="text-xs text-white mb-3">{org.description}</p>
-
-                <div className="space-y-1 mb-3">
-                  <div className="flex items-center gap-1 text-xs">
-                    <Phone className="h-3 w-3" />
-                    <span>{org.contact}</span>
-                  </div>
-                  <div className="flex items-center gap-1 text-xs">
-                    <Globe className="h-3 w-3" />
-                    <span className="truncate">{org.website}</span>
-                  </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <ContactLine icon={<Phone className="h-3 w-3" />} text={union.contact} />
+                  <ContactLine icon={<Globe className="h-3 w-3" />} text={union.website} />
                 </div>
-
-                <div>
-                  <h5 className="text-xs font-medium text-blue-300 mb-1">Services:</h5>
-                  <ul className="text-xs text-white space-y-1">
-                    {org.services.map((service, serviceIndex) => (
-                      <li key={serviceIndex}>• {service}</li>
+                <div className="space-y-1">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Member benefits
+                  </span>
+                  <ul className="space-y-1">
+                    {union.benefits.map((benefit, benefitIndex) => (
+                      <li
+                        key={benefitIndex}
+                        className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                      >
+                        <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                        <span>{benefit}</span>
+                      </li>
                     ))}
                   </ul>
                 </div>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+            </div>
+          ))}
+        </div>
+      </Section>
 
-      <Card className="border-green-500/30 bg-green-500/10">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-green-400">
-            <Users className="h-5 w-5" />
-            Trade Union Support
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {tradeUnions.map((union, index) => (
-              <div key={index} className="border border-green-500/20 rounded-lg p-4">
-                <div className="flex items-start justify-between mb-2">
-                  <h4 className="font-medium text-green-300">{union.name}</h4>
-                  <div className="flex gap-1">
-                    {union.sectors.map((sector, sectorIndex) => (
-                      <Badge key={sectorIndex} className="bg-green-500/20 text-green-400 text-xs">
-                        {sector}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <div className="flex items-center gap-1 text-xs mb-1">
-                      <Phone className="h-3 w-3" />
-                      <span>{union.contact}</span>
-                    </div>
-                    <div className="flex items-center gap-1 text-xs">
-                      <Globe className="h-3 w-3" />
-                      <span className="truncate">{union.website}</span>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h5 className="text-xs font-medium text-green-300 mb-1">Member Benefits:</h5>
-                    <ul className="text-xs text-white space-y-1">
-                      {union.benefits.map((benefit, benefitIndex) => (
-                        <li key={benefitIndex}>• {benefit}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
+      <Section eyebrow="Electrical industry bodies">
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          These organisations are specific to the electrical industry and can provide specialist
+          technical guidance, qualifications support, and career advice.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {electricalIndustryBodies.map((org, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
+            >
+              <h4 className="text-[14px] font-semibold text-white">{org.name}</h4>
+              <p className="text-[13px] text-white/85 leading-relaxed">{org.description}</p>
+              <div className="space-y-1">
+                <ContactLine icon={<Phone className="h-3 w-3" />} text={org.contact} />
+                <ContactLine icon={<Globe className="h-3 w-3" />} text={org.website} />
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+              <div className="space-y-1">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Key services
+                </span>
+                <ul className="space-y-1">
+                  {org.services.map((service, serviceIndex) => (
+                    <li
+                      key={serviceIndex}
+                      className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                      <span>{service}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
 
-      {/* Electrical Industry Bodies */}
-      <Card className="border-elec-yellow/30 bg-elec-yellow/10">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-elec-yellow">
-            <FileText className="h-5 w-5" />
-            Electrical Industry Bodies
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-white mb-4">
-            These organisations are specific to the electrical industry and can provide specialist
-            technical guidance, qualifications support, and career advice.
+      <Section eyebrow="Mental health & wellbeing support">
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Construction and electrical work can be physically and mentally demanding. These
+          organisations offer free, confidential support specifically for people in the trades.
+        </p>
+        <div className="space-y-3">
+          {mentalHealthSupport.map((org, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1"
+            >
+              <div className="flex items-start justify-between gap-2">
+                <h4 className="text-[14px] font-semibold text-white">{org.name}</h4>
+                <span className="text-[12px] text-elec-yellow px-2 py-0.5 rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] whitespace-nowrap">
+                  {org.contact}
+                </span>
+              </div>
+              <p className="text-[14px] text-white/85 leading-relaxed">{org.description}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section eyebrow="Online resources & tools">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {onlineResources.map((resource, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
+            >
+              <h4 className="text-[14px] font-semibold text-white">{resource.platform}</h4>
+              <p className="text-[13px] text-white/85 leading-relaxed">{resource.description}</p>
+              <ContactLine icon={<Globe className="h-3 w-3" />} text={resource.website} />
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section eyebrow="How to escalate a problem">
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          If something is wrong at work or with your training, follow these steps in order. Most
+          issues are resolved at the first two stages.
+        </p>
+        <div className="space-y-3">
+          {escalationSteps.map((item) => (
+            <div key={item.step} className="flex gap-3 items-start">
+              <span className="flex-shrink-0 w-8 h-8 rounded-full border border-white/15 bg-white/[0.03] flex items-center justify-center text-[13px] font-mono text-white">
+                {item.step}
+              </span>
+              <div className="flex-1 min-w-0">
+                <h4 className="text-[14px] font-semibold text-white">{item.title}</h4>
+                <p className="text-[13px] text-white/85 leading-relaxed mt-1">{item.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+            Important
+          </span>
+          <p className="text-[13px] text-white/85 leading-relaxed">
+            Keep written records at every stage — emails, letters, dates, and names. If your issue
+            reaches ACAS or a Tribunal, evidence is essential.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {electricalIndustryBodies.map((org, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <h4 className="font-medium text-elec-yellow mb-2">{org.name}</h4>
-                <p className="text-xs text-white mb-3">{org.description}</p>
-                <div className="space-y-1 mb-3">
-                  <div className="flex items-center gap-1 text-xs">
-                    <Phone className="h-3 w-3" />
-                    <span>{org.contact}</span>
-                  </div>
-                  <div className="flex items-center gap-1 text-xs">
-                    <Globe className="h-3 w-3" />
-                    <span className="truncate">{org.website}</span>
-                  </div>
-                </div>
-                <div>
-                  <h5 className="text-xs font-medium text-elec-yellow mb-1">Key Services:</h5>
-                  <ul className="text-xs text-white space-y-1">
-                    {org.services.map((service, serviceIndex) => (
-                      <li key={serviceIndex}>• {service}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+        </div>
+      </Section>
 
-      {/* Mental Health Support */}
-      <Card className="border-green-500/30 bg-green-500/10">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-green-400">
-            <MessageCircle className="h-5 w-5" />
-            Mental Health & Wellbeing Support
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-white mb-4">
-            Construction and electrical work can be physically and mentally demanding. These organisations
-            offer free, confidential support specifically for people in the trades.
-          </p>
-          <div className="space-y-3">
-            {mentalHealthSupport.map((org, index) => (
-              <div key={index} className="border border-green-500/20 rounded-lg p-4">
-                <div className="flex items-start justify-between mb-2">
-                  <h4 className="font-medium text-green-300">{org.name}</h4>
-                  <Badge className="bg-green-500/20 text-green-400 text-xs ml-2 flex-shrink-0">
-                    {org.contact}
-                  </Badge>
-                </div>
-                <p className="text-sm text-white">{org.description}</p>
+      <Section eyebrow="When to seek help">
+        <div className="space-y-3">
+          {whenToSeekHelp.map((scenario, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1"
+            >
+              <div className="flex items-start justify-between gap-2 flex-wrap">
+                <h4 className="text-[14px] font-semibold text-white flex-1">
+                  {scenario.situation}
+                </h4>
+                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
+                  {scenario.severity}
+                </span>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-purple-500/30 bg-purple-500/10">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-purple-400">
-            <Globe className="h-5 w-5" />
-            Online Resources & Tools
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {onlineResources.map((resource, index) => (
-              <div key={index} className="border border-purple-500/20 rounded-lg p-3">
-                <h4 className="font-medium text-purple-300 text-sm mb-1">{resource.platform}</h4>
-                <p className="text-xs text-white mb-2">{resource.description}</p>
-                <div className="flex items-center gap-1 text-xs text-white">
-                  <Globe className="h-3 w-3" />
-                  <span className="truncate">{resource.website}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Escalation Steps */}
-      <Card className="border-orange-500/30 bg-orange-500/10">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-orange-400">
-            <AlertTriangle className="h-5 w-5" />
-            How to Escalate a Problem
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-white mb-4">
-            If something is wrong at work or with your training, follow these steps in order.
-            Most issues are resolved at the first two stages.
-          </p>
-          <div className="space-y-3">
-            {escalationSteps.map((item) => (
-              <div key={item.step} className="flex gap-3 items-start">
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-orange-500/20 border border-orange-500/30 flex items-center justify-center">
-                  <span className="text-orange-400 font-bold text-sm">{item.step}</span>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-medium text-orange-300 text-sm">{item.title}</h4>
-                  <p className="text-xs text-white mt-1">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="mt-4 bg-orange-500/10 border border-orange-500/20 rounded-lg p-3">
-            <p className="text-xs text-white">
-              <strong className="text-orange-300">Important:</strong> Keep written records at every stage — emails, letters,
-              dates, and names. If your issue reaches ACAS or a Tribunal, evidence is essential.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-yellow-500/30 bg-yellow-500/10">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-yellow-400">
-            <MessageCircle className="h-5 w-5" />
-            When to Seek Help - Action Guide
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {whenToSeekHelp.map((scenario, index) => (
-              <div key={index} className="border border-yellow-500/20 rounded-lg p-4">
-                <div className="flex items-start justify-between mb-2">
-                  <h4 className="font-medium text-yellow-300 flex-1">{scenario.situation}</h4>
-                  <Badge className="bg-yellow-500/20 text-yellow-400 text-xs ml-2">
-                    {scenario.severity}
-                  </Badge>
-                </div>
-                <p className="text-sm text-white">
-                  <strong>First Steps:</strong> {scenario.firstSteps}
-                </p>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+              <p className="text-[14px] text-white/85 leading-relaxed">
+                <span className="font-semibold">First steps:</span> {scenario.firstSteps}
+              </p>
+            </div>
+          ))}
+        </div>
+      </Section>
     </div>
   );
 };

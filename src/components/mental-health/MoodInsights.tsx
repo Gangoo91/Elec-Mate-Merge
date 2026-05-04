@@ -200,7 +200,7 @@ const MoodInsights = () => {
               <Eyebrow>Trend</Eyebrow>
               <div className="mt-2 flex items-center justify-center">
                 {stats.trend > 0 ? (
-                  <TrendingUp className="h-5 w-5 text-emerald-400" />
+                  <TrendingUp className="h-5 w-5 text-white/85" />
                 ) : stats.trend < 0 ? (
                   <TrendingDown className="h-5 w-5 text-red-400" />
                 ) : (
@@ -210,7 +210,7 @@ const MoodInsights = () => {
               <div
                 className={`mt-1 text-lg font-semibold tabular-nums ${
                   stats.trend > 0
-                    ? 'text-emerald-400'
+                    ? 'text-white/85'
                     : stats.trend < 0
                       ? 'text-red-400'
                       : 'text-elec-yellow'
@@ -284,7 +284,7 @@ const MoodInsights = () => {
                       key={day}
                       className={`p-1.5 sm:p-2 rounded-lg text-center ${
                         isBest
-                          ? 'bg-emerald-500/15 border border-emerald-500/30'
+                          ? 'bg-white/[0.02] border border-white/[0.06]'
                           : isWorst
                             ? 'bg-red-500/15 border border-red-500/30'
                             : 'bg-[hsl(0_0%_9%)] border border-white/[0.08]'
@@ -322,7 +322,7 @@ const MoodInsights = () => {
                     key={i}
                     className={`px-4 py-3 rounded-xl text-[13px] border ${
                       insight.type === 'positive'
-                        ? 'bg-emerald-500/10 text-white border-emerald-500/25'
+                        ? 'bg-white/[0.02] text-white border-white/[0.06]'
                         : insight.type === 'concern'
                           ? 'bg-red-500/10 text-white border-red-500/25'
                           : 'bg-[hsl(0_0%_9%)] text-white border-white/[0.08]'

@@ -1,15 +1,6 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import {
-  GraduationCap,
-  ArrowLeft,
-  BookOpen,
-  PoundSterling,
-  Users,
-  Target,
-  Calculator,
-} from 'lucide-react';
+import { ArrowLeft, Calculator } from 'lucide-react';
 import EducationSearchForm, { SearchFilters } from './education/EducationSearchForm';
 import EnhancedEducationCard from './education/EnhancedEducationCard';
 import EducationAnalyticsDashboard from './education/EducationAnalyticsDashboard';
@@ -28,7 +19,6 @@ const EnhancedFurtherEducation = () => {
   const handleSearch = (filters: SearchFilters) => {
     let filtered = enhancedEducationOptions;
 
-    // Apply search term filter
     if (filters.searchTerm) {
       const searchLower = filters.searchTerm.toLowerCase();
       filtered = filtered.filter(
@@ -40,17 +30,14 @@ const EnhancedFurtherEducation = () => {
       );
     }
 
-    // Apply category filter
     if (filters.category && filters.category !== 'All Categories') {
       filtered = filtered.filter((option) => option.category === filters.category);
     }
 
-    // Apply study mode filter
     if (filters.studyMode && filters.studyMode !== 'All Study Modes') {
       filtered = filtered.filter((option) => option.studyMode === filters.studyMode);
     }
 
-    // Apply location filter
     if (filters.location) {
       const locationLower = filters.location.toLowerCase();
       filtered = filtered.filter((option) =>
@@ -58,12 +45,10 @@ const EnhancedFurtherEducation = () => {
       );
     }
 
-    // Apply level filter
     if (filters.level) {
       filtered = filtered.filter((option) => option.level === filters.level);
     }
 
-    // Apply funding type filter
     if (filters.fundingType) {
       filtered = filtered.filter((option) =>
         option.fundingOptions.some((funding) => funding.includes(filters.fundingType))
@@ -94,12 +79,14 @@ const EnhancedFurtherEducation = () => {
   if (viewMode === 'funding') {
     return (
       <div className="space-y-6">
-        <div className="flex items-center gap-4">
-          <Button variant="outline" onClick={handleBackToGrid}>
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Education Options
-          </Button>
-        </div>
+        <Button
+          variant="outline"
+          onClick={handleBackToGrid}
+          className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to education options
+        </Button>
         <FundingCalculator />
       </div>
     );
@@ -108,79 +95,72 @@ const EnhancedFurtherEducation = () => {
   if (viewMode === 'details' && selectedOption) {
     return (
       <div className="space-y-6">
-        <div className="flex items-center gap-4">
-          <Button variant="outline" onClick={handleBackToGrid}>
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Education Options
-          </Button>
+        <Button
+          variant="outline"
+          onClick={handleBackToGrid}
+          className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to education options
+        </Button>
+
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            {selectedOption.institution}
+          </span>
+          <h2 className="text-[20px] font-bold text-white leading-tight">
+            {selectedOption.title}
+          </h2>
+          <p className="text-[14px] text-white/85 leading-relaxed">{selectedOption.description}</p>
+          <p className="text-[13px] text-white/55">
+            Detailed view continues here with comprehensive information, application forms and
+            funding calculators.
+          </p>
         </div>
-
-        <Card className="border-elec-yellow/20 bg-white/5">
-          <CardHeader>
-            <CardTitle className="text-2xl">{selectedOption.title}</CardTitle>
-            <p className="text-amber-400">{selectedOption.institution}</p>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <p className="text-white">{selectedOption.description}</p>
-
-            {/* Detailed information sections would go here */}
-            <div className="text-center py-8">
-              <p className="text-white">
-                Detailed view implementation would continue here with comprehensive information,
-                application forms, funding calculators, etc.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="space-y-4">
-        <h2 className="text-2xl font-semibold flex items-center gap-2">
-          <GraduationCap className="h-6 w-6 text-elec-yellow" />
-          Further Education
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Further education
+        </span>
+        <h2 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-white leading-tight">
+          Advance your qualifications
         </h2>
-        <p className="text-white">
-          Discover comprehensive educational pathways to advance your career in the electrical
-          industry. From HNC certificates to master's degrees, find the right qualification to
-          achieve your professional goals.
+        <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
+          Educational pathways to advance your career in the electrical industry — from HNC
+          certificates to master&apos;s degrees.
         </p>
       </div>
 
-      {/* Analytics Dashboard */}
       <EducationAnalyticsDashboard />
 
-      {/* Action Buttons */}
       <div className="flex flex-wrap gap-2">
         <Button
           onClick={handleShowFundingCalculator}
           variant="outline"
-          className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+          className="h-11 border-white/15 text-white hover:bg-white/[0.05] flex items-center gap-2 touch-manipulation"
         >
-          <Calculator className="mr-2 h-4 w-4" />
-          Funding Calculator
+          <Calculator className="h-4 w-4" />
+          Funding calculator
         </Button>
       </div>
 
-      {/* Search and Filters */}
       <EducationSearchForm onSearch={handleSearch} onReset={handleReset} />
 
-      {/* Results Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <h3 className="text-lg font-medium">Available Programmes</h3>
-          <span className="text-sm text-white">
-            ({filteredOptions.length} {filteredOptions.length === 1 ? 'result' : 'results'})
-          </span>
-        </div>
+      <div className="flex items-baseline justify-between">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Available programmes
+        </span>
+        <span className="text-[12px] text-white/55">
+          {filteredOptions.length} {filteredOptions.length === 1 ? 'result' : 'results'}
+        </span>
       </div>
 
-      {/* Education Options Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredOptions.map((option) => (
           <EnhancedEducationCard
             key={option.id}
@@ -190,106 +170,80 @@ const EnhancedFurtherEducation = () => {
         ))}
       </div>
 
-      {/* Empty State */}
       {filteredOptions.length === 0 && (
-        <Card className="border-elec-yellow/20 bg-white/5">
-          <CardContent className="p-8 text-center">
-            <BookOpen className="h-12 w-12 text-white mx-auto mb-4" />
-            <h3 className="text-lg font-medium mb-2">No programmes found</h3>
-            <p className="text-white mb-4">
-              Try adjusting your search criteria or explore different categories.
-            </p>
-            <Button variant="outline" onClick={handleReset}>
-              Reset Filters
-            </Button>
-          </CardContent>
-        </Card>
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-6 sm:p-8 text-center space-y-3">
+          <h3 className="text-[16px] font-semibold text-white">No programmes found</h3>
+          <p className="text-[14px] text-white/70 leading-relaxed">
+            Try adjusting your search criteria or explore different categories.
+          </p>
+          <Button
+            variant="outline"
+            onClick={handleReset}
+            className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+          >
+            Reset filters
+          </Button>
+        </div>
       )}
 
-      {/* Enhanced Funding Information Card */}
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <PoundSterling className="h-5 w-5 text-elec-yellow" />
-            UK Education Funding Support
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h4 className="font-medium mb-3 text-amber-400">Government Support</h4>
-            <div className="space-y-3 text-sm">
-              <div>
-                <h5 className="font-medium text-white">Advanced Learner Loan (19+)</h5>
-                <p className="text-xs text-white mt-1">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          UK education funding support
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <p className="text-[13px] text-white">Government support</p>
+            <div className="space-y-2">
+              <div className="space-y-1">
+                <p className="text-[13px] text-white/85">Advanced Learner Loan (19+)</p>
+                <p className="text-[12px] text-white/70 leading-relaxed">
                   Available for Level 3-6 qualifications. No upfront fees, only repay when earning
                   £25,000+. 9% of income above threshold.
                 </p>
               </div>
-              <div>
-                <h5 className="font-medium text-white">Student Finance England</h5>
-                <p className="text-xs text-white mt-1">
+              <div className="space-y-1">
+                <p className="text-[13px] text-white/85">Student Finance England</p>
+                <p className="text-[12px] text-white/70 leading-relaxed">
                   Tuition fee loans up to £9,250 for degrees. Maintenance loans available based on
                   household income. Repayment at 9% above £27,295.
                 </p>
               </div>
-              <div>
-                <h5 className="font-medium text-white">Postgraduate Loan</h5>
-                <p className="text-xs text-white mt-1">
-                  Up to £12,167 for Master's study. 6% interest rate. Same repayment terms as
+              <div className="space-y-1">
+                <p className="text-[13px] text-white/85">Postgraduate Loan</p>
+                <p className="text-[12px] text-white/70 leading-relaxed">
+                  Up to £12,167 for Master&apos;s study. 6% interest rate. Same repayment terms as
                   undergraduate loans.
                 </p>
               </div>
             </div>
           </div>
-          <div>
-            <h4 className="font-medium mb-3 text-amber-400">Industry & Employer Support</h4>
-            <div className="space-y-3 text-sm">
-              <div>
-                <h5 className="font-medium text-white">Apprenticeship Levy</h5>
-                <p className="text-xs text-white mt-1">
+          <div className="space-y-2">
+            <p className="text-[13px] text-white">Industry & employer support</p>
+            <div className="space-y-2">
+              <div className="space-y-1">
+                <p className="text-[13px] text-white/85">Apprenticeship Levy</p>
+                <p className="text-[12px] text-white/70 leading-relaxed">
                   Large employers (£3M+ payroll) contribute 0.5% to apprenticeship levy. Can fund
                   degree apprenticeships.
                 </p>
               </div>
-              <div>
-                <h5 className="font-medium text-white">Professional Body Grants</h5>
-                <p className="text-xs text-white mt-1">
-                  IET scholarships (£1,000-£10,000), ECA Educational Trust grants, NECA bursaries
-                  for electrical study.
+              <div className="space-y-1">
+                <p className="text-[13px] text-white/85">Professional body grants</p>
+                <p className="text-[12px] text-white/70 leading-relaxed">
+                  IET scholarships, ECA Educational Trust grants, NECA bursaries for electrical
+                  study.
                 </p>
               </div>
-              <div>
-                <h5 className="font-medium text-white">Career Development Loans</h5>
-                <p className="text-xs text-white mt-1">
+              <div className="space-y-1">
+                <p className="text-[13px] text-white/85">Career Development Loans</p>
+                <p className="text-[12px] text-white/70 leading-relaxed">
                   Bank loans for vocational training. Government pays interest during study and one
                   month after.
                 </p>
               </div>
             </div>
           </div>
-        </CardContent>
-      </Card>
-
-      {/* Quick Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="border-elec-yellow/20 bg-white/5">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-elec-yellow">94%</div>
-            <div className="text-sm text-white">Average Employment Rate</div>
-          </CardContent>
-        </Card>
-        <Card className="border-elec-yellow/20 bg-white/5">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-elec-yellow">£12k+</div>
-            <div className="text-sm text-white">Average Salary Increase</div>
-          </CardContent>
-        </Card>
-        <Card className="border-elec-yellow/20 bg-white/5">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-elec-yellow">78%</div>
-            <div className="text-sm text-white">Get Jobs Before Graduating</div>
-          </CardContent>
-        </Card>
+        </div>
       </div>
     </div>
   );

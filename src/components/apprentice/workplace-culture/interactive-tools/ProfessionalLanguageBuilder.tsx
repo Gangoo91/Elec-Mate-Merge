@@ -1,18 +1,6 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import {
-  ArrowLeft,
-  Lightbulb,
-  Volume2,
-  BookOpen,
-  Target,
-  RotateCcw,
-  Trophy,
-  Zap,
-  Filter,
-} from 'lucide-react';
+import { ArrowLeft, RotateCcw } from 'lucide-react';
 
 interface ProfessionalLanguageBuilderProps {
   onBack: () => void;
@@ -113,7 +101,7 @@ const ProfessionalLanguageBuilder = ({ onBack }: ProfessionalLanguageBuilderProp
       : electricalTerms.filter((term) => term.category === selectedCategory);
 
   const categories = [
-    { id: 'all', label: 'All Terms', count: electricalTerms.length },
+    { id: 'all', label: 'All', count: electricalTerms.length },
     {
       id: 'safety',
       label: 'Safety',
@@ -121,7 +109,7 @@ const ProfessionalLanguageBuilder = ({ onBack }: ProfessionalLanguageBuilderProp
     },
     {
       id: 'tools',
-      label: 'Tools & Equipment',
+      label: 'Tools',
       count: electricalTerms.filter((t) => t.category === 'tools').length,
     },
     {
@@ -135,34 +123,6 @@ const ProfessionalLanguageBuilder = ({ onBack }: ProfessionalLanguageBuilderProp
       count: electricalTerms.filter((t) => t.category === 'communication').length,
     },
   ];
-
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case 'basic':
-        return 'bg-green-500/20 text-green-400 border-green-500/30';
-      case 'intermediate':
-        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
-      case 'advanced':
-        return 'bg-red-500/20 text-red-400 border-red-500/30';
-      default:
-        return 'bg-white/10 text-white border-white/20';
-    }
-  };
-
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case 'safety':
-        return 'bg-red-500/20 text-red-300';
-      case 'tools':
-        return 'bg-blue-500/20 text-blue-300';
-      case 'processes':
-        return 'bg-purple-500/20 text-purple-300';
-      case 'communication':
-        return 'bg-green-500/20 text-green-300';
-      default:
-        return 'bg-white/10 text-white';
-    }
-  };
 
   const generateQuizOptions = (correctTerm: Term) => {
     const otherTerms = electricalTerms
@@ -201,240 +161,224 @@ const ProfessionalLanguageBuilder = ({ onBack }: ProfessionalLanguageBuilderProp
     }, 1500);
   };
 
-  if (mode === 'quiz') {
-    if (showQuizResult) {
-      const isExcellent = quizScore >= 4;
-      const isGood = quizScore >= 3;
+  // Quiz result screen
+  if (mode === 'quiz' && showQuizResult) {
+    const percentage = Math.round((quizScore / 5) * 100);
+    let grade = 'Keep studying';
+    if (quizScore >= 4) grade = 'Excellent';
+    else if (quizScore >= 3) grade = 'Good understanding';
 
-      return (
-        <div className="space-y-6 animate-fade-in">
-          <div className="flex items-center gap-4 mb-6">
-            <Button
-              variant="outline"
-              onClick={() => setMode('browse')}
-              className="flex items-center gap-2 h-11 border-white/20 hover:border-purple-500/50 hover:bg-purple-500/10 touch-manipulation active:scale-95 transition-all"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to Learning
-            </Button>
-            <div>
-              <h2 className="text-2xl font-bold text-white">Quiz Complete!</h2>
-              <p className="text-white">Your vocabulary knowledge results</p>
-            </div>
-          </div>
+    return (
+      <div className="space-y-6 animate-fade-in text-left">
+        <Button
+          variant="ghost"
+          onClick={() => setMode('browse')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back to learning
+        </Button>
 
-          <Card
-            className={`bg-gradient-to-br from-elec-gray to-elec-card ${isExcellent ? 'border-green-500/30' : isGood ? 'border-purple-500/30' : 'border-orange-500/30'} overflow-hidden relative`}
-          >
-            <div
-              className={`absolute top-0 right-0 w-64 h-64 ${isExcellent ? 'bg-green-500/5' : isGood ? 'bg-purple-500/5' : 'bg-orange-500/5'} rounded-full blur-3xl -translate-y-1/2 translate-x-1/2`}
-            />
-            <CardHeader className="relative text-center pb-0">
-              <div
-                className={`mx-auto p-4 rounded-2xl ${isExcellent ? 'bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30' : isGood ? 'bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/30' : 'bg-gradient-to-br from-orange-500/20 to-orange-500/5 border border-orange-500/30'} w-fit mb-4`}
-              >
-                <Trophy
-                  className={`h-10 w-10 ${isExcellent ? 'text-green-400' : isGood ? 'text-purple-400' : 'text-orange-400'}`}
-                />
-              </div>
-              <CardTitle className="text-white text-2xl">Final Score</CardTitle>
-            </CardHeader>
-            <CardContent className="text-center relative space-y-6">
-              <div>
-                <div
-                  className={`text-6xl font-bold mb-2 ${isExcellent ? 'text-green-400' : isGood ? 'text-purple-400' : 'text-orange-400'}`}
-                >
-                  {quizScore}/5
-                </div>
-                <div
-                  className={`inline-block px-6 py-3 rounded-xl ${isExcellent ? 'bg-green-500/10 border border-green-500/20' : isGood ? 'bg-purple-500/10 border border-purple-500/20' : 'bg-orange-500/10 border border-orange-500/20'}`}
-                >
-                  <p
-                    className={`${isExcellent ? 'text-green-300' : isGood ? 'text-purple-300' : 'text-orange-300'}`}
-                  >
-                    {quizScore >= 4
-                      ? 'Excellent vocabulary knowledge!'
-                      : quizScore >= 3
-                        ? 'Good understanding, keep learning!'
-                        : 'Keep studying those terms!'}
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-wrap gap-3 justify-center pt-4 border-t border-white/10">
-                <Button
-                  onClick={startQuiz}
-                  className="h-11 bg-purple-500 hover:bg-purple-500/90 text-white touch-manipulation active:scale-95 transition-all"
-                >
-                  <RotateCcw className="mr-2 h-4 w-4" />
-                  Try Again
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => setMode('browse')}
-                  className="h-11 border-white/20 hover:border-purple-500/50 hover:bg-purple-500/10 touch-manipulation active:scale-95 transition-all"
-                >
-                  Continue Learning
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+        <div className="space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Vocabulary quiz
+          </span>
+          <h2 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
+            Quiz complete
+          </h2>
         </div>
-      );
-    }
 
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+          <div className="flex items-baseline justify-between">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Final score
+            </span>
+            <span className="text-[12px] text-white/85 font-mono">
+              {quizScore}/5 · {percentage}%
+            </span>
+          </div>
+          <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-elec-yellow transition-all duration-500"
+              style={{ width: `${percentage}%` }}
+            />
+          </div>
+          <p className="text-[16px] sm:text-[18px] font-medium text-white">{grade}</p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row gap-2">
+          <Button
+            onClick={startQuiz}
+            className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98]"
+          >
+            <RotateCcw className="mr-2 h-4 w-4" />
+            Try again
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => setMode('browse')}
+            className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+          >
+            Continue learning
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  // Quiz in progress
+  if (mode === 'quiz') {
     const currentTerm = filteredTerms[quizQuestion];
     const quizOptions = generateQuizOptions(currentTerm);
     const quizProgress = ((quizQuestion + 1) / 5) * 100;
 
     return (
-      <div className="space-y-6 animate-fade-in">
-        <div className="flex items-center gap-4 mb-6">
-          <Button
-            variant="outline"
-            onClick={() => setMode('browse')}
-            className="flex items-center gap-2 h-11 border-white/20 hover:border-purple-500/50 hover:bg-purple-500/10 touch-manipulation active:scale-95 transition-all"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Learning
-          </Button>
-          <div>
-            <h2 className="text-2xl font-bold text-white">Vocabulary Quiz</h2>
-            <p className="text-white">Question {quizQuestion + 1} of 5</p>
+      <div className="space-y-6 animate-fade-in text-left">
+        <Button
+          variant="ghost"
+          onClick={() => setMode('browse')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back to learning
+        </Button>
+
+        <div className="space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Vocabulary quiz
+          </span>
+          <h2 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
+            What does this definition describe?
+          </h2>
+        </div>
+
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
+          <div className="flex items-baseline justify-between">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Question {quizQuestion + 1}/5
+            </span>
+            <span className="text-[12px] text-white/85 font-mono">{Math.round(quizProgress)}%</span>
+          </div>
+          <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-elec-yellow transition-all duration-500"
+              style={{ width: `${quizProgress}%` }}
+            />
           </div>
         </div>
 
-        <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-purple-500/20 overflow-hidden relative">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-          <CardHeader className="relative">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/30">
-                  <Lightbulb className="h-5 w-5 text-purple-400" />
-                </div>
-                <CardTitle className="text-white">What does this definition describe?</CardTitle>
-              </div>
-              <Badge
-                variant="outline"
-                className="bg-purple-500/10 text-purple-400 border-purple-500/30"
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5">
+          <p className="text-[16px] sm:text-[18px] font-medium text-white leading-relaxed">
+            {currentTerm.definition}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          {quizOptions.map((option, index) => {
+            const isPicked = selectedAnswer === option.term;
+            const isCorrect = option.term === currentTerm.term;
+            let optionStyle = 'bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.04]';
+            if (selectedAnswer) {
+              if (isPicked && isCorrect) {
+                optionStyle = 'bg-elec-yellow/[0.04] border-elec-yellow/30';
+              } else if (isPicked && !isCorrect) {
+                optionStyle = 'bg-red-500/[0.04] border-red-500/30';
+              } else if (isCorrect) {
+                optionStyle = 'bg-elec-yellow/[0.04] border-elec-yellow/20';
+              }
+            }
+            return (
+              <button
+                key={index}
+                onClick={() => handleQuizAnswer(option.term)}
+                disabled={selectedAnswer !== null}
+                className={`p-4 h-auto text-left rounded-xl border text-[14px] font-medium text-white transition-all touch-manipulation active:scale-[0.99] ${optionStyle}`}
               >
-                {quizQuestion + 1}/5
-              </Badge>
-            </div>
-            <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-gradient-to-r from-purple-500 to-purple-400 transition-all duration-500 ease-out rounded-full"
-                style={{ width: `${quizProgress}%` }}
-              />
-            </div>
-          </CardHeader>
-          <CardContent className="relative space-y-6">
-            <div className="p-5 rounded-xl bg-blue-500/10 border border-blue-500/20">
-              <p className="text-blue-100 text-lg font-medium">{currentTerm.definition}</p>
-            </div>
+                {option.term}
+              </button>
+            );
+          })}
+        </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {quizOptions.map((option, index) => (
-                <Button
-                  key={index}
-                  variant="outline"
-                  className={`p-4 h-auto text-left justify-start transition-all ${
-                    selectedAnswer === option.term
-                      ? option.term === currentTerm.term
-                        ? 'border-green-500 bg-green-500/20 text-green-300'
-                        : 'border-red-500 bg-red-500/20 text-red-300'
-                      : selectedAnswer && option.term === currentTerm.term
-                        ? 'border-green-500 bg-green-500/20 text-green-300'
-                        : 'border-white/10 hover:border-purple-500/50 hover:bg-purple-500/10'
-                  }`}
-                  onClick={() => handleQuizAnswer(option.term)}
-                  disabled={selectedAnswer !== null}
-                >
-                  <span className="font-semibold">{option.term}</span>
-                </Button>
-              ))}
-            </div>
-
-            <div className="flex justify-between items-center pt-4 border-t border-white/10">
-              <div className="text-sm text-white">
-                Score: <span className="text-purple-400 font-semibold">{quizScore}</span>/
-                {quizQuestion + (selectedAnswer ? 1 : 0)}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="text-[12px] text-white/55 font-mono pt-2 border-t border-white/[0.06]">
+          Score: {quizScore}/{quizQuestion + (selectedAnswer ? 1 : 0)}
+        </div>
       </div>
     );
   }
 
+  // Flashcard mode
   if (mode === 'flashcards') {
     const currentTerm = filteredTerms[currentTermIndex];
     const flashcardProgress = ((currentTermIndex + 1) / filteredTerms.length) * 100;
 
     return (
-      <div className="space-y-6 animate-fade-in">
-        <div className="flex items-center gap-4 mb-6">
-          <Button
-            variant="outline"
-            onClick={() => setMode('browse')}
-            className="flex items-center gap-2 h-11 border-white/20 hover:border-green-500/50 hover:bg-green-500/10 touch-manipulation active:scale-95 transition-all"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Learning
-          </Button>
-          <div>
-            <h2 className="text-2xl font-bold text-white">Flashcard Study</h2>
-            <p className="text-white">
-              Card {currentTermIndex + 1} of {filteredTerms.length}
-            </p>
+      <div className="space-y-6 animate-fade-in text-left">
+        <Button
+          variant="ghost"
+          onClick={() => setMode('browse')}
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back to learning
+        </Button>
+
+        <div className="space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Flashcard study
+          </span>
+          <h2 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
+            Card {currentTermIndex + 1} of {filteredTerms.length}
+          </h2>
+        </div>
+
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+          <div className="flex items-baseline justify-between">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Progress
+            </span>
+            <span className="text-[12px] text-white/85 font-mono">
+              {Math.round(flashcardProgress)}%
+            </span>
+          </div>
+          <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-elec-yellow transition-all duration-500"
+              style={{ width: `${flashcardProgress}%` }}
+            />
           </div>
         </div>
 
-        {/* Progress Bar */}
-        <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-gradient-to-r from-green-500 to-green-400 transition-all duration-500 ease-out rounded-full"
-            style={{ width: `${flashcardProgress}%` }}
-          />
-        </div>
-
-        <Card
-          className="bg-gradient-to-br from-elec-gray to-elec-card border-green-500/20 cursor-pointer hover:border-green-500/40 transition-all overflow-hidden relative min-h-[350px]"
+        <button
           onClick={() => setShowDefinition(!showDefinition)}
+          className="w-full rounded-xl border border-white/[0.06] bg-white/[0.02] p-6 sm:p-8 min-h-[300px] flex flex-col justify-center text-center touch-manipulation transition-all active:scale-[0.99]"
         >
-          <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-          <CardContent className="p-8 text-center min-h-[350px] flex flex-col justify-center relative">
-            {!showDefinition ? (
-              <div className="animate-fade-in">
-                <div className="mx-auto p-4 rounded-2xl bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30 w-fit mb-6">
-                  <Target className="h-8 w-8 text-green-400" />
-                </div>
-                <h3 className="text-4xl font-bold text-green-400 mb-6">{currentTerm.term}</h3>
-                <div className="flex justify-center gap-2 mb-6">
-                  <Badge className={getDifficultyColor(currentTerm.difficulty)} variant="outline">
-                    {currentTerm.difficulty}
-                  </Badge>
-                  <Badge className={getCategoryColor(currentTerm.category)} variant="outline">
-                    {currentTerm.category}
-                  </Badge>
-                </div>
-                <p className="text-white text-sm">Tap to reveal definition</p>
+          {!showDefinition ? (
+            <div className="space-y-4 animate-fade-in">
+              <h3 className="text-[28px] sm:text-[32px] font-semibold text-white">{currentTerm.term}</h3>
+              <div className="flex items-baseline justify-center gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span>{currentTerm.difficulty}</span>
+                <span className="text-white/25">·</span>
+                <span>{currentTerm.category}</span>
               </div>
-            ) : (
-              <div className="animate-fade-in">
-                <h3 className="text-2xl font-bold text-white mb-4">{currentTerm.term}</h3>
-                <p className="text-lg text-white mb-6">{currentTerm.definition}</p>
-                <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-left">
-                  <p className="text-blue-300 text-sm">
-                    <strong className="text-blue-400">Usage:</strong> {currentTerm.context}
-                  </p>
-                </div>
-                <p className="text-white text-sm mt-6">Tap to hide definition</p>
+              <p className="text-[12px] text-white/55 pt-4">Tap to reveal definition</p>
+            </div>
+          ) : (
+            <div className="space-y-4 animate-fade-in text-left">
+              <h3 className="text-[20px] sm:text-[22px] font-semibold text-white">{currentTerm.term}</h3>
+              <p className="text-[16px] text-white/85 leading-relaxed">{currentTerm.definition}</p>
+              <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Usage
+                </span>
+                <p className="text-[14px] text-white/85 italic leading-relaxed">{currentTerm.context}</p>
               </div>
-            )}
-          </CardContent>
-        </Card>
+              <p className="text-[12px] text-white/55 text-center pt-2">Tap to hide definition</p>
+            </div>
+          )}
+        </button>
 
-        <div className="flex justify-between gap-4">
+        <div className="flex gap-3">
           <Button
             variant="outline"
             onClick={() => {
@@ -442,7 +386,7 @@ const ProfessionalLanguageBuilder = ({ onBack }: ProfessionalLanguageBuilderProp
               setShowDefinition(false);
             }}
             disabled={currentTermIndex === 0}
-            className="flex-1 h-11 border-white/20 hover:border-green-500/50 hover:bg-green-500/10 disabled:opacity-50 touch-manipulation active:scale-95 transition-all"
+            className="flex-1 h-11 border-white/15 text-white hover:bg-white/[0.05] disabled:opacity-40 touch-manipulation"
           >
             Previous
           </Button>
@@ -452,7 +396,7 @@ const ProfessionalLanguageBuilder = ({ onBack }: ProfessionalLanguageBuilderProp
               setShowDefinition(false);
             }}
             disabled={currentTermIndex === filteredTerms.length - 1}
-            className="flex-1 h-11 bg-green-500 hover:bg-green-500/90 text-black disabled:opacity-50 touch-manipulation active:scale-95 transition-all"
+            className="flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold disabled:opacity-40 touch-manipulation active:scale-[0.98]"
           >
             Next
           </Button>
@@ -461,154 +405,118 @@ const ProfessionalLanguageBuilder = ({ onBack }: ProfessionalLanguageBuilderProp
     );
   }
 
+  // Browse mode
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center gap-4 mb-6">
-        <Button
-          variant="outline"
-          onClick={onBack}
-          className="flex items-center gap-2 h-11 border-white/20 hover:border-purple-500/50 hover:bg-purple-500/10 touch-manipulation active:scale-95 transition-all"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to Tools
-        </Button>
-        <div>
-          <h2 className="text-2xl font-bold text-white">Professional Language Builder</h2>
-          <p className="text-white">Build your electrical industry vocabulary</p>
-        </div>
+    <div className="space-y-6 animate-fade-in text-left">
+      <Button
+        variant="ghost"
+        onClick={onBack}
+        className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+      >
+        <ArrowLeft className="mr-2 h-5 w-5" />
+        Back to tools
+      </Button>
+
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Professional language
+        </span>
+        <h2 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
+          Industry vocabulary
+        </h2>
+        <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
+          Build your electrical industry vocabulary with browse, flashcard and quiz modes.
+        </p>
       </div>
 
-      {/* Mode Selection */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card
-          className="bg-gradient-to-br from-elec-gray to-elec-card border-blue-500/20 cursor-pointer hover:border-blue-500/40 transition-all overflow-hidden relative group"
+      {/* Mode selection */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <button
+          type="button"
           onClick={() => setMode('browse')}
+          className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 text-center space-y-2 touch-manipulation active:scale-[0.98] transition-all"
         >
-          <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
-          <CardContent className="p-6 text-center relative">
-            <div className="mx-auto p-3 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30 w-fit mb-4">
-              <BookOpen className="h-6 w-6 text-blue-400" />
-            </div>
-            <h3 className="font-semibold text-white mb-1">Browse Terms</h3>
-            <p className="text-sm text-white">Explore vocabulary by category</p>
-          </CardContent>
-        </Card>
-
-        <Card
-          className="bg-gradient-to-br from-elec-gray to-elec-card border-green-500/20 cursor-pointer hover:border-green-500/40 transition-all overflow-hidden relative group"
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Mode
+          </span>
+          <h3 className="text-[16px] font-medium text-white">Browse terms</h3>
+          <p className="text-[12px] text-white/55">Explore vocabulary by category</p>
+        </button>
+        <button
+          type="button"
           onClick={() => setMode('flashcards')}
+          className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 text-center space-y-2 touch-manipulation active:scale-[0.98] transition-all"
         >
-          <div className="absolute top-0 right-0 w-32 h-32 bg-green-500/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
-          <CardContent className="p-6 text-center relative">
-            <div className="mx-auto p-3 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30 w-fit mb-4">
-              <Target className="h-6 w-6 text-green-400" />
-            </div>
-            <h3 className="font-semibold text-white mb-1">Flashcards</h3>
-            <p className="text-sm text-white">Study with interactive cards</p>
-          </CardContent>
-        </Card>
-
-        <Card
-          className="bg-gradient-to-br from-elec-gray to-elec-card border-purple-500/20 cursor-pointer hover:border-purple-500/40 transition-all overflow-hidden relative group"
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Mode
+          </span>
+          <h3 className="text-[16px] font-medium text-white">Flashcards</h3>
+          <p className="text-[12px] text-white/55">Study with interactive cards</p>
+        </button>
+        <button
+          type="button"
           onClick={startQuiz}
+          className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 text-center space-y-2 touch-manipulation active:scale-[0.98] transition-all"
         >
-          <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
-          <CardContent className="p-6 text-center relative">
-            <div className="mx-auto p-3 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/30 w-fit mb-4">
-              <Lightbulb className="h-6 w-6 text-purple-400" />
-            </div>
-            <h3 className="font-semibold text-white mb-1">Take Quiz</h3>
-            <p className="text-sm text-white">Test your knowledge</p>
-          </CardContent>
-        </Card>
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Mode
+          </span>
+          <h3 className="text-[16px] font-medium text-white">Take quiz</h3>
+          <p className="text-[12px] text-white/55">Test your knowledge</p>
+        </button>
       </div>
 
-      {/* Category Filter */}
-      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-white/10 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-48 h-48 bg-purple-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-        <CardHeader className="relative">
-          <CardTitle className="text-white flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/30">
-              <Filter className="h-4 w-4 text-purple-400" />
-            </div>
-            Filter by Category
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="relative">
-          <div className="flex flex-wrap gap-2">
-            {categories.map((category) => (
-              <Button
+      {/* Category filter */}
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Filter by category
+        </span>
+        <div className="flex flex-wrap gap-2">
+          {categories.map((category) => {
+            const active = selectedCategory === category.id;
+            return (
+              <button
                 key={category.id}
-                variant="outline"
-                size="sm"
                 onClick={() => setSelectedCategory(category.id)}
-                className={`h-9 transition-all touch-manipulation active:scale-95 ${
-                  selectedCategory === category.id
-                    ? 'bg-purple-500/20 border-purple-500/50 text-purple-300'
-                    : 'border-white/10 hover:border-purple-500/50 hover:bg-purple-500/10'
+                className={`h-9 px-3 rounded-lg border text-[12px] touch-manipulation transition-all inline-flex items-center gap-1.5 ${
+                  active
+                    ? 'bg-elec-yellow text-black font-semibold border-elec-yellow'
+                    : 'bg-white/[0.02] text-white/85 border-white/10 hover:bg-white/[0.05]'
                 }`}
               >
                 {category.label}
-                <Badge
-                  variant="outline"
-                  className={`ml-2 ${
-                    selectedCategory === category.id
-                      ? 'bg-purple-500/20 text-purple-400 border-purple-500/30'
-                      : 'bg-white/5 text-white border-white/10'
-                  }`}
-                >
-                  {category.count}
-                </Badge>
-              </Button>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+                <span className={active ? 'text-black/70' : 'text-white/55'}>{category.count}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
-      {/* Terms List */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* Terms list */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
         {filteredTerms.map((term) => (
-          <Card
+          <div
             key={term.id}
-            className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 hover:border-elec-yellow/40 transition-all overflow-hidden relative group"
+            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
           >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
-            <CardHeader className="relative pb-2">
-              <div className="flex items-start justify-between">
-                <div>
-                  <CardTitle className="text-elec-yellow flex items-center gap-2">
-                    <div className="p-1.5 rounded-lg bg-elec-yellow/10">
-                      <Zap className="h-4 w-4 text-elec-yellow" />
-                    </div>
-                    {term.term}
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      className="p-1 h-auto hover:bg-elec-yellow/10"
-                    >
-                      <Volume2 className="h-3 w-3 text-white" />
-                    </Button>
-                  </CardTitle>
-                  <div className="flex gap-2 mt-3">
-                    <Badge className={getDifficultyColor(term.difficulty)} variant="outline">
-                      {term.difficulty}
-                    </Badge>
-                    <Badge className={getCategoryColor(term.category)} variant="outline">
-                      {term.category}
-                    </Badge>
-                  </div>
-                </div>
+            <div className="flex items-baseline justify-between gap-3">
+              <h3 className="text-[16px] sm:text-[18px] font-medium text-white leading-snug">
+                {term.term}
+              </h3>
+              <div className="flex items-baseline gap-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span>{term.difficulty}</span>
+                <span className="text-white/25">·</span>
+                <span>{term.category}</span>
               </div>
-            </CardHeader>
-            <CardContent className="relative">
-              <p className="text-white mb-4">{term.definition}</p>
-              <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
-                <p className="text-blue-300 text-sm">
-                  <strong className="text-blue-400">Usage:</strong> {term.context}
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+            </div>
+            <p className="text-[14px] text-white/85 leading-relaxed">{term.definition}</p>
+            <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Usage
+              </span>
+              <p className="text-[14px] text-white/85 italic leading-relaxed">{term.context}</p>
+            </div>
+          </div>
         ))}
       </div>
     </div>

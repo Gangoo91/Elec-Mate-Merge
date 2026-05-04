@@ -1,4 +1,4 @@
-import { Brain, ChevronRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
 interface DueTodayCardProps {
   dueCount: number;
@@ -13,18 +13,17 @@ const DueTodayCard = ({ dueCount, onStart }: DueTodayCardProps) => {
       type="button"
       onClick={onStart}
       className="
-        w-full flex items-center gap-3 p-3.5
-        bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl
+        w-full flex items-center gap-3 p-4
+        bg-elec-yellow/[0.04] border border-elec-yellow/20 rounded-xl
         touch-manipulation active:scale-[0.98] transition-transform
         text-left
       "
     >
-      <div className="p-2.5 rounded-xl bg-elec-yellow/20 border border-elec-yellow/30 flex-shrink-0">
-        <Brain className="h-5 w-5 text-elec-yellow" />
-      </div>
-      <div className="flex-1 min-w-0">
-        <h3 className="font-semibold text-white text-sm">Due Today</h3>
-        <p className="text-xs text-white">
+      <div className="flex-1 min-w-0 space-y-1">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+          Due today
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
           {dueCount} {dueCount === 1 ? 'card' : 'cards'} ready for spaced repetition review
         </p>
       </div>

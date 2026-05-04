@@ -306,7 +306,7 @@ export function ApprenticeMessageSheet({ open, onOpenChange }: Props) {
                   setActiveThreadId(null);
                   setMode('new');
                 }}
-                className="h-9 px-3 rounded-lg bg-blue-500 text-white text-[12px] font-semibold hover:bg-blue-400 transition-colors touch-manipulation"
+                className="h-9 px-3 rounded-lg bg-white/[0.02] text-white text-[12px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
               >
                 New thread
               </button>
@@ -332,7 +332,7 @@ export function ApprenticeMessageSheet({ open, onOpenChange }: Props) {
                   value={newSubject}
                   onChange={(e) => setNewSubject(e.target.value)}
                   placeholder="Subject (optional)"
-                  className="w-full h-11 px-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[13px] text-white placeholder:text-white/50 focus:outline-none focus:border-blue-400/40 focus:ring-1 focus:ring-blue-400/20 touch-manipulation"
+                  className="w-full h-11 px-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[13px] text-white placeholder:text-white/50 focus:outline-none focus:border-white/[0.06] focus:ring-1 focus:ring-white/10 touch-manipulation"
                 />
                 <p className="text-[11.5px] text-white/85 leading-snug">
                   Drop your tutor a message. They'll see it the next time they open Student 360.
@@ -349,16 +349,15 @@ export function ApprenticeMessageSheet({ open, onOpenChange }: Props) {
                   onChange={(e) => setDraft(e.target.value)}
                   rows={2}
                   placeholder="Write a message…"
-                  className="flex-1 px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[13px] text-white placeholder:text-white/50 leading-relaxed focus:outline-none focus:border-blue-400/40 focus:ring-1 focus:ring-blue-400/20 touch-manipulation resize-none"
+                  className="flex-1 px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[13px] text-white placeholder:text-white/50 leading-relaxed focus:outline-none focus:border-white/[0.06] focus:ring-1 focus:ring-white/10 touch-manipulation resize-none"
                 />
                 <button
                   type="button"
                   onClick={handleSend}
                   disabled={!draft.trim() || sending}
-                  className={cn(
-                    'shrink-0 h-11 px-4 rounded-lg text-[13px] font-semibold transition-colors touch-manipulation',
+                  className={cn('shrink-0 h-11 px-4 rounded-lg text-[13px] font-semibold transition-colors touch-manipulation',
                     draft.trim() && !sending
-                      ? 'bg-blue-500 text-white hover:bg-blue-400'
+                      ? 'bg-white/[0.02] text-white hover:bg-white/[0.02]'
                       : 'bg-white/[0.05] text-white/40'
                   )}
                 >
@@ -403,7 +402,7 @@ function ThreadList({
                 {t.subject ?? 'Conversation'}
               </div>
               {t.unread_count_student > 0 && (
-                <div className="mt-0.5 text-[10.5px] text-amber-300 tabular-nums">
+                <div className="mt-0.5 text-[10.5px] text-white/85 tabular-nums">
                   {t.unread_count_student} unread
                 </div>
               )}
@@ -431,17 +430,15 @@ function MessageList({ messages }: { messages: Message[] }) {
         return (
           <div key={m.id} className={cn('flex', isMe ? 'justify-end' : 'justify-start')}>
             <div
-              className={cn(
-                'max-w-[80%] rounded-2xl px-3.5 py-2.5 text-[13px] leading-snug',
+              className={cn('max-w-[80%] rounded-2xl px-3.5 py-2.5 text-[13px] leading-snug',
                 isMe
-                  ? 'bg-blue-500 text-white rounded-br-md'
+                  ? 'bg-white/[0.02] text-white rounded-br-md'
                   : 'bg-white/[0.06] text-white border border-white/[0.06] rounded-bl-md'
               )}
             >
               <div className="whitespace-pre-wrap break-words">{m.body}</div>
               <div
-                className={cn(
-                  'mt-1 text-[10px] tabular-nums',
+                className={cn('mt-1 text-[10px] tabular-nums',
                   isMe ? 'text-blue-100/85' : 'text-white/95'
                 )}
               >

@@ -1,11 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Brain, Heart, Target, Zap, Shield, Lightbulb, TrendingUp, Clock } from 'lucide-react';
-
 const StudyPsychologyTab = () => {
   const psychologyTopics = [
     {
-      title: 'Cognitive Load Theory',
-      icon: Brain,
+      title: 'Cognitive load theory',
       description: 'Understanding how your brain processes information',
       content: [
         'Your working memory can only hold 7±2 pieces of information at once',
@@ -20,8 +16,7 @@ const StudyPsychologyTab = () => {
       ],
     },
     {
-      title: 'Growth Mindset',
-      icon: TrendingUp,
+      title: 'Growth mindset',
       description: 'Developing resilience and embracing challenges',
       content: [
         'Believe that electrical skills can be developed through effort and practice',
@@ -36,8 +31,7 @@ const StudyPsychologyTab = () => {
       ],
     },
     {
-      title: 'Motivation & Goal Setting',
-      icon: Target,
+      title: 'Motivation & goal setting',
       description: 'Maintaining drive and direction in your studies',
       content: [
         'Set SMART goals for your electrical training',
@@ -46,14 +40,13 @@ const StudyPsychologyTab = () => {
         'Track progress to maintain momentum',
       ],
       tips: [
-        'Break large goals (like passing 18th Edition) into weekly targets',
+        'Break large goals (like passing BS 7671) into weekly targets',
         'Visualise yourself as a qualified electrician',
         'Find study partners for accountability and support',
       ],
     },
     {
-      title: 'Memory Consolidation',
-      icon: Lightbulb,
+      title: 'Memory consolidation',
       description: 'How memories form and strengthen over time',
       content: [
         'Sleep is crucial for converting short-term memories to long-term storage',
@@ -71,23 +64,23 @@ const StudyPsychologyTab = () => {
 
   const techniques = [
     {
-      title: 'The Testing Effect',
+      title: 'The testing effect',
       description: 'Active recall is more powerful than passive re-reading',
       application: 'Quiz yourself on electrical symbols before checking the answers',
     },
     {
       title: 'Interleaving',
       description: 'Mixing different types of problems improves learning',
-      application: 'Alternate between circuit calculations, safety procedures, and regulations',
+      application: 'Alternate between circuit calculations, safety procedures and regulations',
     },
     {
-      title: 'Elaborative Interrogation',
+      title: 'Elaborative interrogation',
       description: "Asking 'why' and 'how' deepens understanding",
       application:
-        "Don't just memorise cable ratings - understand why they vary with installation method",
+        "Don't just memorise cable ratings — understand why they vary with installation method",
     },
     {
-      title: 'Dual Coding',
+      title: 'Dual coding',
       description: 'Using both visual and verbal information enhances memory',
       application: 'Draw circuit diagrams while explaining the theory aloud',
     },
@@ -95,17 +88,17 @@ const StudyPsychologyTab = () => {
 
   const stressManagement = [
     {
-      technique: 'Box Breathing',
+      technique: 'Box breathing',
       description: '4-4-4-4 breathing pattern to reduce exam anxiety',
       when: 'Before exams or when feeling overwhelmed',
     },
     {
-      technique: 'Progressive Muscle Relaxation',
+      technique: 'Progressive muscle relaxation',
       description: 'Systematically tense and release muscle groups',
       when: 'After long study sessions or before sleep',
     },
     {
-      technique: 'Positive Self-Talk',
+      technique: 'Positive self-talk',
       description: 'Replace negative thoughts with constructive ones',
       when: 'When facing difficult concepts or feeling discouraged',
     },
@@ -118,129 +111,123 @@ const StudyPsychologyTab = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-pink-500/10">
-        <CardHeader>
-          <CardTitle className="text-purple-400 flex items-center gap-2">
-            <Brain className="h-6 w-6" />
-            Psychology of Learning
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-white">
-            Understanding how your mind learns can dramatically improve your study effectiveness.
-            These evidence-based psychological principles will help you master electrical concepts
-            more efficiently and retain information longer.
-          </p>
-        </CardContent>
-      </Card>
-
-      {/* Core Psychology Topics */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {psychologyTopics.map((topic, index) => {
-          const IconComponent = topic.icon;
-          return (
-            <Card key={index} className="border-elec-yellow/20 bg-white/5">
-              <CardHeader>
-                <CardTitle className="text-elec-yellow flex items-center gap-3">
-                  <div className="p-2 bg-elec-yellow/10 rounded-lg">
-                    <IconComponent className="h-5 w-5" />
-                  </div>
-                  {topic.title}
-                </CardTitle>
-                <p className="text-sm text-white">{topic.description}</p>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="font-medium mb-2 text-white">Key Principles:</h4>
-                    <ul className="text-sm text-white space-y-1">
-                      {topic.content.map((point, pointIndex) => (
-                        <li key={pointIndex}>• {point}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="font-medium mb-2 text-white">Practical Applications:</h4>
-                    <ul className="text-sm text-green-400 space-y-1">
-                      {topic.tips.map((tip, tipIndex) => (
-                        <li key={tipIndex}>✓ {tip}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Psychology of learning
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Understanding how your mind learns can dramatically improve your study effectiveness.
+          These evidence-based psychological principles will help you master electrical concepts
+          more efficiently and retain information longer.
+        </p>
       </div>
 
-      {/* Learning Techniques */}
-      <Card className="border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-cyan-500/10">
-        <CardHeader>
-          <CardTitle className="text-blue-400 flex items-center gap-2">
-            <Zap className="h-6 w-6" />
-            Evidence-Based Learning Techniques
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {techniques.map((technique, index) => (
-              <div key={index} className="border border-muted/30 rounded-lg p-4 bg-background/30">
-                <h4 className="font-medium text-white mb-2">{technique.title}</h4>
-                <p className="text-sm text-white mb-3">{technique.description}</p>
-                <div className="bg-blue-500/10 border border-blue-500/20 rounded p-3">
-                  <p className="text-sm text-blue-300">
-                    <strong>For Electrical Training:</strong> {technique.application}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {psychologyTopics.map((topic, index) => (
+          <div
+            key={index}
+            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
+          >
+            <div className="space-y-1">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                {topic.title}
+              </span>
+              <p className="text-[13px] text-white/70">{topic.description}</p>
+            </div>
 
-      {/* Stress Management */}
-      <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/10">
-        <CardHeader>
-          <CardTitle className="text-green-400 flex items-center gap-2">
-            <Shield className="h-6 w-6" />
-            Stress Management & Wellbeing
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {stressManagement.map((item, index) => (
-              <div key={index} className="border border-muted/30 rounded-lg p-4 bg-background/30">
-                <h4 className="font-medium text-white mb-2">{item.technique}</h4>
-                <p className="text-sm text-white mb-2">{item.description}</p>
-                <div className="flex items-center gap-2 text-xs text-green-400">
-                  <Clock className="h-3 w-3" />
-                  <span>{item.when}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+            <div className="space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Key principles
+              </span>
+              <ul className="space-y-1">
+                {topic.content.map((point, pointIndex) => (
+                  <li
+                    key={pointIndex}
+                    className="flex items-start gap-2 text-[13px] text-white/85"
+                  >
+                    <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-      {/* Summary Card */}
-      <Card className="border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-red-500/10">
-        <CardHeader>
-          <CardTitle className="text-orange-400 flex items-center gap-2">
-            <Heart className="h-5 w-5" />
-            The Psychology of Success
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-white">
-            Remember: Your mindset and approach to learning are just as important as the time you
-            spend studying. By understanding how your brain works and applying these psychological
-            principles, you'll not only learn electrical concepts more effectively but also develop
-            the mental resilience needed for a successful career in the electrical industry.
-            Learning is a skill that can be improved with the right techniques and mindset.
-          </p>
-        </CardContent>
-      </Card>
+            <div className="space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Practical applications
+              </span>
+              <ul className="space-y-1">
+                {topic.tips.map((tip, tipIndex) => (
+                  <li
+                    key={tipIndex}
+                    className="flex items-start gap-2 text-[13px] text-white/85"
+                  >
+                    <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                    <span>{tip}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Evidence-based learning techniques
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {techniques.map((technique, index) => (
+            <div
+              key={index}
+              className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
+            >
+              <h4 className="text-[14px] font-semibold text-white">{technique.title}</h4>
+              <p className="text-[13px] text-white/70 leading-relaxed">{technique.description}</p>
+              <div className="rounded-md border border-white/10 bg-white/[0.03] p-2.5 space-y-0.5">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  For electrical training
+                </span>
+                <p className="text-[12px] text-white/85">{technique.application}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Stress management & wellbeing
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {stressManagement.map((item, index) => (
+            <div
+              key={index}
+              className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
+            >
+              <h4 className="text-[14px] font-semibold text-white">{item.technique}</h4>
+              <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
+              <p className="text-[12px] text-white/55">
+                <span className="text-white/70">When: </span>
+                {item.when}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          The psychology of success
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Your mindset and approach to learning are just as important as the time you spend
+          studying. By understanding how your brain works and applying these psychological
+          principles, you&apos;ll not only learn electrical concepts more effectively but also
+          develop the mental resilience needed for a successful career in the electrical industry.
+          Learning is a skill that can be improved with the right techniques and mindset.
+        </p>
+      </div>
     </div>
   );
 };

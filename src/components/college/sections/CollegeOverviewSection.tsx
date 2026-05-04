@@ -395,14 +395,21 @@ function NumberedHeader({
   );
   if (!collapsible) return inner;
   return (
-    <button
-      type="button"
+    <div
+      role="button"
+      tabIndex={0}
       onClick={onToggle}
-      className="w-full text-left touch-manipulation active:opacity-70 transition-opacity"
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onToggle?.();
+        }
+      }}
+      className="w-full text-left touch-manipulation active:opacity-70 transition-opacity cursor-pointer"
       aria-expanded={!isCollapsed}
     >
       {inner}
-    </button>
+    </div>
   );
 }
 

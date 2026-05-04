@@ -1,5 +1,4 @@
 import ToolCard from './ToolCard';
-import { Shield, HardHat, AlertTriangle } from 'lucide-react';
 
 const PPETab = () => {
   const basicPPETools = [
@@ -79,19 +78,24 @@ const PPETab = () => {
   ];
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="text-center space-y-2">
-        <h2 className="text-2xl font-semibold text-elec-yellow">PPE & Safety Equipment</h2>
-        <p className="text-white max-w-3xl mx-auto leading-relaxed">
+    <div className="px-4 sm:px-6 py-4 sm:py-6 space-y-6">
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          PPE & safety
+        </span>
+        <h2 className="text-[22px] sm:text-[26px] font-semibold text-white leading-tight">
+          PPE & safety equipment
+        </h2>
+        <p className="text-[14px] text-white/85 leading-relaxed max-w-2xl">
           Personal Protective Equipment is essential for every UK electrical apprentice. Your safety
           is paramount - never compromise on PPE quality or suitability.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         <ToolCard
-          title="Basic PPE (Required Daily)"
-          icon={<Shield className="h-8 w-8 text-elec-yellow" />}
+          title="Basic PPE (required daily)"
+          icon={null}
           description="Minimum safety equipment for everyday electrical work on construction sites and domestic installations."
           items={basicPPETools}
           apprenticeTip="Buy quality PPE that's comfortable - you'll wear it all day. Cheap safety boots will cause foot problems. Get properly fitted for safety glasses if you wear prescription glasses."
@@ -99,8 +103,8 @@ const PPETab = () => {
         />
 
         <ToolCard
-          title="Specialist PPE (Task-Specific)"
-          icon={<HardHat className="h-8 w-8 text-elec-yellow" />}
+          title="Specialist PPE (task-specific)"
+          icon={null}
           description="Additional protection for specific tasks and higher-risk electrical work environments."
           items={specialistPPETools}
           apprenticeTip="Don't buy specialist PPE until you need it. Employers usually provide arc flash suits and Class 2+ electrical gloves. Focus on good basic PPE first."
@@ -108,49 +112,61 @@ const PPETab = () => {
         />
       </div>
 
-      <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-4">
-        <h3 className="text-lg font-medium text-orange-300 mb-2 flex items-center gap-2">
-          <Shield className="h-5 w-5" />
-          PPE Regulations & Best Practices in the UK
-        </h3>
-        <div className="space-y-2 text-sm text-white leading-relaxed">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          PPE regulations & best practices
+        </span>
+        <div className="space-y-2 text-[14px] text-white/85 leading-relaxed">
           <p>
-            <strong className="text-orange-300">Legal Requirements:</strong> The Personal Protective
-            Equipment at Work Regulations 1992 (amended in 2022) requires employers to provide
-            adequate PPE. However, apprentices should have their own basic kit for flexibility.
+            <strong>Legal requirements:</strong> The Personal Protective Equipment at Work
+            Regulations 1992 (amended in 2022) requires employers to provide adequate PPE. However,
+            apprentices should have their own basic kit for flexibility.
           </p>
           <p>
-            <strong className="text-orange-300">Maintenance:</strong> PPE must be properly
-            maintained, stored, and replaced when damaged. Check PPE before each use - damaged
-            equipment provides no protection.
+            <strong>Maintenance:</strong> PPE must be properly maintained, stored, and replaced when
+            damaged. Check PPE before each use - damaged equipment provides no protection.
           </p>
           <p>
-            <strong className="text-orange-300">Training:</strong> You must be trained in the
-            correct use of PPE. If you're unsure about any equipment, ask your supervisor or trainer
-            for guidance.
+            <strong>Training:</strong> You must be trained in the correct use of PPE. If you're
+            unsure about any equipment, ask your supervisor or trainer for guidance.
           </p>
           <p>
-            <strong className="text-orange-300">Cost Expectations:</strong> Basic PPE kit: £80-150.
-            This investment protects you throughout your career. Quality items last longer and
-            provide better protection.
+            <strong>Cost expectations:</strong> Basic PPE kit: £80-150. This investment protects you
+            throughout your career. Quality items last longer and provide better protection.
           </p>
         </div>
       </div>
 
-      <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
-        <h3 className="text-lg font-medium text-red-300 mb-2 flex items-center gap-2">
-          <AlertTriangle className="h-5 w-5" />
-          Critical PPE Safety Points
-        </h3>
-        <ul className="space-y-1 text-sm text-white">
-          <li>• Never work without appropriate PPE - no job is worth an injury</li>
-          <li>
-            • Regular work gloves are NOT suitable for electrical work - use insulated gloves when
-            required
+      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+          Critical PPE safety
+        </span>
+        <ul className="space-y-1.5 text-[14px] text-white/85 leading-relaxed">
+          <li className="flex items-start gap-2">
+            <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+            <span>Never work without appropriate PPE - no job is worth an injury</span>
           </li>
-          <li>• Replace damaged PPE immediately - it won't protect you if it's compromised</li>
-          <li>• Ensure PPE is correctly fitted - loose or tight equipment is less effective</li>
-          <li>• Keep spare PPE items - safety glasses and gloves are easily lost or damaged</li>
+          <li className="flex items-start gap-2">
+            <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+            <span>
+              Regular work gloves are NOT suitable for electrical work - use insulated gloves when
+              required
+            </span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+            <span>Replace damaged PPE immediately - it won't protect you if it's compromised</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+            <span>Ensure PPE is correctly fitted - loose or tight equipment is less effective</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+            <span>
+              Keep spare PPE items - safety glasses and gloves are easily lost or damaged
+            </span>
+          </li>
         </ul>
       </div>
     </div>

@@ -12,10 +12,10 @@ interface Goal {
 }
 
 const categories = [
-  { value: 'wellbeing', label: 'Wellbeing', color: 'text-pink-400 bg-pink-500/15' },
-  { value: 'work', label: 'Work', color: 'text-amber-400 bg-amber-500/15' },
-  { value: 'learning', label: 'Learning', color: 'text-blue-400 bg-blue-500/15' },
-  { value: 'personal', label: 'Personal', color: 'text-emerald-400 bg-emerald-500/15' },
+  { value: 'wellbeing', label: 'Wellbeing', color: 'text-white/85 bg-white/[0.02]' },
+  { value: 'work', label: 'Work', color: 'text-white/85 bg-white/[0.02]' },
+  { value: 'learning', label: 'Learning', color: 'text-white/85 bg-white/[0.02]' },
+  { value: 'personal', label: 'Personal', color: 'text-white/85 bg-white/[0.02]' },
 ];
 
 const GoalSettingTracker = () => {
@@ -50,15 +50,15 @@ const GoalSettingTracker = () => {
             return (
               <div key={goal.id} className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
                 <button onClick={() => handleProgress(goal)} className="touch-manipulation active:scale-[0.95]">
-                  <div className="w-10 h-10 rounded-xl bg-green-500/15 flex items-center justify-center flex-shrink-0 relative">
-                    <span className="text-[10px] font-bold text-green-400">{goal.progress}%</span>
+                  <div className="w-10 h-10 rounded-xl bg-white/[0.02] flex items-center justify-center flex-shrink-0 relative">
+                    <span className="text-[10px] font-bold text-white/85">{goal.progress}%</span>
                   </div>
                 </button>
                 <div className="flex-1 min-w-0">
                   <h4 className="text-sm font-medium text-white truncate">{goal.title}</h4>
                   {cat && <span className={cn('text-[9px] font-bold px-1.5 py-0.5 rounded mt-0.5 inline-block', cat.color)}>{cat.label}</span>}
                 </div>
-                <button onClick={() => deleteGoal?.(goal.id)} className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-red-500/15 touch-manipulation">
+                <button onClick={() => deleteGoal?.(goal.id)} className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-white/[0.02] touch-manipulation">
                   <Trash2 className="h-3.5 w-3.5 text-white hover:text-red-400" />
                 </button>
               </div>
@@ -74,7 +74,7 @@ const GoalSettingTracker = () => {
           <p className="text-[10px] text-white uppercase tracking-wider font-bold">Completed</p>
           {completedGoals.slice(0, 3).map((goal: Goal) => (
             <div key={goal.id} className="flex items-center gap-2 py-2">
-              <Check className="h-4 w-4 text-emerald-400 flex-shrink-0" />
+              <Check className="h-4 w-4 text-white/85 flex-shrink-0" />
               <span className="text-xs text-white line-through truncate">{goal.title}</span>
             </div>
           ))}
@@ -95,12 +95,12 @@ const GoalSettingTracker = () => {
           <div className="flex gap-1.5">
             {categories.map((c) => (
               <button key={c.value} onClick={() => setCategory(c.value)} className={cn('flex-1 h-9 rounded-lg text-[10px] font-semibold touch-manipulation active:scale-[0.97] transition-all',
-                category === c.value ? c.color + ' border border-current/20' : 'bg-white/[0.03] border border-white/[0.06] text-white'
+                category === c.value ? c.color + 'border border-current/20' : 'bg-white/[0.03] border border-white/[0.06] text-white'
               )}>{c.label}</button>
             ))}
           </div>
           <div className="flex gap-2">
-            <button onClick={handleAdd} disabled={!title.trim()} className="flex-1 h-11 rounded-xl bg-green-500/20 border border-green-500/30 text-green-300 text-xs font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-30">Save Goal</button>
+            <button onClick={handleAdd} disabled={!title.trim()} className="flex-1 h-11 rounded-xl bg-white/[0.02] border border-white/[0.06] text-white/85 text-xs font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-30">Save Goal</button>
             <button onClick={() => setShowAdd(false)} className="h-11 px-4 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-xs touch-manipulation active:scale-[0.98]">Cancel</button>
           </div>
         </div>

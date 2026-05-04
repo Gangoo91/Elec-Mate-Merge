@@ -62,12 +62,14 @@ const EvidenceForm = ({ onAddEvidence, isUploading, setIsUploading }: EvidenceFo
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="evidence-title">Title</Label>
+        <Label htmlFor="evidence-title" className="text-[13px] text-white/85">
+          Title
+        </Label>
         <Input
           id="evidence-title"
           placeholder="Brief title of your training activity"
           required
-          className="bg-white/10"
+          className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
@@ -75,9 +77,11 @@ const EvidenceForm = ({ onAddEvidence, isUploading, setIsUploading }: EvidenceFo
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="training-type">Training Type</Label>
+          <Label htmlFor="training-type" className="text-[13px] text-white/85">
+            Training type
+          </Label>
           <Select value={type} onValueChange={setType}>
-            <SelectTrigger id="training-type" className="bg-white/10">
+            <SelectTrigger id="training-type" className="h-11 touch-manipulation">
               <SelectValue placeholder="Select type" />
             </SelectTrigger>
             <SelectContent>
@@ -90,12 +94,14 @@ const EvidenceForm = ({ onAddEvidence, isUploading, setIsUploading }: EvidenceFo
           </Select>
         </div>
         <div className="space-y-2">
-          <Label htmlFor="training-date">Date</Label>
+          <Label htmlFor="training-date" className="text-[13px] text-white/85">
+            Date
+          </Label>
           <Input
             id="training-date"
             type="date"
             required
-            className="bg-white/10"
+            className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
             value={date}
             onChange={(e) => setDate(e.target.value)}
           />
@@ -103,19 +109,21 @@ const EvidenceForm = ({ onAddEvidence, isUploading, setIsUploading }: EvidenceFo
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="training-description">Description</Label>
+        <Label htmlFor="training-description" className="text-[13px] text-white/85">
+          Description
+        </Label>
         <Textarea
           id="training-description"
           placeholder="Describe what you learned and how it relates to your apprenticeship"
           required
-          className="min-h-[100px] bg-white/10"
+          className="min-h-[120px] text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500/20"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
       </div>
 
       <div className="space-y-2">
-        <Label>Upload Evidence Files</Label>
+        <Label className="text-[13px] text-white/85">Upload evidence files</Label>
         <FileUpload
           onFileSelect={handleFileSelect}
           selectedFiles={selectedFiles}
@@ -128,7 +136,9 @@ const EvidenceForm = ({ onAddEvidence, isUploading, setIsUploading }: EvidenceFo
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="hours-spent">Hours Spent</Label>
+        <Label htmlFor="hours-spent" className="text-[13px] text-white/85">
+          Hours spent
+        </Label>
         <Input
           id="hours-spent"
           type="number"
@@ -136,18 +146,22 @@ const EvidenceForm = ({ onAddEvidence, isUploading, setIsUploading }: EvidenceFo
           step="0.5"
           placeholder="E.g., 3.5"
           required
-          className="bg-white/10"
+          className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
           value={hours}
           onChange={(e) => setHours(e.target.value)}
         />
-        <p className="text-xs text-white">
+        <p className="text-[11px] text-white/55">
           This will be added to your off-the-job training hours total
         </p>
       </div>
 
       <div className="flex justify-end">
-        <Button type="submit" className="w-full" disabled={isUploading}>
-          {isUploading ? 'Uploading...' : 'Add to Training Record'}
+        <Button
+          type="submit"
+          className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:opacity-40"
+          disabled={isUploading}
+        >
+          {isUploading ? 'Uploading...' : 'Add to training record'}
         </Button>
       </div>
     </form>

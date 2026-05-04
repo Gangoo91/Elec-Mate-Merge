@@ -1,10 +1,7 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
-import { Calculator, PoundSterling, Calendar, TrendingUp } from 'lucide-react';
 
 interface ToolCategory {
   name: string;
@@ -76,151 +73,125 @@ const BudgetPlanningCalculator = () => {
 
   const budget = calculateBudget();
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case 'essential':
-        return 'bg-red-500/20 text-red-400 border-red-500/30';
-      case 'recommended':
-        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
-      case 'optional':
-        return 'bg-green-500/20 text-green-400 border-green-500/30';
-      default:
-        return 'bg-white/10 text-white border-white/20';
-    }
-  };
-
   return (
-    <Card className="border-elec-yellow/20 bg-white/5">
-      <CardHeader>
-        <div className="flex items-center gap-2">
-          <Calculator className="h-5 w-5 text-elec-yellow" />
-          <CardTitle className="text-elec-yellow">Budget Planning Calculator</CardTitle>
-        </div>
-        <p className="text-sm text-white">
-          Plan your tool investments based on your available budget and timeframe
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5">
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Budget planner
+        </span>
+        <h3 className="text-[18px] font-semibold text-white leading-tight">
+          Budget planning calculator
+        </h3>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Plan your tool investments based on your available budget and timeframe.
         </p>
-      </CardHeader>
+      </div>
 
-      <CardContent className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="monthly-budget" className="text-white">
-              Monthly Budget (£)
-            </Label>
-            <Input
-              id="monthly-budget"
-              type="number"
-              placeholder="150"
-              value={monthlyBudget}
-              onChange={(e) => setMonthlyBudget(e.target.value)}
-              className="bg-white/5 border-elec-yellow/30"
-            />
-          </div>
-
-          <div>
-            <Label htmlFor="timeframe" className="text-white">
-              Planning Period (months)
-            </Label>
-            <Input
-              id="timeframe"
-              type="number"
-              placeholder="12"
-              value={timeframe}
-              onChange={(e) => setTimeframe(e.target.value)}
-              className="bg-white/5 border-elec-yellow/30"
-            />
-          </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label htmlFor="monthly-budget" className="text-[13px] text-white/85">
+            Monthly budget (£)
+          </Label>
+          <Input
+            id="monthly-budget"
+            type="number"
+            placeholder="150"
+            value={monthlyBudget}
+            onChange={(e) => setMonthlyBudget(e.target.value)}
+            className="h-11 text-base touch-manipulation border-white/15 focus:border-elec-yellow focus:ring-elec-yellow"
+          />
         </div>
 
-        {budget && (
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3 text-center">
-                <PoundSterling className="h-6 w-6 text-blue-400 mx-auto mb-1" />
-                <p className="text-sm text-white">Total Budget</p>
-                <p className="text-lg font-bold text-blue-400">£{budget.totalBudget}</p>
-              </div>
-
-              <div
-                className={`border rounded-lg p-3 text-center ${
-                  budget.canAffordEssentials
-                    ? 'bg-green-500/10 border-green-500/30'
-                    : 'bg-red-500/10 border-red-500/30'
-                }`}
-              >
-                <TrendingUp
-                  className={`h-6 w-6 mx-auto mb-1 ${
-                    budget.canAffordEssentials ? 'text-green-400' : 'text-red-400'
-                  }`}
-                />
-                <p className="text-sm text-white">Essential Tools</p>
-                <p
-                  className={`text-lg font-bold ${
-                    budget.canAffordEssentials ? 'text-green-400' : 'text-red-400'
-                  }`}
-                >
-                  £{budget.essentialCosts}
-                </p>
-              </div>
-
-              <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-3 text-center">
-                <Calendar className="h-6 w-6 text-elec-yellow mx-auto mb-1" />
-                <p className="text-sm text-white">Remaining</p>
-                <p className="text-lg font-bold text-elec-yellow">£{budget.remainingBudget}</p>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              {!budget.canAffordEssentials && (
-                <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3">
-                  <p className="text-red-300 font-medium">Budget Alert</p>
-                  <p className="text-sm text-red-200">
-                    Your current budget may not cover all essential tools. Consider extending your
-                    timeframe or increasing monthly allocation.
-                  </p>
-                </div>
-              )}
-
-              {budget.canAffordQuality && (
-                <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
-                  <p className="text-green-300 font-medium">Excellent Planning!</p>
-                  <p className="text-sm text-green-200">
-                    Your budget allows for quality essential tools plus some recommended items.
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        <div>
-          <h4 className="font-medium text-white mb-3">Tool Category Breakdown</h4>
-          <div className="space-y-3">
-            {toolCategories.map((category, index) => (
-              <div
-                key={index}
-                className="flex items-center justify-between p-3 border border-elec-yellow/20 rounded-lg"
-              >
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="font-medium text-white">{category.name}</span>
-                    <Badge className={getPriorityColor(category.priority)} variant="outline">
-                      {category.priority}
-                    </Badge>
-                  </div>
-                  <p className="text-xs text-white">{category.timeframe}</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-sm text-elec-yellow">
-                    £{category.minCost} - £{category.maxCost}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="space-y-2">
+          <Label htmlFor="timeframe" className="text-[13px] text-white/85">
+            Planning period (months)
+          </Label>
+          <Input
+            id="timeframe"
+            type="number"
+            placeholder="12"
+            value={timeframe}
+            onChange={(e) => setTimeframe(e.target.value)}
+            className="h-11 text-base touch-manipulation border-white/15 focus:border-elec-yellow focus:ring-elec-yellow"
+          />
         </div>
-      </CardContent>
-    </Card>
+      </div>
+
+      {budget && (
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Total budget
+              </span>
+              <p className="text-[18px] font-semibold text-white">£{budget.totalBudget}</p>
+            </div>
+            <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Essential tools
+              </span>
+              <p className="text-[18px] font-semibold text-white">£{budget.essentialCosts}</p>
+            </div>
+            <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Remaining
+              </span>
+              <p className="text-[18px] font-semibold text-elec-yellow">£{budget.remainingBudget}</p>
+            </div>
+          </div>
+
+          {!budget.canAffordEssentials && (
+            <div className="rounded-lg border border-red-500/30 bg-red-500/[0.04] p-3 space-y-1">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+                Budget alert
+              </span>
+              <p className="text-[14px] text-white/85 leading-relaxed">
+                Your current budget may not cover all essential tools. Consider extending your
+                timeframe or increasing monthly allocation.
+              </p>
+            </div>
+          )}
+
+          {budget.canAffordQuality && (
+            <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Excellent planning
+              </span>
+              <p className="text-[14px] text-white/85 leading-relaxed">
+                Your budget allows for quality essential tools plus some recommended items.
+              </p>
+            </div>
+          )}
+        </div>
+      )}
+
+      <div className="space-y-3 pt-2 border-t border-white/[0.06]">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Tool category breakdown
+        </span>
+        <div className="space-y-2">
+          {toolCategories.map((category, index) => (
+            <div
+              key={index}
+              className="flex items-baseline justify-between gap-3 rounded-lg border border-white/[0.06] bg-white/[0.02] p-3"
+            >
+              <div className="space-y-1">
+                <div className="flex items-baseline gap-3 text-[10px] uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[14px] text-white normal-case tracking-normal font-medium">
+                    {category.name}
+                  </span>
+                  <span>{category.priority}</span>
+                </div>
+                <p className="text-[12px] text-white/55">{category.timeframe}</p>
+              </div>
+              <p className="text-[13px] text-white/85 font-mono">
+                £{category.minCost} - £{category.maxCost}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };
 

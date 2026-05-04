@@ -48,22 +48,35 @@ const OJTHeader = ({ handleDownloadReport }: OJTHeaderProps) => {
     return null;
   }
 
-  // Desktop header remains the same
   return (
     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Off the Job Training</h1>
-        <p className="text-sm sm:text-base text-white">
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Off the job training
+        </span>
+        <h1 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
+          Training overview
+        </h1>
+        <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
           Track, manage and provide evidence for your 20% off-the-job training requirements
         </p>
       </div>
       <div className="flex gap-2">
-        <Button variant="outline" onClick={generateReport} className="flex items-center gap-2">
+        <Button
+          variant="outline"
+          onClick={generateReport}
+          className="flex items-center gap-2 h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+        >
           <Download className="h-4 w-4" />
-          Export Report
+          Export report
         </Button>
         <Link to="/apprentice">
-          <Button variant="outline">Back</Button>
+          <Button
+            variant="outline"
+            className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+          >
+            Back
+          </Button>
         </Link>
       </div>
     </div>

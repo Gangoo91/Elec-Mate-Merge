@@ -24,12 +24,12 @@ const KIND_LABEL: Record<CollegeActivityKind, string> = {
 };
 
 const KIND_TONE: Record<CollegeActivityKind, string> = {
-  tutor_comment: 'text-blue-300',
-  assessor_verdict: 'text-emerald-300',
-  iqa_verdict: 'text-emerald-300',
-  new_goal: 'text-purple-300',
-  tutor_goal_comment: 'text-purple-300',
-  observation: 'text-cyan-300',
+  tutor_comment: 'text-white/85',
+  assessor_verdict: 'text-white/85',
+  iqa_verdict: 'text-white/85',
+  new_goal: 'text-white/85',
+  tutor_goal_comment: 'text-white/85',
+  observation: 'text-white/85',
 };
 
 function fmtRel(iso: string): string {
@@ -78,7 +78,7 @@ export function MyActivityFeedCard() {
             Recent activity
           </div>
           {unread_count > 0 && (
-            <span className="text-[10.5px] tabular-nums text-amber-300">
+            <span className="text-[10.5px] tabular-nums text-white/85">
               {unread_count} {unread_count === 1 ? 'item needs' : 'items need'} action
             </span>
           )}
@@ -92,7 +92,7 @@ export function MyActivityFeedCard() {
           <button
             type="button"
             onClick={() => setExpanded((x) => !x)}
-            className="mt-2 px-1 text-[11.5px] font-medium text-cyan-300 hover:text-cyan-200 transition-colors touch-manipulation"
+            className="mt-2 px-1 text-[11.5px] font-medium text-white/85 hover:text-white/85 transition-colors touch-manipulation"
           >
             {expanded ? 'Show less' : `Show ${Math.min(15, items.length - 5)} more`}
           </button>
@@ -124,8 +124,7 @@ function ActivityRow({ item, onClick }: { item: CollegeActivityItem; onClick: ()
       >
         <div className="min-w-0 flex-1">
           <div
-            className={cn(
-              'text-[10.5px] font-medium uppercase tracking-[0.16em]',
+            className={cn('text-[10.5px] font-medium uppercase tracking-[0.16em]',
               KIND_TONE[item.kind]
             )}
           >
@@ -142,7 +141,7 @@ function ActivityRow({ item, onClick }: { item: CollegeActivityItem; onClick: ()
         </div>
         <div className="shrink-0 flex items-center gap-2">
           {item.is_unread && (
-            <span className="h-1.5 w-1.5 rounded-full bg-amber-400" aria-label="unread" />
+            <span className="h-1.5 w-1.5 rounded-full bg-white/[0.02]" aria-label="unread" />
           )}
           <span className="text-[10.5px] text-white/95 tabular-nums whitespace-nowrap">
             {fmtRel(item.occurred_at)}

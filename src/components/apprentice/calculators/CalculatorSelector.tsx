@@ -6,7 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Book } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import StandardsReference from './StandardsReference';
 
@@ -191,13 +191,16 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
   return (
     <div className="space-y-3">
       {/* Calculator Selection */}
-      <Label htmlFor="calculator-select" className="text-sm font-medium text-white block">
-        Select Calculator
+      <Label
+        htmlFor="calculator-select"
+        className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 block"
+      >
+        Select calculator
       </Label>
       <Select value={calculatorType} onValueChange={setCalculatorType}>
         <SelectTrigger
           id="calculator-select"
-          className="w-full h-12 border-white/10 text-white focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow"
+          className="w-full h-11 bg-white/[0.04] border-white/10 text-white focus:border-yellow-500 focus:ring-yellow-500 touch-manipulation"
         >
           <SelectValue placeholder="Choose a calculator" />
         </SelectTrigger>
@@ -208,14 +211,14 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
 
             return (
               <div key={category}>
-                <div className="px-3 py-2 text-xs font-semibold text-elec-yellow bg-white/5 sticky top-0 border-b border-white/5">
+                <div className="px-3 py-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 bg-white/[0.02] sticky top-0 border-b border-white/[0.06]">
                   {category}
                 </div>
                 {calcs.map((calc) => (
                   <SelectItem
                     key={calc.value}
                     value={calc.value}
-                    className="py-3 text-sm hover:bg-elec-yellow/10 focus:bg-elec-yellow/10 cursor-pointer"
+                    className="py-3 text-sm cursor-pointer"
                   >
                     <div className="flex items-center gap-2 w-full">
                       <span className="flex-1 text-left">{calc.label}</span>
@@ -232,12 +235,14 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
       <button
         type="button"
         onClick={() => setShowStandards(!showStandards)}
-        className="flex items-center gap-2 h-11 touch-manipulation active:opacity-70 transition-opacity"
+        className="flex items-center gap-2 h-11 touch-manipulation active:opacity-70 transition-opacity text-white/85 hover:text-white"
       >
-        <Book className="h-4 w-4 text-blue-400" />
-        <span className="text-sm text-white">
-          {showStandards ? 'Hide' : 'Show'} Standards Reference
+        <span className="text-[12px]">
+          {showStandards ? 'Hide' : 'Show'} standards reference
         </span>
+        <ChevronDown
+          className={`h-3.5 w-3.5 text-white/55 transition-transform duration-200 ${showStandards ? 'rotate-180' : ''}`}
+        />
       </button>
 
       {/* Standards Reference */}

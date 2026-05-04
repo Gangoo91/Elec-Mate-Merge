@@ -1,26 +1,18 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Clock, Target, AlertCircle, CheckCircle } from 'lucide-react';
-
 const TimeManagementFundamentalsTab = () => {
   const principles = [
     {
-      title: 'Priority Matrix (Eisenhower Method)',
+      title: 'Priority matrix (Eisenhower method)',
       description: 'Categorise tasks by urgency and importance',
-      icon: Target,
-      color: 'border-blue-500/20 bg-blue-500/10',
       steps: [
-        'Urgent & Important: Do immediately (safety issues, deadlines)',
-        'Important, Not Urgent: Schedule (study time, skills development)',
-        'Urgent, Not Important: Delegate or minimise (interruptions)',
+        'Urgent & important: Do immediately (safety issues, deadlines)',
+        'Important, not urgent: Schedule (study time, skills development)',
+        'Urgent, not important: Delegate or minimise (interruptions)',
         'Neither: Eliminate (time wasters, excessive social media)',
       ],
     },
     {
-      title: 'Time Blocking',
+      title: 'Time blocking',
       description: 'Allocate specific time slots for different activities',
-      icon: Clock,
-      color: 'border-green-500/20 bg-green-500/10',
       steps: [
         'Block work hours (including travel time)',
         'Schedule study sessions with specific topics',
@@ -29,10 +21,8 @@ const TimeManagementFundamentalsTab = () => {
       ],
     },
     {
-      title: 'The 2-Minute Rule',
+      title: 'The 2-minute rule',
       description: 'If it takes less than 2 minutes, do it now',
-      icon: CheckCircle,
-      color: 'border-purple-500/20 bg-purple-500/10',
       steps: [
         'Reply to quick messages immediately',
         'File documents as you receive them',
@@ -67,100 +57,111 @@ const TimeManagementFundamentalsTab = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Clock className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Core Time Management Principles</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {principles.map((principle, index) => {
-              const IconComponent = principle.icon;
-
-              return (
-                <div key={index} className={`border rounded-lg p-6 ${principle.color}`}>
-                  <div className="flex items-center gap-3 mb-4">
-                    <IconComponent className="h-6 w-6 text-white" />
-                    <div>
-                      <h3 className="text-lg font-semibold text-white">{principle.title}</h3>
-                      <p className="text-sm text-white">{principle.description}</p>
-                    </div>
-                  </div>
-
-                  <ul className="space-y-2">
-                    {principle.steps.map((step, stepIndex) => (
-                      <li key={stepIndex} className="text-sm text-white flex items-start gap-2">
-                        <div className="w-1 h-1 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                        {step}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              );
-            })}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <AlertCircle className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Common Challenges & Solutions</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {commonChallenges.map((item, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <h4 className="font-semibold text-white mb-2">{item.challenge}</h4>
-                <p className="text-sm text-white mb-3">{item.solution}</p>
-                <Badge variant="outline" className="text-xs border-elec-yellow/30 text-elec-yellow">
-                  💡 {item.tip}
-                </Badge>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Core time management principles
+        </span>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          {principles.map((principle, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
+            >
+              <div>
+                <h3 className="text-[16px] font-semibold text-white leading-tight">
+                  {principle.title}
+                </h3>
+                <p className="text-[14px] text-white/70 leading-relaxed mt-1">
+                  {principle.description}
+                </p>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow">Getting Started: Your First Week</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="border border-elec-yellow/20 rounded-lg p-4">
-              <h4 className="font-semibold text-white mb-2">Day 1-2: Assessment</h4>
-              <ul className="text-sm text-white space-y-1">
-                <li>• Track your current time usage for 2 days</li>
-                <li>• Identify your peak energy hours</li>
-                <li>• Note major time wasters and distractions</li>
+              <ul className="space-y-1.5">
+                {principle.steps.map((step, stepIndex) => (
+                  <li
+                    key={stepIndex}
+                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  >
+                    <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                    <span>{step}</span>
+                  </li>
+                ))}
               </ul>
             </div>
+          ))}
+        </div>
+      </div>
 
-            <div className="border border-elec-yellow/20 rounded-lg p-4">
-              <h4 className="font-semibold text-white mb-2">Day 3-4: Planning</h4>
-              <ul className="text-sm text-white space-y-1">
-                <li>• Create your weekly template schedule</li>
-                <li>• Set up your priority matrix system</li>
-                <li>• Choose your planning tools and apps</li>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Common challenges & solutions
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {commonChallenges.map((item, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
+            >
+              <h4 className="text-[14px] font-semibold text-white">{item.challenge}</h4>
+              <p className="text-[14px] text-white/85 leading-relaxed">{item.solution}</p>
+              <span className="inline-block text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04]">
+                {item.tip}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Getting started: your first week
+        </span>
+        <div className="space-y-3">
+          {[
+            {
+              title: 'Day 1-2: Assessment',
+              items: [
+                'Track your current time usage for 2 days',
+                'Identify your peak energy hours',
+                'Note major time wasters and distractions',
+              ],
+            },
+            {
+              title: 'Day 3-4: Planning',
+              items: [
+                'Create your weekly template schedule',
+                'Set up your priority matrix system',
+                'Choose your planning tools and apps',
+              ],
+            },
+            {
+              title: 'Day 5-7: Implementation',
+              items: [
+                'Start with one new habit (e.g., time blocking)',
+                'Practice the 2-minute rule consistently',
+                'Review and adjust your approach daily',
+              ],
+            },
+          ].map((block, idx) => (
+            <div
+              key={idx}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
+            >
+              <h4 className="text-[14px] font-semibold text-white">{block.title}</h4>
+              <ul className="space-y-1.5">
+                {block.items.map((item, i) => (
+                  <li
+                    key={i}
+                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  >
+                    <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
               </ul>
             </div>
-
-            <div className="border border-elec-yellow/20 rounded-lg p-4">
-              <h4 className="font-semibold text-white mb-2">Day 5-7: Implementation</h4>
-              <ul className="text-sm text-white space-y-1">
-                <li>• Start with one new habit (e.g., time blocking)</li>
-                <li>• Practice the 2-minute rule consistently</li>
-                <li>• Review and adjust your approach daily</li>
-              </ul>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

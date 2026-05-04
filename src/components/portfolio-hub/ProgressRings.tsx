@@ -153,8 +153,8 @@ export function ProgressRingsGroup({
       {/* Reviews (if provided) */}
       {reviews && (
         <div className="flex flex-col items-center">
-          <div className="h-[120px] w-[120px] rounded-full bg-blue-500/10 border-4 border-blue-500/30 flex flex-col items-center justify-center">
-            <span className="text-2xl font-bold text-blue-500">{reviews.pending}</span>
+          <div className="h-[120px] w-[120px] rounded-full bg-white/[0.02] border-4 border-white/[0.06] flex flex-col items-center justify-center">
+            <span className="text-2xl font-bold text-white/85">{reviews.pending}</span>
             <span className="text-xs text-muted-foreground">Pending</span>
           </div>
           <div className="mt-2 text-center">

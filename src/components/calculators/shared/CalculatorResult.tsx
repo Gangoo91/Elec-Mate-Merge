@@ -1,9 +1,8 @@
-import { ReactNode } from 'react';
-import { CheckCircle, AlertTriangle, Info, ChevronDown } from 'lucide-react';
+import { ReactNode, useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { CALCULATOR_CONFIG, CalculatorCategory } from './CalculatorConfig';
+import { CalculatorCategory } from './CalculatorConfig';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { useState } from 'react';
 
 interface CalculatorResultProps {
   category: CalculatorCategory;
@@ -18,49 +17,20 @@ export const CalculatorResult = ({
   variant = 'success',
   className,
 }: CalculatorResultProps) => {
-  const config = CALCULATOR_CONFIG[category];
+  void category;
 
-  const variantStyles = {
-    success: {
-      border: `${config.gradientFrom}25`,
-      bg: `${config.gradientFrom}06`,
-      icon: CheckCircle,
-      iconColor: config.gradientFrom,
-    },
-    warning: {
-      border: '#f59e0b25',
-      bg: '#f59e0b06',
-      icon: AlertTriangle,
-      iconColor: '#f59e0b',
-    },
-    info: {
-      border: '#60a5fa25',
-      bg: '#60a5fa06',
-      icon: Info,
-      iconColor: '#60a5fa',
-    },
-  };
-
-  const styles = variantStyles[variant];
-  const Icon = styles.icon;
+  const variantClasses =
+    variant === 'warning'
+      ? 'border-red-500/30 bg-red-500/[0.04]'
+      : 'border-white/[0.06] bg-white/[0.02]';
 
   return (
-    <div
-      className={cn('rounded-xl p-4 border animate-fade-in', className)}
-      style={{
-        borderColor: styles.border,
-        background: styles.bg,
-      }}
-    >
-      <div className="flex items-start gap-3">
-        <Icon className="h-5 w-5 mt-0.5 shrink-0" style={{ color: styles.iconColor }} />
-        <div className="flex-1 space-y-3 min-w-0">{children}</div>
-      </div>
+    <div className={cn('rounded-xl p-4 sm:p-5 border animate-fade-in', variantClasses, className)}>
+      <div className="space-y-3 min-w-0">{children}</div>
     </div>
   );
 };
 
-// Result value component — individual glass card for each value
 interface ResultValueProps {
   label: string;
   value: string | number;
@@ -78,12 +48,12 @@ export const ResultValue = ({
   size = 'md',
   className,
 }: ResultValueProps) => {
-  const config = CALCULATOR_CONFIG[category];
+  void category;
 
   const sizeClasses = {
-    sm: { label: 'text-xs', value: 'text-lg sm:text-xl', unit: 'text-xs' },
-    md: { label: 'text-sm', value: 'text-2xl sm:text-3xl', unit: 'text-sm' },
-    lg: { label: 'text-base', value: 'text-3xl sm:text-4xl', unit: 'text-base' },
+    sm: { value: 'text-[18px] sm:text-[20px]', unit: 'text-[12px]' },
+    md: { value: 'text-[24px] sm:text-[28px]', unit: 'text-[14px]' },
+    lg: { value: 'text-[28px] sm:text-[32px]', unit: 'text-[15px]' },
   };
 
   const sizes = sizeClasses[size];
@@ -91,28 +61,25 @@ export const ResultValue = ({
   return (
     <div
       className={cn(
-        'rounded-xl p-3.5 sm:p-4 bg-white/[0.04] border border-white/5 min-w-0',
+        'rounded-xl p-3.5 sm:p-4 bg-white/[0.02] border border-white/[0.06] min-w-0 space-y-1',
         className
       )}
-      style={{ borderLeftWidth: '3px', borderLeftColor: config.gradientFrom }}
     >
-      <p className={cn('text-white font-medium mb-1 truncate', sizes.label)}>{label}</p>
-      <div className="flex items-baseline gap-1.5 sm:gap-2 min-w-0">
-        <span
-          className={cn('font-bold bg-clip-text text-transparent break-words min-w-0', sizes.value)}
-          style={{
-            backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-          }}
-        >
+      <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 truncate">
+        {label}
+      </p>
+      <div className="flex items-baseline gap-1.5 min-w-0">
+        <span className={cn('font-mono font-semibold text-white break-words min-w-0', sizes.value)}>
           {typeof value === 'number' ? value.toLocaleString() : value}
         </span>
-        {unit && <span className={cn('text-white font-medium shrink-0', sizes.unit)}>{unit}</span>}
+        {unit && (
+          <span className={cn('text-white/55 font-mono shrink-0', sizes.unit)}>{unit}</span>
+        )}
       </div>
     </div>
   );
 };
 
-// Grid for multiple result values
 interface ResultsGridProps {
   children: ReactNode;
   columns?: 1 | 2 | 3 | 4;
@@ -130,7 +97,6 @@ export const ResultsGrid = ({ children, columns = 2, className }: ResultsGridPro
   return <div className={cn('grid gap-3', gridClass, className)}>{children}</div>;
 };
 
-// Collapsible section for additional details
 interface ResultDetailsProps {
   title?: string;
   children: ReactNode;
@@ -140,31 +106,27 @@ interface ResultDetailsProps {
 }
 
 export const ResultDetails = ({
-  title = 'Calculation Details',
+  title = 'Calculation details',
   children,
   defaultOpen = false,
   category,
   className,
 }: ResultDetailsProps) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
-  const config = CALCULATOR_CONFIG[category];
+  void category;
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className={className}>
-      <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2 text-sm font-medium text-white hover:text-white transition-colors touch-manipulation">
-        <span>{title}</span>
+      <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2 touch-manipulation">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          {title}
+        </span>
         <ChevronDown
-          className={cn('h-4 w-4 transition-transform duration-200', isOpen && 'rotate-180')}
+          className={cn('h-4 w-4 text-white/55 transition-transform duration-200', isOpen && 'rotate-180')}
         />
       </CollapsibleTrigger>
       <CollapsibleContent className="pt-2">
-        <div
-          className="p-3 rounded-xl border"
-          style={{
-            borderColor: `${config.gradientFrom}15`,
-            background: `${config.gradientFrom}05`,
-          }}
-        >
+        <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-white/[0.02]">
           {children}
         </div>
       </CollapsibleContent>
@@ -172,7 +134,6 @@ export const ResultDetails = ({
   );
 };
 
-// Status badge for results
 interface ResultBadgeProps {
   status: 'pass' | 'fail' | 'warning' | 'info';
   label: string;
@@ -180,18 +141,18 @@ interface ResultBadgeProps {
 }
 
 export const ResultBadge = ({ status, label, className }: ResultBadgeProps) => {
-  const statusStyles = {
-    pass: 'bg-green-500/20 text-green-400 border-green-500/30',
-    fail: 'bg-red-500/20 text-red-400 border-red-500/30',
-    warning: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
-    info: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-  };
+  const statusClasses =
+    status === 'pass'
+      ? 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow'
+      : status === 'fail'
+        ? 'border-red-500/30 bg-red-500/[0.06] text-red-300'
+        : 'border-white/[0.08] bg-white/[0.03] text-white/85';
 
   return (
     <span
       className={cn(
-        'inline-flex items-center px-2.5 py-1.5 rounded-full text-xs font-semibold border',
-        statusStyles[status],
+        'inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-medium border',
+        statusClasses,
         className
       )}
     >

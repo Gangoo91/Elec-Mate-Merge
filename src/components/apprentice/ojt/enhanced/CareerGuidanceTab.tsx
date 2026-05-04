@@ -1,17 +1,7 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Badge } from '@/components/ui/badge';
-import {
-  User,
-  MessageSquare,
-  Send,
-  TrendingUp,
-  Briefcase,
-  GraduationCap,
-  Award,
-} from 'lucide-react';
+import { Send } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import ChatMessageRenderer from './ChatMessageRenderer';
@@ -37,30 +27,24 @@ const CareerGuidanceTab = () => {
         'Control systems',
         'Renewable energy',
       ],
-      icon: Briefcase,
-      color: 'blue',
     },
     {
-      title: 'Further Qualifications',
+      title: 'Further qualifications',
       areas: [
         '18th Edition updates',
         'Testing & inspection',
         'Design & verification',
         'PAT testing',
       ],
-      icon: GraduationCap,
-      color: 'green',
     },
     {
-      title: 'Career Progression',
+      title: 'Career progression',
       areas: [
         'Team leader roles',
         'Electrical supervisor',
         'Contracting business',
         'Training & assessment',
       ],
-      icon: TrendingUp,
-      color: 'purple',
     },
   ];
 
@@ -132,122 +116,121 @@ const CareerGuidanceTab = () => {
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {careerPaths.map((path, index) => (
-          <Card
+          <div
             key={index}
-            className={`border-${path.color}-500/30 bg-gradient-to-br from-${path.color}-500/10 to-${path.color}-600/10`}
+            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
           >
-            <CardHeader>
-              <CardTitle className={`text-${path.color}-400 flex items-center gap-2 text-lg`}>
-                <path.icon className="h-5 w-5" />
-                {path.title}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-2">
-                {path.areas.map((area, idx) => (
-                  <li key={idx} className="text-sm text-white flex items-start gap-2">
-                    <Award className="h-3 w-3 text-elec-yellow mt-1 flex-shrink-0" />
-                    {area}
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              {path.title}
+            </span>
+            <ul className="space-y-1.5">
+              {path.areas.map((area, idx) => (
+                <li
+                  key={idx}
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                  <span>{area}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         ))}
       </div>
 
-      <Card className="border-elec-yellow/50">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <User className="h-5 w-5" />
-            Career Guidance Assistant
-          </CardTitle>
-          <p className="text-sm text-white">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Career guidance assistant
+          </span>
+          <p className="text-[14px] text-white/85 leading-relaxed">
             Get personalised advice on career progression, specialisations, and professional
             development
           </p>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="h-80 border rounded-lg p-4 overflow-y-auto bg-white/5">
-              {chatMessages.length === 0 ? (
-                <div className="flex flex-col items-center justify-center h-full text-center">
-                  <MessageSquare className="h-12 w-12 text-white mb-4" />
-                  <p className="text-white mb-4">
-                    Ask me about career paths, specialisations, qualifications, or professional
-                    development!
-                  </p>
-                  <div className="space-y-2">
-                    <p className="text-sm text-white">Try asking:</p>
+        </div>
+
+        <div className="space-y-4">
+          <div className="h-80 rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 overflow-y-auto">
+            {chatMessages.length === 0 ? (
+              <div className="flex flex-col items-center justify-center h-full text-center">
+                <p className="text-[14px] text-white/85 leading-relaxed mb-4">
+                  Ask about career paths, specialisations, qualifications, or professional
+                  development.
+                </p>
+                <div className="space-y-2">
+                  <p className="text-[12px] text-white/55">Try asking:</p>
+                  <div className="flex flex-wrap gap-1.5 justify-center">
                     {quickQuestions.slice(0, 2).map((question, index) => (
-                      <Badge
+                      <button
                         key={index}
-                        variant="outline"
-                        className="cursor-pointer hover:bg-elec-yellow/20 text-xs"
                         onClick={() => setCurrentMessage(question)}
+                        className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] hover:bg-white/[0.05] touch-manipulation"
                       >
                         {question}
-                      </Badge>
+                      </button>
                     ))}
                   </div>
                 </div>
-              ) : (
-                <>
-                  {chatMessages.map((message) => (
-                    <ChatMessageRenderer
-                      key={message.id}
-                      content={message.content}
-                      isUser={message.isUser}
-                    />
-                  ))}
-                  {isLoading && (
-                    <div className="flex justify-start mb-4">
-                      <div className="bg-white/5 border border-white/20 rounded-lg p-4 mr-4">
-                        <div className="flex items-center gap-2 text-sm text-white">
-                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-elec-yellow"></div>
-                          Providing career guidance...
-                        </div>
+              </div>
+            ) : (
+              <>
+                {chatMessages.map((message) => (
+                  <ChatMessageRenderer
+                    key={message.id}
+                    content={message.content}
+                    isUser={message.isUser}
+                  />
+                ))}
+                {isLoading && (
+                  <div className="flex justify-start mb-4">
+                    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 mr-4">
+                      <div className="flex items-center gap-2 text-[13px] text-white/85">
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-elec-yellow" />
+                        Providing career guidance...
                       </div>
                     </div>
-                  )}
-                </>
-              )}
-            </div>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
 
-            <div className="flex gap-2">
-              <Textarea
-                value={currentMessage}
-                onChange={(e) => setCurrentMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Ask about career paths, specialisations, qualifications, or professional development..."
-                className="flex-1 min-h-[60px] resize-none"
-                disabled={isLoading}
-              />
-              <Button
-                onClick={handleSendMessage}
-                disabled={!currentMessage.trim() || isLoading}
-                className="px-4"
-              >
-                <Send className="h-4 w-4" />
-              </Button>
-            </div>
+          <div className="flex gap-2">
+            <Textarea
+              value={currentMessage}
+              onChange={(e) => setCurrentMessage(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Ask about career paths, specialisations, qualifications, or professional development..."
+              className="flex-1 min-h-[60px] resize-none touch-manipulation text-base focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
+              disabled={isLoading}
+            />
+            <Button
+              onClick={handleSendMessage}
+              disabled={!currentMessage.trim() || isLoading}
+              className="px-4 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:opacity-40"
+            >
+              <Send className="h-4 w-4" />
+            </Button>
+          </div>
 
-            <div className="flex flex-wrap gap-2">
-              <p className="text-xs text-white w-full mb-2">Quick questions:</p>
+          <div className="space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Quick questions
+            </span>
+            <div className="flex flex-wrap gap-1.5">
               {quickQuestions.map((question, index) => (
-                <Badge
+                <button
                   key={index}
-                  variant="outline"
-                  className="cursor-pointer hover:bg-elec-yellow/20 text-xs"
                   onClick={() => setCurrentMessage(question)}
+                  className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] hover:bg-white/[0.05] touch-manipulation"
                 >
                   {question}
-                </Badge>
+                </button>
               ))}
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };

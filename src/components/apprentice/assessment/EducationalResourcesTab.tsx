@@ -1,20 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Badge } from '@/components/ui/badge';
-import {
-  BookOpen,
-  AlertTriangle,
-  Shield,
-  CheckCircle,
-  FileText,
-  Lightbulb,
-  ExternalLink,
-  Scale,
-  Phone,
-  MapPin,
-  GraduationCap,
-  Sparkles,
-} from 'lucide-react';
 
 const EducationalResourcesTab = () => {
   const regulations = [
@@ -22,8 +6,6 @@ const EducationalResourcesTab = () => {
       id: 1,
       title: 'BS 7671 (18th Edition) Wiring Regulations',
       category: 'Installation Standards',
-      color: 'yellow',
-      icon: FileText,
       keyAreas: [
         'Protection against electric shock (Section 411)',
         'Isolation and switching procedures (Section 537)',
@@ -39,8 +21,6 @@ const EducationalResourcesTab = () => {
       id: 2,
       title: 'Health and Safety at Work Act 1974',
       category: 'Safety Legislation',
-      color: 'red',
-      icon: Shield,
       keyAreas: [
         'Employer duty of care responsibilities',
         'Employee safety obligations',
@@ -56,8 +36,6 @@ const EducationalResourcesTab = () => {
       id: 3,
       title: 'Electricity at Work Regulations 1989',
       category: 'Electrical Safety',
-      color: 'blue',
-      icon: AlertTriangle,
       keyAreas: [
         'Safe working procedures on electrical systems',
         'Competency requirements for electrical work',
@@ -73,8 +51,6 @@ const EducationalResourcesTab = () => {
       id: 4,
       title: 'CDM Regulations 2015',
       category: 'Construction Safety',
-      color: 'green',
-      icon: Scale,
       keyAreas: [
         'Construction phase planning requirements',
         'Health and safety file maintenance',
@@ -90,10 +66,8 @@ const EducationalResourcesTab = () => {
 
   const practicalGuidance = [
     {
-      title: 'Site Safety Checklist',
+      title: 'Site safety checklist',
       description: 'Essential safety checks before starting work',
-      color: 'green',
-      icon: CheckCircle,
       items: [
         'Verify isolation procedures are followed',
         'Check all PPE is available and in good condition',
@@ -103,10 +77,8 @@ const EducationalResourcesTab = () => {
       ],
     },
     {
-      title: 'Common Assessment Issues',
+      title: 'Common assessment issues',
       description: 'Frequently encountered problems and solutions',
-      color: 'orange',
-      icon: AlertTriangle,
       items: [
         'Poor lighting conditions - bring additional portable lighting',
         'Damp conditions - use appropriate IP-rated equipment',
@@ -116,10 +88,8 @@ const EducationalResourcesTab = () => {
       ],
     },
     {
-      title: 'Documentation Requirements',
+      title: 'Documentation requirements',
       description: 'Essential paperwork for site assessments',
-      color: 'purple',
-      icon: FileText,
       items: [
         'Risk assessment forms (RAMS)',
         'Method statements for planned work',
@@ -147,351 +117,185 @@ const EducationalResourcesTab = () => {
 
   const emergencyProcedures = [
     {
-      title: 'Emergency Contacts',
+      title: 'Emergency contacts',
       description:
         'Always have emergency services and supervisor contact details readily available.',
     },
     {
-      title: 'First Aid Procedures',
+      title: 'First aid procedures',
       description: 'Know the location of first aid equipment and qualified first aiders.',
     },
     {
-      title: 'Evacuation Routes',
+      title: 'Evacuation routes',
       description: 'Identify and communicate emergency evacuation procedures to all team members.',
     },
   ];
 
-  const getColorConfig = (color: string) => {
-    const configs: Record<string, { bg: string; text: string; iconBg: string; border: string }> = {
-      yellow: {
-        bg: 'bg-elec-yellow/10',
-        text: 'text-elec-yellow',
-        iconBg: 'from-elec-yellow/20 to-elec-yellow/5',
-        border: 'border-elec-yellow/30',
-      },
-      blue: {
-        bg: 'bg-blue-500/10',
-        text: 'text-blue-400',
-        iconBg: 'from-blue-500/20 to-blue-500/5',
-        border: 'border-blue-500/30',
-      },
-      green: {
-        bg: 'bg-green-500/10',
-        text: 'text-green-400',
-        iconBg: 'from-green-500/20 to-green-500/5',
-        border: 'border-green-500/30',
-      },
-      red: {
-        bg: 'bg-red-500/10',
-        text: 'text-red-400',
-        iconBg: 'from-red-500/20 to-red-500/5',
-        border: 'border-red-500/30',
-      },
-      purple: {
-        bg: 'bg-purple-500/10',
-        text: 'text-purple-400',
-        iconBg: 'from-purple-500/20 to-purple-500/5',
-        border: 'border-purple-500/30',
-      },
-      orange: {
-        bg: 'bg-orange-500/10',
-        text: 'text-orange-400',
-        iconBg: 'from-orange-500/20 to-orange-500/5',
-        border: 'border-orange-500/30',
-      },
-    };
-    return configs[color] || configs.yellow;
-  };
-
   return (
-    <div className="space-y-6 animate-fade-in">
-      {/* Header Card */}
-      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-white/10 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-        <CardHeader className="relative">
-          <div className="flex items-center gap-4">
-            <div className="p-3 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/30">
-              <GraduationCap className="h-7 w-7 text-purple-400" />
-            </div>
-            <div>
-              <CardTitle className="text-xl sm:text-2xl font-bold text-white">
-                Educational <span className="text-purple-400">Resources</span>
-              </CardTitle>
-              <p className="text-sm text-white mt-1">
-                Regulations, Standards & Practical Guidance
-              </p>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent className="relative">
-          <p className="text-white">
-            Understanding these regulations helps ensure your assessments meet legal and safety
-            requirements. Access essential resources for conducting thorough and compliant site
-            assessments.
-          </p>
-        </CardContent>
-      </Card>
+    <div className="space-y-5 animate-fade-in">
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Educational resources
+        </span>
+        <h2 className="text-[20px] sm:text-[24px] font-semibold tracking-tight text-white leading-tight">
+          Regulations, standards & practical guidance
+        </h2>
+        <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
+          Understanding these regulations helps ensure your assessments meet legal and safety
+          requirements.
+        </p>
+      </div>
 
-      {/* Tabs */}
       <Tabs defaultValue="regulations" className="w-full">
         <div className="overflow-x-auto scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
-          <TabsList className="w-full min-w-max bg-white/10 border border-white/10 p-1 rounded-xl">
+          <TabsList className="w-full min-w-max bg-white/[0.02] border border-white/[0.06] p-1 rounded-xl">
             <TabsTrigger
               value="regulations"
-              className="flex-1 data-[state=active]:bg-gradient-to-r data-[state=active]:from-elec-yellow/20 data-[state=active]:to-elec-yellow/10 data-[state=active]:text-elec-yellow data-[state=active]:border-elec-yellow/30 rounded-lg border border-transparent transition-all"
+              className="flex-1 data-[state=active]:bg-elec-yellow data-[state=active]:text-black rounded-lg transition-all"
             >
-              <Scale className="h-4 w-4 mr-2" />
               Regulations
             </TabsTrigger>
             <TabsTrigger
               value="guidance"
-              className="flex-1 data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500/20 data-[state=active]:to-green-500/10 data-[state=active]:text-green-400 data-[state=active]:border-green-500/30 rounded-lg border border-transparent transition-all"
+              className="flex-1 data-[state=active]:bg-elec-yellow data-[state=active]:text-black rounded-lg transition-all"
             >
-              <Shield className="h-4 w-4 mr-2" />
               Guidance
             </TabsTrigger>
             <TabsTrigger
               value="resources"
-              className="flex-1 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500/20 data-[state=active]:to-blue-500/10 data-[state=active]:text-blue-400 data-[state=active]:border-blue-500/30 rounded-lg border border-transparent transition-all"
+              className="flex-1 data-[state=active]:bg-elec-yellow data-[state=active]:text-black rounded-lg transition-all"
             >
-              <BookOpen className="h-4 w-4 mr-2" />
               Resources
             </TabsTrigger>
           </TabsList>
         </div>
 
-        {/* Regulations Tab */}
-        <TabsContent value="regulations" className="space-y-6 mt-6">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 rounded-lg bg-elec-yellow/20">
-              <Scale className="h-5 w-5 text-elec-yellow" />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-white">
-                Key Regulations for Site Assessment
-              </h3>
-              <p className="text-sm text-white">
-                Understanding these regulations helps ensure your assessments meet legal and safety
-                requirements.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid gap-4">
-            {regulations.map((regulation) => {
-              const colorConfig = getColorConfig(regulation.color);
-              const RegIcon = regulation.icon;
-              return (
-                <Card
-                  key={regulation.id}
-                  className="bg-gradient-to-br from-elec-gray to-elec-card border-white/10 hover:border-white/20 transition-colors"
-                >
-                  <CardHeader>
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-start gap-3">
-                        <div
-                          className={`p-2.5 rounded-xl bg-gradient-to-br ${colorConfig.iconBg} border ${colorConfig.border} flex-shrink-0`}
-                        >
-                          <RegIcon className={`h-5 w-5 ${colorConfig.text}`} />
-                        </div>
-                        <div>
-                          <CardTitle className="text-white text-base sm:text-lg">
-                            {regulation.title}
-                          </CardTitle>
-                          <Badge
-                            className={`mt-2 ${colorConfig.bg} ${colorConfig.text} ${colorConfig.border}`}
-                          >
-                            {regulation.category}
-                          </Badge>
-                        </div>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div>
-                      <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
-                        <div className="p-1.5 rounded-lg bg-green-500/20">
-                          <CheckCircle className="h-3.5 w-3.5 text-green-400" />
-                        </div>
-                        Key Areas to Focus On
-                      </h4>
-                      <ul className="space-y-2">
-                        {regulation.keyAreas.map((area, index) => (
-                          <li key={index} className="flex items-start gap-2 text-sm text-white">
-                            <span
-                              className={`w-1.5 h-1.5 ${colorConfig.bg.replace('/10', '')} rounded-full mt-1.5 flex-shrink-0`}
-                            />
-                            {area}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="p-4 rounded-xl bg-blue-500/5 border border-blue-500/20">
-                      <h4 className="font-semibold text-white mb-2 flex items-center gap-2">
-                        <div className="p-1.5 rounded-lg bg-blue-500/20">
-                          <Lightbulb className="h-3.5 w-3.5 text-blue-400" />
-                        </div>
-                        What This Means for You
-                      </h4>
-                      <p className="text-sm text-white">{regulation.whatItMeans}</p>
-                    </div>
-
-                    <div className="p-4 rounded-xl bg-purple-500/5 border border-purple-500/20">
-                      <h4 className="font-semibold text-white mb-2 flex items-center gap-2">
-                        <div className="p-1.5 rounded-lg bg-purple-500/20">
-                          <ExternalLink className="h-3.5 w-3.5 text-purple-400" />
-                        </div>
-                        Where to Find More Information
-                      </h4>
-                      <p className="text-sm text-white">{regulation.whereToFind}</p>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        </TabsContent>
-
-        {/* Guidance Tab */}
-        <TabsContent value="guidance" className="space-y-6 mt-6">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 rounded-lg bg-green-500/20">
-              <Shield className="h-5 w-5 text-green-400" />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-white">Practical Assessment Guidance</h3>
-              <p className="text-sm text-white">
-                Real-world tips and checklists to help you conduct thorough and effective site
-                assessments.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid gap-4">
-            {practicalGuidance.map((guide, index) => {
-              const colorConfig = getColorConfig(guide.color);
-              const GuideIcon = guide.icon;
-              return (
-                <Card
-                  key={index}
-                  className="bg-gradient-to-br from-elec-gray to-elec-card border-white/10 hover:border-white/20 transition-colors"
-                >
-                  <CardHeader>
-                    <CardTitle className="text-white flex items-center gap-3">
-                      <div
-                        className={`p-2.5 rounded-xl bg-gradient-to-br ${colorConfig.iconBg} border ${colorConfig.border}`}
-                      >
-                        <GuideIcon className={`h-5 w-5 ${colorConfig.text}`} />
-                      </div>
-                      <div>
-                        <span className="text-base sm:text-lg">{guide.title}</span>
-                        <p className="text-sm text-white font-normal mt-1">
-                          {guide.description}
-                        </p>
-                      </div>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2">
-                      {guide.items.map((item, itemIndex) => (
-                        <li
-                          key={itemIndex}
-                          className="flex items-start gap-3 p-3 rounded-xl bg-white/10 border border-white/10"
-                        >
-                          <div className="p-1.5 rounded-lg bg-green-500/20 flex-shrink-0 mt-0.5">
-                            <CheckCircle className="h-3.5 w-3.5 text-green-400" />
-                          </div>
-                          <span className="text-sm text-white">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        </TabsContent>
-
-        {/* Resources Tab */}
-        <TabsContent value="resources" className="space-y-6 mt-6">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 rounded-lg bg-blue-500/20">
-              <BookOpen className="h-5 w-5 text-blue-400" />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-white">Additional Learning Resources</h3>
-              <p className="text-sm text-white">
-                Further reading and resources to deepen your understanding of site assessment
-                requirements.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-2">
-            <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-blue-500/20">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30">
-                    <BookOpen className="h-5 w-5 text-blue-400" />
-                  </div>
-                  Official Publications
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                {officialPublications.map((pub, index) => (
-                  <div
-                    key={index}
-                    className="p-3 rounded-xl bg-blue-500/5 border border-blue-500/20"
-                  >
-                    <p className="font-medium text-white mb-1">{pub.title}</p>
-                    <p className="text-sm text-white">{pub.description}</p>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-red-500/20">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-gradient-to-br from-red-500/20 to-red-500/5 border border-red-500/30">
-                    <Phone className="h-5 w-5 text-red-400" />
-                  </div>
-                  Emergency Procedures
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                {emergencyProcedures.map((proc, index) => (
-                  <div key={index} className="p-3 rounded-xl bg-red-500/5 border border-red-500/20">
-                    <p className="font-medium text-white mb-1">{proc.title}</p>
-                    <p className="text-sm text-white">{proc.description}</p>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Pro Tip Banner */}
-          <Card className="bg-gradient-to-r from-purple-500/10 via-purple-500/5 to-transparent border-purple-500/30">
-            <CardContent className="p-4 sm:p-5">
-              <div className="flex items-start gap-3">
-                <div className="p-2 rounded-lg bg-purple-500/20 flex-shrink-0">
-                  <Sparkles className="h-5 w-5 text-purple-400" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-purple-300 mb-2">
-                    Pro Tip: Continuous Learning
+        <TabsContent value="regulations" className="space-y-4 mt-5">
+          <div className="grid gap-3">
+            {regulations.map((regulation) => (
+              <div
+                key={regulation.id}
+                className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4"
+              >
+                <div className="space-y-1">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    {regulation.category}
+                  </span>
+                  <h3 className="text-[16px] sm:text-[18px] font-medium text-white">
+                    {regulation.title}
                   </h3>
-                  <p className="text-sm text-white">
-                    Regulations and best practices evolve regularly. Stay updated by subscribing to
-                    industry publications, attending training courses, and participating in
-                    professional development activities. Your employer should provide access to the
-                    latest versions of all relevant documents and training materials.
+                </div>
+
+                <div className="space-y-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Key areas
+                  </span>
+                  <ul className="space-y-1.5">
+                    {regulation.keyAreas.map((area, index) => (
+                      <li
+                        key={index}
+                        className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+                      >
+                        <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                        <span>{area}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="space-y-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    What this means
+                  </span>
+                  <p className="text-[14px] text-white/85 leading-relaxed">
+                    {regulation.whatItMeans}
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Where to find more
+                  </span>
+                  <p className="text-[14px] text-white/85 leading-relaxed">
+                    {regulation.whereToFind}
                   </p>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="guidance" className="space-y-4 mt-5">
+          <div className="grid gap-3">
+            {practicalGuidance.map((guide, index) => (
+              <div
+                key={index}
+                className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
+              >
+                <div className="space-y-1">
+                  <h3 className="text-[16px] sm:text-[18px] font-medium text-white">
+                    {guide.title}
+                  </h3>
+                  <p className="text-[13px] text-white/70 leading-relaxed">{guide.description}</p>
+                </div>
+                <ul className="space-y-1.5">
+                  {guide.items.map((item, itemIndex) => (
+                    <li
+                      key={itemIndex}
+                      className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="resources" className="space-y-4 mt-5">
+          <div className="grid gap-3 md:grid-cols-2">
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Official publications
+              </span>
+              <div className="space-y-3">
+                {officialPublications.map((pub, index) => (
+                  <div key={index} className="space-y-1">
+                    <p className="text-[14px] text-white">{pub.title}</p>
+                    <p className="text-[13px] text-white/70 leading-relaxed">{pub.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-3">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+                Emergency procedures
+              </span>
+              <div className="space-y-3">
+                {emergencyProcedures.map((proc, index) => (
+                  <div key={index} className="space-y-1">
+                    <p className="text-[14px] text-white">{proc.title}</p>
+                    <p className="text-[13px] text-white/70 leading-relaxed">{proc.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Pro tip
+            </span>
+            <p className="text-[14px] text-white/85 leading-relaxed">
+              Regulations and best practices evolve regularly. Stay updated by subscribing to
+              industry publications, attending training courses, and participating in professional
+              development activities. Your employer should provide access to the latest versions of
+              all relevant documents and training materials.
+            </p>
+          </div>
         </TabsContent>
       </Tabs>
     </div>

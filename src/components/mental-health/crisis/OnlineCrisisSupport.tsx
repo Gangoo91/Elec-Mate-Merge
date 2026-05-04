@@ -15,8 +15,8 @@ interface OnlineCrisisSupportProps {
 
 const OnlineCrisisSupport = ({ onlineResources }: OnlineCrisisSupportProps) => {
   return (
-    <Card className="border-red-500/20 bg-[hsl(0_0%_12%)] col-span-1 md:col-span-2 shadow-sm">
-      <CardHeader className="pb-3 border-b border-red-500/10">
+    <Card className="border-white/[0.06] bg-[hsl(0_0%_12%)] col-span-1 md:col-span-2 shadow-sm">
+      <CardHeader className="pb-3 border-b border-white/[0.06]">
         <CardTitle className="text-lg flex items-center gap-2">
           <Globe className="h-5 w-5 text-red-500" />
           Online Support Resources

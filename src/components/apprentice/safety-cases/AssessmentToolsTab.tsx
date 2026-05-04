@@ -1,19 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import {
-  Target,
-  Clock,
-  Award,
-  CheckSquare,
-  BookOpen,
-  TrendingUp,
-  BarChart3,
-  Play,
-  CheckCircle,
-  Zap,
-} from 'lucide-react';
+import { Clock, Award, CheckSquare, Play, CheckCircle, BarChart3 } from 'lucide-react';
 import { useState } from 'react';
 
 const AssessmentToolsTab = () => {
@@ -136,65 +122,6 @@ const AssessmentToolsTab = () => {
     },
   ];
 
-  const getDifficultyConfig = (difficulty: string) => {
-    switch (difficulty) {
-      case 'Beginner':
-        return { bg: 'bg-green-500/10', text: 'text-green-400', border: 'border-green-500/30' };
-      case 'Intermediate':
-        return {
-          bg: 'bg-elec-yellow/10',
-          text: 'text-elec-yellow',
-          border: 'border-elec-yellow/30',
-        };
-      case 'Advanced':
-        return { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/30' };
-      default:
-        return { bg: 'bg-white/10', text: 'text-white', border: 'border-white/20' };
-    }
-  };
-
-  const getColorConfig = (color: string) => {
-    const configs: Record<string, { bg: string; text: string; border: string; iconBg: string }> = {
-      blue: {
-        bg: 'bg-blue-500/10',
-        text: 'text-blue-400',
-        border: 'border-blue-500/30',
-        iconBg: 'from-blue-500/20 to-blue-500/5',
-      },
-      green: {
-        bg: 'bg-green-500/10',
-        text: 'text-green-400',
-        border: 'border-green-500/30',
-        iconBg: 'from-green-500/20 to-green-500/5',
-      },
-      purple: {
-        bg: 'bg-purple-500/10',
-        text: 'text-purple-400',
-        border: 'border-purple-500/30',
-        iconBg: 'from-purple-500/20 to-purple-500/5',
-      },
-      orange: {
-        bg: 'bg-orange-500/10',
-        text: 'text-orange-400',
-        border: 'border-orange-500/30',
-        iconBg: 'from-orange-500/20 to-orange-500/5',
-      },
-      red: {
-        bg: 'bg-red-500/10',
-        text: 'text-red-400',
-        border: 'border-red-500/30',
-        iconBg: 'from-red-500/20 to-red-500/5',
-      },
-      yellow: {
-        bg: 'bg-elec-yellow/10',
-        text: 'text-elec-yellow',
-        border: 'border-elec-yellow/30',
-        iconBg: 'from-elec-yellow/20 to-elec-yellow/5',
-      },
-    };
-    return configs[color] || configs.blue;
-  };
-
   const handleStartAssessment = (assessmentId: string) => {
     setSelectedAssessment(assessmentId);
     console.log(`Starting assessment: ${assessmentId}`);
@@ -210,253 +137,216 @@ const AssessmentToolsTab = () => {
   ).length;
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      {/* Hero Header */}
-      <Card className="bg-gradient-to-br from-white/5 to-elec-card border-white/10 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-        <CardHeader className="relative">
-          <CardTitle className="text-white flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
-              <Target className="h-5 w-5 text-elec-yellow" />
-            </div>
-            Interactive Assessment Centre
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6 relative">
-          <p className="text-white">
-            Test and validate your electrical safety knowledge through comprehensive assessments,
-            interactive simulations, and practical workshops. Track your progress and earn
-            certificates.
-          </p>
+    <div className="space-y-6 animate-fade-in text-left">
+      {/* Header */}
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Assessment centre
+        </span>
+        <h2 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
+          Assessment tools
+        </h2>
+        <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
+          Test and validate your electrical safety knowledge through comprehensive assessments,
+          interactive simulations, and practical workshops.
+        </p>
+      </div>
 
-          {/* Stats Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
-              <div className="p-2 rounded-lg bg-elec-yellow/20 inline-block mb-2">
-                <Zap className="h-5 w-5 text-elec-yellow" />
-              </div>
-              <div className="text-2xl font-bold text-elec-yellow">{assessmentTools.length}</div>
-              <div className="text-xs text-white">Assessment Tools</div>
-            </div>
-            <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
-              <div className="p-2 rounded-lg bg-green-500/20 inline-block mb-2">
-                <CheckCircle className="h-5 w-5 text-green-400" />
-              </div>
-              <div className="text-2xl font-bold text-green-400">{completedCount}</div>
-              <div className="text-xs text-white">Completed</div>
-            </div>
-            <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
-              <div className="p-2 rounded-lg bg-blue-500/20 inline-block mb-2">
-                <BarChart3 className="h-5 w-5 text-blue-400" />
-              </div>
-              <div className="text-2xl font-bold text-blue-400">{Math.round(averageScore)}%</div>
-              <div className="text-xs text-white">Average Score</div>
-            </div>
-            <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
-              <div className="p-2 rounded-lg bg-purple-500/20 inline-block mb-2">
-                <Award className="h-5 w-5 text-purple-400" />
-              </div>
-              <div className="text-2xl font-bold text-purple-400">{certificatesEarned}</div>
-              <div className="text-xs text-white">Certificates</div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Stats strip */}
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Tools
+          </span>
+          <p className="text-[20px] font-semibold text-white">{assessmentTools.length}</p>
+        </div>
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Completed
+          </span>
+          <p className="text-[20px] font-semibold text-white">{completedCount}</p>
+        </div>
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Average
+          </span>
+          <p className="text-[20px] font-semibold text-white">{Math.round(averageScore)}%</p>
+        </div>
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Certificates
+          </span>
+          <p className="text-[20px] font-semibold text-white">{certificatesEarned}</p>
+        </div>
+      </div>
 
-      {/* Assessment Tools Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+      {/* Assessment tools list */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
         {assessmentTools.map((tool) => {
-          const colorConfig = getColorConfig(tool.color);
-          const difficultyConfig = getDifficultyConfig(tool.difficulty);
           const isCompleted = isAssessmentCompleted(tool.id);
 
           return (
-            <Card
+            <div
               key={tool.id}
-              className={`bg-gradient-to-br from-white/5 to-elec-card border-white/10 hover:border-white/20 transition-all overflow-hidden relative ${
-                isCompleted ? 'ring-2 ring-green-500/30' : ''
-              }`}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4"
             >
-              <div
-                className={`absolute top-0 right-0 w-48 h-48 ${colorConfig.bg} rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-50`}
-              />
-              <CardHeader className="relative">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <CardTitle className="text-white text-lg mb-2 flex items-center gap-2">
-                      {tool.title}
-                      {isCompleted && <CheckCircle className="h-5 w-5 text-green-400" />}
-                    </CardTitle>
-                    <div className="flex flex-wrap gap-2 mb-3">
-                      <Badge
-                        className={`${difficultyConfig.bg} ${difficultyConfig.text} border ${difficultyConfig.border}`}
-                      >
-                        {tool.difficulty}
-                      </Badge>
-                      <Badge
-                        className={`${colorConfig.bg} ${colorConfig.text} border ${colorConfig.border}`}
-                      >
-                        {tool.type}
-                      </Badge>
-                      <Badge className="bg-white/5 text-white border border-white/10">
-                        <Clock className="h-3 w-3 mr-1" />
-                        {tool.duration}
-                      </Badge>
-                      {tool.certificate && (
-                        <Badge className="bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/30">
-                          <Award className="h-3 w-3 mr-1" />
-                          Certificate
-                        </Badge>
-                      )}
-                    </div>
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex-1 space-y-2">
+                  <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    <span>{tool.difficulty}</span>
+                    <span className="text-white/25">·</span>
+                    <span>{tool.type}</span>
+                    <span className="text-white/25">·</span>
+                    <span className="flex items-center gap-1">
+                      <Clock className="h-3 w-3" />
+                      {tool.duration}
+                    </span>
                   </div>
-                  {tool.bestScore > 0 && (
-                    <div className="text-right p-3 rounded-lg bg-white/10 border border-white/10">
-                      <div className="text-xl font-bold text-elec-yellow">{tool.bestScore}%</div>
-                      <div className="text-xs text-white">Best Score</div>
-                    </div>
-                  )}
+                  <h3 className="text-[16px] sm:text-[18px] font-medium text-white leading-snug">
+                    {tool.title}
+                  </h3>
                 </div>
-              </CardHeader>
-              <CardContent className="relative space-y-4">
-                <p className="text-white text-sm">{tool.description}</p>
+                {isCompleted && <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0" />}
+              </div>
 
-                {/* Stats Row */}
-                <div className="grid grid-cols-3 gap-2">
-                  <div className="p-3 rounded-lg bg-white/10 border border-white/10 text-center">
-                    <div className="text-lg font-bold text-blue-400">{tool.questions}</div>
-                    <div className="text-xs text-white">Questions</div>
-                  </div>
-                  <div className="p-3 rounded-lg bg-white/10 border border-white/10 text-center">
-                    <div className="text-lg font-bold text-green-400">{tool.passingScore}%</div>
-                    <div className="text-xs text-white">Pass Score</div>
-                  </div>
-                  <div className="p-3 rounded-lg bg-white/10 border border-white/10 text-center">
-                    <div className="text-lg font-bold text-orange-400">{tool.attempts}</div>
-                    <div className="text-xs text-white">Attempts</div>
-                  </div>
+              <p className="text-[14px] text-white/85 leading-relaxed">{tool.description}</p>
+
+              {/* Stats */}
+              <div className="grid grid-cols-3 gap-3 pt-2 border-t border-white/[0.06]">
+                <div>
+                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Questions
+                  </p>
+                  <p className="text-[14px] text-white font-mono">{tool.questions}</p>
                 </div>
+                <div>
+                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Pass score
+                  </p>
+                  <p className="text-[14px] text-white font-mono">{tool.passingScore}%</p>
+                </div>
+                <div>
+                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Attempts
+                  </p>
+                  <p className="text-[14px] text-white font-mono">{tool.attempts}</p>
+                </div>
+              </div>
 
-                {/* Progress Bar */}
-                {tool.bestScore > 0 && (
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-white">Progress</span>
-                      <span className="text-sm text-elec-yellow">{tool.bestScore}%</span>
-                    </div>
-                    <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                      <div
-                        className="h-full rounded-full bg-gradient-to-r from-elec-yellow to-elec-yellow/70 transition-all duration-500"
-                        style={{ width: `${tool.bestScore}%` }}
-                      />
-                    </div>
-                  </div>
-                )}
-
-                {/* Topics */}
+              {/* Best score progress */}
+              {tool.bestScore > 0 && (
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <div className="p-1.5 rounded-lg bg-elec-yellow/20">
-                      <BookOpen className="h-3.5 w-3.5 text-elec-yellow" />
-                    </div>
-                    <h4 className="text-sm font-medium text-white">Topics Covered</h4>
+                  <div className="flex items-baseline justify-between">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                      Best score
+                    </span>
+                    <span className="text-[12px] text-white/85 font-mono">{tool.bestScore}%</span>
                   </div>
-                  <div className="grid grid-cols-2 gap-1 ml-7">
-                    {tool.topics.map((topic, topicIndex) => (
-                      <div
-                        key={topicIndex}
-                        className="flex items-center gap-2 text-xs text-white"
-                      >
-                        <CheckSquare className="h-3 w-3 text-green-400 flex-shrink-0" />
-                        {topic}
-                      </div>
-                    ))}
+                  <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-elec-yellow transition-all duration-500"
+                      style={{ width: `${tool.bestScore}%` }}
+                    />
                   </div>
                 </div>
+              )}
 
-                {/* Action Buttons */}
-                <div className="flex gap-2 pt-2">
-                  <Button
-                    className="flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-95 transition-all"
-                    onClick={() => handleStartAssessment(tool.id)}
-                  >
-                    <Play className="mr-2 h-4 w-4" />
-                    {tool.bestScore > 0 ? 'Retake' : 'Start'}
-                  </Button>
-                  {tool.bestScore > 0 && (
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="h-11 w-11 border-white/20 hover:bg-white/10 touch-manipulation"
+              {/* Topics */}
+              <div className="space-y-2">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Topics
+                </span>
+                <div className="flex flex-wrap gap-1.5">
+                  {tool.topics.map((topic, topicIndex) => (
+                    <span
+                      key={topicIndex}
+                      className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-flex items-center gap-1"
                     >
-                      <BarChart3 className="h-4 w-4 text-white" />
-                    </Button>
-                  )}
+                      <CheckSquare className="h-3 w-3 text-white/55" />
+                      {topic}
+                    </span>
+                  ))}
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+
+              {/* Action */}
+              <div className="flex gap-2 pt-1">
+                <Button
+                  className="flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98]"
+                  onClick={() => handleStartAssessment(tool.id)}
+                >
+                  <Play className="mr-2 h-4 w-4" />
+                  {tool.bestScore > 0 ? 'Retake' : 'Start'}
+                </Button>
+                {tool.bestScore > 0 && (
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="h-11 w-11 border-white/15 hover:bg-white/[0.05] touch-manipulation"
+                  >
+                    <BarChart3 className="h-4 w-4 text-white" />
+                  </Button>
+                )}
+                {tool.certificate && (
+                  <span className="inline-flex items-center gap-1 text-[12px] text-white/55 px-2 rounded-md border border-white/10 bg-white/[0.03]">
+                    <Award className="h-3 w-3" />
+                    Cert
+                  </span>
+                )}
+              </div>
+            </div>
           );
         })}
       </div>
 
-      {/* Performance Summary */}
-      <Card className="bg-gradient-to-br from-white/5 to-elec-card border-green-500/20 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-        <CardHeader className="relative">
-          <CardTitle className="text-white flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30">
-              <TrendingUp className="h-5 w-5 text-green-400" />
-            </div>
-            Assessment Performance & Progress
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="relative space-y-4">
-          <p className="text-white">
-            Track your assessment performance over time and identify areas for improvement. Regular
-            assessment helps reinforce learning and ensures knowledge retention.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
-              <div className="text-3xl font-bold text-green-400 mb-2">
-                {Math.round((completedCount / assessmentTools.length) * 100)}%
+      {/* Performance summary */}
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 pt-4">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Performance
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Track your assessment performance over time and identify areas for improvement. Regular
+          assessment helps reinforce learning and ensures knowledge retention.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          {[
+            {
+              label: 'Completion',
+              value: `${Math.round((completedCount / assessmentTools.length) * 100)}%`,
+              progress: (completedCount / assessmentTools.length) * 100,
+            },
+            {
+              label: 'Average score',
+              value: `${Math.round(averageScore)}%`,
+              progress: averageScore,
+            },
+            {
+              label: 'Certificates',
+              value: `${certificatesEarned}/${assessmentTools.filter((t) => t.certificate).length}`,
+              progress:
+                (certificatesEarned / assessmentTools.filter((t) => t.certificate).length) * 100,
+            },
+          ].map((metric) => (
+            <div
+              key={metric.label}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
+            >
+              <div className="flex items-baseline justify-between">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  {metric.label}
+                </span>
+                <span className="text-[12px] text-white/85 font-mono">{metric.value}</span>
               </div>
-              <div className="text-sm text-white mb-3">Completion Rate</div>
-              <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+              <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
                 <div
-                  className="h-full rounded-full bg-gradient-to-r from-green-500 to-green-400 transition-all duration-500"
-                  style={{ width: `${(completedCount / assessmentTools.length) * 100}%` }}
+                  className="h-full bg-elec-yellow transition-all duration-500"
+                  style={{ width: `${metric.progress}%` }}
                 />
               </div>
             </div>
-            <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
-              <div className="text-3xl font-bold text-blue-400 mb-2">
-                {Math.round(averageScore)}%
-              </div>
-              <div className="text-sm text-white mb-3">Average Score</div>
-              <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                <div
-                  className="h-full rounded-full bg-gradient-to-r from-blue-500 to-blue-400 transition-all duration-500"
-                  style={{ width: `${averageScore}%` }}
-                />
-              </div>
-            </div>
-            <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
-              <div className="text-3xl font-bold text-purple-400 mb-2">
-                {certificatesEarned}/{assessmentTools.filter((t) => t.certificate).length}
-              </div>
-              <div className="text-sm text-white mb-3">Certificates Earned</div>
-              <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                <div
-                  className="h-full rounded-full bg-gradient-to-r from-purple-500 to-purple-400 transition-all duration-500"
-                  style={{
-                    width: `${(certificatesEarned / assessmentTools.filter((t) => t.certificate).length) * 100}%`,
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

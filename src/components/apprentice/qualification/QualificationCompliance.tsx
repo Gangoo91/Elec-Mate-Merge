@@ -1,7 +1,3 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
-import { Badge } from '@/components/ui/badge';
-import { CheckCircle, Clock, AlertCircle } from 'lucide-react';
 import { useQualifications } from '@/hooks/qualification/useQualifications';
 
 const QualificationCompliance = () => {
@@ -9,24 +5,24 @@ const QualificationCompliance = () => {
 
   if (loading) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Loading Compliance Data...</CardTitle>
-        </CardHeader>
-      </Card>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Loading compliance data...
+        </span>
+      </div>
     );
   }
 
   if (!userSelection) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Qualification Compliance</CardTitle>
-          <CardDescription>
-            Select a qualification to track your compliance and progress.
-          </CardDescription>
-        </CardHeader>
-      </Card>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Qualification compliance
+        </span>
+        <p className="text-[14px] text-white/70 leading-relaxed">
+          Select a qualification to track your compliance and progress.
+        </p>
+      </div>
     );
   }
 
@@ -44,137 +40,113 @@ const QualificationCompliance = () => {
   const notStartedCategories = compliance.filter((c) => c.compliance_percentage === 0).length;
 
   return (
-    <div className="space-y-6 bg-white/5 min-h-screen p-4">
-      {/* Main Progress Card - Simplified */}
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardContent className="p-6 text-center">
-          {/* Smaller percentage at the top */}
-          <div className="text-3xl font-bold text-elec-yellow mb-3">{overallProgress}%</div>
-
-          {/* Title and description */}
-          <div className="space-y-2 mb-6">
-            <h2 className="text-xl font-bold text-elec-light">Overall Progress</h2>
-            <p className="text-sm text-elec-light/70 max-w-md mx-auto leading-relaxed">
-              {userSelection.qualification?.title}
-            </p>
-            <p className="text-xs text-elec-light/60">
-              {userSelection.qualification?.awarding_body}
-            </p>
+    <div className="space-y-6">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Overall progress
+          </span>
+          <div className="flex items-baseline gap-3">
+            <span className="text-3xl font-mono text-white">{overallProgress}%</span>
           </div>
+          <p className="text-[14px] text-white/85 leading-relaxed">
+            {userSelection.qualification?.title}
+          </p>
+          <p className="text-[11px] text-white/55 font-mono">
+            {userSelection.qualification?.awarding_body}
+          </p>
+        </div>
 
-          {/* Progress bar */}
-          <div className="mb-6">
-            <Progress value={overallProgress} className="w-full h-2 bg-elec-card" />
+        <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-elec-yellow transition-all duration-500"
+            style={{ width: `${overallProgress}%` }}
+          />
+        </div>
+
+        <div className="grid grid-cols-3 gap-3">
+          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
+            <div className="text-2xl font-mono text-white">{completedCategories}</div>
+            <p className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-1">Completed</p>
           </div>
-
-          {/* Stats grid - Mobile optimized */}
-          <div className="grid grid-cols-3 gap-2 sm:gap-4">
-            <div className="text-center space-y-1 sm:space-y-2">
-              <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-400 mx-auto" />
-              <div className="text-xl sm:text-2xl font-bold text-green-400">
-                {completedCategories}
-              </div>
-              <p className="text-[10px] sm:text-xs text-elec-light/70 leading-tight">Completed</p>
-            </div>
-            <div className="text-center space-y-1 sm:space-y-2">
-              <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-orange-400 mx-auto" />
-              <div className="text-xl sm:text-2xl font-bold text-orange-400">
-                {inProgressCategories}
-              </div>
-              <p className="text-[10px] sm:text-xs text-elec-light/70 leading-tight">In Progress</p>
-            </div>
-            <div className="text-center space-y-1 sm:space-y-2">
-              <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-400 mx-auto" />
-              <div className="text-xl sm:text-2xl font-bold text-red-400">
-                {notStartedCategories}
-              </div>
-              <p className="text-[10px] sm:text-xs text-elec-light/70 leading-tight">Not Started</p>
-            </div>
+          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
+            <div className="text-2xl font-mono text-white">{inProgressCategories}</div>
+            <p className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-1">In progress</p>
           </div>
-        </CardContent>
-      </Card>
+          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
+            <div className="text-2xl font-mono text-white">{notStartedCategories}</div>
+            <p className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-1">Not started</p>
+          </div>
+        </div>
+      </div>
 
-      {/* Category Progress Section */}
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-elec-light text-center">Category Progress</h3>
-        <div className="grid gap-4">
+      <div className="space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Category progress
+        </span>
+        <div className="grid gap-3">
           {compliance.map((complianceRecord) => {
             const category = categories.find((c) => c.id === complianceRecord.category_id);
             if (!category) return null;
 
-            const getStatusIcon = () => {
-              if (complianceRecord.compliance_percentage >= 100) {
-                return <CheckCircle className="h-5 w-5 text-green-400" />;
-              } else if (complianceRecord.compliance_percentage > 0) {
-                return <Clock className="h-5 w-5 text-orange-400" />;
-              } else {
-                return null; // No icon for not started
-              }
-            };
+            const entryProgress = Math.min(
+              (complianceRecord.completed_entries / complianceRecord.required_entries) * 100,
+              100
+            );
 
             return (
-              <Card key={complianceRecord.id} className="border-elec-yellow/20 bg-white/5">
-                <CardContent className="p-6">
-                  {/* Percentage at the top - centered */}
-                  <div className="text-center mb-4">
-                    <div className="text-2xl font-bold text-elec-yellow mb-3">
-                      {complianceRecord.compliance_percentage}%
-                    </div>
+              <div
+                key={complianceRecord.id}
+                className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
+              >
+                <div className="flex items-baseline justify-between gap-3">
+                  <h4 className="text-[15px] font-medium text-white">{category.name}</h4>
+                  <span className="text-2xl font-mono text-white">
+                    {complianceRecord.compliance_percentage}%
+                  </span>
+                </div>
+
+                <p className="text-[13px] text-white/70 leading-relaxed">{category.description}</p>
+
+                <div className="space-y-2">
+                  <div className="flex justify-between text-[12px]">
+                    <span className="text-white/55">Portfolio entries</span>
+                    <span className="text-white/85 font-mono">
+                      {complianceRecord.completed_entries} / {complianceRecord.required_entries}
+                    </span>
                   </div>
-
-                  {/* Title - centered with optional status icon */}
-                  <div className="text-center mb-4">
-                    {getStatusIcon() && (
-                      <div className="flex items-center justify-center mb-2">{getStatusIcon()}</div>
-                    )}
-                    <h4 className="font-semibold text-lg text-elec-light">{category.name}</h4>
-                  </div>
-
-                  <p className="text-sm text-elec-light/70 mb-4 text-center leading-relaxed">
-                    {category.description}
-                  </p>
-
-                  {/* Progress section */}
-                  <div className="space-y-3">
-                    <div className="flex justify-between text-sm text-elec-light">
-                      <span className="font-medium">Portfolio Entries</span>
-                      <span className="font-bold">
-                        {complianceRecord.completed_entries} / {complianceRecord.required_entries}
-                      </span>
-                    </div>
-                    <Progress
-                      value={
-                        (complianceRecord.completed_entries / complianceRecord.required_entries) *
-                        100
-                      }
-                      className="w-full h-3 bg-elec-card"
+                  <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-elec-yellow transition-all duration-500"
+                      style={{ width: `${entryProgress}%` }}
                     />
                   </div>
+                </div>
 
-                  {/* Learning outcomes */}
-                  {category.learning_outcomes && category.learning_outcomes.length > 0 && (
-                    <div className="mt-4 pt-4 border-t border-elec-yellow/20">
-                      <p className="text-xs font-medium text-elec-light/70 mb-2 text-center">
-                        Learning Outcomes:
-                      </p>
-                      <ul className="text-xs text-elec-light/60 space-y-1">
-                        {category.learning_outcomes.slice(0, 2).map((outcome, index) => (
-                          <li key={index} className="flex items-start gap-2">
-                            <span className="text-elec-yellow mt-1">•</span>
-                            <span>{outcome}</span>
-                          </li>
-                        ))}
-                        {category.learning_outcomes.length > 2 && (
-                          <li className="flex items-start gap-2">
-                            <span className="text-elec-yellow mt-1">•</span>
-                            <span>And {category.learning_outcomes.length - 2} more...</span>
-                          </li>
-                        )}
-                      </ul>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
+                {category.learning_outcomes && category.learning_outcomes.length > 0 && (
+                  <div className="pt-3 border-t border-white/[0.06] space-y-1">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                      Learning outcomes
+                    </span>
+                    <ul className="space-y-1.5 mt-1">
+                      {category.learning_outcomes.slice(0, 2).map((outcome, index) => (
+                        <li
+                          key={index}
+                          className="text-[12px] text-white/85 leading-relaxed flex items-start gap-2"
+                        >
+                          <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                          <span>{outcome}</span>
+                        </li>
+                      ))}
+                      {category.learning_outcomes.length > 2 && (
+                        <li className="text-[11px] text-white/55 italic">
+                          And {category.learning_outcomes.length - 2} more...
+                        </li>
+                      )}
+                    </ul>
+                  </div>
+                )}
+              </div>
             );
           })}
         </div>

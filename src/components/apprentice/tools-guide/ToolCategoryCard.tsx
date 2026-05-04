@@ -1,4 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
@@ -11,34 +10,25 @@ interface ToolCategoryCardProps {
   itemCount: number;
 }
 
-const ToolCategoryCard = ({ title, icon, description, link, itemCount }: ToolCategoryCardProps) => {
+const ToolCategoryCard = ({ title, description, link, itemCount }: ToolCategoryCardProps) => {
   return (
-    <Card className="border-elec-yellow/20 bg-white/5 backdrop-blur hover:border-elec-yellow/50 transition-all duration-300 hover:shadow-lg group h-full">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-lg flex items-center gap-3 text-elec-yellow group-hover:text-elec-yellow/90 transition-colors">
-          {icon}
-          {title}
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4 flex flex-col h-full">
-        <p className="text-sm text-white leading-relaxed flex-1">{description}</p>
-
-        <div className="flex items-center justify-between">
-          <span className="text-xs text-elec-yellow/70">{itemCount} essential items</span>
-          <Button
-            asChild
-            variant="outline"
-            size="sm"
-            className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow hover:text-black transition-all duration-300"
-          >
-            <Link to={link} className="flex items-center gap-2">
-              View Details
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 h-full flex flex-col">
+      <h3 className="text-[16px] font-semibold text-white leading-tight">{title}</h3>
+      <p className="text-[14px] text-white/85 leading-relaxed flex-1">{description}</p>
+      <div className="flex items-center justify-between pt-2">
+        <span className="text-[12px] text-white/55">{itemCount} essential items</span>
+        <Button
+          asChild
+          size="sm"
+          className="h-9 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
+        >
+          <Link to={link} className="flex items-center gap-2">
+            View details
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </Button>
+      </div>
+    </div>
   );
 };
 

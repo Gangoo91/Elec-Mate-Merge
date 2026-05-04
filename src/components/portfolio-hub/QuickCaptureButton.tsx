@@ -44,7 +44,7 @@ export function QuickCaptureButton({
       type: 'photo',
       label: 'Photo',
       icon: Image,
-      color: 'bg-blue-500',
+      color: 'bg-white/[0.02]',
       description: 'Take a photo or upload from gallery',
     },
     {
@@ -58,21 +58,21 @@ export function QuickCaptureButton({
       type: 'document',
       label: 'Document',
       icon: File,
-      color: 'bg-green-500',
+      color: 'bg-white/[0.02]',
       description: 'Upload PDF, Word, or other files',
     },
     {
       type: 'voice',
       label: 'Voice Note',
       icon: Mic,
-      color: 'bg-purple-500',
+      color: 'bg-white/[0.02]',
       description: 'Record audio with auto-transcription',
     },
     {
       type: 'text',
       label: 'Quick Note',
       icon: FileText,
-      color: 'bg-amber-500',
+      color: 'bg-white/[0.02]',
       description: 'Write a text reflection',
     },
   ];
@@ -96,8 +96,7 @@ export function QuickCaptureButton({
                 <button
                   key={option.type}
                   onClick={() => handleCaptureSelect(option.type)}
-                  className={cn(
-                    'flex items-center gap-3 pl-4 pr-3 py-2.5 rounded-full shadow-lg',
+                  className={cn('flex items-center gap-3 pl-4 pr-3 py-2.5 rounded-full shadow-lg',
                     'bg-card border border-border',
                     'animate-in slide-in-from-bottom-2 fade-in duration-200',
                     'hover:scale-105 active:scale-95 transition-transform touch-manipulation'
@@ -108,8 +107,7 @@ export function QuickCaptureButton({
                     {option.label}
                   </span>
                   <span
-                    className={cn(
-                      'h-10 w-10 rounded-full flex items-center justify-center',
+                    className={cn('h-10 w-10 rounded-full flex items-center justify-center',
                       option.color
                     )}
                   >
@@ -123,8 +121,7 @@ export function QuickCaptureButton({
           {/* Main FAB Button */}
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className={cn(
-              'h-14 w-14 rounded-full shadow-lg flex items-center justify-center',
+            className={cn('h-14 w-14 rounded-full shadow-lg flex items-center justify-center',
               'transition-all duration-300 ease-out',
               'active:scale-95 touch-manipulation',
               isExpanded ? 'bg-muted rotate-45' : 'bg-elec-yellow hover:bg-elec-yellow/90'
@@ -170,8 +167,7 @@ export function QuickCaptureButton({
                 <button
                   key={option.type}
                   onClick={() => handleCaptureSelect(option.type)}
-                  className={cn(
-                    'flex items-center gap-4 p-4 rounded-xl',
+                  className={cn('flex items-center gap-4 p-4 rounded-xl',
                     'bg-muted/50 border border-border',
                     'hover:border-elec-yellow/50 hover:bg-elec-yellow/5',
                     'transition-all duration-200',
@@ -179,8 +175,7 @@ export function QuickCaptureButton({
                   )}
                 >
                   <span
-                    className={cn(
-                      'h-12 w-12 rounded-xl flex items-center justify-center shrink-0',
+                    className={cn('h-12 w-12 rounded-xl flex items-center justify-center shrink-0',
                       option.color
                     )}
                   >

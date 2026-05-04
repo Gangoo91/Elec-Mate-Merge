@@ -43,7 +43,7 @@ const ResourceDetails = ({ resource, onBack }: ResourceDetailsProps) => {
             <span
               className={`text-xs px-2 py-1 rounded ${
                 resource.open_now
-                  ? 'bg-green-500/10 text-green-500'
+                  ? 'bg-white/[0.02] text-white/85'
                   : 'bg-yellow-500/10 text-yellow-500'
               }`}
             >
@@ -86,7 +86,7 @@ const ResourceDetails = ({ resource, onBack }: ResourceDetailsProps) => {
           {resource.contact && (
             <Button
               size="sm"
-              className="bg-red-500 hover:bg-red-600 text-white flex items-center justify-center gap-2 w-full"
+              className="bg-white/[0.02] hover:bg-white/[0.02] text-white flex items-center justify-center gap-2 w-full"
               onClick={() => handleCopyContact(resource.contact || '')}
             >
               <Phone className="h-4 w-4" /> Copy Contact

@@ -1,17 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import {
-  TrendingUp,
-  Users,
-  Award,
-  PoundSterling,
-  BookOpen,
-  Target,
-  Star,
-  Building,
-  GraduationCap,
-} from 'lucide-react';
-
 interface EducationAnalytics {
   totalCourses: number;
   totalProviders: number;
@@ -32,153 +18,117 @@ const educationAnalytics: EducationAnalytics = {
   highDemandPrograms: 45,
   fundingOptionsAvailable: 12,
   topCategories: [
-    { name: "Bachelor's Degrees", count: 89 },
-    { name: 'HNC/HND', count: 67 },
-    { name: "Master's Degrees", count: 45 },
-    { name: 'Professional Certs', count: 32 },
-    { name: 'Foundation Degrees', count: 17 },
+    { name: "Bachelor's degrees", count: 89 },
+    { name: 'HNC / HND', count: 67 },
+    { name: "Master's degrees", count: 45 },
+    { name: 'Professional certs', count: 32 },
+    { name: 'Foundation degrees', count: 17 },
   ],
 };
 
+const Stat = ({ label, value }: { label: string; value: string | number }) => (
+  <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      {label}
+    </span>
+    <div className="text-[18px] sm:text-[20px] font-semibold text-white">{value}</div>
+  </div>
+);
+
+const Section = ({ eyebrow, children }: { eyebrow: string; children: React.ReactNode }) => (
+  <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      {eyebrow}
+    </span>
+    <div>{children}</div>
+  </div>
+);
+
 const EducationAnalyticsDashboard = () => {
   return (
-    <Card className="border-elec-yellow/20 bg-white/5">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-lg">
-          <TrendingUp className="h-5 w-5 text-elec-yellow" />
-          UK Education Market Insights
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        {/* Key Statistics */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="text-center space-y-1">
-            <div className="text-2xl font-bold text-elec-yellow">
-              {educationAnalytics.totalCourses}
+    <Section eyebrow="UK education market insights">
+      <div className="space-y-5">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <Stat label="Available programmes" value={educationAnalytics.totalCourses} />
+          <Stat label="Education providers" value={educationAnalytics.totalProviders} />
+          <Stat label="Average rating" value={educationAnalytics.averageRating} />
+          <Stat label="Employment rate" value={`${educationAnalytics.averageEmploymentRate}%`} />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              High demand
+            </span>
+            <div className="text-[20px] font-semibold text-white">
+              {educationAnalytics.highDemandPrograms}
             </div>
-            <div className="text-xs text-white">Available Programmes</div>
+            <p className="text-[12px] text-white/55">programmes in high demand</p>
           </div>
-          <div className="text-center space-y-1">
-            <div className="text-2xl font-bold text-elec-yellow">
-              {educationAnalytics.totalProviders}
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Funding available
+            </span>
+            <div className="text-[20px] font-semibold text-white">
+              {educationAnalytics.fundingOptionsAvailable}
             </div>
-            <div className="text-xs text-white">Education Providers</div>
+            <p className="text-[12px] text-white/55">different funding options</p>
           </div>
-          <div className="text-center space-y-1">
-            <div className="text-2xl font-bold text-elec-yellow flex items-center justify-center gap-1">
-              <Star className="h-4 w-4 fill-elec-yellow" />
-              <span>{educationAnalytics.averageRating}</span>
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Starting salary
+            </span>
+            <div className="text-[16px] font-semibold text-white">
+              {educationAnalytics.averageStartingSalary}
             </div>
-            <div className="text-xs text-white">Average Rating</div>
-          </div>
-          <div className="text-center space-y-1">
-            <div className="text-2xl font-bold text-elec-yellow">
-              {educationAnalytics.averageEmploymentRate}%
-            </div>
-            <div className="text-xs text-white">Employment Rate</div>
+            <p className="text-[12px] text-white/55">average graduate salary</p>
           </div>
         </div>
 
-        {/* Industry Insights */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card className="border-elec-yellow/10 bg-white/10">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <GraduationCap className="h-4 w-4 text-green-400" />
-                <span className="text-sm font-medium text-green-400">High Demand</span>
-              </div>
-              <div className="text-2xl font-bold text-white mb-1">
-                {educationAnalytics.highDemandPrograms}
-              </div>
-              <div className="text-xs text-white">programmes in high demand</div>
-              <div className="mt-2 text-xs text-green-400">Excellent career prospects</div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-elec-yellow/10 bg-white/10">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <PoundSterling className="h-4 w-4 text-blue-400" />
-                <span className="text-sm font-medium text-blue-400">Funding Available</span>
-              </div>
-              <div className="text-2xl font-bold text-white mb-1">
-                {educationAnalytics.fundingOptionsAvailable}
-              </div>
-              <div className="text-xs text-white">different funding options</div>
-              <div className="mt-2 text-xs text-blue-400">Multiple pathways to finance</div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-elec-yellow/10 bg-white/10">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <Award className="h-4 w-4 text-amber-400" />
-                <span className="text-sm font-medium text-amber-400">Starting Salary</span>
-              </div>
-              <div className="text-lg font-bold text-white mb-1">
-                {educationAnalytics.averageStartingSalary}
-              </div>
-              <div className="text-xs text-white">average graduate salary</div>
-              <div className="mt-2 text-xs text-amber-400">Strong return on investment</div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Popular Categories */}
-        <div>
-          <h4 className="text-sm font-medium mb-3 text-elec-yellow flex items-center gap-1">
-            <Target className="h-4 w-4" />
-            Most Popular Education Categories
-          </h4>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div className="space-y-3">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Most popular categories
+          </span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
             {educationAnalytics.topCategories.map((category, idx) => (
               <div
                 key={idx}
-                className="flex items-center justify-between p-3 bg-white/10 rounded-lg border border-elec-yellow/10"
+                className="flex items-center justify-between rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2"
               >
-                <div className="flex items-center gap-2">
-                  <Building className="h-3 w-3 text-elec-yellow" />
-                  <span className="text-sm text-white">{category.name}</span>
-                </div>
-                <Badge
-                  variant="outline"
-                  className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30"
-                >
-                  {category.count}
-                </Badge>
+                <span className="text-[14px] text-white/85">{category.name}</span>
+                <span className="text-[12px] text-white/55 font-mono">{category.count}</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Market Trends */}
-        <Card className="bg-elec-yellow/5 border-elec-yellow/20">
-          <CardContent className="p-4">
-            <h4 className="font-medium mb-3 text-elec-yellow">UK Education Trends 2025</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div>
-                <h5 className="font-medium mb-2 text-green-400">Growth Areas:</h5>
-                <ul className="space-y-1 text-xs text-white">
-                  <li>• Renewable energy programmes (+60% applications)</li>
-                  <li>• Digital engineering courses (+40% demand)</li>
-                  <li>• Part-time and flexible study (+35%)</li>
-                  <li>• Work-based learning pathways (+50%)</li>
-                </ul>
-              </div>
-              <div>
-                <h5 className="font-medium mb-2 text-blue-400">Industry Partnerships:</h5>
-                <ul className="space-y-1 text-xs text-white">
-                  <li>• 85% of programmes have employer links</li>
-                  <li>• Average 94% employment rate post-graduation</li>
-                  <li>• £12k+ average salary increase after qualification</li>
-                  <li>• 78% receive job offers before graduation</li>
-                </ul>
-              </div>
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            UK education trends
+          </span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[14px] text-white/85 leading-relaxed">
+            <div>
+              <h5 className="text-white mb-2">Growth areas</h5>
+              <ul className="space-y-1.5">
+                <li>Renewable energy programmes</li>
+                <li>Digital engineering courses</li>
+                <li>Part-time and flexible study</li>
+                <li>Work-based learning pathways</li>
+              </ul>
             </div>
-          </CardContent>
-        </Card>
-      </CardContent>
-    </Card>
+            <div>
+              <h5 className="text-white mb-2">Industry partnerships</h5>
+              <ul className="space-y-1.5">
+                <li>Most programmes have employer links</li>
+                <li>Strong post-graduation employment rates</li>
+                <li>Salary uplift typical post-qualification</li>
+                <li>Many receive job offers before graduation</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Section>
   );
 };
 

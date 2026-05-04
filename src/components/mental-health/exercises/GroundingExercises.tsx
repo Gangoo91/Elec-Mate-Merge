@@ -234,52 +234,52 @@ const GroundingExercises = () => {
   const getColorClasses = (color: string) => {
     const colors: Record<string, { bg: string; text: string; border: string; gradient: string }> = {
       purple: {
-        bg: 'bg-purple-500/20',
-        text: 'text-purple-400',
-        border: 'border-purple-500/20',
-        gradient: 'from-purple-500/10',
+        bg: 'bg-white/[0.02]',
+        text: 'text-white/85',
+        border: 'border-white/[0.06]',
+        gradient: '',
       },
       blue: {
-        bg: 'bg-blue-500/20',
-        text: 'text-blue-400',
-        border: 'border-blue-500/20',
-        gradient: 'from-blue-500/10',
+        bg: 'bg-white/[0.02]',
+        text: 'text-white/85',
+        border: 'border-white/[0.06]',
+        gradient: '',
       },
       green: {
-        bg: 'bg-green-500/20',
-        text: 'text-green-400',
-        border: 'border-green-500/20',
-        gradient: 'from-green-500/10',
+        bg: 'bg-white/[0.02]',
+        text: 'text-white/85',
+        border: 'border-white/[0.06]',
+        gradient: '',
       },
       cyan: {
-        bg: 'bg-cyan-500/20',
-        text: 'text-cyan-400',
-        border: 'border-cyan-500/20',
-        gradient: 'from-cyan-500/10',
+        bg: 'bg-white/[0.02]',
+        text: 'text-white/85',
+        border: 'border-white/[0.06]',
+        gradient: '',
       },
       amber: {
-        bg: 'bg-amber-500/20',
-        text: 'text-amber-400',
-        border: 'border-amber-500/20',
-        gradient: 'from-amber-500/10',
+        bg: 'bg-white/[0.02]',
+        text: 'text-white/85',
+        border: 'border-white/[0.06]',
+        gradient: '',
       },
       indigo: {
-        bg: 'bg-indigo-500/20',
-        text: 'text-indigo-400',
-        border: 'border-indigo-500/20',
-        gradient: 'from-indigo-500/10',
+        bg: 'bg-white/[0.02]',
+        text: 'text-white/85',
+        border: 'border-white/[0.06]',
+        gradient: '',
       },
       rose: {
-        bg: 'bg-rose-500/20',
-        text: 'text-rose-400',
-        border: 'border-rose-500/20',
-        gradient: 'from-rose-500/10',
+        bg: 'bg-white/[0.02]',
+        text: 'text-white/85',
+        border: 'border-white/[0.06]',
+        gradient: '',
       },
       orange: {
-        bg: 'bg-orange-500/20',
-        text: 'text-orange-400',
-        border: 'border-orange-500/20',
-        gradient: 'from-orange-500/10',
+        bg: 'bg-white/[0.02]',
+        text: 'text-white/85',
+        border: 'border-white/[0.06]',
+        gradient: '',
       },
     };
     return colors[color] || colors.blue;
@@ -291,8 +291,8 @@ const GroundingExercises = () => {
       <div className="space-y-4">
         {/* Header */}
         <div className="text-center py-2">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-purple-500/20 to-blue-500/20 mb-3">
-            <Anchor className="h-6 w-6 text-purple-400" />
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/[0.02] mb-3">
+            <Anchor className="h-6 w-6 text-white/85" />
           </div>
           <h2 className="text-xl font-bold text-white mb-1">Grounding Exercises</h2>
           <p className="text-sm text-white">Techniques to bring you back to the present moment</p>
@@ -301,7 +301,7 @@ const GroundingExercises = () => {
         {/* Cloud Sync Status */}
         <div className="flex items-center justify-center gap-2 text-xs">
           {user ? (
-            <span className="flex items-center gap-1 text-green-400">
+            <span className="flex items-center gap-1 text-white/85">
               <Cloud className="h-3 w-3" />
               Synced to cloud
             </span>
@@ -315,13 +315,13 @@ const GroundingExercises = () => {
 
         {/* Stats */}
         {completed.length > 0 && (
-          <Card className="border-green-500/20 bg-green-500/5">
+          <Card className="border-white/[0.06] bg-white/[0.02]">
             <CardContent className="p-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-green-400" />
+                <CheckCircle className="h-5 w-5 text-white/85" />
                 <span className="text-sm text-white">{completed.length} completed today</span>
               </div>
-              <Sparkles className="h-5 w-5 text-green-400" />
+              <Sparkles className="h-5 w-5 text-white/85" />
             </CardContent>
           </Card>
         )}
@@ -340,7 +340,7 @@ const GroundingExercises = () => {
                   active:scale-95 transition-transform`}
               >
                 {isComplete && (
-                  <CheckCircle className="absolute top-1 right-1 h-3 w-3 text-green-400" />
+                  <CheckCircle className="absolute top-1 right-1 h-3 w-3 text-white/85" />
                 )}
                 <Icon className={`h-5 w-5 ${colors.text}`} />
                 <span className="text-[10px] text-white font-medium">{ex.shortName}</span>
@@ -363,7 +363,7 @@ const GroundingExercises = () => {
                 className={`${colors.border} overflow-hidden cursor-pointer active:scale-[0.99] transition-transform`}
                 onClick={() => startExercise(exercise)}
               >
-                <CardContent className={`p-3 bg-gradient-to-r ${colors.gradient} to-transparent`}>
+                <CardContent className="p-3 bg-white/[0.02]">
                   <div className="flex items-center gap-3">
                     <div
                       className={`w-10 h-10 rounded-xl ${colors.bg} flex items-center justify-center flex-shrink-0`}
@@ -373,7 +373,7 @@ const GroundingExercises = () => {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
                         <h4 className="font-medium text-white text-sm">{exercise.name}</h4>
-                        {isComplete && <CheckCircle className="h-4 w-4 text-green-400" />}
+                        {isComplete && <CheckCircle className="h-4 w-4 text-white/85" />}
                       </div>
                       <p className="text-xs text-white line-clamp-1">{exercise.description}</p>
                     </div>
@@ -389,10 +389,10 @@ const GroundingExercises = () => {
         </div>
 
         {/* Tip */}
-        <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/10 to-indigo-500/5">
+        <Card className="border-white/[0.06] bg-white/[0.02]">
           <CardContent className="p-4">
-            <p className="text-sm text-blue-200">
-              <strong className="text-blue-400">When to use:</strong> Feeling anxious, overwhelmed,
+            <p className="text-sm text-white/85">
+              <strong className="text-white/85">When to use:</strong> Feeling anxious, overwhelmed,
               or disconnected? These techniques help you reconnect with the present moment.
             </p>
           </CardContent>
@@ -436,9 +436,9 @@ const GroundingExercises = () => {
 
         {isFinished ? (
           // Completion screen
-          <Card className="border-green-500/20 bg-gradient-to-br from-green-500/10 to-emerald-500/5">
+          <Card className="border-white/[0.06] bg-white/[0.02]">
             <CardContent className="p-6 text-center">
-              <CheckCircle className="h-12 w-12 text-green-400 mx-auto mb-4" />
+              <CheckCircle className="h-12 w-12 text-white/85 mx-auto mb-4" />
               <h3 className="text-lg font-bold text-white mb-2">Well done!</h3>
               <p className="text-sm text-white mb-4">
                 You've grounded yourself using all five senses. How do you feel now?
@@ -454,7 +454,7 @@ const GroundingExercises = () => {
                   Try Again
                 </Button>
                 <Button
-                  className="flex-1 bg-green-500 hover:bg-green-600"
+                  className="flex-1 bg-white/[0.02] hover:bg-white/[0.02]"
                   onClick={() => {
                     markCompleted(selectedExercise.id);
                     setSelectedExercise(null);
@@ -474,7 +474,7 @@ const GroundingExercises = () => {
                   key={i}
                   className={`w-10 h-1 rounded-full transition-all ${
                     i < senseIndex
-                      ? 'bg-green-400'
+                      ? 'bg-white/[0.02]'
                       : i === senseIndex
                         ? colors.text.replace('text-', 'bg-')
                         : 'bg-white/20'
@@ -484,9 +484,7 @@ const GroundingExercises = () => {
             </div>
 
             {/* Current Sense */}
-            <Card
-              className={`${colors.border} bg-gradient-to-br ${colors.gradient} to-transparent`}
-            >
+            <Card className="border-white/[0.06] bg-white/[0.02]">
               <CardContent className="p-6 text-center">
                 <span className="text-4xl mb-3 block">{currentSense.emoji}</span>
                 <h3 className="text-2xl font-bold text-white mb-2">
@@ -514,7 +512,7 @@ const GroundingExercises = () => {
                   }}
                   className={`w-10 h-10 rounded-full transition-all ${
                     i < senseCount
-                      ? 'bg-green-500 text-white'
+                      ? 'bg-white/[0.02] text-white'
                       : i === senseCount
                         ? `${colors.bg} ${colors.text} ring-2 ring-white/50 animate-pulse`
                         : 'bg-white/10 text-white'
@@ -566,7 +564,7 @@ const GroundingExercises = () => {
             key={i}
             className={`h-1 rounded-full transition-all ${
               i < currentStep
-                ? 'bg-green-400 w-8'
+                ? 'bg-white/[0.02] w-8'
                 : i === currentStep
                   ? `${colors.text.replace('text-', 'bg-')} w-8`
                   : 'bg-white/20 w-4'
@@ -578,7 +576,7 @@ const GroundingExercises = () => {
       {/* Current Step */}
       {currentStep < selectedExercise.steps.length ? (
         <>
-          <Card className={`${colors.border} bg-gradient-to-br ${colors.gradient} to-transparent`}>
+          <Card className="border-white/[0.06] bg-white/[0.02]">
             <CardContent className="p-6">
               <div className="flex items-start gap-3">
                 <div
@@ -620,9 +618,9 @@ const GroundingExercises = () => {
         </>
       ) : (
         // Completion screen
-        <Card className="border-green-500/20 bg-gradient-to-br from-green-500/10 to-emerald-500/5">
+        <Card className="border-white/[0.06] bg-white/[0.02]">
           <CardContent className="p-6 text-center">
-            <CheckCircle className="h-12 w-12 text-green-400 mx-auto mb-4" />
+            <CheckCircle className="h-12 w-12 text-white/85 mx-auto mb-4" />
             <h3 className="text-lg font-bold text-white mb-2">Exercise Complete!</h3>
             <p className="text-sm text-white mb-4">
               Take a moment to notice how you feel now compared to when you started.
@@ -632,7 +630,7 @@ const GroundingExercises = () => {
                 Repeat
               </Button>
               <Button
-                className="flex-1 bg-green-500 hover:bg-green-600"
+                className="flex-1 bg-white/[0.02] hover:bg-white/[0.02]"
                 onClick={() => {
                   markCompleted(selectedExercise.id);
                   setSelectedExercise(null);
@@ -658,7 +656,7 @@ const GroundingExercises = () => {
                     i <= currentStep ? 'text-white' : 'text-white'
                   }`}
                 >
-                  <span className={i < currentStep ? 'text-green-400' : ''}>{i + 1}.</span>
+                  <span className={i < currentStep ? 'text-white/85' : ''}>{i + 1}.</span>
                   <span className={i < currentStep ? 'line-through' : ''}>{step}</span>
                 </div>
               ))}

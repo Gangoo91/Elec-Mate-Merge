@@ -16,7 +16,7 @@ const BalanceInfoCard = ({ title, description, tips, icon }: BalanceInfoCardProp
       <ul className="text-sm space-y-2">
         {tips.map((tip, index) => (
           <li key={index} className="flex items-start">
-            <CheckCircle className="h-4 w-4 text-green-500 mr-2 mt-1 flex-shrink-0" />
+            <CheckCircle className="h-4 w-4 text-white/85 mr-2 mt-1 flex-shrink-0" />
             <span>{tip}</span>
           </li>
         ))}

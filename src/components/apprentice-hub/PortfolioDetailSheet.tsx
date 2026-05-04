@@ -265,8 +265,8 @@ export function PortfolioDetailSheet({
 
   const statusColors: Record<string, string> = {
     draft: 'bg-muted text-white',
-    'in-progress': 'bg-blue-500/10 text-blue-500 border-blue-500/30',
-    completed: 'bg-green-500/10 text-green-500 border-green-500/30',
+    'in-progress': 'bg-white/[0.02] text-white/85 border-white/[0.06]',
+    completed: 'bg-white/[0.02] text-white/85 border-white/[0.06]',
     reviewed: 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30',
   };
 
@@ -382,7 +382,7 @@ export function PortfolioDetailSheet({
                 <FileText className="h-16 w-16 text-white" />
               </div>
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+            <div className="absolute inset-0 bg-white/[0.02] from-background via-background/50" />
 
             {/* Title overlay */}
             <div className="absolute bottom-0 left-0 right-0 p-4">
@@ -403,7 +403,7 @@ export function PortfolioDetailSheet({
                   entry.category === 'site-diary-evidence') && (
                   <Badge
                     variant="outline"
-                    className="text-xs bg-cyan-500/10 text-cyan-400 border-cyan-500/30"
+                    className="text-xs bg-white/[0.02] text-white/85 border-white/[0.06]"
                   >
                     <NotebookPen className="h-3 w-3 mr-1" />
                     From Site Diary
@@ -412,7 +412,7 @@ export function PortfolioDetailSheet({
                 {isVerified && (
                   <Badge
                     variant="outline"
-                    className="text-xs bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
+                    className="text-xs bg-white/[0.02] text-white/85 border-white/[0.06]"
                   >
                     <ShieldCheck className="h-3 w-3 mr-1" />
                     Verified
@@ -431,8 +431,7 @@ export function PortfolioDetailSheet({
           <div className="flex border-b border-border shrink-0">
             <button
               onClick={() => setActiveTab('details')}
-              className={cn(
-                'flex-1 h-11 text-sm font-medium border-b-2 transition-colors touch-manipulation',
+              className={cn('flex-1 h-11 text-sm font-medium border-b-2 transition-colors touch-manipulation',
                 activeTab === 'details'
                   ? 'border-elec-yellow text-elec-yellow'
                   : 'border-transparent text-white'
@@ -442,8 +441,7 @@ export function PortfolioDetailSheet({
             </button>
             <button
               onClick={() => setActiveTab('comments')}
-              className={cn(
-                'flex-1 h-11 text-sm font-medium border-b-2 transition-colors flex items-center justify-center gap-2 touch-manipulation',
+              className={cn('flex-1 h-11 text-sm font-medium border-b-2 transition-colors flex items-center justify-center gap-2 touch-manipulation',
                 activeTab === 'comments'
                   ? 'border-elec-yellow text-elec-yellow'
                   : 'border-transparent text-white'
@@ -522,7 +520,7 @@ export function PortfolioDetailSheet({
                 {entry.assessmentCriteria?.length > 0 && (
                   <div className="space-y-2">
                     <h3 className="text-sm font-medium text-white flex items-center gap-1.5">
-                      <CheckCircle2 className="h-3.5 w-3.5 text-green-500" />
+                      <CheckCircle2 className="h-3.5 w-3.5 text-white/85" />
                       Assessment Criteria ({entry.assessmentCriteria.length})
                     </h3>
                     <div className="space-y-1.5">
@@ -536,10 +534,10 @@ export function PortfolioDetailSheet({
                           <button
                             key={i}
                             onClick={() => setExpandedAC(isExpanded ? null : ac)}
-                            className="w-full text-left p-2.5 rounded-lg bg-green-500/5 border border-green-500/15 touch-manipulation active:bg-green-500/10 transition-colors"
+                            className="w-full text-left p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06] touch-manipulation active:bg-white/[0.02] transition-colors"
                           >
                             <div className="flex items-start gap-2">
-                              <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0 mt-0.5" />
+                              <CheckCircle2 className="h-4 w-4 text-white/85 shrink-0 mt-0.5" />
                               <span className="text-sm text-white">{ac}</span>
                             </div>
                             {isExpanded && matchedDetail && (
@@ -554,8 +552,7 @@ export function PortfolioDetailSheet({
                                 )}
                                 <Badge
                                   variant="outline"
-                                  className={cn(
-                                    'text-[10px]',
+                                  className={cn('text-[10px]',
                                     getConfidenceBadgeClass(matchedDetail.confidence)
                                   )}
                                 >
@@ -651,10 +648,9 @@ export function PortfolioDetailSheet({
                                             return next;
                                           });
                                         }}
-                                        className={cn(
-                                          'w-full text-left rounded-lg p-2.5 border transition-colors touch-manipulation',
+                                        className={cn('w-full text-left rounded-lg p-2.5 border transition-colors touch-manipulation',
                                           alreadyClaimed
-                                            ? 'border-green-500/30 bg-green-500/10 opacity-70'
+                                            ? 'border-white/[0.06] bg-white/[0.02] opacity-70'
                                             : isSelected
                                               ? 'border-elec-yellow/40 bg-elec-yellow/10'
                                               : 'border-white/[0.08] bg-transparent active:bg-white/[0.04]'
@@ -662,7 +658,7 @@ export function PortfolioDetailSheet({
                                       >
                                         <div className="flex items-start gap-2">
                                           {alreadyClaimed ? (
-                                            <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
+                                            <CheckCircle2 className="h-4 w-4 text-white/85 shrink-0 mt-0.5" />
                                           ) : isSelected ? (
                                             <CheckCircle2 className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
                                           ) : (
@@ -672,15 +668,14 @@ export function PortfolioDetailSheet({
                                             <div className="flex items-center gap-2">
                                               <Badge
                                                 variant="outline"
-                                                className={cn(
-                                                  'text-[10px] shrink-0',
+                                                className={cn('text-[10px] shrink-0',
                                                   getConfidenceBadgeClass(mc.confidence)
                                                 )}
                                               >
                                                 {mc.confidence}%
                                               </Badge>
                                               {alreadyClaimed && (
-                                                <span className="text-[10px] text-green-400 font-medium">
+                                                <span className="text-[10px] text-white/85 font-medium">
                                                   Claimed
                                                 </span>
                                               )}
@@ -710,7 +705,7 @@ export function PortfolioDetailSheet({
                       {aiAnalysis.matchedCriteria?.length > 0 && selectedClaimACs.size > 0 && (
                         <button
                           onClick={handleClaimACs}
-                          className="w-full flex items-center justify-center gap-2 h-12 rounded-xl bg-green-500/15 border border-green-500/30 text-green-400 text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
+                          className="w-full flex items-center justify-center gap-2 h-12 rounded-xl bg-white/[0.02] border border-white/[0.06] text-white/85 text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
                         >
                           <CheckCircle2 className="h-4.5 w-4.5" />
                           Claim {selectedClaimACs.size} Selected ACs
@@ -739,16 +734,16 @@ export function PortfolioDetailSheet({
                 {entry.learningOutcomes?.length > 0 && (
                   <div className="space-y-2">
                     <h3 className="text-sm font-medium text-white flex items-center gap-1.5">
-                      <BookOpen className="h-3.5 w-3.5 text-blue-500" />
+                      <BookOpen className="h-3.5 w-3.5 text-white/85" />
                       Learning Outcomes ({entry.learningOutcomes.length})
                     </h3>
                     <div className="space-y-1.5">
                       {entry.learningOutcomes.map((lo: string, i: number) => (
                         <div
                           key={i}
-                          className="flex items-start gap-2 p-2.5 rounded-lg bg-blue-500/5 border border-blue-500/15"
+                          className="flex items-start gap-2 p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06]"
                         >
-                          <BookOpen className="h-4 w-4 text-blue-500 shrink-0 mt-0.5" />
+                          <BookOpen className="h-4 w-4 text-white/85 shrink-0 mt-0.5" />
                           <span className="text-sm text-foreground">{lo}</span>
                         </div>
                       ))}
@@ -777,7 +772,7 @@ export function PortfolioDetailSheet({
                 {entry.dateCompleted && (
                   <div className="space-y-1">
                     <span className="text-xs text-white flex items-center gap-1">
-                      <FileCheck className="h-3 w-3 text-green-500" />
+                      <FileCheck className="h-3 w-3 text-white/85" />
                       Completed
                     </span>
                     <p className="text-sm text-foreground">
@@ -820,7 +815,7 @@ export function PortfolioDetailSheet({
                 {entry.supervisorFeedback && (
                   <div className="space-y-2">
                     <h3 className="text-sm font-medium text-white">Supervisor Feedback</h3>
-                    <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
+                    <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.06]">
                       <p className="text-sm text-foreground">{entry.supervisorFeedback}</p>
                     </div>
                   </div>
@@ -830,14 +825,14 @@ export function PortfolioDetailSheet({
                 {(isVerified || existingVerification) && (
                   <div className="space-y-2">
                     <h3 className="text-sm font-medium text-white flex items-center gap-1.5">
-                      <ShieldCheck className="h-3.5 w-3.5 text-emerald-500" />
+                      <ShieldCheck className="h-3.5 w-3.5 text-white/85" />
                       Supervisor Verification
                     </h3>
                     {isVerified && existingVerification?.verified_at ? (
-                      <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 space-y-2">
+                      <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.06] space-y-2">
                         <div className="flex items-center gap-2">
-                          <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-                          <span className="text-sm font-medium text-emerald-400">
+                          <CheckCircle2 className="h-4 w-4 text-white/85" />
+                          <span className="text-sm font-medium text-white/85">
                             Verified by {existingVerification.supervisor_name}
                           </span>
                         </div>
@@ -863,9 +858,9 @@ export function PortfolioDetailSheet({
                     ) : existingVerification ? (
                       <button
                         onClick={() => setShowVerificationQR(true)}
-                        className="w-full p-3 rounded-lg bg-purple-500/10 border border-purple-500/20 text-left touch-manipulation active:scale-[0.98]"
+                        className="w-full p-3 rounded-lg bg-white/[0.02] border border-white/[0.06] text-left touch-manipulation active:scale-[0.98]"
                       >
-                        <p className="text-sm text-purple-400 font-medium">Verification pending</p>
+                        <p className="text-sm text-white/85 font-medium">Verification pending</p>
                         <p className="text-xs text-white mt-0.5">
                           Tap to show QR code or share link
                         </p>
@@ -968,22 +963,20 @@ export function PortfolioDetailSheet({
               <button
                 onClick={handleRequestVerification}
                 disabled={isCreatingVerification || isVerified}
-                className={cn(
-                  'flex flex-col items-center gap-0.5 min-w-[56px] py-1.5 rounded-lg hover:bg-muted/60 touch-manipulation active:scale-95 transition-colors disabled:opacity-70',
-                  isVerified && 'bg-emerald-500/10'
+                className={cn('flex flex-col items-center gap-0.5 min-w-[56px] py-1.5 rounded-lg hover:bg-muted/60 touch-manipulation active:scale-95 transition-colors disabled:opacity-70',
+                  isVerified && 'bg-white/[0.02]'
                 )}
               >
                 {isCreatingVerification ? (
-                  <Loader2 className="h-5 w-5 text-purple-400 animate-spin" />
+                  <Loader2 className="h-5 w-5 text-white/85 animate-spin" />
                 ) : (
                   <ShieldCheck
-                    className={cn('h-5 w-5', isVerified ? 'text-emerald-400' : 'text-purple-400')}
+                    className={cn('h-5 w-5', isVerified ? 'text-white/85' : 'text-white/85')}
                   />
                 )}
                 <span
-                  className={cn(
-                    'text-[10px]',
-                    isVerified ? 'text-emerald-400' : 'text-purple-400/80'
+                  className={cn('text-[10px]',
+                    isVerified ? 'text-white/85' : 'text-purple-400/80'
                   )}
                 >
                   {isVerified ? 'Verified' : 'Verify'}
@@ -1099,10 +1092,10 @@ export function PortfolioDetailSheet({
 // File icon helper
 function FileIcon({ type }: { type?: string }) {
   if (type?.startsWith('image/')) {
-    return <ImageIcon className="h-5 w-5 text-blue-500" />;
+    return <ImageIcon className="h-5 w-5 text-white/85" />;
   }
   if (type?.startsWith('video/')) {
-    return <Video className="h-5 w-5 text-purple-500" />;
+    return <Video className="h-5 w-5 text-white/85" />;
   }
   if (type?.includes('pdf')) {
     return <FileText className="h-5 w-5 text-red-500" />;

@@ -146,7 +146,7 @@ export function ProposeIlpGoalSheet({ open, onOpenChange, onSubmitted, prefill }
         <SheetTitle className="sr-only">Propose ILP goal</SheetTitle>
         <div className="flex flex-col h-full">
           <div className="px-4 sm:px-5 pt-4 pb-3 border-b border-white/[0.06]">
-            <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-amber-300">
+            <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white/85">
               Propose a goal
             </div>
             <h2 className="mt-1 text-[18px] font-semibold text-white tracking-tight leading-tight">
@@ -253,11 +253,10 @@ export function ProposeIlpGoalSheet({ open, onOpenChange, onSubmitted, prefill }
               type="button"
               onClick={handleSubmit}
               disabled={saving || !form.title.trim() || !form.description.trim()}
-              className={cn(
-                'inline-flex items-center h-11 px-4 rounded-lg text-[13px] font-semibold text-black transition-colors touch-manipulation',
+              className={cn('inline-flex items-center h-11 px-4 rounded-lg text-[13px] font-semibold text-black transition-colors touch-manipulation',
                 saving || !form.title.trim() || !form.description.trim()
                   ? 'bg-white/[0.05] text-white/40'
-                  : 'bg-amber-300 hover:bg-amber-200'
+                  : 'bg-white/[0.02] hover:bg-white/[0.02]'
               )}
             >
               {savedTick ? 'Sent ✓' : saving ? 'Sending…' : 'Send to tutor'}

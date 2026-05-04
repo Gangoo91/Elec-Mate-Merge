@@ -1,23 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import {
-  Target,
-  CheckCircle,
-  Clock,
-  Users,
-  FileText,
-  AlertTriangle,
-  Star,
-  BookOpen,
-  Award,
-  TrendingUp,
-} from 'lucide-react';
-
 const AssessmentPreparation = () => {
   const assessmentTypes = [
     {
-      type: 'Portfolio Review',
+      type: 'Portfolio review',
       description: 'Comprehensive review of your complete portfolio',
       duration: '2-3 hours',
       format: 'Face-to-face with assessor',
@@ -29,7 +13,7 @@ const AssessmentPreparation = () => {
       ],
     },
     {
-      type: 'Professional Discussion',
+      type: 'Professional discussion',
       description: 'Structured conversation about your learning and development',
       duration: '45-90 minutes',
       format: 'One-to-one discussion',
@@ -41,7 +25,7 @@ const AssessmentPreparation = () => {
       ],
     },
     {
-      type: 'Practical Assessment',
+      type: 'Practical assessment',
       description: 'Demonstration of practical skills and knowledge',
       duration: 'Half day',
       format: 'Workplace observation',
@@ -92,286 +76,255 @@ const AssessmentPreparation = () => {
 
   const preparationTimeline = [
     {
-      timeframe: '3 Months Before',
+      timeframe: '3 months before',
       tasks: [
         'Complete portfolio gap analysis',
         'Identify any missing evidence',
         'Schedule additional workplace opportunities',
         'Begin preparing assessment documentation',
       ],
-      priority: 'high',
     },
     {
-      timeframe: '6 Weeks Before',
+      timeframe: '6 weeks before',
       tasks: [
         'Submit draft portfolio for review',
         'Incorporate feedback from supervisor',
         'Practice professional discussion scenarios',
         'Confirm assessment dates and logistics',
       ],
-      priority: 'high',
     },
     {
-      timeframe: '2 Weeks Before',
+      timeframe: '2 weeks before',
       tasks: [
         'Finalise portfolio organisation',
         'Prepare presentation materials',
         'Review all evidence one final time',
         'Confirm assessment venue and requirements',
       ],
-      priority: 'medium',
     },
     {
-      timeframe: '1 Week Before',
+      timeframe: '1 week before',
       tasks: [
         'Print and bind portfolio copies',
         'Prepare assessment day kit',
         'Review learning outcomes one last time',
         'Get good rest and prepare mentally',
       ],
-      priority: 'low',
     },
   ];
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case 'high':
-        return 'bg-red-500/20 text-red-400 border-red-500/30';
-      case 'medium':
-        return 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30';
-      case 'low':
-        return 'bg-green-500/20 text-green-400 border-green-500/30';
-      default:
-        return 'bg-white/10 text-white border-white/30';
-    }
-  };
-
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-orange-500/10">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Target className="h-6 w-6" />
-            Assessment Preparation Guide
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-white">
-            Prepare thoroughly for your end-point assessment with this comprehensive guide covering
-            portfolio review, professional discussion, and practical assessment components.
-          </p>
-        </CardContent>
-      </Card>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Assessment preparation guide
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Prepare thoroughly for your end-point assessment with this comprehensive guide covering
+          portfolio review, professional discussion, and practical assessment components.
+        </p>
+      </div>
 
-      {/* Assessment Types */}
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold text-white">Assessment Components</h3>
+        <h3 className="text-[18px] sm:text-[20px] font-semibold text-white leading-tight">
+          Assessment components
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {assessmentTypes.map((assessment, index) => (
-            <Card key={index} className="border-blue-500/20 bg-white/5">
-              <CardHeader>
-                <CardTitle className="text-blue-400">{assessment.type}</CardTitle>
-                <p className="text-sm text-white">{assessment.description}</p>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-white">Duration:</span>
-                  <Badge variant="outline" className="text-blue-400">
-                    <Clock className="h-3 w-3 mr-1" />
-                    {assessment.duration}
-                  </Badge>
-                </div>
-
+            <div
+              key={index}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
+            >
+              <div>
+                <h4 className="text-[16px] font-semibold text-white">{assessment.type}</h4>
+                <p className="text-[14px] text-white/70 leading-relaxed mt-1">
+                  {assessment.description}
+                </p>
+              </div>
+              <div className="space-y-1 text-[13px] text-white/85">
                 <div>
-                  <span className="text-sm text-white">Format: {assessment.format}</span>
+                  <span className="text-white/55">Duration:</span> {assessment.duration}
                 </div>
-
                 <div>
-                  <h4 className="font-medium text-white mb-2">Preparation Checklist:</h4>
-                  <ul className="space-y-1">
-                    {assessment.preparation.map((item, itemIndex) => (
-                      <li key={itemIndex} className="flex items-start gap-2">
-                        <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
-                        <span className="text-xs text-white">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <span className="text-white/55">Format:</span> {assessment.format}
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+              <div className="space-y-2">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Preparation checklist
+                </span>
+                <ul className="space-y-1.5">
+                  {assessment.preparation.map((item, itemIndex) => (
+                    <li
+                      key={itemIndex}
+                      className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           ))}
         </div>
       </div>
 
-      {/* Assessment Criteria */}
-      <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/10">
-        <CardHeader>
-          <CardTitle className="text-green-400">Assessment Criteria Breakdown</CardTitle>
-          <p className="text-white">
-            Understanding how you'll be assessed across knowledge, skills, and behaviours
-          </p>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            {assessmentCriteria.map((criteria, index) => (
-              <div key={index} className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-medium text-green-400">{criteria.category}</h4>
-                  <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
-                    {criteria.weight}
-                  </Badge>
-                </div>
-                <p className="text-sm text-white">{criteria.description}</p>
-                <div>
-                  <h5 className="text-sm font-medium text-white mb-1">Evidence Types:</h5>
-                  <ul className="space-y-1">
-                    {criteria.evidence.map((evidence, evidenceIndex) => (
-                      <li key={evidenceIndex} className="text-xs text-white">
-                        • {evidence}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Assessment criteria breakdown
+        </span>
+        <p className="text-[14px] text-white/70 leading-relaxed">
+          Understanding how you'll be assessed across knowledge, skills, and behaviours
+        </p>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          {assessmentCriteria.map((criteria, index) => (
+            <div key={index} className="space-y-2">
+              <div className="flex items-center justify-between">
+                <h4 className="text-[14px] font-semibold text-white">{criteria.category}</h4>
+                <span className="text-[12px] text-elec-yellow px-2 py-0.5 rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04]">
+                  {criteria.weight}
+                </span>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Preparation Timeline */}
-      <Card className="border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-pink-500/10">
-        <CardHeader>
-          <CardTitle className="text-purple-400">Assessment Preparation Timeline</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {preparationTimeline.map((period, index) => (
-              <div key={index} className="flex gap-4">
-                <div className="flex-shrink-0">
-                  <Badge className={getPriorityColor(period.priority)} variant="outline">
-                    {period.timeframe}
-                  </Badge>
-                </div>
-                <div className="flex-1">
-                  <ul className="space-y-2">
-                    {period.tasks.map((task, taskIndex) => (
-                      <li key={taskIndex} className="flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-sm text-white">{task}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              <p className="text-[14px] text-white/85 leading-relaxed">{criteria.description}</p>
+              <div className="space-y-1.5">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Evidence types
+                </span>
+                <ul className="space-y-1">
+                  {criteria.evidence.map((evidence, evidenceIndex) => (
+                    <li
+                      key={evidenceIndex}
+                      className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                      <span>{evidence}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+            </div>
+          ))}
+        </div>
+      </div>
 
-      {/* Success Tips */}
-      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-orange-500/10">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Star className="h-5 w-5" />
-            Top Tips for Assessment Success
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <h4 className="font-medium text-white mb-3">Before Assessment:</h4>
-              <ul className="space-y-2">
-                <li className="flex items-start gap-2">
-                  <TrendingUp className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-white">
-                    Practice explaining your work to others
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <TrendingUp className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-white">
-                    Ensure all evidence is clearly labelled and dated
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <TrendingUp className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-white">
-                    Prepare specific examples for each competency
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <TrendingUp className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-white">
-                    Get feedback from supervisors and mentors
-                  </span>
-                </li>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Assessment preparation timeline
+        </span>
+        <div className="space-y-4">
+          {preparationTimeline.map((period, index) => (
+            <div key={index} className="space-y-2">
+              <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block">
+                {period.timeframe}
+              </span>
+              <ul className="space-y-1.5">
+                {period.tasks.map((task, taskIndex) => (
+                  <li
+                    key={taskIndex}
+                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  >
+                    <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                    <span>{task}</span>
+                  </li>
+                ))}
               </ul>
             </div>
-            <div>
-              <h4 className="font-medium text-white mb-3">During Assessment:</h4>
-              <ul className="space-y-2">
-                <li className="flex items-start gap-2">
-                  <Award className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-white">
-                    Be confident and speak clearly about your work
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Award className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-white">
-                    Reference specific evidence when answering questions
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Award className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-white">
-                    Admit when you don't know something - it's professional
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Award className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-white">
-                    Ask for clarification if you don't understand a question
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+          ))}
+        </div>
+      </div>
 
-      {/* Common Pitfalls */}
-      <Card className="border-red-500/30 bg-gradient-to-br from-red-500/10 to-orange-500/10">
-        <CardHeader>
-          <CardTitle className="text-red-400 flex items-center gap-2">
-            <AlertTriangle className="h-5 w-5" />
-            Common Assessment Pitfalls to Avoid
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <h4 className="font-medium text-white mb-2">Portfolio Issues:</h4>
-              <ul className="text-sm text-white space-y-1">
-                <li>• Insufficient reflection in evidence commentary</li>
-                <li>• Poor organisation making evidence hard to find</li>
-                <li>• Missing evidence for key competencies</li>
-                <li>• Weak links between evidence and learning outcomes</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-medium text-white mb-2">Assessment Day Issues:</h4>
-              <ul className="text-sm text-white space-y-1">
-                <li>• Not being able to explain your own work</li>
-                <li>• Failing to reference portfolio evidence</li>
-                <li>• Poor time management during assessment</li>
-                <li>• Not demonstrating professional behaviours</li>
-              </ul>
-            </div>
+      <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+          Top tips for assessment success
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <h4 className="text-[14px] font-semibold text-white">Before assessment</h4>
+            <ul className="space-y-1.5">
+              {[
+                'Practice explaining your work to others',
+                'Ensure all evidence is clearly labelled and dated',
+                'Prepare specific examples for each competency',
+                'Get feedback from supervisors and mentors',
+              ].map((item, i) => (
+                <li
+                  key={i}
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-        </CardContent>
-      </Card>
+          <div className="space-y-2">
+            <h4 className="text-[14px] font-semibold text-white">During assessment</h4>
+            <ul className="space-y-1.5">
+              {[
+                'Be confident and speak clearly about your work',
+                'Reference specific evidence when answering questions',
+                "Admit when you don't know something — it's professional",
+                "Ask for clarification if you don't understand a question",
+              ].map((item, i) => (
+                <li
+                  key={i}
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Common assessment pitfalls to avoid
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <h4 className="text-[14px] font-semibold text-white">Portfolio issues</h4>
+            <ul className="space-y-1.5">
+              {[
+                'Insufficient reflection in evidence commentary',
+                'Poor organisation making evidence hard to find',
+                'Missing evidence for key competencies',
+                'Weak links between evidence and learning outcomes',
+              ].map((item, i) => (
+                <li
+                  key={i}
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="space-y-2">
+            <h4 className="text-[14px] font-semibold text-white">Assessment day issues</h4>
+            <ul className="space-y-1.5">
+              {[
+                'Not being able to explain your own work',
+                'Failing to reference portfolio evidence',
+                'Poor time management during assessment',
+                'Not demonstrating professional behaviours',
+              ].map((item, i) => (
+                <li
+                  key={i}
+                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

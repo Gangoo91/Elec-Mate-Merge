@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Clock, Plus, Target, Calendar, TrendingUp, ChevronRight, Download } from 'lucide-react';
+import { Clock, Plus, Target, ChevronRight, Download } from 'lucide-react';
 import { useCPDData } from '@/hooks/cpd/useCPDData';
 import { cpdExportService } from '@/services/cpdExportService';
 
@@ -20,23 +18,16 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
   if (loading || !stats) {
     return (
       <div className="space-y-4 animate-fade-in">
-        <div className="h-14 bg-gradient-to-br from-elec-gray to-elec-card rounded-xl animate-pulse border border-elec-yellow/20"></div>
-        <div className="h-32 bg-gradient-to-br from-elec-gray to-elec-card rounded-xl animate-pulse border border-elec-yellow/20"></div>
-        <div className="h-12 bg-white/5 rounded-lg animate-pulse"></div>
-        <div className="h-40 bg-gradient-to-br from-elec-gray to-elec-card rounded-xl animate-pulse border border-elec-yellow/20"></div>
+        <div className="h-14 rounded-xl border border-white/[0.06] bg-white/[0.02] animate-pulse" />
+        <div className="h-32 rounded-xl border border-white/[0.06] bg-white/[0.02] animate-pulse" />
+        <div className="h-12 rounded-xl border border-white/[0.06] bg-white/[0.02] animate-pulse" />
+        <div className="h-40 rounded-xl border border-white/[0.06] bg-white/[0.02] animate-pulse" />
       </div>
     );
   }
 
   const recentEntries = entries.slice(0, 3);
   const activeGoals = goals.filter((goal) => goal.status === 'Active').slice(0, 2);
-
-  const getComplianceColor = () => {
-    if (stats.completionPercentage >= 100) return 'text-green-400';
-    if (stats.completionPercentage >= 80) return 'text-green-400';
-    if (stats.completionPercentage >= 60) return 'text-amber-400';
-    return 'text-red-400';
-  };
 
   const handleQuickExport = () => {
     if (stats && entries && goals) {
@@ -46,229 +37,191 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
 
   return (
     <div className="space-y-4 pb-20 animate-fade-in">
-      {/* Quick Add Button - Sticky */}
-      <div className="sticky top-0 z-10 bg-elec-dark/95 backdrop-blur-sm py-3 -mx-4 px-4 border-b border-white/10">
+      <div className="sticky top-0 z-10 bg-elec-dark/95 backdrop-blur-sm py-3 -mx-4 px-4 border-b border-white/[0.06]">
         <Button
           onClick={onAddEntry}
-          className="w-full h-12 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 touch-manipulation active:scale-95 transition-all font-medium text-base"
+          className="w-full h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation font-medium"
         >
           <Plus className="mr-2 h-5 w-5" />
-          Add CPD Entry
+          Add CPD entry
         </Button>
       </div>
 
-      {/* Key Metrics - Compact */}
-      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
-        <CardContent className="p-4 relative">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="text-center p-3 rounded-lg bg-white/5 border border-white/10">
-              <div className="text-2xl font-bold text-elec-yellow">{stats.hoursThisYear}</div>
-              <div className="text-xs text-white">Hours This Year</div>
-            </div>
-            <div className="text-center p-3 rounded-lg bg-white/5 border border-white/10">
-              <div className={`text-2xl font-bold ${getComplianceColor()}`}>
-                {stats.completionPercentage}%
-              </div>
-              <div className="text-xs text-white">Progress</div>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
+        <div className="grid grid-cols-2 gap-3">
+          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Hours this year
+            </span>
+            <div className="text-[20px] font-semibold text-white">{stats.hoursThisYear}</div>
+          </div>
+          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Progress
+            </span>
+            <div className="text-[20px] font-semibold text-white">
+              {stats.completionPercentage}%
             </div>
           </div>
-          <div className="mt-4 space-y-2 p-3 rounded-lg bg-white/5 border border-white/10">
-            <div className="flex justify-between text-sm text-white">
-              <span>Annual Target</span>
-              <span className="text-elec-yellow font-medium">
-                {stats.hoursThisYear} / {stats.targetHours} hours
-              </span>
-            </div>
-            <Progress value={stats.completionPercentage} className="h-2" />
+        </div>
+        <div className="space-y-2 rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
+          <div className="flex justify-between text-[13px]">
+            <span className="text-white/55">Annual target</span>
+            <span className="text-white font-mono">
+              {stats.hoursThisYear} / {stats.targetHours} hours
+            </span>
           </div>
-        </CardContent>
-      </Card>
-
-      {/* Tab Navigation */}
-      <div className="flex space-x-1 bg-white/5 rounded-xl p-1 border border-white/10">
-        {[
-          { id: 'overview', label: 'Overview', icon: TrendingUp },
-          { id: 'recent', label: 'Recent', icon: Clock },
-          { id: 'goals', label: 'Goals', icon: Target },
-        ].map((tab) => {
-          const Icon = tab.icon;
-          return (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
-              className={`flex-1 flex items-center justify-center gap-2 px-3 py-3 rounded-lg text-sm font-medium transition-all touch-manipulation ${
-                activeTab === tab.id
-                  ? 'bg-elec-yellow text-elec-dark'
-                  : 'text-white hover:text-white hover:bg-white/5'
-              }`}
-            >
-              <Icon className="h-4 w-4" />
-              {tab.label}
-            </button>
-          );
-        })}
+          <Progress value={stats.completionPercentage} className="h-1 bg-white/5" />
+        </div>
       </div>
 
-      {/* Tab Content */}
+      <div className="flex space-x-1 rounded-xl border border-white/[0.06] bg-white/[0.02] p-1">
+        {[
+          { id: 'overview', label: 'Overview' },
+          { id: 'recent', label: 'Recent' },
+          { id: 'goals', label: 'Goals' },
+        ].map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id as 'overview' | 'recent' | 'goals')}
+            className={`flex-1 flex items-center justify-center px-3 py-2.5 rounded-lg text-[13px] font-medium transition-colors touch-manipulation ${
+              activeTab === tab.id
+                ? 'bg-elec-yellow text-black'
+                : 'text-white/85 hover:text-white hover:bg-white/[0.04]'
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
       {activeTab === 'overview' && (
-        <div className="space-y-4">
-          {/* Quick Stats */}
+        <div className="space-y-3">
           <div className="grid grid-cols-2 gap-3">
-            <Card className="bg-gradient-to-br from-elec-gray to-amber-950/20 border-amber-500/20 overflow-hidden relative">
-              <div className="absolute top-0 right-0 w-16 h-16 bg-amber-500/5 rounded-full blur-xl -translate-y-1/2 translate-x-1/2" />
-              <CardContent className="p-4 text-center relative">
-                <div className="text-2xl font-bold text-amber-400">{stats.daysRemaining}</div>
-                <div className="text-xs text-white">Days Left</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-gradient-to-br from-elec-gray to-blue-950/20 border-blue-500/20 overflow-hidden relative">
-              <div className="absolute top-0 right-0 w-16 h-16 bg-blue-500/5 rounded-full blur-xl -translate-y-1/2 translate-x-1/2" />
-              <CardContent className="p-4 text-center relative">
-                <div className="text-2xl font-bold text-blue-400">{stats.hoursThisMonth}</div>
-                <div className="text-xs text-white">This Month</div>
-              </CardContent>
-            </Card>
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Days left
+              </span>
+              <div className="text-[20px] font-semibold text-white">{stats.daysRemaining}</div>
+            </div>
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                This month
+              </span>
+              <div className="text-[20px] font-semibold text-white">{stats.hoursThisMonth}</div>
+            </div>
           </div>
 
-          {/* Category Breakdown - Top 3 */}
-          <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
-            <CardHeader className="pb-3 relative">
-              <CardTitle className="text-sm text-white">Top Categories</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3 relative">
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Top categories
+            </span>
+            <div className="space-y-2">
               {stats.categoryBreakdown.slice(0, 3).map((category, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-2 rounded-lg bg-white/5 border border-white/10"
-                >
-                  <span className="text-xs font-medium text-white">{category.category}</span>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs text-elec-yellow font-medium">{category.hours}h</span>
-                    <div className="w-16 bg-white/10 rounded-full h-1.5">
-                      <div
-                        className="h-1.5 rounded-full bg-elec-yellow transition-all"
-                        style={{ width: `${category.percentage}%` }}
-                      />
-                    </div>
+                <div key={index} className="space-y-1.5">
+                  <div className="flex justify-between items-baseline">
+                    <span className="text-[13px] text-white/85">{category.category}</span>
+                    <span className="text-[12px] text-white/55 font-mono">{category.hours}h</span>
+                  </div>
+                  <div className="w-full bg-white/[0.04] rounded-full h-1">
+                    <div
+                      className="h-1 rounded-full bg-white/40"
+                      style={{ width: `${category.percentage}%` }}
+                    />
                   </div>
                 </div>
               ))}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       )}
 
       {activeTab === 'recent' && (
-        <div className="space-y-3">
+        <div className="space-y-2">
           {recentEntries.map((entry) => (
-            <Card
+            <button
               key={entry.id}
-              className="bg-gradient-to-br from-elec-gray to-elec-card border-white/10 hover:border-elec-yellow/30 cursor-pointer transition-all overflow-hidden relative touch-manipulation active:scale-[0.98]"
+              className="w-full text-left rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 hover:bg-white/[0.04] transition-colors touch-manipulation"
               onClick={() => onViewEntry(entry.id)}
             >
-              <div className="absolute top-0 right-0 w-24 h-24 bg-elec-yellow/5 rounded-full blur-xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <CardContent className="p-4 relative">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="space-y-2 flex-1 min-w-0">
-                    <h3 className="font-medium text-white text-sm line-clamp-2">
-                      {entry.activity}
-                    </h3>
-                    <div className="flex flex-wrap items-center gap-2 text-xs">
-                      <span className="px-2 py-1 rounded bg-white/5 text-white">
-                        {entry.date}
-                      </span>
-                      <span className="px-2 py-1 rounded bg-elec-yellow/10 text-elec-yellow font-medium">
-                        {entry.hours}h
-                      </span>
-                      <Badge
-                        variant="outline"
-                        className="text-xs bg-blue-500/10 text-blue-400 border-blue-500/30"
-                      >
-                        {entry.status}
-                      </Badge>
-                    </div>
+              <div className="flex items-start justify-between gap-3">
+                <div className="space-y-2 flex-1 min-w-0">
+                  <h3 className="text-[14px] text-white line-clamp-2">{entry.activity}</h3>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                      {entry.date}
+                    </span>
+                    <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                      {entry.hours}h
+                    </span>
+                    <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                      {entry.status}
+                    </span>
                   </div>
-                  <ChevronRight className="h-5 w-5 text-white flex-shrink-0" />
                 </div>
-              </CardContent>
-            </Card>
+                <ChevronRight className="h-5 w-5 text-white/55 flex-shrink-0" />
+              </div>
+            </button>
           ))}
 
           <Button
             variant="outline"
             onClick={onViewHistory}
-            className="w-full h-11 border-white/20 hover:bg-white/10 touch-manipulation active:scale-95 transition-all"
+            className="w-full h-11 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
           >
-            View All Entries
+            View all entries
           </Button>
         </div>
       )}
 
       {activeTab === 'goals' && (
-        <div className="space-y-3">
+        <div className="space-y-2">
           {activeGoals.map((goal) => (
-            <Card
+            <div
               key={goal.id}
-              className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative"
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
             >
-              <div className="absolute top-0 right-0 w-24 h-24 bg-elec-yellow/5 rounded-full blur-xl -translate-y-1/2 translate-x-1/2" />
-              <CardContent className="p-4 relative">
-                <div className="space-y-3">
-                  <div className="flex items-start justify-between gap-2">
-                    <h3 className="font-medium text-white text-sm">{goal.title}</h3>
-                    <Badge
-                      variant="outline"
-                      className="text-xs bg-blue-500/10 text-blue-400 border-blue-500/30"
-                    >
-                      {goal.status}
-                    </Badge>
-                  </div>
+              <div className="flex items-start justify-between gap-2">
+                <h3 className="text-[14px] text-white">{goal.title}</h3>
+                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                  {goal.status}
+                </span>
+              </div>
 
-                  <div className="space-y-2 p-2 rounded-lg bg-white/5 border border-white/10">
-                    <div className="flex justify-between text-xs text-white">
-                      <span className="text-white">Progress</span>
-                      <span className="text-elec-yellow font-medium">
-                        {goal.currentHours} / {goal.targetHours} hours
-                      </span>
-                    </div>
-                    <Progress
-                      value={(goal.currentHours / goal.targetHours) * 100}
-                      className="h-2"
-                    />
-                  </div>
-
-                  <div className="flex items-center gap-2 text-xs text-white">
-                    <Calendar className="h-3.5 w-3.5 text-elec-yellow" />
-                    <span>Due: {new Date(goal.deadline).toLocaleDateString()}</span>
-                  </div>
+              <div className="space-y-1.5 rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
+                <div className="flex justify-between text-[13px]">
+                  <span className="text-white/55">Progress</span>
+                  <span className="text-white font-mono">
+                    {goal.currentHours} / {goal.targetHours} hours
+                  </span>
                 </div>
-              </CardContent>
-            </Card>
+                <Progress
+                  value={(goal.currentHours / goal.targetHours) * 100}
+                  className="h-1 bg-white/5"
+                />
+              </div>
+
+              <div className="text-[12px] text-white/55 font-mono">
+                Due: {new Date(goal.deadline).toLocaleDateString()}
+              </div>
+            </div>
           ))}
 
           {activeGoals.length === 0 && (
-            <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
-              <CardContent className="p-6 text-center relative">
-                <div className="p-3 rounded-full bg-gradient-to-br from-white/10 to-white/5 border border-white/20 w-fit mx-auto mb-3">
-                  <Target className="h-6 w-6 text-white" />
-                </div>
-                <p className="text-sm text-white font-medium">No active goals</p>
-                <p className="text-xs text-white mt-1">Create goals to track your progress</p>
-              </CardContent>
-            </Card>
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-6 text-center space-y-2">
+              <Target className="h-6 w-6 text-white/55 mx-auto" />
+              <p className="text-[14px] text-white">No active goals</p>
+              <p className="text-[12px] text-white/55">Create goals to track your progress</p>
+            </div>
           )}
         </div>
       )}
 
-      {/* Quick Actions */}
       <div className="grid grid-cols-2 gap-3">
         <Button
           variant="outline"
           onClick={onViewHistory}
-          className="h-11 border-white/20 hover:bg-white/10 touch-manipulation active:scale-95 transition-all"
+          className="h-11 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
         >
           <Clock className="mr-2 h-4 w-4" />
           History
@@ -276,7 +229,7 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
         <Button
           variant="outline"
           onClick={handleQuickExport}
-          className="h-11 border-white/20 hover:bg-white/10 touch-manipulation active:scale-95 transition-all"
+          className="h-11 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
         >
           <Download className="mr-2 h-4 w-4" />
           Export

@@ -38,18 +38,10 @@ export function VideoPlayerSheet({
 }: VideoPlayerSheetProps) {
   if (!video) return null;
 
-  const levelColour =
-    video.level === 'beginner'
-      ? 'text-green-400 bg-green-400/10 border-green-400/20'
-      : video.level === 'intermediate'
-        ? 'text-amber-400 bg-amber-400/10 border-amber-400/20'
-        : 'text-red-400 bg-red-400/10 border-red-400/20';
-
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
         <div className="flex flex-col h-full bg-[hsl(240,5.9%,10%)]">
-          {/* Drag handle + close -- overlays the top of the video */}
           <SheetHeader className="flex-shrink-0 relative z-10">
             <div className="flex justify-center pt-2.5 pb-1">
               <div className="h-1 w-10 rounded-full bg-white/30" />
@@ -63,32 +55,27 @@ export function VideoPlayerSheet({
             </button>
           </SheetHeader>
 
-          {/* Scrollable content -- iframe first, no padding above */}
           <div className="flex-1 overflow-y-auto overscroll-contain -mt-8">
-            {/* YouTube player — iframe on web, native browser on iOS/Android */}
             <YouTubePlayer videoId={video.id} title={video.title} />
 
-            {/* Video info */}
             <div className="px-4 pt-4 pb-6 space-y-4">
-              <h3 className="text-[15px] sm:text-base font-semibold text-white leading-snug">
+              <h3 className="text-[16px] font-semibold text-white leading-snug">
                 {video.title}
               </h3>
 
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-[13px] text-white">{video.channel}</span>
-                <span className="text-white/15">|</span>
-                <span className="flex items-center gap-1 text-[13px] text-white">
+              <div className="flex items-baseline gap-2 flex-wrap text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="normal-case tracking-normal text-[13px] text-white/85">
+                  {video.channel}
+                </span>
+                <span className="text-white/25">·</span>
+                <span className="flex items-center gap-1 normal-case tracking-normal text-[13px] text-white/85">
                   <Clock className="h-3.5 w-3.5" />
                   {video.duration}
                 </span>
-                <span
-                  className={`px-2 py-0.5 rounded-md border text-[11px] font-medium ${levelColour}`}
-                >
-                  {video.level.charAt(0).toUpperCase() + video.level.slice(1)}
-                </span>
-                <span className="px-2 py-0.5 rounded-md bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow text-[11px] font-medium">
-                  {categoryLabels[video.category]}
-                </span>
+                <span className="text-white/25">·</span>
+                <span>{video.level}</span>
+                <span className="text-white/25">·</span>
+                <span>{categoryLabels[video.category]}</span>
               </div>
 
               <div className="flex gap-2">
@@ -96,29 +83,31 @@ export function VideoPlayerSheet({
                   onClick={onBookmarkToggle}
                   className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl border touch-manipulation active:scale-[0.98] transition-all ${
                     isBookmarked
-                      ? 'bg-elec-yellow/15 border-elec-yellow/30 text-elec-yellow'
-                      : 'bg-white/[0.05] border-white/[0.08] text-white'
+                      ? 'bg-elec-yellow/[0.06] border-elec-yellow/30 text-elec-yellow'
+                      : 'bg-white/[0.02] border-white/[0.06] text-white'
                   }`}
                 >
                   <Bookmark className={`h-4 w-4 ${isBookmarked ? 'fill-elec-yellow' : ''}`} />
-                  <span className="text-sm font-medium">{isBookmarked ? 'Saved' : 'Save'}</span>
+                  <span className="text-[14px] font-medium">{isBookmarked ? 'Saved' : 'Save'}</span>
                 </button>
                 <button
                   onClick={() => openExternalUrl(`https://www.youtube.com/watch?v=${video.id}`)}
-                  className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98] transition-all"
+                  className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl bg-white/[0.02] border border-white/[0.06] text-white touch-manipulation active:scale-[0.98] transition-all"
                 >
                   <ExternalLink className="h-4 w-4" />
-                  <span className="text-sm font-medium">Open in YouTube</span>
+                  <span className="text-[14px] font-medium">Open in YouTube</span>
                 </button>
               </div>
 
               {video.description && (
-                <p className="text-[13px] text-white leading-relaxed">{video.description}</p>
+                <p className="text-[14px] text-white/85 leading-relaxed">{video.description}</p>
               )}
 
               {relatedVideos.length > 0 && (
-                <div className="pt-4 border-t border-white/[0.06]">
-                  <h4 className="text-sm font-semibold text-white mb-3">More like this</h4>
+                <div className="pt-4 border-t border-white/[0.06] space-y-3">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    More like this
+                  </span>
                   <div className="space-y-2">
                     {relatedVideos.map((rv) => (
                       <RelatedVideoRow
@@ -163,16 +152,16 @@ function RelatedVideoRow({
           className="w-full h-full object-cover"
           loading="lazy"
         />
-        <span className="absolute bottom-1 right-1 px-1 py-0.5 rounded bg-black/70 text-[9px] text-white font-medium">
+        <span className="absolute bottom-1 right-1 px-1 py-0.5 rounded bg-black/70 text-[9px] text-white font-mono">
           {video.duration}
         </span>
       </button>
 
       <button onClick={onTap} className="flex-1 text-left touch-manipulation min-w-0 pt-0.5">
-        <h5 className="text-[12px] font-medium text-white leading-tight line-clamp-2">
+        <h5 className="text-[13px] font-medium text-white leading-tight line-clamp-2">
           {video.title}
         </h5>
-        <p className="text-[10px] text-white mt-1">{video.channel}</p>
+        <p className="text-[11px] text-white/55 mt-1">{video.channel}</p>
       </button>
 
       <button

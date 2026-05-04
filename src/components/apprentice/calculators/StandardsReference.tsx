@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Book,
-  CheckCircle,
-  AlertTriangle,
-  FileText,
-  Settings,
-  Zap,
-  ChevronDown,
-} from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import { ukElectricalStandards, voltageDropLimits } from '@/data/standards';
@@ -19,67 +11,39 @@ const StandardsReference = () => {
     setOpenItems((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
-  const getAccentColour = (code: string) => {
-    if (code.includes('7671')) return 'border-l-blue-400';
-    if (code.includes('60898')) return 'border-l-yellow-400';
-    if (code.includes('61008')) return 'border-l-green-400';
-    if (code.includes('60439')) return 'border-l-purple-400';
-    return 'border-l-white';
-  };
-
-  const getIconColour = (code: string) => {
-    if (code.includes('7671')) return 'text-blue-400';
-    if (code.includes('60898')) return 'text-yellow-400';
-    if (code.includes('61008')) return 'text-green-400';
-    if (code.includes('60439')) return 'text-purple-400';
-    return 'text-white';
-  };
-
-  const getIcon = (code: string) => {
-    if (code.includes('7671')) return Book;
-    if (code.includes('60898')) return Zap;
-    if (code.includes('61008')) return CheckCircle;
-    if (code.includes('60439')) return Settings;
-    return FileText;
-  };
-
   return (
     <div className="space-y-5">
-      {/* Header */}
       <div className="space-y-1">
-        <div className="flex items-center gap-2">
-          <Book className="h-5 w-5 text-blue-400" />
-          <h2 className="text-lg font-semibold text-white">UK Electrical Standards Reference</h2>
-        </div>
-        <p className="text-sm text-white">Key Standards Used in Calculations</p>
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          UK electrical standards reference
+        </span>
+        <p className="text-[13px] text-white/85 leading-relaxed">
+          Key standards used in calculations
+        </p>
       </div>
 
       {/* Standards List */}
       <div className="space-y-2">
         {ukElectricalStandards.map((standard, index) => {
           const isOpen = !!openItems[index];
-          const IconComponent = getIcon(standard.code);
 
           return (
             <Collapsible key={index} open={isOpen} onOpenChange={() => toggleItem(index)}>
-              <CollapsibleTrigger className="w-full touch-manipulation">
+              <CollapsibleTrigger className="w-full touch-manipulation min-h-[44px]">
                 <div
                   className={cn(
-                    'flex items-center gap-3 px-3 py-3 rounded-lg transition-colors duration-150',
-                    'border-l-2',
-                    getAccentColour(standard.code),
-                    'hover:bg-white/[0.03]',
-                    isOpen && 'bg-white/[0.03]'
+                    'flex items-center gap-3 px-3 py-3 rounded-lg border transition-colors duration-150',
+                    'border-white/[0.06] bg-white/[0.02]',
+                    'hover:bg-white/[0.04]'
                   )}
                 >
-                  <IconComponent className={cn('h-4 w-4 shrink-0', getIconColour(standard.code))} />
                   <div className="flex-1 text-left min-w-0">
-                    <span className="text-sm font-semibold text-white">{standard.code}</span>
-                    <span className="text-sm text-white ml-2">{standard.description}</span>
+                    <span className="text-[14px] font-mono text-white">{standard.code}</span>
+                    <span className="text-[13px] text-white/85 ml-2">{standard.description}</span>
                   </div>
                   <ChevronDown
                     className={cn(
-                      'h-4 w-4 text-white shrink-0 transition-transform duration-200',
+                      'h-4 w-4 text-white/55 shrink-0 transition-transform duration-200',
                       isOpen && 'rotate-180'
                     )}
                   />
@@ -88,48 +52,59 @@ const StandardsReference = () => {
 
               <CollapsibleContent>
                 <div className="pl-4 pr-2 py-3 space-y-4">
-                  {/* Title and scope */}
                   <div className="space-y-1">
-                    <h4 className="text-base font-semibold text-white">{standard.title}</h4>
-                    <p className="text-sm text-white leading-relaxed">{standard.scope}</p>
+                    <h4 className="text-[14px] font-medium text-white">{standard.title}</h4>
+                    <p className="text-[13px] text-white/85 leading-relaxed">{standard.scope}</p>
                     {standard.notes && (
-                      <p className="text-sm text-blue-300 font-medium">{standard.notes}</p>
+                      <p className="text-[12px] text-white/55 leading-relaxed">{standard.notes}</p>
                     )}
                   </div>
 
-                  {/* Use Cases */}
                   <div className="space-y-1.5">
-                    <h5 className="text-sm font-semibold text-white">Common Use Cases</h5>
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                      Common use cases
+                    </span>
                     <ul className="space-y-1">
                       {standard.useCases.map((useCase, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-sm text-white">
-                          <span className="text-blue-400 mt-0.5 shrink-0">•</span>
+                        <li
+                          key={idx}
+                          className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                        >
+                          <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                           <span>{useCase}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
 
-                  {/* Key Points */}
                   <div className="space-y-1.5">
-                    <h5 className="text-sm font-semibold text-white">Key Points</h5>
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                      Key points
+                    </span>
                     <ul className="space-y-1">
                       {standard.keyPoints.map((point, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-sm text-white">
-                          <CheckCircle className="h-3.5 w-3.5 text-green-400 mt-0.5 shrink-0" />
+                        <li
+                          key={idx}
+                          className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                        >
+                          <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                           <span>{point}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
 
-                  {/* Key Sections */}
                   <div className="space-y-1.5">
-                    <h5 className="text-sm font-semibold text-white">Key Sections</h5>
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                      Key sections
+                    </span>
                     <ul className="space-y-1">
                       {standard.sections.map((section, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-sm text-white">
-                          <span className="text-amber-400 mt-0.5 shrink-0">§</span>
+                        <li
+                          key={idx}
+                          className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                        >
+                          <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                           <span>{section}</span>
                         </li>
                       ))}
@@ -144,26 +119,28 @@ const StandardsReference = () => {
 
       {/* Voltage Drop Limits */}
       <div className="space-y-3">
-        <h3 className="text-base font-semibold text-white">BS 7671 Voltage Drop Limits</h3>
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          BS 7671 voltage drop limits
+        </span>
         <div className="space-y-2">
           {voltageDropLimits.map((item, index) => (
             <div
               key={index}
-              className="rounded-xl p-3 bg-white/[0.04] border border-white/5 border-l-2 border-l-amber-400/60"
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-2"
             >
-              <div className="flex justify-between items-start mb-2">
-                <span className="text-sm font-semibold text-white">{item.circuit}</span>
-                <span className="text-xl font-bold text-amber-400">{item.limit}</span>
+              <div className="flex justify-between items-baseline">
+                <span className="text-[14px] text-white font-medium">{item.circuit}</span>
+                <span className="text-xl font-mono text-elec-yellow">{item.limit}</span>
               </div>
-              <div className="space-y-0.5 text-sm text-white">
+              <div className="space-y-0.5 text-[13px] text-white/85">
                 <p>
-                  <span className="font-medium">Reference:</span> {item.reference}
+                  <span className="text-white/55">Reference:</span> {item.reference}
                 </p>
                 <p>
-                  <span className="font-medium">Application:</span> {item.application}
+                  <span className="text-white/55">Application:</span> {item.application}
                 </p>
                 <p>
-                  <span className="font-medium">Calculation:</span> {item.calculation}
+                  <span className="text-white/55">Calculation:</span> {item.calculation}
                 </p>
               </div>
             </div>
@@ -171,15 +148,11 @@ const StandardsReference = () => {
         </div>
       </div>
 
-      {/* Disclaimer */}
-      <div className="flex items-start gap-2 pt-1">
-        <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
-        <p className="text-sm text-white">
-          <strong>Important:</strong> These calculators are based on current UK electrical standards
-          but should not replace professional electrical design. Always consult qualified personnel
-          for critical installations and verify against the latest editions of relevant standards.
-        </p>
-      </div>
+      <p className="text-[12px] text-white/55 leading-relaxed">
+        These calculators are based on current UK electrical standards but should not replace
+        professional electrical design. Always consult qualified personnel for critical installations
+        and verify against the latest editions of relevant standards.
+      </p>
     </div>
   );
 };

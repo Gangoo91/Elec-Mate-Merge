@@ -1,8 +1,5 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Zap, Home, Building, Factory, Wrench } from 'lucide-react';
+import { Home, Building, Factory } from 'lucide-react';
 
 interface PresetScenario {
   id: string;
@@ -149,66 +146,46 @@ const QuickCalculationPresets: React.FC<QuickCalculationPresetsProps> = ({
 
   if (presets.length === 0) return null;
 
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case 'domestic':
-        return 'bg-green-500/20 text-green-300 border-green-500/30';
-      case 'commercial':
-        return 'bg-blue-500/20 text-blue-300 border-blue-500/30';
-      case 'industrial':
-        return 'bg-orange-500/20 text-orange-300 border-orange-500/30';
-      default:
-        return 'bg-white/10 text-white border-white/30';
-    }
-  };
-
   return (
-    <Card className="border-elec-yellow/20 bg-white/5">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-sm">
-          <Wrench className="h-4 w-4" />
-          Quick Start Scenarios
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="grid gap-3">
-          {presets.map((preset) => (
-            <div
-              key={preset.id}
-              className="p-3 rounded border border-elec-yellow/10 bg-white/10 hover:bg-white/10 transition-colors cursor-pointer"
-              onClick={() => onPresetSelect(preset)}
-            >
-              <div className="flex items-start justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  {preset.icon}
-                  <h4 className="font-medium text-sm">{preset.name}</h4>
-                </div>
-                <Badge className={getCategoryColor(preset.category)}>{preset.category}</Badge>
-              </div>
-
-              <p className="text-xs text-white mb-2">{preset.description}</p>
-
-              <div className="flex items-center justify-between">
-                <div className="flex gap-1 flex-wrap">
-                  {Object.entries(preset.inputs)
-                    .slice(0, 3)
-                    .map(([key, value]) => (
-                      <Badge key={key} variant="outline" className="text-xs">
-                        {key}: {value}
-                      </Badge>
-                    ))}
-                </div>
-                <Button variant="ghost" size="sm" className="h-6 px-2">
-                  <Zap className="h-3 w-3" />
-                </Button>
-              </div>
-
-              <p className="text-xs text-blue-300 mt-2 italic">{preset.explanation}</p>
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        Quick start scenarios
+      </span>
+      <div className="grid gap-3">
+        {presets.map((preset) => (
+          <button
+            key={preset.id}
+            type="button"
+            onClick={() => onPresetSelect(preset)}
+            className="text-left p-3 rounded-lg border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] transition-colors touch-manipulation"
+          >
+            <div className="flex items-start justify-between mb-2">
+              <h4 className="text-[14px] text-white font-medium">{preset.name}</h4>
+              <span className="text-[10px] uppercase tracking-[0.18em] text-white/55">
+                {preset.category}
+              </span>
             </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+
+            <p className="text-[12px] text-white/55 mb-2">{preset.description}</p>
+
+            <div className="flex flex-wrap gap-1.5 mb-2">
+              {Object.entries(preset.inputs)
+                .slice(0, 3)
+                .map(([key, value]) => (
+                  <span
+                    key={key}
+                    className="text-[11px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono"
+                  >
+                    {key}: {value}
+                  </span>
+                ))}
+            </div>
+
+            <p className="text-[11px] text-white/55 italic">{preset.explanation}</p>
+          </button>
+        ))}
+      </div>
+    </div>
   );
 };
 

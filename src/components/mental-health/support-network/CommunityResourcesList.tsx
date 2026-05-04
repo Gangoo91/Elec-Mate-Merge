@@ -52,41 +52,41 @@ const sectionConfigs: Record<ResourceType, SectionConfig> = {
     color: 'blue',
     icon: Globe,
     label: 'Websites',
-    borderClass: 'border-blue-500/20',
-    bgClass: 'from-blue-500/10',
-    iconBgClass: 'bg-blue-500/20',
-    iconClass: 'text-blue-400',
-    badgeClass: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+    borderClass: 'border-white/[0.06]',
+    bgClass: '',
+    iconBgClass: 'bg-white/[0.02]',
+    iconClass: 'text-white/85',
+    badgeClass: 'bg-white/[0.02] text-white/85 border-white/[0.06]',
   },
   document: {
     color: 'cyan',
     icon: FileText,
     label: 'Documents',
-    borderClass: 'border-cyan-500/20',
-    bgClass: 'from-cyan-500/10',
-    iconBgClass: 'bg-cyan-500/20',
-    iconClass: 'text-cyan-400',
-    badgeClass: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
+    borderClass: 'border-white/[0.06]',
+    bgClass: '',
+    iconBgClass: 'bg-white/[0.02]',
+    iconClass: 'text-white/85',
+    badgeClass: 'bg-white/[0.02] text-white/85 border-white/[0.06]',
   },
   video: {
     color: 'purple',
     icon: Video,
     label: 'Videos',
-    borderClass: 'border-purple-500/20',
-    bgClass: 'from-purple-500/10',
-    iconBgClass: 'bg-purple-500/20',
-    iconClass: 'text-purple-400',
-    badgeClass: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+    borderClass: 'border-white/[0.06]',
+    bgClass: '',
+    iconBgClass: 'bg-white/[0.02]',
+    iconClass: 'text-white/85',
+    badgeClass: 'bg-white/[0.02] text-white/85 border-white/[0.06]',
   },
   article: {
     color: 'amber',
     icon: BookOpen,
     label: 'Articles',
-    borderClass: 'border-amber-500/20',
-    bgClass: 'from-amber-500/10',
-    iconBgClass: 'bg-amber-500/20',
-    iconClass: 'text-amber-400',
-    badgeClass: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+    borderClass: 'border-white/[0.06]',
+    bgClass: '',
+    iconBgClass: 'bg-white/[0.02]',
+    iconClass: 'text-white/85',
+    badgeClass: 'bg-white/[0.02] text-white/85 border-white/[0.06]',
   },
 };
 
@@ -132,8 +132,7 @@ const CommunityResourcesList = ({ resources }: CommunityResourcesListProps) => {
         {/* Collapsible Header */}
         <button
           onClick={() => toggleSection(type)}
-          className={`w-full p-4 flex items-center justify-between bg-gradient-to-r ${config.bgClass} to-transparent
-            min-h-[72px] touch-manipulation active:opacity-80 transition-colors duration-300`}
+          className="w-full p-4 flex items-center justify-between bg-white/[0.02] min-h-[72px] touch-manipulation active:opacity-80 transition-colors duration-300"
         >
           <div className="flex items-center gap-3">
             <div
@@ -201,8 +200,7 @@ const CommunityResourcesList = ({ resources }: CommunityResourcesListProps) => {
       {/* Suggest Resource Button */}
       <Button
         variant="outline"
-        className="w-full h-11 border-cyan-500/30 hover:bg-cyan-500/10 text-cyan-400
-          touch-manipulation active:scale-[0.99] transition-all duration-300"
+        className="w-full h-11 border-white/[0.06] hover:bg-white/[0.02] text-white/85 touch-manipulation active:scale-[0.99] transition-all duration-300"
         onClick={() => setIsSheetOpen(true)}
       >
         <FilePlus className="h-4 w-4 mr-2" />
@@ -214,7 +212,7 @@ const CommunityResourcesList = ({ resources }: CommunityResourcesListProps) => {
         <SheetContent side="bottom" className="h-[60vh] rounded-t-2xl">
           <SheetHeader className="pb-4 border-b border-white/10">
             <SheetTitle className="flex items-center gap-2">
-              <FilePlus className="h-5 w-5 text-cyan-400" />
+              <FilePlus className="h-5 w-5 text-white/85" />
               Suggest a Resource
             </SheetTitle>
             <SheetDescription>Help grow our community resources library</SheetDescription>
@@ -225,7 +223,7 @@ const CommunityResourcesList = ({ resources }: CommunityResourcesListProps) => {
               <Label htmlFor="title">Resource Title</Label>
               <Input
                 id="title"
-                className="h-11 touch-manipulation text-base border-white/[0.08] focus:border-cyan-500 focus:ring-cyan-500"
+                className="h-11 touch-manipulation text-base border-white/[0.08] focus:border-white/[0.06] focus:ring-white/10"
                 value={suggestion.title}
                 onChange={(e) => setSuggestion({ ...suggestion, title: e.target.value })}
                 required
@@ -236,7 +234,7 @@ const CommunityResourcesList = ({ resources }: CommunityResourcesListProps) => {
               <Label htmlFor="description">Description</Label>
               <Input
                 id="description"
-                className="h-11 touch-manipulation text-base border-white/[0.08] focus:border-cyan-500 focus:ring-cyan-500"
+                className="h-11 touch-manipulation text-base border-white/[0.08] focus:border-white/[0.06] focus:ring-white/10"
                 value={suggestion.description}
                 onChange={(e) => setSuggestion({ ...suggestion, description: e.target.value })}
                 required
@@ -248,7 +246,7 @@ const CommunityResourcesList = ({ resources }: CommunityResourcesListProps) => {
               <Input
                 id="url"
                 type="url"
-                className="h-11 touch-manipulation text-base border-white/[0.08] focus:border-cyan-500 focus:ring-cyan-500"
+                className="h-11 touch-manipulation text-base border-white/[0.08] focus:border-white/[0.06] focus:ring-white/10"
                 value={suggestion.url}
                 onChange={(e) => setSuggestion({ ...suggestion, url: e.target.value })}
                 required
@@ -267,7 +265,7 @@ const CommunityResourcesList = ({ resources }: CommunityResourcesListProps) => {
               </Button>
               <Button
                 type="submit"
-                className="flex-1 h-11 bg-cyan-500 hover:bg-cyan-600 text-black touch-manipulation"
+                className="flex-1 h-11 bg-white/[0.02] hover:bg-white/[0.02] text-black touch-manipulation"
               >
                 Submit Suggestion
               </Button>

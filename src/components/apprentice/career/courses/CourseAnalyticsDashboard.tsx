@@ -1,207 +1,124 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import {
-  TrendingUp,
-  Users,
-  Award,
-  PoundSterling,
-  BookOpen,
-  Target,
-  Star,
-  Building,
-  Sparkles,
-} from 'lucide-react';
 import { courseAnalytics } from './enhancedCoursesData';
 
 const CourseAnalyticsDashboard = () => {
   return (
-    <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
-      <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        UK course market insights
+      </span>
 
-      <CardHeader className="relative">
-        <CardTitle className="flex items-center gap-3 text-white">
-          <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
-            <TrendingUp className="h-5 w-5 text-elec-yellow" />
-          </div>
-          UK Course Market Insights
-        </CardTitle>
-      </CardHeader>
-
-      <CardContent className="space-y-6 relative">
-        {/* Key Statistics */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="text-center p-4 rounded-xl bg-white/5 border border-white/10">
-            <div className="text-2xl font-bold text-elec-yellow">
-              {courseAnalytics.totalCourses}
-            </div>
-            <div className="text-xs text-white mt-1">Available Courses</div>
-          </div>
-          <div className="text-center p-4 rounded-xl bg-white/5 border border-white/10">
-            <div className="text-2xl font-bold text-elec-yellow">
-              {courseAnalytics.totalProviders}
-            </div>
-            <div className="text-xs text-white mt-1">Training Providers</div>
-          </div>
-          <div className="text-center p-4 rounded-xl bg-white/5 border border-white/10">
-            <div className="text-2xl font-bold text-elec-yellow flex items-center justify-center gap-1">
-              <Star className="h-5 w-5 fill-elec-yellow" />
-              <span>{courseAnalytics.averageRating}</span>
-            </div>
-            <div className="text-xs text-white mt-1">Average Rating</div>
-          </div>
-          <div className="text-center p-4 rounded-xl bg-white/5 border border-white/10">
-            <div className="text-2xl font-bold text-green-400">
-              {courseAnalytics.highDemandCourses}
-            </div>
-            <div className="text-xs text-white mt-1">High Demand</div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Available courses
+          </span>
+          <div className="text-[18px] font-semibold text-white">{courseAnalytics.totalCourses}</div>
+        </div>
+        <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Training providers
+          </span>
+          <div className="text-[18px] font-semibold text-white">
+            {courseAnalytics.totalProviders}
           </div>
         </div>
-
-        {/* Industry Insights */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card className="bg-gradient-to-br from-green-500/10 to-green-500/5 border-green-500/20 overflow-hidden relative">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-green-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
-            <CardContent className="p-4 relative">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="p-1.5 rounded-lg bg-green-500/20">
-                  <Award className="h-4 w-4 text-green-400" />
-                </div>
-                <span className="text-sm font-medium text-green-400">High Demand Skills</span>
-              </div>
-              <div className="text-2xl font-bold text-white mb-1">
-                {courseAnalytics.highDemandCourses}
-              </div>
-              <div className="text-xs text-white">courses in high demand</div>
-              <div className="mt-2 text-xs text-green-400">Essential for career progression</div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-blue-500/10 to-blue-500/5 border-blue-500/20 overflow-hidden relative">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
-            <CardContent className="p-4 relative">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="p-1.5 rounded-lg bg-blue-500/20">
-                  <BookOpen className="h-4 w-4 text-blue-400" />
-                </div>
-                <span className="text-sm font-medium text-blue-400">Emerging Tech</span>
-              </div>
-              <div className="text-2xl font-bold text-white mb-1">
-                {courseAnalytics.emergingTechCourses}
-              </div>
-              <div className="text-xs text-white">future-ready courses</div>
-              <div className="mt-2 text-xs text-blue-400">High salary impact potential</div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-amber-500/10 to-amber-500/5 border-amber-500/20 overflow-hidden relative">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
-            <CardContent className="p-4 relative">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="p-1.5 rounded-lg bg-amber-500/20">
-                  <PoundSterling className="h-4 w-4 text-amber-400" />
-                </div>
-                <span className="text-sm font-medium text-amber-400">Salary Impact</span>
-              </div>
-              <div className="text-lg font-bold text-white mb-1">
-                {courseAnalytics.averageSalaryImpact}
-              </div>
-              <div className="text-xs text-white">average annual increase</div>
-              <div className="mt-2 text-xs text-amber-400">Based on industry data</div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Popular Categories */}
-        <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-          <h4 className="text-sm font-medium mb-4 text-elec-yellow flex items-center gap-2">
-            <div className="p-1.5 rounded bg-elec-yellow/20">
-              <Target className="h-4 w-4" />
-            </div>
-            Most Popular Course Categories
-          </h4>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {courseAnalytics.topCategories.map((category, idx) => (
-              <div
-                key={idx}
-                className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10 hover:border-elec-yellow/30 transition-all"
-              >
-                <div className="flex items-center gap-2">
-                  <Building className="h-3.5 w-3.5 text-elec-yellow" />
-                  <span className="text-sm text-white">{category.name}</span>
-                </div>
-                <Badge
-                  variant="outline"
-                  className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30"
-                >
-                  {category.count}
-                </Badge>
-              </div>
-            ))}
+        <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Average rating
+          </span>
+          <div className="text-[18px] font-semibold text-white">
+            {courseAnalytics.averageRating}
           </div>
         </div>
+        <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            High demand
+          </span>
+          <div className="text-[18px] font-semibold text-white">
+            {courseAnalytics.highDemandCourses}
+          </div>
+        </div>
+      </div>
 
-        {/* Market Trends */}
-        <Card className="bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border-elec-yellow/20 overflow-hidden relative">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-          <CardContent className="p-4 relative">
-            <h4 className="font-medium mb-4 text-elec-yellow flex items-center gap-2">
-              <Sparkles className="h-4 w-4" />
-              UK Market Trends 2026
-            </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-              <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-                <h5 className="font-medium mb-3 text-green-400 flex items-center gap-2">
-                  <TrendingUp className="h-4 w-4" />
-                  Growing Demand
-                </h5>
-                <ul className="space-y-2 text-xs text-white">
-                  <li className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-green-400 flex-shrink-0" />
-                    EV charging installation (+45% year-on-year)
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-green-400 flex-shrink-0" />
-                    Smart building automation (+35%)
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-green-400 flex-shrink-0" />
-                    Renewable energy systems (+40%)
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-green-400 flex-shrink-0" />
-                    Data centre electrical work (+30%)
-                  </li>
-                </ul>
-              </div>
-              <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-                <h5 className="font-medium mb-3 text-blue-400 flex items-center gap-2">
-                  <Users className="h-4 w-4" />
-                  Skills Shortage Areas
-                </h5>
-                <ul className="space-y-2 text-xs text-white">
-                  <li className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-blue-400 flex-shrink-0" />
-                    Testing & inspection qualified electricians
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-blue-400 flex-shrink-0" />
-                    Industrial automation specialists
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-blue-400 flex-shrink-0" />
-                    ATEX certified professionals
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-blue-400 flex-shrink-0" />
-                    Project management qualified sparks
-                  </li>
-                </ul>
-              </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            High demand skills
+          </span>
+          <div className="text-[18px] font-semibold text-white">
+            {courseAnalytics.highDemandCourses}
+          </div>
+          <p className="text-[12px] text-white/70">
+            Courses in high demand — essential for career progression.
+          </p>
+        </div>
+
+        <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Emerging tech
+          </span>
+          <div className="text-[18px] font-semibold text-white">
+            {courseAnalytics.emergingTechCourses}
+          </div>
+          <p className="text-[12px] text-white/70">
+            Future-ready courses with high salary impact potential.
+          </p>
+        </div>
+
+        <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Salary impact
+          </span>
+          <div className="text-[16px] font-semibold text-white">
+            {courseAnalytics.averageSalaryImpact}
+          </div>
+          <p className="text-[12px] text-white/70">Average annual increase based on industry data.</p>
+        </div>
+      </div>
+
+      <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Most popular course categories
+        </span>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+          {courseAnalytics.topCategories.map((category, idx) => (
+            <div
+              key={idx}
+              className="flex items-baseline justify-between rounded-md border border-white/10 bg-white/[0.03] px-3 py-2"
+            >
+              <span className="text-[13px] text-white/85">{category.name}</span>
+              <span className="text-[12px] text-white/85 font-mono">{category.count}</span>
             </div>
-          </CardContent>
-        </Card>
-      </CardContent>
-    </Card>
+          ))}
+        </div>
+      </div>
+
+      <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          UK market trends
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="space-y-2">
+            <p className="text-[13px] text-white">Growing demand</p>
+            <ul className="space-y-1 text-[13px] text-white/85">
+              <li>EV charging installation</li>
+              <li>Smart building automation</li>
+              <li>Renewable energy systems</li>
+              <li>Data centre electrical work</li>
+            </ul>
+          </div>
+          <div className="space-y-2">
+            <p className="text-[13px] text-white">Skills shortage areas</p>
+            <ul className="space-y-1 text-[13px] text-white/85">
+              <li>Testing & inspection qualified electricians</li>
+              <li>Industrial automation specialists</li>
+              <li>ATEX certified professionals</li>
+              <li>Project management qualified electricians</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

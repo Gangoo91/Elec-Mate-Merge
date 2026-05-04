@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { CheckCircle, XCircle, RotateCcw, Target } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { CheckCircle, XCircle, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface QuizQuestion {
@@ -90,180 +89,173 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = 'Quick Quiz' }) =
     const passed = percentage >= 70;
 
     return (
-      <Card className="bg-elec-card border-elec-yellow/20">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-elec-yellow">
-            <Target className="h-5 w-5" />
-            Quiz Complete!
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="text-center space-y-6">
-          <div className={`text-6xl font-bold ${passed ? 'text-green-400' : 'text-red-400'}`}>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5">
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Quiz complete
+          </span>
+          <h3 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
+            Results
+          </h3>
+        </div>
+        <div className="text-center space-y-4">
+          <div className={`text-5xl font-bold ${passed ? 'text-elec-yellow' : 'text-red-300'}`}>
             {percentage}%
           </div>
-          <div>
-            <p className="text-lg text-white mb-2">
-              You scored {score} out of {questions.length} questions correctly
-            </p>
-            <div
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${
-                passed
-                  ? 'bg-green-500/20 border border-green-400/30 text-green-300'
-                  : 'bg-red-500/20 border border-red-400/30 text-red-300'
-              }`}
-            >
-              {passed ? (
-                <>
-                  <CheckCircle className="h-5 w-5" />
-                  <span className="font-medium">Passed!</span>
-                </>
-              ) : (
-                <>
-                  <XCircle className="h-5 w-5" />
-                  <span className="font-medium">Review Required</span>
-                </>
-              )}
-            </div>
+          <p className="text-[14px] text-white/85 leading-relaxed">
+            You scored {score} out of {questions.length} questions correctly
+          </p>
+          <div className="flex items-center justify-center gap-2">
+            {passed ? (
+              <>
+                <CheckCircle className="h-4 w-4 text-elec-yellow" />
+                <span className="text-[14px] text-white/85 font-medium">Passed</span>
+              </>
+            ) : (
+              <>
+                <XCircle className="h-4 w-4 text-red-300" />
+                <span className="text-[14px] text-white/85 font-medium">Review required</span>
+              </>
+            )}
           </div>
           <Button
             onClick={restartQuiz}
             variant="outline"
-            className="border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow hover:text-elec-dark"
+            className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
           >
             <RotateCcw className="h-4 w-4 mr-2" />
-            Retake Quiz
+            Retake quiz
           </Button>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     );
   }
 
   return (
-    <Card className="bg-elec-card border-elec-yellow/20">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-elec-yellow">
-          <Target className="h-5 w-5" />
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
           {title}
-        </CardTitle>
-        <div className="flex items-center justify-between text-sm text-white">
-          <span>
+        </span>
+        <div className="flex items-baseline justify-between gap-3">
+          <span className="text-[12px] text-white/55 font-mono">
             Question {currentQuestion + 1} of {questions.length}
           </span>
           <div className="flex gap-1 items-center">
             {questions.map((_, index) => (
               <div
                 key={index}
-                className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${
                   index < currentQuestion
-                    ? 'bg-green-400'
+                    ? 'bg-white/40'
                     : index === currentQuestion
                       ? 'bg-elec-yellow'
-                      : 'bg-white/15'
+                      : 'bg-white/10'
                 }`}
               />
             ))}
           </div>
         </div>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <div>
-          <h3 className="text-lg font-medium text-white mb-4">{currentQ?.question}</h3>
-          <div className="space-y-3">
-            {currentQ?.options.map((option, index) => (
-              <button
-                key={index}
-                onClick={() => handleAnswerSelect(index)}
-                disabled={showResult}
-                className={`w-full p-4 text-left rounded-lg border transition-all duration-200 ${
-                  selectedAnswers[currentQuestion] === index
-                    ? showResult
-                      ? index === correctIndex
-                        ? 'bg-green-500/20 border-green-400/50 text-green-300'
-                        : 'bg-red-500/20 border-red-400/50 text-red-300'
-                      : 'bg-elec-yellow/20 border-elec-yellow/50 text-elec-yellow'
-                    : showResult && index === correctIndex
-                      ? 'bg-green-500/20 border-green-400/50 text-green-300'
-                      : 'bg-white/5 border-white/10 hover:border-elec-yellow/30 text-white hover:text-white'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <div
-                    className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                      selectedAnswers[currentQuestion] === index
-                        ? showResult
-                          ? index === correctIndex
-                            ? 'border-green-400 bg-green-400'
-                            : 'border-red-400 bg-red-400'
-                          : 'border-elec-yellow bg-elec-yellow'
-                        : showResult && index === correctIndex
-                          ? 'border-green-400 bg-green-400'
-                          : 'border-white/60 bg-transparent'
-                    }`}
-                  >
-                    {selectedAnswers[currentQuestion] === index && !showResult && (
-                      <div className="w-3 h-3 rounded-full bg-white/10"></div>
-                    )}
-                    {showResult && (
-                      <>
-                        {index === correctIndex ? (
-                          <CheckCircle className="h-4 w-4 text-white" />
-                        ) : selectedAnswers[currentQuestion] === index ? (
-                          <XCircle className="h-4 w-4 text-white" />
-                        ) : null}
-                      </>
-                    )}
-                  </div>
-                  <span className="flex-1">{option}</span>
+      </div>
+
+      <div className="space-y-3">
+        <h3 className="text-[16px] font-semibold text-white leading-snug">{currentQ?.question}</h3>
+        <div className="space-y-2">
+          {currentQ?.options.map((option, index) => (
+            <button
+              key={index}
+              onClick={() => handleAnswerSelect(index)}
+              disabled={showResult}
+              className={`w-full p-3.5 text-left rounded-xl border transition-all duration-200 touch-manipulation ${
+                selectedAnswers[currentQuestion] === index
+                  ? showResult
+                    ? index === correctIndex
+                      ? 'bg-elec-yellow/[0.08] border-elec-yellow/40 text-white'
+                      : 'bg-red-500/[0.08] border-red-500/40 text-white'
+                    : 'bg-elec-yellow/[0.08] border-elec-yellow/40 text-white'
+                  : showResult && index === correctIndex
+                    ? 'bg-elec-yellow/[0.08] border-elec-yellow/40 text-white'
+                    : 'bg-white/[0.02] border-white/[0.06] text-white/85'
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <div
+                  className={`w-5 h-5 rounded-full border flex items-center justify-center flex-shrink-0 ${
+                    selectedAnswers[currentQuestion] === index
+                      ? showResult
+                        ? index === correctIndex
+                          ? 'border-elec-yellow bg-elec-yellow'
+                          : 'border-red-400 bg-red-400'
+                        : 'border-elec-yellow bg-elec-yellow'
+                      : showResult && index === correctIndex
+                        ? 'border-elec-yellow bg-elec-yellow'
+                        : 'border-white/30 bg-transparent'
+                  }`}
+                >
+                  {showResult && (
+                    <>
+                      {index === correctIndex ? (
+                        <CheckCircle className="h-3.5 w-3.5 text-black" />
+                      ) : selectedAnswers[currentQuestion] === index ? (
+                        <XCircle className="h-3.5 w-3.5 text-white" />
+                      ) : null}
+                    </>
+                  )}
                 </div>
-              </button>
-            ))}
-          </div>
+                <span className="flex-1 text-[14px]">{option}</span>
+              </div>
+            </button>
+          ))}
         </div>
+      </div>
 
-        {showResult && currentQ?.explanation && (
-          <div
-            className={`p-4 rounded-lg border ${
-              isCorrect
-                ? 'bg-green-500/10 border-green-400/30 text-green-300'
-                : 'bg-blue-500/10 border-blue-400/30 text-blue-300'
-            }`}
+      {showResult && currentQ?.explanation && (
+        <div
+          className={`rounded-xl border p-4 space-y-1 ${
+            isCorrect
+              ? 'border-elec-yellow/20 bg-elec-yellow/[0.04]'
+              : 'border-white/[0.06] bg-white/[0.02]'
+          }`}
+        >
+          <span
+            className={`text-[10px] font-medium uppercase tracking-[0.18em] ${isCorrect ? 'text-elec-yellow/85' : 'text-white/55'}`}
           >
-            <p className="font-medium mb-2">{isCorrect ? '✓ Correct!' : 'ℹ Explanation:'}</p>
-            <p className="text-sm">{currentQ.explanation}</p>
-          </div>
-        )}
-
-        <div className="flex justify-between">
-          <Button
-            onClick={handlePrevious}
-            disabled={currentQuestion === 0}
-            variant="outline"
-            className="border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow hover:text-elec-dark disabled:opacity-50"
-          >
-            Previous
-          </Button>
-
-          <div className="flex gap-2">
-            {!showResult && isAnswered && (
-              <Button
-                onClick={handleSubmitAnswer}
-                className="bg-blue-600 hover:bg-blue-700 text-white"
-              >
-                Submit Answer
-              </Button>
-            )}
-
-            {showResult && (
-              <Button
-                onClick={handleNext}
-                className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-              >
-                {currentQuestion === questions.length - 1 ? 'Complete Quiz' : 'Next Question'}
-              </Button>
-            )}
-          </div>
+            {isCorrect ? 'Correct' : 'Explanation'}
+          </span>
+          <p className="text-[14px] text-white/85 leading-relaxed">{currentQ.explanation}</p>
         </div>
-      </CardContent>
-    </Card>
+      )}
+
+      <div className="flex justify-between gap-3 pt-2">
+        <Button
+          onClick={handlePrevious}
+          disabled={currentQuestion === 0}
+          variant="outline"
+          className="h-11 border-white/15 text-white hover:bg-white/[0.05] disabled:opacity-40 touch-manipulation"
+        >
+          Previous
+        </Button>
+
+        <div className="flex gap-2">
+          {!showResult && isAnswered && (
+            <Button
+              onClick={handleSubmitAnswer}
+              className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98]"
+            >
+              Submit answer
+            </Button>
+          )}
+
+          {showResult && (
+            <Button
+              onClick={handleNext}
+              className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98]"
+            >
+              {currentQuestion === questions.length - 1 ? 'Complete quiz' : 'Next question'}
+            </Button>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };

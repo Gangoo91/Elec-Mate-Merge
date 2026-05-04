@@ -1,52 +1,65 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const TrainingGuideCard = () => {
   const isMobile = useIsMobile();
 
   return (
-    <Card className="border-elec-yellow/20 bg-white/5">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <FileText className="h-5 w-5 text-elec-yellow" />
-          Off-the-Job Training Guide
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          <p className="text-sm sm:text-base">
-            Off-the-job training is a key requirement for all apprenticeships. It refers to the
-            learning that takes place outside of day-to-day work duties, but within your paid
-            working hours. This should represent at least 20% of your total working time.
-          </p>
-          <div className={`grid grid-cols-1 ${isMobile ? 'gap-4' : 'md:grid-cols-2 gap-4'} mt-4`}>
-            <div className="bg-white/10 p-4 rounded-md">
-              <h3 className="text-elec-yellow font-medium mb-2">
-                What counts as off-the-job training:
-              </h3>
-              <ul className="list-disc list-inside space-y-1 text-sm">
-                <li>Theory lessons and lectures</li>
-                <li>Practical training (shadowing, mentoring)</li>
-                <li>Learning support sessions</li>
-                <li>Online learning and research</li>
-                <li>Industry visits or competitions</li>
-              </ul>
-            </div>
-            <div className="bg-white/10 p-4 rounded-md">
-              <h3 className="text-elec-yellow font-medium mb-2">Evidence requirements:</h3>
-              <ul className="list-disc list-inside space-y-1 text-sm">
-                <li>Records of training activities</li>
-                <li>Certificates of completion</li>
-                <li>Photographs of practical work</li>
-                <li>Projects and assignments</li>
-                <li>Witness testimonials</li>
-              </ul>
-            </div>
-          </div>
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        Off-the-job training guide
+      </span>
+      <p className="text-[14px] text-white/85 leading-relaxed">
+        Off-the-job training is a key requirement for all apprenticeships. It refers to the learning
+        that takes place outside of day-to-day work duties, but within your paid working hours. This
+        should represent at least 20% of your total working time.
+      </p>
+      <div className={`grid grid-cols-1 ${isMobile ? 'gap-3' : 'md:grid-cols-2 gap-3'}`}>
+        <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            What counts as off-the-job training
+          </span>
+          <ul className="space-y-1.5">
+            {[
+              'Theory lessons and lectures',
+              'Practical training (shadowing, mentoring)',
+              'Learning support sessions',
+              'Online learning and research',
+              'Industry visits or competitions',
+            ].map((item) => (
+              <li
+                key={item}
+                className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+              >
+                <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
         </div>
-      </CardContent>
-    </Card>
+        <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Evidence requirements
+          </span>
+          <ul className="space-y-1.5">
+            {[
+              'Records of training activities',
+              'Certificates of completion',
+              'Photographs of practical work',
+              'Projects and assignments',
+              'Witness testimonials',
+            ].map((item) => (
+              <li
+                key={item}
+                className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+              >
+                <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
   );
 };
 

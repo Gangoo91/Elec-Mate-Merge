@@ -1,21 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { MobileInput } from '@/components/ui/mobile-input';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import {
-  HardHat,
-  CheckCircle,
-  MapPin,
-  Thermometer,
-  Wind,
-  Sun,
-  Droplets,
-  Eye,
-  Building,
-  CloudRain,
-  AlertTriangle,
-  CheckSquare,
-} from 'lucide-react';
+import { CheckSquare, CheckCircle } from 'lucide-react';
 import { useState } from 'react';
 
 const SiteConditionTab = () => {
@@ -24,9 +9,7 @@ const SiteConditionTab = () => {
 
   const conditionChecklist = [
     {
-      category: 'Access & Working Space',
-      icon: MapPin,
-      color: 'blue',
+      category: 'Access & working space',
       items: [
         'Adequate working space around electrical equipment (minimum 600mm)',
         'Clear access routes to and from work area',
@@ -38,9 +21,7 @@ const SiteConditionTab = () => {
       ],
     },
     {
-      category: 'Environmental Conditions',
-      icon: Thermometer,
-      color: 'orange',
+      category: 'Environmental conditions',
       items: [
         'Dry conditions - no risk of water ingress',
         'Adequate ventilation in enclosed spaces',
@@ -52,9 +33,7 @@ const SiteConditionTab = () => {
       ],
     },
     {
-      category: 'Lighting & Visibility',
-      icon: Sun,
-      color: 'yellow',
+      category: 'Lighting & visibility',
       items: [
         'Adequate natural or artificial lighting',
         'Emergency lighting available if required',
@@ -66,9 +45,7 @@ const SiteConditionTab = () => {
       ],
     },
     {
-      category: 'Structural Considerations',
-      icon: Building,
-      color: 'purple',
+      category: 'Structural considerations',
       items: [
         'Building structure suitable for proposed work',
         'No signs of structural damage or instability',
@@ -80,9 +57,7 @@ const SiteConditionTab = () => {
       ],
     },
     {
-      category: 'Weather & Seasonal Factors',
-      icon: Wind,
-      color: 'green',
+      category: 'Weather & seasonal factors',
       items: [
         'Current weather conditions suitable for work',
         'Weather forecast checked for duration of work',
@@ -98,8 +73,6 @@ const SiteConditionTab = () => {
   const environmentalFactors = [
     {
       factor: 'Temperature',
-      icon: Thermometer,
-      color: 'orange',
       considerations: [
         'Cable installation temperature ratings',
         'Thermal expansion effects',
@@ -109,55 +82,15 @@ const SiteConditionTab = () => {
     },
     {
       factor: 'Humidity',
-      icon: Droplets,
-      color: 'blue',
       considerations: ['Condensation risk', 'Insulation resistance', 'Equipment protection'],
       optimalRange: '30% to 70% relative humidity',
     },
     {
-      factor: 'Air Quality',
-      icon: Wind,
-      color: 'green',
+      factor: 'Air quality',
       considerations: ['Dust levels', 'Chemical vapours', 'Respiratory protection needs'],
       optimalRange: 'Clean, well-ventilated air',
     },
   ];
-
-  const getColorConfig = (color: string) => {
-    const configs: Record<string, { bg: string; text: string; iconBg: string; border: string }> = {
-      blue: {
-        bg: 'bg-blue-500/10',
-        text: 'text-blue-400',
-        iconBg: 'from-blue-500/20 to-blue-500/5',
-        border: 'border-blue-500/30',
-      },
-      green: {
-        bg: 'bg-green-500/10',
-        text: 'text-green-400',
-        iconBg: 'from-green-500/20 to-green-500/5',
-        border: 'border-green-500/30',
-      },
-      yellow: {
-        bg: 'bg-elec-yellow/10',
-        text: 'text-elec-yellow',
-        iconBg: 'from-elec-yellow/20 to-elec-yellow/5',
-        border: 'border-elec-yellow/30',
-      },
-      purple: {
-        bg: 'bg-purple-500/10',
-        text: 'text-purple-400',
-        iconBg: 'from-purple-500/20 to-purple-500/5',
-        border: 'border-purple-500/30',
-      },
-      orange: {
-        bg: 'bg-orange-500/10',
-        text: 'text-orange-400',
-        iconBg: 'from-orange-500/20 to-orange-500/5',
-        border: 'border-orange-500/30',
-      },
-    };
-    return configs[color] || configs.blue;
-  };
 
   const toggleItem = (item: string) => {
     setCheckedItems((prev) =>
@@ -169,243 +102,167 @@ const SiteConditionTab = () => {
   const completionRate = (checkedItems.length / totalItems) * 100;
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      {/* Header Card */}
-      <Card className="bg-gradient-to-br from-white/5 to-elec-card border-white/10 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-        <CardHeader className="relative">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
-              <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30">
-                <HardHat className="h-7 w-7 text-blue-400" />
-              </div>
-              <div>
-                <CardTitle className="text-xl sm:text-2xl font-bold text-white">
-                  Site Condition <span className="text-blue-400">Evaluation</span>
-                </CardTitle>
-                <p className="text-sm text-white mt-1">
-                  Environmental & Working Conditions Assessment
-                </p>
-              </div>
-            </div>
-            <Badge
-              className={`
-              ${completionRate === 100 ? 'bg-green-500/20 text-green-400 border-green-500/30' : 'bg-blue-500/20 text-blue-400 border-blue-500/30'}
-              text-sm px-3 py-1
-            `}
-            >
-              {Math.round(completionRate)}% Complete
-            </Badge>
-          </div>
-        </CardHeader>
-        <CardContent className="relative">
-          <p className="text-white mb-4">
-            Assess environmental and working conditions to ensure safe and effective electrical
-            installation work. This evaluation helps identify potential hazards and ensures optimal
-            working conditions.
-          </p>
+    <div className="space-y-5 animate-fade-in">
+      <div className="space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Site condition evaluation
+        </span>
+        <h2 className="text-[20px] sm:text-[24px] font-semibold tracking-tight text-white leading-tight">
+          Environmental & working conditions assessment
+        </h2>
+        <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
+          Assess environmental and working conditions to ensure safe and effective electrical
+          installation work.
+        </p>
+      </div>
 
-          {/* Progress Bar */}
-          <div className="space-y-2">
-            <div className="flex justify-between text-xs text-white">
-              <span>Progress</span>
-              <span>
-                {checkedItems.length} of {totalItems} items checked
-              </span>
-            </div>
-            <div className="h-2.5 bg-white/10 rounded-full overflow-hidden">
-              <div
-                className={`h-full rounded-full transition-all duration-500 ${
-                  completionRate === 100
-                    ? 'bg-gradient-to-r from-green-500 to-green-400'
-                    : 'bg-gradient-to-r from-blue-500 to-blue-400'
-                }`}
-                style={{ width: `${completionRate}%` }}
-              />
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
+        <div className="flex items-baseline justify-between">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Progress
+          </span>
+          <span className="text-[12px] text-white/85 font-mono">
+            {checkedItems.length}/{totalItems} · {Math.round(completionRate)}%
+          </span>
+        </div>
+        <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-elec-yellow transition-all duration-500"
+            style={{ width: `${completionRate}%` }}
+          />
+        </div>
+      </div>
 
-      {/* Checklist Categories */}
       {conditionChecklist.map((category, index) => {
-        const colorConfig = getColorConfig(category.color);
-        const CategoryIcon = category.icon;
         const categoryChecked = category.items.filter((item) => checkedItems.includes(item)).length;
 
         return (
-          <Card
+          <div
             key={index}
-            className="bg-gradient-to-br from-white/5 to-elec-card border-white/10 hover:border-white/20 transition-colors"
+            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
           >
-            <CardHeader className="pb-4">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-white flex items-center gap-3">
-                  <div
-                    className={`p-2.5 rounded-xl bg-gradient-to-br ${colorConfig.iconBg} border ${colorConfig.border}`}
+            <div className="flex items-baseline justify-between">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                {category.category}
+              </span>
+              <span className="text-[12px] text-white/85 font-mono">
+                {categoryChecked}/{category.items.length}
+              </span>
+            </div>
+            <div className="space-y-2">
+              {category.items.map((item, itemIndex) => {
+                const isChecked = checkedItems.includes(item);
+                return (
+                  <button
+                    key={itemIndex}
+                    onClick={() => toggleItem(item)}
+                    className={`
+                      w-full flex items-start gap-3 p-3 rounded-lg
+                      border transition-all duration-200
+                      touch-manipulation active:scale-[0.99] min-h-[44px]
+                      ${
+                        isChecked
+                          ? 'bg-white/[0.04] border-white/10'
+                          : 'bg-white/[0.02] border-white/[0.06] hover:border-white/10'
+                      }
+                    `}
                   >
-                    <CategoryIcon className={`h-5 w-5 ${colorConfig.text}`} />
-                  </div>
-                  <span className="text-base sm:text-lg">{category.category}</span>
-                </CardTitle>
-                <Badge className={`${colorConfig.bg} ${colorConfig.text} ${colorConfig.border}`}>
-                  {categoryChecked}/{category.items.length}
-                </Badge>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                {category.items.map((item, itemIndex) => {
-                  const isChecked = checkedItems.includes(item);
-                  return (
-                    <button
-                      key={itemIndex}
-                      onClick={() => toggleItem(item)}
+                    <div
                       className={`
-                        w-full flex items-start gap-3 p-3 sm:p-4 rounded-xl
-                        border transition-all duration-200
-                        touch-manipulation active:scale-[0.99]
-                        ${
-                          isChecked
-                            ? 'bg-green-500/10 border-green-500/30'
-                            : 'bg-white/10 border-white/10 hover:border-white/20'
-                        }
-                      `}
+                      flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center transition-all
+                      ${isChecked ? 'bg-elec-yellow' : 'border-2 border-white/30'}
+                    `}
                     >
-                      <div
-                        className={`
-                        flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center transition-all
-                        ${
-                          isChecked
-                            ? 'bg-green-500 border-green-500'
-                            : 'border-2 border-white/30 hover:border-blue-400'
-                        }
-                      `}
-                      >
-                        {isChecked && <CheckCircle className="h-4 w-4 text-white" />}
-                      </div>
-                      <span
-                        className={`text-sm text-left ${isChecked ? 'text-green-400' : 'text-white'}`}
-                      >
-                        {item}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </CardContent>
-          </Card>
+                      {isChecked && <CheckCircle className="h-4 w-4 text-black" />}
+                    </div>
+                    <span
+                      className={`text-[14px] text-left leading-relaxed ${isChecked ? 'text-white' : 'text-white/85'}`}
+                    >
+                      {item}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         );
       })}
 
-      {/* Environmental Factors Guide */}
-      <Card className="bg-gradient-to-br from-white/5 to-elec-card border-blue-500/20">
-        <CardHeader>
-          <CardTitle className="text-white flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30">
-              <Thermometer className="h-5 w-5 text-blue-400" />
-            </div>
-            Environmental Factors Guide
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {environmentalFactors.map((factor, index) => {
-              const factorConfig = getColorConfig(factor.color);
-              const FactorIcon = factor.icon;
-              return (
-                <div
-                  key={index}
-                  className={`p-4 rounded-xl ${factorConfig.bg} border ${factorConfig.border}`}
-                >
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className={`p-2 rounded-lg bg-gradient-to-br ${factorConfig.iconBg}`}>
-                      <FactorIcon className={`h-4 w-4 ${factorConfig.text}`} />
-                    </div>
-                    <h4 className={`font-semibold ${factorConfig.text}`}>{factor.factor}</h4>
-                  </div>
-                  <p className="text-xs text-white mb-3">
-                    <span className="font-medium text-white">Optimal: </span>
-                    {factor.optimalRange}
-                  </p>
-                  <ul className="space-y-1.5">
-                    {factor.considerations.map((consideration, idx) => (
-                      <li key={idx} className="text-xs text-white flex items-start gap-2">
-                        <span
-                          className={`w-1 h-1 ${factorConfig.bg.replace('/10', '')} rounded-full mt-1.5 flex-shrink-0`}
-                        />
-                        {consideration}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              );
-            })}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Notes Section */}
-      <Card className="bg-gradient-to-br from-white/5 to-elec-card border-white/10">
-        <CardHeader>
-          <CardTitle className="text-white flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/30">
-              <Eye className="h-5 w-5 text-purple-400" />
-            </div>
-            Environmental Assessment Notes
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <MobileInput
-            label="Environmental Notes"
-            value={environmentalNotes}
-            onChange={(e) => setEnvironmentalNotes(e.target.value)}
-            placeholder="Record specific environmental conditions, weather factors, seasonal considerations, or site-specific environmental challenges..."
-            multiline
-            rows={4}
-            className="mb-4"
-          />
-          <Button className="w-full h-12 bg-blue-500 hover:bg-blue-500/90 text-white font-semibold touch-manipulation active:scale-95 transition-all">
-            <CheckSquare className="mr-2 h-5 w-5" />
-            Complete Site Condition Assessment
-          </Button>
-        </CardContent>
-      </Card>
-
-      {/* Weather Warning Banner */}
-      <Card className="bg-gradient-to-r from-orange-500/10 via-orange-500/5 to-transparent border-orange-500/30">
-        <CardContent className="p-4 sm:p-5">
-          <div className="flex items-start gap-3">
-            <div className="p-2 rounded-lg bg-orange-500/20 flex-shrink-0">
-              <CloudRain className="h-5 w-5 text-orange-400" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-orange-300 mb-2">Weather Considerations</h3>
-              <p className="text-sm text-white mb-3">
-                Always check weather conditions before starting outdoor electrical work:
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Environmental factors guide
+        </span>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          {environmentalFactors.map((factor, index) => (
+            <div
+              key={index}
+              className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2"
+            >
+              <p className="text-[14px] text-white">{factor.factor}</p>
+              <p className="text-[12px] text-white/70 leading-relaxed">
+                <span className="text-white/55">Optimal: </span>
+                {factor.optimalRange}
               </p>
-              <ul className="space-y-2 text-sm text-white">
-                <li className="flex items-center gap-2">
-                  <AlertTriangle className="h-3.5 w-3.5 text-orange-400 flex-shrink-0" />
-                  Do not work in wet conditions or during electrical storms
-                </li>
-                <li className="flex items-center gap-2">
-                  <AlertTriangle className="h-3.5 w-3.5 text-orange-400 flex-shrink-0" />
-                  Wind speeds above 15 mph may affect ladder work
-                </li>
-                <li className="flex items-center gap-2">
-                  <AlertTriangle className="h-3.5 w-3.5 text-orange-400 flex-shrink-0" />
-                  Temperature below 0°C may affect cable flexibility
-                </li>
-                <li className="flex items-center gap-2">
-                  <AlertTriangle className="h-3.5 w-3.5 text-orange-400 flex-shrink-0" />
-                  High humidity can affect insulation resistance readings
-                </li>
+              <ul className="space-y-1">
+                {factor.considerations.map((consideration, idx) => (
+                  <li
+                    key={idx}
+                    className="text-[12px] text-white/85 flex items-start gap-2 leading-relaxed"
+                  >
+                    <span className="w-1 h-1 bg-white/55 rounded-full mt-1.5 flex-shrink-0" />
+                    <span>{consideration}</span>
+                  </li>
+                ))}
               </ul>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          ))}
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Environmental notes
+        </span>
+        <MobileInput
+          label="Environmental notes"
+          value={environmentalNotes}
+          onChange={(e) => setEnvironmentalNotes(e.target.value)}
+          placeholder="Record specific environmental conditions, weather factors, seasonal considerations, or site-specific environmental challenges..."
+          multiline
+          rows={4}
+        />
+        <Button className="w-full h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]">
+          <CheckSquare className="mr-2 h-4 w-4" />
+          Complete site condition assessment
+        </Button>
+      </div>
+
+      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+          Weather considerations
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Always check weather conditions before starting outdoor electrical work.
+        </p>
+        <ul className="space-y-1.5 pt-1">
+          <li className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed">
+            <span className="w-1 h-1 rounded-full bg-red-300 mt-2 flex-shrink-0" />
+            <span>Do not work in wet conditions or during electrical storms</span>
+          </li>
+          <li className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed">
+            <span className="w-1 h-1 rounded-full bg-red-300 mt-2 flex-shrink-0" />
+            <span>Wind speeds above 15 mph may affect ladder work</span>
+          </li>
+          <li className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed">
+            <span className="w-1 h-1 rounded-full bg-red-300 mt-2 flex-shrink-0" />
+            <span>Temperature below 0°C may affect cable flexibility</span>
+          </li>
+          <li className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed">
+            <span className="w-1 h-1 rounded-full bg-red-300 mt-2 flex-shrink-0" />
+            <span>High humidity can affect insulation resistance readings</span>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 };

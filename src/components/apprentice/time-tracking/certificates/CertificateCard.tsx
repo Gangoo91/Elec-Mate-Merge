@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Award, Calendar, Eye, Trash2 } from 'lucide-react';
+import { Calendar, Eye, Trash2 } from 'lucide-react';
 import { Certificate } from '@/types/certificates';
 
 interface CertificateCardProps {
@@ -10,49 +9,52 @@ interface CertificateCardProps {
 
 const CertificateCard = ({ certificate, onDelete }: CertificateCardProps) => {
   return (
-    <Card className="border-elec-yellow/20 bg-white/10">
-      <CardContent className="p-4">
-        <div className="flex items-start justify-between">
-          <div className="flex items-center gap-3">
-            <Award className="h-8 w-8 text-elec-yellow" />
-            <div>
-              <h4 className="font-medium">{certificate.name}</h4>
-              <p className="text-sm text-white">{certificate.issuedBy}</p>
-            </div>
-          </div>
-          <div className="flex gap-2">
-            <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
-              <Eye className="h-4 w-4" />
-            </Button>
-            <Button
-              size="sm"
-              variant="ghost"
-              className="h-8 w-8 p-0 text-red-400 hover:text-red-300"
-              onClick={() => onDelete(certificate.id)}
-            >
-              <Trash2 className="h-4 w-4" />
-            </Button>
-          </div>
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex-1 min-w-0">
+          <h4 className="text-[15px] font-medium text-white">{certificate.name}</h4>
+          <p className="text-[13px] text-white/55 mt-0.5">{certificate.issuedBy}</p>
         </div>
+        <div className="flex gap-1">
+          <Button
+            size="sm"
+            variant="ghost"
+            className="h-9 w-9 p-0 text-white/55 hover:text-white hover:bg-white/[0.05] touch-manipulation"
+          >
+            <Eye className="h-4 w-4" />
+          </Button>
+          <Button
+            size="sm"
+            variant="ghost"
+            className="h-9 w-9 p-0 text-red-300 hover:text-red-200 hover:bg-red-500/[0.08] touch-manipulation"
+            onClick={() => onDelete(certificate.id)}
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        </div>
+      </div>
 
-        <div className="grid grid-cols-2 gap-2 mt-4 text-sm">
-          <div>
-            <p className="text-white">Issue Date</p>
-            <div className="flex items-center gap-1.5">
-              <Calendar className="h-3.5 w-3.5" />
-              {certificate.issueDate}
-            </div>
-          </div>
-          <div>
-            <p className="text-white">Expiry Date</p>
-            <div className="flex items-center gap-1.5">
-              <Calendar className="h-3.5 w-3.5" />
-              {certificate.expiryDate}
-            </div>
+      <div className="grid grid-cols-2 gap-3 mt-4">
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Issue date
+          </span>
+          <div className="flex items-center gap-1.5 text-[13px] text-white/85 font-mono">
+            <Calendar className="h-3.5 w-3.5 text-white/55" />
+            {certificate.issueDate}
           </div>
         </div>
-      </CardContent>
-    </Card>
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Expiry date
+          </span>
+          <div className="flex items-center gap-1.5 text-[13px] text-white/85 font-mono">
+            <Calendar className="h-3.5 w-3.5 text-white/55" />
+            {certificate.expiryDate}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

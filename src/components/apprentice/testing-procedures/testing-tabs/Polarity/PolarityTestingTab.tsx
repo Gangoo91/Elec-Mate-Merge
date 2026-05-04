@@ -1,50 +1,55 @@
-import { Card, CardContent } from '@/components/ui/card';
-
 const PolarityTestingTab = () => {
+  const items = [
+    'Verify that single pole devices (switches, fuses) are connected in the line conductor only',
+    'Check that bayonet/Edison screw lampholders have line conductor connected to the centre contact',
+    'Confirm that all socket outlets have line/neutral/earth connected to the correct terminals',
+    'Use a continuity tester to check correct polarity throughout the installation',
+    'Pay special attention to two-way and intermediate switching arrangements',
+  ];
+
   return (
     <div className="space-y-6">
-      <Card>
-        <CardContent className="pt-6">
-          <h2 className="text-xl font-semibold">Polarity Testing</h2>
-          <p className="text-sm text-white mt-1 mb-4">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+        <div className="space-y-1">
+          <h2 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
+            Polarity testing
+          </h2>
+          <p className="text-[14px] text-white/70 leading-relaxed">
             Verifies that all connections are correctly wired and switches/fuses are in the line
             conductor.
           </p>
+        </div>
 
-          <ul className="list-disc pl-6 space-y-3 text-sm">
-            <li>
-              Verify that single pole devices (switches, fuses) are connected in the line conductor
-              only
+        <ul className="space-y-1.5">
+          {items.map((item, i) => (
+            <li
+              key={i}
+              className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+            >
+              <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+              <span>{item}</span>
             </li>
-            <li>
-              Check that bayonet/Edison screw lampholders have line conductor connected to the
-              center contact
-            </li>
-            <li>
-              Confirm that all socket outlets have line/neutral/earth connected to the correct
-              terminals
-            </li>
-            <li>Use a continuity tester to check correct polarity throughout the installation</li>
-            <li>Pay special attention to two-way and intermediate switching arrangements</li>
-          </ul>
+          ))}
+        </ul>
 
-          <div className="mt-6 bg-white/5 border border-white/10 p-4 rounded-md">
-            <img
-              loading="lazy"
-              src="/placeholder.svg"
-              alt="Polarity Testing Method"
-              className="mx-auto max-h-64"
-            />
-            <p className="text-xs text-center mt-2 text-white">
-              Socket outlet and switch polarity testing diagram
-            </p>
-          </div>
-        </CardContent>
-      </Card>
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
+          <img
+            loading="lazy"
+            src="/placeholder.svg"
+            alt="Polarity Testing Method"
+            className="mx-auto max-h-64"
+          />
+          <p className="text-[12px] text-center mt-2 text-white/55">
+            Socket outlet and switch polarity testing diagram
+          </p>
+        </div>
+      </div>
 
-      <div className="bg-green-950/20 border border-green-500/30 rounded-md p-4">
-        <h3 className="text-green-200 font-medium mb-2">Safety Reminder</h3>
-        <p className="text-sm text-green-100/80">
+      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-1">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+          Safety warning
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
           Incorrect polarity is a serious safety issue that can result in electric shock hazards and
           incorrectly isolated circuits. Always double-check polarity tests and immediately rectify
           any issues found.

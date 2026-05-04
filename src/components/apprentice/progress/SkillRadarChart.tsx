@@ -5,8 +5,6 @@
  * Pure SVG — no charting library needed.
  */
 
-import { Card, CardContent } from '@/components/ui/card';
-import { Radar } from 'lucide-react';
 import { type SkillAxis } from '@/hooks/useUnifiedProgress';
 
 interface SkillRadarChartProps {
@@ -56,17 +54,13 @@ export function SkillRadarChart({ data }: SkillRadarChartProps) {
   });
 
   return (
-    <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-white/[0.06]">
-      <CardContent className="p-4">
-        <div className="flex items-center gap-2 mb-3">
-          <div className="p-1.5 rounded-lg bg-blue-500/10">
-            <Radar className="h-4 w-4 text-blue-400" />
-          </div>
-          <h3 className="font-semibold text-white text-sm">Skill Radar</h3>
-        </div>
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        Skill radar
+      </span>
 
-        <div className="flex justify-center">
-          <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+      <div className="flex justify-center">
+        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
             {/* Grid rings */}
             {gridRings.map((points, i) => (
               <polygon
@@ -120,7 +114,7 @@ export function SkillRadarChart({ data }: SkillRadarChartProps) {
                   y={p.y}
                   textAnchor="middle"
                   dominantBaseline="middle"
-                  className="fill-white/90 text-[10px] font-medium"
+                  className="fill-white/85 text-[10px] font-medium"
                 >
                   {p.label}
                 </text>
@@ -129,16 +123,15 @@ export function SkillRadarChart({ data }: SkillRadarChartProps) {
                   y={p.y + 12}
                   textAnchor="middle"
                   dominantBaseline="middle"
-                  className="fill-elec-yellow text-[10px] font-bold"
+                  className="fill-elec-yellow text-[10px] font-mono"
                 >
                   {p.score}%
                 </text>
               </g>
             ))}
-          </svg>
-        </div>
-      </CardContent>
-    </Card>
+        </svg>
+      </div>
+    </div>
   );
 }
 

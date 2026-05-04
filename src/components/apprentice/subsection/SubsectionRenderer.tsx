@@ -4,7 +4,6 @@ import { renderSection3 } from './sections/Section3Renderer';
 import { renderSection4 } from './sections/Section4Renderer';
 import { renderSection5 } from './sections/Section5Renderer';
 import { renderSection6To10 } from './sections/Section6To10Renderer';
-import { Card } from '@/components/ui/card';
 
 interface SubsectionRendererProps {
   subsectionId: string;
@@ -64,7 +63,7 @@ const SubsectionRenderer = ({
   };
 
   return (
-    <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-6 shadow-lg animate-fade-in">
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 animate-fade-in">
       {renderContent()}
     </div>
   );
