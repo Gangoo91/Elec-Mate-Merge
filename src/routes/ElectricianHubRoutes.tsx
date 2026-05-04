@@ -133,7 +133,7 @@ const SiteSafety = lazy(() => import('@/pages/electrician-tools/SiteSafety'));
 const AgentSelectorPage = lazy(() => import('@/pages/electrician-tools/AgentSelectorPage'));
 const CircuitDesigner = lazy(() => import('@/pages/electrician-tools/CircuitDesigner'));
 const CostEngineerPage = lazy(() => import('@/pages/electrician-tools/CostEngineerPage'));
-const CostEngineerQuotes = lazy(() => import('@/pages/electrician-tools/CostEngineerQuotes'));
+// CostEngineerQuotes — re-add when the cost-engineer redesign lands.
 const InstallationSpecialistPage = lazy(
   () => import('@/pages/electrician-tools/InstallationSpecialistPage')
 );
@@ -812,14 +812,7 @@ const ElectricianHubRoutes = () => (
         </LazyRoute>
       }
     />
-    <Route
-      path="cost-engineer/quotes"
-      element={
-        <LazyRoute>
-          <CostEngineerQuotes />
-        </LazyRoute>
-      }
-    />
+    {/* cost-engineer/quotes — route restored when CostEngineerQuotes ships. */}
     <Route
       path="installation-specialist"
       element={
