@@ -28,9 +28,9 @@ const Enhanced3PhaseTestingCard = ({
   const [testingMode, setTestingMode] = useState<'single' | 'three'>('three');
 
   const testSequence = [
-    { phase: 'L1', color: 'text-red-400', description: 'Line 1 to Neutral and Earth' },
-    { phase: 'L2', color: 'text-yellow-400', description: 'Line 2 to Neutral and Earth' },
-    { phase: 'L3', color: 'text-blue-400', description: 'Line 3 to Neutral and Earth' },
+    { phase: 'L1', color: 'text-amber-700', description: 'Line 1 (brown) to Neutral and Earth' },
+    { phase: 'L2', color: 'text-zinc-300', description: 'Line 2 (black) to Neutral and Earth' },
+    { phase: 'L3', color: 'text-slate-400', description: 'Line 3 (grey) to Neutral and Earth' },
     { phase: 'L1-L2', color: 'text-purple-400', description: 'Line to Line Voltage' },
     { phase: 'L2-L3', color: 'text-green-400', description: 'Line to Line Voltage' },
     { phase: 'L3-L1', color: 'text-orange-400', description: 'Line to Line Voltage' },

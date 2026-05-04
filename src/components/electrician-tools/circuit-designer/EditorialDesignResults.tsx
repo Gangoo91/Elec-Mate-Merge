@@ -1905,9 +1905,9 @@ const ThreePhaseWayGrid = ({
               Way
             </span>
           </div>
-          <PhaseHeaderCell phase="L1" colour="bg-red-400/60" />
-          <PhaseHeaderCell phase="L2" colour="bg-yellow-400/70" />
-          <PhaseHeaderCell phase="L3" colour="bg-blue-400/60" />
+          <PhaseHeaderCell phase="L1" colour="bg-amber-700/60" />
+          <PhaseHeaderCell phase="L2" colour="bg-zinc-800/70" />
+          <PhaseHeaderCell phase="L3" colour="bg-slate-400/60" />
         </div>
 
         {/* Way rows */}
@@ -1977,9 +1977,9 @@ const ThreePhaseWayGrid = ({
 };
 
 const PHASE_COLOUR_NAMES: Record<string, string> = {
-  L1: 'red',
-  L2: 'yellow',
-  L3: 'blue',
+  L1: 'brown',
+  L2: 'black',
+  L3: 'grey',
 };
 
 const PhaseHeaderCell = ({ phase, colour }: { phase: string; colour: string }) => (
@@ -2541,9 +2541,9 @@ const CircuitDetail = ({
                     value={String(context.phaseAssignment)}
                     edited={isEdited('phaseAssignment')}
                     options={[
-                      { value: 'L1', label: 'L1 (red)' },
-                      { value: 'L2', label: 'L2 (yellow)' },
-                      { value: 'L3', label: 'L3 (blue)' },
+                      { value: 'L1', label: 'L1 (brown)' },
+                      { value: 'L2', label: 'L2 (black)' },
+                      { value: 'L3', label: 'L3 (grey)' },
                     ]}
                     validate={() => ({ ok: true as const })}
                     onCommit={(v) => onEdit('phaseAssignment', v)}
@@ -2938,15 +2938,15 @@ const CircuitDetail = ({
 };
 
 /**
- * Phase colour stripe — left-edge accent. L1 red, L2 yellow, L3 blue,
- * 3φ gradient. Iconic + scannable per BS 6724 colour conventions.
+ * Phase colour stripe — left-edge accent. L1 brown, L2 black, L3 grey,
+ * 3φ gradient. BS 7671 harmonised colour conventions.
  */
 const phaseStripeClass = (phase?: 'L1' | 'L2' | 'L3' | 'L1L2L3'): string => {
-  if (phase === 'L1') return 'before:bg-red-400/60';
-  if (phase === 'L2') return 'before:bg-yellow-400/70';
-  if (phase === 'L3') return 'before:bg-blue-400/60';
+  if (phase === 'L1') return 'before:bg-amber-700/60';
+  if (phase === 'L2') return 'before:bg-zinc-800/70';
+  if (phase === 'L3') return 'before:bg-slate-400/60';
   if (phase === 'L1L2L3')
-    return 'before:bg-gradient-to-b before:from-red-400/60 before:via-yellow-400/60 before:to-blue-400/60';
+    return 'before:bg-gradient-to-b before:from-amber-700/60 before:via-zinc-800/60 before:to-slate-400/60';
   return 'before:bg-white/10';
 };
 
@@ -3144,9 +3144,9 @@ const TPNCircuitsBoard = ({
             Way
           </span>
         </div>
-        <PhaseHeaderCell phase="L1" colour="bg-red-400/60" />
-        <PhaseHeaderCell phase="L2" colour="bg-yellow-400/70" />
-        <PhaseHeaderCell phase="L3" colour="bg-blue-400/60" />
+        <PhaseHeaderCell phase="L1" colour="bg-amber-700/60" />
+        <PhaseHeaderCell phase="L2" colour="bg-zinc-800/70" />
+        <PhaseHeaderCell phase="L3" colour="bg-slate-400/60" />
         <div className="border-r border-white/[0.06]" />
       </div>
 

@@ -174,9 +174,9 @@ const PhaseBalanceTooltip: React.FC<{
     <p className="font-semibold border-b pb-1">Phase Balance Analysis (BS7671)</p>
 
     <div className="grid grid-cols-3 gap-1">
-      <span className="text-red-400">L1: {loads.L1}A</span>
-      <span className="text-yellow-400">L2: {loads.L2}A</span>
-      <span className="text-blue-400">L3: {loads.L3}A</span>
+      <span className="text-amber-700">L1: {loads.L1}A</span>
+      <span className="text-zinc-300">L2: {loads.L2}A</span>
+      <span className="text-slate-400">L3: {loads.L3}A</span>
     </div>
 
     <div className="flex justify-between">
