@@ -66,7 +66,7 @@ export const PROTECTION_RATING_OPTIONS = [
   { value: '125', label: '125 A' },
 ];
 
-// ─── BS 7671 Table 41.3 — Max Zs (Ω) for 0.4 s disconnection ─────────────────
+// ─── BS 7671 Table 41.3 — Max Zs (Ω) for 0.4 s disconnection (MCBs) ────────
 
 const TABLE_41_3: Record<string, Record<number, number>> = {
   B: {
@@ -83,9 +83,46 @@ const TABLE_41_3: Record<string, Record<number, number>> = {
   },
 };
 
+// ─── BS 7671 Table 41.4 — Max Zs (Ω) for 0.4 s disconnection (BS 88 fuses) ─
+// gG general purpose fuses (also applies to BS 1361, BS 3036 mappings below)
+
+const TABLE_41_4_BS88: Record<number, number> = {
+  6: 8.89, 10: 5.33, 16: 2.82, 20: 1.85, 25: 1.44, 32: 1.04,
+  40: 0.86, 50: 0.63, 63: 0.42, 80: 0.32, 100: 0.25, 125: 0.19,
+  160: 0.15, 200: 0.12,
+};
+
+// BS 1361 fuse links (domestic consumer unit fuses)
+const TABLE_41_4_BS1361: Record<number, number> = {
+  5: 9.58, 15: 3.43, 20: 2.14, 30: 1.27, 45: 0.67, 60: 0.48, 80: 0.33, 100: 0.25,
+};
+
+// BS 3036 rewirable fuses (older installations)
+const TABLE_41_4_BS3036: Record<number, number> = {
+  5: 9.21, 15: 2.93, 20: 1.85, 30: 1.09, 45: 0.60,
+};
+
+/** Normalise a device curve / type string to a lookup key. */
+function normaliseCurveKey(curve: string): string {
+  const c = curve.trim().toUpperCase();
+  // MCB curves
+  if (/^[BCD]$/.test(c)) return c;
+  // BS 88 fuse identifiers
+  if (/BS\s*88|^GG$|^AM$|^G[GML]$/.test(c)) return 'BS88';
+  // BS 1361
+  if (/BS\s*1361/.test(c)) return 'BS1361';
+  // BS 3036
+  if (/BS\s*3036|REWIRABLE/.test(c)) return 'BS3036';
+  return c;
+}
+
 export function lookupMaxZs(curve: string | undefined, rating: number): number | null {
   if (!curve || !rating) return null;
-  return TABLE_41_3[curve.toUpperCase()]?.[rating] ?? null;
+  const key = normaliseCurveKey(curve);
+  if (key === 'BS88') return TABLE_41_4_BS88[rating] ?? null;
+  if (key === 'BS1361') return TABLE_41_4_BS1361[rating] ?? null;
+  if (key === 'BS3036') return TABLE_41_4_BS3036[rating] ?? null;
+  return TABLE_41_3[key]?.[rating] ?? null;
 }
 
 // ─── BS 7671 Appendix 4 — Iz (current capacity, A) at Method C reference ──
@@ -689,9 +726,14 @@ export function recomputeDerivedFields(
     patch['calculations.voltageDrop.compliant'] = vdPct <= limit;
   }
 
-  // Max Zs from Table 41.3 (or 41.4 for fuses, but MCB is dominant case)
+  // Max Zs from Table 41.3 / 41.4
   const maxZs = lookupMaxZs(curve, rating);
-  if (maxZs != null) patch['calculations.maxZs'] = maxZs;
+  if (maxZs != null) {
+    patch['calculations.maxZs'] = maxZs;
+    const correctedZs = Number(circuit?.calculations?.zs ?? 0);
+    // zsCompliant: false = FAIL — earth fault disconnection time > 0.4 s
+    patch['calculations.zsCompliant'] = correctedZs <= maxZs;
+  }
 
   // In follows protection rating
   if (rating > 0) patch['calculations.In'] = rating;
@@ -808,7 +850,34 @@ export function attemptAutoFix(
         break;
       }
     }
-    // Curve relief failed — the only remaining frontend lever is cable upsize.
+    // Curve relief failed — try CPC upsize first (larger CPC lowers R2
+    // directly, which lowers Zs without affecting cable capacity or Vd).
+    if (!zsResolved) {
+      const currentCpc = Number(c?.cpcSize ?? c?.cableSize ?? 0);
+      const liveSize = Number(c?.cableSize ?? 0);
+      const CPC_SIZES_FULL = [1.0, 1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120];
+      // (R1+R2) contribution to Zs. R2 share ≈ liveSize/(liveSize+cpcSize)
+      // because R ∝ 1/A, so R2/R1 = liveSize/cpcSize.
+      const totalCableContribution = Math.max(0, zs - supplyZe);
+      const r2Fraction = (liveSize > 0 && currentCpc > 0) ? liveSize / (liveSize + currentCpc) : 0.5;
+      const r1Contribution = totalCableContribution * (1 - r2Fraction);
+      const r2Contribution = totalCableContribution * r2Fraction;
+      for (const candidateCpc of CPC_SIZES_FULL.filter(s => s > currentCpc)) {
+        const newR2 = currentCpc > 0 ? r2Contribution * (currentCpc / candidateCpc) : r2Contribution;
+        const estimatedNewZs = supplyZe + r1Contribution + newR2 + zdbDelta;
+        if (estimatedNewZs <= maxZs) {
+          fixes.push({
+            field: 'cpcSize',
+            value: candidateCpc,
+            rationale: `Upsize CPC ${currentCpc} → ${candidateCpc} mm² to bring Zs ≤ max ${maxZs.toFixed(2)} Ω (reduces R2 contribution)`,
+          });
+          zsResolved = true;
+          break;
+        }
+      }
+    }
+
+    // CPC upsize insufficient — the remaining frontend lever is cable upsize.
     // R1+R2 is roughly inversely proportional to cable area; doubling area
     // approximately halves R1+R2 (and thus the cable contribution to Zs).
     if (!zsResolved) {

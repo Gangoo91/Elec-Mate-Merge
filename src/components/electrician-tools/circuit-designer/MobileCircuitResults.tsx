@@ -114,14 +114,18 @@ export const MobileCircuitResults = ({
 
   const selectedCircuit = design.circuits[selectedCircuitIndex];
 
-  // Use backend complianceStatus for consistent results
+  // Use backend complianceStatus for consistent results, but always
+  // override to fail if Zs > maxZs (safety-critical — 0.4 s disconnection)
   const allCircuitsCompliant = design.circuits.every((c) => {
+    const zsVal = c.calculations?.zs ?? 0;
+    const maxZsVal = c.calculations?.maxZs ?? 0;
+    const zsOk = !(maxZsVal > 0 && zsVal > maxZsVal);
     const status = (c as any).complianceStatus;
-    // Use backend status if available, fallback to calculation check
-    return status
+    const basePass = status
       ? status === 'pass'
       : c.calculations?.voltageDrop?.compliant &&
           (c.calculations?.zs ?? 0) <= (c.calculations?.maxZs ?? 999);
+    return basePass && zsOk;
   });
   const hasWarnings = design.circuits.some(
     (c) => (c as any).complianceStatus === 'warning' || (c.warnings && c.warnings.length > 0)
@@ -131,14 +135,20 @@ export const MobileCircuitResults = ({
   // Calculate compliance stats for MobileSystemSummary
   const complianceStats = design.circuits.reduce(
     (acc, circuit) => {
+      const zsVal = circuit.calculations?.zs ?? 0;
+      const maxZsVal = circuit.calculations?.maxZs ?? 0;
+      const zsOk = !(maxZsVal > 0 && zsVal > maxZsVal);
       const status = (circuit as any).complianceStatus;
-      if (
+      const basePass =
         status === 'pass' ||
         (!status &&
           circuit.calculations?.voltageDrop?.compliant &&
-          (circuit.calculations?.zs ?? 0) <= (circuit.calculations?.maxZs ?? 999))
-      ) {
+          (circuit.calculations?.zs ?? 0) <= (circuit.calculations?.maxZs ?? 999));
+      if (basePass && zsOk) {
         acc.compliant++;
+      } else if (!zsOk) {
+        // Zs failure is always a hard fail
+        acc.fails++;
       } else if (status === 'warning' || circuit.warnings?.length > 0) {
         acc.warnings++;
       } else {
@@ -260,9 +270,14 @@ export const MobileCircuitResults = ({
             {design.circuits.map((circuit, idx) => {
               const isActive = idx === selectedCircuitIndex;
               // Use backend complianceStatus, fallback to warning check
-              const status =
-                (circuit as any).complianceStatus ||
-                (circuit.warnings?.length > 0 ? 'warning' : 'pass');
+              // Safety-critical: override to 'fail' if Zs > maxZs
+              const zsV = circuit.calculations?.zs ?? 0;
+              const mxZs = circuit.calculations?.maxZs ?? 0;
+              const zsOkPill = !(mxZs > 0 && zsV > mxZs);
+              const status = !zsOkPill
+                ? 'fail'
+                : (circuit as any).complianceStatus ||
+                  (circuit.warnings?.length > 0 ? 'warning' : 'pass');
 
               return (
                 <button

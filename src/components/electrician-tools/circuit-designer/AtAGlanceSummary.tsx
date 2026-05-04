@@ -86,10 +86,17 @@ export const AtAGlanceSummary = ({ summary, circuit }: AtAGlanceSummaryProps) =>
       })()
     : summary?.zs || 'N/A';
 
+  // Safety-critical: always check Zs vs maxZs directly — if Zs > maxZs,
+  // the circuit cannot achieve 0.4 s disconnection regardless of other flags
+  const zsDirectCheck = circuit
+    ? (circuit.calculations?.maxZs ?? 0) > 0
+      ? (circuit.calculations?.zs ?? 0) <= circuit.calculations.maxZs
+      : true
+    : true;
   const safeComplianceTick = circuit
     ? (circuit.calculations?.voltageDrop?.compliant ?? true) &&
-      (circuit.expectedTests?.zs?.compliant ??
-        (circuit.calculations?.zs ?? 0) <= (circuit.calculations?.maxZs ?? 999))
+      zsDirectCheck &&
+      (circuit.expectedTests?.zs?.compliant ?? true)
     : (summary?.complianceTick ?? false);
 
   const safeNotes = summary?.notes || '';
