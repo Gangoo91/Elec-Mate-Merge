@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { CircuitDesign } from '@/types/installation-design';
-import { Search, CheckCircle2, AlertTriangle, Zap } from 'lucide-react';
+import { Search, CheckCircle2, AlertTriangle, AlertCircle, Zap } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 
@@ -27,8 +27,10 @@ export const ResultsNavPanel = ({
   );
 
   const getCircuitStatus = (circuit: CircuitDesign) => {
-    const warnings = circuit.warnings?.length || 0;
-    if (warnings > 0) return 'warning';
+    // Safety-critical: direct Zs vs maxZs check — hard fail
+    const zsVal = circuit.calculations?.zs ?? 0;
+    const maxZsVal = circuit.calculations?.maxZs ?? 0;
+    if (maxZsVal > 0 && zsVal > maxZsVal) return 'fail';
 
     // Check expected test results for Zs compliance
     const zsCompliant =
@@ -36,6 +38,9 @@ export const ResultsNavPanel = ({
     const vdCompliant = circuit.calculations?.voltageDrop?.compliant ?? true;
 
     if (!zsCompliant || !vdCompliant) return 'warning';
+
+    const warnings = circuit.warnings?.length || 0;
+    if (warnings > 0) return 'warning';
 
     return 'success';
   };
@@ -78,6 +83,8 @@ export const ResultsNavPanel = ({
                   <div className="flex-shrink-0 mt-0.5">
                     {status === 'success' ? (
                       <CheckCircle2 className="h-4 w-4 text-primary" />
+                    ) : status === 'fail' ? (
+                      <AlertCircle className="h-4 w-4 text-red-500" />
                     ) : (
                       <AlertTriangle className="h-4 w-4 text-orange-500" />
                     )}
@@ -117,16 +124,16 @@ export const ResultsNavPanel = ({
               Compliant
             </span>
             <span className="font-semibold">
-              {circuits.filter((c) => !c.warnings || c.warnings.length === 0).length}
+              {circuits.filter((c) => getCircuitStatus(c) === 'success').length}
             </span>
           </div>
           <div className="flex items-center justify-between text-sm">
             <span className="text-muted-foreground flex items-center gap-1.5">
               <AlertTriangle className="h-3.5 w-3.5 text-orange-500" />
-              With Warnings
+              Issues
             </span>
             <span className="font-semibold">
-              {circuits.filter((c) => c.warnings && c.warnings.length > 0).length}
+              {circuits.filter((c) => getCircuitStatus(c) !== 'success').length}
             </span>
           </div>
         </div>

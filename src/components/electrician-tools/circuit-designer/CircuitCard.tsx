@@ -47,6 +47,16 @@ export const CircuitCard = ({
     status = !isCompliant ? 'fail' : hasWarnings ? 'warning' : 'pass';
   }
 
+  // Safety-critical override: if Zs exceeds maxZs the circuit MUST NOT show
+  // PASS regardless of what the backend complianceStatus says — a real
+  // installation with these values would not achieve 0.4 s disconnection.
+  const zsValue = circuit.calculations?.zs ?? 0;
+  const maxZsValue = circuit.calculations?.maxZs ?? 0;
+  const zsFailure = maxZsValue > 0 && zsValue > maxZsValue;
+  if (zsFailure && status === 'pass') {
+    status = 'fail';
+  }
+
   return (
     <Card
       className={`bg-card border-elec-yellow/30 overflow-hidden shadow-lg shadow-elec-yellow/5 transition-all duration-300 hover:shadow-elec-yellow/10 mx-auto max-w-2xl ${className}`}
@@ -86,7 +96,25 @@ export const CircuitCard = ({
             {status === 'fail' && <AlertCircle className="h-3 w-3 mr-1" />}
             {status === 'pass' ? 'Pass' : status === 'warning' ? 'Warning' : 'Review'}
           </Badge>
+          {zsFailure && (
+            <Badge
+              variant="destructive"
+              className="bg-red-600/30 text-red-300 border-red-500/40 h-7 shrink-0"
+            >
+              <AlertCircle className="h-3 w-3 mr-1" />
+              Zs FAIL
+            </Badge>
+          )}
         </div>
+
+        {/* Zs non-compliance warning */}
+        {zsFailure && (
+          <div className="mt-2 bg-red-500/10 border border-red-500/20 rounded-lg p-2">
+            <p className="text-[10px] text-red-300">
+              • Zs {zsValue.toFixed(2)} Ω exceeds max {maxZsValue.toFixed(2)} Ω — earth fault disconnection will not meet 0.4 s (Reg 411.3.2)
+            </p>
+          </div>
+        )}
 
         {/* Show validation issues when status is not pass */}
         {status !== 'pass' &&
