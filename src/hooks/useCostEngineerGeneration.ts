@@ -175,6 +175,13 @@ export function useCostEngineerGeneration({
   };
 
   useEffect(() => {
+    // Reset stale state when jobId changes (e.g. user kicked off a
+    // refinement). Without this, the streaming view shows the previous
+    // job's 100%-complete progress for a beat before the first poll
+    // returns the new job's progress=0 row.
+    setJob(null);
+    lastProgressRef.current = 0;
+
     if (jobId) {
       startPolling();
     }
@@ -182,6 +189,7 @@ export function useCostEngineerGeneration({
     return () => {
       clearPolling();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jobId]);
 
   return {

@@ -12,8 +12,8 @@ import { Button } from '@/components/ui/button';
 import { MobileInput } from '@/components/ui/mobile-input';
 import { Settings, Save, AlertCircle } from 'lucide-react';
 import { toast } from 'sonner';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { storageGetSync, storageSetJSONSync } from '@/utils/storage';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { supabase } from '@/integrations/supabase/client';
 
 export interface BusinessSettings {
   monthlyOverheads: {
@@ -38,6 +38,8 @@ export interface BusinessSettings {
     permits: number;
     waste: number;
   };
+  /** % markup added on top of trade-price materials before margin is applied. */
+  materialsMarkupPercent: number;
 }
 
 export const DEFAULT_BUSINESS_SETTINGS: BusinessSettings = {
@@ -63,11 +65,81 @@ export const DEFAULT_BUSINESS_SETTINGS: BusinessSettings = {
     permits: 0,
     waste: 20,
   },
+  materialsMarkupPercent: 15,
 };
 
-// Generate user-scoped storage key for business settings
-const getStorageKey = (userId?: string) =>
-  userId ? `electrician_business_settings_${userId}` : 'electrician_business_settings_guest';
+/**
+ * Load the user's business settings from `user_business_settings`.
+ * Returns null if the row doesn't exist yet (caller should fall back to
+ * defaults). The dialog still works for unauthenticated previews — in
+ * that case it just keeps state in memory.
+ */
+async function loadFromDb(userId: string | undefined): Promise<BusinessSettings | null> {
+  if (!userId) return null;
+  const { data, error } = await supabase
+    .from('user_business_settings')
+    .select('*')
+    .eq('user_id', userId)
+    .maybeSingle();
+  if (error || !data) return null;
+  // The `extra` JSONB carries the full dialog shape so we round-trip
+  // monthlyOverheads / jobCosts without losing anything.
+  const extra = (data.extra as Partial<BusinessSettings>) ?? {};
+  return {
+    monthlyOverheads:
+      extra.monthlyOverheads ?? DEFAULT_BUSINESS_SETTINGS.monthlyOverheads,
+    labourRates: {
+      electrician: Number(data.labour_rate_electrician),
+      apprentice: Number(data.labour_rate_apprentice),
+      targetIncome:
+        extra.labourRates?.targetIncome ??
+        DEFAULT_BUSINESS_SETTINGS.labourRates.targetIncome,
+    },
+    profitTargets: {
+      minimum: Number(data.min_margin_percent),
+      target: Number(data.target_margin_percent),
+      premium: Number(data.max_margin_percent),
+    },
+    jobCosts: extra.jobCosts ?? DEFAULT_BUSINESS_SETTINGS.jobCosts,
+    materialsMarkupPercent:
+      Number(data.materials_markup_percent) ||
+      DEFAULT_BUSINESS_SETTINGS.materialsMarkupPercent,
+  };
+}
+
+async function saveToDb(
+  userId: string | undefined,
+  s: BusinessSettings
+): Promise<void> {
+  if (!userId) return;
+  const perJobOverhead = s.jobCosts.travel + s.jobCosts.permits + s.jobCosts.waste;
+  const monthlyOverheadsTotal =
+    s.monthlyOverheads.vanCosts +
+    s.monthlyOverheads.toolDepreciation +
+    s.monthlyOverheads.insurance +
+    s.monthlyOverheads.adminCosts +
+    s.monthlyOverheads.marketing;
+
+  const { error } = await supabase
+    .from('user_business_settings')
+    .upsert(
+      {
+        user_id: userId,
+        labour_rate_electrician: s.labourRates.electrician,
+        labour_rate_apprentice: s.labourRates.apprentice,
+        target_margin_percent: s.profitTargets.target,
+        min_margin_percent: s.profitTargets.minimum,
+        max_margin_percent: s.profitTargets.premium,
+        materials_markup_percent: s.materialsMarkupPercent,
+        per_job_overhead: perJobOverhead,
+        monthly_overheads_total: monthlyOverheadsTotal,
+        // Round-trip the full dialog shape so nothing's lost.
+        extra: s,
+      },
+      { onConflict: 'user_id' }
+    );
+  if (error) throw error;
+}
 
 interface BusinessSettingsDialogProps {
   onSettingsChange?: (settings: BusinessSettings) => void;
@@ -101,34 +173,46 @@ export function BusinessSettingsDialog({
   // Parse helper: allow empty → 0, preserve typed numbers
   const parseValue = (val: string) => (val === '' ? 0 : Number(val));
 
-  const storageKey = getStorageKey(userId);
+  const [saving, setSaving] = useState(false);
 
+  // Load on mount or when user changes.
   useEffect(() => {
-    const raw = storageGetSync(storageKey);
-    if (raw) {
-      try {
-        const parsed = JSON.parse(raw);
-        setSettings(parsed);
+    let cancelled = false;
+    (async () => {
+      const fromDb = await loadFromDb(userId).catch(() => null);
+      if (cancelled) return;
+      if (fromDb) {
+        setSettings(fromDb);
         setHasConfigured(true);
-        onSettingsChange?.(parsed);
-      } catch (e) {
-        console.error('Failed to parse business settings:', e);
+        onSettingsChange?.(fromDb);
+      } else {
+        setSettings(DEFAULT_BUSINESS_SETTINGS);
+        setHasConfigured(false);
       }
-    } else {
-      // Reset to defaults when no saved settings for this user
-      setSettings(DEFAULT_BUSINESS_SETTINGS);
-      setHasConfigured(false);
-    }
-  }, [storageKey]);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [userId]);
 
-  const handleSave = () => {
-    storageSetJSONSync(storageKey, settings);
-    setHasConfigured(true);
-    onSettingsChange?.(settings);
-    setOpen(false);
-    toast.success('Business settings saved', {
-      description: 'Your profitability calculations will now use these settings',
-    });
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      await saveToDb(userId, settings);
+      setHasConfigured(true);
+      onSettingsChange?.(settings);
+      setOpen(false);
+      toast.success('Business settings saved', {
+        description: 'Cost Engineer will use these settings on every estimate.',
+      });
+    } catch (err: any) {
+      console.error('Failed to save business settings:', err);
+      toast.error('Failed to save settings', {
+        description: err?.message ?? 'Try again, or check your connection.',
+      });
+    } finally {
+      setSaving(false);
+    }
   };
 
   const totalMonthlyOverheads =
@@ -435,6 +519,23 @@ export function BusinessSettingsDialog({
                 }
               />
             </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 items-start">
+              <MobileInput
+                label="Materials Markup"
+                hint="% added on top of trade price before margin"
+                type="number"
+                inputMode="decimal"
+                unit="%"
+                value={displayValue(settings.materialsMarkupPercent)}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    materialsMarkupPercent: parseValue(e.target.value),
+                  })
+                }
+              />
+            </div>
           </div>
 
           {/* Job-Specific Costs */}
@@ -517,10 +618,11 @@ export function BusinessSettingsDialog({
             </Button>
             <Button
               onClick={handleSave}
-              className="flex-1 h-12 touch-manipulation bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+              disabled={saving}
+              className="flex-1 h-12 touch-manipulation bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 disabled:opacity-60"
             >
               <Save className="h-4 w-4 mr-2" />
-              Save Settings
+              {saving ? 'Saving…' : 'Save Settings'}
             </Button>
           </div>
         </div>
