@@ -45,6 +45,9 @@ export const CPC_SIZE_OPTIONS = [
   { value: '25', label: '25 mm²' },
   { value: '35', label: '35 mm²' },
   { value: '50', label: '50 mm²' },
+  { value: '70', label: '70 mm²' },
+  { value: '95', label: '95 mm²' },
+  { value: '120', label: '120 mm²' },
 ];
 
 export const PROTECTION_RATING_OPTIONS = [
@@ -516,7 +519,7 @@ export function validateCableTypeChange(
 
 // ─── CPC size editor ─────────────────────────────────────────────────────────
 
-const CPC_SIZES = [1.0, 1.5, 2.5, 4, 6, 10, 16, 25, 35, 50];
+const CPC_SIZES = [1.0, 1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120];
 
 /**
  * BS 7671 Table 54.7 simplified: CPC must be ≥ live × adiabatic factor.
