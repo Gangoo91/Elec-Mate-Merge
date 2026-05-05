@@ -77,6 +77,8 @@ const getCircuitStatus = (circuit: any): CircuitStatus => {
     return 'review';
   if (Array.isArray(circuit?.warnings) && circuit.warnings.length > 0) return 'review';
   if (circuit?.calculations?.voltageDrop?.compliant === false) return 'review';
+  if (circuit?.calculations?.zsCompliant === false) return 'review';
+  if (circuit?.calculations?.izCompliant === false) return 'review';
   const zs = Number(circuit?.calculations?.zs ?? 0);
   const maxZs = Number(circuit?.calculations?.maxZs ?? Infinity);
   if (zs > 0 && maxZs > 0 && zs > maxZs) return 'review';
@@ -110,6 +112,12 @@ function getComplianceScore(circuit: any, design: any): number {
   if (warnings > 0) score -= 10;
 
   if (circuit?.calculations?.voltageDrop?.compliant === false) score -= 10;
+
+  // Hard FAIL flags from the validator (post ELE-965). These are independent
+  // tests so they're scored separately even though they may overlap with the
+  // raw zs > maxZs check below.
+  if (circuit?.calculations?.zsCompliant === false) score -= 15;
+  if (circuit?.calculations?.izCompliant === false) score -= 15;
 
   const zs = Number(circuit?.calculations?.zs ?? 0);
   const maxZs = Number(circuit?.calculations?.maxZs ?? Infinity);
@@ -214,33 +222,101 @@ const getRegRefs = (circuit: any): { reg: string; reason?: string }[] => {
 };
 
 // A4 feature derivation from regulation_refs across all circuits.
-const deriveA4Features = (circuits: any[]) => {
+/**
+ * Build a comprehensive BS 7671 feature/observation list, tailored to the
+ * install type. Domestic, commercial and industrial installations care about
+ * different sections of BS 7671 — the panel surfaces what's relevant rather
+ * than throwing every reg at every job.
+ */
+const deriveBSFeatures = (
+  circuits: any[],
+  installType: string,
+  earthingSystem: string | undefined
+) => {
   const allRefs = circuits.flatMap((c) =>
     getRegRefs(c).map((r) => ({ ...r, circuit: c.name, idx: c.circuitNumber }))
   );
-
   const matches = (pattern: RegExp) => allRefs.filter((r) => pattern.test(r.reg));
+  const haystack = (c: any): string =>
+    `${c?.name ?? ''} ${c?.loadType ?? ''} ${c?.specialLocation ?? ''}`.toLowerCase();
+  const any = (re: RegExp) => circuits.some((c) => re.test(haystack(c)));
+  const count = (re: RegExp) => circuits.filter((c) => re.test(haystack(c))).length;
 
-  const afddRefs = matches(/^421\.1\.7/);
-  const spdRefs = matches(/^443\./);
-  const openPenRefs = matches(/^(411\.4\.5|722\.411\.4)/);
-  const tnCsTtRcdRefs = matches(/^411\.5/);
-  const evRefs = matches(/^722\./);
-  const specialLocations = circuits
-    .map((c) => c.specialLocation)
-    .filter((s) => s && s !== 'none');
-  const section7xx = matches(/^7\d{2}\./);
+  // Universal — these apply regardless of install type.
+  const afddCount = new Set(matches(/^421\.1\.7/).map((r) => r.idx)).size;
+  const spdRecommended = matches(/^443\./).length > 0;
+  const openPenFlagged = matches(/^(411\.4\.5|722\.411\.4)/).length > 0;
+  const ttRcdApplied = matches(/^411\.5/).length > 0 || earthingSystem === 'TT';
+  const evCount = new Set(matches(/^722\./).map((r) => r.idx)).size;
+  const has3Phase = circuits.some((c) => c?.phases === 'three');
+  const specialLocations = Array.from(
+    new Set(circuits.map((c) => c.specialLocation).filter((s) => s && s !== 'none'))
+  );
+
+  // Domestic
+  const hasBathroom = circuits.some((c) => c?.specialLocation === 'bathroom');
+  const hasKitchen = any(/kitchen|cooker|hob|oven|island/);
+  const hasSmokeAlarm = any(/smoke|heat-detector|co-detector|alarm/);
+  const hasShower = any(/shower/);
+
+  // Commercial
+  const hasMedical = any(/clinical|medical|dental|theatre|x-?ray|sterilis|patient|consult/);
+  const hasEmergencyLighting = any(/emergency.?light|escape.?light|exit.?sign/);
+  const hasFireAlarm = any(/fire.?alarm|fire.?detection|sounder|beacon/);
+  const hasHvac = any(/hvac|air.?con|aircon|chiller|ventilation|extract|ahu/);
+  const hasReception = any(/reception|front.?house|lobby|foyer|atrium/);
+  const hasStaff = any(/staff|breakroom|locker.?room|kitchenette/);
+  const hasRetail = any(/retail|shop.?floor|display|signage|epos|till/);
+
+  // Industrial
+  const hasMotor = circuits.some(
+    (c) => c?.phases === 'three' && /motor|pump|fan|compressor|conveyor/.test(haystack(c))
+  );
+  const motorCount = count(/motor|pump|fan|compressor/);
+  const hasWelding = any(/weld|brazing/);
+  const hasMachineTools = any(/machine.?tool|cnc|lathe|mill|drill|press/);
+  const hasAgricultural = any(/agri|farm|barn|stable|dairy|stock/);
+  const hasPv = any(/solar|pv|photovoltaic|inverter/);
+  const hasWorkshop = any(/workshop|fabrication|maintenance/);
 
   return {
-    afddCount: new Set(afddRefs.map((r) => r.idx)).size,
-    spdRecommended: spdRefs.length > 0,
-    openPenFlagged: openPenRefs.length > 0,
-    ttRcdApplied: tnCsTtRcdRefs.length > 0,
-    evCount: new Set(evRefs.map((r) => r.idx)).size,
-    specialLocationsApplied: Array.from(new Set(specialLocations)),
-    section7xxRefs: section7xx.length,
+    installType,
+    earthingSystem,
+    // Universal
+    afddCount,
+    spdRecommended,
+    openPenFlagged,
+    ttRcdApplied,
+    evCount,
+    has3Phase,
+    specialLocations,
+    // Domestic
+    hasBathroom,
+    hasKitchen,
+    hasSmokeAlarm,
+    hasShower,
+    // Commercial
+    hasMedical,
+    hasEmergencyLighting,
+    hasFireAlarm,
+    hasHvac,
+    hasReception,
+    hasStaff,
+    hasRetail,
+    // Industrial
+    hasMotor,
+    motorCount,
+    hasWelding,
+    hasMachineTools,
+    hasAgricultural,
+    hasPv,
+    hasWorkshop,
   };
 };
+
+// Backwards-compat alias for any caller that still imports the old name.
+const deriveA4Features = (circuits: any[]) =>
+  deriveBSFeatures(circuits, 'domestic', undefined);
 
 const EditorialDesignResults = ({ design, onReset }: EditorialDesignResultsProps) => {
   const navigate = useNavigate();
@@ -330,11 +406,16 @@ const EditorialDesignResults = ({ design, onReset }: EditorialDesignResultsProps
    * outputs stay coherent with the inputs the user just changed.
    */
   const applyEdit = (circuitIdx: number, field: string, after: unknown) => {
+    // Capture the circuit BEFORE the edit (with whatever edits are already
+    // applied + their derived recompute) so the ribbon can show real deltas.
+    const baseCircuit = baseCircuits[circuitIdx];
+    const prevEdits = edits[circuitIdx] ?? {};
+    const snapshotBefore = applyEditsToCircuit(baseCircuit, prevEdits);
+
     setEdits((prev) => {
       const nextCircuitEdits = { ...(prev[circuitIdx] ?? {}), [field]: after };
       // Build a temporary merged circuit so recomputeDerivedFields can read
       // the post-edit state and emit fresh Iz / Vd / maxZs / In.
-      const baseCircuit = baseCircuits[circuitIdx];
       const merged = applyEditsToCircuit(baseCircuit, nextCircuitEdits);
       const derivedPatch = recomputeDerivedFields(merged);
       return {
@@ -348,11 +429,18 @@ const EditorialDesignResults = ({ design, onReset }: EditorialDesignResultsProps
         if (!field.includes('.')) return (c as any)?.[field];
         return field.split('.').reduce((acc: any, p) => acc?.[p], c);
       })();
+      // Build the AFTER snapshot the same way edits memo will — base circuit
+      // + nextCircuitEdits + derived recompute. We do this here (not via
+      // setEdits's stale closure) so the ribbon has accurate values.
+      const nextCircuitEdits = { ...prevEdits, [field]: after };
+      const mergedAfter = applyEditsToCircuit(baseCircuit, nextCircuitEdits);
+      const derivedPatchAfter = recomputeDerivedFields(mergedAfter);
+      const snapshotAfter = applyEditsToCircuit(mergedAfter, derivedPatchAfter);
       return {
         ...prev,
         [circuitIdx]: [
           ...(prev[circuitIdx] ?? []),
-          { field, before, after, editedAt: Date.now() },
+          { field, before, after, editedAt: Date.now(), snapshotBefore, snapshotAfter },
         ],
       };
     });
@@ -484,7 +572,7 @@ const EditorialDesignResults = ({ design, onReset }: EditorialDesignResultsProps
     return { totalLoad, diversifiedLoad, factor, totalIb, passCount };
   }, [design, circuits]);
 
-  const a4 = useMemo(() => deriveA4Features(circuits), [circuits]);
+  // a4 features memo lives after `supply` + `installType` are defined below.
 
   // Phase overrides — extracted from edits, threaded into the recommender so
   // user phase reassignments are honoured by the balancer.
@@ -523,10 +611,137 @@ const EditorialDesignResults = ({ design, onReset }: EditorialDesignResultsProps
   const projectName = design?.projectName || design?.projectInfo?.projectName || 'Untitled';
   const location = design?.location || design?.projectInfo?.location || '—';
 
+  // BS 7671 features panel — install-type-aware. Domestic / commercial /
+  // industrial each surface a different mix of regulations.
+  const a4 = useMemo(
+    () => deriveBSFeatures(circuits, String(installType), supply?.earthingSystem),
+    [circuits, installType, supply?.earthingSystem]
+  );
+
+  // ── Compliance concerns: failing circuits that need attention ─────────
+  // We compute this AFTER the layout (so we have boardZdb per circuit) and
+  // factor in the submain chain when checking Zs. Defined further down — see
+  // failingCircuits / autoFixAllFailures below circuitContext.
+  const supplyZeNum = Number(supply?.Ze ?? supply?.ze ?? 0.35);
+
   const circuitContext = useMemo(
     () => buildCircuitContextMap(layout.boards, layout.submainFeeds, boardReferences),
     [layout, boardReferences]
   );
+
+  // ── Compliance concerns: failing circuits that need attention ─────────
+  // Detects circuits that fail BS 7671 compliance after the full chain check
+  // (Zs corrected for submain Zdb, Iz < In, Vd > limit). Drives the
+  // ComplianceConcernsBanner + the Auto-fix-all bulk recheck.
+  const failingCircuits = useMemo(() => {
+    const out: Array<{
+      idx: number;
+      circuit: any;
+      reasons: string[];
+      boardZdb: number;
+    }> = [];
+    circuits.forEach((c: any, i: number) => {
+      const ctx = circuitContext.get(i);
+      const board = layout.boards.find((b) => b.id === ctx?.boardId);
+      const zdb = Number(board?.zdb ?? supplyZeNum);
+      const reasons: string[] = [];
+
+      const aiZs = Number(c?.calculations?.zs ?? NaN);
+      const correctedZs = Number.isFinite(aiZs)
+        ? aiZs + Math.max(0, zdb - supplyZeNum)
+        : NaN;
+      const maxZs = Number(c?.calculations?.maxZs ?? NaN);
+      if (
+        Number.isFinite(correctedZs) &&
+        Number.isFinite(maxZs) &&
+        correctedZs > maxZs
+      ) {
+        reasons.push(`Zs ${correctedZs.toFixed(2)} Ω > max ${maxZs.toFixed(2)} Ω`);
+      }
+      if (c?.calculations?.izCompliant === false) {
+        reasons.push("Iz < In (cable can't carry the protection)");
+      }
+      if (c?.calculations?.voltageDrop?.compliant === false) {
+        const vd = Number(c?.calculations?.voltageDrop?.percent ?? 0);
+        const lim = Number(c?.calculations?.voltageDrop?.limit ?? 5);
+        reasons.push(`Vd ${vd.toFixed(2)}% > ${lim}% limit`);
+      }
+      if (reasons.length > 0) out.push({ idx: i, circuit: c, reasons, boardZdb: zdb });
+    });
+    return out;
+  }, [circuits, circuitContext, layout.boards, supplyZeNum]);
+
+  const [autoFixProgress, setAutoFixProgress] = useState<{
+    inProgress: boolean;
+    done: number;
+    total: number;
+    fixed: number;
+    failed: number;
+  } | null>(null);
+
+  const autoFixAllFailures = async () => {
+    if (failingCircuits.length === 0) return;
+    setAutoFixProgress({
+      inProgress: true,
+      done: 0,
+      total: failingCircuits.length,
+      fixed: 0,
+      failed: 0,
+    });
+    const loading = toast.loading(
+      `Asking AI to fix ${failingCircuits.length} circuit${failingCircuits.length === 1 ? '' : 's'}…`,
+      { description: 'This usually takes 5-15 seconds per circuit.' }
+    );
+    let fixed = 0;
+    let failed = 0;
+    for (let i = 0; i < failingCircuits.length; i++) {
+      const fc = failingCircuits[i];
+      try {
+        const { data, error } = await supabase.functions.invoke('recheck-circuit', {
+          body: {
+            mode: 'make-pass',
+            circuit: fc.circuit,
+            supply: { Ze: supplyZeNum },
+            installType,
+            boardZdb: fc.boardZdb,
+            reason: `Failing reasons: ${fc.reasons.join('; ')}. Find a compliance route.`,
+          },
+        });
+        if (error || data?.error) throw new Error(data?.error || error?.message);
+        const r = data?.result ?? {};
+        if (r.cableSize != null) applyEdit(fc.idx, 'cableSize', Number(r.cableSize));
+        if (r.cpcSize != null) applyEdit(fc.idx, 'cpcSize', Number(r.cpcSize));
+        if (r.cableType) applyEdit(fc.idx, 'cableType', String(r.cableType));
+        if (r.protectionDevice?.type)
+          applyEdit(fc.idx, 'protectionDevice.type', String(r.protectionDevice.type));
+        if (r.protectionDevice?.rating != null)
+          applyEdit(fc.idx, 'protectionDevice.rating', Number(r.protectionDevice.rating));
+        if (r.protectionDevice?.curve)
+          applyEdit(fc.idx, 'protectionDevice.curve', String(r.protectionDevice.curve));
+        fixed++;
+      } catch {
+        failed++;
+      }
+      setAutoFixProgress({
+        inProgress: i + 1 < failingCircuits.length,
+        done: i + 1,
+        total: failingCircuits.length,
+        fixed,
+        failed,
+      });
+    }
+    toast.success(
+      `${fixed} fixed${failed > 0 ? ` · ${failed} couldn't be fixed automatically` : ''}`,
+      {
+        id: loading,
+        description:
+          failed > 0
+            ? 'Open the failing circuits manually — AI rationale + alternatives are in the circuit detail panel.'
+            : 'All circuits should now show PASS. Review the impact ribbons for details.',
+      }
+    );
+    setTimeout(() => setAutoFixProgress(null), 4000);
+  };
 
   // Sticky mini-header reveal — fires when the hero scrolls out of view.
   const [showMiniHeader, setShowMiniHeader] = useState(false);
@@ -868,6 +1083,15 @@ const EditorialDesignResults = ({ design, onReset }: EditorialDesignResultsProps
         {/* COHERENCE BANNER — surfaces multi-board, three-phase, Zs corrections etc. */}
         <CoherenceBanner warnings={layout.warnings} />
 
+        {/* COMPLIANCE CONCERNS — circuits that still fail after the chain
+            check (Zs / Iz / Vd). One-click bulk auto-fix. */}
+        <ComplianceConcernsBanner
+          failing={failingCircuits}
+          onAutoFix={autoFixAllFailures}
+          progress={autoFixProgress}
+          onSelectCircuit={setSelectedIdx}
+        />
+
         {/* DESIGN AUDIT — multi-pass critique loop output */}
         {design?.criticReview && <DesignAuditSection review={design.criticReview} />}
 
@@ -878,9 +1102,26 @@ const EditorialDesignResults = ({ design, onReset }: EditorialDesignResultsProps
             <span className="text-elec-yellow">Design</span>{' '}
             <span className="text-white">complete.</span>
           </h2>
-          <p className="text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85 max-w-2xl">
-            {totalCircuits} circuit{totalCircuits === 1 ? '' : 's'} designed against BS 7671:2018+A4:2026.
-            Every numeric choice is grounded in the regulations and Appendix 4 cable tables.
+          <p className="text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/85 max-w-3xl">
+            {(() => {
+              // Plain-English summary — translates the headline numbers into
+              // a one-sentence story the user can read at a glance.
+              const passCount = stats.passCount;
+              const reviewCount = totalCircuits - passCount;
+              const boardWord = layout.boards.length === 1 ? 'board' : 'boards';
+              const phaseDesc = layout.needsThreePhase ? 'three-phase' : 'single-phase';
+              const installLabel =
+                installType === 'commercial'
+                  ? 'commercial'
+                  : installType === 'industrial'
+                    ? 'industrial'
+                    : 'domestic';
+              return `${totalCircuits} circuit${totalCircuits === 1 ? '' : 's'} across ${layout.boards.length} ${boardWord} on a ${phaseDesc} ${installLabel} install. ${
+                reviewCount === 0
+                  ? `All circuits PASS BS 7671 compliance.`
+                  : `${passCount} pass · ${reviewCount} need${reviewCount === 1 ? 's' : ''} review.`
+              } Every cable size and protection rating is grounded in BS 7671:2018+A4:2026 and Appendix 4 tables.`;
+            })()}
           </p>
           {/* Sentinel for sticky-header reveal */}
           <div ref={heroSentinelRef} className="h-px w-px" aria-hidden />
@@ -1262,80 +1503,364 @@ const A4FeaturesPanel = ({
   a4,
   earthingSystem,
 }: {
-  a4: ReturnType<typeof deriveA4Features>;
+  a4: ReturnType<typeof deriveBSFeatures>;
   earthingSystem?: string;
 }) => {
   const items: { title: string; detail: string; reg: string }[] = [];
+  const installType = a4.installType;
+
+  // ── Universal items (apply to every install type) ────────────────────
   if (a4.afddCount > 0) {
     items.push({
       title: 'AFDD',
-      detail: `Recommended on ${a4.afddCount} circuit${a4.afddCount === 1 ? '' : 's'}`,
+      detail: `Recommended on ${a4.afddCount} circuit${a4.afddCount === 1 ? '' : 's'} (A4:2026 socket-circuit risk assessment)`,
       reg: '421.1.7',
     });
   }
   if (a4.spdRecommended) {
     items.push({
       title: 'Surge protection',
-      detail: 'Risk assessment performed; SPD recommended',
+      detail: 'Risk assessment performed — SPD recommended at the origin (Type 2 minimum, Type 1+2 if exposed location).',
       reg: '443.4',
     });
   }
   if (a4.openPenFlagged) {
     items.push({
-      title: 'Open-PEN',
-      detail: 'EVSE integral PEN fault detection required',
+      title: 'Open-PEN detection',
+      detail: 'PME systems with EVSE need integral PEN fault detection (or TT-island).',
       reg: '411.4.5',
     });
   }
   if (a4.ttRcdApplied) {
     items.push({
       title: 'TT earthing',
-      detail: '30 mA RCBO applied to every circuit',
+      detail: 'TT system — every final circuit needs 30 mA RCBO (or upstream 100 mA selective at origin).',
       reg: '411.5',
     });
   }
   if (a4.evCount > 0) {
     items.push({
       title: 'EV charging',
-      detail: `${a4.evCount} EV circuit${a4.evCount === 1 ? '' : 's'} · Type A/B RCBO`,
+      detail: `${a4.evCount} EV circuit${a4.evCount === 1 ? '' : 's'} — Type A/B RCBO required for DC fault current per A4:2026.`,
       reg: '722.531.2',
     });
   }
-  if (a4.specialLocationsApplied.length > 0) {
+  if (a4.has3Phase) {
     items.push({
-      title: 'Special locations',
-      detail: a4.specialLocationsApplied.map((s: string) => s.replace(/-/g, ' ')).join(', '),
-      reg: a4.specialLocationsApplied.includes('bathroom') ? '701' : '7xx',
+      title: 'Three-phase coordination',
+      detail: 'L1/L2/L3 balance, TP+N submain protection and discrimination at parent board.',
+      reg: '536',
     });
+  }
+
+  // ── Domestic-specific ─────────────────────────────────────────────────
+  if (installType === 'domestic') {
+    if (a4.hasBathroom) {
+      items.push({
+        title: 'Bathroom (Section 701)',
+        detail: 'Zones 0/1/2 — supplementary equipotential bonding, IP rating + 30 mA RCD on socket / lighting in zones.',
+        reg: '701',
+      });
+    }
+    if (a4.hasKitchen) {
+      items.push({
+        title: 'Kitchen — splash zones',
+        detail: 'Sockets ≥ 300 mm from sinks / hobs; cooker outlet within 2 m of unit; dedicated cooker circuit if > 13 A.',
+        reg: '511.1',
+      });
+    }
+    if (a4.hasShower) {
+      items.push({
+        title: 'Shower circuit',
+        detail: 'Dedicated 40 A or 45 A RCBO, 10 mm² T&E typical, bathroom zone considerations.',
+        reg: '701.512.3',
+      });
+    }
+    if (a4.hasSmokeAlarm) {
+      items.push({
+        title: 'Smoke / heat detection',
+        detail: 'BS 5839-6 + BS EN 14604 — interlinked grade D, mains + battery backup, dedicated 6 A circuit.',
+        reg: 'BS 5839-6',
+      });
+    }
+  }
+
+  // ── Commercial-specific ───────────────────────────────────────────────
+  if (installType === 'commercial') {
+    if (a4.hasMedical) {
+      items.push({
+        title: 'Medical locations (710)',
+        detail: 'Group 1/2 medical — IT system where applicable, supplementary EQB, separated supply for life-support equipment.',
+        reg: '710',
+      });
+    }
+    if (a4.hasEmergencyLighting) {
+      items.push({
+        title: 'Emergency lighting',
+        detail: 'BS 5266-1 — escape route + open area + high-risk task. 1 hr or 3 hr duration depending on building use.',
+        reg: 'BS 5266',
+      });
+    }
+    if (a4.hasFireAlarm) {
+      items.push({
+        title: 'Fire alarm system',
+        detail: 'BS 5839-1 — category L/P/M depending on building use. Dedicated supply with 24 h standby battery.',
+        reg: 'BS 5839-1',
+      });
+    }
+    if (a4.hasHvac) {
+      items.push({
+        title: 'HVAC isolation (537.4)',
+        detail: 'Local emergency switching + isolator at plant + remote stop. Ratings to match motor inrush.',
+        reg: '537.4',
+      });
+    }
+    if (a4.hasReception || a4.hasRetail || a4.hasStaff) {
+      items.push({
+        title: 'Public / staff areas',
+        detail: 'Front-of-house and staff facilities — mid-trip isolation, cleanable accessories (IP54+), thermal disconnection consideration on heavy daytime peaks.',
+        reg: '512.2 / 718',
+      });
+    }
+  }
+
+  // ── Industrial-specific ───────────────────────────────────────────────
+  if (installType === 'industrial') {
+    if (a4.hasMotor) {
+      items.push({
+        title: `Three-phase motor protection${a4.motorCount > 1 ? ` (${a4.motorCount} circuits)` : ''}`,
+        detail: 'Type C/D MCB or motor-rated MCCB for inrush, soft-start where I_st > 10×In, EM stop (537.3) and overload heater for continuous duty.',
+        reg: '535 / 537',
+      });
+    }
+    if (a4.hasMachineTools || a4.hasWelding) {
+      items.push({
+        title: 'Conducting locations (706)',
+        detail: 'Restricted-conductive locations — SELV / functional earthing, 30 mA RCD, Class II equipment where possible.',
+        reg: '706',
+      });
+    }
+    if (a4.hasWelding) {
+      items.push({
+        title: 'Welding sets',
+        detail: 'BS EN 60974 — dedicated supply, Type A RCD (DC component), reduced low-voltage where possible (110 V CTE).',
+        reg: 'BS EN 60974',
+      });
+    }
+    if (a4.hasWorkshop) {
+      items.push({
+        title: 'Workshop circuits',
+        detail: 'High-current radials / 3φ outlets, dedicated isolators, IP54 sockets near machinery, mechanical protection of cabling.',
+        reg: '522.6',
+      });
+    }
+    if (a4.hasAgricultural) {
+      items.push({
+        title: 'Agricultural (705)',
+        detail: 'Stricter IP, livestock-safe disconnection (300 mA RCD on outgoing), supplementary EQB on metal structures.',
+        reg: '705',
+      });
+    }
+    if (a4.hasPv) {
+      items.push({
+        title: 'Photovoltaic / inverters',
+        detail: 'DC + AC isolation, RCD Type B on AC side (DC fault current), G99 for grid-connected ≥ 16 A/phase.',
+        reg: '712 / G99',
+      });
+    }
+  }
+
+  // ── Special-location fallback (anything specialLocation = ... not caught above) ──
+  if (a4.specialLocations.length > 0) {
+    const remaining = a4.specialLocations.filter(
+      (s) => !['bathroom', 'kitchen'].includes(s)
+    );
+    if (remaining.length > 0) {
+      items.push({
+        title: 'Special locations',
+        detail: remaining.map((s: string) => s.replace(/-/g, ' ')).join(', '),
+        reg: '7xx',
+      });
+    }
   }
 
   if (items.length === 0) return null;
 
+  // Build a friendly heading for the install type.
+  const installLabel =
+    installType === 'commercial'
+      ? 'COMMERCIAL'
+      : installType === 'industrial'
+        ? 'INDUSTRIAL'
+        : 'DOMESTIC';
+
   return (
     <section className="space-y-4">
-      <Eyebrow>03 · BS 7671:2018+A4:2026 APPLIED</Eyebrow>
-      <p className="text-[12.5px] leading-relaxed text-white/60 max-w-2xl">
-        Auto-applied features based on your supply, install type and the circuits you specified.
-        {earthingSystem === 'TT' && ' TT earthing demands 30 mA RCD on every circuit per 411.5.'}
+      <Eyebrow>03 · BS 7671 — {installLabel} CHECKS</Eyebrow>
+      <p className="text-[12.5px] leading-relaxed text-white/85 max-w-3xl">
+        Sections of BS 7671 (and adjoining standards) that this design touches —
+        tailored to a {installType} installation. Auto-derived from your supply,
+        circuit names and load types.
+        {earthingSystem === 'TT' && ' TT earthing demands 30 mA RCD on every final circuit per 411.5.'}
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
         {items.map((item) => (
           <div
             key={item.title}
-            className="bg-[hsl(0_0%_10%)] border border-elec-yellow/[0.20] rounded-2xl p-4 sm:p-5"
+            className="bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-elec-yellow/[0.22] rounded-2xl p-4 sm:p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
           >
             <div className="flex items-baseline justify-between gap-2">
               <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
                 {item.title}
               </span>
-              <span className="text-[10px] font-semibold tabular-nums text-elec-yellow/80 border border-elec-yellow/30 bg-elec-yellow/[0.06] rounded-md px-1.5 py-0.5">
+              <span className="text-[10px] font-semibold tabular-nums text-elec-yellow/85 border border-elec-yellow/35 bg-elec-yellow/[0.08] rounded-md px-1.5 py-0.5">
                 {item.reg}
               </span>
             </div>
-            <p className="mt-2 text-[13px] leading-relaxed text-white/85">{item.detail}</p>
+            <p className="mt-2 text-[13px] leading-relaxed text-white">{item.detail}</p>
           </div>
         ))}
       </div>
+    </section>
+  );
+};
+
+// ─── Compliance Concerns Banner ─────────────────────────────────────────────
+
+/**
+ * Sits above the hero. Lists circuits that fail compliance after the full
+ * chain check (Zs corrected for submain Zdb, Iz < In, Vd > limit). One-click
+ * "Auto-fix all" runs the AI's make-pass mode on each and applies sequentially.
+ *
+ * If everything passes — renders nothing. The user gets visual silence which
+ * is itself a positive signal.
+ */
+const ComplianceConcernsBanner = ({
+  failing,
+  onAutoFix,
+  progress,
+  onSelectCircuit,
+}: {
+  failing: Array<{ idx: number; circuit: any; reasons: string[]; boardZdb: number }>;
+  onAutoFix: () => void;
+  progress: {
+    inProgress: boolean;
+    done: number;
+    total: number;
+    fixed: number;
+    failed: number;
+  } | null;
+  onSelectCircuit: (idx: number) => void;
+}) => {
+  if (failing.length === 0 && !progress) return null;
+
+  return (
+    <section
+      className={cn(
+        'relative bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border rounded-2xl px-5 py-5 sm:px-7 sm:py-6 lg:px-9 lg:py-7 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]',
+        progress && !progress.inProgress && progress.failed === 0
+          ? 'border-emerald-500/40'
+          : 'border-amber-500/45'
+      )}
+      role="alert"
+      aria-live="polite"
+    >
+      <div className="flex items-baseline justify-between gap-3 flex-wrap">
+        <div className="flex items-baseline gap-2">
+          <span
+            className={cn(
+              'text-[10.5px] font-semibold uppercase tracking-[0.18em]',
+              progress && !progress.inProgress && progress.failed === 0
+                ? 'text-emerald-300'
+                : 'text-amber-300'
+            )}
+          >
+            {progress && !progress.inProgress && progress.failed === 0
+              ? 'COMPLIANCE — RESOLVED'
+              : 'COMPLIANCE NEEDS ATTENTION'}
+          </span>
+          {!progress && (
+            <span className="text-[11px] text-white/85">
+              {failing.length} circuit{failing.length === 1 ? '' : 's'} won't pass as designed
+            </span>
+          )}
+        </div>
+        {!progress?.inProgress && failing.length > 0 && (
+          <button
+            type="button"
+            onClick={onAutoFix}
+            className="text-[12px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/85 rounded-full px-4 py-2 min-h-[36px] touch-manipulation transition-colors"
+          >
+            Auto-fix all with AI
+          </button>
+        )}
+      </div>
+
+      {/* Progress strip during bulk fix */}
+      {progress && (
+        <div className="mt-3 space-y-1.5">
+          <div className="flex items-center gap-3 text-[11.5px] tabular-nums text-white">
+            <span>
+              {progress.done} / {progress.total} processed
+              {progress.fixed > 0 && (
+                <span className="text-emerald-300"> · {progress.fixed} fixed</span>
+              )}
+              {progress.failed > 0 && (
+                <span className="text-amber-300"> · {progress.failed} couldn't fix</span>
+              )}
+            </span>
+            {progress.inProgress && (
+              <span className="inline-block w-3 h-3 border-2 border-elec-yellow/80 border-t-transparent rounded-full animate-spin" />
+            )}
+          </div>
+          <div className="h-1.5 rounded-full bg-white/[0.08] overflow-hidden">
+            <div
+              className={cn(
+                'h-full rounded-full transition-all duration-300',
+                progress.failed > 0 ? 'bg-amber-400' : 'bg-emerald-400'
+              )}
+              style={{ width: `${Math.round((progress.done / Math.max(1, progress.total)) * 100)}%` }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* List of failing circuits */}
+      {!progress?.inProgress && failing.length > 0 && (
+        <>
+          <p className="mt-3 text-[12.5px] leading-relaxed text-white max-w-3xl">
+            These circuits don't meet BS 7671 disconnection / cable-capacity / voltage-drop
+            limits. Click <span className="font-semibold text-elec-yellow">Auto-fix all</span> and
+            the AI will engineer a compliance route per circuit (CPC upsize → cable upsize →
+            curve relax → parallel earth → split as needed). Or click a circuit to inspect + fix
+            manually.
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {failing.map((f) => (
+              <button
+                key={f.idx}
+                type="button"
+                onClick={() => onSelectCircuit(f.idx)}
+                className="text-left rounded-xl bg-amber-500/[0.06] border border-amber-500/30 hover:border-amber-500/60 active:bg-amber-500/[0.10] px-3 py-2 transition-colors touch-manipulation min-w-[200px]"
+              >
+                <div className="text-[12px] font-semibold text-white truncate">
+                  {f.circuit?.name || `Circuit ${f.idx + 1}`}
+                </div>
+                <div className="mt-0.5 text-[10.5px] text-amber-200/90 leading-tight">
+                  {f.reasons.join(' · ')}
+                </div>
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+
+      {progress && !progress.inProgress && progress.failed === 0 && (
+        <p className="mt-3 text-[12.5px] leading-relaxed text-white max-w-3xl">
+          All circuits now pass BS 7671 compliance. Review the impact ribbons inside each
+          circuit detail to see what changed.
+        </p>
+      )}
     </section>
   );
 };
@@ -2389,7 +2914,14 @@ const CircuitDetail = ({
   circuitIndex: number;
   totalCircuits: number;
   context?: CircuitContext;
-  editHistory: { field: string; before: unknown; after: unknown; editedAt: number }[];
+  editHistory: {
+    field: string;
+    before: unknown;
+    after: unknown;
+    editedAt: number;
+    snapshotBefore?: Record<string, unknown>;
+    snapshotAfter?: Record<string, unknown>;
+  }[];
   onEdit: (field: string, value: unknown) => void;
   complianceScore?: number;
   circuitCost?: InstallationCost['perCircuit'][number];
@@ -2412,11 +2944,123 @@ const CircuitDetail = ({
   const wayLabel = context ? `Way ${String(context.wayNumber).padStart(2, '0')}` : `${String(circuitIndex + 1).padStart(2, '0')} of ${totalCircuits}`;
   const phaseLabel = context?.phaseAssignment;
 
+  // ── AI Recheck state ────────────────────────────────────────────────
+  // The user can ask the AI to recheck this circuit, give alternatives, or
+  // make it pass — three modes hitting one edge function.
+  const [aiRecheckBusy, setAiRecheckBusy] = useState<
+    'recheck' | 'alternatives' | 'make-pass' | null
+  >(null);
+  const [aiReason, setAiReason] = useState('');
+  const [alternatives, setAlternatives] = useState<any[] | null>(null);
+  const [aiRationale, setAiRationale] = useState<{
+    text: string;
+    regs: string[];
+  } | null>(null);
+
+  const applyRedesign = (redesign: any) => {
+    if (!redesign) return;
+    if (redesign.cableSize != null) onEdit('cableSize', Number(redesign.cableSize));
+    if (redesign.cpcSize != null) onEdit('cpcSize', Number(redesign.cpcSize));
+    if (redesign.cableType) onEdit('cableType', String(redesign.cableType));
+    if (redesign.cableLength != null) onEdit('cableLength', Number(redesign.cableLength));
+    if (redesign.installationMethod) onEdit('installationMethod', String(redesign.installationMethod));
+    if (redesign.protectionDevice?.type) {
+      onEdit('protectionDevice.type', String(redesign.protectionDevice.type));
+    }
+    if (redesign.protectionDevice?.rating != null) {
+      onEdit('protectionDevice.rating', Number(redesign.protectionDevice.rating));
+    }
+    if (redesign.protectionDevice?.curve) {
+      onEdit('protectionDevice.curve', String(redesign.protectionDevice.curve));
+    }
+    setAiRationale({
+      text: redesign.rationale ?? '',
+      regs: Array.isArray(redesign.regulation_refs) ? redesign.regulation_refs : [],
+    });
+  };
+
+  const askAi = async (mode: 'recheck' | 'alternatives' | 'make-pass') => {
+    if (aiRecheckBusy) return;
+    setAiRecheckBusy(mode);
+    setAlternatives(null);
+    const loading = toast.loading(
+      mode === 'recheck'
+        ? 'Rechecking circuit…'
+        : mode === 'alternatives'
+          ? 'Generating alternatives…'
+          : 'Finding a route to PASS…',
+      { description: 'Usually 5–15 seconds.' }
+    );
+    try {
+      const { data, error } = await supabase.functions.invoke('recheck-circuit', {
+        body: {
+          mode,
+          circuit,
+          supply: { Ze: supplyZe },
+          installType: 'domestic',
+          boardZdb,
+          reason: aiReason.trim() || undefined,
+        },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      const result = data?.result ?? {};
+      if (mode === 'alternatives') {
+        const alts = Array.isArray(result.alternatives) ? result.alternatives : [];
+        if (alts.length === 0) throw new Error('No alternatives returned');
+        setAlternatives(alts);
+        toast.success(`${alts.length} alternative${alts.length === 1 ? '' : 's'} ready`, {
+          id: loading,
+          description: 'Tap one to apply.',
+        });
+      } else {
+        applyRedesign(result);
+        toast.success(
+          mode === 'recheck' ? 'Redesign applied' : 'Compliance route applied',
+          { id: loading, description: 'Review the changes in the impact ribbon above.' }
+        );
+        setAiReason('');
+      }
+    } catch (err: any) {
+      toast.error('AI recheck failed', {
+        id: loading,
+        description: err?.message ?? 'Try again, or build the change manually.',
+      });
+    } finally {
+      setAiRecheckBusy(null);
+    }
+  };
+
   const editedFields = new Set(editHistory.map((h) => h.field));
   const isEdited = (field: string) => editedFields.has(field);
 
+  // Last edit's snapshots — drives the EditImpactRibbon. Pulls the most recent
+  // entry that has snapshots populated (older edits without snapshots are
+  // skipped so we don't render a stale ribbon).
+  const latestEditWithSnapshot = [...editHistory]
+    .reverse()
+    .find((h) => h.snapshotBefore && h.snapshotAfter);
+
   return (
-    <section className="space-y-5">
+    <section
+      className={cn(
+        'relative space-y-5 sm:space-y-6 rounded-3xl overflow-hidden',
+        // Brighter card surface — was bg-elec-dark which read very dark.
+        // Layered gradient + subtle tint gives depth without losing the editorial feel.
+        'bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)]',
+        'border border-white/[0.10] shadow-[0_4px_24px_rgba(0,0,0,0.4)]',
+        'p-4 sm:p-6 lg:p-8'
+      )}
+    >
+      {/* EDIT IMPACT RIBBON — surfaces the last edit's before→after deltas. */}
+      {latestEditWithSnapshot && (
+        <EditImpactRibbon
+          edit={latestEditWithSnapshot}
+          boardZdb={boardZdb}
+          supplyZe={supplyZe}
+        />
+      )}
+
       {/* Header — circuit name is editable (Tier 1 free).
           Mobile: stacked (title block on top, badges row below) so the
           eyebrow and load-type don't get squashed into a 1-word column.
@@ -2486,6 +3130,22 @@ const CircuitDetail = ({
           )}
         </div>
       </div>
+
+      {/* KEY STATS — always-visible summary of the circuit's most-important
+          numbers. Sits between the header and the detail sections so the
+          user has a permanent reminder of the current state while editing. */}
+      <CircuitKeyStats
+        circuit={circuit}
+        boardZdb={boardZdb}
+        supplyZe={supplyZe}
+        status={status}
+      />
+
+      {/* Desktop 2-col layout for the INPUT sections (LOAD + CABLE).
+          Mobile: stacks naturally. lg+: side-by-side. PROTECTION / COMPLIANCE
+          / TESTS stay full-width below since they benefit from more breathing
+          room (more fields, regulation chips, longer values). */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
 
       {/* 01 · LOAD — diversity factor + special location editable */}
       <DetailSection number="01" title="LOAD">
@@ -2704,6 +3364,8 @@ const CircuitDetail = ({
           ) : null}
         </DetailGrid>
       </DetailSection>
+
+      </div>{/* end 2-col grid for LOAD + CABLE */}
 
       {/* 03 · PROTECTION — rating editable, validated */}
       <DetailSection number="03" title="PROTECTION">
@@ -2933,6 +3595,174 @@ const CircuitDetail = ({
           </p>
         </div>
       </DetailSection>
+
+      {/* ── AI Recheck panel ──────────────────────────────────────────── */}
+      <div className="mt-2 rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_15%)_0%,hsl(0_0%_12%)_100%)] border border-elec-yellow/[0.20] p-4 sm:p-5 lg:p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+        <div className="flex items-baseline gap-2">
+          <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+            06
+          </span>
+          <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/85">
+            · ASK THE AI
+          </span>
+        </div>
+        <p className="mt-2 text-[12.5px] leading-relaxed text-white/85 max-w-2xl">
+          Not happy with this circuit? Get a fresh take from the designer. Tell it what
+          you want — smaller cable, future-proofed, optimised for inrush, etc. — or just
+          ask it to recheck.
+        </p>
+        <textarea
+          value={aiReason}
+          onChange={(e) => setAiReason(e.target.value)}
+          placeholder="Optional: tell the AI what you want (e.g. 'try a smaller cable', 'this needs Type C for inrush', 'I'd prefer RCBO over MCB+RCD')"
+          className="mt-3 w-full min-h-[60px] bg-black/40 border border-white/[0.15] rounded-lg px-3 py-2 text-[12.5px] text-white placeholder:text-white/55 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+          maxLength={400}
+          disabled={!!aiRecheckBusy}
+        />
+        <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2">
+          <button
+            type="button"
+            onClick={() => askAi('recheck')}
+            disabled={!!aiRecheckBusy}
+            className={cn(
+              'min-h-[44px] rounded-lg text-[12.5px] font-semibold uppercase tracking-[0.14em] transition-colors touch-manipulation border',
+              aiRecheckBusy === 'recheck'
+                ? 'bg-elec-yellow/[0.10] text-elec-yellow/70 border-elec-yellow/30 cursor-wait'
+                : aiRecheckBusy
+                  ? 'bg-white/[0.04] text-white/40 border-white/10 cursor-not-allowed'
+                  : 'bg-elec-yellow text-black border-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/85'
+            )}
+          >
+            {aiRecheckBusy === 'recheck' ? 'Rechecking…' : 'Recheck this circuit'}
+          </button>
+          <button
+            type="button"
+            onClick={() => askAi('alternatives')}
+            disabled={!!aiRecheckBusy}
+            className={cn(
+              'min-h-[44px] rounded-lg text-[12.5px] font-semibold uppercase tracking-[0.14em] transition-colors touch-manipulation border',
+              aiRecheckBusy === 'alternatives'
+                ? 'bg-white/[0.04] text-white/55 border-white/15 cursor-wait'
+                : aiRecheckBusy
+                  ? 'bg-white/[0.04] text-white/40 border-white/10 cursor-not-allowed'
+                  : 'bg-white/[0.04] text-white border-white/30 hover:bg-white/[0.06] active:bg-white/[0.08]'
+            )}
+          >
+            {aiRecheckBusy === 'alternatives' ? 'Thinking…' : 'Try alternatives'}
+          </button>
+          <button
+            type="button"
+            onClick={() => askAi('make-pass')}
+            disabled={!!aiRecheckBusy || status === 'pass'}
+            title={status === 'pass' ? 'Circuit already passes' : 'Find a compliance route'}
+            className={cn(
+              'min-h-[44px] rounded-lg text-[12.5px] font-semibold uppercase tracking-[0.14em] transition-colors touch-manipulation border',
+              aiRecheckBusy === 'make-pass'
+                ? 'bg-amber-500/[0.10] text-amber-300 border-amber-500/30 cursor-wait'
+                : aiRecheckBusy || status === 'pass'
+                  ? 'bg-white/[0.04] text-white/40 border-white/10 cursor-not-allowed'
+                  : 'bg-amber-500/[0.08] text-amber-300 border-amber-500/40 hover:bg-amber-500/[0.12] active:bg-amber-500/[0.16]'
+            )}
+          >
+            {aiRecheckBusy === 'make-pass' ? 'Working…' : 'Make this PASS'}
+          </button>
+        </div>
+
+        {/* Latest AI rationale */}
+        {aiRationale && (
+          <div className="mt-4 rounded-xl bg-emerald-500/[0.05] border border-emerald-500/25 px-4 py-3">
+            <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-300">
+              AI rationale
+            </div>
+            <p className="mt-1.5 text-[12.5px] leading-relaxed text-white">
+              {aiRationale.text}
+            </p>
+            {aiRationale.regs.length > 0 && (
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {aiRationale.regs.map((r, i) => (
+                  <span
+                    key={i}
+                    className="text-[10px] font-semibold tabular-nums text-white/85 border border-white/20 rounded-md px-1.5 py-0.5"
+                  >
+                    {r}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* ── Alternatives sheet ────────────────────────────────────────── */}
+      <Sheet open={!!alternatives} onOpenChange={(o) => !o && setAlternatives(null)}>
+        <SheetContent
+          side="bottom"
+          className="bg-[hsl(0_0%_8%)] border-t border-white/[0.10] rounded-t-2xl px-4 sm:px-6 pb-6 pt-4 max-h-[90vh] overflow-y-auto"
+        >
+          <SheetHeader className="text-left">
+            <SheetTitle className="text-[20px] font-semibold tracking-tight text-white">
+              Alternative designs
+            </SheetTitle>
+          </SheetHeader>
+          <p className="mt-2 text-[12.5px] leading-relaxed text-white">
+            Each one is BS 7671-compliant. Pick the trade-off that fits your job —
+            tap "Apply this option" to use it.
+          </p>
+          <div className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-3">
+            {alternatives?.map((alt: any, i: number) => (
+              <article
+                key={i}
+                className="rounded-xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] p-4 space-y-3"
+              >
+                <div className="flex items-baseline justify-between gap-2 flex-wrap">
+                  <h4 className="text-[14px] font-semibold tracking-tight text-elec-yellow">
+                    {alt.label ?? `Option ${i + 1}`}
+                  </h4>
+                  <span className="text-[10px] uppercase tracking-[0.14em] tabular-nums text-white/65">
+                    {alt.cableSize ? `${alt.cableSize} mm² ` : ''}
+                    {alt.protectionDevice?.rating
+                      ? `· ${alt.protectionDevice.rating} A ${alt.protectionDevice?.type ?? ''} ${alt.protectionDevice?.curve ?? ''}`
+                      : ''}
+                  </span>
+                </div>
+                {alt.rationale && (
+                  <p className="text-[12.5px] leading-relaxed text-white/85">
+                    {alt.rationale}
+                  </p>
+                )}
+                {alt.tradeOff && (
+                  <p className="text-[11.5px] leading-relaxed text-amber-300/85">
+                    Trade-off: {alt.tradeOff}
+                  </p>
+                )}
+                {Array.isArray(alt.regulation_refs) && alt.regulation_refs.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5">
+                    {alt.regulation_refs.map((r: string, j: number) => (
+                      <span
+                        key={j}
+                        className="text-[10px] font-semibold tabular-nums text-white/80 border border-white/20 rounded-md px-1.5 py-0.5"
+                      >
+                        {r}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                <button
+                  type="button"
+                  onClick={() => {
+                    applyRedesign(alt);
+                    setAlternatives(null);
+                    toast.success(`Applied: ${alt.label ?? 'alternative'}`);
+                  }}
+                  className="w-full min-h-[40px] rounded-lg bg-elec-yellow text-black text-[12px] font-semibold uppercase tracking-[0.14em] hover:bg-elec-yellow/90 active:bg-elec-yellow/85 transition-colors touch-manipulation"
+                >
+                  Apply this option
+                </button>
+              </article>
+            ))}
+          </div>
+        </SheetContent>
+      </Sheet>
     </section>
   );
 };
@@ -3710,6 +4540,442 @@ const BigStat = ({
   </div>
 );
 
+// ─── Circuit Key Stats ───────────────────────────────────────────────────────
+
+/**
+ * Always-visible summary strip near the top of CircuitDetail. Surfaces the
+ * most-decisive numbers (cable, protection, Iz, Vd, Zs, headroom, status) so
+ * the user has a permanent reminder of the current circuit state while
+ * editing further down the page. Mobile: 2-col compact grid. Desktop: 6 cells.
+ */
+const CircuitKeyStats = ({
+  circuit,
+  boardZdb,
+  supplyZe,
+  status,
+}: {
+  circuit: any;
+  boardZdb?: number;
+  supplyZe?: number;
+  status: 'pass' | 'review';
+}) => {
+  const cableSize = circuit?.cableSize;
+  const cableType = circuit?.cableType;
+  const proRating = circuit?.protectionDevice?.rating;
+  const proType = circuit?.protectionDevice?.type ?? 'MCB';
+  const proCurve = circuit?.protectionDevice?.curve;
+  const ib = Number(circuit?.calculations?.Ib ?? 0);
+  const iz = Number(circuit?.calculations?.Iz ?? 0);
+  const vdPct = Number(circuit?.calculations?.voltageDrop?.percent ?? 0);
+  const vdLimit = Number(circuit?.calculations?.voltageDrop?.limit ?? 5);
+  const aiZs = Number(circuit?.calculations?.zs ?? NaN);
+  const ze = Number(supplyZe ?? 0.35);
+  const zdb = Number(boardZdb ?? ze);
+  const zsCorrection = Math.max(0, zdb - ze);
+  const zs = Number.isFinite(aiZs) ? aiZs + zsCorrection : NaN;
+  const maxZs = Number(circuit?.calculations?.maxZs ?? NaN);
+
+  // Headroom: how much headroom does Iz have above the protection rating?
+  // Healthy: Iz > In × 1.2. Tight: 1.0–1.2. Failed: Iz < In.
+  const izHeadroomPct =
+    iz > 0 && proRating > 0 ? Math.round(((iz - proRating) / proRating) * 100) : null;
+
+  // Tone helpers
+  const vdTone = vdPct === 0 ? 'neutral' : vdPct <= vdLimit ? 'good' : 'bad';
+  const zsTone =
+    !Number.isFinite(zs) || !Number.isFinite(maxZs)
+      ? 'neutral'
+      : zs <= maxZs
+        ? 'good'
+        : 'bad';
+  const izTone =
+    izHeadroomPct == null ? 'neutral' : izHeadroomPct >= 20 ? 'good' : izHeadroomPct >= 0 ? 'warn' : 'bad';
+
+  return (
+    <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_15%)_0%,hsl(0_0%_12%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] overflow-hidden">
+      {/* Row 1: status + cable + protection — high level */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 divide-x divide-y sm:divide-y-0 divide-white/[0.08]">
+        <KeyStatCell
+          label="Status"
+          value={status === 'pass' ? 'PASS' : 'REVIEW'}
+          tone={status === 'pass' ? 'good' : 'warn'}
+          big
+        />
+        <KeyStatCell
+          label="Cable"
+          value={cableSize ? `${cableSize} mm²` : '—'}
+          sub={cableType || ''}
+        />
+        <KeyStatCell
+          label="Protection"
+          value={proRating ? `${proRating} A` : '—'}
+          sub={`${proType}${proCurve ? ` · ${proCurve}` : ''}`}
+        />
+        <KeyStatCell
+          label="Ib / Iz"
+          value={iz > 0 ? `${ib.toFixed(0)} / ${iz.toFixed(0)} A` : `${ib.toFixed(0)} A`}
+          sub={izHeadroomPct != null ? `${izHeadroomPct >= 0 ? '+' : ''}${izHeadroomPct}% headroom` : ''}
+          tone={izTone}
+        />
+        <KeyStatCell
+          label="Voltage drop"
+          value={vdPct > 0 ? `${vdPct.toFixed(2)}%` : '—'}
+          sub={vdLimit > 0 ? `≤ ${vdLimit}% limit` : ''}
+          tone={vdTone}
+        />
+        <KeyStatCell
+          label="Zs / max"
+          value={
+            Number.isFinite(zs) && Number.isFinite(maxZs)
+              ? `${zs.toFixed(2)} / ${maxZs.toFixed(2)} Ω`
+              : Number.isFinite(zs)
+                ? `${zs.toFixed(2)} Ω`
+                : '—'
+          }
+          sub={zsCorrection > 0.005 ? `incl. +${zsCorrection.toFixed(2)} Ω submain` : ''}
+          tone={zsTone}
+        />
+      </div>
+    </div>
+  );
+};
+
+const KeyStatCell = ({
+  label,
+  value,
+  sub,
+  tone = 'neutral',
+  big,
+}: {
+  label: string;
+  value: string;
+  sub?: string;
+  tone?: 'good' | 'warn' | 'bad' | 'neutral';
+  big?: boolean;
+}) => {
+  const valueClass =
+    tone === 'good'
+      ? 'text-emerald-300'
+      : tone === 'warn'
+        ? 'text-elec-yellow'
+        : tone === 'bad'
+          ? 'text-amber-300'
+          : 'text-white';
+  return (
+    <div className="px-3 sm:px-4 py-3 sm:py-3.5 min-w-0">
+      <div className="text-[9.5px] font-semibold uppercase tracking-[0.18em] text-white/65 truncate">
+        {label}
+      </div>
+      <div
+        className={cn(
+          'mt-1 font-semibold tabular-nums truncate',
+          big ? 'text-[14px] sm:text-[15px]' : 'text-[13px] sm:text-[14px]',
+          valueClass
+        )}
+      >
+        {value}
+      </div>
+      {sub && (
+        <div className="mt-0.5 text-[10px] tabular-nums text-white/65 truncate">{sub}</div>
+      )}
+    </div>
+  );
+};
+
+// ─── Edit Impact Ribbon ──────────────────────────────────────────────────────
+
+/**
+ * Surfaces what the LAST edit actually did to the circuit. When the user
+ * tweaks a field (cable size up, breaker rating down etc.) we want them to
+ * SEE the consequence: Iz changed, voltage drop dropped, status flipped from
+ * REVIEW to PASS. This ribbon makes those derived-value deltas visible
+ * without the user having to scan every section.
+ *
+ * Renders nothing if no diff (rare — recompute almost always changes
+ * something), or if the edit doesn't have snapshots (older history records).
+ */
+const EditImpactRibbon = ({
+  edit,
+  boardZdb,
+  supplyZe,
+}: {
+  edit: {
+    field: string;
+    before: unknown;
+    after: unknown;
+    snapshotBefore?: Record<string, unknown>;
+    snapshotAfter?: Record<string, unknown>;
+    editedAt: number;
+  };
+  boardZdb?: number;
+  supplyZe?: number;
+}) => {
+  const before = edit.snapshotBefore as any;
+  const after = edit.snapshotAfter as any;
+  if (!before || !after) return null;
+
+  // Helper — corrected Zs accounts for submain chain (boardZdb − supplyZe delta).
+  const correctedZs = (c: any) => {
+    const ai = Number(c?.calculations?.zs ?? NaN);
+    if (!Number.isFinite(ai)) return NaN;
+    const ze = Number(supplyZe ?? 0.35);
+    const zdb = Number(boardZdb ?? ze);
+    return ai + Math.max(0, zdb - ze);
+  };
+  const statusOf = (c: any): 'pass' | 'review' => {
+    if (c?.compliance_pass === false) return 'review';
+    if (Array.isArray(c?.ungrounded_choices) && c.ungrounded_choices.length > 0) return 'review';
+    if (Array.isArray(c?.warnings) && c.warnings.length > 0) return 'review';
+    if (c?.calculations?.voltageDrop?.compliant === false) return 'review';
+    if (c?.calculations?.zsCompliant === false) return 'review';
+    if (c?.calculations?.izCompliant === false) return 'review';
+    const zs = Number(c?.calculations?.zs ?? 0);
+    const maxZs = Number(c?.calculations?.maxZs ?? Infinity);
+    if (zs > 0 && maxZs > 0 && zs > maxZs) return 'review';
+    return 'pass';
+  };
+
+  const diffs: Array<{
+    label: string;
+    before: string;
+    after: string;
+    direction: 'better' | 'worse' | 'neutral';
+  }> = [];
+
+  // Cable size
+  const cBefore = Number(before.cableSize ?? 0);
+  const cAfter = Number(after.cableSize ?? 0);
+  if (cBefore !== cAfter && cAfter > 0) {
+    diffs.push({
+      label: 'Cable',
+      before: `${cBefore} mm²`,
+      after: `${cAfter} mm²`,
+      direction: cAfter > cBefore ? 'better' : 'worse',
+    });
+  }
+
+  // Cable type
+  const ctBefore = String(before.cableType ?? '').trim();
+  const ctAfter = String(after.cableType ?? '').trim();
+  if (ctBefore !== ctAfter && ctAfter) {
+    diffs.push({
+      label: 'Type',
+      before: ctBefore || '—',
+      after: ctAfter,
+      direction: 'neutral',
+    });
+  }
+
+  // Cable length
+  const lBefore = Number(before.cableLength ?? 0);
+  const lAfter = Number(after.cableLength ?? 0);
+  if (lBefore !== lAfter && lAfter > 0) {
+    diffs.push({
+      label: 'Length',
+      before: `${lBefore} m`,
+      after: `${lAfter} m`,
+      direction: lAfter < lBefore ? 'better' : 'worse',
+    });
+  }
+
+  // CPC size
+  const cpcB = Number(before.cpcSize ?? 0);
+  const cpcA = Number(after.cpcSize ?? 0);
+  if (cpcB !== cpcA && cpcA > 0) {
+    diffs.push({
+      label: 'CPC',
+      before: `${cpcB} mm²`,
+      after: `${cpcA} mm²`,
+      direction: cpcA > cpcB ? 'better' : 'worse',
+    });
+  }
+
+  // Protection rating
+  const pBefore = Number(before?.protectionDevice?.rating ?? 0);
+  const pAfter = Number(after?.protectionDevice?.rating ?? 0);
+  if (pBefore !== pAfter && pAfter > 0) {
+    diffs.push({
+      label: 'Protection',
+      before: `${pBefore} A`,
+      after: `${pAfter} A`,
+      // Lower rating = closer to Ib usually = "better fit", but context-dependent.
+      direction: 'neutral',
+    });
+  }
+
+  // Curve
+  const cuBefore = String(before?.protectionDevice?.curve ?? '').toUpperCase();
+  const cuAfter = String(after?.protectionDevice?.curve ?? '').toUpperCase();
+  if (cuBefore !== cuAfter && cuAfter) {
+    diffs.push({
+      label: 'Curve',
+      before: cuBefore || '—',
+      after: cuAfter,
+      direction: 'neutral',
+    });
+  }
+
+  // ── Derived deltas ──────────────────────────────────────────────────
+  const izBefore = Number(before?.calculations?.Iz ?? 0);
+  const izAfter = Number(after?.calculations?.Iz ?? 0);
+  if (izBefore !== izAfter && izAfter > 0) {
+    diffs.push({
+      label: 'Iz',
+      before: `${izBefore.toFixed(0)} A`,
+      after: `${izAfter.toFixed(0)} A`,
+      direction: izAfter > izBefore ? 'better' : 'worse',
+    });
+  }
+
+  const vdBefore = Number(before?.calculations?.voltageDrop?.percent ?? 0);
+  const vdAfter = Number(after?.calculations?.voltageDrop?.percent ?? 0);
+  if (vdBefore !== vdAfter && vdAfter > 0) {
+    diffs.push({
+      label: 'Vd',
+      before: `${vdBefore.toFixed(2)}%`,
+      after: `${vdAfter.toFixed(2)}%`,
+      direction: vdAfter < vdBefore ? 'better' : 'worse',
+    });
+  }
+
+  const zsBefore = correctedZs(before);
+  const zsAfter = correctedZs(after);
+  if (
+    Number.isFinite(zsBefore) &&
+    Number.isFinite(zsAfter) &&
+    Math.abs(zsAfter - zsBefore) > 0.005
+  ) {
+    diffs.push({
+      label: 'Zs',
+      before: `${zsBefore.toFixed(2)} Ω`,
+      after: `${zsAfter.toFixed(2)} Ω`,
+      direction: zsAfter < zsBefore ? 'better' : 'worse',
+    });
+  }
+
+  const maxBefore = Number(before?.calculations?.maxZs ?? 0);
+  const maxAfter = Number(after?.calculations?.maxZs ?? 0);
+  if (maxBefore !== maxAfter && maxAfter > 0) {
+    diffs.push({
+      label: 'Max Zs',
+      before: `${maxBefore.toFixed(2)} Ω`,
+      after: `${maxAfter.toFixed(2)} Ω`,
+      direction: maxAfter > maxBefore ? 'better' : 'worse',
+    });
+  }
+
+  // Status flip
+  const sBefore = statusOf(before);
+  const sAfter = statusOf(after);
+  const statusFlipped = sBefore !== sAfter;
+  const statusDirection: 'better' | 'worse' = sAfter === 'pass' ? 'better' : 'worse';
+
+  if (diffs.length === 0 && !statusFlipped) return null;
+
+  const fieldLabel = (() => {
+    const f = edit.field;
+    if (f === 'cableSize') return 'cable size';
+    if (f === 'cableType') return 'cable type';
+    if (f === 'cableLength') return 'cable length';
+    if (f === 'cpcSize') return 'CPC size';
+    if (f.startsWith('protectionDevice.')) return f.split('.')[1] ?? 'protection';
+    if (f === 'name') return 'name';
+    if (f === 'specialLocation') return 'location';
+    if (f === 'installationMethod') return 'install method';
+    if (f.startsWith('calculations.diversityFactor')) return 'diversity';
+    if (f === 'phaseAssignment') return 'phase';
+    return f;
+  })();
+
+  return (
+    <motion.div
+      key={edit.editedAt}
+      initial={{ opacity: 0, y: -6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.2, ease: 'easeOut' }}
+      className={cn(
+        'rounded-2xl px-4 py-3 sm:px-5 sm:py-4 border backdrop-blur-sm',
+        statusFlipped && sAfter === 'pass'
+          ? 'bg-emerald-500/[0.08] border-emerald-500/30'
+          : statusFlipped && sAfter === 'review'
+            ? 'bg-amber-500/[0.08] border-amber-500/40'
+            : 'bg-elec-yellow/[0.06] border-elec-yellow/30'
+      )}
+      role="status"
+      aria-live="polite"
+    >
+      <div className="flex items-baseline justify-between gap-3 flex-wrap">
+        <div className="flex items-baseline gap-2 flex-wrap min-w-0">
+          <span
+            className={cn(
+              'text-[10px] font-semibold uppercase tracking-[0.18em]',
+              statusFlipped && sAfter === 'pass'
+                ? 'text-emerald-300'
+                : statusFlipped && sAfter === 'review'
+                  ? 'text-amber-300'
+                  : 'text-elec-yellow'
+            )}
+          >
+            Last edit
+          </span>
+          <span className="text-[12.5px] text-white capitalize">
+            Changed {fieldLabel}
+          </span>
+          {statusFlipped && (
+            <span
+              className={cn(
+                'text-[10.5px] font-semibold uppercase tracking-[0.16em] px-2 py-0.5 rounded-full border',
+                sAfter === 'pass'
+                  ? 'text-emerald-300 border-emerald-500/40 bg-emerald-500/10'
+                  : 'text-amber-300 border-amber-500/40 bg-amber-500/10'
+              )}
+            >
+              {sBefore.toUpperCase()} → {sAfter.toUpperCase()}
+            </span>
+          )}
+        </div>
+      </div>
+
+      {diffs.length > 0 && (
+        <div className="mt-2.5 flex flex-wrap gap-x-4 gap-y-1.5">
+          {diffs.map((d, i) => (
+            <span key={i} className="text-[11.5px] tabular-nums text-white/80 inline-flex items-baseline gap-1.5">
+              <span className="text-white/55 uppercase tracking-[0.12em] text-[10px] font-semibold">
+                {d.label}
+              </span>
+              <span className="text-white/55">{d.before}</span>
+              <span
+                className={cn(
+                  'text-[11px]',
+                  d.direction === 'better'
+                    ? 'text-emerald-400'
+                    : d.direction === 'worse'
+                      ? 'text-amber-400'
+                      : 'text-white/60'
+                )}
+              >
+                →
+              </span>
+              <span
+                className={cn(
+                  'font-semibold',
+                  d.direction === 'better'
+                    ? 'text-emerald-300'
+                    : d.direction === 'worse'
+                      ? 'text-amber-300'
+                      : 'text-white'
+                )}
+              >
+                {d.after}
+              </span>
+            </span>
+          ))}
+        </div>
+      )}
+    </motion.div>
+  );
+};
+
 const DetailSection = ({
   number,
   title,
@@ -3728,14 +4994,19 @@ const DetailSection = ({
         · {title}
       </span>
     </div>
-    <div className="sm:bg-[hsl(0_0%_10%)] sm:border sm:border-white/[0.08] sm:rounded-2xl sm:p-5 lg:p-6 py-2 border-y border-white/[0.06] sm:border-y">
+    <div className="sm:bg-[linear-gradient(180deg,hsl(0_0%_15%)_0%,hsl(0_0%_12%)_100%)] sm:border sm:border-white/[0.10] sm:rounded-2xl sm:p-5 lg:p-6 sm:shadow-[inset_0_1px_0_rgba(255,255,255,0.03)] py-2 border-y border-white/[0.08] sm:border-y">
       {children}
     </div>
   </div>
 );
 
 const DetailGrid = ({ children }: { children: React.ReactNode }) => (
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-3">{children}</div>
+  // 1 col on mobile, 2 on tablet/desktop. We deliberately don't push to 3
+  // because LOAD + CABLE now sit in 50%-width halves at lg+, and 3 cols in a
+  // half-width column reads cramped. Wider sections (PROTECTION / COMPLIANCE
+  // / TESTS) still get plenty of breathing room with 2 cols + the lighter
+  // gradient surface.
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">{children}</div>
 );
 
 /**
@@ -3757,13 +5028,13 @@ const EditableDetailField = ({
   className?: string;
 }) => (
   <div className={cn('flex flex-col min-w-0', className)}>
-    <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/55 inline-flex items-center gap-1.5">
+    <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/75 inline-flex items-center gap-1.5">
       {label}
       {isEdited && (
         <span className="inline-block w-1.5 h-1.5 rounded-full bg-elec-yellow" aria-label="edited" />
       )}
       {lock && (
-        <svg className="w-3 h-3 text-white/30" viewBox="0 0 16 16" fill="currentColor">
+        <svg className="w-3 h-3 text-white/40" viewBox="0 0 16 16" fill="currentColor">
           <path d="M8 1a3 3 0 0 0-3 3v3H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1h-1V4a3 3 0 0 0-3-3Zm-2 6V4a2 2 0 1 1 4 0v3H6Z" />
         </svg>
       )}
@@ -3786,7 +5057,7 @@ const DetailField = ({
   className?: string;
 }) => (
   <div className={cn('flex flex-col min-w-0', className)}>
-    <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/55">
+    <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/75">
       {label}
     </span>
     {chip ? (

@@ -157,10 +157,49 @@ function lookupIz(cableSize: number, cableType: string | undefined): number | nu
 export { lookupIz };
 
 // ─── Voltage drop factors (mV/A/m) at conductor temperature ──────────────────
-// Used for length / size revalidation. T+E values (4D2B equivalent).
-const VD_FACTORS_TE: Record<number, number> = {
+// BS 7671 Appendix 4 cable tables. We hold separate factor tables for
+// single-phase and three-phase, and per cable family — T&E (Cu, two-core +
+// cpc), SWA (Cu armoured), and bare singles. Falls through to T&E for
+// unknown families so the Vd recompute always returns a value.
+//
+// Source: Appendix 4, Tables 4D2B (T&E 1φ), 4D4B (SWA), with the 1φ values
+// for 230 V supplies and 3φ values for 400 V line-to-line.
+const VD_FACTORS_TE_1PH: Record<number, number> = {
   1.0: 44, 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8, 25: 1.75, 35: 1.25, 50: 0.93,
 };
+const VD_FACTORS_TE_3PH: Record<number, number> = {
+  // 3φ T&E is uncommon (rare for 4-core T&E) but we hold values for completeness.
+  1.0: 38, 1.5: 25, 2.5: 15, 4: 9.5, 6: 6.4, 10: 3.8, 16: 2.4, 25: 1.5, 35: 1.1, 50: 0.80,
+};
+const VD_FACTORS_SWA_1PH: Record<number, number> = {
+  // SWA Cu, ~70°C, single-phase 230V (Table 4D4B).
+  1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8, 25: 1.75, 35: 1.25, 50: 0.93,
+  70: 0.63, 95: 0.46, 120: 0.36, 150: 0.29, 185: 0.24, 240: 0.18,
+};
+const VD_FACTORS_SWA_3PH: Record<number, number> = {
+  1.5: 25, 2.5: 15, 4: 9.5, 6: 6.4, 10: 3.8, 16: 2.4, 25: 1.5, 35: 1.1, 50: 0.80,
+  70: 0.55, 95: 0.40, 120: 0.31, 150: 0.25, 185: 0.21, 240: 0.16,
+};
+
+// Backwards-compat alias — old call sites use VD_FACTORS_TE for 1φ T&E.
+const VD_FACTORS_TE = VD_FACTORS_TE_1PH;
+
+/**
+ * Pick the right Vd factor table for the circuit's cable family + phase
+ * count. Falls through to T&E single-phase if cable type is unknown.
+ */
+function vdFactorFor(cableSizeMm2: number, cableType: string | undefined, isThreePhase: boolean): number | null {
+  const t = String(cableType ?? '').toLowerCase();
+  const isSwa = /swa|steel\s*wire\s*armoured/i.test(t);
+  const table = isSwa
+    ? isThreePhase
+      ? VD_FACTORS_SWA_3PH
+      : VD_FACTORS_SWA_1PH
+    : isThreePhase
+      ? VD_FACTORS_TE_3PH
+      : VD_FACTORS_TE_1PH;
+  return table[cableSizeMm2] ?? null;
+}
 
 const STANDARD_CABLE_SIZES = [1.0, 1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120];
 const STANDARD_RATINGS = [6, 10, 13, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125];
@@ -712,18 +751,39 @@ export function recomputeDerivedFields(
     if (iz != null) patch['calculations.Iz'] = iz;
   }
 
-  // Voltage drop — recompute from mV/A/m × Ib × length / 1000
-  const factor = VD_FACTORS_TE[cableSize];
+  // Voltage drop — pick the right Appendix 4 factor for this circuit's cable
+  // family (T&E vs SWA) and phase count. For 3-phase circuits we use the 3-ph
+  // mV/A/m and reference U_LL = 400V; for 1-phase use 230V phase-to-neutral.
+  // Ring finals: divide by 4 (two parallel paths × 2 for the loop).
+  const isThreePhase = String(circuit?.phases ?? 'single') === 'three';
+  const refVoltage = isThreePhase ? 400 : u0;
+  const factor = vdFactorFor(cableSize, cableType, isThreePhase);
   if (factor && ib > 0 && length > 0) {
     const isRing = detectRingFinal(circuit);
-    // Ring finals get the parallel-paths /4 reduction
     const divisor = isRing ? 4000 : 1000;
     const vdVolts = (factor * ib * length) / divisor;
-    const vdPct = (vdVolts / u0) * 100;
-    const limit = Number(circuit?.calculations?.voltageDrop?.limit ?? 5);
+    const vdPct = (vdVolts / refVoltage) * 100;
+    // Default limit: 3% lighting, 5% other loads, 6% submains.
+    const inferredLimit = (() => {
+      const lt = String(circuit?.loadType ?? '').toLowerCase();
+      if (/light|emergency-lighting|overhead-lighting/.test(lt)) return 3;
+      return 5;
+    })();
+    const limit = Number(circuit?.calculations?.voltageDrop?.limit ?? inferredLimit);
     patch['calculations.voltageDrop.volts'] = Number(vdVolts.toFixed(3));
     patch['calculations.voltageDrop.percent'] = Number(vdPct.toFixed(2));
+    patch['calculations.voltageDrop.limit'] = limit;
     patch['calculations.voltageDrop.compliant'] = vdPct <= limit;
+  }
+
+  // Iz coverage check — Iz must be ≥ In (otherwise the cable can't carry the
+  // protection rating). Surface as a derived flag so the UI can show FAIL
+  // even when the AI's payload didn't include it.
+  if (cableSize > 0) {
+    const iz = lookupIz(cableSize, cableType);
+    if (iz != null && rating > 0) {
+      patch['calculations.izCompliant'] = iz >= rating;
+    }
   }
 
   // Max Zs from Table 41.3 / 41.4
@@ -930,6 +990,14 @@ export interface EditRecord {
   before: unknown;
   after: unknown;
   editedAt: number; // epoch ms
+  /**
+   * Full circuit snapshot before AND after the edit was applied (with derived
+   * fields recomputed). Used by the EditImpactRibbon to show what the edit
+   * actually CHANGED — Iz, Vd, Zs, status, etc. — not just the single field.
+   * Optional so older history records keep working.
+   */
+  snapshotBefore?: Record<string, unknown>;
+  snapshotAfter?: Record<string, unknown>;
 }
 
 export type EditHistory = Record<number, EditRecord[]>;

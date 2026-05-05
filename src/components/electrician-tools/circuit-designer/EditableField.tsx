@@ -71,22 +71,29 @@ export const EditableField = (props: EditableFieldProps) => {
 
   const commit = (raw: string | number) => {
     const v = props.kind === 'number' ? Number(raw) : raw;
-    let result: ValidationResult;
-    if (props.kind === 'text') result = props.validate(String(v));
-    else if (props.kind === 'number') result = props.validate(Number(v));
-    else result = props.validate(v as string | number);
+    // Single-assignment to give TS a clean union to narrow against.
+    const result: ValidationResult =
+      props.kind === 'text'
+        ? props.validate(String(v))
+        : props.kind === 'number'
+          ? props.validate(Number(v))
+          : props.validate(v as string | number);
 
     if (!result.ok) {
-      toast.error(result.error, {
-        description: result.suggestion ? `Suggestion: ${result.suggestion.label}` : undefined,
-        action: result.suggestion
+      // Type guard: TypeScript's narrowing on discriminated unions sometimes
+      // fails when the variable is assigned via a multi-branch conditional —
+      // pin it manually.
+      const failed = result as Extract<ValidationResult, { ok: false }>;
+      toast.error(failed.error, {
+        description: failed.suggestion ? `Suggestion: ${failed.suggestion.label}` : undefined,
+        action: failed.suggestion
           ? {
               label: 'Apply',
               onClick: () => {
                 if (props.kind === 'number') {
-                  props.onCommit(Number(result.suggestion!.value));
+                  props.onCommit(Number(failed.suggestion!.value));
                 } else {
-                  props.onCommit(result.suggestion!.value as any);
+                  props.onCommit(failed.suggestion!.value as any);
                 }
                 setEditing(false);
               },
