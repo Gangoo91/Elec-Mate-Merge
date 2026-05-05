@@ -268,23 +268,26 @@ export const generateBulkPDFs = async (
           `[bulkPdfExport] Validation failed for ${reportId}:`,
           validation.missingFields
         );
-        // ELE-NEW — log to Sentry so we can see WHY a specific user's PDF
-        // failed without needing them to report it. Includes user id + cert
-        // id + missing fields + cert metadata so we can triage from the
-        // dashboard.
+        // Log to Sentry with the missing-field list IN THE TITLE so issues
+        // group by what's actually missing — at a glance we can see whether
+        // most users are missing the address, the inspector name, etc.,
+        // without expanding the extra data on every event.
         try {
           const { captureError } = await import('@/lib/sentry');
-          captureError(new Error('PDF validation failed'), {
-            stage: 'pdf-validation',
-            reportId,
-            reportType: report.report_type,
-            userId,
-            missingFields: validation.missingFields,
-            hasClientName: !!report.client_name,
-            hasInstallationAddress: !!report.installation_address,
-            hasInspectorName: !!report.inspector_name,
-            status: report.status,
-          });
+          captureError(
+            new Error(`PDF validation failed: missing ${validation.missingFields.join(', ')}`),
+            {
+              stage: 'pdf-validation',
+              reportId,
+              reportType: report.report_type,
+              userId,
+              missingFields: validation.missingFields,
+              hasClientName: !!report.client_name,
+              hasInstallationAddress: !!report.installation_address,
+              hasInspectorName: !!report.inspector_name,
+              status: report.status,
+            }
+          );
         } catch {
           /* sentry optional — never block PDF flow on logging */
         }

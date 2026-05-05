@@ -249,7 +249,7 @@ export default function IsolationCertificatePage() {
           contractorEmail: prev.contractorEmail || cp.company_email || '',
           registrationNumber: prev.registrationNumber || cp.registration_number || '',
           registrationScheme: prev.registrationScheme || cp.registration_scheme || '',
-          personIsolatingName: prev.personIsolatingName || profile.full_name || '',
+          personIsolatingName: prev.personIsolatingName || cp.inspector_name || '',
         }));
       }
     });

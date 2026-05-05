@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useEffect, useMemo, Fragment } from 'react';
 import {
   ArrowLeft,
   MousePointer2,
@@ -298,6 +298,9 @@ const DiagramBuilderPage = () => {
   const [searchParams] = useSearchParams();
   const haptic = useHaptic();
   const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [isDirty, setIsDirty] = useState(false);
+  const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null);
+  const [savedAgoTick, setSavedAgoTick] = useState(0);
 
   // Auto-assign circuitRef to symbols that don't have one
   useEffect(() => {
@@ -400,17 +403,69 @@ const DiagramBuilderPage = () => {
   // page is killed mid-edit; in practice almost nothing.
   useEffect(() => {
     if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
+    setIsDirty(true);
     autoSaveTimerRef.current = setTimeout(() => {
       storageSetJSONSync('diagram-builder-project', {
         objects: canvasObjects,
         settings: { gridEnabled, snapEnabled },
         timestamp: new Date().toISOString(),
       });
+      setLastSavedAt(new Date());
+      setIsDirty(false);
     }, 300);
     return () => {
       if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
     };
   }, [canvasObjects, gridEnabled, snapEnabled]);
+
+  // Tick "Saved Xs ago" label once a minute so it stays accurate without
+  // re-rendering on every frame.
+  useEffect(() => {
+    const t = setInterval(() => setSavedAgoTick((n) => n + 1), 30_000);
+    return () => clearInterval(t);
+  }, []);
+
+  // Desktop keyboard shortcuts — Figma-style. Skipped on mobile (no keyboard).
+  // Shortcuts are gated by `target` so they don't fire while typing in inputs.
+  useEffect(() => {
+    const isTypingTarget = (el: EventTarget | null) => {
+      if (!(el instanceof HTMLElement)) return false;
+      const tag = el.tagName;
+      return tag === 'INPUT' || tag === 'TEXTAREA' || el.isContentEditable;
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (isTypingTarget(e.target)) return;
+      const meta = e.ctrlKey || e.metaKey;
+      const k = e.key.toLowerCase();
+
+      if (meta && k === 's') { e.preventDefault(); handleSave(); return; }
+      if (meta && k === 'z') {
+        e.preventDefault();
+        if (e.shiftKey) handleRedo(); else handleUndo();
+        return;
+      }
+      if (meta && k === 'y') { e.preventDefault(); handleRedo(); return; }
+
+      if (e.shiftKey || e.altKey || meta) return;
+      switch (k) {
+        case 'v': setActiveTool('select'); setSelectedSymbolId(null); setPlacingSymbolName(null); break;
+        case 'w': setActiveTool('wall'); break;
+        case 'r': setShapesSheetOpen(true); break;
+        case 'a': setSymbolSheetOpen(true); break;
+        case 'c': setActiveTool('cable'); break;
+        case 'e': setActiveTool('eraser'); break;
+        case 'd': setActiveTool('dimension'); break;
+        case 'escape':
+          setSelectedObject(null);
+          setActiveTool('select');
+          setSelectedSymbolId(null);
+          setPlacingSymbolName(null);
+          break;
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   const handleSave = () => {
     haptic.success();
@@ -622,17 +677,17 @@ const DiagramBuilderPage = () => {
   };
 
   // Primary toolbar — the tools electricians need most
-  const toolButtons: { id: DrawingTool | 'add-symbol' | 'ai-room' | 'undo' | 'redo' | 'shapes'; icon: any; label: string }[] = [
-    { id: 'select', icon: MousePointer2, label: 'Select' },
-    { id: 'wall', icon: PenTool, label: 'Wall' },
-    { id: 'shapes', icon: LayoutGrid, label: 'Room' },
-    { id: 'add-symbol', icon: Plus, label: 'Add Item' },
-    { id: 'cable', icon: Spline, label: 'Cable' },
-    { id: 'dimension', icon: Ruler, label: 'Size' },
-    { id: 'eraser', icon: Eraser, label: 'Erase' },
-    { id: 'ai-room', icon: Sparkles, label: 'AI Help' },
-    { id: 'undo', icon: Undo2, label: 'Undo' },
-    { id: 'redo', icon: Redo2, label: 'Redo' },
+  const toolButtons: { id: DrawingTool | 'add-symbol' | 'ai-room' | 'undo' | 'redo' | 'shapes'; icon: any; label: string; group: 'select' | 'draw' | 'place' | 'edit' | 'ai' | 'history' }[] = [
+    { id: 'select', icon: MousePointer2, label: 'Select', group: 'select' },
+    { id: 'wall', icon: PenTool, label: 'Wall', group: 'draw' },
+    { id: 'shapes', icon: LayoutGrid, label: 'Room', group: 'draw' },
+    { id: 'add-symbol', icon: Plus, label: 'Add Item', group: 'place' },
+    { id: 'cable', icon: Spline, label: 'Cable', group: 'place' },
+    { id: 'dimension', icon: Ruler, label: 'Size', group: 'edit' },
+    { id: 'eraser', icon: Eraser, label: 'Erase', group: 'edit' },
+    { id: 'ai-room', icon: Sparkles, label: 'AI Help', group: 'ai' },
+    { id: 'undo', icon: Undo2, label: 'Undo', group: 'history' },
+    { id: 'redo', icon: Redo2, label: 'Redo', group: 'history' },
   ];
 
   const handleToolTap = (id: string) => {
@@ -748,7 +803,7 @@ const DiagramBuilderPage = () => {
         className="flex items-center justify-between px-3 bg-elec-dark border-b border-white/10 shrink-0"
         style={{ height: HEADER_HEIGHT }}
       >
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 min-w-0">
           <Button
             variant="ghost"
             size="icon"
@@ -757,10 +812,48 @@ const DiagramBuilderPage = () => {
           >
             <ArrowLeft className="h-4 w-4" />
           </Button>
-          <h1 className="hidden sm:block text-sm font-semibold text-white">Room Planner</h1>
+          <div className="hidden sm:flex items-center gap-2 min-w-0">
+            <h1 className="text-sm font-semibold text-white truncate">Room Planner</h1>
+            {(() => {
+              if (canvasObjects.length === 0 && !lastSavedAt) return null;
+              const diffSec = lastSavedAt
+                ? Math.max(0, Math.floor((Date.now() - lastSavedAt.getTime()) / 1000))
+                : null;
+              const label = isDirty
+                ? 'Saving…'
+                : diffSec === null
+                  ? null
+                  : diffSec < 5
+                    ? 'Saved'
+                    : diffSec < 60
+                      ? `Saved ${diffSec}s ago`
+                      : `Saved ${Math.floor(diffSec / 60)}m ago`;
+              if (!label) return null;
+              const dotColour = isDirty ? 'bg-amber-400 animate-pulse' : 'bg-emerald-400';
+              // Reference the tick state so React knows to re-render this branch.
+              void savedAgoTick;
+              return (
+                <span className="hidden md:flex items-center gap-1.5 text-[11px] text-white/60">
+                  <span className={`h-1.5 w-1.5 rounded-full ${dotColour}`} />
+                  {label}
+                </span>
+              );
+            })()}
+          </div>
         </div>
 
         <div className="flex items-center gap-1.5">
+          {/* My Plans — primary discoverable entry to multi-room plan library */}
+          <Button
+            onClick={() => { haptic.light(); setMyPlansOpen(true); }}
+            aria-label="My Plans"
+            variant="ghost"
+            className="h-9 px-2 sm:px-3 text-white hover:bg-white/10 text-xs font-medium touch-manipulation rounded-lg border border-white/10"
+          >
+            <FolderOpen className="h-3.5 w-3.5 sm:mr-1" />
+            <span className="hidden sm:inline">My Plans</span>
+          </Button>
+
           {/* Save Room — primary action */}
           <Button
             onClick={() => {
@@ -1010,8 +1103,15 @@ const DiagramBuilderPage = () => {
           <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
             <div className="text-center pointer-events-auto px-6 max-w-sm rounded-3xl bg-black/45 backdrop-blur-md border border-white/10 shadow-2xl py-6">
               <h2 className="text-white text-lg font-bold mb-1">Start Your First Room</h2>
-              <p className="text-white text-xs mb-5">Choose a starting point to draw your room layout.</p>
+              <p className="text-white text-xs mb-5">Pick a starting point — or open one you've already saved.</p>
               <div className="space-y-2">
+                <button onClick={() => { haptic.light(); setMyPlansOpen(true); }} className="w-full p-3 bg-white/[0.05] border border-white/10 rounded-xl touch-manipulation active:scale-95 text-left flex items-center gap-3">
+                  <FolderOpen className="h-5 w-5 text-blue-400 shrink-0" />
+                  <div>
+                    <p className="text-sm font-semibold text-white">Open a Saved Plan</p>
+                    <p className="text-[10px] text-white">Pick up where you left off on a previous job.</p>
+                  </div>
+                </button>
                 <button onClick={() => setShapesSheetOpen(true)} className="w-full p-3 bg-white/[0.08] border border-white/15 rounded-xl touch-manipulation active:scale-95 text-left flex items-center gap-3">
                   <LayoutGrid className="h-5 w-5 text-elec-yellow shrink-0" />
                   <div>
@@ -1023,7 +1123,7 @@ const DiagramBuilderPage = () => {
                   <Sparkles className="h-5 w-5 text-elec-yellow shrink-0" />
                   <div>
                     <p className="text-sm font-semibold text-elec-yellow">Use AI Help</p>
-                    <p className="text-[10px] text-elec-yellow/70">Create a room from a template, voice description, or photo.</p>
+                    <p className="text-[10px] text-elec-yellow/70">Generate from a template, voice description, or photo.</p>
                   </div>
                 </button>
               </div>
@@ -1033,32 +1133,40 @@ const DiagramBuilderPage = () => {
         )}
       </div>
 
-      {/* Bottom toolbar — docked like native app tab bar */}
+      {/* Bottom toolbar — docked like native app tab bar.
+          Subtle group dividers (sm+) help separate drawing / placement / edit /
+          AI / history without visual clutter on mobile. */}
       <div className="shrink-0 bg-[#111] border-t border-white/10 px-2 py-1.5 safe-area-pb">
         <div className="flex items-center justify-around">
-          {toolButtons.map((tool) => {
+          {toolButtons.map((tool, idx) => {
             const Icon = tool.icon;
             const active = isToolActive(tool.id);
             const isAction = tool.id === 'undo' || tool.id === 'redo';
+            const prev = toolButtons[idx - 1];
+            const showDivider = prev && prev.group !== tool.group;
             return (
-              <button
-                key={tool.id}
-                onClick={() => handleToolTap(tool.id)}
-                aria-label={tool.label}
-                className={cn(
-                  'flex flex-col items-center justify-center transition-all touch-manipulation active:scale-90',
-                  active
-                    ? 'text-elec-yellow'
-                    : isAction
-                      ? 'text-white'
-                      : 'text-white'
+              <Fragment key={tool.id}>
+                {showDivider && (
+                  <span aria-hidden className="hidden sm:block self-center h-6 w-px bg-white/10" />
                 )}
-              >
-                <Icon className="h-5 w-5" />
-                <span className={cn('text-[9px] mt-0.5 leading-none hidden min-[375px]:block', active ? 'font-bold' : 'font-medium')}>
-                  {tool.label}
-                </span>
-              </button>
+                <button
+                  onClick={() => handleToolTap(tool.id)}
+                  aria-label={tool.label}
+                  className={cn(
+                    'flex flex-col items-center justify-center transition-all touch-manipulation active:scale-90',
+                    active
+                      ? 'text-elec-yellow'
+                      : isAction
+                        ? 'text-white'
+                        : 'text-white'
+                  )}
+                >
+                  <Icon className="h-5 w-5" />
+                  <span className={cn('text-[9px] mt-0.5 leading-none hidden min-[375px]:block', active ? 'font-bold' : 'font-medium')}>
+                    {tool.label}
+                  </span>
+                </button>
+              </Fragment>
             );
           })}
         </div>

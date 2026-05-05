@@ -5,6 +5,9 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import ProtectiveDeviceSection from './ProtectiveDeviceSection';
+import { CALCULATOR_CONFIG } from '@/components/calculators/shared';
+
+const config = CALCULATOR_CONFIG['cable'];
 
 interface CableSizingResultProps {
   recommendedCable: BS7671CableOption | null;

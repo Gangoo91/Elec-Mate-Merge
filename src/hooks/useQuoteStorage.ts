@@ -1,18 +1,53 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Quote } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { captureError, captureApiError, trackMilestone, addBreadcrumb } from '@/lib/sentry';
 import { trackFeatureUse } from '@/components/ActivityTracker';
+import { QUERY_KEYS, QUERY_PRESETS } from '@/lib/queryConfig';
 
-// Database storage for quotes (no longer using localStorage)
-
+// Database storage for quotes (no longer using localStorage).
+//
+// Read path runs through React Query so multiple consumers calling
+// useQuoteStorage() on the same render (e.g. dashboard sub-components) share
+// a single cached fetch instead of each firing their own — that was Sentry
+// 7C, the dashboard N+1.
+//
+// Mutations keep their old-style "update local state on success" feel via
+// setSavedQuotes / setInvoicedQuotes adapters that delegate to
+// queryClient.setQueryData — so every consumer sees the optimistic update
+// without a roundtrip.
 export const useQuoteStorage = () => {
-  const [savedQuotes, setSavedQuotes] = useState<Quote[]>([]);
-  const [invoicedQuotes, setInvoicedQuotes] = useState<Quote[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
+  const queryClient = useQueryClient();
+
+  // Auth user id — fetched once. We only need this to scope the cache key
+  // and run the queryFn; Supabase RLS handles the actual filtering anyway.
+  // hasResolvedAuth lets `loading` stay true during the brief async getUser
+  // call so consumers don't flash an empty state before data arrives.
+  const [userId, setUserId] = useState<string | null>(null);
+  const [hasResolvedAuth, setHasResolvedAuth] = useState(false);
+  useEffect(() => {
+    let cancelled = false;
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (cancelled) return;
+      setUserId(user?.id ?? null);
+      setHasResolvedAuth(true);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const activeKey = useMemo(
+    () => [...QUERY_KEYS.QUOTES, userId, 'active'] as const,
+    [userId]
+  );
+  const invoicedKey = useMemo(
+    () => [...QUERY_KEYS.QUOTES, userId, 'invoiced'] as const,
+    [userId]
+  );
 
   const parseNumber = (value: unknown): number => {
     if (typeof value === 'number') {
@@ -143,73 +178,95 @@ export const useQuoteStorage = () => {
     [convertDbRowToQuote]
   );
 
-  // Manually refresh quotes from database
+  // ── Read path through React Query ──────────────────────────────────────
+  // Multiple consumers share these caches by query key, so the dashboard's
+  // 5+ components that call useQuoteStorage() now trigger ONE fetch each
+  // (active + invoiced) total — not one per consumer.
+  const activeQuery = useQuery({
+    queryKey: activeKey,
+    queryFn: () => fetchActiveQuotesForUser(userId!),
+    enabled: !!userId,
+    ...QUERY_PRESETS.USER_DATA,
+    meta: { errorContext: 'loadQuotes', endpoint: 'quotes/load' },
+  });
+  const invoicedQuery = useQuery({
+    queryKey: invoicedKey,
+    queryFn: () => fetchInvoicedQuotesForUser(userId!),
+    enabled: !!userId,
+    ...QUERY_PRESETS.USER_DATA,
+    meta: { errorContext: 'loadInvoicedQuotes', endpoint: 'quotes/load-invoiced' },
+  });
+
+  const savedQuotes = useMemo(() => activeQuery.data ?? [], [activeQuery.data]);
+  const invoicedQuotes = useMemo(() => invoicedQuery.data ?? [], [invoicedQuery.data]);
+  // Match original behaviour: loading is true (a) while we're still
+  // resolving the auth user, OR (b) while queries are running for a logged-
+  // in user. Stays false (the original early-return path) when there's no
+  // logged-in user.
+  const loading =
+    !hasResolvedAuth ||
+    (userId !== null && (activeQuery.isLoading || invoicedQuery.isLoading));
+  const lastUpdated = useMemo(
+    () =>
+      new Date(
+        Math.max(activeQuery.dataUpdatedAt || 0, invoicedQuery.dataUpdatedAt || 0) ||
+          Date.now()
+      ),
+    [activeQuery.dataUpdatedAt, invoicedQuery.dataUpdatedAt]
+  );
+
+  // Surface fetch errors to Sentry. We do this in an effect (not the query
+  // meta) so it only fires once per error transition, not on every render.
+  useEffect(() => {
+    if (activeQuery.error) {
+      captureApiError(activeQuery.error, 'quotes/load', { context: 'loadQuotes' });
+    }
+  }, [activeQuery.error]);
+  useEffect(() => {
+    if (invoicedQuery.error) {
+      captureApiError(invoicedQuery.error, 'quotes/load-invoiced', {
+        context: 'loadInvoicedQuotes',
+      });
+    }
+  }, [invoicedQuery.error]);
+
+  // Adapters: mutation code below still calls `setSavedQuotes(updater)` /
+  // `setInvoicedQuotes(updater)` to optimistically update local state.
+  // These now write directly to the shared React Query cache so every
+  // consumer sees the change without a refetch.
+  const setSavedQuotes = useCallback(
+    (updater: Quote[] | ((prev: Quote[]) => Quote[])) => {
+      queryClient.setQueryData<Quote[]>(activeKey, (prev) =>
+        typeof updater === 'function' ? updater(prev || []) : updater
+      );
+    },
+    [queryClient, activeKey]
+  );
+  const setInvoicedQuotes = useCallback(
+    (updater: Quote[] | ((prev: Quote[]) => Quote[])) => {
+      queryClient.setQueryData<Quote[]>(invoicedKey, (prev) =>
+        typeof updater === 'function' ? updater(prev || []) : updater
+      );
+    },
+    [queryClient, invoicedKey]
+  );
+
+  // Manually refresh from the database. With React Query this is just an
+  // invalidation — every cached consumer refetches together.
   const refreshQuotes = useCallback(async () => {
     try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) {
-        return;
-      }
-
-      const [quotes, invoiced] = await Promise.all([
-        fetchActiveQuotesForUser(user.id),
-        fetchInvoicedQuotesForUser(user.id),
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: QUERY_KEYS.QUOTES }),
       ]);
-
-      setSavedQuotes(quotes);
-      setInvoicedQuotes(invoiced);
-      setLastUpdated(new Date());
     } catch (error) {
-      // Pass the raw error — captureApiError → normaliseError extracts
-      // .message from Supabase POJOs. Pre-wrapping with new Error(String(err))
-      // mangles object errors to "[object Object]" before Sentry sees them.
       captureApiError(error, 'quotes/refresh', { context: 'refreshQuotes' });
     }
-  }, [fetchActiveQuotesForUser, fetchInvoicedQuotesForUser]);
+  }, [queryClient]);
 
-  // Load quotes from Supabase on mount
+  // Set up real-time subscription for quote updates AND inserts. Realtime
+  // changes invalidate the React Query cache so every consumer refetches.
   useEffect(() => {
-    const loadQuotes = async () => {
-      try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-        if (!user) {
-          setLoading(false);
-          return;
-        }
-
-        const quotes = await fetchActiveQuotesForUser(user.id);
-        setSavedQuotes(quotes);
-        setLastUpdated(new Date());
-      } catch (error) {
-        captureApiError(error, 'quotes/load', { context: 'loadQuotes' });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    // Load quotes that have been converted to invoices (for the Invoiced filter tab)
-    const loadInvoicedQuotes = async () => {
-      try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-        if (!user) return;
-
-        const converted = await fetchInvoicedQuotesForUser(user.id);
-        setInvoicedQuotes(converted);
-      } catch (error) {
-        captureApiError(error, 'quotes/load-invoiced', { context: 'loadInvoicedQuotes' });
-      }
-    };
-
-    loadQuotes();
-    loadInvoicedQuotes();
-
-    // Set up real-time subscription for quote updates AND inserts
+    if (!userId) return;
     const setupRealtimeSubscription = async () => {
       const {
         data: { user },
@@ -287,7 +344,7 @@ export const useQuoteStorage = () => {
     return () => {
       if (channel) supabase.removeChannel(channel);
     };
-  }, [fetchActiveQuotesForUser, fetchInvoicedQuotesForUser, refreshQuotes]);
+  }, [userId, refreshQuotes]);
 
   // Save a new quote to Supabase
   const saveQuote = useCallback(
@@ -421,7 +478,7 @@ export const useQuoteStorage = () => {
         return false;
       }
     },
-    [savedQuotes]
+    [savedQuotes, setSavedQuotes]
   );
 
   // Delete a quote from Supabase
@@ -448,7 +505,7 @@ export const useQuoteStorage = () => {
         return false;
       }
     },
-    [savedQuotes]
+    [savedQuotes, setSavedQuotes]
   );
 
   // Get quote statistics

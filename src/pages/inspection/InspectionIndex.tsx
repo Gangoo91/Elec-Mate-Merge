@@ -102,8 +102,12 @@ const InspectionIndex = () => {
     if (reportType === 'ev-charging') {
       navigate(`/electrician/inspection-testing/ev-charging/${reportId}`);
       return;
-    } else if (reportType === 'fire-alarm') {
-      navigate(`/electrician/inspection-testing/fire-alarm/${reportId}`);
+    } else if (reportType && reportType.startsWith('fire-alarm')) {
+      // Covers fire-alarm AND all four variants (design / commissioning /
+      // inspection / modification). Each has its own React Router route.
+      // Without this, variants fell through to the default EICR branch
+      // below — losing the user's data into the wrong form.
+      navigate(`/electrician/inspection-testing/${reportType}/${reportId}`);
       return;
     } else if (reportType === 'emergency-lighting') {
       navigate(`/electrician/inspection-testing/emergency-lighting/${reportId}`);
@@ -127,8 +131,20 @@ const InspectionIndex = () => {
   };
 
   const handleNavigate = (section: string, reportId?: string, reportType?: string) => {
-    // Cert types with dedicated routes — navigate directly
-    const dedicatedRouteTypes = ['ev-charging', 'fire-alarm', 'emergency-lighting', 'pat-testing', 'solar-pv', 'testing-only'];
+    // Cert types with dedicated routes — navigate directly. Includes the
+    // four fire-alarm variants explicitly so they don't fall back to EICR.
+    const dedicatedRouteTypes = [
+      'ev-charging',
+      'fire-alarm',
+      'fire-alarm-design',
+      'fire-alarm-commissioning',
+      'fire-alarm-inspection',
+      'fire-alarm-modification',
+      'emergency-lighting',
+      'pat-testing',
+      'solar-pv',
+      'testing-only',
+    ];
     const effectiveType = reportType || section;
     if (dedicatedRouteTypes.includes(effectiveType) && reportId) {
       navigate(`/electrician/inspection-testing/${effectiveType}/${reportId}`);

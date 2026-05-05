@@ -560,8 +560,21 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
 
   const navigateToForm = () => {
     const reportType = report.report_type.toLowerCase();
-    // Dedicated route types navigate to their own routes
-    const dedicatedRouteTypes = ['ev-charging', 'fire-alarm', 'emergency-lighting', 'pat-testing', 'solar-pv'];
+    // Dedicated route types navigate to their own routes. Fire-alarm variants
+    // (design / commissioning / inspection / modification) each have their
+    // own route — without listing them here they fell through to the legacy
+    // section path and rendered as EICR.
+    const dedicatedRouteTypes = [
+      'ev-charging',
+      'fire-alarm',
+      'fire-alarm-design',
+      'fire-alarm-commissioning',
+      'fire-alarm-inspection',
+      'fire-alarm-modification',
+      'emergency-lighting',
+      'pat-testing',
+      'solar-pv',
+    ];
     if (dedicatedRouteTypes.includes(reportType)) {
       navigate(`/electrician/inspection-testing/${reportType}/${report.report_id || report.id}`);
     } else {
