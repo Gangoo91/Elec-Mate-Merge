@@ -154,7 +154,7 @@ export function MyEpaSimulatorCard() {
             <button
               type="button"
               onClick={() => navigate('/apprentice/epa-simulator?tab=readiness')}
-              className="mt-4 w-full h-11 rounded-lg bg-white/[0.02] text-black text-[13px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
+              className="mt-4 w-full h-11 rounded-lg bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
             >
               Take your first mock
             </button>
@@ -164,7 +164,8 @@ export function MyEpaSimulatorCard() {
             <div className="mt-3 grid grid-cols-2 gap-3 sm:gap-5">
               <div>
                 <div
-                  className={cn('text-[20px] sm:text-[24px] font-semibold leading-none capitalize',
+                  className={cn(
+                    'text-[20px] sm:text-[24px] font-semibold leading-none capitalize',
                     gradeTone(summary.latest?.predicted_grade ?? null)
                   )}
                 >
@@ -184,7 +185,8 @@ export function MyEpaSimulatorCard() {
                   )}
                   {summary.trendDelta != null && summary.trendDelta !== 0 && (
                     <span
-                      className={cn('ml-1 text-[10.5px] font-medium tabular-nums',
+                      className={cn(
+                        'ml-1 text-[10.5px] font-medium tabular-nums',
                         summary.trendDelta > 0 ? 'text-white/85' : 'text-white/85'
                       )}
                     >
@@ -208,7 +210,7 @@ export function MyEpaSimulatorCard() {
               <button
                 type="button"
                 onClick={() => navigate('/apprentice/epa-simulator?tab=knowledge')}
-                className="h-11 rounded-lg bg-white/[0.02] text-black text-[12.5px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
+                className="h-11 rounded-lg bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
               >
                 Knowledge mock
               </button>
@@ -239,7 +241,8 @@ export function MyEpaSimulatorCard() {
                         {s.overall_score != null ? `${s.overall_score}%` : '—'}
                       </span>
                       <span
-                        className={cn('text-[10.5px] uppercase tracking-tight font-medium',
+                        className={cn(
+                          'text-[10.5px] uppercase tracking-tight font-medium',
                           gradeTone(s.predicted_grade)
                         )}
                       >

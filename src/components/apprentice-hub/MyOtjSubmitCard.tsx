@@ -267,14 +267,15 @@ export function MyOtjSubmitCard() {
                 setAiPrefill(null);
                 setOpen(true);
               }}
-              className="h-11 rounded-lg bg-white/[0.02] text-black text-[13px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
+              className="h-11 rounded-lg bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
             >
               Submit work activity
             </button>
             <button
               type="button"
               onClick={() => setAiPromptOpen((x) => !x)}
-              className={cn('inline-flex items-center justify-center gap-1.5 h-11 px-4 rounded-lg border text-[13px] font-semibold transition-colors touch-manipulation',
+              className={cn(
+                'inline-flex items-center justify-center gap-1.5 h-11 px-4 rounded-lg border text-[13px] font-semibold transition-colors touch-manipulation',
                 aiPromptOpen
                   ? 'border-white/[0.06] bg-white/[0.02] text-white/85'
                   : 'border-white/[0.06] bg-white/[0.02] text-white/85 hover:bg-white/[0.02]'
@@ -309,12 +310,13 @@ export function MyOtjSubmitCard() {
                   type="button"
                   onClick={() => void handleGenerateProposal()}
                   disabled={aiPromptLoading || aiPromptText.trim().length < 8}
-                  className={cn('shrink-0 inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg text-[12px] font-semibold transition-colors touch-manipulation',
+                  className={cn(
+                    'shrink-0 inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg text-[12px] font-semibold transition-colors touch-manipulation',
                     aiPromptLoading
-                      ? 'bg-white/[0.02] text-black/70'
+                      ? 'bg-elec-yellow/60 text-black/70'
                       : aiPromptText.trim().length < 8
                         ? 'bg-white/[0.05] text-white/40'
-                        : 'bg-white/[0.02] text-black hover:bg-white/[0.02]'
+                        : 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
                   )}
                 >
                   <Sparkles className="h-3 w-3" />
@@ -411,7 +413,8 @@ function RowItem({ row }: { row: OtjRow }) {
           )}
         </div>
         <span
-          className={cn('shrink-0 text-[10.5px] font-medium tabular-nums tracking-tight uppercase',
+          className={cn(
+            'shrink-0 text-[10.5px] font-medium tabular-nums tracking-tight uppercase',
             STATUS_TONE[row.verification_status]
           )}
         >

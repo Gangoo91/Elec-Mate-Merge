@@ -182,11 +182,11 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
         className={`${rowBgClass} border-b border-border/30 transition-colors`}
       >
         {/* Circuit Number - Always visible, sticky (ELE-830 overlap fix) */}
-        <TableCell className="sot-sticky-col p-0 h-8 align-middle w-[72px] min-w-[72px] max-w-[72px]">
+        <TableCell className="sot-sticky-col p-0 h-8 align-middle w-[112px] min-w-[112px] max-w-[112px]">
           <EnhancedValidatedInput
             value={result.circuitDesignation}
             onChange={(value) => onUpdate(result.id, 'circuitDesignation', value)}
-            className="h-8 text-sm text-center px-1 w-full"
+            className="h-8 text-[11px] text-center px-2 w-full tracking-tight whitespace-nowrap"
             disabled={!!result.sourceCircuitId}
           />
         </TableCell>

@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Camera, X, Check, Loader2, Upload, Sparkles, ScanLine, ArrowRight } from 'lucide-react';
+import { Camera, X } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { v4 as uuidv4 } from 'uuid';
@@ -19,6 +19,12 @@ interface BoardPhotoCaptureProps {
     circuitsFound?: number,
     photoUrl?: string
   ) => void;
+  /**
+   * When set, the capture step skips the in-built (legacy `board-read-enhanced`)
+   * analysis and instead hands the captured image URLs to the parent. The
+   * parent then runs its own streaming flow via `BoardScannerStream`.
+   */
+  onPhotosReady?: (imageUrls: string[]) => void;
 }
 
 export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
@@ -26,6 +32,7 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
   onClose,
   renderContentOnly = false,
   onProgressUpdate,
+  onPhotosReady,
 }) => {
   const [capturedImages, setCapturedImages] = useState<
     Array<{ url: string; status: 'compressing' | 'ready' }>
@@ -521,6 +528,16 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
       return;
     }
 
+    // New streaming flow — hand image URLs to the parent and let it run the
+    // SSE pipeline through `BoardScannerStream`. Skip the legacy single-shot
+    // edge function entirely.
+    if (onPhotosReady) {
+      const firstPhotoUrl = capturedImages[0]?.url || null;
+      onProgressUpdate?.('uploading', 100, undefined, firstPhotoUrl || undefined);
+      onPhotosReady(capturedImages.map((img) => img.url));
+      return;
+    }
+
     setIsAnalyzing(true);
 
     // Notify parent of progress start - include first photo URL for display during analysis
@@ -786,203 +803,233 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
       )}
 
       {capturedImages.length === 0 && !showCamera && (
-        <div className="flex flex-col items-center space-y-5">
-          {/* Hero — glowing icon */}
-          <div className="relative flex items-center justify-center pt-2">
-            <div className="absolute inset-0 bg-elec-yellow/10 blur-3xl rounded-full scale-150" />
-            <div className="relative p-5 rounded-3xl bg-gradient-to-br from-elec-yellow/15 to-elec-yellow/5 border border-elec-yellow/25 shadow-lg shadow-elec-yellow/10">
-              <ScanLine className="h-10 w-10 text-elec-yellow" />
-            </div>
-            <div className="absolute -top-0.5 -right-0.5 p-1.5 rounded-full bg-elec-yellow shadow-md shadow-elec-yellow/30">
-              <Sparkles className="h-3 w-3 text-black" />
-            </div>
-          </div>
-
-          {/* Description */}
-          <p className="text-sm text-white text-center max-w-[280px] leading-relaxed">
-            Snap a photo and AI will instantly detect your circuits, ratings and device types.
+        <div className="flex flex-col">
+          {/* Editorial intro paragraph — replaces the icon hero + checkmark list */}
+          <p className="text-[15px] sm:text-[16px] text-white/65 leading-relaxed max-w-[58ch]">
+            Snap the board and the scanner streams every circuit it can see — labels, ratings, RCBOs, three-phase, the lot. Edit anything you need to before sending it through to the schedule.
           </p>
 
-          {/* What AI Detects — clean vertical list */}
-          <div className="w-full rounded-xl bg-white/[0.03] border border-white/10 px-4 py-3 space-y-2.5">
+          {/* What it reads — three numbered rows in editorial language, no icons */}
+          <ul className="mt-8 border-t border-white/[0.06]">
             {[
-              { label: 'Circuit labels & descriptions' },
-              { label: 'MCB, RCBO & RCD ratings' },
-              { label: 'Board make, model & ways' },
-            ].map(({ label }) => (
-              <div key={label} className="flex items-center gap-3">
-                <div className="h-5 w-5 rounded-full bg-green-500/15 flex items-center justify-center flex-shrink-0">
-                  <Check className="h-3 w-3 text-green-400" />
+              { n: '01', t: 'Circuit labels', s: 'Reads handwritten and printed legends, expands UK abbreviations.' },
+              { n: '02', t: 'Devices', s: 'MCB, RCBO, RCD, AFDD, MCCB, isolators — by I∆n marking and model code.' },
+              { n: '03', t: 'Board structure', s: 'Brand, model, layout, main switch, surge protection, three-phase.' },
+            ].map(({ n, t, s }) => (
+              <li
+                key={n}
+                className="border-b border-white/[0.06] py-4 sm:py-5 flex items-baseline gap-4 sm:gap-6"
+              >
+                <span className="flex-shrink-0 w-8 sm:w-10 text-[18px] sm:text-[20px] font-light text-elec-yellow/70 tabular-nums leading-tight">
+                  {n}
+                </span>
+                <div className="flex-1 min-w-0">
+                  <div className="text-[15px] sm:text-[16px] font-semibold text-white leading-snug">
+                    {t}
+                  </div>
+                  <p className="mt-1 text-[13px] sm:text-[14px] text-white/55 leading-relaxed max-w-[55ch]">
+                    {s}
+                  </p>
                 </div>
-                <span className="text-sm text-white">{label}</span>
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
 
-          {/* Reading Direction Guidance */}
-          <div className="w-full flex items-start gap-3 px-4 py-3 rounded-xl bg-elec-yellow/[0.06] border border-elec-yellow/20">
-            <ArrowRight className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-            <p className="text-xs text-white leading-relaxed">
-              AI reads circuits <span className="font-semibold text-elec-yellow">left → right</span>.
-              Main switch on the right? Use{' '}
-              <span className="font-semibold">"Reverse Order"</span> after scanning.
+          {/* Reading direction note — editorial, no callout box */}
+          <div className="mt-6 pt-5 border-t border-white/[0.06]">
+            <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-elec-yellow">
+              Tip
+            </div>
+            <p className="mt-1.5 text-[13px] sm:text-[14px] text-white/65 leading-relaxed max-w-[55ch]">
+              The scanner reads circuits left to right. If your main switch is on the right, tap <span className="text-white font-medium">Reverse</span> after the scan completes.
             </p>
           </div>
 
-          {/* ELE-867 — On PC web, the Upload path is primary because most desktops
-              don't have a usable rear camera. On mobile we keep "Use Camera" primary.
-              We detect "PC web" by checking if the device is a coarse pointer (touch).
-              touchscreen → primary camera; mouse-only → primary upload. */}
-          {(() => {
-            const isCoarsePointer =
-              typeof window !== 'undefined' &&
-              window.matchMedia &&
-              window.matchMedia('(pointer: coarse)').matches;
+          {/* CTAs — editorial yellow rectangles, no icons */}
+          <div className="mt-10 space-y-3">
+            {(() => {
+              const isCoarsePointer =
+                typeof window !== 'undefined' &&
+                window.matchMedia &&
+                window.matchMedia('(pointer: coarse)').matches;
 
-            const cameraBtn = (
-              <Button
-                onClick={startCamera}
-                className="w-full h-14 text-base gap-3 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold rounded-xl touch-manipulation shadow-lg shadow-elec-yellow/20"
-              >
-                <Camera className="h-5 w-5" />
-                Use Camera
-              </Button>
-            );
-
-            const uploadBtnPrimary = (
-              <Button
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  fileInputRef.current?.click();
-                }}
-                className="w-full h-14 text-base gap-3 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold rounded-xl touch-manipulation shadow-lg shadow-elec-yellow/20"
-              >
-                <Upload className="h-5 w-5" />
-                Upload Photos
-              </Button>
-            );
-
-            const cameraBtnSecondary = (
-              <button
-                onClick={startCamera}
-                className="flex items-center gap-2 text-sm text-white font-medium py-2 touch-manipulation active:opacity-70 transition-opacity"
-              >
-                <Camera className="h-4 w-4" />
-                Use Webcam (if available)
-              </button>
-            );
-
-            const uploadBtnSecondary = (
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  fileInputRef.current?.click();
-                }}
-                className="flex items-center gap-2 text-sm text-white font-medium py-2 touch-manipulation active:opacity-70 transition-opacity"
-              >
-                <Upload className="h-4 w-4" />
-                Upload from gallery
-              </button>
-            );
-
-            return isCoarsePointer ? (
-              <>{cameraBtn}{uploadBtnSecondary}</>
-            ) : (
-              <>{uploadBtnPrimary}{cameraBtnSecondary}</>
-            );
-          })()}
-        </div>
-      )}
-
-      {showCamera && (
-        <div className="space-y-2.5 md:space-y-3">
-          <video
-            ref={videoRef}
-            autoPlay
-            playsInline
-            className="w-full rounded-lg aspect-video object-cover"
-          />
-          <div className="flex gap-2">
-            <Button onClick={capturePhoto} className="flex-1 h-10 md:h-12 text-sm md:text-base">
-              <Camera className="h-4 w-4 mr-2" />
-              Capture Photo
-            </Button>
-            <Button
-              variant="outline"
-              onClick={stopCamera}
-              className="h-10 md:h-12 text-sm md:text-base"
-            >
-              Cancel
-            </Button>
-          </div>
-        </div>
-      )}
-
-      {capturedImages.length > 0 && (
-        <div className="space-y-2.5 md:space-y-3">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-[40vh] md:max-h-[50vh] overflow-y-auto">
-            {capturedImages.map((img, idx) => (
-              <div key={idx} className="relative group">
-                <img
-                  src={img.url}
-                  alt={`Board photo ${idx + 1}`}
-                  className="w-full rounded-lg border object-cover aspect-video"
-                />
-                {img.status === 'compressing' && (
-                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center rounded-lg">
-                    <Loader2 className="h-5 w-5 md:h-6 md:w-6 animate-spin text-foreground" />
-                  </div>
-                )}
-                <Button
-                  variant="destructive"
-                  size="icon"
-                  className="absolute top-1.5 right-1.5 md:top-2 md:right-2 h-7 w-7 md:h-8 md:w-8 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity"
-                  onClick={() => removeImage(idx)}
+              const primaryCamera = (
+                <button
+                  onClick={startCamera}
+                  className="w-full h-12 rounded-xl text-[14px] font-semibold tracking-tight bg-elec-yellow text-black hover:bg-elec-yellow/90 active:bg-elec-yellow/80 transition-colors touch-manipulation shadow-[0_8px_30px_-8px_rgba(252,196,25,0.45)]"
                 >
-                  <X className="h-3.5 w-3.5 md:h-4 md:w-4" />
-                </Button>
-              </div>
-            ))}
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {!isAnalyzing ? (
-              <>
-                <Button
-                  onClick={analyzeImages}
-                  className="flex-1 min-w-full sm:min-w-0 h-10 md:h-12 text-sm md:text-base"
-                >
-                  <Check className="h-4 w-4 mr-2" />
-                  Analyse {capturedImages.length} Photo{capturedImages.length > 1 ? 's' : ''}
-                </Button>
-                <Button
-                  variant="outline"
+                  Use camera →
+                </button>
+              );
+
+              const primaryUpload = (
+                <button
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     fileInputRef.current?.click();
                   }}
-                  className="h-10 md:h-12 text-sm md:text-base"
+                  className="w-full h-12 rounded-xl text-[14px] font-semibold tracking-tight bg-elec-yellow text-black hover:bg-elec-yellow/90 active:bg-elec-yellow/80 transition-colors touch-manipulation shadow-[0_8px_30px_-8px_rgba(252,196,25,0.45)]"
                 >
-                  Add More
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    setCapturedImages([]);
-                    setShowCamera(false);
+                  Upload photos →
+                </button>
+              );
+
+              const secondaryCamera = (
+                <button
+                  onClick={startCamera}
+                  className="w-full h-11 text-[12px] uppercase tracking-[0.18em] font-semibold text-white/65 hover:text-white touch-manipulation transition-colors"
+                >
+                  Use webcam
+                </button>
+              );
+
+              const secondaryUpload = (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    fileInputRef.current?.click();
                   }}
-                  className="h-10 md:h-12 text-sm md:text-base"
+                  className="w-full h-11 text-[12px] uppercase tracking-[0.18em] font-semibold text-white/65 hover:text-white touch-manipulation transition-colors"
                 >
-                  Clear
-                </Button>
+                  Upload from gallery
+                </button>
+              );
+
+              return isCoarsePointer ? (
+                <>
+                  {primaryCamera}
+                  {secondaryUpload}
+                </>
+              ) : (
+                <>
+                  {primaryUpload}
+                  {secondaryCamera}
+                </>
+              );
+            })()}
+          </div>
+        </div>
+      )}
+
+      {showCamera && (
+        <div>
+          <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-elec-yellow">
+            Live
+          </div>
+          <h3 className="mt-2 text-[20px] sm:text-[24px] leading-tight font-semibold text-white tracking-tight">
+            Frame the whole board.
+          </h3>
+
+          <div className="mt-6 relative rounded-xl overflow-hidden border border-white/[0.08] bg-black">
+            <video
+              ref={videoRef}
+              autoPlay
+              playsInline
+              className="w-full aspect-video object-cover"
+            />
+            {/* Editorial frame guide */}
+            <div className="pointer-events-none absolute inset-6 border border-white/15 rounded-lg" />
+          </div>
+
+          <div className="mt-8 flex items-center justify-between gap-4">
+            <button
+              type="button"
+              onClick={stopCamera}
+              className="text-[12px] uppercase tracking-[0.18em] font-semibold text-white/65 hover:text-white transition-colors touch-manipulation"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={capturePhoto}
+              className="h-12 px-6 rounded-xl text-[14px] font-semibold tracking-tight bg-elec-yellow text-black hover:bg-elec-yellow/90 active:bg-elec-yellow/80 transition-colors touch-manipulation shadow-[0_8px_30px_-8px_rgba(252,196,25,0.45)]"
+            >
+              Capture →
+            </button>
+          </div>
+        </div>
+      )}
+
+      {capturedImages.length > 0 && (
+        <div>
+          <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-elec-yellow">
+            {capturedImages.length} photo{capturedImages.length > 1 ? 's' : ''} ready
+          </div>
+          <h3 className="mt-2 text-[20px] sm:text-[24px] leading-tight font-semibold text-white tracking-tight">
+            Review your shots, then scan.
+          </h3>
+
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[45vh] overflow-y-auto pr-1">
+            {capturedImages.map((img, idx) => (
+              <div
+                key={idx}
+                className="relative group rounded-xl overflow-hidden border border-white/[0.08] bg-white/[0.02]"
+              >
+                <img
+                  src={img.url}
+                  alt={`Board photo ${idx + 1}`}
+                  className="w-full object-cover aspect-video"
+                />
+                {img.status === 'compressing' && (
+                  <div className="absolute inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center">
+                    <span className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-white/85">
+                      Compressing
+                    </span>
+                  </div>
+                )}
+                <button
+                  type="button"
+                  onClick={() => removeImage(idx)}
+                  className="absolute top-2 right-2 h-7 px-2.5 rounded-md text-[10.5px] uppercase tracking-[0.18em] font-semibold bg-black/55 text-white/85 hover:bg-black/75 hover:text-white backdrop-blur-sm transition-colors touch-manipulation"
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 space-y-3">
+            {!isAnalyzing ? (
+              <>
+                <button
+                  onClick={analyzeImages}
+                  className="w-full h-12 rounded-xl text-[14px] font-semibold tracking-tight bg-elec-yellow text-black hover:bg-elec-yellow/90 active:bg-elec-yellow/80 transition-colors touch-manipulation shadow-[0_8px_30px_-8px_rgba(252,196,25,0.45)]"
+                >
+                  Scan {capturedImages.length} photo{capturedImages.length > 1 ? 's' : ''} →
+                </button>
+                <div className="flex items-center justify-center gap-6 pt-1">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      fileInputRef.current?.click();
+                    }}
+                    className="text-[12px] uppercase tracking-[0.18em] font-semibold text-white/65 hover:text-white transition-colors touch-manipulation"
+                  >
+                    Add more
+                  </button>
+                  <span className="text-white/15">·</span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setCapturedImages([]);
+                      setShowCamera(false);
+                    }}
+                    className="text-[12px] uppercase tracking-[0.18em] font-semibold text-white/65 hover:text-white transition-colors touch-manipulation"
+                  >
+                    Clear all
+                  </button>
+                </div>
               </>
             ) : (
-              <Button disabled className="w-full h-10 md:h-12 text-sm md:text-base">
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                Analysing {capturedImages.length} Photo{capturedImages.length > 1 ? 's' : ''}...
-              </Button>
+              <button
+                disabled
+                className="w-full h-12 rounded-xl text-[14px] font-semibold tracking-tight bg-white/[0.04] text-white/55 cursor-not-allowed"
+              >
+                Reading {capturedImages.length} photo{capturedImages.length > 1 ? 's' : ''}…
+              </button>
             )}
           </div>
         </div>

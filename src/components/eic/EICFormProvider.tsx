@@ -20,7 +20,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { isNotifiableWork, createNotificationFromCertificate } from '@/utils/notificationHelper';
 import { sanitizeTextInput } from '@/utils/inputSanitization';
 import { draftStorage } from '@/utils/draftStorage';
-import { getCableSizeForRating, getCpcForLive, BS_STANDARD_MAP } from '@/utils/circuitDefaults';
+import { pickCableSize, getCpcForLive, BS_STANDARD_MAP } from '@/utils/circuitDefaults';
 import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
 import {
   validateLoadedData,
@@ -734,7 +734,8 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
         const deviceCategory = circuit.device || 'MCB';
         const deviceCurve = circuit.curve || 'B';
 
-        const liveSize = getCableSizeForRating(ratingAmps) || '2.5mm';
+        const liveSize =
+          pickCableSize(ratingAmps, { description: circuit.label || '' }) || '2.5mm';
         const cpcSize = getCpcForLive(liveSize) || '1.5mm';
         const bsStandard = BS_STANDARD_MAP[deviceCategory] || 'MCB (BS EN 60898)';
         const maxZs = getMaxZsFromDeviceDetails(

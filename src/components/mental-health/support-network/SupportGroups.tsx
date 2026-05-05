@@ -57,10 +57,7 @@ const SupportGroups = ({ groups, defaultExpanded = true }: SupportGroupsProps) =
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <Badge
-            variant="outline"
-            className="bg-white/[0.02] text-white/85 border-white/[0.06]"
-          >
+          <Badge variant="outline" className="bg-white/[0.02] text-white/85 border-white/[0.06]">
             {totalMembers}
           </Badge>
           <div
@@ -112,7 +109,7 @@ const SupportGroups = ({ groups, defaultExpanded = true }: SupportGroupsProps) =
 
               {/* Join Button */}
               <Button
-                className="w-full h-11 bg-white/[0.02] hover:bg-white/[0.02] text-black font-medium touch-manipulation active:scale-[0.98] transition-all duration-300"
+                className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium touch-manipulation active:scale-[0.98] transition-all duration-300"
                 onClick={() => handleJoinGroup(group)}
               >
                 Request to Join

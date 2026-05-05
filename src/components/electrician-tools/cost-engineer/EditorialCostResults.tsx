@@ -619,7 +619,7 @@ export const EditorialCostResults = ({
         </div>
       </div>
 
-      <main className="w-full px-4 sm:px-6 md:px-10 lg:px-16 py-6 sm:py-10 space-y-9 sm:space-y-12">
+      <main className="w-full px-4 sm:px-6 md:px-10 lg:px-16 py-6 sm:py-10 [&>*+*]:mt-9 sm:[&>*+*]:mt-12 [&>*+*]:pt-9 sm:[&>*+*]:pt-12 [&>*+*]:relative [&>*+*]:before:content-[''] [&>*+*]:before:absolute [&>*+*]:before:top-0 [&>*+*]:before:left-0 [&>*+*]:before:right-0 [&>*+*]:before:h-[2px] [&>*+*]:before:rounded-full [&>*+*]:before:bg-gradient-to-r [&>*+*]:before:from-elec-yellow/40 [&>*+*]:before:via-elec-yellow/20 [&>*+*]:before:to-transparent">
         {/* HERO ─────────────────────────────────── */}
         <section className="space-y-3">
           <div className="flex items-baseline justify-between gap-3 flex-wrap">

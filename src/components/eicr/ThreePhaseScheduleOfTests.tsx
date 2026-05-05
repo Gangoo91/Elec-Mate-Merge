@@ -119,17 +119,25 @@ export const ThreePhaseScheduleOfTests: React.FC<ThreePhaseScheduleOfTestsProps>
         L1 += parseFloat(r.phaseBalanceL1 || '0') || 0;
         L2 += parseFloat(r.phaseBalanceL2 || '0') || 0;
         L3 += parseFloat(r.phaseBalanceL3 || '0') || 0;
-      } else {
-        // Single phase circuits - distribute based on circuit number for estimation
-        const circuitNum = parseInt(r.circuitNumber || '0');
-        const load = parseFloat(r.protectiveDeviceRating || '0') || 0;
+        return;
+      }
 
-        // Simple rotation: C1 -> L1, C2 -> L2, C3 -> L3, C4 -> L1...
+      const load = parseFloat(r.protectiveDeviceRating || '0') || 0;
+      const estLoad = load * 0.5; // 50% loading assumption
+
+      // Prefer the explicit phase assignment from the scanner / designer.
+      // Fall back to round-robin only when no assignment is present (fresh
+      // hand-built schedules without scanner data).
+      const explicit = r.phaseAssignment;
+      if (explicit === 'L1') L1 += estLoad;
+      else if (explicit === 'L2') L2 += estLoad;
+      else if (explicit === 'L3') L3 += estLoad;
+      else {
+        const circuitNum = parseInt(r.circuitNumber || '0');
         const phaseIndex = (circuitNum - 1) % 3;
-        if (phaseIndex === 0)
-          L1 += load * 0.5; // Assume 50% loading
-        else if (phaseIndex === 1) L2 += load * 0.5;
-        else L3 += load * 0.5;
+        if (phaseIndex === 0) L1 += estLoad;
+        else if (phaseIndex === 1) L2 += estLoad;
+        else L3 += estLoad;
       }
     });
 

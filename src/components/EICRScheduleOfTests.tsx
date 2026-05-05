@@ -84,7 +84,7 @@ import { useOrientation } from '@/hooks/useOrientation';
 import { useInlineVoice } from '@/hooks/useInlineVoice';
 import { twinAndEarthCpcFor, normaliseCableSize } from '@/utils/twinAndEarth';
 import { getTableViewPreference, setTableViewPreference } from '@/utils/mobileTableUtils';
-import { createCircuitWithDefaults } from '@/utils/circuitDefaults';
+import { createCircuitWithDefaults, pickCableSize } from '@/utils/circuitDefaults';
 import { resolveFieldName } from '@/utils/voiceFieldAliases';
 import { resolveDropdownValue } from '@/utils/voiceDropdownResolver';
 import { calculatePointsServed } from '@/types/autoFillTypes';
@@ -443,7 +443,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
             return filtered.map((circuit, i) => {
               const newNum = (i + 1).toString();
               const desc = circuit.circuitDescription || circuit.circuitType || 'Circuit';
-              return { ...circuit, circuitNumber: newNum, circuitDesignation: `C${newNum}` };
+              return { ...circuit, circuitNumber: newNum, circuitDesignation: `Way ${newNum}` };
             });
           });
           if (selectedCircuitIndex >= testResults.length - 1 && selectedCircuitIndex > 0) {
@@ -703,7 +703,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                   return {
                     ...circuit,
                     circuitNumber: newNum,
-                    circuitDesignation: `C${newNum}`,
+                    circuitDesignation: `Way ${newNum}`,
                   };
                 });
               });
@@ -757,7 +757,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                 return {
                   ...circuit,
                   circuitNumber: newNum,
-                  circuitDesignation: `C${newNum}`,
+                  circuitDesignation: `Way ${newNum}`,
                 };
               });
             });
@@ -1163,7 +1163,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     setTestResults(updatedResults);
     onUpdate('scheduleOfTests', updatedResults);
     toast.success(
-      `Circuit C${nextCircuitNum} added to ${boardId === 'main' || boardId === 'main-cu' ? 'DB' : boardId}`
+      `Way ${nextCircuitNum} added to ${boardId === 'main' || boardId === 'main-cu' ? 'DB' : boardId}`
     );
   };
 
@@ -1330,7 +1330,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
       // No blank rows - create and append new circuit (existing logic)
       const baseResult: TestResult = {
         id: crypto.randomUUID(),
-        circuitDesignation: `C${newCircuitNumber}`,
+        circuitDesignation: `Way ${newCircuitNumber}`,
         circuitNumber: newCircuitNumber,
         circuitDescription: circuitType || '',
         circuitType: circuitType || '',
@@ -1794,21 +1794,35 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     toast.success(`Applied Live-Earth "${value}" MΩ to all circuits`);
   };
 
-  // Utility function to fix protective device terminology
-  const fixProtectiveDeviceType = (type: string): string => {
-    if (!type) return type;
+  // Utility function to fix protective device terminology.
+  // Defensive: some scanners pass an object ({ category, type, ... }) instead
+  // of a string. Coerce safely so the schedule never crashes on apply.
+  const fixProtectiveDeviceType = (type: unknown): string => {
+    let s: string;
+    if (typeof type === 'string') {
+      s = type;
+    } else if (type && typeof type === 'object') {
+      const obj = type as { category?: unknown; type?: unknown };
+      s =
+        (typeof obj.type === 'string' && obj.type) ||
+        (typeof obj.category === 'string' && obj.category) ||
+        '';
+    } else {
+      s = '';
+    }
+    if (!s) return s;
 
     // Map Type 1/2/3 to Type B/C/D (UK standard)
-    if (type.includes('Type 1') || type.includes('Type1')) {
-      return type.replace(/Type ?1/gi, 'Type B');
+    if (s.includes('Type 1') || s.includes('Type1')) {
+      return s.replace(/Type ?1/gi, 'Type B');
     }
-    if (type.includes('Type 2') || type.includes('Type2')) {
-      return type.replace(/Type ?2/gi, 'Type C');
+    if (s.includes('Type 2') || s.includes('Type2')) {
+      return s.replace(/Type ?2/gi, 'Type C');
     }
-    if (type.includes('Type 3') || type.includes('Type3')) {
-      return type.replace(/Type ?3/gi, 'Type D');
+    if (s.includes('Type 3') || s.includes('Type3')) {
+      return s.replace(/Type ?3/gi, 'Type D');
     }
-    return type;
+    return s;
   };
 
   // AI Photo Analysis Handlers
@@ -2012,36 +2026,70 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     return lookup.maxZs !== null ? lookup.maxZs.toFixed(2) : '';
   };
 
-  // Convert Circuit[] format from SimpleCircuitTable to TestResult format
+  // Convert Circuit[] format from SimpleCircuitTable to TestResult format.
+  // CRITICAL: pass through phase / phaseAssignment / spans_ways so the
+  // downstream handleApplyAICircuits expansion can split 3P circuits into
+  // three rows (Way N L1, Way N L2, Way N L3).
   const convertCircuitsToTestResults = (circuits: any[]): any[] => {
+    // Accept both legacy (string) and new (object) device shapes.
+    const getCategory = (c: any): string => {
+      if (typeof c.device === 'string') return c.device || 'MCB';
+      if (c.device && typeof c.device === 'object') return c.device.category || 'MCB';
+      return c.protectiveDeviceType || 'MCB';
+    };
+    const getRating = (c: any): string => {
+      const r = c.rating ?? c.device?.rating_amps ?? c.protectiveDeviceRating;
+      return r != null ? String(r) : '';
+    };
+    const getCurve = (c: any): string =>
+      c.curve ?? c.device?.curve ?? c.protectiveDeviceCurve ?? '';
+
     return circuits.map((circuit) => {
-      // Use helper function to get correct full BS standard format
-      const bsStandard = getDefaultBsStandard(circuit.device || 'MCB');
+      const category = getCategory(circuit);
+      const bsStandard = getDefaultBsStandard(category);
+      const description = circuit.label ?? circuit.circuitDescription ?? '';
+      const isThreePhase = circuit.phase === '3P' || circuit.phaseType === '3P';
+
+      // Normalise phase assignment — array → "L1,L2,L3", single letter stays.
+      let phaseAssignment: string | null = null;
+      const rawPhase =
+        circuit.phaseAssignment ?? circuit.phase_assignment ?? circuit.phaseDesignation;
+      if (Array.isArray(rawPhase)) {
+        phaseAssignment = rawPhase.length > 1 ? 'L1,L2,L3' : rawPhase[0] ?? null;
+      } else if (typeof rawPhase === 'string') {
+        phaseAssignment = rawPhase.includes(',')
+          ? 'L1,L2,L3'
+          : rawPhase === 'L1' || rawPhase === 'L2' || rawPhase === 'L3'
+            ? rawPhase
+            : null;
+      }
+      if (isThreePhase) phaseAssignment = 'L1,L2,L3';
 
       return {
-        circuitDescription: circuit.label || '',
-        protectiveDeviceType: circuit.device || 'MCB',
-        protectiveDeviceCurve: circuit.curve || '',
-        protectiveDeviceRating: circuit.rating?.toString() || '',
-        bsStandard: bsStandard,
-        circuitType: circuit.label?.toLowerCase().includes('socket')
+        circuitDescription: description,
+        protectiveDeviceType: category,
+        protectiveDeviceCurve: getCurve(circuit),
+        protectiveDeviceRating: getRating(circuit),
+        bsStandard,
+        circuitType: description.toLowerCase().includes('socket')
           ? 'Sockets'
-          : circuit.label?.toLowerCase().includes('light')
+          : description.toLowerCase().includes('light')
             ? 'Lighting'
             : '',
         liveSize:
           circuit.liveConductorSize ||
-          (circuit.rating && circuit.rating <= 10
-            ? '1.5'
-            : circuit.rating && circuit.rating <= 20
-              ? '2.5'
-              : circuit.rating && circuit.rating <= 32
-                ? '4.0'
-                : '2.5'),
+          pickCableSize(circuit.rating ?? null, { description }) ||
+          '2.5mm',
         cpcSize: circuit.cpcSize || '',
         referenceMethod: 'C',
         protectiveDeviceKaRating: circuit.kaRating || '6kA',
         confidence: circuit.confidence,
+        // Phase fields — these drive the 3P expansion in handleApplyAICircuits.
+        phase: isThreePhase ? '3P' : '1P',
+        phaseType: isThreePhase ? '3P' : '1P',
+        phaseAssignment,
+        spans_ways: circuit.spansWays ?? circuit.spans_ways ?? (isThreePhase ? 3 : 1),
+        wayNumber: circuit.position ?? circuit.wayNumber ?? null,
       };
     });
   };
@@ -2055,6 +2103,23 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     // Determine target board - use activeBoardId if viewing a subboard, otherwise main board
     const targetBoardId = activeBoardId || distributionBoards[0]?.id || MAIN_BOARD_ID;
 
+    // Pre-expand three-phase circuits into three rows (one per phase) so the
+    // schedule of tests has L1/L2/L3 IR + Zs readings independently per phase.
+    // This is the convention for 3P installations on the EICR schedule.
+    const expandedCircuits = selectedCircuits.flatMap((c) => {
+      const isThreePhase =
+        c.phase === '3P' || c.phaseType === '3P' ||
+        (typeof c.phaseAssignment === 'string' && c.phaseAssignment.includes(','));
+      if (!isThreePhase) return [c];
+      return (['L1', 'L2', 'L3'] as const).map((phase) => ({
+        ...c,
+        phase: '3P',
+        phaseType: '3P',
+        phaseAssignment: phase,
+        _phaseLetter: phase,
+      }));
+    });
+
     // Find blank rows in the target board to fill first
     const blankIndices: number[] = [];
     testResults.forEach((result, idx) => {
@@ -2067,7 +2132,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     const updatedResults = [...testResults];
     const remainingCircuits: any[] = [];
 
-    selectedCircuits.forEach((circuit, circuitIdx) => {
+    expandedCircuits.forEach((circuit, circuitIdx) => {
       const normalisedCircuit = normaliseAICircuit(circuit);
 
       // If we have a blank slot, fill it
@@ -2096,8 +2161,20 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
           normalisedCircuit.protectiveDeviceType.toUpperCase().includes('RCBO');
         const requiresRCD = isSocketCircuit || isBathroomCircuit || isOutdoorCircuit || isRCBOOrRCD;
 
+        const phaseLetterFromCircuit = (circuit._phaseLetter ||
+          (circuit.phaseAssignment === 'L1' ||
+          circuit.phaseAssignment === 'L2' ||
+          circuit.phaseAssignment === 'L3'
+            ? circuit.phaseAssignment
+            : null)) as 'L1' | 'L2' | 'L3' | null;
+        const isThreePhaseRow = circuit.phaseType === '3P' || circuit.phase === '3P';
         updatedResults[blankIdx] = {
           ...existingResult,
+          circuitDesignation: phaseLetterFromCircuit
+            ? `Way ${circuitNumber} ${phaseLetterFromCircuit}`
+            : `Way ${circuitNumber}`,
+          phaseType: isThreePhaseRow ? '3P' : ('1P' as const),
+          phaseAssignment: phaseLetterFromCircuit,
           circuitDescription: circuitDesc,
           circuitType: circuitType,
           type: circuitType,
@@ -2145,12 +2222,34 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     });
 
     // Append remaining circuits that didn't fit in blank slots
+    let phaseGroupCounter = 0;
+    let lastPhaseGroupBase: number | null = null;
     remainingCircuits.forEach((circuit, index) => {
       // Count only circuits on the TARGET board for per-board numbering
       const boardCircuitCount = updatedResults.filter(
         (r) => (r.boardId || MAIN_BOARD_ID) === targetBoardId
       ).length;
-      const circuitNumber = (boardCircuitCount + 1).toString();
+      // For 3P expansion: keep the same way number across L1/L2/L3.
+      // We detect contiguous expanded triplets by the _phaseLetter field set
+      // upstream — L1 starts a new group, L2/L3 reuse the same way number.
+      const phaseLetter = circuit._phaseLetter as 'L1' | 'L2' | 'L3' | undefined;
+      let circuitNumber: string;
+      if (phaseLetter === 'L1' || phaseLetter === undefined) {
+        const wayNum = boardCircuitCount + 1;
+        circuitNumber =
+          phaseLetter === 'L1' ? `${wayNum}.1` : String(wayNum);
+        if (phaseLetter === 'L1') {
+          lastPhaseGroupBase = wayNum;
+          phaseGroupCounter = 1;
+        } else {
+          lastPhaseGroupBase = null;
+          phaseGroupCounter = 0;
+        }
+      } else {
+        // L2 or L3 — reuse the way number from the L1 row
+        phaseGroupCounter += 1;
+        circuitNumber = `${lastPhaseGroupBase ?? boardCircuitCount + 1}.${phaseGroupCounter}`;
+      }
       const liveSize = circuit.liveSize;
       const circuitType = circuit.circuitType || '';
       const circuitDesc = circuit.circuitDescription || '';
@@ -2165,15 +2264,33 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
         circuitDesc.toLowerCase().includes('outdoor') ||
         circuitDesc.toLowerCase().includes('garden');
 
+      const protectiveDeviceTypeStr = String(circuit.protectiveDeviceType || '').toUpperCase();
       const isRCBOOrRCD =
-        circuit.protectiveDeviceType.toUpperCase().includes('RCD') ||
-        circuit.protectiveDeviceType.toUpperCase().includes('RCBO');
+        protectiveDeviceTypeStr.includes('RCD') || protectiveDeviceTypeStr.includes('RCBO');
       const requiresRCD = isSocketCircuit || isBathroomCircuit || isOutdoorCircuit || isRCBOOrRCD;
 
+      const phaseLetterForRow = circuit._phaseLetter as 'L1' | 'L2' | 'L3' | undefined;
+      const phaseAssignmentForRow: 'L1' | 'L2' | 'L3' | null =
+        phaseLetterForRow ?? (
+          circuit.phaseAssignment === 'L1' ||
+          circuit.phaseAssignment === 'L2' ||
+          circuit.phaseAssignment === 'L3'
+            ? circuit.phaseAssignment
+            : null
+        );
+      const wayBase = circuitNumber.split('.')[0];
+      const designation = phaseLetterForRow
+        ? `Way ${wayBase} ${phaseLetterForRow}`
+        : phaseAssignmentForRow
+          ? `Way ${wayBase} ${phaseAssignmentForRow}`
+          : `Way ${wayBase}`;
       const newResult: TestResult = {
         id: crypto.randomUUID(),
-        circuitNumber: circuitNumber,
-        circuitDesignation: `C${circuitNumber}`,
+        circuitNumber,
+        circuitDesignation: designation,
+        phaseType: phaseLetterForRow ? '3P' : (circuit.phaseType as '1P' | '3P' | '' | undefined) ?? '1P',
+        phaseAssignment: phaseAssignmentForRow,
+        wayNumber: parseInt(wayBase, 10) || null,
         circuitDescription: circuitDesc,
         circuitType: circuitType,
         type: circuitType,

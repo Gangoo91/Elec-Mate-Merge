@@ -122,7 +122,7 @@ export function MyReflectionCard() {
           <button
             type="button"
             onClick={() => setCaptureOpen(true)}
-            className="mt-4 w-full h-11 rounded-lg bg-white/[0.02] text-black text-[13px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
+            className="mt-4 w-full h-11 rounded-lg bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
           >
             {reflectedToday ? 'Add another reflection' : 'Capture today'}
           </button>

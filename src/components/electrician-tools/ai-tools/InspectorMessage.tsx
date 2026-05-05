@@ -142,7 +142,7 @@ export const InspectorMessage = memo(
                       </h1>
                     ),
                     h2: ({ children }) => (
-                      <h2 className="text-lg sm:text-xl font-semibold mt-6 mb-3 first:mt-0 text-white tracking-tight">
+                      <h2 className="relative text-lg sm:text-xl font-semibold mt-7 pt-7 mb-3 first:mt-0 first:pt-0 text-white tracking-tight before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-[2px] before:rounded-full before:bg-gradient-to-r before:from-elec-yellow/40 before:via-elec-yellow/20 before:to-transparent first:before:hidden">
                         {transformInlineChildren(children, inlineCtx, 'h2')}
                       </h2>
                     ),
@@ -156,6 +156,10 @@ export const InspectorMessage = memo(
                         {transformInlineChildren(children, inlineCtx, 'p')}
                       </p>
                     ),
+                    // Suppress markdown horizontal rules — we already
+                    // draw a gold gradient stripe before every H2, so an
+                    // additional `---` line would double the divider.
+                    hr: () => null,
                     ul: ({ children }) => (
                       <ul className="my-3 ml-5 space-y-1.5 list-disc marker:text-elec-yellow/70">
                         {children}

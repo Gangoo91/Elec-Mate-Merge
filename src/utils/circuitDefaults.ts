@@ -313,7 +313,7 @@ export function createCircuitWithDefaults(
   return {
     id: crypto.randomUUID(),
     circuitNumber,
-    circuitDesignation: `C${circuitNumber}`,
+    circuitDesignation: `Way ${circuitNumber}`,
     circuitDescription,
     circuitType: defaults.circuitType || 'Other',
     type: defaults.type || 'Other',
@@ -386,23 +386,101 @@ export function getCircuitTypes(): { value: CircuitType; label: string }[] {
 }
 
 /**
- * BS 7671 cable size by breaker rating
- * Maps protective device rating to minimum cable size
+ * BS 7671 cable size by breaker rating — RADIAL fallback when circuit type
+ * is unknown. The smarter `pickCableSize()` helper below should be preferred.
  */
 const CABLE_SIZE_BY_RATING: Record<number, string> = {
-  6: '1.5mm', // Lighting
+  6: '1.0mm', // Lighting
   10: '1.5mm',
-  16: '2.5mm', // Immersion
-  20: '2.5mm', // Radial
+  16: '2.5mm',
+  20: '2.5mm',
   25: '4.0mm',
-  32: '2.5mm', // Ring final (or 4mm radial)
-  40: '6.0mm',
-  45: '10mm', // Shower
+  32: '4.0mm', // 32A radial sockets / cooker — for ring use pickCableSize
+  40: '6.0mm', // Shower / cooker (≤ short run)
+  45: '10mm',
   50: '10mm',
   63: '16mm',
   80: '25mm',
   100: '35mm',
 };
+
+/**
+ * Smart cable sizing — uses the circuit type, label and rating together to
+ * pick the right cable per BS 7671 Appx 4 / OSG. Captures the domestic
+ * conventions every UK spark expects:
+ *   • Ring final 32A → 2.5mm² (two 2.5mm² conductors in parallel)
+ *   • Radial sockets 32A → 4.0mm²
+ *   • Shower 40A/45A/50A → 6.0/10/10 mm²
+ *   • Cooker 32A → 6.0 mm² (single feed)
+ *   • Lighting 6A/10A → 1.0/1.5 mm²
+ *   • Immersion 16A → 2.5 mm²
+ *   • EV charger 32A → 6.0 mm² (Type B RCD assumed; longer runs may need 10)
+ */
+export function pickCableSize(
+  rating: number | null,
+  opts?: {
+    circuitType?: string;
+    description?: string;
+    isRing?: boolean;
+    isCooker?: boolean;
+    isShower?: boolean;
+    isEv?: boolean;
+  }
+): string | null {
+  if (!rating) return null;
+
+  const desc = (opts?.description || opts?.circuitType || '').toLowerCase();
+  const isRing =
+    opts?.isRing ??
+    /\bring\b/.test(desc);
+  const isShower = opts?.isShower ?? /\bshower\b/.test(desc);
+  const isCooker =
+    opts?.isCooker ?? /\bcooker|hob|oven\b/.test(desc);
+  const isEv = opts?.isEv ?? /\bev\b|\bcharger\b/.test(desc);
+  const isImmersion = /\bimmersion|water heater\b/.test(desc);
+  const isLighting = /\blight|lts|lgt\b/.test(desc);
+
+  // Lighting first — overrides rating-only defaults (10A bedroom lighting on 1.5mm²).
+  if (isLighting) {
+    if (rating <= 6) return '1.0mm';
+    return '1.5mm';
+  }
+
+  // Shower — high-load, sized by length but always at least 6mm².
+  if (isShower) {
+    if (rating <= 32) return '6.0mm';
+    if (rating <= 40) return '10mm'; // Conservative for typical 40A showers
+    return '10mm'; // 45A / 50A
+  }
+
+  // Cooker / hob / oven — typically 6mm² up to 40A, 10mm² above.
+  if (isCooker) {
+    if (rating <= 32) return '6.0mm';
+    if (rating <= 40) return '6.0mm';
+    return '10mm';
+  }
+
+  // EV charger — 32A on 6mm² is standard for short runs.
+  if (isEv) {
+    if (rating <= 32) return '6.0mm';
+    return '10mm';
+  }
+
+  // Immersion heater — always 2.5mm² for 16A.
+  if (isImmersion) {
+    if (rating <= 16) return '2.5mm';
+    return '4.0mm';
+  }
+
+  // Ring final — 2.5mm² regardless of "rating" because it's two parallel runs.
+  if (isRing) {
+    return '2.5mm';
+  }
+
+  // Radial sockets / general — fall through to the rating table, which now
+  // correctly returns 4mm² for a 32A radial.
+  return CABLE_SIZE_BY_RATING[rating] || null;
+}
 
 /**
  * CPC size for given live conductor size

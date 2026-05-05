@@ -418,15 +418,16 @@ async function fetchTablesAndFigures(
 }
 
 /**
- * Branch 5: Practical Work Intelligence — vector + BM25 hybrid over the
- * separate `practical_work_intelligence` corpus (industrial, EV, solar, fire,
- * emergency lighting, data-centre, BMS, HVAC etc.). Mirrors the BS 7671
- * branches but goes through `search_practical_v1` and tags every result as
- * `source: 'practical'` so the prompt formatter labels it as practitioner
- * guidance, not regulation.
+ * Branch 5: Practical Work Intelligence — vector + BM25 hybrid RRF over
+ * the separate `practical_work_intelligence` corpus (industrial, EV, solar,
+ * fire, emergency lighting, data-centre, BMS, HVAC etc.). Calls
+ * `search_practical_work_v2` — the rebuilt RPC that uses halfvec(3072)
+ * embeddings, server-side RRF fusion, and excludes rows the OSG classifier
+ * marked for removal. Tags every result as `source: 'practical'` so the
+ * prompt formatter labels it as practitioner guidance, not regulation.
  *
- * Cap is intentionally smaller (5) so practical context never dominates the
- * BS 7671 regulatory results — it complements them.
+ * Cap is intentionally smaller (8) so practical context never dominates
+ * the BS 7671 regulatory results — it complements them.
  */
 async function fetchPracticalIntelligence(
   opts: FacetRetrievalOptions
@@ -434,7 +435,6 @@ async function fetchPracticalIntelligence(
   const { supabase, understanding, queryEmbedding } = opts;
   const queryText = understanding.original;
 
-  // Bail early if neither vector nor text query is usable.
   if (
     (!queryEmbedding || queryEmbedding.length === 0) &&
     (!queryText || queryText.length < 3)
@@ -442,27 +442,21 @@ async function fetchPracticalIntelligence(
     return [];
   }
 
-  // Optional equipment filter when the query understanding pinned a domain.
-  // We keep it loose — the topic tag may not exactly match the stored
-  // equipment_category, so prefer null (let RRF rank) unless we're confident.
-  const equipmentFilter: string | null = null;
-
-  const { data, error } = await supabase.rpc('search_practical_v1', {
-    query_embedding: queryEmbedding ?? null,
-    query_text: queryText || null,
-    equipment_filter: equipmentFilter,
-    facet_type_filter: null,
-    reg_filter: null,
-    min_confidence: 0.6,
-    match_count: 8,
-    vector_weight: queryEmbedding ? 1.0 : 0.0,
-    bm25_weight: queryText ? 1.0 : 0.0,
-    rrf_k: 60,
+  const { data, error } = await supabase.rpc('search_practical_work_v2', {
+    p_query_text: queryText || null,
+    p_query_embedding: queryEmbedding ?? null,
+    p_match_count: 8,
+    p_facet_types: null,
+    p_applies_to: null,
+    p_equipment_category: null,
+    p_min_confidence: 0.6,
+    p_rrf_k: 60,
+    p_pool_size: 80,
   });
 
   if (error || !data) return [];
   const rows = data as Array<{
-    facet_id: string;
+    id: string;
     primary_topic: string | null;
     equipment_category: string | null;
     equipment_subcategory: string | null;
@@ -474,20 +468,38 @@ async function fetchPracticalIntelligence(
     test_procedures: unknown;
     common_defects: string[] | null;
     troubleshooting_steps: string[] | null;
-    inspection_checklist: string[] | null;
+    inspection_checklist: unknown;
+    common_mistakes: string[] | null;
     typical_duration_minutes: number | null;
     skill_level: string | null;
     tools_required: string[] | null;
     confidence_score: number | null;
     rrf_score: number | null;
-    retrieval_source: string | null;
+    similarity: number | null;
   }>;
+
+  // The v2 RPC's inspection_checklist is jsonb[] (richer); the v1
+  // shape was string[]. Coerce to string[] for the prompt formatter,
+  // pulling the most useful field from each entry.
+  const flattenChecklist = (val: unknown): string[] | undefined => {
+    if (!Array.isArray(val)) return undefined;
+    const out: string[] = [];
+    for (const v of val) {
+      if (typeof v === 'string' && v.trim()) out.push(v);
+      else if (v && typeof v === 'object') {
+        const obj = v as Record<string, unknown>;
+        const text = obj.check ?? obj.checkpoint ?? obj.item ?? obj.task ?? obj.text;
+        if (typeof text === 'string' && text.trim()) out.push(text);
+      }
+    }
+    return out.length ? out : undefined;
+  };
 
   const out: FacetContextUnit[] = [];
   let rank = 0;
   for (const r of rows.slice(0, 8)) {
     out.push({
-      id: `pwi-${r.facet_id}`,
+      id: `pwi-${r.id}`,
       source: 'practical',
       rank: ++rank,
       score: Number(r.rrf_score ?? r.confidence_score ?? 0),
@@ -499,9 +511,9 @@ async function fetchPracticalIntelligence(
       keywords: r.keywords ?? undefined,
       bs7671_regulations: r.bs7671_regulations ?? undefined,
       test_procedures: r.test_procedures,
-      common_defects: r.common_defects ?? undefined,
+      common_defects: r.common_defects ?? r.common_mistakes ?? undefined,
       troubleshooting_steps: r.troubleshooting_steps ?? undefined,
-      inspection_checklist: r.inspection_checklist ?? undefined,
+      inspection_checklist: flattenChecklist(r.inspection_checklist),
       typical_duration_minutes: r.typical_duration_minutes ?? undefined,
       skill_level: r.skill_level ?? undefined,
       tools_required: r.tools_required ?? undefined,
@@ -526,7 +538,7 @@ function fuseUnits(
     figure: 1.4,
     vector: 1.2,
     bm25: 1.0,
-    practical: 0.85, // intentionally below regulatory branches so regs win on ties
+    practical: 1.05, // raised from 0.85 — practical work intelligence is now v2 (halfvec hybrid RRF, OSG-classified) and adds genuine job-scoped depth (timing, tools, defects). Still below regulatory exact_reg/table/figure/vector so regs win on ambiguous ties.
     cross_ref: 0.3,
   };
 

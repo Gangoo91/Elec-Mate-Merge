@@ -92,7 +92,7 @@ const EventsList = ({ events, defaultExpanded = true }: EventsListProps) => {
                   </div>
                 </div>
                 <Button
-                  className="bg-white/[0.02] hover:bg-white/[0.02] text-black h-11 px-4 flex-shrink-0 touch-manipulation active:scale-[0.98] transition-all duration-300"
+                  className="bg-elec-yellow hover:bg-elec-yellow/90 text-black h-11 px-4 flex-shrink-0 touch-manipulation active:scale-[0.98] transition-all duration-300"
                   onClick={() => handleRegister(event)}
                 >
                   Register

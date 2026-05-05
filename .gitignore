@@ -44,3 +44,18 @@ lti-private-key*
 # Playwright auth state
 e2e/.auth/
 __pycache__/
+
+# Claude Code worktree state — managed by `git worktree`, never commit
+.claude/worktrees/
+
+# One-off scratch scripts (audits, screenshots, extracts)
+_audit-*.mjs
+_screenshot-*.mjs
+_extract-*.mjs
+
+# iOS build artefacts
+ios/build/
+ios/ExportOptions-local.plist
+
+# Supabase CLI temp
+supabase/.temp/

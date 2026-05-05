@@ -1,116 +1,108 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useRef, useEffect } from 'react';
+/**
+ * Installation Specialist orchestrator.
+ *
+ * Three-screen flow mirroring the Cost Engineer rebuild:
+ *   1. Briefing — description-led brief + attachments + optional details
+ *   2. Stream   — editorial streaming surface, progress + live steps
+ *   3. Results  — editorial method statement
+ *
+ * Backend stays on the existing `create-installation-method-job` /
+ * polling stack. The shape of `method_data` returned by the edge
+ * function is read by `EditorialMethodResults` directly. When a
+ * `installation_method_partials` table lands, swap polling for realtime
+ * subscription inside `InstallationStream`.
+ */
+
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { CheckCircle } from 'lucide-react';
-import { InstallationInput } from './InstallationInput';
-import { InstallationProcessingView } from './InstallationProcessingView';
-import { InstallationResults } from './InstallationResults';
-import InstallationSuccess from './InstallationSuccess';
-import { InstallationProjectDetails as ProjectDetailsType } from '@/types/installation-method';
-import { useInstallationMethodJobPolling } from '@/hooks/useInstallationMethodJobPolling';
 import { supabase } from '@/integrations/supabase/client';
+import { InstallationBriefing } from './InstallationBriefing';
+import { InstallationStream } from './InstallationStream';
+import { EditorialMethodResults } from './EditorialMethodResults';
+import {
+  InstallationMethodInputs,
+  composeInstallationBriefing,
+  emptyInstallationInputs,
+} from '@/types/installation-method-inputs';
+import { useInstallationMethodJobPolling } from '@/hooks/useInstallationMethodJobPolling';
 import {
   getStoredCircuitContext,
   clearStoredCircuitContext,
   type StoredCircuitContext,
 } from '@/utils/circuit-context-generator';
 import { ImportedContextBanner } from '@/components/electrician-tools/shared/ImportedContextBanner';
-import { AnimatePresence } from 'framer-motion';
 import { SaveCustomerPrompt } from '@/components/electrician/shared/SaveCustomerPrompt';
 
 interface InstallationSpecialistInterfaceProps {
   designerContext?: any;
 }
 
+type View = 'briefing' | 'streaming' | 'results';
+
 const InstallationSpecialistInterface = ({
   designerContext,
 }: InstallationSpecialistInterfaceProps) => {
   const routerLocation = useLocation();
-
-  // Check if we're viewing saved results
   const savedResultsState = routerLocation.state as {
     fromSavedResults?: boolean;
     jobId?: string;
     outputData?: any;
     inputData?: any;
   } | null;
-  const [showResults, setShowResults] = useState(!!savedResultsState?.fromSavedResults);
-  const [showCelebration, setShowCelebration] = useState(false);
-  const [celebrationShown, setCelebrationShown] = useState(!!savedResultsState?.fromSavedResults);
-  const [methodData, setMethodData] = useState<any>(() => {
-    // Initialize with saved results if present
-    if (savedResultsState?.fromSavedResults && savedResultsState.outputData) {
-      const data = savedResultsState.outputData;
+
+  /* ─── State ─────────────────────────────────────────────────── */
+  const [inputs, setInputs] = useState<InstallationMethodInputs>(() => {
+    if (savedResultsState?.fromSavedResults && savedResultsState.inputData) {
+      const i = savedResultsState.inputData;
       return {
-        ...data,
-        steps:
-          data.steps?.map((step: any) => ({
-            stepNumber: step.stepNumber || step.step,
-            title: step.title,
-            content: step.content || step.description,
-            safety: step.safety || step.safetyNotes || [],
-            toolsRequired: step.toolsRequired || step.tools || step.equipmentNeeded || [],
-            materialsNeeded: step.materialsNeeded || step.materials || [],
-            estimatedDuration:
-              step.estimatedDuration ||
-              (step.estimatedTime ? `${step.estimatedTime} mins` : undefined),
-            riskLevel: step.riskLevel || 'medium',
-            qualifications: step.qualifications,
-            linkedHazards: step.linkedHazards,
-            notes: step.notes,
-            assignedPersonnel: step.assignedPersonnel,
-            bsReferences: step.bsReferences,
-            inspectionCheckpoints: step.inspectionCheckpoints,
-          })) || [],
-        _fullMethodStatement: data,
+        ...emptyInstallationInputs(),
+        description: i.query ?? i.description ?? '',
+        installationType: i.projectDetails?.installationType ?? 'domestic',
+        projectName: i.projectDetails?.projectName ?? '',
+        location: i.projectDetails?.location ?? '',
+        clientName: i.projectDetails?.clientName ?? '',
       };
     }
-    return null;
+    return emptyInstallationInputs();
   });
-  const [generationStartTime, setGenerationStartTime] = useState(0);
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [originalQuery, setOriginalQuery] = useState<string>(
-    savedResultsState?.fromSavedResults ? savedResultsState.inputData?.query || '' : ''
+
+  const [view, setView] = useState<View>(
+    savedResultsState?.fromSavedResults ? 'results' : 'briefing'
   );
-  const [projectInfo, setProjectInfo] = useState<ProjectDetailsType>({
-    projectName: '',
-    location: '',
-    installationType: 'domestic',
-  });
-  const [currentJobId, setCurrentJobId] = useState<string | null>(null);
+  const [methodData, setMethodData] = useState<any>(savedResultsState?.outputData ?? null);
+  const [currentJobId, setCurrentJobId] = useState<string | null>(savedResultsState?.jobId ?? null);
   const [isCancelling, setIsCancelling] = useState(false);
   const [importedContext, setImportedContext] = useState<StoredCircuitContext | null>(null);
-  const [initialPrompt, setInitialPrompt] = useState<string>('');
-  const [initialProjectName, setInitialProjectName] = useState<string>('');
-  const [customerId, setCustomerId] = useState<string | undefined>(undefined);
   const [showSaveCustomerPrompt, setShowSaveCustomerPrompt] = useState(false);
   const [savePromptDismissed, setSavePromptDismissed] = useState(false);
+  const inputsBeforeStreamRef = useRef<InstallationMethodInputs | null>(null);
 
-  // Check for imported circuit context on mount
+  /* ─── Imported circuit context (from Circuit Designer) ──────── */
   useEffect(() => {
-    const storedContext = getStoredCircuitContext();
-    if (storedContext && storedContext.agentType === 'installer') {
-      setImportedContext(storedContext);
+    const stored = getStoredCircuitContext();
+    if (stored && stored.agentType === 'installer') {
+      setImportedContext(stored);
       clearStoredCircuitContext();
     }
   }, []);
 
   const handleUseImportedContext = () => {
-    if (importedContext) {
-      setInitialPrompt(importedContext.formattedPrompt);
-      setInitialProjectName(importedContext.sourceDesign);
-      setImportedContext(null);
-    }
-  };
-
-  const handleDismissImportedContext = () => {
+    if (!importedContext) return;
+    setInputs((prev) => ({
+      ...prev,
+      description: prev.description
+        ? `${prev.description}\n\n${importedContext.formattedPrompt}`
+        : importedContext.formattedPrompt,
+      projectName: prev.projectName || importedContext.sourceDesign,
+    }));
     setImportedContext(null);
   };
 
+  /* ─── Polling the job ───────────────────────────────────────── */
   const {
-    job,
     isPolling,
     startPolling,
     stopPolling,
@@ -118,279 +110,204 @@ const InstallationSpecialistInterface = ({
     status: jobStatus,
     currentStep: jobCurrentStep,
     methodData: jobMethodData,
-    qualityMetrics: jobQualityMetrics,
     error: jobError,
   } = useInstallationMethodJobPolling(currentJobId);
 
-  const lastProjectRef = useRef<{ details: ProjectDetailsType; description: string } | null>(null);
+  /* ─── Patch / generate / cancel ─────────────────────────────── */
+  const onPatch = (patch: Partial<InstallationMethodInputs>) =>
+    setInputs((prev) => ({ ...prev, ...patch }));
 
-  const handleGenerate = async (
-    projectDetails: ProjectDetailsType,
-    description: string,
-    useFullMode: boolean
-  ) => {
-    setGenerationStartTime(Date.now());
-    setShowResults(true);
-    setCelebrationShown(false);
-    setIsGenerating(true);
-    setOriginalQuery(description);
-    setProjectInfo(projectDetails);
-    lastProjectRef.current = { details: projectDetails, description };
+  const onGenerate = async () => {
+    inputsBeforeStreamRef.current = inputs;
+    setView('streaming');
+    setMethodData(null);
 
     try {
-      // Create job using the job queue
       const {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) {
-        toast.error('Authentication required', {
-          description: 'Please log in to generate installation methods',
-        });
-        setIsGenerating(false);
+        toast.error('Sign in to generate a method statement.');
+        setView('briefing');
         return;
       }
 
-      const { data, error } = await supabase.functions.invoke('create-installation-method-job', {
+      const briefing = composeInstallationBriefing(inputs);
+      const { data, error } = await supabase.functions.invoke('installation-specialist', {
         body: {
-          query: description,
-          projectDetails,
+          action: 'generate',
+          query: briefing,
+          projectDetails: {
+            projectName: inputs.projectName,
+            location: inputs.location,
+            installationType: inputs.installationType,
+            clientName: inputs.clientName,
+            clientContact: inputs.clientContact,
+            additionalNotes: inputs.additionalNotes,
+            expectedStartDate: inputs.expectedStartDate,
+          },
           designerContext: designerContext || null,
+          attachments: inputs.attachments,
         },
       });
 
       if (error || !data?.jobId) {
-        throw new Error(error?.message || 'Failed to create job');
+        throw new Error(error?.message || 'Failed to create installation method job.');
       }
 
-      console.log('✅ Created installation method job:', data.jobId);
       setCurrentJobId(data.jobId);
       startPolling();
 
-      // Link customer to job
-      if (customerId && data.jobId) {
+      if (inputs.customerId) {
         supabase
           .from('installation_method_jobs')
-          .update({ customer_id: customerId })
+          .update({ customer_id: inputs.customerId })
           .eq('id', data.jobId)
           .then(({ error: linkErr }) => {
-            if (linkErr)
-              console.error('Failed to link customer to installation method job:', linkErr);
+            if (linkErr) console.error('Customer link failed:', linkErr);
           });
-      } else if (!customerId && projectDetails.clientName?.trim() && !savePromptDismissed) {
+      } else if (inputs.clientName?.trim() && !savePromptDismissed) {
         setShowSaveCustomerPrompt(true);
       }
-    } catch (error: any) {
-      console.error('Generation error:', error);
-      toast.error('Generation Failed', {
-        description: error.message || 'An unexpected error occurred',
-      });
-      setIsGenerating(false);
-      setShowResults(false);
+    } catch (err: any) {
+      console.error('Installation generate error:', err);
+      toast.error('Generation failed', { description: err?.message ?? 'Unexpected error' });
+      setView('briefing');
     }
   };
 
-  // Handle job completion
-  useEffect(() => {
-    console.log('🔍 Job Status Check:', {
-      jobStatus,
-      hasMethodData: !!jobMethodData,
-      celebrationShown,
-    });
-
-    if (jobStatus === 'complete' && jobMethodData && !celebrationShown) {
-      console.log('✅ Setting method data and showing celebration');
-
-      // Map backend field names - pass through exact field names from backend
-      const mappedData = {
-        ...jobMethodData,
-        steps:
-          jobMethodData.steps?.map((step: any) => ({
-            stepNumber: step.stepNumber || step.step,
-            title: step.title,
-            content: step.content || step.description,
-            safety: step.safety || step.safetyNotes || [],
-            toolsRequired: step.toolsRequired || step.tools || step.equipmentNeeded || [],
-            materialsNeeded: step.materialsNeeded || step.materials || [],
-            estimatedDuration:
-              step.estimatedDuration ||
-              (step.estimatedTime ? `${step.estimatedTime} mins` : undefined),
-            riskLevel: step.riskLevel || 'medium',
-            qualifications: step.qualifications,
-            linkedHazards: step.linkedHazards,
-            notes: step.notes,
-            assignedPersonnel: step.assignedPersonnel,
-            bsReferences: step.bsReferences,
-            inspectionCheckpoints: step.inspectionCheckpoints,
-          })) || [],
-        _fullMethodStatement: jobMethodData,
-      };
-
-      console.log('✅ Mapped method data:', mappedData);
-      setMethodData(mappedData);
-      setIsGenerating(false);
-
-      if (!celebrationShown) {
-        setShowCelebration(true);
-        setCelebrationShown(true);
-      }
-    } else if (jobStatus === 'failed' || jobStatus === 'cancelled') {
-      toast.error(jobStatus === 'cancelled' ? 'Generation Cancelled' : 'Generation Failed', {
-        description:
-          jobError ||
-          (jobStatus === 'cancelled'
-            ? 'You cancelled the generation'
-            : 'An unexpected error occurred'),
-      });
-      setIsGenerating(false);
-      setShowResults(false);
-      stopPolling();
+  const handleCancel = async () => {
+    if (!currentJobId) {
+      setView('briefing');
+      return;
     }
-  }, [jobStatus, jobMethodData, jobError, celebrationShown, stopPolling]);
-
-  // Restart polling if job is processing but polling stopped
-  useEffect(() => {
-    if (currentJobId && jobStatus === 'processing' && !isPolling) {
-      console.warn('⚠️ Job processing but polling stopped - restarting');
-      startPolling();
-    }
-  }, [currentJobId, jobStatus, isPolling, startPolling]);
-
-  // Force re-render when job completes
-  useEffect(() => {
-    if (jobStatus === 'complete' && jobMethodData) {
-      console.log('✅ Job complete - forcing state update');
-      setShowResults(true);
-    }
-  }, [jobStatus, jobMethodData]);
-
-  const handleCancelGeneration = async () => {
-    if (!currentJobId) return;
-
     setIsCancelling(true);
     try {
-      const { data, error } = await supabase.functions.invoke('cancel-installation-method-job', {
-        body: { jobId: currentJobId },
+      await supabase.functions.invoke('installation-specialist', {
+        body: { action: 'cancel', jobId: currentJobId },
       });
-
-      if (error) throw error;
-
       stopPolling();
-      setIsGenerating(false);
-      setShowResults(false);
       setCurrentJobId(null);
+      setView('briefing');
       toast.info('Generation cancelled');
-    } catch (error: any) {
-      console.error('Cancel error:', error);
-      toast.error('Failed to cancel generation', {
-        description: error.message,
-      });
+    } catch (err: any) {
+      console.error('Cancel error:', err);
+      toast.error('Couldn’t cancel', { description: err?.message });
     } finally {
       setIsCancelling(false);
     }
   };
 
-  const handleRegenerate = () => {
-    if (lastProjectRef.current) {
-      handleGenerate(lastProjectRef.current.details, lastProjectRef.current.description, true);
-    }
+  const handleNewMethod = () => {
+    setMethodData(null);
+    setCurrentJobId(null);
+    setInputs(emptyInstallationInputs());
+    setView('briefing');
   };
 
-  const handleCloseCelebration = () => {
-    setShowCelebration(false);
-    setShowResults(true);
+  const handleEditAndRegenerate = () => {
+    if (inputsBeforeStreamRef.current) setInputs(inputsBeforeStreamRef.current);
+    setMethodData(null);
+    setCurrentJobId(null);
+    setView('briefing');
   };
+
+  /* ─── React to job lifecycle ────────────────────────────────── */
+  useEffect(() => {
+    if (jobStatus === 'complete' && jobMethodData) {
+      setMethodData(jobMethodData);
+      setView('results');
+    } else if (jobStatus === 'failed' || jobStatus === 'cancelled') {
+      // Stay on stream so the failure card is shown; stream's "Back"
+      // button calls handleCancel which routes back to briefing.
+      stopPolling();
+    }
+  }, [jobStatus, jobMethodData, stopPolling]);
+
+  // Restart polling if job is processing but polling stopped
+  useEffect(() => {
+    if (currentJobId && jobStatus === 'processing' && !isPolling) {
+      startPolling();
+    }
+  }, [currentJobId, jobStatus, isPolling, startPolling]);
+
+  /* ─── Render ────────────────────────────────────────────────── */
+  const liveMethod = useMemo(() => {
+    if (!jobMethodData) return null;
+    if (Array.isArray(jobMethodData.steps) && jobMethodData.steps.length > 0) return jobMethodData;
+    return null;
+  }, [jobMethodData]);
+
+  if (view === 'streaming') {
+    return (
+      <InstallationStream
+        inputs={inputs}
+        jobId={currentJobId}
+        jobProgress={jobProgress}
+        jobStatus={jobStatus === 'idle' ? 'pending' : jobStatus}
+        currentStep={jobCurrentStep}
+        error={jobError}
+        liveMethod={liveMethod}
+        onCancel={handleCancel}
+      />
+    );
+  }
+
+  if (view === 'results' && methodData) {
+    return (
+      <EditorialMethodResults
+        inputs={inputs}
+        methodData={methodData}
+        jobId={currentJobId}
+        onNewMethod={handleNewMethod}
+        onEditAndRegenerate={handleEditAndRegenerate}
+      />
+    );
+  }
 
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      {/* Success Modal */}
-      <InstallationSuccess
-        results={methodData}
-        onViewResults={handleCloseCelebration}
-        generationTime={Math.round((Date.now() - generationStartTime) / 1000)}
-        open={showCelebration}
-        onOpenChange={(open) => !open && handleCloseCelebration()}
+      {/* Imported circuit context */}
+      <AnimatePresence>
+        {importedContext && (
+          <ImportedContextBanner
+            source={importedContext.sourceDesign}
+            circuitCount={importedContext.context.circuitSummaries.length}
+            onUseContext={handleUseImportedContext}
+            onDismiss={() => setImportedContext(null)}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Save customer prompt (after submit) */}
+      {showSaveCustomerPrompt && !inputs.customerId && inputs.clientName?.trim() && (
+        <SaveCustomerPrompt
+          client={{ name: inputs.clientName, address: inputs.location || undefined }}
+          onSaved={(savedId) => {
+            setInputs((prev) => ({ ...prev, customerId: savedId }));
+            setShowSaveCustomerPrompt(false);
+            if (currentJobId) {
+              supabase
+                .from('installation_method_jobs')
+                .update({ customer_id: savedId })
+                .eq('id', currentJobId);
+            }
+          }}
+          onDismiss={() => {
+            setShowSaveCustomerPrompt(false);
+            setSavePromptDismissed(true);
+          }}
+        />
+      )}
+
+      <InstallationBriefing
+        inputs={inputs}
+        onPatch={onPatch}
+        onGenerate={onGenerate}
+        isProcessing={view !== 'briefing'}
       />
 
-      {!showResults ? (
-        <>
-          {/* Imported Circuit Context Banner */}
-          <AnimatePresence>
-            {importedContext && (
-              <ImportedContextBanner
-                source={importedContext.sourceDesign}
-                circuitCount={importedContext.context.circuitSummaries.length}
-                onUseContext={handleUseImportedContext}
-                onDismiss={handleDismissImportedContext}
-              />
-            )}
-          </AnimatePresence>
-          {/* Save Customer Prompt */}
-          {showSaveCustomerPrompt && !customerId && projectInfo.clientName?.trim() && (
-            <SaveCustomerPrompt
-              client={{
-                name: projectInfo.clientName,
-                address: projectInfo.location || undefined,
-              }}
-              onSaved={(savedId) => {
-                setCustomerId(savedId);
-                setShowSaveCustomerPrompt(false);
-                if (currentJobId) {
-                  supabase
-                    .from('installation_method_jobs')
-                    .update({ customer_id: savedId })
-                    .eq('id', currentJobId);
-                }
-              }}
-              onDismiss={() => {
-                setShowSaveCustomerPrompt(false);
-                setSavePromptDismissed(true);
-              }}
-            />
-          )}
-
-          <InstallationInput
-            onGenerate={handleGenerate}
-            isProcessing={isGenerating}
-            initialPrompt={initialPrompt}
-            initialProjectName={initialProjectName}
-            customerId={customerId}
-            onCustomerIdChange={setCustomerId}
-          />
-        </>
-      ) : isGenerating ? (
-        <InstallationProcessingView
-          originalQuery={originalQuery}
-          projectDetails={projectInfo}
-          progress={{
-            stage: jobQualityMetrics?.stage || 'initializing',
-            message: jobCurrentStep || 'Starting...',
-          }}
-          startTime={generationStartTime}
-          qualityMetrics={jobQualityMetrics}
-          onCancel={handleCancelGeneration}
-          isCancelling={isCancelling}
-        />
-      ) : methodData ? (
-        <InstallationResults
-          originalQuery={originalQuery}
-          jobTitle={methodData.jobTitle}
-          installationType={methodData.installationType}
-          installationGuide={methodData.installationGuide || ''}
-          steps={methodData.steps || []}
-          summary={methodData.summary || {}}
-          projectDetails={projectInfo}
-          fullMethodStatement={methodData._fullMethodStatement}
-          onStartOver={handleRegenerate}
-        />
-      ) : (
-        <Alert>
-          <CheckCircle className="h-4 w-4" />
-          <AlertTitle>Ready to Generate</AlertTitle>
-          <AlertDescription>
-            Configure your installation requirements and click generate to begin.
-          </AlertDescription>
-        </Alert>
-      )}
+      {isCancelling && <p className="text-center text-[12px] text-white/55">Cancelling…</p>}
     </div>
   );
 };

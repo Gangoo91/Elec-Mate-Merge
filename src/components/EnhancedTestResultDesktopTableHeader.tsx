@@ -70,7 +70,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
             so the group row cell stays empty for a clean top-left corner. */}
         <TableHead
           colSpan={1}
-          className="sot-header-group-cell sot-sticky-col w-[72px] min-w-[72px] max-w-[72px]"
+          className="sot-header-group-cell sot-sticky-col w-[112px] min-w-[112px] max-w-[112px]"
         />
         <TableHead
           colSpan={1}
@@ -227,10 +227,10 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
       <TableRow className="sot-header-labels hover:bg-transparent">
         {/* Circuit Number - Always visible */}
         <TableHead
-          className="sot-header-cell sot-sticky-col w-[72px] min-w-[72px] max-w-[72px]"
+          className="sot-header-cell sot-sticky-col w-[112px] min-w-[112px] max-w-[112px]"
           data-group="circuit"
         >
-          Circuit
+          Way
         </TableHead>
 
         {/* Phase - Always visible */}

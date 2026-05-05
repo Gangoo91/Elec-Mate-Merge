@@ -87,8 +87,16 @@ export interface TestResult {
   // Board association (for multi-board installations)
   boardId?: string; // References DistributionBoard.id, defaults to MAIN_BOARD_ID
 
-  // Three-Phase Circuit Fields (BS 7671:2018+A2:2022)
+  // Three-Phase Circuit Fields (BS 7671:2018+A4:2026)
   phaseType?: '1P' | '3P' | '';
+  /**
+   * For 1P circuits on a 3P board, which phase the circuit sits on.
+   * For 3P circuits, may be 'L1,L2,L3' (or null — implied by phaseType '3P').
+   * For 1P boards, null.
+   */
+  phaseAssignment?: 'L1' | 'L2' | 'L3' | 'L1,L2,L3' | null;
+  /** Per-board way number — independent of the global circuitNumber. */
+  wayNumber?: number | null;
   phaseRotation?: string; // Phase sequence test (L1-L2-L3 clockwise)
   phaseBalanceL1?: string; // Load balance on L1 (Amps)
   phaseBalanceL2?: string; // Load balance on L2 (Amps)

@@ -6,7 +6,7 @@ import EICRFormHeader from './eicr/EICRFormHeader';
 import EICRFormContent from './eicr/EICRFormContent';
 import DuplicatedFromBanner from './certificates/DuplicatedFromBanner';
 import { BoardScannerOverlay } from './testing/BoardScannerOverlay';
-import { getCableSizeForRating, getCpcForLive, BS_STANDARD_MAP } from '@/utils/circuitDefaults';
+import { pickCableSize, getCpcForLive, BS_STANDARD_MAP } from '@/utils/circuitDefaults';
 import { getMaxZsFromDeviceDetails, getMaxZsWithRcd } from '@/utils/zsCalculations';
 
 // Tab value type
@@ -57,13 +57,29 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
     (data: { board: any; circuits: any[]; metadata?: any; warnings?: string[] }) => {
       // Convert detected circuits to test results format matching TestResult type
       // BoardPhotoCapture already transforms circuits to: { position, label, device, rating, curve, ... }
-      const newCircuits = data.circuits.map((circuit, index) => {
-        const ratingAmps = circuit.rating || null;
-        const deviceCategory = circuit.device || 'MCB';
-        const deviceCurve = circuit.curve || 'B';
+      const newCircuits = data.circuits.flatMap((circuit, index) => {
+        // Accept both legacy `device: 'MCB'` (string) and new
+        // `device: { category: 'MCB', ... }` (object) shapes.
+        const deviceCategory: string =
+          (typeof circuit.device === 'string'
+            ? circuit.device
+            : circuit.device?.category) || 'MCB';
+        const ratingAmps =
+          circuit.rating ??
+          (typeof circuit.device === 'object' ? circuit.device?.rating_amps : null) ??
+          null;
+        const deviceCurve =
+          circuit.curve ??
+          (typeof circuit.device === 'object' ? circuit.device?.curve : null) ??
+          'B';
+        const isSpare = /spare/i.test(deviceCategory);
 
-        // Get cable size from detected rating
-        const liveSize = getCableSizeForRating(ratingAmps) || '2.5mm';
+        // Get cable size — smart, circuit-type-aware. A 40A shower lands as
+        // 6/10mm², a 32A ring final as 2.5mm², a 32A radial as 4mm².
+        const liveSize =
+          pickCableSize(ratingAmps, {
+            description: circuit.label || '',
+          }) || '2.5mm';
         const cpcSize = getCpcForLive(liveSize) || '1.5mm';
 
         // Get BS standard from device category
@@ -77,47 +93,84 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
           curve: deviceCurve,
           rating: ratingAmps?.toString() || '',
           protectiveDeviceType: deviceCategory,
-          // If the scanned device is an RCBO, default to 30mA so the RCD
-          // branch fires; the user can adjust in the cell afterwards.
           rcdRating: /rcbo/i.test(deviceCategory) ? '30mA' : null,
           circuitDescription: circuit.label || '',
         });
         const maxZs = maxZsLookup.maxZs;
 
-        return {
-          id: `circuit-${Date.now()}-${index}`,
-          circuitNumber: circuit.position?.toString() || String(index + 1),
-          circuitDesignation: `C${circuit.position?.toString() || String(index + 1)}`,
-          circuitDescription: circuit.label || `Circuit ${index + 1}`,
+        const NA = isSpare ? 'N/A' : '';
+        const wayNumber: number =
+          (circuit.position as number) ?? (circuit.wayNumber as number) ?? index + 1;
+        const isThreePhase = circuit.phase === '3P';
+
+        // Common shape per row — varies only for 3P expansion below.
+        const baseRow = {
+          circuitDescription: isSpare ? 'Spare' : circuit.label || `Circuit ${wayNumber}`,
           circuitType: '',
           type: '',
-          // Use DETECTED device values
-          protectiveDeviceType: deviceCategory,
-          protectiveDeviceRating: ratingAmps?.toString() || '',
-          protectiveDeviceCurve: deviceCurve,
-          bsStandard: bsStandard,
-          // Cable sizes from detected rating
-          liveSize: liveSize,
-          cpcSize: cpcSize,
-          // Max Zs calculated from BS 7671 tables
-          maxZs: maxZs?.toString() || '',
-          phaseType: circuit.phase === '3P' ? '3P' : ('1P' as '1P' | '3P'),
-          // RCD details if RCBO
-          rcdBsStandard: deviceCategory === 'RCBO' ? 'RCBO (BS EN 61009)' : '',
-          rcdType: deviceCategory === 'RCBO' ? 'A' : '',
-          rcdRating: deviceCategory === 'RCBO' ? '30' : '',
-          // Default test values - user must fill these
-          r1r2: '',
-          r2: '',
-          zs: '',
-          polarity: '',
-          insulationTestVoltage: '500',
-          insulationLiveNeutral: '',
-          insulationLiveEarth: '',
-          rcdOneX: '',
+          protectiveDeviceType: isSpare ? '' : deviceCategory,
+          protectiveDeviceRating: isSpare ? '' : ratingAmps?.toString() || '',
+          protectiveDeviceCurve: isSpare ? '' : deviceCurve,
+          bsStandard: isSpare ? '' : bsStandard,
+          liveSize: isSpare ? '' : liveSize,
+          cpcSize: isSpare ? '' : cpcSize,
+          maxZs: isSpare ? '' : maxZs?.toString() || '',
+          wayNumber,
+          isSpare,
+          rcdBsStandard: isSpare
+            ? ''
+            : deviceCategory === 'RCBO' || deviceCategory === 'RCD'
+              ? 'BS EN 61009'
+              : '',
+          rcdType: isSpare
+            ? ''
+            : ((circuit.device?.rcd_type as string | undefined) ??
+              (deviceCategory === 'RCBO' ? 'A' : '')),
+          rcdRating: isSpare
+            ? ''
+            : (circuit.device?.i_delta_n_mA?.toString() ??
+              (deviceCategory === 'RCBO' ? '30' : '')),
+          r1r2: NA,
+          r2: NA,
+          zs: NA,
+          polarity: NA,
+          insulationTestVoltage: isSpare ? 'N/A' : '500',
+          insulationLiveNeutral: NA,
+          insulationLiveEarth: NA,
+          rcdOneX: NA,
           autoFilled: true,
-          notes: circuit.notes || '',
+          notes: circuit.notes || (isSpare ? 'Spare way — no circuit fitted' : ''),
         };
+
+        // ── Three-phase: expand into THREE rows (one per phase) ──
+        // This is how the schedule of tests for 3P installations is laid out:
+        // each phase gets its own row for IR / Zs / RCD test readings.
+        if (isThreePhase) {
+          return (['L1', 'L2', 'L3'] as const).map((phase, i) => ({
+            ...baseRow,
+            id: `circuit-${Date.now()}-${index}-${phase}`,
+            circuitNumber: `${wayNumber}.${i + 1}`,
+            circuitDesignation: `Way ${wayNumber} ${phase}`,
+            phaseType: '3P' as const,
+            phaseAssignment: phase,
+          }));
+        }
+
+        // ── Single-phase: one row, with optional phase letter on 3P boards ──
+        const rawPhase =
+          circuit.phaseAssignment ?? circuit.phase_assignment ?? circuit.phaseDesignation;
+        const phaseLetter: 'L1' | 'L2' | 'L3' | null =
+          rawPhase === 'L1' || rawPhase === 'L2' || rawPhase === 'L3' ? rawPhase : null;
+        return [
+          {
+            ...baseRow,
+            id: `circuit-${Date.now()}-${index}`,
+            circuitNumber: String(wayNumber),
+            circuitDesignation: phaseLetter ? `Way ${wayNumber} ${phaseLetter}` : `Way ${wayNumber}`,
+            phaseType: '1P' as const,
+            phaseAssignment: phaseLetter,
+          },
+        ];
       });
 
       // Merge with existing circuits or replace

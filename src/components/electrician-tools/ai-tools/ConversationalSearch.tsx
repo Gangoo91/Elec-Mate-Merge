@@ -522,6 +522,19 @@ export default function ConversationalSearch() {
     toast.success('New chat started');
   }, [chatHistory, haptic]);
 
+  // ChatGPT-style stop. Aborts the in-flight fetch — the streaming
+  // pipeline's `finally` block does the rest (resets state, frees the
+  // controller). The user is then free to ask a different question.
+  const handleStop = useCallback(() => {
+    if (!abortControllerRef.current) return;
+    haptic.warning();
+    try {
+      abortControllerRef.current.abort();
+    } catch (err) {
+      console.warn('[ConversationalSearch] abort failed:', err);
+    }
+  }, [haptic]);
+
   const handleLoadSession = useCallback(
     async (id: string) => {
       const loadedMessages = await chatHistory.loadSession(id);
@@ -972,6 +985,7 @@ export default function ConversationalSearch() {
             value={input}
             onChange={setInput}
             onSubmit={() => handleSend()}
+            onStop={handleStop}
             onClear={handleNewChat}
             isStreaming={isStreaming}
             placeholder="Ask Elec-AI…"

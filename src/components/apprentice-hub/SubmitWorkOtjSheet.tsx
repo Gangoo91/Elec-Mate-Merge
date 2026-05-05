@@ -272,7 +272,8 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
                     key={a.value}
                     type="button"
                     onClick={() => setForm((f) => ({ ...f, activity_type: a.value }))}
-                    className={cn('h-auto py-2 px-3 rounded-lg border text-left transition-colors touch-manipulation',
+                    className={cn(
+                      'h-auto py-2 px-3 rounded-lg border text-left transition-colors touch-manipulation',
                       form.activity_type === a.value
                         ? 'border-white/[0.06] bg-white/[0.02] text-white'
                         : 'border-white/[0.07] bg-white/[0.02] text-white/95 hover:text-white hover:border-white/[0.18]'
@@ -280,7 +281,8 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
                   >
                     <div className="text-[12.5px] font-medium leading-tight">{a.label}</div>
                     <div
-                      className={cn('mt-0.5 text-[10.5px] leading-snug',
+                      className={cn(
+                        'mt-0.5 text-[10.5px] leading-snug',
                         form.activity_type === a.value ? 'text-emerald-100/75' : 'text-white/95'
                       )}
                     >
@@ -412,9 +414,10 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
               type="button"
               onClick={handleSubmit}
               disabled={!valid || saving}
-              className={cn('flex-1 h-11 rounded-lg text-[13px] font-semibold transition-colors touch-manipulation',
+              className={cn(
+                'flex-1 h-11 rounded-lg text-[13px] font-semibold transition-colors touch-manipulation',
                 valid && !saving
-                  ? 'bg-white/[0.02] text-black hover:bg-white/[0.02]'
+                  ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
                   : 'bg-white/[0.05] text-white/40'
               )}
             >

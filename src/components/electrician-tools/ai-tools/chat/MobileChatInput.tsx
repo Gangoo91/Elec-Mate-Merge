@@ -43,6 +43,12 @@ interface MobileChatInputProps {
    * diagnostic — a photo with no caption is a valid request.
    */
   canSubmitWithoutText?: boolean;
+  /**
+   * Called when user taps Stop (only shown while streaming). Should abort
+   * the in-flight request. ChatGPT-style — frees the user to type the next
+   * message rather than wait for the model to finish.
+   */
+  onStop?: () => void;
 }
 
 /**
@@ -68,6 +74,7 @@ export const MobileChatInput = memo(function MobileChatInput({
   voiceEnabled = true,
   onTranscript,
   canSubmitWithoutText = false,
+  onStop,
 }: MobileChatInputProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isFocused, setIsFocused] = useState(false);
@@ -195,7 +202,7 @@ export const MobileChatInput = memo(function MobileChatInput({
           <div className="shrink-0 self-center pl-1">
             <VoiceInputButton
               onTranscript={handleTranscript}
-              disabled={isStreaming}
+              disabled={false}
             />
           </div>
         )}
@@ -208,32 +215,49 @@ export const MobileChatInput = memo(function MobileChatInput({
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           placeholder={placeholder}
-          disabled={isStreaming}
           rows={1}
           className={cn(
             'flex-1 bg-transparent border-none outline-none resize-none',
             'text-white placeholder:text-white',
             'min-h-[40px] max-h-[120px]',
-            'leading-relaxed py-2 px-2.5',
-            'disabled:opacity-60'
+            'leading-relaxed py-2 px-2.5'
           )}
           style={{ fontSize: '16px' }}
           aria-label="Message input"
         />
 
-        <button
-          onClick={handleSubmit}
-          disabled={!canSend}
-          className={cn(
-            'shrink-0 h-11 px-5 rounded-full text-[13px] font-semibold',
-            'bg-elec-yellow text-black hover:bg-elec-yellow/90',
-            'active:scale-[0.98] transition-all touch-manipulation',
-            'disabled:opacity-40 disabled:active:scale-100 disabled:cursor-not-allowed'
-          )}
-          aria-label={isStreaming ? 'Sending' : 'Send message'}
-        >
-          {isStreaming ? 'Sending' : 'Send'}
-        </button>
+        {isStreaming && onStop ? (
+          <button
+            onClick={() => {
+              haptic.warning();
+              onStop();
+            }}
+            className={cn(
+              'shrink-0 h-11 w-11 rounded-full inline-flex items-center justify-center',
+              'bg-white text-black hover:bg-white/90',
+              'active:scale-[0.98] transition-all touch-manipulation'
+            )}
+            aria-label="Stop generating"
+            title="Stop generating"
+          >
+            {/* Filled square — ChatGPT-style stop glyph. */}
+            <span className="block h-3 w-3 rounded-[2px] bg-black" />
+          </button>
+        ) : (
+          <button
+            onClick={handleSubmit}
+            disabled={!canSend}
+            className={cn(
+              'shrink-0 h-11 px-5 rounded-full text-[13px] font-semibold',
+              'bg-elec-yellow text-black hover:bg-elec-yellow/90',
+              'active:scale-[0.98] transition-all touch-manipulation',
+              'disabled:opacity-40 disabled:active:scale-100 disabled:cursor-not-allowed'
+            )}
+            aria-label="Send message"
+          >
+            Send
+          </button>
+        )}
       </div>
     </div>
   );

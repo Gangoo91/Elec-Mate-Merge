@@ -1,14 +1,7 @@
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import {
-  Rocket,
-  ClipboardCheck,
-  Sparkles,
-  Briefcase,
-  GraduationCap,
-  Lightbulb,
-  Zap,
-} from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface AppTipsSheetProps {
@@ -18,247 +11,295 @@ interface AppTipsSheetProps {
 
 interface Tip {
   title: string;
-  description: string;
+  body: string;
+  route?: string;
 }
 
-interface TipCategory {
-  id: string;
+interface Section {
+  number: string;
+  eyebrow: string;
   title: string;
-  subtitle: string;
-  icon: React.ElementType;
-  gradient: string;
-  gradientLine: string;
-  iconBg: string;
-  iconBorder: string;
-  iconText: string;
-  dotColour: string;
-  blobGradient: string;
+  intro?: string;
   tips: Tip[];
 }
 
-const categories: TipCategory[] = [
+// Verified routes from AppRouter / ElectricianHubRoutes:
+//   /settings?tab=account|business|elec-id
+//   /electrician/<feature>
+const SETTINGS_ACCOUNT = '/settings?tab=account';
+const SETTINGS_BUSINESS = '/settings?tab=business';
+const SETTINGS_ELEC_ID = '/settings?tab=elec-id';
+const ELEC = (p: string) => `/electrician/${p}`;
+
+const sections: Section[] = [
   {
-    id: 'getting-started',
-    title: 'Getting Started',
-    subtitle: 'Set up once, save time forever',
-    icon: Rocket,
-    gradient: 'from-amber-500 via-yellow-500 to-amber-500',
-    gradientLine: 'from-amber-500 via-yellow-500 to-amber-500',
-    iconBg: 'bg-amber-500/10',
-    iconBorder: 'border-amber-500/20',
-    iconText: 'text-amber-400',
-    dotColour: 'bg-amber-400',
-    blobGradient: 'from-amber-500 via-yellow-500 to-amber-500',
+    number: '01',
+    eyebrow: 'Setup',
+    title: 'Get set up',
+    intro:
+      'A few minutes here saves hours later. Your details auto-fill into every cert, quote and invoice you generate.',
     tips: [
       {
-        title: 'Your Profile',
-        description:
-          'Settings \u2192 Account. Add your name, job title, specialisation, ECS card type, and years of experience. If you\u2019re an apprentice, set your course level, year, and training provider.',
+        title: 'Profile',
+        body: 'Your name, role, ECS card and years of experience. The basics that appear on shared documents.',
+        route: SETTINGS_ACCOUNT,
       },
       {
-        title: 'Company Identity',
-        description:
-          'Settings \u2192 Business \u2192 Company Identity. Add your company name, address, phone, email, logo, and registration/VAT numbers. Your logo appears on every PDF you generate.',
+        title: 'Company identity',
+        body: 'Business name, address, phone, email, registration and VAT numbers. Pulled into every PDF.',
+        route: SETTINGS_BUSINESS,
       },
       {
-        title: 'Rates & Pricing',
-        description:
-          'Settings \u2192 Business \u2192 Pricing & Rates. Set your default hourly rate, overhead percentage, and profit margin. Add worker rates for electricians, apprentices, labourers, designers, and owners \u2014 the Cost Engineer uses these for accurate quotes.',
+        title: 'Brand kit',
+        body: 'Logo, primary and accent colours, signature. Sets the tone of the documents your clients receive.',
+        route: SETTINGS_BUSINESS,
       },
       {
-        title: 'Inspector Details',
-        description:
-          'Settings \u2192 Business \u2192 Inspector Details. Select your qualifications (18th Edition, 2391, AM2, etc.), scheme registration (NICEIC, NAPIT, ELECSA), insurance provider and cover level, and draw your digital signature. All auto-fill into certificates.',
+        title: 'Rates and pricing',
+        body: 'Default hourly rate, overhead, profit margin, plus per-role rates for electricians, apprentices, labourers and designers.',
+        route: SETTINGS_BUSINESS,
       },
       {
-        title: 'Test Instruments',
-        description:
-          'Settings \u2192 Business \u2192 Testing Instruments. Add your MFT, insulation tester, loop impedance tester, and other instruments with serial numbers and calibration dates. They auto-populate into your certs and flag when calibration is due.',
+        title: 'Inspector details',
+        body: 'Qualifications (18th Edition, 2391, AM2), scheme registration (NICEIC, NAPIT, ELECSA), insurance. Auto-fills certificates.',
+        route: SETTINGS_BUSINESS,
       },
       {
-        title: 'Payment Setup',
-        description:
-          'Settings \u2192 Business \u2192 Payment & Banking. Add your bank details (account name, sort code, account number) so they appear on invoices. Connect Stripe to accept card payments directly from clients.',
+        title: 'Test instruments',
+        body: 'MFTs, insulation testers, loop impedance testers — with serial numbers and calibration dates. Flagged when calibration is due.',
+        route: SETTINGS_BUSINESS,
       },
       {
-        title: 'Elec-ID',
-        description:
-          'Your digital trade card. Upload qualifications, track expiry dates, build your work history, and share everything with clients via QR code or link. Also generates a professional CV from your profile.',
+        title: 'Payment and banking',
+        body: 'Bank details for invoices. Connect Stripe to take card payments directly from clients.',
+        route: SETTINGS_BUSINESS,
       },
     ],
   },
   {
-    id: 'inspection-testing',
-    title: 'Inspection & Testing',
-    subtitle: 'Certs, scanning, and compliance',
-    icon: ClipboardCheck,
-    gradient: 'from-blue-500 via-blue-400 to-cyan-400',
-    gradientLine: 'from-blue-500 via-blue-400 to-cyan-400',
-    iconBg: 'bg-blue-500/10',
-    iconBorder: 'border-blue-500/20',
-    iconText: 'text-blue-400',
-    dotColour: 'bg-blue-400',
-    blobGradient: 'from-blue-500 via-blue-400 to-cyan-400',
+    number: '02',
+    eyebrow: 'Compliance',
+    title: 'Certificates',
+    intro:
+      'Every certificate auto-saves to your device first, then syncs. You can finish a job offline and the data is safe.',
     tips: [
       {
-        title: 'EICR / EIC / Minor Works',
-        description:
-          'Full cert forms with auto-save every 10 seconds. Saves locally first, then syncs to cloud \u2014 never lose work on site.',
+        title: 'EICR',
+        body: 'The full Electrical Installation Condition Report — board-by-board, schedule of tests, observations and recommendations.',
+        route: ELEC('inspection-testing'),
       },
       {
-        title: 'Board Scanner',
-        description:
-          'Snap a photo of a distribution board and AI reads the circuit details. Saves hours of manual entry.',
+        title: 'EIC and Minor Works',
+        body: 'New install certs with all the schedule fields, model-form-accurate, ready to print or email.',
+        route: ELEC('inspection-testing'),
       },
       {
-        title: 'Schedule of Tests',
-        description:
-          '\u201CFill All\u201D buttons bulk-set RCD results, AFDD results, and BS standards across all circuits in one tap.',
+        title: 'Solar PV and EV charging',
+        body: 'Specialist certs with the right declarations and presets — no need to remember which fields apply.',
+        route: ELEC('inspection-testing'),
       },
       {
-        title: 'Specialist Certs',
-        description:
-          'Emergency Lighting, Fire Alarm, Solar PV, EV Charging \u2014 all with built-in compliance checks and auto-save.',
+        title: 'Fire alarm and emergency lighting',
+        body: 'Design, installation, commissioning, modification and inspection certs for BS 5839 and BS 5266.',
+        route: ELEC('inspection-testing'),
+      },
+      {
+        title: 'Specialist notices',
+        body: 'BESS, PAT, Smoke and CO alarm, Lightning Protection, G98 and G99, Permit to Work, Danger and Limitation notices.',
+        route: ELEC('inspection-testing'),
+      },
+      {
+        title: 'Board scanner',
+        body: 'Snap a photo of a distribution board and the circuit details are read automatically. Cuts out the manual entry.',
+        route: ELEC('inspection-testing'),
+      },
+      {
+        title: 'Schedule of tests, fast',
+        body: 'Bulk-set RCD results, AFDD results and BS standards across every circuit in one tap.',
+        route: ELEC('inspection-testing'),
+      },
+      {
+        title: 'A4:2026 ready',
+        body: 'AFDD requirements, updated TN-C-S earthing rules and the new schedule columns are all in the current cert forms.',
       },
     ],
   },
   {
-    id: 'ai-tools',
-    title: 'AI Tools',
-    subtitle: 'Design, quote, and plan in seconds',
-    icon: Sparkles,
-    gradient: 'from-purple-500 via-purple-400 to-violet-400',
-    gradientLine: 'from-purple-500 via-purple-400 to-violet-400',
-    iconBg: 'bg-purple-500/10',
-    iconBorder: 'border-purple-500/20',
-    iconText: 'text-purple-400',
-    dotColour: 'bg-purple-400',
-    blobGradient: 'from-purple-500 via-purple-400 to-violet-400',
+    number: '03',
+    eyebrow: 'AI tools',
+    title: 'Design, quote, plan',
+    intro:
+      'Built for the trade. Trained on real pricing data, BS 7671 and the way jobs actually run.',
     tips: [
       {
         title: 'Circuit Designer',
-        description:
-          'Describe your installation, get cable sizes, protection devices, and volt drop calcs to BS 7671.',
+        body: 'Describe an installation. Get cable sizes, protective devices, volt drop and Zs values to BS 7671.',
+        route: ELEC('circuit-designer'),
       },
       {
         title: 'Cost Engineer',
-        description:
-          'AI quotes from real trade pricing data. Generates itemised quotes ready to send to clients.',
+        body: 'Itemised quotes from real trade pricing. Specify the job, get a client-ready breakdown with materials and labour.',
+        route: ELEC('cost-engineer'),
       },
       {
-        title: 'RAMS Generator',
-        description:
-          'Describe the job, get a full Risk Assessment & Method Statement in minutes. Ready to print.',
+        title: 'RAMS and method statements',
+        body: 'Risk Assessment plus Method Statement, generated from the job description. Hazards, controls, PPE and step-by-step.',
+        route: ELEC('health-safety'),
       },
       {
         title: 'Installation Specialist',
-        description:
-          'Step-by-step installation guidance for any type of electrical work, with reg references.',
+        body: 'Step-by-step installation guidance for any kind of electrical work, with regulation references.',
+        route: ELEC('installation-specialist'),
+      },
+      {
+        title: 'Diagram Builder',
+        body: 'Generate single-line diagrams, circuit layouts and schematics from a brief description.',
+        route: ELEC('install-planner'),
+      },
+      {
+        title: 'On-site analysis',
+        body: 'Photo of a component or fault and get the identification, likely cause and the next thing to check.',
+      },
+      {
+        title: 'BS 7671 lookup',
+        body: 'Searchable regulations with practical guidance notes. Find any reg in seconds, from any cert form.',
       },
     ],
   },
   {
-    id: 'business-hub',
-    title: 'Business Hub',
-    subtitle: 'Run your business from your phone',
-    icon: Briefcase,
-    gradient: 'from-emerald-500 via-emerald-400 to-green-400',
-    gradientLine: 'from-emerald-500 via-emerald-400 to-green-400',
-    iconBg: 'bg-emerald-500/10',
-    iconBorder: 'border-emerald-500/20',
-    iconText: 'text-emerald-400',
-    dotColour: 'bg-emerald-400',
-    blobGradient: 'from-emerald-500 via-emerald-400 to-green-400',
+    number: '04',
+    eyebrow: 'Day to day',
+    title: 'Run the business',
+    intro: 'The pipeline from enquiry to paid, in one place.',
     tips: [
       {
         title: 'Quotes',
-        description:
-          'Create itemised quotes with your rates, materials, and labour. Set validity period, deposit percentage, and warranty terms in Settings \u2192 Business \u2192 Quote Settings. Choose from 15+ standard T&Cs or write your own.',
+        body: 'Itemised quotes with your rates, materials and labour. Validity period, deposit and warranty terms in your settings.',
+        route: ELEC('quotes'),
       },
       {
         title: 'Invoices',
-        description:
-          'Convert quotes to invoices in one tap, or create standalone invoices. Configure late payment interest, preferred payment method, and invoice T&Cs in Settings \u2192 Business \u2192 Invoice Settings. Bank details auto-fill from your payment setup.',
+        body: 'Convert a quote to an invoice in one tap, or create one standalone. Bank details and T&Cs auto-fill.',
+        route: ELEC('invoices'),
       },
       {
-        title: 'Calendar & Scheduling',
-        description:
-          'Manage jobs, set reminders, plan your week. Syncs with your AI day planner for optimised routing between jobs.',
+        title: 'Calendar',
+        body: 'Plan your week, see jobs at a glance, set reminders. Connects with the AI day planner for routing.',
+        route: ELEC('business/calendar'),
       },
       {
         title: 'Spark Tasks',
-        description:
-          'Your job to-do list with project grouping and priority levels. Create tasks from site, assign to projects, and track completion.',
+        body: 'Your job to-do list grouped by project, with priorities. Add from site, track to completion.',
+        route: ELEC('tasks'),
       },
       {
-        title: 'Mate (Business AI)',
-        description:
-          'Your WhatsApp AI assistant. Creates invoices, checks your schedule, logs tasks, runs calcs \u2014 all via chat. Set up from the Mate card in the Electrician Hub.',
-      },
-    ],
-  },
-  {
-    id: 'study-centre',
-    title: 'Study Centre',
-    subtitle: 'Learn, revise, and stay current',
-    icon: GraduationCap,
-    gradient: 'from-cyan-500 via-cyan-400 to-sky-400',
-    gradientLine: 'from-cyan-500 via-cyan-400 to-sky-400',
-    iconBg: 'bg-cyan-500/10',
-    iconBorder: 'border-cyan-500/20',
-    iconText: 'text-cyan-400',
-    dotColour: 'bg-cyan-400',
-    blobGradient: 'from-cyan-500 via-cyan-400 to-sky-400',
-    tips: [
-      {
-        title: 'Apprentice Courses',
-        description:
-          'Level 2 & 3 with interactive content, mock exams, and progress tracking. Built for the new apprenticeship standards.',
+        title: 'Snagging',
+        body: 'Log defects with photos against a project, assign to yourself or a mate, and generate a snag list PDF.',
+        route: ELEC('snagging'),
       },
       {
-        title: 'CPD / Upskilling',
-        description:
-          'Courses for qualified sparkies to stay current with regs and new tech like solar PV and EV charging.',
+        title: 'Take card payments',
+        body: 'Connect Stripe and your invoices include a Pay Now link. Money lands directly in your account.',
+        route: SETTINGS_BUSINESS,
       },
       {
-        title: 'BS 7671 Reference',
-        description:
-          'Searchable regulation database with practical guidance notes. Find any reg in seconds.',
+        title: 'Accounting sync',
+        body: 'Push invoices and expenses to Xero, QuickBooks, Sage or FreeAgent. Set up once in your business settings.',
+        route: SETTINGS_BUSINESS,
+      },
+      {
+        title: 'Late payment chasers',
+        body: 'Automatic reminder emails for overdue invoices, with a tone that escalates over time. You stay in control.',
+        route: ELEC('invoices'),
+      },
+      {
+        title: 'Receipt to expense',
+        body: 'Photograph a receipt. Date, supplier, amount and VAT extracted into a logged expense.',
+        route: ELEC('expenses'),
       },
     ],
   },
   {
-    id: 'pro-tips',
-    title: 'Pro Tips',
-    subtitle: 'Get more from every feature',
-    icon: Lightbulb,
-    gradient: 'from-orange-500 via-orange-400 to-amber-400',
-    gradientLine: 'from-orange-500 via-orange-400 to-amber-400',
-    iconBg: 'bg-orange-500/10',
-    iconBorder: 'border-orange-500/20',
-    iconText: 'text-orange-400',
-    dotColour: 'bg-orange-400',
-    blobGradient: 'from-orange-500 via-orange-400 to-amber-400',
+    number: '05',
+    eyebrow: 'Learning',
+    title: 'Learn and grow',
+    intro:
+      'Whether you are coming through your apprenticeship or staying current as a qualified spark.',
     tips: [
       {
-        title: 'Explore Everything',
-        description:
-          '50+ tools across inspection, AI, business, and learning. Tap around \u2014 you might find something that saves hours every week.',
+        title: 'Apprentice Hub',
+        body: 'Level 2 and Level 3 with interactive content, mock exams, OJT tracking and progress through the standards.',
       },
       {
-        title: 'Offline Ready',
-        description:
-          'Certs auto-save locally. Lose signal on site? Data\u2019s safe. Syncs automatically when you\u2019re back online.',
+        title: 'EPA and AM2 simulators',
+        body: 'Knowledge tests, professional discussions, safe isolation, testing and fault finding under exam conditions.',
       },
       {
-        title: 'Brand Your PDFs',
-        description:
-          'Every cert, quote, and invoice generates a branded PDF. Set your logo, brand colours (primary, secondary, accent), and logo size in Settings \u2192 Business. Connect Xero, QuickBooks, Sage, or FreeAgent to auto-sync invoices.',
+        title: 'Mood and wellbeing',
+        body: 'Weekly check-ins, signposting to the Electrical Industries Charity, Mind, and Samaritans. Private to you.',
       },
       {
-        title: 'Quick Search',
-        description:
-          'Tap the search icon (next to this button!) to jump to any page in the app instantly. Or press Cmd+K on desktop.',
+        title: 'CPD and upskilling',
+        body: 'Courses for qualified electricians on regs, solar PV, EV charging, fire alarm and more.',
+      },
+      {
+        title: 'BS 7671, OSG, GN3',
+        body: 'The full text, searchable, with practical notes alongside.',
+      },
+    ],
+  },
+  {
+    number: '06',
+    eyebrow: 'Trade card',
+    title: 'Elec-ID',
+    intro: 'Your professional identity, sharable in a tap.',
+    tips: [
+      {
+        title: 'Build your trade card',
+        body: 'Qualifications, expiry dates, work history, scheme registration. The single source of truth for who you are.',
+        route: SETTINGS_ELEC_ID,
+      },
+      {
+        title: 'Generate your CV',
+        body: 'A professional CV pulled from your Elec-ID profile, ready to send to employers or contracts.',
+        route: ELEC('cv-builder'),
+      },
+      {
+        title: 'Share via QR',
+        body: 'A public profile link, with a QR code. Hand it to clients, recruiters, anyone.',
+        route: SETTINGS_ELEC_ID,
+      },
+    ],
+  },
+  {
+    number: '07',
+    eyebrow: 'Power user',
+    title: 'Pro tips',
+    intro: 'Small things that compound over time.',
+    tips: [
+      {
+        title: 'Quick search anywhere',
+        body: 'Cmd+K on desktop, or the search button in the header on mobile, jumps straight to any page in the app.',
+      },
+      {
+        title: 'Brand every PDF',
+        body: 'Logo, primary and accent colours, signature. Set them once in business settings and every cert, quote and invoice carries your brand.',
+        route: SETTINGS_BUSINESS,
+      },
+      {
+        title: 'Quote to invoice in one tap',
+        body: 'When a job is done, open the quote and tap Convert. The invoice carries client, line items, rates and bank details across.',
+        route: ELEC('quotes'),
+      },
+      {
+        title: 'Bulk PDF export',
+        body: 'Select a date range or project and export every cert, quote and invoice as a single bundle.',
+        route: ELEC('invoices'),
+      },
+      {
+        title: 'Search regs from any cert',
+        body: 'A reg lookup is one tap from inside the cert forms. Find the right reference without leaving the form.',
+        route: ELEC('inspection-testing'),
       },
     ],
   },
@@ -267,135 +308,162 @@ const categories: TipCategory[] = [
 const containerVariants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.06 },
+    transition: { staggerChildren: 0.04 },
   },
 };
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 16 },
+const sectionVariants = {
+  hidden: { opacity: 0, y: 12 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { type: 'spring', stiffness: 260, damping: 20 },
+    transition: { type: 'spring', stiffness: 240, damping: 22 },
   },
 };
 
-const CategoryCard = ({ category }: { category: TipCategory }) => {
-  const Icon = category.icon;
-
-  return (
-    <motion.div
-      variants={cardVariants}
-      className={cn('group relative overflow-hidden', 'glass-premium rounded-2xl')}
-    >
-      {/* 2px gradient accent line */}
-      <div
-        className={cn(
-          'absolute inset-x-0 top-0 h-[2px]',
-          'bg-gradient-to-r',
-          category.gradientLine,
-          'opacity-60'
-        )}
-      />
-
-      {/* Decorative gradient blob */}
-      <div
-        className={cn(
-          'absolute -top-20 -right-20 w-40 h-40',
-          'bg-gradient-to-br',
-          category.blobGradient,
-          'opacity-[0.04] blur-3xl pointer-events-none'
-        )}
-      />
-
-      <div className="relative z-10 p-5">
-        {/* Header: icon + title + subtitle */}
-        <div className="flex items-start gap-3.5 mb-4">
-          <div
-            className={cn(
-              'flex-shrink-0 p-2.5 rounded-xl',
-              category.iconBg,
-              'border',
-              category.iconBorder
-            )}
-          >
-            <Icon className={cn('h-6 w-6', category.iconText)} />
-          </div>
-          <div className="flex-1 min-w-0">
-            <h3 className="text-lg font-semibold text-white leading-tight">{category.title}</h3>
-            <p className="text-sm text-white mt-0.5">{category.subtitle}</p>
-          </div>
-          <span
-            className={cn(
-              'flex-shrink-0 text-xs font-medium text-white',
-              'px-2 py-1 rounded-md bg-white/[0.04]'
-            )}
-          >
-            {category.tips.length} tips
-          </span>
-        </div>
-
-        {/* Tips — clean rows, no inner containers */}
-        <div className="space-y-0">
-          {category.tips.map((tip, i) => (
-            <div key={tip.title}>
-              {i > 0 && <div className="h-px bg-white/[0.04] mx-1" />}
-              <div className="py-3 flex gap-3">
-                <div
-                  className={cn(
-                    'flex-shrink-0 w-1.5 h-1.5 rounded-full mt-[7px]',
-                    category.dotColour
-                  )}
-                />
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-white">{tip.title}</p>
-                  <p className="text-sm text-white leading-relaxed mt-0.5">{tip.description}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </motion.div>
-  );
+const matchesQuery = (tip: Tip, q: string) => {
+  if (!q) return true;
+  const needle = q.toLowerCase();
+  return tip.title.toLowerCase().includes(needle) || tip.body.toLowerCase().includes(needle);
 };
 
 const AppTipsSheet = ({ open, onOpenChange }: AppTipsSheetProps) => {
+  const navigate = useNavigate();
+  const [query, setQuery] = useState('');
+
+  const filtered = useMemo(() => {
+    if (!query.trim()) return sections;
+    return sections
+      .map((s) => ({ ...s, tips: s.tips.filter((t) => matchesQuery(t, query)) }))
+      .filter((s) => s.tips.length > 0);
+  }, [query]);
+
+  const handleOpen = (route?: string) => {
+    if (!route) return;
+    onOpenChange(false);
+    // tiny delay so sheet close animation doesn't compete with route change
+    setTimeout(() => navigate(route), 150);
+  };
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+      <SheetContent side="bottom" className="h-[92vh] p-0 rounded-t-2xl overflow-hidden">
         <div className="flex flex-col h-full bg-background">
-          {/* Sticky header */}
+          {/* Sticky header — editorial: thin gold accent, big title, search */}
           <div className="flex-shrink-0 sticky top-0 z-10 backdrop-blur-xl bg-background/95">
-            <div className="h-[2px] bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-500" />
-            <div className="px-5 py-4 flex items-center gap-3.5">
-              <div className={cn('p-2.5 rounded-xl', 'bg-amber-500/10 border border-amber-500/20')}>
-                <Zap className="h-5 w-5 text-amber-400" />
+            <div className="h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-orange-400" />
+
+            <div className="px-5 sm:px-8 pt-6 pb-5">
+              <div className="text-[10px] font-bold uppercase tracking-[0.24em] text-elec-yellow">
+                Tips &amp; Guidance
               </div>
-              <div className="flex-1">
-                <h2 className="text-lg font-bold text-white">Tips & Guidance</h2>
-                <p className="text-xs text-white mt-0.5">
-                  Get the most out of every feature in Elec-Mate
-                </p>
-              </div>
+              <h2 className="mt-2 text-[28px] sm:text-[34px] leading-[1.05] font-semibold text-white tracking-tight">
+                A guide to every part of Elec-Mate.
+              </h2>
+
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search tips"
+                aria-label="Search tips"
+                className={cn(
+                  'mt-5 w-full bg-transparent border-0 border-b border-white/15',
+                  'text-base text-white placeholder:text-white/35',
+                  'pb-2 pt-1 outline-none focus:border-elec-yellow/70 focus:ring-0',
+                  'transition-colors touch-manipulation'
+                )}
+              />
             </div>
-            <div className="h-px bg-white/[0.06]" />
           </div>
 
-          {/* Scrollable body */}
+          {/* Body */}
           <div className="flex-1 overflow-y-auto overscroll-contain">
-            <div className="px-4 py-4">
-              <motion.div
-                className="space-y-4 pb-8"
-                variants={containerVariants}
-                initial="hidden"
-                animate={open ? 'visible' : 'hidden'}
-              >
-                {categories.map((cat) => (
-                  <CategoryCard key={cat.id} category={cat} />
-                ))}
-              </motion.div>
-            </div>
+            <motion.div
+              className="px-5 sm:px-8 pt-2 pb-20"
+              variants={containerVariants}
+              initial="hidden"
+              animate={open ? 'visible' : 'hidden'}
+            >
+              {filtered.length === 0 ? (
+                <div className="py-20 text-center text-sm text-white/50">
+                  No tips match &ldquo;{query}&rdquo;.
+                </div>
+              ) : (
+                filtered.map((section) => (
+                  <motion.section
+                    key={section.number}
+                    variants={sectionVariants}
+                    className="pt-10 sm:pt-14 first:pt-6"
+                  >
+                    {/* Section header — number in yellow, eyebrow, then title */}
+                    <div className="flex items-baseline gap-4 sm:gap-6">
+                      <span className="text-[44px] sm:text-[56px] leading-none font-light text-elec-yellow/80 tabular-nums">
+                        {section.number}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-[10px] font-bold uppercase tracking-[0.22em] text-elec-yellow">
+                          {section.eyebrow}
+                        </div>
+                        <h3 className="mt-1 text-[22px] sm:text-[26px] leading-tight font-semibold text-white tracking-tight">
+                          {section.title}
+                        </h3>
+                      </div>
+                    </div>
+
+                    {section.intro && (
+                      <p className="mt-4 max-w-[58ch] text-[15px] leading-relaxed text-white/65">
+                        {section.intro}
+                      </p>
+                    )}
+
+                    {/* Tips — hairline-separated rows, no icons, no chrome */}
+                    <ul className="mt-6 border-t border-white/[0.06]">
+                      {section.tips.map((tip) => {
+                        const interactive = Boolean(tip.route);
+                        return (
+                          <li key={tip.title} className="border-b border-white/[0.06]">
+                            <button
+                              type="button"
+                              onClick={() => handleOpen(tip.route)}
+                              disabled={!interactive}
+                              className={cn(
+                                'w-full text-left py-5 sm:py-6 flex items-start gap-6',
+                                'group touch-manipulation',
+                                interactive
+                                  ? 'cursor-pointer hover:bg-white/[0.02] transition-colors'
+                                  : 'cursor-default'
+                              )}
+                            >
+                              <div className="flex-1 min-w-0 pr-2">
+                                <div className="text-[16px] sm:text-[17px] font-semibold text-white leading-snug">
+                                  {tip.title}
+                                </div>
+                                <p className="mt-1.5 text-[14px] sm:text-[15px] leading-relaxed text-white/65 max-w-[60ch]">
+                                  {tip.body}
+                                </p>
+                              </div>
+
+                              {interactive && (
+                                <span
+                                  className={cn(
+                                    'flex-shrink-0 mt-1 text-[13px] font-medium tracking-wide',
+                                    'text-elec-yellow/80 group-hover:text-elec-yellow',
+                                    'transition-colors whitespace-nowrap'
+                                  )}
+                                >
+                                  Open →
+                                </span>
+                              )}
+                            </button>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </motion.section>
+                ))
+              )}
+            </motion.div>
           </div>
         </div>
       </SheetContent>

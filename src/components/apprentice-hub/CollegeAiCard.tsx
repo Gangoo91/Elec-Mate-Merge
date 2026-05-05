@@ -45,7 +45,7 @@ export function CollegeAiCard() {
             </li>
           ))}
         </ul>
-        <div className="mt-4 inline-flex items-center h-10 px-4 rounded-lg bg-white/[0.02] text-black text-[13px] font-semibold group-hover:bg-white/[0.02] transition-colors">
+        <div className="mt-4 inline-flex items-center h-10 px-4 rounded-lg bg-elec-yellow text-black text-[13px] font-semibold group-hover:bg-elec-yellow/90 transition-colors">
           Open College AI →
         </div>
       </div>

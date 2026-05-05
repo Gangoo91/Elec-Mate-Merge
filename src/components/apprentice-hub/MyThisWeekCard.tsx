@@ -35,7 +35,7 @@ export function MyThisWeekCard() {
         <button
           type="button"
           onClick={regenerate}
-          className="mt-3 inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-white/[0.02] hover:bg-white/[0.02] text-black text-[12px] font-semibold transition-colors touch-manipulation"
+          className="mt-3 inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[12px] font-semibold transition-colors touch-manipulation"
         >
           <RefreshCw className="h-3.5 w-3.5" />
           Try again
@@ -114,7 +114,7 @@ function ThisWeekBulletRow({ bullet, index }: { bullet: ThisWeekBullet; index: n
         <button
           type="button"
           onClick={() => navigate(bullet.action_href)}
-          className="shrink-0 inline-flex items-center h-7 px-2.5 rounded-md bg-white/[0.02] hover:bg-white/[0.02] text-black text-[11.5px] font-semibold transition-colors touch-manipulation"
+          className="shrink-0 inline-flex items-center h-7 px-2.5 rounded-md bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[11.5px] font-semibold transition-colors touch-manipulation"
         >
           {bullet.action_label} →
         </button>

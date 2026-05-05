@@ -176,9 +176,7 @@ const CommunityResourcesList = ({ resources }: CommunityResourcesListProps) => {
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 min-w-0">
                     <h4 className="font-medium text-white text-sm">{resource.title}</h4>
-                    <p className="text-xs text-white line-clamp-2 mt-0.5">
-                      {resource.description}
-                    </p>
+                    <p className="text-xs text-white line-clamp-2 mt-0.5">{resource.description}</p>
                   </div>
                   <ExternalLink className={`h-4 w-4 ${config.iconClass} flex-shrink-0 mt-0.5`} />
                 </div>
@@ -265,7 +263,7 @@ const CommunityResourcesList = ({ resources }: CommunityResourcesListProps) => {
               </Button>
               <Button
                 type="submit"
-                className="flex-1 h-11 bg-white/[0.02] hover:bg-white/[0.02] text-black touch-manipulation"
+                className="flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black touch-manipulation"
               >
                 Submit Suggestion
               </Button>

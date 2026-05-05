@@ -161,7 +161,8 @@ export function QuickReflectionSheet({ open, onOpenChange, onSaved }: Props) {
             />
             <div className="flex items-baseline justify-between gap-3">
               <span
-                className={cn('text-[10.5px] tabular-nums',
+                className={cn(
+                  'text-[10.5px] tabular-nums',
                   charCount >= 12 ? 'text-white/85' : 'text-white/95'
                 )}
               >
@@ -199,7 +200,8 @@ export function QuickReflectionSheet({ open, onOpenChange, onSaved }: Props) {
                         type="button"
                         key={p}
                         onClick={() => setDuration(p)}
-                        className={cn('h-8 px-3 rounded-full border text-[11.5px] font-medium tabular-nums touch-manipulation transition-colors',
+                        className={cn(
+                          'h-8 px-3 rounded-full border text-[11.5px] font-medium tabular-nums touch-manipulation transition-colors',
                           duration === p
                             ? 'border-white/[0.06] bg-white/[0.02] text-white/85'
                             : 'border-white/[0.10] bg-white/[0.02] text-white/95 hover:text-white hover:border-white/[0.22]'
@@ -227,9 +229,10 @@ export function QuickReflectionSheet({ open, onOpenChange, onSaved }: Props) {
               type="button"
               onClick={handleSubmit}
               disabled={!valid || saving}
-              className={cn('flex-1 h-11 rounded-lg text-[13px] font-semibold transition-colors touch-manipulation',
+              className={cn(
+                'flex-1 h-11 rounded-lg text-[13px] font-semibold transition-colors touch-manipulation',
                 valid && !saving
-                  ? 'bg-white/[0.02] text-black hover:bg-white/[0.02]'
+                  ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
                   : 'bg-white/[0.05] text-white/40'
               )}
             >

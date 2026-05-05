@@ -1,7 +1,18 @@
 /**
  * Practical Work Intelligence RAG Module
- * Primary data source for hands-on installation, commissioning, and maintenance guidance
+ * Primary data source for hands-on installation, commissioning, and maintenance guidance.
+ *
+ * Two surfaces:
+ *   - searchPracticalWorkIntelligence — legacy keyword RPC, kept for back-compat
+ *   - searchPracticalWorkV2           — new hybrid RRF (vector + tsvector)
+ *
+ * v2 mirrors `searchFacets` in `bs7671-facets-rag.ts`: caller-provided
+ * embedding (text-embedding-3-large, dim 3072), filters pushed down,
+ * RRF fusion. Rows the OSG/GN3 classifier marked for removal are
+ * excluded automatically by the RPC.
  */
+
+import { generateLargeEmbedding } from './ai-providers.ts';
 
 export interface PracticalWorkResult {
   content: string;
@@ -195,4 +206,148 @@ export function formatForAIContext(results: PracticalWorkResult[]): string {
       return formatted;
     })
     .join('\n\n---\n\n');
+}
+
+/* ─── v2 ─ hybrid RRF search ────────────────────────────────────── */
+
+export interface PracticalWorkFacet {
+  id: string;
+  primaryTopic: string;
+  facetType: string | null;
+  equipmentCategory: string | null;
+  appliesTo: string[] | null;
+  keywords: string[] | null;
+  bs7671Regulations: string[] | null;
+  toolsRequired: string[] | null;
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  materialsNeeded: any[] | null;
+  safetyRequirements: any | null;
+  inspectionChecklist: any[] | null;
+  commonMistakes: string[] | null;
+  testProcedures: any[] | null;
+  acceptanceCriteria: any | null;
+  /* eslint-enable @typescript-eslint/no-explicit-any */
+  typicalDurationMinutes: number | null;
+  skillLevel: string | null;
+  confidenceScore: number | null;
+  /** Cosine similarity vs query embedding, 0-1. */
+  similarity: number;
+  /** Reciprocal Rank Fusion score, vector + tsvector. */
+  rrfScore: number;
+}
+
+export interface SearchPracticalWorkV2Args {
+  query: string;
+  matchCount?: number;
+  /** Optional facet_type filter (e.g. ['installation', 'testing']). */
+  facetTypes?: string[] | null;
+  /** Optional installation context (['domestic'], ['commercial', 'industrial']). */
+  appliesTo?: string[] | null;
+  equipmentCategory?: string | null;
+  minConfidence?: number;
+  /** Skip the embedding round-trip if you only want keyword search. */
+  skipEmbedding?: boolean;
+}
+
+/**
+ * Hybrid RRF search across `practical_work_intelligence`.
+ *
+ * Generates a 3072-dim halfvec embedding for the query, passes it
+ * alongside the raw text to `search_practical_work_v2`. The RPC fuses
+ * vector cosine + tsvector relevance via RRF and applies any filter
+ * push-downs. Rows flagged by the OSG classifier as 'delete' are
+ * skipped server-side.
+ *
+ * Failure modes are non-fatal: if the embedding call fails, falls back
+ * to text-only ranking. If the RPC fails, returns an empty array and
+ * logs — the caller continues without practical-work grounding rather
+ * than crashing the whole job.
+ */
+export async function searchPracticalWorkV2(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  supabase: any,
+  args: SearchPracticalWorkV2Args
+): Promise<PracticalWorkFacet[]> {
+  const {
+    query,
+    matchCount = 10,
+    facetTypes = null,
+    appliesTo = null,
+    equipmentCategory = null,
+    minConfidence = 0,
+    skipEmbedding = false,
+  } = args;
+
+  if (!query || query.trim().length === 0) return [];
+
+  let embedding: number[] | null = null;
+  if (!skipEmbedding) {
+    const openAiKey = Deno.env.get('OPENAI_API_KEY');
+    if (openAiKey) {
+      try {
+        embedding = await generateLargeEmbedding(query, openAiKey);
+      } catch (err) {
+        console.warn('[rag-practical-work] embedding failed, falling back to text-only:', err);
+      }
+    }
+  }
+
+  const { data, error } = await supabase.rpc('search_practical_work_v2', {
+    p_query_text: query,
+    p_query_embedding: embedding,
+    p_match_count: matchCount,
+    p_facet_types: facetTypes,
+    p_applies_to: appliesTo,
+    p_equipment_category: equipmentCategory,
+    p_min_confidence: minConfidence,
+  });
+
+  if (error) {
+    console.error('[rag-practical-work] search_practical_work_v2 failed:', error);
+    return [];
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (data ?? []).map((row: any) => ({
+    id: row.id,
+    primaryTopic: row.primary_topic ?? '',
+    facetType: row.facet_type,
+    equipmentCategory: row.equipment_category,
+    appliesTo: row.applies_to,
+    keywords: row.keywords,
+    bs7671Regulations: row.bs7671_regulations,
+    toolsRequired: row.tools_required,
+    materialsNeeded: row.materials_needed,
+    safetyRequirements: row.safety_requirements,
+    inspectionChecklist: row.inspection_checklist,
+    commonMistakes: row.common_mistakes,
+    testProcedures: row.test_procedures,
+    acceptanceCriteria: row.acceptance_criteria,
+    typicalDurationMinutes: row.typical_duration_minutes,
+    skillLevel: row.skill_level,
+    confidenceScore: row.confidence_score !== null ? Number(row.confidence_score) : null,
+    similarity: Number(row.similarity ?? 0),
+    rrfScore: Number(row.rrf_score ?? 0),
+  }));
+}
+
+/**
+ * Compact prompt block for AI annotation. One line per facet, regulation
+ * cites first, content truncated. Designed to keep token cost low while
+ * preserving citability.
+ */
+export function formatPracticalWorkForPrompt(facets: PracticalWorkFacet[]): string {
+  if (facets.length === 0) return '[no practical work facets matched]';
+  return facets
+    .map((f, i) => {
+      const regs = (f.bs7671Regulations ?? []).slice(0, 3).join(', ');
+      const equip = f.equipmentCategory ? ` [${f.equipmentCategory}]` : '';
+      const tools = (f.toolsRequired ?? []).slice(0, 4).join(', ');
+      const topic = (f.primaryTopic || '').replace(/\s+/g, ' ').slice(0, 360);
+      const lines = [`${i + 1}. ${topic}${equip}`];
+      if (regs) lines.push(`   regs: ${regs}`);
+      if (tools) lines.push(`   tools: ${tools}`);
+      return lines.join('\n');
+    })
+    .join('\n');
 }

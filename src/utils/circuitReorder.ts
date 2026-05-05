@@ -17,10 +17,17 @@ const renumberBoard = (circuits: TestResult[], boardId: string): TestResult[] =>
   return circuits.map((c) => {
     if (getBoardId(c) !== boardId) return c;
     n += 1;
-    // circuitNumber is the raw number ("1", "2"...) — some scanners store "C1" style.
-    // circuitDesignation is the display badge ("C1", "C2"...). The desktop row
-    // and mobile card both render circuitDesignation, so keep both in sync.
-    return { ...c, circuitNumber: String(n), circuitDesignation: `C${n}` };
+    // circuitNumber is the raw number ("1", "2"...).
+    // circuitDesignation is the display badge ("Way 1", "Way 2", "Way 1 L1"...).
+    // For 3P-expanded rows we keep the existing designation suffix (L1/L2/L3)
+    // but renumber the way base, and the column1 number reflects the way base.
+    const phaseSuffixMatch = (c.circuitDesignation || '').match(/\b(L[123])\b/);
+    const phaseSuffix = phaseSuffixMatch ? ` ${phaseSuffixMatch[1]}` : '';
+    return {
+      ...c,
+      circuitNumber: String(n),
+      circuitDesignation: `Way ${n}${phaseSuffix}`,
+    };
   });
 };
 
