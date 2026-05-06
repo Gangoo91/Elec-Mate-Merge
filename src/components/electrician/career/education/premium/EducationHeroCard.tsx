@@ -5,17 +5,8 @@
 
 import { useEffect, useState } from 'react';
 import { motion, useSpring, useTransform } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import {
-  GraduationCap,
-  Users,
-  Star,
-  TrendingUp,
-  Calculator,
-  RefreshCw,
-  MapPin,
-} from 'lucide-react';
+import { Calculator, RefreshCw } from 'lucide-react';
 import { pageVariants, counterSpringConfig } from './animations/variants';
 import type { LiveEducationAnalytics } from '@/hooks/useLiveEducationData';
 
@@ -74,119 +65,112 @@ const EducationHeroCard = ({
   className,
 }: EducationHeroCardProps) => {
   return (
-    <motion.div
+    <motion.section
       variants={pageVariants}
       initial="initial"
       animate="animate"
-      className={cn('space-y-3', className)}
+      className={cn('space-y-4', className)}
     >
-      {/* Compact Hero Card */}
-      <div className="relative overflow-hidden rounded-2xl bg-white/[0.03] border border-white/10">
-        {/* Subtle accent line */}
-        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow/60 via-amber-400/40 to-elec-yellow/60" />
+      {/* Editorial header */}
+      <div className="flex items-baseline justify-between gap-3 flex-wrap">
+        <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+          04 · FURTHER EDUCATION
+        </span>
+        {onRefresh && (
+          <button
+            type="button"
+            onClick={onRefresh}
+            disabled={isRefreshing}
+            className="text-[10.5px] uppercase tracking-[0.14em] text-white/85 hover:text-elec-yellow border border-white/15 hover:border-elec-yellow/40 rounded-full px-2.5 py-1 min-h-[28px] touch-manipulation transition-colors inline-flex items-center gap-1.5 disabled:opacity-50"
+          >
+            <RefreshCw className={cn('h-3 w-3', isRefreshing && 'animate-spin')} />
+            Refresh
+          </button>
+        )}
+      </div>
+      <h2 className="text-[34px] sm:text-[44px] lg:text-[54px] font-semibold tracking-tight leading-[1.05]">
+        <span className="text-elec-yellow">Step</span> <span className="text-white">up.</span>
+      </h2>
+      <p className="text-[14px] sm:text-[15px] leading-relaxed text-white max-w-3xl">
+        HNC, HND, BEng and engineering degree apprenticeships from accredited UK providers. Funding
+        routes (advanced learner loan, ELC, employer-supported, levy), part-time and distance
+        options included.
+      </p>
 
-        <div className="relative z-10 p-4">
-          {/* Header row */}
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-                <GraduationCap className="h-5 w-5 text-elec-yellow" />
-              </div>
-              <div>
-                <h1 className="text-lg font-semibold text-white">
-                  Further Education
-                </h1>
-                <p className="text-xs text-white mt-0.5">
-                  HNC, HND, degrees & apprenticeships
-                </p>
-              </div>
-            </div>
-
-            {/* Refresh button */}
-            {onRefresh && (
-              <Button
-                onClick={onRefresh}
-                disabled={isRefreshing}
-                size="icon"
-                variant="ghost"
-                className="h-9 w-9 text-white hover:text-white hover:bg-white/10 rounded-xl touch-manipulation"
-              >
-                <RefreshCw className={cn('h-4 w-4', isRefreshing && 'animate-spin')} />
-              </Button>
-            )}
-          </div>
-
-          {/* Live data indicator */}
-          {isFromCache && lastUpdated && (
-            <div className="inline-flex items-center gap-2 mt-3 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
-              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
-              <span className="text-[11px] font-medium text-emerald-300">
-                Live data • Updated{' '}
-                {new Date(lastUpdated).toLocaleDateString('en-GB', {
-                  day: 'numeric',
-                  month: 'short',
-                })}
-              </span>
-            </div>
-          )}
-
-          {/* Inline Stats Row */}
-          {analytics && (
-            <div className="flex items-center gap-3 mt-3 flex-wrap">
-              <div className="flex items-center gap-1.5 text-sm">
-                <GraduationCap className="h-3.5 w-3.5 text-elec-yellow" />
-                <span className="font-semibold text-white">
-                  <AnimatedCounter value={analytics.totalCourses} />
-                </span>
-                <span className="text-white text-xs">programmes</span>
-              </div>
-              <span className="text-white">•</span>
-              <div className="flex items-center gap-1.5 text-sm">
-                <Users className="h-3.5 w-3.5 text-emerald-400" />
-                <span className="font-semibold text-white">
-                  <AnimatedCounter value={analytics.totalProviders} />
-                </span>
-                <span className="text-white text-xs">providers</span>
-              </div>
-              <span className="text-white">•</span>
-              <div className="flex items-center gap-1.5 text-sm">
-                <Star className="h-3.5 w-3.5 text-amber-400" />
-                <span className="font-semibold text-white">
-                  <AnimatedCounter value={analytics.averageRating} decimals={1} />
-                </span>
-                <span className="text-white text-xs">avg</span>
-              </div>
-              {analytics.averageEmploymentRate && analytics.averageEmploymentRate > 0 && (
-                <>
-                  <span className="text-white hidden sm:inline">•</span>
-                  <div className="hidden sm:flex items-center gap-1.5 text-sm">
-                    <TrendingUp className="h-3.5 w-3.5 text-blue-400" />
-                    <span className="font-semibold text-white">
-                      <AnimatedCounter value={analytics.averageEmploymentRate} suffix="%" />
-                    </span>
-                    <span className="text-white text-xs">employed</span>
-                  </div>
-                </>
-              )}
-            </div>
-          )}
-
-          {/* Single CTA */}
-          {onFundingCalculator && (
-            <div className="mt-3">
-              <Button
-                onClick={onFundingCalculator}
-                className="h-10 px-4 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 gap-2 font-semibold rounded-xl touch-manipulation active:scale-[0.98] text-sm"
-              >
-                <Calculator className="h-4 w-4" />
-                Funding Calculator
-              </Button>
-            </div>
+      {/* Live stats strip — replaces the old icon-heavy block */}
+      {analytics && (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-black/40 border border-white/[0.10] rounded-2xl overflow-hidden">
+          <StatCell label="Programmes" value={<AnimatedCounter value={analytics.totalCourses} />} />
+          <StatCell
+            label="Providers"
+            value={<AnimatedCounter value={analytics.totalProviders} />}
+          />
+          <StatCell
+            label="Avg rating"
+            value={<AnimatedCounter value={analytics.averageRating} decimals={1} />}
+          />
+          {analytics.averageEmploymentRate && analytics.averageEmploymentRate > 0 ? (
+            <StatCell
+              label="Employed"
+              value={<AnimatedCounter value={analytics.averageEmploymentRate} suffix="%" />}
+            />
+          ) : (
+            <StatCell label="Funded routes" value="ELC · Levy · ALL" small />
           )}
         </div>
+      )}
+
+      {/* Live data indicator + funding CTA */}
+      <div className="flex items-baseline justify-between gap-3 flex-wrap">
+        {isFromCache && lastUpdated ? (
+          <span className="inline-flex items-center gap-1.5 text-[10.5px] tabular-nums text-emerald-300">
+            <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" aria-hidden />
+            Live · updated{' '}
+            {new Date(lastUpdated).toLocaleDateString('en-GB', {
+              day: 'numeric',
+              month: 'short',
+            })}
+          </span>
+        ) : (
+          <span />
+        )}
+        {onFundingCalculator && (
+          <button
+            type="button"
+            onClick={onFundingCalculator}
+            className="text-[12px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/85 rounded-full px-4 py-2 min-h-[36px] inline-flex items-center gap-2 touch-manipulation transition-colors"
+          >
+            <Calculator className="h-3.5 w-3.5" />
+            Funding calculator
+          </button>
+        )}
       </div>
-    </motion.div>
+    </motion.section>
   );
 };
+
+const StatCell = ({
+  label,
+  value,
+  small,
+}: {
+  label: string;
+  value: React.ReactNode;
+  small?: boolean;
+}) => (
+  <div className="bg-[hsl(0_0%_10%)] px-3 sm:px-4 py-3 sm:py-4">
+    <div className="text-[9.5px] font-semibold uppercase tracking-[0.18em] text-white/65 truncate">
+      {label}
+    </div>
+    <div
+      className={cn(
+        'mt-1 font-semibold tabular-nums text-white truncate',
+        small ? 'text-[12px]' : 'text-[18px] sm:text-[20px]'
+      )}
+    >
+      {value}
+    </div>
+  </div>
+);
 
 export default EducationHeroCard;

@@ -1,5 +1,4 @@
 import { useState, useMemo, useCallback } from 'react';
-import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import ModernCoursesHero from './ModernCoursesHero';
 import ModernCoursesGrid from './ModernCoursesGrid';
@@ -13,6 +12,7 @@ import {
   calculateCoursesAnalytics,
   TrainingCourse,
 } from '@/hooks/useTrainingCourses';
+import { Eyebrow } from '@/components/college/primitives';
 
 // Transform TrainingCourse to EnhancedCareerCourse for existing grid/modal components
 const transformToEnhanced = (course: TrainingCourse): EnhancedCareerCourse => ({
@@ -186,23 +186,51 @@ const ElectricianCareerCourses = () => {
   // Funding Calculator View
   if (viewMode === 'funding') {
     return (
-      <div className="space-y-6">
-        <Button
-          variant="outline"
-          onClick={handleBackToGrid}
-          className="bg-white/5 border-white/10 text-white hover:text-white hover:bg-white/10 gap-2"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to Courses
-        </Button>
+      <div className="space-y-8 sm:space-y-10">
+        <section className="space-y-3">
+          <button
+            type="button"
+            onClick={handleBackToGrid}
+            className="text-white/85 hover:text-white inline-flex items-center gap-1.5 text-[12px] uppercase tracking-[0.14em] font-semibold border border-white/15 hover:border-white/30 rounded-full px-3 py-1 min-h-[32px] touch-manipulation"
+          >
+            <ArrowLeft className="h-3.5 w-3.5" />
+            Courses
+          </button>
+          <Eyebrow>02 · FUNDING</Eyebrow>
+          <h2 className="text-[28px] sm:text-[36px] lg:text-[44px] font-semibold tracking-tight leading-[1.05]">
+            <span className="text-elec-yellow">Pay for</span>{' '}
+            <span className="text-white">it.</span>
+          </h2>
+          <p className="text-[13.5px] sm:text-[15px] leading-relaxed text-white max-w-3xl">
+            Levy-funded apprenticeships, employer support, ELC, advanced learner loans and tax
+            relief — work out what you can claim before you book.
+          </p>
+        </section>
         <FundingCalculator />
       </div>
     );
   }
 
   return (
-    <div className="space-y-2 sm:space-y-4">
-      {/* Hero with Search + Location + Category Pills */}
+    <div className="space-y-8 sm:space-y-10">
+      {/* Editorial header — sits above the search/filter UI which we keep
+          functional and purpose-built. */}
+      <section className="space-y-3">
+        <Eyebrow>02 · COURSES</Eyebrow>
+        <h2 className="text-[34px] sm:text-[44px] lg:text-[54px] font-semibold tracking-tight leading-[1.05]">
+          <span className="text-elec-yellow">Stay</span>{' '}
+          <span className="text-white">qualified.</span>
+        </h2>
+        <p className="text-[14px] sm:text-[15px] leading-relaxed text-white max-w-3xl">
+          {totalCount > 0
+            ? `${totalCount.toLocaleString('en-GB')} courses`
+            : 'Live training courses'}{' '}
+          from accredited UK providers — 18th Edition (2382-22), AM2/AM2E, 2391/2 testing, 2399 PV,
+          EV OZEV-approved, F-Gas, MCS heat-pump and more. Search by topic + postcode, filter by
+          format and level, then book or enquire direct with the provider.
+        </p>
+      </section>
+
       <ModernCoursesHero
         analytics={analytics}
         searchQuery={searchQuery}

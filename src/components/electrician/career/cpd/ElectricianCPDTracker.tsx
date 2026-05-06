@@ -73,23 +73,24 @@ const ElectricianCPDTracker = () => {
   if (isMobile) {
     return (
       <div className="min-h-screen bg-elec-dark">
-        {/* Header */}
-        <div className="bg-elec-dark border-b border-elec-yellow/20 p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Clock className="h-6 w-6 text-elec-yellow" />
-              <div>
-                <h1 className="text-lg font-bold text-foreground">Electrician CPD Tracker</h1>
-                <p className="text-xs text-white">Professional Development</p>
-              </div>
-            </div>
+        {/* Editorial header */}
+        <div className="px-4 pt-5 pb-4 border-b border-white/[0.08]">
+          <div className="flex items-baseline justify-between gap-2">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+              CPD
+            </span>
             <button
               onClick={() => setActiveTab('settings')}
-              className="text-elec-yellow hover:text-amber-400"
+              className="text-[10.5px] uppercase tracking-[0.14em] text-white/85 hover:text-elec-yellow inline-flex items-center gap-1.5 border border-white/15 rounded-full px-2.5 py-1 min-h-[28px] touch-manipulation"
             >
-              <Settings className="h-5 w-5" />
+              <Settings className="h-3 w-3" />
+              Bodies
             </button>
           </div>
+          <h2 className="mt-1 text-[28px] font-semibold tracking-tight leading-[1.05]">
+            <span className="text-elec-yellow">Track</span>{' '}
+            <span className="text-white">your hours.</span>
+          </h2>
         </div>
 
         {/* Mobile Content */}
@@ -255,27 +256,31 @@ const ElectricianCPDTracker = () => {
 
   // Desktop layout
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="text-center space-y-4">
-        <div className="flex items-center justify-center gap-3">
-          <Clock className="h-8 w-8 text-elec-yellow" />
-          <h1 className="text-3xl font-bold text-foreground">Enhanced CPD Tracker</h1>
-        </div>
-        <p className="text-white max-w-3xl mx-auto">
-          Professional-grade CPD tracking with compliance monitoring, evidence management, and
-          industry-specific templates for UK electricians.
-        </p>
-        <div className="flex justify-center">
+    <div className="space-y-8 sm:space-y-10">
+      {/* Editorial header */}
+      <section className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3 flex-wrap">
+          <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+            CPD · CONTINUOUS PROFESSIONAL DEVELOPMENT
+          </span>
           <button
             onClick={() => setShowProfessionalBodyManager(true)}
-            className="text-elec-yellow hover:text-amber-400 text-sm flex items-center gap-2 touch-manipulation active:scale-[0.98] min-h-[44px] px-3"
+            className="text-[11px] uppercase tracking-[0.14em] text-white/85 hover:text-elec-yellow border border-white/15 hover:border-elec-yellow/40 rounded-full px-3 py-1 min-h-[32px] touch-manipulation transition-colors inline-flex items-center gap-1.5"
           >
-            <Settings className="h-4 w-4" />
-            Manage Professional Bodies
+            <Settings className="h-3.5 w-3.5" />
+            Bodies
           </button>
         </div>
-      </div>
+        <h2 className="text-[34px] sm:text-[44px] lg:text-[54px] font-semibold tracking-tight leading-[1.05]">
+          <span className="text-elec-yellow">Track</span>{' '}
+          <span className="text-white">your hours.</span>
+        </h2>
+        <p className="text-[14px] sm:text-[15px] leading-relaxed text-white max-w-3xl">
+          Log activities, manage evidence, hit your annual hour targets per professional body — IET
+          30 hours / NICEIC 12 hours / ECA 30 hours / NAPIT 12 hours typical. Compliance dashboard,
+          goal tracking, evidence library, analytics.
+        </p>
+      </section>
 
       {/* Main Content */}
       <DropdownTabs
