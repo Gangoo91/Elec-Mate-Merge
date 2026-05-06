@@ -726,10 +726,17 @@ export function recommendBoardLayout(
     const boardCurrent = needsThreePhase
       ? boardLoad / (Math.sqrt(3) * supplyVoltage)
       : boardLoad / supplyVoltage;
-    // If we auto-converted to 3φ, the user's main switch rating no longer applies.
-    const initialMain = needsThreePhase
-      ? sizeBoardMainSwitch(boardCurrent)
-      : Number(design?.consumerUnit?.mainSwitchRating ?? 100);
+    // ELE-969 — auto-size when user hasn't explicitly entered a rating, so
+    // commercial / industrial installs don't end up stuck on the 100 A
+    // default with downstream MEC + bonding miscalc. If the user did enter
+    // a rating we honour it, but bump up if it's smaller than the load needs.
+    const userMainExplicit =
+      design?.consumerUnit?.mainSwitchRating != null &&
+      Number(design.consumerUnit.mainSwitchRating) > 0;
+    const userMain = Number(design?.consumerUnit?.mainSwitchRating ?? 0);
+    const initialMain = userMainExplicit
+      ? Math.max(userMain, sizeOriginMainSwitch(boardCurrent))
+      : sizeOriginMainSwitch(boardCurrent);
     const phaseBalance =
       supplyPhases === 'three'
         ? balancePhases(circuits, allIndices, supplyVoltage, options.phaseOverrides)
@@ -824,17 +831,25 @@ export function recommendBoardLayout(
 
       // Origin's main switch must carry the whole installation (origin circuits + all
       // submains), not just its own circuits. We size from the *total* installation load.
-      // When we've auto-converted to 3φ, recompute the user's main rating too — their
-      // original 100 A was a single-phase assumption and won't apply at 400 V 3φ.
+      // ELE-969 — auto-size whenever the user hasn't explicitly supplied a main
+      // switch rating. Previously we only auto-sized on auto-3φ conversion, so a
+      // 165 kW design with no user-entered main switch was getting stuck on the
+      // 100 A default → MEC and bonding showed 16 mm² / 10 mm² instead of the
+      // correct 50 mm² / 25 mm² for a 250 A service.
       let boardMainSwitch: number;
       if (isOrigin) {
-        if (needsThreePhase) {
-          const installationCurrent = totalDiversified / (Math.sqrt(3) * 400);
-          boardMainSwitch = sizeBoardMainSwitch(installationCurrent);
-        } else {
-          boardMainSwitch = mainRating;
-        }
+        const userMainExplicit =
+          design?.consumerUnit?.mainSwitchRating != null &&
+          Number(design.consumerUnit.mainSwitchRating) > 0;
+        const installationCurrent = needsThreePhase
+          ? totalDiversified / (Math.sqrt(3) * 400)
+          : boardCurrentA;
+        boardMainSwitch = userMainExplicit
+          ? Math.max(mainRating, sizeOriginMainSwitch(installationCurrent))
+          : sizeOriginMainSwitch(installationCurrent);
       } else {
+        // Submains: size purely from the load (no 100 A floor) — small
+        // submains feeding a few circuits should land on a small main.
         boardMainSwitch = sizeBoardMainSwitch(boardCurrentA);
       }
 
@@ -1009,15 +1024,37 @@ export function recommendBoardLayout(
 // equivalent), ambient 30°C. Phase 4b will let user enter actual run length and
 // the AI will perform a proper voltage-drop verified sizing.
 
+/**
+ * Round a current up to the next standard IEC main switch / MCCB / ACB rating.
+ * Covers from a 40A consumer-unit through to a 1600A switchgear breaker so
+ * commercial and industrial designs land on real catalogue values, not
+ * `Math.ceil(currentA/10)*10` gibberish.
+ *
+ * Source: IEC 60898 / 60947-2 standard rating series.
+ */
 function sizeBoardMainSwitch(currentA: number): number {
-  if (currentA <= 32) return 40;
-  if (currentA <= 50) return 63;
-  if (currentA <= 80) return 100;
-  if (currentA <= 100) return 125;
-  if (currentA <= 125) return 160;
-  if (currentA <= 160) return 200;
-  if (currentA <= 200) return 250;
-  return Math.ceil(currentA / 10) * 10;
+  // BS 7671 433.1: Ib ≤ In ≤ Iz — round the design current up to the next
+  // standard rating. No extra headroom factor; the next-standard step is the
+  // headroom. Caller decides any minimum floor (e.g. origin floored at 100 A
+  // to match a typical UK service).
+  const STANDARD_RATINGS = [
+    40, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600,
+  ];
+  for (const r of STANDARD_RATINGS) {
+    if (currentA <= r) return r;
+  }
+  return 1600;
+}
+
+/**
+ * Origin-board main switch — floors at 100 A (typical UK service rating)
+ * even for small loads. ELE-969 noted that auto-sizing a 5 kW domestic to
+ * a 40 A main silently under-specs the MEC as if the actual service were
+ * also 40 A. The user can override by entering a smaller rating in the
+ * supply step (we honour explicit user input).
+ */
+function sizeOriginMainSwitch(currentA: number): number {
+  return Math.max(100, sizeBoardMainSwitch(currentA));
 }
 
 // SWA 4-core XLPE 90°C, Method E (clipped). BS 7671 Table 4D4A current capacity
@@ -1168,7 +1205,12 @@ function sizeMainBonding(
 /**
  * Estimate the service phase conductor size from the main switch rating —
  * used when the user hasn't supplied a service cable size. Conservative:
- * matches typical UK DNO service cable sizes for given main fuse / switch ratings.
+ * matches typical UK DNO service cable sizes (waveform / Wavecon / Aluminium
+ * mains) for given main fuse / switch ratings per ENA TS 43-125 and ESQCR.
+ *
+ * Above 250A the service is typically a separate metered LV connection with
+ * 185 / 240 / 300 mm² conductors — those values are needed for commercial
+ * and industrial supplies (ELE-969).
  */
 function estimateServicePhaseSize(mainSwitchA: number): number {
   if (mainSwitchA <= 80) return 16;
@@ -1177,7 +1219,13 @@ function estimateServicePhaseSize(mainSwitchA: number): number {
   if (mainSwitchA <= 160) return 50;
   if (mainSwitchA <= 200) return 70;
   if (mainSwitchA <= 250) return 95;
-  return 120;
+  if (mainSwitchA <= 315) return 120;
+  if (mainSwitchA <= 400) return 185;
+  if (mainSwitchA <= 500) return 240;
+  if (mainSwitchA <= 630) return 300;
+  // 630A+ services use parallel cables or ducted busbar — fall back to the
+  // largest single conductor we model.
+  return 300;
 }
 
 /**
