@@ -1,17 +1,14 @@
+/**
+ * AccreditationCard — editorial card.
+ *
+ * Type-led, gradient surface, tabular nums for fees + duration. Replaces the
+ * gradient-background + circular-logo header with a tighter hierarchy: brand
+ * mark next to title, key facts as a divide-y meta strip, benefit chips, and
+ * primary + secondary actions in the footer.
+ */
+
 import { openExternalUrl } from '@/utils/open-external-url';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import {
-  Award,
-  MapPin,
-  Clock,
-  PoundSterling,
-  TrendingUp,
-  ExternalLink,
-  Users,
-  Calendar,
-  Check,
-} from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { AccreditationOption } from '../../../apprentice/career/accreditation/enhancedAccreditationData';
 import { isValidUrl } from '@/utils/urlUtils';
 import { cn } from '@/lib/utils';
@@ -25,185 +22,137 @@ interface AccreditationCardProps {
 const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardProps) => {
   const brandInfo = getBrandInfo(accreditation.accreditationBody);
   const logoUrl = getLogoUrl(accreditation.accreditationBody, accreditation.website);
-
-  const getCategoryColor = (category: string) => {
-    const colors = {
-      'Competent Person Schemes': 'bg-purple-500/20 border-purple-500/30 text-purple-300',
-      'Professional Engineering Bodies': 'bg-blue-500/20 border-blue-500/30 text-blue-300',
-      'Trade Associations': 'bg-green-500/20 border-green-500/30 text-green-300',
-      'Safety & Health Bodies': 'bg-red-500/20 border-red-500/30 text-red-300',
-      'Project & Construction Management': 'bg-amber-500/20 border-amber-500/30 text-amber-300',
-    };
-    return (
-      colors[category as keyof typeof colors] || 'bg-white/10 border-white/20 text-foreground/80'
-    );
-  };
-
-  const getPopularityColor = (popularity: number) => {
-    if (popularity >= 90) return 'text-green-400';
-    if (popularity >= 75) return 'text-amber-400';
-    return 'text-red-400';
-  };
+  const popularityTone =
+    accreditation.popularity >= 90
+      ? 'text-emerald-300'
+      : accreditation.popularity >= 75
+        ? 'text-elec-yellow'
+        : 'text-amber-300';
 
   return (
-    <div
-      className="bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-xl border border-white/10 overflow-hidden group hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.01] h-full cursor-pointer"
+    <button
+      type="button"
       onClick={() => onViewDetails(accreditation)}
+      className="text-left group rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] hover:border-elec-yellow/40 active:bg-white/[0.04] transition-colors p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] touch-manipulation flex flex-col"
     >
-      {/* Header section with logo and title */}
-      <div className="relative overflow-hidden h-32 sm:h-36 bg-gradient-to-br from-elec-yellow/10 via-elec-yellow/5 to-transparent">
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-
-        {/* Logo section */}
-        <div className="absolute top-3 left-3">
-          <div
-            className="w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center border-2 bg-white/10 backdrop-blur-sm"
-            style={{ borderColor: brandInfo.brandColor }}
-          >
-            {logoUrl ? (
-              <img
-                src={logoUrl}
-                alt={`${accreditation.accreditationBody} logo`}
-                className="w-10 h-10 sm:w-12 sm:h-12 object-contain"
-                loading="lazy"
-                decoding="async"
-                referrerPolicy="no-referrer"
-                onError={(e) => {
-                  // Fallback to initials if logo fails to load
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                  const parent = target.parentElement;
-                  if (parent) {
-                    parent.innerHTML = `<span class="text-xs sm:text-sm font-bold text-foreground">${getInitials(accreditation.accreditationBody)}</span>`;
-                    parent.style.backgroundColor = brandInfo.brandColor + '20';
-                  }
-                }}
-              />
-            ) : (
-              <span
-                className="text-sm sm:text-base font-bold text-foreground"
-                style={{ backgroundColor: brandInfo.brandColor + '20' }}
-              >
-                {getInitials(accreditation.accreditationBody)}
-              </span>
-            )}
-          </div>
-        </div>
-        {/* Level Badge - positioned at bottom of header */}
-        <div className="absolute bottom-3 left-3">
-          <Badge
-            variant="outline"
-            className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 text-xs"
-          >
-            {accreditation.level}
-          </Badge>
-        </div>
-
-        {/* Popularity indicator */}
-        <div className="absolute bottom-3 right-3 flex items-center gap-1 text-xs">
-          <TrendingUp className={`h-3 w-3 ${getPopularityColor(accreditation.popularity)}`} />
-          <span className="text-foreground/90">{accreditation.popularity}%</span>
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="p-4 space-y-3 flex flex-col h-[calc(100%-8rem)] sm:h-[calc(100%-9rem)]">
-        {/* Title and Provider */}
-        <div className="space-y-2">
-          <h3 className="font-semibold text-foreground line-clamp-2 leading-tight text-sm sm:text-base">
-            {accreditation.title}
-          </h3>
-          <div className="flex items-center gap-2 text-xs text-amber-400">
-            <Award className="h-3 w-3" />
-            <span className="font-medium truncate">{accreditation.provider}</span>
-          </div>
-        </div>
-
-        {/* Description */}
-        <p className="text-foreground/80 line-clamp-2 leading-relaxed text-xs sm:text-sm flex-grow">
-          {accreditation.description}
-        </p>
-
-        {/* Meta information grid */}
-        <div className="grid grid-cols-2 gap-2 text-xs">
-          <div className="flex items-center gap-1 text-foreground/70">
-            <Clock className="h-3 w-3" />
-            <span className="truncate">{accreditation.duration}</span>
-          </div>
-          <div className="flex items-center gap-1 text-elec-yellow font-medium">
-            <PoundSterling className="h-3 w-3" />
-            <span className="truncate">{accreditation.cost}</span>
-          </div>
-          {accreditation.locations.length > 0 && (
-            <div className="flex items-center gap-1 text-foreground/70 col-span-2">
-              <MapPin className="h-3 w-3" />
-              <span className="truncate">
-                {accreditation.locations.slice(0, 2).join(', ')}
-                {accreditation.locations.length > 2 &&
-                  ` +${accreditation.locations.length - 2} more`}
-              </span>
-            </div>
+      {/* Brand row */}
+      <div className="flex items-start gap-3">
+        <div
+          className="w-12 h-12 rounded-xl flex items-center justify-center border bg-white/[0.04] shrink-0"
+          style={{ borderColor: brandInfo.brandColor }}
+        >
+          {logoUrl ? (
+            <img
+              src={logoUrl}
+              alt={`${accreditation.accreditationBody} logo`}
+              className="w-9 h-9 object-contain"
+              loading="lazy"
+              decoding="async"
+              referrerPolicy="no-referrer"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                const parent = target.parentElement;
+                if (parent) {
+                  parent.innerHTML = `<span class="text-[11px] font-semibold text-white">${getInitials(
+                    accreditation.accreditationBody
+                  )}</span>`;
+                }
+              }}
+            />
+          ) : (
+            <span className="text-[11px] font-semibold text-white">
+              {getInitials(accreditation.accreditationBody)}
+            </span>
           )}
         </div>
-
-        {/* Key Benefits */}
-        {accreditation.benefits.length > 0 && (
-          <div className="space-y-2">
-            <div className="flex flex-wrap gap-1">
-              {accreditation.benefits.slice(0, 2).map((benefit, idx) => (
-                <div key={idx} className="flex items-center gap-1 text-xs text-foreground/80">
-                  <Check className="h-3 w-3 text-green-400 flex-shrink-0" />
-                  <span className="truncate">{benefit}</span>
-                </div>
-              ))}
-              {accreditation.benefits.length > 2 && (
-                <span className="text-xs text-foreground/60">
-                  +{accreditation.benefits.length - 2} more benefits
-                </span>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Footer */}
-        <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/10">
-          <div className="flex items-center gap-2 text-xs text-foreground/70">
-            <Calendar className="h-3 w-3" />
-            <span className="truncate">{accreditation.renewalPeriod || 'No renewal'}</span>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Button
-              size="sm"
-              variant="ghost"
-              className="h-8 px-3 text-elec-yellow hover:bg-elec-yellow/10 hover:text-elec-yellow"
-              onClick={(e) => {
-                e.stopPropagation();
-                onViewDetails(accreditation);
-              }}
-              aria-label={`View details for ${accreditation.title}`}
-            >
-              <span className="text-xs">Details</span>
-            </Button>
-            {isValidUrl(accreditation.website) && (
-              <Button
-                size="sm"
-                variant="ghost"
-                className="h-8 px-2 text-elec-yellow hover:bg-elec-yellow/10 hover:text-elec-yellow"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openExternalUrl(accreditation.website);
-                }}
-                aria-label={`Visit ${accreditation.accreditationBody} website`}
-              >
-                <ExternalLink className="h-3 w-3" />
-              </Button>
-            )}
-          </div>
+        <div className="min-w-0 flex-1">
+          <h3 className="text-[15px] font-semibold tracking-tight text-white leading-tight line-clamp-2">
+            {accreditation.title}
+          </h3>
+          <p className="mt-0.5 text-[10.5px] uppercase tracking-[0.14em] font-semibold text-white/65 truncate">
+            {accreditation.provider}
+          </p>
         </div>
       </div>
-    </div>
+
+      {/* Description */}
+      <p className="mt-3 text-[12px] leading-relaxed text-white line-clamp-3 flex-grow">
+        {accreditation.description}
+      </p>
+
+      {/* Meta strip */}
+      <dl className="mt-3 pt-3 border-t border-white/[0.06] grid grid-cols-2 gap-x-4 gap-y-1.5 text-[11px]">
+        <MetaRow label="Level" value={accreditation.level} />
+        <MetaRow label="Cost" value={accreditation.cost} accent />
+        <MetaRow label="Duration" value={accreditation.duration} />
+        <MetaRow label="Renews" value={accreditation.renewalPeriod || '—'} />
+      </dl>
+
+      {/* Benefits */}
+      {accreditation.benefits.length > 0 && (
+        <ul className="mt-3 flex flex-wrap gap-1">
+          {accreditation.benefits.slice(0, 3).map((b, i) => (
+            <li
+              key={i}
+              className="text-[10px] uppercase tracking-[0.12em] text-white/85 border border-white/15 rounded-md px-1.5 py-0.5"
+            >
+              {b}
+            </li>
+          ))}
+          {accreditation.benefits.length > 3 && (
+            <li className="text-[10px] uppercase tracking-[0.12em] text-white/65 px-1.5 py-0.5">
+              +{accreditation.benefits.length - 3}
+            </li>
+          )}
+        </ul>
+      )}
+
+      {/* Footer — popularity + actions */}
+      <div className="mt-3 pt-3 border-t border-white/[0.06] flex items-baseline justify-between gap-2">
+        <span className={cn('text-[11px] tabular-nums font-semibold', popularityTone)}>
+          {accreditation.popularity}% take-up
+        </span>
+        <div className="flex items-center gap-1.5">
+          <span className="text-[10.5px] uppercase tracking-[0.14em] text-elec-yellow group-hover:underline">
+            Details →
+          </span>
+          {isValidUrl(accreditation.website) && (
+            <a
+              href={accreditation.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                openExternalUrl(accreditation.website);
+              }}
+              className="ml-1 text-white/65 hover:text-elec-yellow inline-flex items-center justify-center h-7 w-7 rounded-md border border-white/15 hover:border-elec-yellow/40 transition-colors touch-manipulation"
+              aria-label={`Visit ${accreditation.accreditationBody} website`}
+            >
+              <ExternalLink className="h-3 w-3" />
+            </a>
+          )}
+        </div>
+      </div>
+    </button>
   );
 };
+
+const MetaRow = ({ label, value, accent }: { label: string; value: string; accent?: boolean }) => (
+  <div className="inline-flex items-baseline gap-1.5 min-w-0">
+    <dt className="text-[9.5px] uppercase tracking-[0.14em] font-semibold text-white/65 shrink-0">
+      {label}
+    </dt>
+    <dd
+      className={cn(
+        'tabular-nums truncate',
+        accent ? 'text-elec-yellow font-semibold' : 'text-white'
+      )}
+    >
+      {value}
+    </dd>
+  </div>
+);
 
 export default AccreditationCard;
